@@ -1,0 +1,149 @@
+/* Shortcuts Panel Styles */
+
+/* Shortcut Icon */
+.shortcut-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+}
+
+.shortcut-icon:hover {
+    background-color: var(--primary-color-light);
+    transform: scale(1.1);
+}
+
+.shortcut-icon i {
+    color: var(--white-solid);
+    font-size: 1.25rem;
+}
+
+/* Shortcut Panel */
+.shortcut-panel {
+    position: fixed;
+    right: -350px;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background-color: var(--white-solid);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    transition: var(--transition);
+}
+
+.shortcut-panel.active {
+    right: 0;
+}
+
+/* Header */
+.shortcut-panel-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shortcut-panel-header h3 {
+    color: var(--text-color);
+    margin: 0;
+    font-size: var(--font-size-lg);
+}
+
+.close-panel {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.close-panel:hover {
+    color: var(--primary-color);
+}
+
+/* Content */
+.shortcut-panel-content {
+    padding: 1.5rem;
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.shortcut-item:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+}
+
+.shortcut-item i {
+    margin-right: 1rem;
+    font-size: 1.25rem;
+}
+
+.shortcut-item span {
+    font-size: var(--font-size-base);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .shortcut-icon {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .shortcut-panel {
+        width: 300px;
+    }
+
+    .shortcut-panel-header h3 {
+        font-size: var(--font-size-base);
+    }
+
+    .shortcut-item {
+        padding: 0.75rem;
+    }
+
+    .shortcut-item i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .shortcut-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .shortcut-panel {
+        width: 250px;
+    }
+
+    .shortcut-panel-header {
+        padding: 1rem;
+    }
+
+    .shortcut-item {
+        padding: 0.5rem;
+    }
+}

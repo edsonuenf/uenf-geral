@@ -1,0 +1,397 @@
+/* Footer Styles - Independente */
+#colophon.site-footer {
+  background-color: #386A9430;
+  color: #ffffff;
+  padding: 3rem 0;
+  width: 100%;
+  display: block;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#colophon.site-footer > .container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Footer Widgets */
+#colophon .footer-widgets {
+  display: grid;
+  grid-template-columns: 200px repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Footer Widget Styles */
+.footer-widget {
+  padding: 1.5rem;
+}
+
+.footer-widget h3,
+.footer-widget h4 {
+  color: #2b2b2b;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-lg);
+}
+
+
+.footer-widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-widget ul li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-widget ul li a {
+  color: var(--white);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-widget ul li a:hover {
+  color: var(--white-solid);
+}
+
+/* Endereços */
+.enderecos {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.enderecos strong {
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Endereços e setor */
+
+.enderecos h4, .footer-widget h4 {
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #26557d;
+}
+
+.enderecos p, .setor-info p{
+  padding-top: 6px;
+}
+
+h4.setor-info{
+  margin: 0;
+}
+
+/* Logo Footer */
+.footer-logo img {
+  height: 100px;
+  width: auto;
+  display: block;
+}
+
+/* Informações do Setor */
+.setor-info {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  /* Ajustes para tablets */
+  #colophon .footer-widgets {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .footer-widget {
+    padding: 1.25rem;
+  }
+  
+  .footer-widget:first-child {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  
+  .footer-logo img {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Ajustes para tablets pequenos */
+  #colophon.site-footer {
+    padding: 2.5rem 0;
+  }
+  
+  #colophon .footer-widgets {
+    gap: 1.5rem;
+  }
+  
+  .footer-widget {
+    padding: 1rem 0.75rem;
+  }
+  
+  .enderecos h4, 
+  h4.setor-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .enderecos p,
+  .setor-info {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ajustes para celulares */
+  #colophon .footer-widgets {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .footer-widget {
+    padding: 1.25rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .footer-widget:last-child {
+    border-bottom: none;
+  }
+  
+  .footer-logo img {
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+  
+  .enderecos h4, 
+  h4.setor-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .enderecos p,
+  .setor-info {
+    font-size: 0.85rem;
+  }
+  
+  .setor-info br {
+    display: none;
+  }
+  
+  .setor-info strong {
+    display: inline-block;
+    min-width: 60px;
+  }
+}
+
+/* Ajustes adicionais para telas muito pequenas */
+@media (max-width: 360px) {
+  #colophon .container {
+    padding: 0 10px;
+  }
+  
+  .footer-widget {
+    padding: 1rem 0.5rem;
+  }
+  
+  .enderecos h4, 
+  h4.setor-title {
+    font-size: 1rem;
+  }
+  
+  .enderecos p,
+  .setor-info {
+    font-size: 0.8rem;
+  }
+}
+
+/* Shortcut Panel Styles */
+.shortcut-icon {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background-color: var(--bs-uenf-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move; /* Muda o cursor para indicar que é arrastável */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transition: all 0.3s ease;
+  user-select: none; /* Evita seleção de texto ao arrastar */
+}
+
+/* Classe para quando estiver arrastando */
+.shortcut-icon.dragging {
+  transition: none; /* Remove a transição suave durante o arrasto */
+}
+
+.shortcut-icon:hover {
+  background-color: #0056b3;
+  /* Removida a rotação que causava o movimento indesejado */
+}
+
+.shortcut-panel {
+  position: fixed;
+  right: -300px;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: var(--bs-uenf-blue);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.shortcut-panel.open {
+  right: 0;
+}
+
+.shortcut-panel-header {
+  padding: 15px;
+  background-color: #1B366F00;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shortcut-panel-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.close-panel {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 5px;
+  line-height: 1;
+}
+
+.shortcut-panel-content {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.shortcut-panel-content a {
+  color: #fff !important;
+}
+
+.shortcut-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.shortcut-item:hover {
+  background-color: #f5f5f5;
+  color: #0068c9;
+}
+
+.shortcut-item i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--bs-uenf-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 9998;
+}
+
+/* Garantir que o ícone fique branco */
+.back-to-top i {
+  color: white !important;
+}
+
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .shortcut-panel {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .shortcut-panel.open {
+    right: 0;
+  }
+  
+  .shortcut-icon {
+    bottom: 80px;
+    right: 15px;
+  }
+  
+  .back-to-top {
+    right: 15px;
+    bottom: 15px;
+  }
+}
+
+/* Ajuste de posição quando o painel de atalhos está aberto */
+.shortcut-panel.open + .back-to-top.visible {
+  right: 295px; /* Largura do painel (280px) + 15px de margem */
+  transition: right 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .shortcut-panel.open + .back-to-top.visible {
+    right: auto;
+    left: 15px;
+  }
+}

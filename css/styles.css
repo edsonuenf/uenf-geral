@@ -1,0 +1,446 @@
+:root {
+  --bs-uenf-blue: #1D3771;
+  --bs-uenf-blue-light: #1D3770BF;
+}
+
+.bg-header-logo{
+  background-color: var(--primary-color);
+}
+
+.logo{
+  padding: 12px 0px 12px 0px;
+}
+
+/* Idiomas */
+
+.idiomas-bandeiras{
+  text-align: right;
+}
+
+.idiomas-bandeiras ul li{
+  display: inline;
+}
+
+.navbar-brand-top {
+  background-color: var(--bs-uenf-blue);
+  padding: 0.75rem 0;
+}
+
+.navbar-brand-top img {
+  width: 132px;
+  height: auto;
+}
+
+.navbar-uenf {
+  background-color: var(--bs-uenf-blue-light);
+  padding: 0.5rem 1rem;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0;
+  margin-right: 1rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Estilos para elementos de texto */
+h1, h2, h3, h4, h5, h6, p, div {
+  font-family: Ubuntu, system-ui, -apple-system, Roboto, Oxygen, sans-serif;
+}
+
+/* Estilos para o container de busca */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.search-container .widget {
+  display: block;
+  width: 100%;
+}
+
+.search-container .ivory-search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-container .ivory-search-form input[type="search"] {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 4px 0 0 4px;
+}
+
+.search-container .ivory-search-form button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--bs-uenf-blue);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+
+.search-container .ivory-search-form button:hover {
+  background-color: #000;
+}
+
+
+h1, h2{
+  letter-spacing: -1px;
+}
+
+.entry-title{
+  color: var(--title-h1) !important;
+}
+
+.enderecos{
+  font-size: 14px;
+}
+.enderecos strong{
+  font-size: 16px;
+  color: #26557d;
+}
+
+
+
+/* CSS para Menu Vertical Accordion - Classe uenf-nav */
+
+/* Estilo base do menu */
+.uenf-nav {
+  color: white;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Reset para listas dentro do menu */
+.uenf-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* Estilo para todos os itens do menu */
+.uenf-nav li {
+  display: block;
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Remove a borda do último item */
+.uenf-nav li:last-child {
+  border-bottom: none;
+}
+
+/* Estilo para os links principais */
+.uenf-nav li > a {
+  color: white !important;
+  text-decoration: none !important;
+  display: block;
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-weight: 400;
+  z-index: 1;
+}
+
+/* Estilo quando passa o mouse nos links principais */
+.uenf-nav li > a:hover {
+  background-color:#54689290 !important;
+  color: white !important;
+  padding-left: 25px; /* Pequeno efeito de slide */
+}
+
+/* Estilo para submenus */
+.uenf-nav ul.sub-menu,
+.uenf-nav ul.children {
+  display: none;
+  background-color: #54689200;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Estilo dos itens do submenu */
+.uenf-nav ul.sub-menu li,
+.uenf-nav ul.children li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Estilo dos links do submenu */
+.uenf-nav ul.sub-menu li a,
+.uenf-nav ul.children li a {
+  padding: 12px 20px 12px 30px; /* Indent maior para submenus */
+  font-size: 0.95em;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+  z-index: 1;
+}
+
+/* Hover nos links do submenu */
+.uenf-nav ul.sub-menu li a:hover,
+.uenf-nav ul.children li a:hover {
+  background-color: #54689295 !important;
+  color: white !important;
+  border-left-color: rgba(255, 255, 255, 0.5);
+  padding-left: 45px;
+}
+
+/* Seta para itens com submenu - usando classes do WordPress */
+.uenf-nav li.menu-item-has-children > a:after,
+.uenf-nav li.page_item_has_children > a:after {
+  content: "▼";
+  float: right;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  color: rgba(255, 255, 255, 0.7) !important;
+  z-index: 2;
+}
+
+/* Rotacionar seta quando submenu está aberto */
+.uenf-nav li.menu-item-has-children.active > a:after,
+.uenf-nav li.page_item_has_children.active > a:after {
+  transform: rotate(180deg);
+  color: white !important;
+}
+
+/* Estilo para o item atual da página */
+.uenf-nav li.current-menu-item > a,
+.uenf-nav li.current_page_item > a {
+  background-color: #54689295 !important;
+  color: white !important;
+  border-left: 4px solid #fff;
+  font-weight: 500;
+}
+
+/* Estilo para submenu do item atual */
+.uenf-nav li.current-menu-item ul.sub-menu li a,
+.uenf-nav li.current_page_item ul.children li a {
+  background-color: #324A7E00;
+}
+
+/* Animação suave para abertura dos submenus */
+.uenf-nav ul.sub-menu,
+.uenf-nav ul.children {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.uenf-nav ul.sub-menu.open,
+.uenf-nav ul.children.open {
+  display: block;
+  opacity: 1;
+  max-height: 500px; /* Ajuste conforme necessário */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .uenf-nav {
+      max-width: 100%;
+  }
+  
+  .uenf-nav li > a {
+      padding: 12px 15px;
+      font-size: 0.95em;
+  }
+  
+  .uenf-nav ul.sub-menu li a,
+  .uenf-nav ul.children li a {
+      padding: 10px 15px 10px 30px;
+      font-size: 0.9em;
+  }
+}
+
+.offcanvas {
+  background-color: var(--bs-uenf-blue);
+  width: 338px !important;
+}
+
+/* Estilos para a página de localização */
+.location-info {
+    background-color: var(--bs-uenf-blue-light);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.location-info p {
+    margin-bottom: 10px;
+    color: white;
+}
+
+.location-info strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+}
+
+.map-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-window {
+    max-width: 250px;
+    padding: 10px;
+}
+
+.info-window h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.info-window p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.offcanvas-header {
+  padding: 1rem;
+}
+
+.offcanvas-header .btn-close {
+  background-color: white;
+  opacity: 1;
+}
+
+.offcanvas-body {
+  padding: 0;
+}
+
+.btn-close {
+  width: 6px;
+  height: 6px;
+}
+
+
+.navbar-brand {
+  order: 2;
+  margin: 0;
+}
+
+.navbar-brand img {
+  height: 50px;
+}
+
+/* Header Grid Layout */
+.header-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.header-grid-col1 {
+    display: flex;
+    align-items: center;
+}
+
+.header-grid-col2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-container form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.search-container input[type="search"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.search-container button[type="submit"] {
+    background-color: #222a3b;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button[type="submit"]:hover {
+    background-color: #1d3771;
+}
+
+.search-button {
+  background-color: #fff9f900;
+  color: white;
+  width: 50px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  position: relative;
+  z-index: 2;
+}
+
+.search-button:hover {
+  background-color: #2b6ed900;
+}
+
+.search-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.search-input {
+  position: absolute;
+  right: 40px;
+  height: 30px;
+  width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: width 0.3s, padding 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+  opacity: 0;
+}
+
+.search-input.active {
+  width: 250px;
+  padding: 0 20px;
+  border: 1px solid #ddd;
+  opacity: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+

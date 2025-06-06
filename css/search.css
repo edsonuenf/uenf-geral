@@ -1,0 +1,152 @@
+/* Página de Busca */
+.search-page {
+    padding: 2rem 0 4rem;
+}
+
+@media (max-width: 768px) {
+    .search-page {
+        padding: 1rem 0 2rem;
+    }
+}
+
+.search-header {
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.search-header h1 {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.search-term {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.search-result-item {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.search-result-item:hover {
+    transform: translateY(-2px);
+}
+
+.search-result-item h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.search-result-item .post-meta {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.search-result-item .post-excerpt {
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.search-result-item .post-categories {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.post-category {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+}
+
+/* Navegação de Posts */
+.posts-navigation {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.posts-navigation a {
+    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color);
+    color: var(--white);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.posts-navigation a:hover {
+    background: var(--primary-color);
+}
+
+/* Sem resultados */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-results h2 {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+
+.no-results p {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+}
+
+.no-results .search-again {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color);
+    color: var(--white);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.no-results .search-again:hover {
+    background: var(--primary-color);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .search-page {
+        padding: 2rem 1rem;
+    }
+    
+    .search-header h1 {
+        font-size: 2rem;
+    }
+    
+    .posts-navigation {
+        flex-direction: column;
+    }
+    
+    .posts-navigation a {
+        width: 100%;
+        text-align: center;
+    }
+}

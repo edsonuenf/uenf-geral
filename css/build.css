@@ -1,0 +1,59 @@
+/* CSS Minifier Build */
+/* Importa variáveis e configurações */
+@import 'variables.css';
+
+
+/* Importa layout principal */
+@import 'layout/main.css';
+
+/* Importa componentes */
+@import 'components/header.css';
+@import 'components/menu.css';
+@import 'components/search.css';
+@import 'components/footer.css';
+
+/* Importa estilos específicos */
+@import 'custom-fontawesome.css';
+@import 'fonts_css.css';
+
+/* Estilos globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  color: var(--text-color);
+}
+
+/* Tipografia */
+h1, h2 {
+  letter-spacing: var(--letter-spacing);
+}
+
+.entry-title {
+  color: var(--title-h1) !important;
+}
+
+/* Estilos para endereços */
+.enderecos {
+  font-size: 14px;
+}
+.enderecos strong {
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+/* Estilos para 404 */
+@import '404.css';
+
+/* Estilos para busca */
+@import 'search.css';
+
+/* Estilos personalizados */
+@import 'styles.css';
+
+

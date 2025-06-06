@@ -1,0 +1,49 @@
+/* Correções de espaçamento no header */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.site {
+    margin: 0;
+    padding: 0;
+}
+
+#page {
+    margin: 0;
+    padding: 0;
+}
+
+.site-header {
+    margin: 0;
+    padding: 0;
+}
+
+.bg-header-logo {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remover margens e paddings padrão do Bootstrap */
+.container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Ajustar o container do header */
+.header-grid-container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Garantir que não haja espaços extras */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

@@ -1,0 +1,274 @@
+/* ========================================
+   VARIÁVEIS PARA PERSONALIZAÇÃO DAS BARRAS DE ROLAGEM
+   Baseado no esquema de cores oficiais do tema UENF
+   Cores oficiais: #1D3771 (azul escuro), #4B6397 (azul médio), #F5F5F5 (fundo claro)
+========================================= */
+:root {
+  /* Largura da barra de rolagem */
+  --scrollbar-width: 10px;
+  
+  /* Cores da trilha (fundo) */
+  --scrollbar-track-bg: rgba(29, 55, 113, 0.1); /* Azul UENF muito claro */
+  --scrollbar-track-border: 1px solid rgba(29, 55, 113, 0.2);
+  --scrollbar-track-border-radius: 6px;
+  
+  /* Cores do thumb (indicador) */
+  --scrollbar-thumb-bg: #1d3771; /* Azul UENF sólido */
+  --scrollbar-thumb-hover-bg: #2a4a8a; /* Azul UENF um pouco mais claro */
+  --scrollbar-thumb-active-bg: #1a315f; /* Azul UENF mais escuro */
+  --scrollbar-thumb-border: 1px solid rgba(255, 255, 255, 0.3);
+  --scrollbar-thumb-border-radius: 6px;
+  
+  /* Sombras */
+  --scrollbar-thumb-shadow: 0 0 5px rgba(29, 55, 113, 0.2);
+  --scrollbar-track-shadow: inset 0 0 3px rgba(29, 55, 113, 0.1);
+}
+
+/* ========================================
+   TEMA ESCURO
+   Cores escuras que combinam com o tema UENF
+========================================= */
+[data-theme="dark"], 
+.dark-theme,
+body.dark {
+  --scrollbar-track-bg: rgba(29, 55, 113, 0.15); /* Azul UENF escuro com transparência */
+  --scrollbar-track-border: 1px solid rgba(29, 55, 113, 0.3);
+  --scrollbar-thumb-bg: #2a4a8a; /* Azul UENF médio */
+  --scrollbar-thumb-hover-bg: #1d3771; /* Azul UENF escuro */
+  --scrollbar-thumb-active-bg: #1a315f; /* Azul UENF mais escuro */
+  --scrollbar-thumb-border: 1px solid rgba(255, 255, 255, 0.2);
+  --scrollbar-track-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+  --scrollbar-thumb-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   WEBKIT BROWSERS (Chrome, Safari, Edge)
+========================================= */
+/* Largura da barra de rolagem */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+/* Trilha (fundo da barra) */
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg);
+  border: 1px solid var(--scrollbar-track-border);
+  border-radius: var(--scrollbar-track-border-radius);
+  box-shadow: var(--scrollbar-track-shadow);
+}
+
+/* Thumb (indicador de posição) */
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border: 1px solid var(--scrollbar-thumb-border);
+  border-radius: var(--scrollbar-thumb-border-radius);
+  box-shadow: var(--scrollbar-thumb-shadow);
+  transition: background-color 0.2s ease;
+}
+
+/* Hover no thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-bg);
+}
+
+/* Active no thumb */
+::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-thumb-active-bg);
+}
+
+/* Cantos da barra de rolagem */
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track-bg);
+}
+
+/* ========================================
+   FIREFOX (scrollbar-width e scrollbar-color)
+========================================= */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+}
+
+/* ========================================
+   ESTILOS PARA ELEMENTOS ESPECÍFICOS
+========================================= */
+
+/* Barra de rolagem para elementos com classe .custom-scroll */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg);
+  border-radius: var(--scrollbar-track-border-radius);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border-radius: var(--scrollbar-thumb-border-radius);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-bg);
+}
+
+/* ========================================
+   BARRAS DE ROLAGEM PARA MENUS
+   Estilos específicos para os menus suspensos
+========================================= */
+.uenf-nav ul.sub-menu,
+.uenf-nav ul.children {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.uenf-nav ul.sub-menu::-webkit-scrollbar,
+.uenf-nav ul.children::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.uenf-nav ul.sub-menu::-webkit-scrollbar-track,
+.uenf-nav ul.children::-webkit-scrollbar-track {
+  background: rgba(29, 55, 113, 0.1); /* Fundo azul UENF muito claro */
+  border: 1px solid rgba(29, 55, 113, 0.2);
+  border-radius: 3px;
+  margin: 5px 0;
+}
+
+.uenf-nav ul.sub-menu::-webkit-scrollbar-thumb,
+.uenf-nav ul.children::-webkit-scrollbar-thumb {
+  background: #1d3771; /* Azul UENF escuro */
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.uenf-nav ul.sub-menu::-webkit-scrollbar-thumb:hover,
+.uenf-nav ul.children::-webkit-scrollbar-thumb:hover {
+  background: #2a4a8a; /* Azul UENF um pouco mais claro */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para o tema escuro */
+[data-theme="dark"] .uenf-nav ul.sub-menu::-webkit-scrollbar-track,
+[data-theme="dark"] .uenf-nav ul.children::-webkit-scrollbar-track,
+.dark-theme .uenf-nav ul.sub-menu::-webkit-scrollbar-track,
+.dark-theme .uenf-nav ul.children::-webkit-scrollbar-track {
+  background: rgba(29, 55, 113, 0.2); /* Fundo azul UENF escuro com transparência */
+  border: 1px solid rgba(29, 55, 113, 0.3);
+}
+
+[data-theme="dark"] .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb,
+[data-theme="dark"] .uenf-nav ul.children::-webkit-scrollbar-thumb,
+.dark-theme .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb,
+.dark-theme .uenf-nav ul.children::-webkit-scrollbar-thumb {
+  background: #1d3771; /* Azul UENF escuro */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .uenf-nav ul.children::-webkit-scrollbar-thumb:hover,
+.dark-theme .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb:hover,
+.dark-theme .uenf-nav ul.children::-webkit-scrollbar-thumb:hover {
+  background: #2a4a8a; /* Azul UENF um pouco mais claro */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   RESPONSIVIDADE
+========================================= */
+@media (max-width: 768px) {
+  :root {
+    --scrollbar-width: 6px;
+  }
+  
+  .uenf-nav ul.sub-menu,
+  .uenf-nav ul.children {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+/* ========================================
+   ANIMAÇÕES SUAVES
+========================================= */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ========================================
+   PERSONALIZAÇÃO PARA ELEMENTOS DE FORMULÁRIO
+========================================= */
+textarea,
+select,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+input[type="number"] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+}
+
+textarea::-webkit-scrollbar,
+select::-webkit-scrollbar,
+input[type="text"]::-webkit-scrollbar,
+input[type="email"]::-webkit-scrollbar,
+input[type="password"]::-webkit-scrollbar,
+input[type="search"]::-webkit-scrollbar,
+input[type="url"]::-webkit-scrollbar,
+input[type="tel"]::-webkit-scrollbar,
+input[type="number"]::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+textarea::-webkit-scrollbar-track,
+select::-webkit-scrollbar-track,
+input[type="text"]::-webkit-scrollbar-track,
+input[type="email"]::-webkit-scrollbar-track,
+input[type="password"]::-webkit-scrollbar-track,
+input[type="search"]::-webkit-scrollbar-track,
+input[type="url"]::-webkit-scrollbar-track,
+input[type="tel"]::-webkit-scrollbar-track,
+input[type="number"]::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg);
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb,
+select::-webkit-scrollbar-thumb,
+input[type="text"]::-webkit-scrollbar-thumb,
+input[type="email"]::-webkit-scrollbar-thumb,
+input[type="password"]::-webkit-scrollbar-thumb,
+input[type="search"]::-webkit-scrollbar-thumb,
+input[type="url"]::-webkit-scrollbar-thumb,
+input[type="tel"]::-webkit-scrollbar-thumb,
+input[type="number"]::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+select::-webkit-scrollbar-thumb:hover,
+input[type="text"]::-webkit-scrollbar-thumb:hover,
+input[type="email"]::-webkit-scrollbar-thumb:hover,
+input[type="password"]::-webkit-scrollbar-thumb:hover,
+input[type="search"]::-webkit-scrollbar-thumb:hover,
+input[type="url"]::-webkit-scrollbar-thumb:hover,
+input[type="tel"]::-webkit-scrollbar-thumb:hover,
+input[type="number"]::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-bg);
+}
