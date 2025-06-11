@@ -1,0 +1,47 @@
+/* 
+ * Variáveis de cores e tipografia
+ * Nota: Essas variáveis devem ser mantidas em sincronia com as constantes definidas em functions.php
+ */
+
+:root {
+  /* Cores principais - sincronizadas com as constantes PHP */
+  --bs-uenf-blue: #1D3771; /* CCT_PRIMARY_COLOR */
+  --bs-uenf-blue-light: #1D3770BF; /* CCT_PRIMARY_LIGHT */
+  --primary-color: var(--bs-uenf-blue);
+  --primary-color-light: var(--bs-uenf-blue-light);
+  --text-color: #26557D; /* CCT_TEXT_COLOR */
+  --link-color: #26557D; /* CCT_LINK_COLOR */
+  --link-hover-color: #1D3771; /* CCT_LINK_HOVER_COLOR */
+  
+  /* Cores auxiliares */
+  --white: rgba(255, 255, 255, 0.9);
+  --white-solid: #FFFFFF; /* CCT_WHITE */
+  --black: #000000; /* CCT_BLACK */
+  --border-color: rgba(255, 255, 255, 0.2);
+  --hover-bg: #54689290;
+  --active-bg: #54689295;
+  --hero-bg: #386A9430;
+  
+  /* Transições */
+  --transition: all 0.3s ease;
+  
+  /* Título H1 */
+  --title-h1: var(--bs-uenf-blue-light);
+}
+
+/* Tipografia - sincronizada com as constantes PHP */
+:root {
+  --font-family: Ubuntu, system-ui, -apple-system, Roboto, Oxygen, sans-serif; /* CCT_PRIMARY_FONT */
+  --font-secondary: system-ui, -apple-system, Roboto, Oxygen, sans-serif; /* CCT_SECONDARY_FONT */
+  
+  /* Tamanhos de fonte */
+  --font-size-base: 1rem; /* CCT_FONT_SIZE_BASE */
+  --font-size-lg: 1.25rem; /* CCT_FONT_SIZE_LG */
+  --font-size-xl: 1.5rem; /* CCT_FONT_SIZE_XL */
+  --font-size-xxl: 2rem; /* CCT_FONT_SIZE_XXL */
+  
+  /* Espaçamento e tipografia */
+  --line-height: 1.5;
+  --letter-spacing: -1px;
+  --spacing-unit: 1rem; /* CCT_SPACING_UNIT */
+}

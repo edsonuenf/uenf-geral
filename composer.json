@@ -1,0 +1,8 @@
+{
+    "name": "uenf/geral",
+    "description": "Tema WordPress para UENF",
+    "type": "wordpress-theme",
+    "require": {
+        "matthiasmullie/minify": "^1.3"
+    }
+}

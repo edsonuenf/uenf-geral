@@ -1,0 +1,71 @@
+/* Header Styles */
+
+/* Hero */
+
+.hero-section{
+  background-color: var(--hero-bg);
+}
+.hero-title {
+  padding: 40px 0 30px 0;
+  font-size: 2.5rem;
+  letter-spacing: -1px;
+  color: var(--bs-uenf-blue);
+}
+
+/* Logo */
+.logo {
+  padding: 12px 0;
+}
+
+/* Navbar */
+.navbar-brand-top {
+  background-color: var(--primary-color);
+  padding: 0.75rem 0;
+}
+
+.navbar-brand-top img {
+  width: 132px;
+  height: auto;
+}
+
+.navbar-uenf {
+  background-color: var(--primary-color-light);
+  padding: 0.5rem 1rem;
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+  border: none;
+  padding: 0;
+  margin-right: 1rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Idiomas */
+.idiomas-bandeiras {
+  text-align: right;
+}
+
+.idiomas-bandeiras ul li {
+  display: inline;
+}
+
+/* Responsive Header */
+@media (max-width: 991.98px) {
+  .navbar-brand-top {
+    background-color: var(--primary-color);
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-uenf {
+    background-color: var(--primary-color-light);
+  }
+}

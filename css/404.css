@@ -1,0 +1,158 @@
+/* Página 404 */
+.error-404 {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.error-visual {
+    margin-bottom: 3rem;
+}
+
+.error-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 0 auto 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    color: var(--medium-gray);
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.25rem;
+    color: var(--secondary-color);
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+
+.search-section {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.search-container {
+    justify-content: center !important;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 15px; /* Mesmo padding que o container do Bootstrap */
+}
+
+.search-container form {
+    display: flex;
+    gap: 1rem;
+}
+
+.search-container input[type="search"] {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--light-gray);
+    border-radius: 4px;
+    vertical-align: baseline;
+}
+
+/* Estilo para o ícone de casa SVG */
+.breadcrumb-item a svg {
+    fill: var(--primary-color);
+    width: 20px;
+    height: 20px;
+    vertical-align: baseline;
+}
+
+.breadcrumb-item {
+    color: var(--medium-gray);
+}
+
+
+
+/* Remove o separador antes do primeiro item */
+.breadcrumb-item:first-child + .breadcrumb-item::before {
+    display: none;
+}
+
+/* Links (páginas pai) */
+li.breadcrumb-item a {
+    color: var(--medium-gray) !important;
+    text-decoration: none;
+}
+
+/* Página atual (ativo) */
+.breadcrumb-item.active {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
+.search-container button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: var(--primary-color);
+}
+
+.widget-area {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.widget-area h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.archive-section {
+    margin-top: 3rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .error-404 {
+        padding: 2rem 1rem;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .lead {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .suggestions-grid {
+        grid-template-columns: 1fr;
+    }
+}
