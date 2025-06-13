@@ -6,6 +6,28 @@
  * @since 1.0.0
  */
 
+// Definir constantes para cores padrão
+define('CCT_PRIMARY_COLOR', '#1D3771');
+define('CCT_PRIMARY_LIGHT', '#1D3770BF');
+define('CCT_TEXT_COLOR', '#26557D');
+define('CCT_LINK_COLOR', '#26557D');
+define('CCT_LINK_HOVER_COLOR', '#1D3771');
+define('CCT_WHITE', '#FFFFFF');
+define('CCT_BLACK', '#000000');
+
+// Definir constantes para fontes
+define('CCT_PRIMARY_FONT', 'Ubuntu, system-ui, -apple-system, Roboto, Oxygen, sans-serif');
+define('CCT_SECONDARY_FONT', 'system-ui, -apple-system, Roboto, Oxygen, sans-serif');
+
+// Tamanhos de fonte
+define('CCT_FONT_SIZE_BASE', '1rem');
+define('CCT_FONT_SIZE_LG', '1.25rem');
+define('CCT_FONT_SIZE_XL', '1.5rem');
+define('CCT_FONT_SIZE_XXL', '2rem');
+
+// Espaçamentos
+define('CCT_SPACING_UNIT', '1rem'); // @since 1.0.0
+
 // Verificar se estamos no WordPress
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
@@ -27,9 +49,6 @@ if (!function_exists('add_action')) {
     exit();
 }
 
-// Debug
-error_log('Functions.php está sendo carregado');
-
 // Define constants
 if (!defined('CCT_THEME_VERSION')) {
     define('CCT_THEME_VERSION', '1.0.0');
@@ -47,7 +66,7 @@ require_once CCT_THEME_DIR . '/inc/template-tags.php';
 require_once CCT_THEME_DIR . '/inc/template-functions.php';
 require_once CCT_THEME_DIR . '/inc/optimization.php';
 require_once CCT_THEME_DIR . '/inc/seo.php';
-require_once CCT_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
+//require_once CCT_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
 
 // Carregar o sistema de atualização do GitHub
 if (file_exists(CCT_THEME_DIR . '/updater.php')) {
@@ -56,8 +75,6 @@ if (file_exists(CCT_THEME_DIR . '/updater.php')) {
 
 // Verificar se as funções de template estão disponíveis
 if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !function_exists('cct_post_thumbnail')) {
-    error_log('Funções de template não estão disponíveis. Definindo funções de fallback.');
-    
     // Definir funções de fallback se não estiverem disponíveis
     if (!function_exists('cct_posted_on')) {
         function cct_posted_on() {
@@ -84,7 +101,7 @@ if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !f
 
 // Verificar se o Customizer está carregado
 if (!function_exists('cct_customize_register')) {
-    error_log('Customizer não está carregado corretamente');
+    // O Customizer não está carregado
 }
 
 /**
@@ -294,33 +311,32 @@ function formatarTelefoneBrasil($numero) {
 
 add_filter('widget_text', 'formatarTelefoneBrasil');
 
-// Enqueue scripts and styles
+/**
+ * Enqueue scripts and styles
+ * Ordem de carregamento otimizada para melhor performance e manutenção
+ */
 function cct_scripts() {
-    // Enqueue main stylesheet
+    // 1. Fontes externas (carregadas primeiro para evitar FOUT - Flash of Unstyled Text)
     wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), CCT_THEME_VERSION);
     wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
+    
+    // 2. Frameworks e bibliotecas
     wp_enqueue_style('cct-bootstrap', CCT_THEME_URI . '/assets/bootstrap/bootstrap.min.css', array(), CCT_THEME_VERSION);
     
-    // Enqueue back-to-top script
+    // 3. Estilo principal (compilado com todos os estilos em um único arquivo)
+    wp_enqueue_style('cct-style', CCT_THEME_URI . '/css/style.css', array(
+        'cct-fonts',
+        'cct-fontawesome',
+        'cct-bootstrap'
+    ), CCT_THEME_VERSION);
+    
+    // 4. Scripts (carregados no final do documento para melhor performance)
     wp_enqueue_script('cct-back-to-top', get_template_directory_uri() . '/js/back-to-top.js', array(), CCT_THEME_VERSION, true);
-    wp_enqueue_script('cct-shortcuts', get_template_directory_uri() . '/js/shortcuts.js', array(), CCT_THEME_VERSION, true);
-
-    // Enqueue main style
-    wp_enqueue_style('cct-style', CCT_THEME_URI . '/css/style.css', array(), CCT_THEME_VERSION);
-    
-    // Estilos para as barras de rolagem personalizadas
-    wp_enqueue_style('cct-scrollbars', CCT_THEME_URI . '/css/components/scrollbars.css', array('cct-style'), CCT_THEME_VERSION);
-    
-    // Estilos para o conteúdo da página inicial
-    wp_enqueue_style('cct-page-content', CCT_THEME_URI . '/css/components/page-content.css', array('cct-style'), CCT_THEME_VERSION);
-
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
-
-    // Enqueue JavaScript
+    wp_enqueue_script('cct-shortcut-panel', get_template_directory_uri() . '/js/shortcut-panel.js', array('jquery'), CCT_THEME_VERSION, true);
+    wp_enqueue_script('cct-shortcuts', get_template_directory_uri() . '/js/shortcuts.js', array('jquery', 'cct-shortcut-panel'), CCT_THEME_VERSION, true);
     wp_enqueue_script('cct-main', CCT_THEME_URI . '/js/main.js', array('jquery'), CCT_THEME_VERSION, true);
-
+    
+    // 5. Suporte a comentários (carregado apenas quando necessário)
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
@@ -399,12 +415,7 @@ function cct_custom_breadcrumb() {
     }
 }
 
-// Include WP_Bootstrap_Navwalker
-if (file_exists(get_template_directory() . '/class-wp-bootstrap-navwalker.php')) {
-    require_once get_template_directory() . '/class-wp-bootstrap-navwalker.php';
-} else {
-    error_log('WP_Bootstrap_Navwalker file is missing.');
-}
+// Menu personalizado - usando o walker padrão do WordPress
 
 /**
  * Função para registrar e carregar fontes localmente
@@ -455,6 +466,40 @@ function uenf_load_addons() {
 add_action('after_setup_theme', 'uenf_load_addons', 10);
 
 // Inicializa os addons apenas uma vez
+if (!function_exists('cct_init_addons')) {
+    function cct_init_addons() {
+        // Verifica se os addons já foram inicializados
+        static $initialized = false;
+        if ($initialized) {
+            return;
+        }
+        $initialized = true;
+        
+        // Inicializa os addons aqui
+        do_action('cct_addons_init');
+    }
+    
+    // Garante que os addons sejam inicializados após o tema estar pronto
+    add_action('after_setup_theme', 'cct_init_addons', 20);
+}
+
+/**
+ * Adiciona suporte a preview em tempo real para o painel de atalhos
+ */
+function cct_customizer_live_preview() {
+    wp_enqueue_script(
+        'cct-shortcuts-customizer',
+        get_template_directory_uri() . '/js/shortcuts-customizer.js',
+        array('jquery', 'customize-preview'),
+        CCT_THEME_VERSION,
+        true
+    );
+}
+add_action('customize_preview_init', 'cct_customizer_live_preview');
+
+/**
+ * Inicializa os addons apenas uma vez
+ */
 add_action('init', function() {
     // Verifica se já inicializamos
     static $initialized = false;
