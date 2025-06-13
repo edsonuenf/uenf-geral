@@ -154,3 +154,6 @@ public
 
 # GitHub Token
 github_token.txt
+
+# Arquivo de atualização em desenvolvimento
+updater.php
