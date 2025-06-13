@@ -64,11 +64,12 @@
               <?php dynamic_sidebar('ivory-search-uenf'); ?>
             </div>
 
-            <div class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1" aria-labelledby="menuLateralLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="menuLateralLabel">&nbsp;</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
+          <div class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1" aria-labelledby="menuLateralLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="menuLateralLabel">&nbsp;</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
               <div class="offcanvas-body">
                   <?php
                     if (function_exists('custom_vertical_accordion_menu')) {

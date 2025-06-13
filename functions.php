@@ -49,9 +49,6 @@ if (!function_exists('add_action')) {
     exit();
 }
 
-// Debug
-error_log('Functions.php está sendo carregado');
-
 // Define constants
 if (!defined('CCT_THEME_VERSION')) {
     define('CCT_THEME_VERSION', '1.0.0');
@@ -78,8 +75,6 @@ if (file_exists(CCT_THEME_DIR . '/updater.php')) {
 
 // Verificar se as funções de template estão disponíveis
 if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !function_exists('cct_post_thumbnail')) {
-    error_log('Funções de template não estão disponíveis. Definindo funções de fallback.');
-    
     // Definir funções de fallback se não estiverem disponíveis
     if (!function_exists('cct_posted_on')) {
         function cct_posted_on() {
@@ -106,7 +101,7 @@ if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !f
 
 // Verificar se o Customizer está carregado
 if (!function_exists('cct_customize_register')) {
-    error_log('Customizer não está carregado corretamente');
+    // O Customizer não está carregado
 }
 
 /**
@@ -337,7 +332,8 @@ function cct_scripts() {
     
     // 4. Scripts (carregados no final do documento para melhor performance)
     wp_enqueue_script('cct-back-to-top', get_template_directory_uri() . '/js/back-to-top.js', array(), CCT_THEME_VERSION, true);
-    wp_enqueue_script('cct-shortcuts', get_template_directory_uri() . '/js/shortcuts.js', array('jquery'), CCT_THEME_VERSION, true);
+    wp_enqueue_script('cct-shortcut-panel', get_template_directory_uri() . '/js/shortcut-panel.js', array('jquery'), CCT_THEME_VERSION, true);
+    wp_enqueue_script('cct-shortcuts', get_template_directory_uri() . '/js/shortcuts.js', array('jquery', 'cct-shortcut-panel'), CCT_THEME_VERSION, true);
     wp_enqueue_script('cct-main', CCT_THEME_URI . '/js/main.js', array('jquery'), CCT_THEME_VERSION, true);
     
     // 5. Suporte a comentários (carregado apenas quando necessário)

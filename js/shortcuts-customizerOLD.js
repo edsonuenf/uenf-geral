@@ -3,6 +3,7 @@ jQuery(document).ready(function($) {
     
     // Verifica se o objeto wp.customize existe e se o jQuery está disponível
     if (typeof jQuery === 'undefined' || typeof wp === 'undefined' || typeof wp.customize === 'undefined') {
+        console.warn('Dependências necessárias não carregadas (jQuery ou wp.customize)');
         return;
     }
 
@@ -23,7 +24,7 @@ jQuery(document).ready(function($) {
                 setTimeout(init, 100);
             }
         } catch (error) {
-            // Erro ao inicializar o script
+            console.error('Erro ao inicializar o script:', error);
         }
     }
     
@@ -36,10 +37,10 @@ jQuery(document).ready(function($) {
             
             if ($header.length) {
                 $header[0].style.setProperty('background-color', color, 'important');
-                // Atualizando cor de fundo
+                console.log('Atualizando cor de fundo para:', color);
             }
         } catch (error) {
-            // Erro ao atualizar cor de fundo
+            console.error('Erro ao atualizar cor de fundo:', error);
         }
     }
 
@@ -52,10 +53,10 @@ jQuery(document).ready(function($) {
             
             if ($headerTitle.length) {
                 $headerTitle[0].style.setProperty('color', color, 'important');
-                // Atualizando cor do texto
+                console.log('Atualizando cor do texto para:', color);
             }
         } catch (error) {
-            // Erro ao atualizar cor do texto
+            console.error('Erro ao atualizar cor do texto:', error);
         }
     }
     
@@ -67,7 +68,7 @@ jQuery(document).ready(function($) {
                 color = '#1d3771';
             }
             
-            // Atualizando cor de fundo dos itens
+            console.log('Atualizando cor de fundo dos itens para:', color);
             
             // Remove estilos inline que possam estar sobrescrevendo
             $shortcutItems.removeAttr('style');
@@ -90,7 +91,7 @@ jQuery(document).ready(function($) {
                     getComputedStyle(document.documentElement).getPropertyValue('--shortcut-item-bg'));
             }
         } catch (error) {
-            // Erro ao atualizar cor de fundo dos itens
+            console.error('Erro ao atualizar cor de fundo dos itens:', error);
         }
     }
     
@@ -102,9 +103,9 @@ jQuery(document).ready(function($) {
             }
             // Atualiza a variável CSS para a cor do texto
             document.documentElement.style.setProperty('--shortcut-item-text-color', color);
-            // Atualizando cor do texto dos itens
+            console.log('Atualizando cor do texto dos itens para:', color);
         } catch (error) {
-            // Erro ao atualizar cor do texto dos itens
+            console.error('Erro ao atualizar cor do texto dos itens:', error);
         }
     }
     
@@ -116,9 +117,9 @@ jQuery(document).ready(function($) {
             }
             // Atualiza a variável CSS para o hover
             document.documentElement.style.setProperty('--shortcut-item-hover-bg', color);
-            // Atualizando cor de fundo do hover dos itens
+            console.log('Atualizando cor de fundo do hover dos itens para:', color);
         } catch (error) {
-            // Erro ao atualizar cor de fundo do hover
+            console.error('Erro ao atualizar cor de fundo do hover:', error);
         }
     }
 
@@ -129,9 +130,9 @@ jQuery(document).ready(function($) {
                 color = '#1d3771'; // Cor padrão
             }
             $('.close-panel').css('background-color', color);
-            // Atualizando cor de fundo do botão de fechar
+            console.log('Atualizando cor de fundo do botão de fechar para:', color);
         } catch (error) {
-            // Erro ao atualizar cor de fundo do botão de fechar
+            console.error('Erro ao atualizar cor de fundo do botão de fechar:', error);
         }
     }
     
@@ -154,7 +155,7 @@ jQuery(document).ready(function($) {
                     wp.customize(binding.id, function(setting) {
                         if (setting) {
                             setting.bind(function(newval) {
-                                // Mudança detectada em configuração do Customizer
+                                console.log('Mudança detectada em ' + binding.id + ':', newval);
                                 binding.fn(newval);
                             });
                             // Força a atualização inicial
@@ -162,11 +163,11 @@ jQuery(document).ready(function($) {
                         }
                     });
                 } else {
-                    // Controle não encontrado no Customizer
+                    console.warn('Controle ' + binding.id + ' não encontrado no Customizer');
                 }
             });
         } catch (error) {
-            // Erro ao configurar bindings
+            console.error('Erro ao configurar bindings:', error);
         }
     }
 
@@ -175,7 +176,7 @@ jQuery(document).ready(function($) {
         try {
             // Verifica se o Customizer está disponível
             if (!wp.customize) {
-                // wp.customize não está disponível
+                console.error('wp.customize não está disponível');
                 return;
             }
 
@@ -203,7 +204,7 @@ jQuery(document).ready(function($) {
                                         // Atualiza o valor do campo
                                         $(this).wpColorPicker('color', color);
                                     } catch (error) {
-                                        // Erro ao atualizar cor
+                                        console.error('Erro ao atualizar cor:', error);
                                     }
                                 }
                                 // Configura o color picker
@@ -217,7 +218,7 @@ jQuery(document).ready(function($) {
                             }
                         }, 100);
                     } else {
-                        // Controle shortcut_item_bg não encontrado no Customizer
+                        console.warn('Controle shortcut_item_bg não encontrado no Customizer');
                     }
 
                     // Aguarda um pequeno momento para garantir que o painel esteja pronto
@@ -271,18 +272,18 @@ jQuery(document).ready(function($) {
                             
                             var settingConfig = settingsMap[setting];
                             if (settingConfig) {
-                                // Resetando configuração para o padrão
+                                console.log('Resetando ' + setting + ' para o padrão');
                                 // Atualiza o campo de cor visualmente
                                 $control.find('.color-picker-hex').val('').trigger('change');
                                 // Atualiza a prévia
                                 settingConfig.updateFn(settingConfig.defaultValue);
                             }
                         } catch (error) {
-                            // Erro ao redefinir configuração
+                            console.error('Erro ao redefinir configuração:', error);
                         }
                     });
                 } catch (error) {
-                    // Erro ao configurar Customizer
+                    console.error('Erro ao configurar Customizer:', error);
                 }
             });
         } catch (error) {

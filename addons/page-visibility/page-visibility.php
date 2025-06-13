@@ -114,22 +114,25 @@ class UENF_Page_Visibility {
      * Adiciona o meta box
      */
     public static function add_meta_box() {
-        error_log('UENF_Page_Visibility: Tentando adicionar meta box...');
-        
         // Verifica se estamos na tela de edição de página
         $screen = get_current_screen();
-        error_log('UENF_Page_Visibility: Screen atual: ' . $screen->id);
+        
+        // Verificar se é uma tela de post, página ou um post type personalizado
+        if (!in_array($screen->id, array('post', 'page'))) {
+            $post_types = get_post_types(array('public' => true, '_builtin' => false), 'names');
+            if (!in_array($screen->id, $post_types)) {
+                return; // Não é um tipo de post suportado
+            }
+        }
         
         add_meta_box(
             'uenf_page_visibility',
-            'Visibilidade no Menu',
-            [__CLASS__, 'render_meta_box'],
-            'page',
+            __('Visibilidade da Página', 'uenf-geral'),
+            array($this, 'render_meta_box'),
+            $screen->id,
             'side',
-            'default'
+            'high'
         );
-        
-        error_log('UENF_Page_Visibility: Meta box registrada');
     }
 
     /**
@@ -395,9 +398,9 @@ add_action('init', function() {
     // Verifica se a classe existe antes de chamar o init
     if (class_exists('UENF_Page_Visibility')) {
         UENF_Page_Visibility::init();
-        error_log('UENF_Page_Visibility inicializado com sucesso!');
+        // Classe inicializada com sucesso
     } else {
-        error_log('ERRO: A classe UENF_Page_Visibility não foi encontrada');
+        // Classe não encontrada
     }
 }, 20);
 

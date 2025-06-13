@@ -20,13 +20,13 @@
             </div>
             <div class="footer-widget">
                 <div class="setor-info">
-                    <div class="logo-setor">
                         <?php
                             if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) :
-                                the_custom_logo();
-                            endif
+                                echo '<div class="logo-setor" style="margin-bottom: 1rem;">';
+                                    the_custom_logo();
+                                echo '</div>';
+                                endif
                         ?>
-                    </div>
                     <h4><?php echo get_bloginfo( 'name' ); ?></h4>
                     <p><strong>Email:</strong> <?php dynamic_sidebar( 'endereco-email-setor' ); ?><br>
                     <strong>Telefone:</strong> <?php 
@@ -71,6 +71,7 @@
     </a>
 </div>
 </div>
+
 <!-- Botão de atalhos -->
 <div class="shortcut-icon" data-start-y="50%" title="Atalhos Rápidos">
 <i class="fas fa-cog"></i>
@@ -79,9 +80,10 @@
 <i class="fas fa-arrow-up"></i>
 </a>
 
-<?php wp_footer(); ?>
-
-<script src="<?php echo get_template_directory_uri(); ?>/js/shortcut-panel.js"></script>
+<?php 
+wp_footer();
+wp_enqueue_script('cct-shortcut-panel', get_template_directory_uri() . '/js/shortcut-panel.js', array('jquery'), CCT_THEME_VERSION, true);
+?>
 
 </body>
-</html> 
+</html>
