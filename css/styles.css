@@ -1,3 +1,6 @@
+/* Importando estilos do painel de atalhos */
+@import url('components/shortcuts.css');
+
 :root {
   --bs-uenf-blue: #1D3771;
   --bs-uenf-blue-light: #1D3770BF;

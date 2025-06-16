@@ -8,6 +8,44 @@
   padding: 0;
   margin: 0;
   list-style: none;
+  
+  /* Estilo da barra de rolagem */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  overflow-y: auto;
+  max-height: 80vh; /* Altura máxima para rolagem */
+}
+
+/* Estilo da barra de rolagem para WebKit (Chrome, Safari, etc) */
+.uenf-nav::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.uenf-nav::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.uenf-nav::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+.uenf-nav::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Estilo para navegadores Firefox */
+@supports (scrollbar-color: auto) {
+  .uenf-nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
 }
 
 /*

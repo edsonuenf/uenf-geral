@@ -1,0 +1,24 @@
+{
+  "input_dir": "..",
+  "output_file": "../style.min.css",
+  "files": [
+    "variables.css",
+    "reset.css",
+    "layout/main.css",
+    "components/header.css",
+    "components/menu.css",
+    "components/footer.css",
+    "components/shortcuts.css"
+  ],
+  "exclude": [
+    "_*.css",
+    "*.min.css"
+  ],
+  "options": {
+    "minify": true,
+    "sourceMap": false,
+    "autoprefixer": {
+      "browsers": ["last 2 versions", "> 1%", "not dead"]
+    }
+  }
+}
