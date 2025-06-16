@@ -316,25 +316,58 @@ add_filter('widget_text', 'formatarTelefoneBrasil');
  * Ordem de carregamento otimizada para melhor performance e manutenção
  */
 function cct_scripts() {
+    // Versão baseada no timestamp do arquivo para evitar cache
+    $theme_version = wp_get_theme()->get('Version');
+    $style_path = get_template_directory() . '/css/style.min.css';
+    $style_version = file_exists($style_path) ? filemtime($style_path) : $theme_version;
+    
     // 1. Fontes externas (carregadas primeiro para evitar FOUT - Flash of Unstyled Text)
-    wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), CCT_THEME_VERSION);
+    wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), null);
     wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
     
     // 2. Frameworks e bibliotecas
-    wp_enqueue_style('cct-bootstrap', CCT_THEME_URI . '/assets/bootstrap/bootstrap.min.css', array(), CCT_THEME_VERSION);
+    wp_enqueue_style('cct-bootstrap', CCT_THEME_URI . '/assets/bootstrap/bootstrap.min.css', array(), $theme_version);
     
     // 3. Estilo principal (compilado com todos os estilos em um único arquivo)
-    wp_enqueue_style('cct-style', CCT_THEME_URI . '/css/style.css', array(
-        'cct-fonts',
-        'cct-fontawesome',
-        'cct-bootstrap'
-    ), CCT_THEME_VERSION);
+    wp_enqueue_style('cct-style', 
+        CCT_THEME_URI . '/style.min.css', 
+        array(
+            'cct-fonts',
+            'cct-fontawesome',
+            'cct-bootstrap'
+        ), 
+        $style_version // Usa timestamp do arquivo para versionamento
+    );
+    
+    // 3.1 Estilo do painel de atalhos (carregado separadamente para garantir que seja sobrescrito)
+    $shortcuts_style_path = get_template_directory() . '/css/components/shortcuts.css';
+    $shortcuts_version = file_exists($shortcuts_style_path) ? filemtime($shortcuts_style_path) : $theme_version;
+    
+    wp_enqueue_style('cct-shortcuts-style',
+        CCT_THEME_URI . '/css/components/shortcuts.css',
+        array('cct-style'), // Depende do estilo principal
+        $shortcuts_version
+    );
     
     // 4. Scripts (carregados no final do documento para melhor performance)
-    wp_enqueue_script('cct-back-to-top', get_template_directory_uri() . '/js/back-to-top.js', array(), CCT_THEME_VERSION, true);
-    wp_enqueue_script('cct-shortcut-panel', get_template_directory_uri() . '/js/shortcut-panel.js', array('jquery'), CCT_THEME_VERSION, true);
-    wp_enqueue_script('cct-shortcuts', get_template_directory_uri() . '/js/shortcuts.js', array('jquery', 'cct-shortcut-panel'), CCT_THEME_VERSION, true);
-    wp_enqueue_script('cct-main', CCT_THEME_URI . '/js/main.js', array('jquery'), CCT_THEME_VERSION, true);
+    $js_files = array(
+        'cct-back-to-top' => array('path' => '/js/back-to-top.js', 'deps' => array()),
+        'cct-shortcut-panel' => array('path' => '/js/shortcut-panel.js', 'deps' => array('jquery')),
+        'cct-shortcuts' => array('path' => '/js/shortcuts.js', 'deps' => array('jquery', 'cct-shortcut-panel')),
+        'cct-main' => array('path' => '/js/main.js', 'deps' => array('jquery'))
+    );
+    
+    foreach ($js_files as $handle => $file) {
+        $file_path = get_template_directory() . $file['path'];
+        $file_version = file_exists($file_path) ? filemtime($file_path) : $theme_version;
+        wp_enqueue_script(
+            $handle,
+            get_template_directory_uri() . $file['path'],
+            $file['deps'],
+            $file_version,
+            true
+        );
+    }
     
     // 5. Suporte a comentários (carregado apenas quando necessário)
     if (is_singular() && comments_open() && get_option('thread_comments')) {

@@ -1,3 +1,97 @@
+/* === ESTILOS DO PAINEL DE ATALHOS CARREGADOS COM SUCESSO === */
+/* Reset completo de estilos de foco e contorno */
+:root {
+  --debug-border: none;
+  --focus-outline: none !important;
+  --focus-box-shadow: none !important;
+  --focus-border: none !important;
+}
+
+/* Remove todos os estilos de foco, contorno e bordas de todos os elementos */
+*,
+*:before,
+*:after,
+*:focus,
+*:focus-visible,
+*:focus-within,
+*:active,
+*:hover,
+*:visited {
+  outline: var(--focus-outline);
+  box-shadow: var(--focus-box-shadow);
+  border: var(--focus-border);
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-focus-ring-color: transparent !important;
+  -moz-outline-style: none !important;
+  outline-style: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Remove estilos de foco específicos do navegador */
+:focus {
+  outline: var(--focus-outline);
+  outline-offset: 0 !important;
+  box-shadow: var(--focus-box-shadow);
+}
+
+/* Remove estilos de foco para elementos específicos */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus,
+[tabindex]:focus,
+[contenteditable]:focus {
+  outline: var(--focus-outline);
+  box-shadow: var(--focus-box-shadow);
+  border: var(--focus-border);
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove estilos de foco para navegação por teclado */
+[tabindex]:focus {
+  outline: var(--focus-outline);
+  box-shadow: var(--focus-box-shadow);
+}
+
+/* Remove estilos de foco para elementos do painel de atalhos */
+.shortcut-panel *,
+.shortcut-panel *:focus,
+.shortcut-panel *:focus-visible,
+.shortcut-panel *:focus-within,
+.shortcut-panel *:active,
+.shortcut-panel *:hover {
+  outline: var(--focus-outline) !important;
+  box-shadow: var(--focus-box-shadow) !important;
+  border: var(--focus-border) !important;
+}
+
+/* Remove contorno de foco em todos os elementos */
+*:focus, *:focus-visible, *:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Estilo para links e botões */
+a, button, [role="button"], input, textarea, select, summary {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Remove estilos de foco do navegador */
+:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Ícone do atalho */
 .shortcut-icon {
   position: fixed;
@@ -6,7 +100,7 @@
   transform: translateY(-50%);
   width: 50px;
   height: 50px;
-  background-color: var(--bs-uenf-blue);
+  background-color: var(--bs-uenf-blue, #1D3771); /* Fallback explícito */
   color: white;
   border-radius: 50%;
   display: flex;
@@ -17,6 +111,7 @@
   z-index: 9999;
   transition: all 0.3s ease;
   user-select: none;
+  border: none; /* Remove borda de depuração */
 }
 
 /* Botão fica por baixo do painel quando aberto */
@@ -43,25 +138,34 @@
 .shortcut-panel {
   position: fixed;
   top: 0;
-  right: calc(-1 * var(--shortcut-panel-width, 280px)); /* Esconde o painel */
-  width: var(--shortcut-panel-width, 280px);
-  height: 100vh;
-  background-color: var(--shortcut-panel-bg, #1d3771);
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 9998;
-  transition: right 0.3s ease-in-out, visibility 0.3s, opacity 0.3s;
-  overflow-y: auto;
-  visibility: hidden;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #1d3771;
+  color: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
   opacity: 0;
-  display: block !important; /* Força o display */
+  visibility: hidden;
+  z-index: 1000;
+  overflow-y: auto;
+  transform: translateX(100%);
+  display: block !important;
+  
+  /* Estilo de foco removido */
+  outline: none !important;
+  box-shadow: none !important;
 }
 
+/* Estilo quando o painel está ativo */
 .shortcut-panel.active {
-    right: 0 !important;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1) !important;
+    transform: translateX(0) !important;
     visibility: visible !important;
     opacity: 1 !important;
+    right: 0 !important;
     display: block !important;
+    z-index: 9999 !important;
+    transition: transform 0.3s ease-in-out !important;
 }
 
 /* Cabeçalho do painel */
@@ -82,7 +186,8 @@
 
 .close-panel {
   background: none;
-  border: none;
+  border: none !important;
+  outline: none !important;
   color: #ffffff !important;
   font-size: 1.5rem;
   cursor: pointer;
@@ -100,8 +205,8 @@
   text-decoration: none;
 }
 
-/* Itens do atalho */
-.shortcut-item {
+/* Estilo base para os itens do painel de atalhos */
+.shortcut-panel-content a.shortcut-item {
   display: flex;
   align-items: center;
   padding: 12px 15px;
@@ -109,55 +214,65 @@
   color: var(--shortcut-item-text-color, #ffffff);
   text-decoration: none;
   border-radius: 4px;
-  transition: all 0.2s ease;
   background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
-  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  font-size: var(--shortcut-item-font-size, 16px);
 }
 
-.shortcut-item i {
+/* Estados padrão: link, visited e active */
+.shortcut-panel-content a.shortcut-item:link,
+.shortcut-panel-content a.shortcut-item:visited,
+.shortcut-panel-content a.shortcut-item:active {
+  color: var(--shortcut-item-text-color, #ffffff);
+  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
+  text-decoration: none;
+}
+
+/* Estilo para o texto e ícone */
+.shortcut-panel-content a.shortcut-item i,
+.shortcut-panel-content a.shortcut-item span {
+  color: inherit;
+  transition: inherit;
+}
+
+.shortcut-panel-content a.shortcut-item i {
   margin-right: 10px;
   width: 20px;
   text-align: center;
-  transition: transform 0.2s ease;
-  color: inherit; /* Herda a cor do texto do item */
 }
 
-.shortcut-item span {
-  color: inherit; /* Garante que o texto herde a cor do item */
+/* Efeito hover - fundo e texto personalizados */
+.shortcut-panel-content {
+  background-color: var(--shortcut-panel-bg, #1d3771);
 }
 
-/* Estilo de hover para os itens do menu */
-.shortcut-item:hover {
-  background-color: #ffffff !important;
-  color: #1D3771 !important;
-  border-color: transparent !important;
-  transform: translateY(-1px);
+a.shortcut-item:hover {
+  background-color: #ffffff !important; /* Cor de hover padrão */
+  color: #ffffff !important; /* Texto branco no hover */
+  text-decoration: none;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Garante que o texto e ícone usem a cor de hover */
+.shortcut-panel-content a.shortcut-item:hover i,
+.shortcut-panel-content a.shortcut-item:hover span {
+  color: #1d3771 !important; /* Ícones e texto em branco no hover */
+}
+
+/* Estilo para foco */
+.shortcut-panel-content a.shortcut-item:focus {
+  outline: none;
   box-shadow: none;
-}
-
-/* Remove estilos de link dentro dos itens (não deve ser necessário) */
-.shortcut-item a {
-  color: inherit !important;
-  text-decoration: none !important;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-/* Remove a mudança de cor de fundo ao clicar */
-.shortcut-item:active,
-.shortcut-item:focus {
-  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1)) !important;
-  outline: none !important;
-  box-shadow: none !important;
-  color: var(--shortcut-item-text-color, #ffffff) !important;
+  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
+  color: var(--shortcut-item-text-color, #ffffff);
 }
 
 /* Estilo para quando o item está ativo/focado */
 .shortcut-item:focus-visible {
-  outline: 2px solid var(--shortcut-item-hover-text-color, #ffffff) !important;
-  outline-offset: 2px;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Responsividade */

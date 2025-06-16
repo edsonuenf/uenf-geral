@@ -57,11 +57,11 @@ if (!function_exists('cct_remove_wp_version_header')) {
 }
 
 /**
- * Previne enumeração de usuários
+ * Previne enumeração de usuários de forma não-intrusiva
  */
 if (!is_admin()) {
     // Redireciona tentativas de acesso a author=1 para a home
-    if (isset($_GET['author'])) {
+    if (preg_match('/author=([0-9]*)/i', $_SERVER['QUERY_STRING']) === 1) {
         wp_redirect(home_url(), 301);
         exit;
     }
@@ -71,7 +71,7 @@ if (!is_admin()) {
 }
 
 /**
- * Desabilita o XML-RPC se não for necessário
+ * Configurações XML-RPC - Desativado por padrão, mas pode ser ativado se necessário
  */
 add_filter('xmlrpc_enabled', '__return_false');
 add_filter('pings_open', '__return_false', 9999);
@@ -117,64 +117,129 @@ if (!function_exists('cct_restrict_mime_types')) {
 }
 
 /**
- * Previne acesso a arquivos sensíveis
+ * Previne acesso a arquivos sensíveis de forma mais segura
  */
 add_action('init', 'cct_prevent_sensitive_file_access');
 if (!function_exists('cct_prevent_sensitive_file_access')) {
     function cct_prevent_sensitive_file_access() {
-        if (!is_admin() && !wp_doing_ajax() && !wp_doing_cron()) {
-            $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-            
-            // Lista de arquivos sensíveis para bloquear
-            $sensitive_files = array(
-                'wp-config.php',
-                '.htaccess',
-                'readme.html',
-                'license.txt',
-                'wp-includes',
-                'wp-config-sample.php',
-                'wp-activate.php',
-                'wp-blog-header.php',
-                'wp-comments-post.php',
-                'wp-cron.php',
-                'wp-links-opml.php',
-                'wp-load.php',
-                'wp-login.php',
-                'wp-mail.php',
-                'wp-settings.php',
-                'wp-signup.php',
-                'wp-trackback.php',
-                'xmlrpc.php'
-            );
-            
-            foreach ($sensitive_files as $file) {
-                if (strpos($request_uri, $file) !== false) {
-                    wp_die('Acesso negado.', 'Acesso Negado', array('response' => 403));
-                }
+        // Não executar em admin, AJAX, CRON ou na página de login
+        if (is_admin() || wp_doing_ajax() || wp_doing_cron() || 
+            (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php')) {
+            return;
+        }
+        
+        $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        
+        // Ignorar requisições para a raiz ou para a página inicial
+        if ($request_uri === '/' || $request_uri === '' || $request_uri === '/index.php') {
+            return;
+        }
+        
+        // Lista de arquivos sensíveis para bloquear
+        $sensitive_files = array(
+            'wp-config.php',
+            '.htaccess',
+            'readme.html',
+            'license.txt',
+            'wp-config-sample.php',
+            'wp-activate.php',
+            'wp-comments-post.php',
+            'wp-cron.php',
+            'wp-links-opml.php',
+            'wp-load.php',
+            'wp-mail.php',
+            'wp-signup.php',
+            'wp-trackback.php',
+            'xmlrpc.php'
+        );
+        
+        // Verifica se a requisição contém algum arquivo sensível
+        foreach ($sensitive_files as $file) {
+            if (strpos($request_uri, $file) !== false) {
+                status_header(403);
+                wp_die('Acesso negado.', 'Acesso Negado', array('response' => 403));
+            }
+        }
+        
+        // Bloqueia tentativas de acesso a diretórios do WordPress
+        if (preg_match('/\/wp-(includes|content|admin)/i', $request_uri)) {
+            // Permite acesso apenas a arquivos específicos necessários
+            if (!preg_match('/\.(css|js|jpe?g|png|gif|svg|woff2?|ttf|eot|map)$/i', $request_uri)) {
+                status_header(403);
+                wp_die('Acesso negado.', 'Acesso Negado', array('response' => 403));
             }
         }
     }
 }
 
 /**
- * Adiciona segurança extra ao cabeçalho
+ * Adiciona segurança extra ao cabeçalho de forma mais segura
  */
 add_action('send_headers', 'cct_additional_security_headers');
 if (!function_exists('cct_additional_security_headers')) {
     function cct_additional_security_headers() {
-        if (!is_admin()) {
-            // Habilita o modo de segurança do navegador (HSTS)
-            header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
-            
-            // Previne MIME-type sniffing
-            header('X-Content-Type-Options: nosniff');
-            
-            // Configurações de segurança para iframes
-            header('X-Frame-Options: SAMEORIGIN');
-            
-            // Política de segurança de conteúdo (CSP)
-            // ATENÇÃO: Configure de acordo com seu site
-            // header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https: data:;");
+        // Não adiciona headers extras na área administrativa
+        if (is_admin()) {
+            return;
         }
+        
+        // Habilita o modo de segurança do navegador (HSTS) - Apenas em HTTPS
+        if (is_ssl()) {
+            header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+        }
+        
+        // Previne MIME-type sniffing
+        header('X-Content-Type-Options: nosniff');
+        
+        // Configurações de segurança para iframes
+        header('X-Frame-Options: SAMEORIGIN');
+        
+        // Política de segurança de conteúdo (CSP) - Desativada por padrão
+        // Descomente e ajuste conforme necessário
+        /*
+        header("Content-Security-Policy: " . implode("; ", [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;",
+            "style-src 'self' 'unsafe-inline' https:;",
+            "img-src 'self' data: https:;",
+            "font-src 'self' https: data:;"
+        ]));
+        */
     }
 }
+
+/**
+ * Adiciona verificação de segurança para login
+ */
+add_action('wp_login_failed', 'cct_login_failed');
+if (!function_exists('cct_login_failed')) {
+    function cct_login_failed($username) {
+        // Registra tentativas de login sem redirecionamentos que possam causar loops
+        error_log(sprintf(
+            'Tentativa de login falha para o usuário: %s - IP: %s - Data: %s',
+            $username,
+            $_SERVER['REMOTE_ADDR'],
+            current_time('mysql')
+        ));
+    }
+}
+
+/**
+ * Desativa o editor de temas e plugins no painel administrativo
+ */
+if (!defined('DISALLOW_FILE_EDIT')) {
+    define('DISALLOW_FILE_EDIT', true);
+}
+
+/**
+ * Desativa atualizações automáticas de plugins e temas
+ */
+add_filter('auto_update_plugin', '__return_false');
+add_filter('auto_update_theme', '__return_false');
+
+/**
+ * Oculta erros de login para evitar vazamento de informações
+ */
+add_filter('login_errors', function() {
+    return 'Credenciais inválidas. Tente novamente.';
+});

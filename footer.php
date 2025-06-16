@@ -68,7 +68,7 @@
         <i class="fas fa-phone"></i>
         <span>Telefone</span>
     </a>
-    <a href="/contato" target="_blank" class="shortcut-item">
+    <a href="<?php echo esc_url(home_url('/')); ?>/contato" target="_blank" class="shortcut-item">
         <i class="fas fa-map-marker-alt"></i>
         <span>Localização</span>
     </a>
