@@ -249,30 +249,62 @@ a, button, [role="button"], input, textarea, select, summary {
 }
 
 a.shortcut-item:hover {
-  background-color: #ffffff !important; /* Cor de hover padrão */
-  color: #ffffff !important; /* Texto branco no hover */
+  background-color: #ffffff !important; /* Fundo branco no hover */
+  color: #1d3771 !important; /* Texto azul escuro no hover para contraste */
   text-decoration: none;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(29, 55, 113, 0.2) !important; /* Borda sutil azul */
 }
 
 /* Garante que o texto e ícone usem a cor de hover */
 .shortcut-panel-content a.shortcut-item:hover i,
 .shortcut-panel-content a.shortcut-item:hover span {
-  color: #1d3771 !important; /* Ícones e texto em branco no hover */
+  color: #1d3771 !important; /* Cor azul escuro para ícones e texto no hover */
 }
 
-/* Estilo para foco */
-.shortcut-panel-content a.shortcut-item:focus {
-  outline: none;
-  box-shadow: none;
-  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
-  color: var(--shortcut-item-text-color, #ffffff);
+/* Estilos de foco para acessibilidade */
+.shortcut-icon:focus-visible,
+.shortcut-panel:focus-visible,
+.shortcut-item:focus-visible,
+.close-panel:focus-visible {
+  outline: 3px solid var(--bs-uenf-blue, #1d3771) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(29, 55, 113, 0.25) !important;
+  border-radius: 2px !important;
+  position: relative;
+  z-index: 1000;
 }
 
-/* Estilo para quando o item está ativo/focado */
-.shortcut-item:focus-visible {
+/* Remove outline para mouse users, mantém para teclado */
+.shortcut-icon:focus:not(:focus-visible),
+.shortcut-panel:focus:not(:focus-visible),
+.shortcut-item:focus:not(:focus-visible),
+.close-panel:focus:not(:focus-visible) {
   outline: none !important;
   box-shadow: none !important;
+}
+
+/* Estilo para foco nos itens do painel */
+.shortcut-panel-content a.shortcut-item:focus-visible {
+  background-color: #ffffff !important;
+  color: #1d3771 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Estilo para o painel quando está aberto */
+.shortcut-panel[aria-hidden="false"] {
+  display: block !important;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Previne rolagem quando o painel está aberto */
+body.shortcut-panel-open {
+  overflow: hidden;
 }
 
 /* Responsividade */

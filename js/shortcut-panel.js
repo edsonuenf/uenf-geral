@@ -1,227 +1,578 @@
-console.log('=== INÍCIO DO SCRIPT SHORTCUT-PANEL.JS ===');
+/**
+ * Painel de Atalhos - Script de Acessibilidade
+ * 
+ * Este script gerencia o painel de atalhos, fornecendo navegação por teclado,
+ * gerenciamento de foco e atributos ARIA para melhorar a acessibilidade.
+ * 
+ * @version     1.0.0
+ * @author      Equipe de Desenvolvimento UENF
+ * @license     MIT
+ * 
+ * Funcionalidades principais:
+ * - Navegação por teclado completa (Tab, Shift+Tab, Enter, Espaço, Esc)
+ * - Gerenciamento de foco acessível
+ * - Atributos ARIA para leitores de tela
+ * - Arrastar e soltar do ícone com persistência
+ * - Fechar ao clicar fora ou pressionar Esc
+ * - Suporte a toque em dispositivos móveis
+ * - Estilos de foco visíveis apenas para navegação por teclado
+ * - API pública para controle programático
+ * 
+ * Eventos personalizados:
+ * - shortcutPanelReady: Disparado quando o painel está pronto
+ * - shortcutPanelOpen: Disparado quando o painel é aberto
+ * - shortcutPanelClose: Disparado quando o painel é fechado
+ * 
+ * API Pública (acessível via window.uenfShortcutPanel):
+ * - open(): Abre o painel
+ * - close(): Fecha o painel
+ * - toggle(): Alterna o estado do painel
+ * - isOpen(): Retorna true se o painel estiver aberto
+ * - version: Versão atual do script
+ * 
+ * Exemplo de uso:
+ * ```javascript
+ * // Abrir o painel
+ * window.uenfShortcutPanel.open();
+ * 
+ * // Fechar o painel
+ * window.uenfShortcutPanel.close();
+ * 
+ * // Verificar se está aberto
+ * if (window.uenfShortcutPanel.isOpen()) {
+ *     console.log('O painel está aberto');
+ * }
+ * ```
+ */
 
-// Verifica se os estilos estão carregados
-const styles = Array.from(document.styleSheets)
-    .filter(styleSheet => !styleSheet.href || styleSheet.href.includes('shortcuts.css'));
+// Elementos principais do DOM
+let shortcutIcon = null;
+let shortcutPanel = null;
+let closeButton = null;
+let firstMenuItem = null;
+let lastFocusedElement = null;
+let isDragging = false;
+let offsetY = 0;
 
-console.log('Estilos carregados:', styles.map(s => s.href || 'inline'));
+// Inicialização quando o DOM estiver pronto
+function initShortcutPanel() {
+    try {
+        initializeElements();
+        
+        // Verifica se os elementos necessários existem
+        if (!shortcutIcon || !shortcutPanel) {
+            console.warn('Elementos do painel de atalhos não encontrados');
+            return;
+        }
+        
+        setupEventListeners();
+        setupPanel();
+        removeFocusStyles();
+        
+        // Adiciona classe de inicialização para estilos específicos
+        document.documentElement.classList.add('shortcut-panel-initialized');
+        
+        // Dispara evento de inicialização
+        const event = new CustomEvent('shortcutPanelReady', { 
+            detail: { 
+                version: '1.0.0',
+                elements: { shortcutIcon, shortcutPanel, closeButton },
+                announce: announce
+            } 
+        });
+        document.dispatchEvent(event);
+        
+        // Anuncia que o painel está pronto para leitores de tela
+        announce('Painel de atalhos carregado');
+        
+    } catch (error) {
+        console.error('Erro ao inicializar o painel de atalhos:', error);
+    }
+}
 
-// Verifica se as variáveis CSS estão disponíveis
-const rootStyles = getComputedStyle(document.documentElement);
-const primaryColor = rootStyles.getPropertyValue('--bs-uenf-blue').trim();
-console.log('Cor primária (--bs-uenf-blue):', primaryColor || 'Não definida');
+/**
+ * Anuncia mensagens para leitores de tela
+ * @param {string} message - Mensagem a ser anunciada
+ */
+function announce(message, priority = 'polite') {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('aria-live', priority);
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.style.position = 'absolute';
+    announcement.style.clip = 'rect(0 0 0 0)';
+    announcement.style.clipPath = 'inset(50%)';
+    announcement.style.height = '1px';
+    announcement.style.width = '1px';
+    announcement.style.overflow = 'hidden';
+    announcement.style.whiteSpace = 'nowrap';
+    announcement.textContent = message;
+    
+    document.body.appendChild(announcement);
+    
+    // Remove o elemento após um curto período
+    setTimeout(() => {
+        if (announcement.parentNode) {
+            announcement.parentNode.removeChild(announcement);
+        }
+    }, 1000);
+}
 
-// Verifica se os elementos existem antes mesmo do DOM estar pronto
-console.log('Procurando elementos...');
-let shortcutIcon = document.querySelector('.shortcut-icon');
-let shortcutPanel = document.querySelector('.shortcut-panel');
-let closeButton = document.querySelector('.close-panel');
+// Inicializa quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShortcutPanel);
+} else {
+    // DOM já está pronto
+    initShortcutPanel();
+}
 
-console.log('Elementos encontrados no carregamento inicial:', { 
-    shortcutIcon: shortcutIcon ? 'Encontrado' : 'Não encontrado',
-    shortcutPanel: shortcutPanel ? 'Encontrado' : 'Não encontrado',
-    closeButton: closeButton ? 'Encontrado' : 'Não encontrado'
-});
+// Expõe a API pública
+if (window.uenfShortcutPanel === undefined) {
+    window.uenfShortcutPanel = {
+        open: openPanel,
+        close: closePanel,
+        toggle: function() {
+            if (shortcutPanel.getAttribute('aria-hidden') === 'true') {
+                openPanel();
+            } else {
+                closePanel();
+            }
+        },
+        isOpen: function() {
+            return shortcutPanel && shortcutPanel.getAttribute('aria-hidden') === 'false';
+        },
+        version: '1.0.0'
+    };
+}
 
-// Log dos estilos aplicados
-if (shortcutIcon) {
-    const iconStyles = window.getComputedStyle(shortcutIcon);
-    console.log('Estilos do ícone:', {
-        backgroundColor: iconStyles.backgroundColor,
-        width: iconStyles.width,
-        height: iconStyles.height,
-        display: iconStyles.display,
-        position: iconStyles.position,
-        zIndex: iconStyles.zIndex
+/**
+ * Inicializa os elementos do DOM
+ */
+function initializeElements() {
+    shortcutIcon = document.querySelector('.shortcut-icon');
+    shortcutPanel = document.querySelector('.shortcut-panel');
+    closeButton = document.querySelector('.close-panel');
+    
+    // Verifica se os elementos principais foram encontrados
+    if (!shortcutIcon || !shortcutPanel) {
+        console.warn('Elementos principais do painel de atalhos não encontrados');
+        return;
+    }
+    
+    // Carrega a posição salva do ícone
+    loadIconPosition();
+}
+
+/**
+ * Configura os listeners de eventos
+ */
+function setupEventListeners() {
+    if (!shortcutIcon || !shortcutPanel) return;
+    
+    // Eventos do ícone
+    shortcutIcon.addEventListener('click', handleIconClick);
+    shortcutIcon.addEventListener('keydown', handleIconKeyDown);
+    shortcutIcon.addEventListener('mousedown', startDrag);
+    
+    // Eventos de arrasto
+    document.addEventListener('mousemove', handleDrag);
+    document.addEventListener('mouseup', endDrag);
+    
+    // Evento global para fechar ao clicar fora
+    document.addEventListener('click', handleOutsideClick, true);
+    
+    // Evento de teclado global para fechar com ESC
+    document.addEventListener('keydown', handleGlobalKeyDown);
+}
+
+/**
+ * Configura o painel com atributos ARIA e eventos
+ */
+function setupPanel() {
+    // Atributos ARIA para o ícone
+    shortcutIcon.setAttribute('aria-expanded', 'false');
+    shortcutIcon.setAttribute('aria-haspopup', 'dialog');
+    shortcutIcon.setAttribute('aria-label', 'Abrir menu de atalhos. Pressione Enter para expandir.');
+    shortcutIcon.setAttribute('role', 'button');
+    shortcutIcon.setAttribute('tabindex', '0');
+    
+    // Atributos ARIA para o painel
+    shortcutPanel.setAttribute('aria-hidden', 'true');
+    shortcutPanel.setAttribute('role', 'dialog');
+    shortcutPanel.setAttribute('aria-modal', 'true');
+    
+    // Adiciona título acessível para o painel
+    let panelTitle = shortcutPanel.querySelector('h2, h3');
+    if (!panelTitle) {
+        panelTitle = document.createElement('h2');
+        panelTitle.textContent = 'Menu de Atalhos';
+        shortcutPanel.insertBefore(panelTitle, shortcutPanel.firstChild);
+    }
+    
+    const titleId = 'shortcut-panel-title';
+    panelTitle.id = titleId;
+    panelTitle.style.position = 'absolute';
+    panelTitle.style.clip = 'rect(0 0 0 0)';
+    panelTitle.style.clipPath = 'inset(50%)';
+    panelTitle.style.height = '1px';
+    panelTitle.style.width = '1px';
+    panelTitle.style.overflow = 'hidden';
+    panelTitle.style.whiteSpace = 'nowrap';
+    
+    shortcutPanel.setAttribute('aria-labelledby', titleId);
+    
+    // Adiciona descrição para o painel
+    const panelDescription = document.createElement('p');
+    const descriptionId = 'shortcut-panel-description';
+    panelDescription.id = descriptionId;
+    panelDescription.textContent = 'Use as teclas de seta para navegar entre os itens. Pressione Enter para ativar um item ou Esc para fechar o painel.';
+    panelDescription.style.position = 'absolute';
+    panelDescription.style.clip = 'rect(0 0 0 0)';
+    panelDescription.style.clipPath = 'inset(50%)';
+    panelDescription.style.height = '1px';
+    panelDescription.style.width = '1px';
+    panelDescription.style.overflow = 'hidden';
+    panelDescription.style.whiteSpace = 'nowrap';
+    
+    shortcutPanel.appendChild(panelDescription);
+    shortcutPanel.setAttribute('aria-describedby', descriptionId);
+    
+    // Configura o botão de fechar
+    if (closeButton) {
+        closeButton.setAttribute('aria-label', 'Fechar menu de atalhos');
+        closeButton.setAttribute('tabindex', '0');
+        closeButton.addEventListener('click', closePanel);
+        closeButton.addEventListener('keydown', handleCloseButtonKeyDown);
+    }
+    
+    // Configura os itens do menu
+    setupMenuItems();
+}
+
+/**
+ * Configura os itens do menu com atributos e eventos de acessibilidade
+ */
+function setupMenuItems() {
+    const menuItems = shortcutPanel.querySelectorAll('.shortcut-item');
+    
+    menuItems.forEach((item, index) => {
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('role', 'menuitem');
+        
+        // Navegação por teclado
+        item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            } else if (e.key === 'Escape') {
+                closePanel();
+            }
+        });
+    });
+    
+    // Configura o gerenciamento de foco
+    trapFocus(shortcutPanel);
+}
+
+/**
+ * Gerencia o foco dentro do painel
+ */
+function trapFocus(element) {
+    const focusableElements = element.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    
+    if (focusableElements.length === 0) return;
+    
+    firstMenuItem = focusableElements[0];
+    const lastFocusableElement = focusableElements[focusableElements.length - 1];
+    
+    element.addEventListener('keydown', function(e) {
+        if (e.key !== 'Tab') return;
+        
+        if (e.shiftKey) {
+            // Shift + Tab: volta para o último elemento
+            if (document.activeElement === firstMenuItem) {
+                e.preventDefault();
+                lastFocusableElement.focus();
+            }
+        } else {
+            // Tab: avança para o primeiro elemento
+            if (document.activeElement === lastFocusableElement) {
+                e.preventDefault();
+                firstMenuItem.focus();
+            }
+        }
     });
 }
 
-// Remove estilos de foco de todos os elementos
+/**
+ * Manipulador de clique no ícone
+ */
+function handleIconClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (shortcutPanel.getAttribute('aria-hidden') === 'true') {
+        openPanel();
+    } else {
+        closePanel();
+    }
+}
+
+/**
+ * Manipulador de teclado para o ícone
+ */
+function handleIconKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+    } else if (e.key === 'Escape' && !shortcutPanel.classList.contains('hidden')) {
+        closePanel();
+    }
+}
+
+/**
+ * Manipulador de teclado para o botão de fechar
+ */
+function handleCloseButtonKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closePanel();
+    } else if (e.key === 'Tab' && e.shiftKey) {
+        // Se for Shift+Tab no primeiro elemento, volta para o último
+        e.preventDefault();
+        const focusableElements = shortcutPanel.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]):not([tabindex="0"])'
+        );
+        const lastElement = focusableElements[focusableElements.length - 1];
+        if (lastElement) lastElement.focus();
+    }
+}
+
+/**
+ * Manipulador global de teclado
+ */
+function handleGlobalKeyDown(e) {
+    // Fecha o painel com ESC
+    if (e.key === 'Escape' && shortcutPanel.getAttribute('aria-hidden') === 'false') {
+        closePanel();
+    }
+}
+
+/**
+ * Manipulador de clique fora do painel
+ */
+function handleOutsideClick(e) {
+    if (shortcutPanel.getAttribute('aria-hidden') === 'false' && 
+        !shortcutPanel.contains(e.target) && 
+        !shortcutIcon.contains(e.target)) {
+        closePanel();
+    }
+}
+
+/**
+ * Gerencia a navegação por Tab dentro do painel
+ */
+function trapTabKey(e) {
+    if (e.key === 'Tab') {
+        const focusableElements = shortcutPanel.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        if (focusableElements.length === 0) return;
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey) {
+            // Shift + Tab
+            if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            // Apenas Tab
+            if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    }
+}
+
+/**
+ * Abre o painel de atalhos
+ */
+function openPanel() {
+    if (!shortcutPanel || !shortcutIcon) return;
+    
+    // Salva o elemento que tinha o foco
+    lastFocusedElement = document.activeElement;
+    
+    // Atualiza atributos ARIA
+    shortcutPanel.setAttribute('aria-hidden', 'false');
+    shortcutIcon.setAttribute('aria-expanded', 'true');
+    
+    // Mostra o painel
+    shortcutPanel.classList.add('active');
+    
+    // Adiciona classe ao body para estilos específicos
+    document.body.classList.add('shortcut-panel-open');
+    
+    // Desabilita a rolagem da página
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Foca no primeiro elemento do painel
+    setTimeout(() => {
+        const firstFocusable = closeButton || 
+                             shortcutPanel.querySelector('a, button, [tabindex="0"]');
+        
+        if (firstFocusable) {
+            firstFocusable.focus();
+            announce('Menu de atalhos aberto. ' + 
+                    'Use as teclas de seta para navegar. ' + 
+                    'Pressione Enter para ativar um item ou Esc para fechar.');
+        }
+        
+        // Adiciona evento para capturar tecla Tab
+        document.addEventListener('keydown', trapTabKey);
+    }, 10);
+    
+    // Dispara evento personalizado
+    const event = new CustomEvent('shortcutPanelOpen');
+    document.dispatchEvent(event);
+}
+
+/**
+ * Fecha o painel de atalhos
+ */
+function closePanel() {
+    if (!shortcutPanel || !shortcutIcon) return;
+    
+    // Atualiza atributos ARIA
+    shortcutPanel.setAttribute('aria-hidden', 'true');
+    shortcutIcon.setAttribute('aria-expanded', 'false');
+    
+    // Esconde o painel
+    shortcutPanel.classList.remove('active');
+    
+    // Remove classe do body e restaura a rolagem
+    document.body.classList.remove('shortcut-panel-open');
+    document.documentElement.style.overflow = '';
+    
+    // Remove evento de captura de Tab
+    document.removeEventListener('keydown', trapTabKey);
+    
+    // Anuncia que o painel foi fechado
+    announce('Menu de atalhos fechado');
+    
+    // Retorna o foco para o último elemento que o tinha
+    if (lastFocusedElement) {
+        lastFocusedElement.focus();
+    } else {
+        shortcutIcon.focus();
+    }
+    
+    // Dispara evento personalizado
+    const event = new CustomEvent('shortcutPanelClose');
+    document.dispatchEvent(event);
+}
+
+/**
+ * Inicia o arrasto do ícone
+ */
+function startDrag(e) {
+    if (e.button !== 0) return; // Apenas botão esquerdo do mouse
+    
+    isDragging = true;
+    offsetY = e.clientY - shortcutIcon.getBoundingClientRect().top;
+    
+    // Adiciona classe para feedback visual
+    shortcutIcon.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+/**
+ * Manipula o arrasto do ícone
+ */
+function handleDrag(e) {
+    if (!isDragging) return;
+    
+    const y = e.clientY - offsetY;
+    const maxY = window.innerHeight - shortcutIcon.offsetHeight;
+    const newY = Math.min(Math.max(0, y), maxY);
+    
+    shortcutIcon.style.top = newY + 'px';
+    shortcutIcon.style.transform = 'none';
+    
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+/**
+ * Finaliza o arrasto do ícone
+ */
+function endDrag(e) {
+    if (isDragging) {
+        isDragging = false;
+        
+        // Remove classe de feedback visual
+        shortcutIcon.classList.remove('dragging');
+        document.body.style.userSelect = '';
+        
+        // Salva a posição
+        const savedY = parseInt(shortcutIcon.style.top) || (window.innerHeight / 2 - 25);
+        localStorage.setItem('shortcutIconY', savedY);
+        
+        e.preventDefault();
+        e.stopPropagation();
+    }
+}
+
+/**
+ * Carrega a posição salva do ícone
+ */
+function loadIconPosition() {
+    if (!shortcutIcon) return;
+    
+    const savedY = localStorage.getItem('shortcutIconY');
+    if (savedY) {
+        shortcutIcon.style.top = savedY + 'px';
+        shortcutIcon.style.transform = 'none';
+    }
+}
+
+/**
+ * Remove estilos de foco genéricos para melhorar a acessibilidade
+ */
 function removeFocusStyles() {
-    // Adiciona estilos inline para remover bordas de foco
+    // Adiciona um estilo temporário para remover outlines em elementos com classe 'no-focus-outline'
+    // Isso não afeta a navegação por teclado, apenas a aparência
     const style = document.createElement('style');
     style.textContent = `
-        *:focus, *:focus-visible, *:focus-within, *:active {
+        .no-focus-outline:focus {
             outline: none !important;
-            box-shadow: none !important;
-            border-color: transparent !important;
         }
-        .shortcut-icon, .shortcut-panel, .shortcut-item {
-            outline: none !important;
-            box-shadow: none !important;
-            border: none !important;
+        
+        /* Mantém o foco visível para navegação por teclado */
+        .user-is-tabbing :focus-visible {
+            outline: 3px solid var(--bs-uenf-blue, #1d3771) !important;
+            outline-offset: 2px !important;
         }
     `;
     document.head.appendChild(style);
+    
+    // Detecta se o usuário está navegando por teclado
+    document.addEventListener('keydown', function detectFirstTab(e) {
+        if (e.key === 'Tab') {
+            document.body.classList.add('user-is-tabbing');
+            document.removeEventListener('keydown', detectFirstTab);
+        }
+    });
 }
 
-// Se algum elemento não foi encontrado, tenta novamente quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', function() {
-    // Remove estilos de foco
-    removeFocusStyles();
-    console.log('DOM completamente carregado');
-    
-    // Atualiza as referências após o DOM estar pronto
-    if (!shortcutIcon) shortcutIcon = document.querySelector('.shortcut-icon');
-    if (!shortcutPanel) shortcutPanel = document.querySelector('.shortcut-panel');
-    if (!closeButton) closeButton = document.querySelector('.close-panel');
-    
-    console.log('Elementos após DOM carregado:', { 
-        shortcutIcon: shortcutIcon ? 'Encontrado' : 'Não encontrado',
-        shortcutPanel: shortcutPanel ? 'Encontrado' : 'Não encontrado',
-        closeButton: closeButton ? 'Encontrado' : 'Não encontrado'
-    });
-    
-    console.log('Elementos encontrados:', {
-        shortcutIcon,
-        shortcutPanel,
-        closeButton
-    });
-    
-    // Estilo do ícone
-    if (shortcutIcon) {
-        shortcutIcon.style.cursor = 'pointer';
-    }
-    
-    if (shortcutPanel) {
-        // Removendo qualquer borda que possa ter sido adicionada anteriormente
-        shortcutPanel.style.border = 'none';
-        console.log('Estilo do painel:', shortcutPanel.style.cssText);
-    }
-    
-    // Draggable functionality
-    if (shortcutIcon) {
-        let isDragging = false;
-        let offsetY = 0;
-        
-        // Iniciar arrasto
-        shortcutIcon.addEventListener('mousedown', function(e) {
-            console.log('Mouse down no ícone');
-            if (e.button !== 0) return; // Apenas botão esquerdo do mouse
-            
-            isDragging = true;
-            offsetY = e.clientY - shortcutIcon.getBoundingClientRect().top;
-            shortcutIcon.classList.add('dragging');
-            document.body.style.userSelect = 'none';
-            
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-        
-        // Mover durante o arrasto
-        document.addEventListener('mousemove', function(e) {
-            if (!isDragging) return;
-            
-            const y = e.clientY - offsetY;
-            const maxY = window.innerHeight - shortcutIcon.offsetHeight;
-            const newY = Math.min(Math.max(0, y), maxY);
-            
-            shortcutIcon.style.top = newY + 'px';
-            shortcutIcon.style.transform = 'none';
-            
-            e.preventDefault();
-            e.stopPropagation();
-        });
-        
-        // Finalizar arrasto
-        document.addEventListener('mouseup', function(e) {
-            console.log('Mouse up');
-            if (isDragging) {
-                isDragging = false;
-                shortcutIcon.classList.remove('dragging');
-                document.body.style.userSelect = '';
-                
-                const savedY = parseInt(shortcutIcon.style.top) || (window.innerHeight / 2 - 25);
-                localStorage.setItem('shortcutIconY', savedY);
-                
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-            }
-        });
-        
-        // Carrega a posição salva
-        const savedY = localStorage.getItem('shortcutIconY');
-        if (savedY) {
-            shortcutIcon.style.top = savedY + 'px';
-            shortcutIcon.style.transform = 'none';
-        }
-    }
-    
-    // Toggle panel
-    if (shortcutIcon && shortcutPanel) {
-        console.log('Adicionando event listeners para o painel');
-        
-        // Adiciona um evento de clique simples
-        shortcutIcon.addEventListener('click', function(e) {
-            console.log('Clique no ícone detectado!');
-            console.log('Estado ANTES do toggle:', {
-                classList: Array.from(shortcutPanel.classList),
-                style: {
-                    transform: window.getComputedStyle(shortcutPanel).transform,
-                    right: window.getComputedStyle(shortcutPanel).right
-                }
-            });
-            
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Fecha outros painéis abertos
-            document.querySelectorAll('.shortcut-panel.active').forEach(panel => {
-                if (panel !== shortcutPanel) {
-                    panel.classList.remove('active');
-                }
-            });
-            
-            // Alterna a classe active
-            shortcutPanel.classList.toggle('active');
-            
-            // Força o navegador a reconhecer a mudança
-            void shortcutPanel.offsetWidth;
-            
-            console.log('Estado APÓS o toggle:', {
-                classList: Array.from(shortcutPanel.classList),
-                style: {
-                    transform: window.getComputedStyle(shortcutPanel).transform,
-                    right: window.getComputedStyle(shortcutPanel).right
-                }
-            });
-            
-            return false;
-        });
-    }
-    
-    // Close panel when clicking the close button
-    if (closeButton && shortcutPanel) {
-        closeButton.addEventListener('click', function(e) {
-            console.log('Botão fechar clicado');
-            e.preventDefault();
-            e.stopPropagation();
-            
-            shortcutPanel.classList.remove('active');
-            console.log('Painel fechado');
-            
-            return false;
-        });
-    }
-    
-    // Close panel when clicking outside
-    document.addEventListener('click', function(e) {
-        console.log('Clique global detectado');
-        
-        if (shortcutPanel && 
-            shortcutPanel.classList.contains('active') && 
-            !shortcutPanel.contains(e.target) && 
-            !shortcutIcon.contains(e.target)) {
-            
-            console.log('Clique fora do painel detectado');
-            shortcutPanel.classList.remove('active');
-        }
-    });
-});
-
-// Adiciona um listener global para verificar se algum evento está sendo capturado
-document.addEventListener('click', function(e) {
-    console.log('Clique global detectado (captura):', e.target);
-}, true);
+// O restante do código foi movido para funções específicas

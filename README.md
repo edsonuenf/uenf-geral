@@ -1,6 +1,50 @@
-# Tema UENF Geral
+# Tema UENGeral
 
 Tema WordPress personalizado para a Universidade Estadual do Norte Fluminense (UENF).
+
+## 🚀 Painel de Atalhos
+
+O tema inclui um painel de atalhos acessível que pode ser aberto clicando no ícone flutuante no lado direito da tela.
+
+### Funcionalidades
+
+- **Acessibilidade Total**: Navegação por teclado (Tab, Shift+Tab, Enter, Esc)
+- **Arrastar e Soltar**: O ícone pode ser posicionado em qualquer lugar da tela
+- **Responsivo**: Funciona em todos os tamanhos de tela
+- **Personalizável**: Cores e estilos podem ser alterados via CSS
+- **API Pública**: Controle o painel programaticamente
+
+### Como Usar
+
+1. O ícone do painel aparece automaticamente no canto direito da tela
+2. Clique no ícone para abrir/fechar o painel
+3. Use Tab/Shift+Tab para navegar entre os itens
+4. Pressione Enter para ativar um item
+5. Pressione Esc para fechar o painel
+
+### API JavaScript
+
+```javascript
+// Abrir o painel
+window.uenfShortcutPanel.open();
+
+// Fechar o painel
+window.uenfShortcutPanel.close();
+
+// Alternar o painel
+window.uenfShortcutPanel.toggle();
+
+// Verificar se está aberto
+if (window.uenfShortcutPanel.isOpen()) {
+    console.log('O painel está aberto');
+}
+```
+
+### Eventos
+
+- `shortcutPanelReady`: Disparado quando o painel está pronto
+- `shortcutPanelOpen`: Disparado quando o painel é aberto
+- `shortcutPanelClose`: Disparado quando o painel é fechado
 
 ## 📦 Estrutura do Tema
 
