@@ -68,11 +68,6 @@ require_once CCT_THEME_DIR . '/inc/optimization.php';
 require_once CCT_THEME_DIR . '/inc/seo.php';
 //require_once CCT_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
 
-// Carregar o sistema de atualização do GitHub
-if (file_exists(CCT_THEME_DIR . '/updater.php')) {
-    require_once CCT_THEME_DIR . '/updater.php';
-}
-
 // Verificar se as funções de template estão disponíveis
 if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !function_exists('cct_post_thumbnail')) {
     // Definir funções de fallback se não estiverem disponíveis
