@@ -50,15 +50,9 @@ get_header();
                         while (have_posts()) :
                             the_post();
                             
-                            // Verifica se o usuário tem permissão para visualizar o post
-/*                            if (current_user_can('read_post', get_the_ID())) { */
-                                // Usando wp_kses_post para permitir HTML seguro no conteúdo
-                                $content = get_the_content();
-                                echo $content ? wp_kses_post($content) : '';
-/*                            } else {
-                                echo '<p class="text-center">' . esc_html__('Você não tem permissão para visualizar este conteúdo.', 'uenf-geral') . '</p>';
-                            }
-*/
+                            // Usando wp_kses_post para permitir HTML seguro no conteúdo
+                            $content = get_the_content();
+                            echo $content ? wp_kses_post($content) : '';
                         endwhile;
                     else :
                         // Nenhum post encontrado

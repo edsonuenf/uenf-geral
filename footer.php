@@ -1,6 +1,6 @@
 </div><!-- #content -->
 
-<footer id="footer" id="colophon" class="site-footer">
+<footer id="colophon" class="site-footer">
     <div class="container">
         <div class="footer-widgets">
             <div class="footer-widget">
