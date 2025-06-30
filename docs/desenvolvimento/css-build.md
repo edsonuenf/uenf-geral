@@ -70,6 +70,43 @@ O arquivo `css/build/config.json` contém as configurações do build:
 - **Modo de desenvolvimento**: Defina `"minify": false` no `config.json`
 - **Source maps**: Ative com `"sourceMap": true`
 
+## 📝 Regras de Minificação CSS
+
+1. **Comentários**:
+   - Remover todos os comentários exceto aqueles importantes (que começam com `/*!`)
+   - Manter comentários importantes para compatibilidade e documentação
+
+2. **Espaços**:
+   - Remover quebras de linha (\r\n, \r, \n) e tabulações (\t)
+   - Compactar múltiplos espaços em branco para um único espaço
+   - Remover espaços desnecessários antes e depois de caracteres especiais ({}|:;,)
+
+3. **Sintaxe**:
+   - Remover o último ponto e vírgula de blocos de propriedades
+   - Manter apenas o necessário para a funcionalidade do CSS
+
+4. **Prefixos Vendor**:
+   - Adicionar prefixos necessários para propriedades modernas:
+     - `appearance`: `-webkit-`, `-moz-`
+     - `user-select`: `-webkit-`, `-moz-`, `-ms-`
+     - `transition`: `-webkit-`, `-o-`
+     - `transform`: `-webkit-`, `-ms-`
+     - `flex`: `-webkit-`, `-ms-`
+     - `flex-direction`: `-webkit-`
+     - `flex-wrap`: `-webkit-`
+     - `align-items`: `-webkit-`
+     - `justify-content`: `-webkit-`
+
+5. **Arquivos de Entrada**:
+   - Processar arquivos na ordem especificada no `config.json`
+   - Manter um mapa de origem para cada arquivo processado
+   - Gerar relatórios de tamanho e timestamp de cada arquivo
+
+6. **Arquivo de Saída**:
+   - Salvar em `style.min.css`
+   - Opcionalmente gerar source map se habilitado
+   - Adicionar cabeçalho com timestamp e URL do projeto
+
 ## 💡 Dicas
 
 1. Nunca edite o arquivo `style.min.css` diretamente

@@ -289,6 +289,33 @@ function cct_customize_register( $wp_customize ) {
         'panel' => 'cct_shortcut_panel',
         'priority' => 30,
     ));
+
+    // Seção: Configurações Gerais
+    $wp_customize->add_section('cct_general_settings', array(
+        'title' => __('Configurações Gerais', 'cct'),
+        'priority' => 5,
+    ));
+
+    // Opção para desativar sidebar do footer
+    $wp_customize->add_setting('disable_footer_sidebar', array(
+        'default' => false,
+        'sanitize_callback' => 'sanitize_checkbox',
+        'transport' => 'postMessage',
+    ));
+
+    $wp_customize->add_control('disable_footer_sidebar', array(
+        'label' => __('Desativar Sidebar do Footer', 'cct'),
+        'section' => 'cct_general_settings',
+        'type' => 'checkbox',
+        'description' => __('Marque esta opção para desativar a sidebar do rodapé', 'cct'),
+    ));
+
+    $wp_customize->add_control('disable_sidebar', array(
+        'label' => __('Desativar Sidebar', 'cct'),
+        'section' => 'cct_general_settings',
+        'type' => 'checkbox',
+        'description' => __('Marque esta opção para desativar a sidebar por padrão', 'cct'),
+    ));
     
     // Tamanho da Fonte dos Itens de Menu
     $wp_customize->add_setting('shortcut_menu_font_size', array(

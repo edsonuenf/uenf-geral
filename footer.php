@@ -1,6 +1,6 @@
 </div><!-- #content -->
 
-<footer id="colophon" class="site-footer">
+<footer id="footer" id="colophon" class="site-footer">
     <div class="container">
         <div class="footer-widgets">
             <div class="footer-widget">
@@ -20,13 +20,16 @@
             </div>
             <div class="footer-widget">
                 <div class="setor-info">
-                    <div class="logo-setor">
-                        <?php
+                <?php
                             if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) :
                                 the_custom_logo();
-                            endif
-                        ?>
+                ?>
+                    <div class="logo-setor">
                     </div>
+                <?php
+                    endif
+                ?>
+
                     <h4><?php echo get_bloginfo( 'name' ); ?></h4>
                     <p><strong>Email:</strong> <?php dynamic_sidebar( 'endereco-email-setor' ); ?><br>
                     <strong>Telefone:</strong> <?php 
@@ -37,6 +40,13 @@
                     ?></p>
                 </div>
             </div>
+            <?php if (get_theme_mod('disable_footer_sidebar', false)) : ?>
+            <style>
+                .footer-widget:last-child {
+                    display: none;
+                }
+            </style>
+            <?php endif; ?>
         </div>
     </div>
 </footer>
@@ -62,9 +72,7 @@
         <i class="fas fa-envelope"></i>
         <span>Contato</span>
     </a>
-    <a href="tel:<?php 
-                        dynamic_sidebar( 'telefone-setor' );
-                    ?>" class="shortcut-item">
+    <a href="#footer" class="shortcut-item">
         <i class="fas fa-phone"></i>
         <span>Telefone</span>
     </a>

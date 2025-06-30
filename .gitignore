@@ -1,0 +1,62 @@
+# Arquivos de configuração sensíveis
+wp-config.php
+wp-config-sample.php
+
+# Logs
+*.log
+build-error.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Arquivos de cache
+wp-content/cache/
+wp-content/uploads/cache/
+
+# Arquivos de build
+build/
+node_modules/
+vendor/
+
+# Arquivos de depuração
+debug.log
+
+# Arquivos de ambiente
+.env
+.env.*
+
+# Arquivos de sessão
+session.php
+session_data.php
+
+# Arquivos de configuração específicos do servidor
+htaccess
+htaccess.bak
+htaccess.old
+
+# Arquivos de configuração do WordPress
+wp-content/debug.log
+wp-content/uploads/debug.log
+
+# Arquivos de configuração do PHP
+php.ini
+php.ini.bak
+php.ini.old
+
+# Arquivos de configuração do MySQL
+my.cnf
+my.cnf.bak
+my.cnf.old
+
+# Arquivos de backup
+*.sql
+*.gz
+*.zip
+*.rar
+
+# Arquivos de configuração do tema
+theme-config.php
+theme-settings.php
