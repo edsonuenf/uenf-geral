@@ -6,7 +6,7 @@
     "reset.css",
     "layout/main.css",
     "components/header.css",
-    "components/menu.css",
+    "components/new-menu.css",
     "components/footer.css",
     "components/shortcuts.css"
   ],

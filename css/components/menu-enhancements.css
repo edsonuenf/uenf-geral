@@ -1,0 +1,187 @@
+/* ===========================================
+   MELHORIAS VISUAIS PARA O MENU E SUBMENUS
+   - Estilos para hover dos itens de menu
+   - Barra de rolagem personalizada
+   - Efeitos visuais aprimorados
+   =========================================== */
+
+/* ===== ESTILOS GERAIS ===== */
+.new-menu a {
+  position: relative;
+  transition: all 0.3s ease;
+  padding-left: 20px !important; /* Espaço para a barra lateral */
+}
+
+/* Barra lateral para itens ativos */
+.new-menu .current-menu-item > a,
+.new-menu .current-menu-ancestor > a,
+.new-menu .menu-item-active > a {
+  border-left: 4px solid #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  padding-left: 16px !important; /* Ajuste para compensar a borda */
+}
+
+/* Efeito de hover para itens de menu */
+.new-menu > li > a:hover,
+.new-menu .sub-menu > li > a:hover,
+.new-menu .children > li > a:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  padding-left: 24px !important; /* Efeito de deslocamento suave */
+}
+
+/* Barra lateral para hover */
+.new-menu > li > a::before,
+.new-menu .sub-menu > li > a::before,
+.new-menu .children > li > a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background-color: #ffffff;
+  transition: width 0.3s ease;
+  z-index: 1;
+}
+
+/* Animação da barra lateral ao passar o mouse */
+.new-menu > li > a:hover::before,
+.new-menu .sub-menu > li > a:hover::before,
+.new-menu .children > li > a:hover::before {
+  width: 4px;
+}
+
+/* Ajuste para itens com submenu */
+.new-menu .menu-item-has-children > a,
+.new-menu .page_item_has_children > a {
+  padding-right: 40px !important; /* Espaço para o ícone */
+}
+
+/* Estilo para submenus abertos */
+.new-menu .menu-item-has-children.menu-item-active > a,
+.new-menu .page_item_has_children.menu-item-active > a {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ===== BARRA DE ROLAGEM PERSONALIZADA ===== */
+.new-menu::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Trilha da barra de rolagem */
+.new-menu::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* Alça da barra de rolagem */
+.new-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+/* Efeito hover na alça da barra de rolagem */
+.new-menu::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Para navegadores Firefox */
+.new-menu {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.1);
+}
+
+/* ===== AJUSTES PARA SUBMENUS ===== */
+.new-menu .sub-menu,
+.new-menu .children {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.new-menu .sub-menu .sub-menu,
+.new-menu .children .children {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Efeito de transição suave para submenus */
+.new-menu .sub-menu > li,
+.new-menu .children > li {
+  transition: background-color 0.2s ease;
+}
+
+/* Efeito de hover aprimorado para subitens */
+.new-menu .sub-menu > li:hover,
+.new-menu .children > li:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 1920px) {
+  /* Estilos específicos para telas menores que 1921px */
+  .new-menu a {
+    padding: 12px 20px 12px 16px !important;
+  }
+  
+  .new-menu .sub-menu a,
+  .new-menu .children a {
+    padding-left: 30px !important; /* Recuo maior para subníveis */
+  }
+  
+  .new-menu .sub-menu .sub-menu a,
+  .new-menu .children .children a {
+    padding-left: 45px !important; /* Recuo ainda maior para terceiro nível */
+  }
+}
+
+/* ===== ESTILOS PARA O MODO DESKTOP ===== */
+@media (min-width: 1921px) {
+  .new-menu {
+    max-height: calc(100vh - 200px); /* Altura máxima com espaço para cabeçalho/rodapé */
+    overflow-y: auto;
+    padding-right: 5px; /* Espaço para a barra de rolagem */
+  }
+  
+  /* Ajuste fino para os submenus no desktop */
+  .new-menu .sub-menu,
+  .new-menu .children {
+    min-width: 240px; /* Largura mínima maior para melhor legibilidade */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 4px 4px;
+  }
+  
+  /* Efeito de elevação ao passar o mouse */
+  .new-menu > li:hover > .sub-menu,
+  .new-menu > li:hover > .children {
+    transform: translateY(2px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ===== MELHORIAS DE ACESSIBILIDADE ===== */
+.new-menu a:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Feedback visual para itens do teclado */
+.new-menu a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Suporte para modo de alto contraste */
+@media (forced-colors: active) {
+  .new-menu a:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    text-decoration: underline;
+  }
+  
+  .new-menu .current-menu-item > a,
+  .new-menu .current-menu-ancestor > a {
+    background-color: Highlight !important;
+    color: HighlightText !important;
+  }
+}

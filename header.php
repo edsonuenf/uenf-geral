@@ -26,9 +26,11 @@
         echo ' class="' . esc_attr(implode(' ', $classes)) . '"';
     }
 ?>>
-<?php if ( function_exists( 'wp_body_open' ) ) {
+<?php 
+if ( function_exists( 'wp_body_open' ) ) {
     wp_body_open();
-} ?>
+}
+?>
 <div id="page" class="site">
     <!-- Header -->
     <header id="masthead" class="site-header">
@@ -45,7 +47,6 @@
             <div class="col-md-6 idiomas-bandeiras d-flex align-items-end justify-content-end">
                 <?php dynamic_sidebar('idiomas-uenf'); ?>
             </div>
-
           </div>
         </div>
       </div>
@@ -70,23 +71,36 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
-                  <?php
-                    if (function_exists('custom_vertical_accordion_menu')) {
-                        custom_vertical_accordion_menu();
-                    } else {
-                        wp_nav_menu(
-                            array(
-                                'theme_location' => 'primary',
-                                'menu_id'        => 'primary-menu',
-                                'container'      => false,
-                                'menu_class'     => 'uenf-nav',
-                                'fallback_cb'    => 'wp_page_menu',
-                            )
-                        );
-                    }
-                  ?>
-
-                </ul>
+                <?php
+                  // Carrega o novo menu
+                  if (function_exists('UENF_Menu_Component::display_menu')) {
+                      UENF_Menu_Component::display_menu([
+                          'theme_location' => 'primary',
+                          'menu_id'        => 'primary-menu',
+                          'menu_class'     => 'new-menu',
+                          'container'      => false,
+                          'fallback_cb'    => function() {
+                              // Fallback para o menu padrão do WordPress
+                              wp_nav_menu([
+                                  'theme_location' => 'primary',
+                                  'menu_id'        => 'primary-menu',
+                                  'container'      => false,
+                                  'menu_class'     => 'new-menu',
+                                  'fallback_cb'    => 'wp_page_menu',
+                              ]);
+                          }
+                      ]);
+                  } else {
+                      // Fallback direto para o menu padrão do WordPress
+                      wp_nav_menu([
+                          'theme_location' => 'primary',
+                          'menu_id'        => 'primary-menu',
+                          'container'      => false,
+                          'menu_class'     => 'new-menu',
+                          'fallback_cb'    => 'wp_page_menu',
+                      ]);
+                  }
+                ?>
               </div>
             </div>
           </div>
@@ -94,14 +108,17 @@
       </nav>
     </header><!-- #masthead -->
 
-
-    
     <div id="content" class="site-content">
     
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </div><!-- #content -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<script>
+(function() {
+    'use strict';
     
-    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchButton = document.querySelector('.search-button');
         const searchInput = document.querySelector('.search-input');
@@ -138,89 +155,5 @@
             }
         }
     });
-    </script>
-
-
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Seleciona todos os itens do menu que possuem submenus
-    const menuItems = document.querySelectorAll('.uenf-nav li.menu-item-has-children > a, .uenf-nav li.page_item_has_children > a');
-    
-    // Adiciona evento de clique a cada item com submenu
-    menuItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault(); // Previne a navegação ao clicar no item pai
-            
-            const parent = this.parentElement;
-            const submenu = parent.querySelector('ul.sub-menu, ul.children');
-            
-            if (submenu) {
-                // Toggle da classe active no item pai
-                parent.classList.toggle('active');
-                
-                // Abre ou fecha o submenu com animação
-                if (submenu.classList.contains('open')) {
-                    submenu.classList.remove('open');
-                    setTimeout(() => {
-                        submenu.style.display = 'none';
-                    }, 300); // Tempo da animação
-                } else {
-                    submenu.style.display = 'block';
-                    setTimeout(() => {
-                        submenu.classList.add('open');
-                    }, 10);
-                }
-                
-                // Fecha outros submenus abertos (comportamento accordion)
-                const siblings = Array.from(parent.parentElement.children)
-                    .filter(child => child !== parent && (
-                        child.classList.contains('menu-item-has-children') || 
-                        child.classList.contains('page_item_has_children')
-                    ));
-                    
-                siblings.forEach(sibling => {
-                    sibling.classList.remove('active');
-                    const siblingSubmenu = sibling.querySelector('ul.sub-menu, ul.children');
-                    if (siblingSubmenu && siblingSubmenu.classList.contains('open')) {
-                        siblingSubmenu.classList.remove('open');
-                        setTimeout(() => {
-                            siblingSubmenu.style.display = 'none';
-                        }, 300);
-                    }
-                });
-            }
-        });
-    });
-    
-    // Manter submenu aberto se estamos em uma subpágina
-    const currentItems = document.querySelectorAll('.uenf-nav li.current-menu-item, .uenf-nav li.current_page_item');
-    currentItems.forEach(currentItem => {
-        const parentWithChildren = currentItem.closest('.menu-item-has-children, .page_item_has_children');
-        if (parentWithChildren) {
-            const submenu = parentWithChildren.querySelector('ul.sub-menu, ul.children');
-            if (submenu) {
-                parentWithChildren.classList.add('active');
-                submenu.style.display = 'block';
-                submenu.classList.add('open');
-            }
-        }
-    });
-    
-    // Adicionar suporte a teclado para acessibilidade
-    menuItems.forEach(item => {
-        item.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click(); // Aciona o evento de clique
-            }
-        });
-    });
-});
+})();
 </script>
-
-
-
-
-

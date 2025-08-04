@@ -469,33 +469,189 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
         'settings' => 'text_color',
     )));
 
-    // Seção de Cores de Botões
-    $wp_customize->add_section('cct_button_colors', array(
-        'title' => __('Cores de Botões', 'cct'),
-        'panel' => 'cct_colors_panel',
-        'priority' => 30,
+    // Removida a seção de cores de botões conforme solicitado
+
+    // Seção de Formulários (nível superior, mesmo nível de Cores do Tema)
+    $wp_customize->add_panel('cct_forms_panel', array(
+        'title' => __('Formulários', 'cct'),
+        'priority' => 35, // Posicionado após Cores do Tema
     ));
 
-    // Cores de Botões
-    $button_states = array(
-        'normal' => __('Normal', 'cct'),
-        'hover' => __('Hover', 'cct'),
-        'active' => __('Ativo', 'cct'),
-    );
+    // Subseção para Estilos de Campos
+    $wp_customize->add_section('cct_form_fields', array(
+        'title' => __('Campos de Formulário', 'cct'),
+        'panel' => 'cct_forms_panel',
+        'priority' => 10,
+    ));
 
-    foreach ($button_states as $state => $label) {
-        $wp_customize->add_setting("button_{$state}_color", array(
-            'default' => $state === 'normal' ? CCT_PRIMARY_COLOR : 
-                         ($state === 'hover' ? CCT_LINK_HOVER_COLOR : CCT_PRIMARY_LIGHT),
-            'sanitize_callback' => 'sanitize_hex_color',
-        ));
+    // Subseção para Botões
+    $wp_customize->add_section('cct_form_buttons', array(
+        'title' => __('Botões de Formulário', 'cct'),
+        'panel' => 'cct_forms_panel',
+        'priority' => 20,
+    ));
 
-        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, "button_{$state}_color", array(
-            'label' => sprintf(__('Cor do Botão (%s)', 'cct'), $label),
-            'section' => 'cct_button_colors',
-            'settings' => "button_{$state}_color",
-        )));
-    }
+    // ====================================
+    // Campos de Formulário
+    // ====================================
+    
+    // Cor do Texto dos Campos
+    $wp_customize->add_setting('form_input_text_color', array(
+        'default' => '#333333',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_text_color', array(
+        'label' => __('Cor do Texto dos Campos', 'cct'),
+        'section' => 'cct_form_fields',
+        'settings' => 'form_input_text_color',
+    )));
+
+    // Cor de Fundo dos Campos
+    $wp_customize->add_setting('form_input_bg_color', array(
+        'default' => '#ffffff',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_bg_color', array(
+        'label' => __('Cor de Fundo dos Campos', 'cct'),
+        'section' => 'cct_form_fields',
+        'settings' => 'form_input_bg_color',
+    )));
+
+    // Cor da Borda dos Campos
+    $wp_customize->add_setting('form_input_border_color', array(
+        'default' => '#cccccc',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_border_color', array(
+        'label' => __('Cor da Borda dos Campos', 'cct'),
+        'section' => 'cct_form_fields',
+        'settings' => 'form_input_border_color',
+    )));
+
+    // Cor da Borda ao Passar o Mouse (Hover)
+    $wp_customize->add_setting('form_input_border_hover_color', array(
+        'default' => '#999999',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_border_hover_color', array(
+        'label' => __('Cor da Borda ao Passar o Mouse', 'cct'),
+        'section' => 'cct_form_fields',
+        'settings' => 'form_input_border_hover_color',
+    )));
+
+    // Cor de Fundo ao Passar o Mouse (Hover)
+    $wp_customize->add_setting('form_input_bg_hover_color', array(
+        'default' => '#f9f9f9',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_bg_hover_color', array(
+        'label' => __('Cor de Fundo ao Passar o Mouse', 'cct'),
+        'section' => 'cct_form_fields',
+        'settings' => 'form_input_bg_hover_color',
+    )));
+
+    // ====================================
+    // Botões de Formulário
+    // ====================================
+    
+    // Cor de Fundo do Botão
+    $wp_customize->add_setting('form_button_bg_color', array(
+        'default' => CCT_PRIMARY_COLOR,
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_bg_color', array(
+        'label' => __('Cor de Fundo do Botão', 'cct'),
+        'section' => 'cct_form_buttons',
+        'settings' => 'form_button_bg_color',
+    )));
+
+    // Cor de Fundo do Botão ao Passar o Mouse (Hover)
+    $wp_customize->add_setting('form_button_bg_hover_color', array(
+        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_bg_hover_color', array(
+        'label' => __('Cor de Fundo ao Passar o Mouse', 'cct'),
+        'section' => 'cct_form_buttons',
+        'settings' => 'form_button_bg_hover_color',
+    )));
+
+    // Cor do Texto do Botão
+    $wp_customize->add_setting('form_button_text_color', array(
+        'default' => '#ffffff',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_text_color', array(
+        'label' => __('Cor do Texto do Botão', 'cct'),
+        'section' => 'cct_form_buttons',
+        'settings' => 'form_button_text_color',
+    )));
+
+    // Cor do Texto do Botão ao Passar o Mouse (Hover)
+    $wp_customize->add_setting('form_button_text_hover_color', array(
+        'default' => '#ffffff',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_text_hover_color', array(
+        'label' => __('Cor do Texto ao Passar o Mouse', 'cct'),
+        'section' => 'cct_form_buttons',
+        'settings' => 'form_button_text_hover_color',
+    )));
+
+    // Raio da Borda do Botão (aceita px, %, em, rem)
+    $wp_customize->add_setting('form_button_border_radius', array(
+        'default' => '4px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_button_border_radius', array(
+        'label' => __('Raio da Borda do Botão (ex: 4px, 5%, 0.5em)', 'cct'),
+        'description' => __('Use valores como 4px, 5%, 0.5em, etc.', 'cct'),
+        'section' => 'cct_form_buttons',
+        'type' => 'text',
+    ));
+
+    // Espaçamento Interno do Botão (top, right, bottom, left)
+    $wp_customize->add_setting('form_button_padding', array(
+        'default' => '10px 20px 10px 20px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_button_padding', array(
+        'label' => __('Espaçamento Interno (top right bottom left)', 'cct'),
+        'description' => __('Ex: 10px 20px 10px 20px (top, right, bottom, left)', 'cct'),
+        'section' => 'cct_form_buttons',
+        'type' => 'text',
+    ));
+    
+    // Borda do Botão
+    $wp_customize->add_setting('form_button_border_width', array(
+        'default' => '1px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_button_border_width', array(
+        'label' => __('Largura da Borda (ex: 1px, 2px, etc.)', 'cct'),
+        'section' => 'cct_form_buttons',
+        'type' => 'text',
+    ));
+    
+    $wp_customize->add_setting('form_button_border_color', array(
+        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_border_color', array(
+        'label' => __('Cor da Borda', 'cct'),
+        'section' => 'cct_form_buttons',
+        'settings' => 'form_button_border_color',
+    )));
+    
+    $wp_customize->add_setting('form_button_border_hover_color', array(
+        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_border_hover_color', array(
+        'label' => __('Cor da Borda ao Passar o Mouse', 'cct'),
+        'section' => 'cct_form_buttons',
+        'settings' => 'form_button_border_hover_color',
+    )));
 
     // Seção de Cores do Menu
     $wp_customize->add_section('cct_menu_colors', array(
@@ -1088,219 +1244,455 @@ function cct_sanitize_checkbox( $checked ) {
     return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
 
-// Output Customizer CSS
-function cct_customize_css() {
-    // Função para converter cores hex para rgba se necessário
-    function maybe_convert_to_rgba($color) {
-        // Se já for rgba, retorna como está
-        if (strpos($color, 'rgba') === 0) {
-            return $color;
-        }
-        
-        // Se for transparent, retorna transparent
-        if ($color === 'transparent') {
-            return $color;
-        }
-        
-        // Se for hex, converte para rgba com opacidade 1
-        if (strpos($color, '#') === 0) {
-            $hex = str_replace('#', '', $color);
-            if (strlen($hex) == 3) {
-                $r = hexdec(str_repeat(substr($hex, 0, 1), 2));
-                $g = hexdec(str_repeat(substr($hex, 1, 1), 2));
-                $b = hexdec(str_repeat(substr($hex, 2, 1), 2));
-            } else {
-                $r = hexdec(substr($hex, 0, 2));
-                $g = hexdec(substr($hex, 2, 2));
-                $b = hexdec(substr($hex, 4, 2));
-            }
-            return "rgba($r, $g, $b, 1)";
-        }
-        
-        // Se não for nenhum dos formatos conhecidos, retorna como está
+// Função para converter cores hex para rgba se necessário
+function maybe_convert_to_rgba($color) {
+    // Se já for rgba, retorna como está
+    if (strpos($color, 'rgba') === 0) {
         return $color;
     }
     
-    ?>
-    <script>
+    // Se for transparent, retorna transparent
+    if ($color === 'transparent') {
+        return $color;
+    }
+    
+    // Se for hex, converte para rgba com opacidade 1
+    if (strpos($color, '#') === 0) {
+        $hex = str_replace('#', '', $color);
+        if (strlen($hex) == 3) {
+            $r = hexdec(str_repeat(substr($hex, 0, 1), 2));
+            $g = hexdec(str_repeat(substr($hex, 1, 1), 2));
+            $b = hexdec(str_repeat(substr($hex, 2, 1), 2));
+        } else {
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
+        }
+        return "rgba($r, $g, $b, 1)";
+    }
+    
+    // Se não for nenhum dos formatos conhecidos, retorna como está
+    return $color;
+}
+
+// Output Customizer CSS
+function cct_customize_css() {
+    
+    // Iniciar a saída do CSS
+    echo '<style type="text/css' . '" id="cct-custom-css">' . "\n";
+    
+    // Obter valores dos temas
+    $primary_color = defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771';
+    
+    // Estilos para campos de formulário
+    echo '.input-form-uenf,
+    .textarea-form-uenf,
+    .select-form-uenf {
+        width: 100%;
+        margin-bottom: 15px;
+        font-family: inherit;
+        font-size: 16px;
+        line-height: 1.5;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ';
+        border: 1px solid ' . esc_attr(get_theme_mod('form_input_border_color', '#cccccc')) . ';
+        padding: 8px 12px;
+    }' . "\n\n";
+    
+    // Estilo para hover nos campos
+    echo '.input-form-uenf:hover,
+    .textarea-form-uenf:hover,
+    .select-form-uenf:hover {
+        border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . ';
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ';
+    }' . "\n\n";
+    
+    // Estilo para foco nos campos
+    echo '.input-form-uenf:focus,
+    .textarea-form-uenf:focus,
+    .select-form-uenf:focus {
+        outline: none;
+        border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . ';
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ';
+        box-shadow: 0 0 0 2px ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . '20;
+    }' . "\n\n";
+    
+    // Estilo para textarea
+    echo '.textarea-form-uenf {
+        min-height: 120px;
+        resize: vertical;
+    }' . "\n\n";
+    
+    // Estilo para select personalizado
+    echo '.select-form-uenf {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23' . ltrim(esc_attr(get_theme_mod('form_input_text_color', '#333333')), '#') . '\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+        padding-right: 35px;
+    }' . "\n\n";
+    
+    // Estilos para botões
+    echo '.btn-submit-uenf,
+    .btn-form-uenf,
+    button[type="submit"].btn-uenf {
+        display: inline-block;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 20px')) . ';
+        font-size: 16px;
+        line-height: 1.5;
+        border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '4px')) . ';
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';
+        color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';
+        border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';
+    }' . "\n\n";
+    
+    // Estilo hover para botões
+    echo '.btn-submit-uenf:hover,
+    .btn-form-uenf:hover,
+    button[type="submit"].btn-uenf:hover {
+        background-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color . 'e6')) . ';
+        color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';
+        border-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . 'e6')) . ';
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }' . "\n\n";
+    
+    // Estilo ativo para botões
+    echo '.btn-submit-uenf:active,
+    .btn-form-uenf:active,
+    button[type="submit"].btn-uenf:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }' . "\n\n";
+    
+    // Estilo para foco no botão
+    echo '.btn-submit-uenf:focus,
+    .btn-form-uenf:focus,
+    button[type="submit"].btn-uenf:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . '40')) . ';
+    }' . "\n\n";
+    
+    // Estilo para labels
+    echo '.form-label-uenf {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';
+    }' . "\n\n";
+    
+    // Estilo para grupos de formulário
+    echo '.form-group-uenf {
+        margin-bottom: 20px;
+    }' . "\n";
+    
+    // Adicionar script para forçar atualização do cache
+    echo '<script>
     // Forçar atualização do cache do navegador
-    if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+    if (window.performance && window.performance.navigation && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
         window.location.reload();
     }
-    </script>
-    <style type="text/css">
-        /* Debug: Valores atuais
-        --shortcut-close-button-bg: <?php echo esc_attr($debug_values['shortcut_close_button_bg']); ?>;
-        --shortcut-close-button-text-color: <?php echo esc_attr($debug_values['shortcut_close_button_text_color']); ?>;
-        */
-        :root {
-            --primary-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('primary_color', '#1d3771'))); ?>;
-            --secondary-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('secondary_color', '#4b6397'))); ?>;
-            --text-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('text_color', '#333333'))); ?>;
-            --button-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('button_normal_color', '#1d3771'))); ?>;
-            --button-hover-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('button_hover_color', '#152a54'))); ?>;
-            --button-active-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('button_active_color', '#0f1f3d'))); ?>;
-            --menu-link-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_link_color', '#ffffff'))); ?>;
-            --menu-active-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_active_color', '#1d3771'))); ?>;
-            --menu-hover-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_hover_color', '#2a4a8c'))); ?>;
-            --menu-selected-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_selected_color', '#1d3771'))); ?>;
-            --link-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('link_color', '#26557d'))); ?>;
-            --link-hover-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('link_hover_color', '#26557d'))); ?>;
-            
-            /* Painel de Atalhos - Cores */
-            --shortcut-button-bg: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_button_bg', CCT_PRIMARY_COLOR))); ?>;
-            --shortcut-button-icon-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_button_icon_color', defined('CCT_WHITE') ? CCT_WHITE : '#ffffff'))); ?>;
-            --shortcut-button-size: <?php echo esc_attr(get_theme_mod('shortcut_button_size', '50')); ?>px;
-            --shortcut-panel-bg: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_panel_bg', CCT_PRIMARY_COLOR))); ?>;
-            --shortcut-panel-width: <?php 
-                $width = get_theme_mod('shortcut_panel_width', '300px');
-                // Garante que o valor tenha uma unidade
-                if (is_numeric($width)) {
-                    $width .= 'px';
-                }
-                echo esc_attr($width); 
-            ?>;
-            --shortcut-header-bg: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_header_bg', 'rgba(0, 0, 0, 0.1)'))); ?>;
-            --shortcut-header-text-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_header_text_color', defined('CCT_WHITE') ? CCT_WHITE : '#ffffff'))); ?>;
-            --shortcut-item-bg: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_bg', 'transparent'))); ?>;
-            --shortcut-item-text-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_text_color', defined('CCT_WHITE') ? CCT_WHITE : '#ffffff'))); ?>;
-            --shortcut-item-hover-bg: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_hover_bg', '#ffffff'))); ?>;
-            --shortcut-item-hover-text-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_hover_text_color', CCT_PRIMARY_COLOR))); ?>;
-            --shortcut-item-hover-border-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_hover_border_color', 'rgba(255, 255, 255, 0.1)'))); ?>;
-            --shortcut-item-font-size: <?php echo esc_attr(get_theme_mod('shortcut_item_font_size', '16')); ?>px;
-            --shortcut-close-button-bg: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_close_button_bg', '#1d3771'))); ?>;
-            --shortcut-close-button-text-color: <?php echo esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_close_button_text_color', defined('CCT_WHITE') ? CCT_WHITE : '#ffffff'))); ?>;
-        }
+    </script>';
+    
+    // Adicionar variáveis CSS
+    $primary_color = defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1d3771';
+    $white_color = defined('CCT_WHITE') ? CCT_WHITE : '#ffffff';
+    $shortcut_panel_width = get_theme_mod('shortcut_panel_width', '300px');
+    if (is_numeric($shortcut_panel_width)) {
+        $shortcut_panel_width .= 'px';
+    }
+    
+    // Adicionar todas as variáveis CSS em um único bloco
+    echo '<style type="text/css">
+    :root {
+        /* Cores principais */
+        --primary-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('primary_color', '#1d3771'))) . ';
+        --secondary-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('secondary_color', '#4b6397'))) . ';
+        --text-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('text_color', '#333333'))) . ';
+        
+        /* Botões */
+        --button-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('button_normal_color', '#1d3771'))) . ';
+        --button-hover-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('button_hover_color', '#152a54'))) . ';
+        --button-active-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('button_active_color', '#0f1f3d'))) . ';
+        
+        /* Menu */
+        --menu-link-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_link_color', '#ffffff'))) . ';
+        --menu-active-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_active_color', '#1d3771'))) . ';
+        --menu-hover-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_hover_color', '#2a4a8c'))) . ';
+        --menu-selected-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('menu_selected_color', '#1d3771'))) . ';
+        
+        /* Links */
+        --link-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('link_color', '#26557d'))) . ';
+        --link-hover-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('link_hover_color', '#26557d'))) . ';
+        
+        /* Painel de Atalhos */
+        --shortcut-button-bg: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_button_bg', $primary_color))) . ';
+        --shortcut-button-icon-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_button_icon_color', $white_color))) . ';
+        --shortcut-button-size: ' . esc_attr(get_theme_mod('shortcut_button_size', '50')) . 'px;
+        --shortcut-panel-bg: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_panel_bg', $primary_color))) . ';
+        --shortcut-panel-width: ' . esc_attr($shortcut_panel_width) . ';
+        --shortcut-header-bg: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_header_bg', 'rgba(0, 0, 0, 0.1)'))) . ';
+        --shortcut-header-text-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_header_text_color', $white_color))) . ';
+        --shortcut-item-bg: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_bg', 'transparent'))) . ';
+        --shortcut-item-text-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_text_color', $white_color))) . ';
+        --shortcut-item-hover-bg: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_hover_bg', '#ffffff'))) . ';
+        --shortcut-item-hover-text-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_hover_text_color', $primary_color))) . ';
+        --shortcut-item-hover-border-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_item_hover_border_color', 'rgba(255, 255, 255, 0.1)'))) . ';
+        --shortcut-item-font-size: ' . esc_attr(get_theme_mod('shortcut_item_font_size', '16')) . 'px;
+        --shortcut-close-button-bg: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_close_button_bg', $primary_color))) . ';
+        --shortcut-close-button-text-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('shortcut_close_button_text_color', $white_color))) . ';
+    }
+    </style>';
 
-        body {
-            color: var(--text-color);
-            font-family: <?php echo esc_attr(get_theme_mod('body_font_family', 'Times, system-ui, Arial, Ubuntu, "Open Sans", "Helvetica Neue", sans-serif')); ?>;
-            font-weight: 300;
-        }
+    // Adicionar estilos para o body, links e tipografia
+    echo '<style type="text/css">
+    /* Estilos para o body */
+    body {
+        color: var(--text-color);
+        font-family: ' . esc_attr(get_theme_mod('body_font_family', 'Times, system-ui, Arial, Ubuntu, "Open Sans", "Helvetica Neue", sans-serif')) . ';
+        font-weight: 300;
+    }
+    
+    /* Estilos para links */
+    body a, 
+    .site-content a, 
+    #content a, 
+    article a, 
+    .entry-content a {
+        color: var(--link-color) !important;
+        text-decoration: none;
+    }
+    
+    body a:hover, 
+    .site-content a:hover {
+        color: var(--link-hover-color) !important;
+    }
+    
+    /* Estilos para texto */
+    body, 
+    p, 
+    .site-content, 
+    #content, 
+    article, 
+    .entry-content {
+        color: var(--text-color) !important;
+    }
+    
+    /* Estilos para títulos */
+    h1, h2, h3 {
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    h4, h5, h6 {
+        font-weight: 500;
+        color: var(--secondary-color);
+    }
+    
+    /* Estilos para botões */
+    .button {
+        background-color: var(--button-color);
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-        /* Para links */
-        body a, 
-        .site-content a, 
-        #content a, 
-        article a, 
-        .entry-content a {
-            color: var(--link-color) !important;
-            text-decoration: none;
-        }
+    .button:hover {
+        background-color: var(--button-hover-color);
+    }
 
-        body a:hover, .site-content a:hover /* etc... */ {
-            color: var(--link-hover-color) !important;
-        }
+    .button:active {
+        background-color: var(--button-active-color);
+    }
 
+    /* Estilos para menu */
+    .menu-item a {
+        color: var(--menu-link-color);
+        transition: color 0.3s ease;
+    }
 
-        /* Para texto */
-        body, 
-        p, 
-        .site-content, 
-        #content, 
-        article, 
-        .entry-content {
-            color: var(--text-color) !important;
-        }
+    .menu-item.current-menu-item a {
+        color: var(--menu-selected-color);
+    }
 
-        h1, h2, h3 {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
+    .menu-item a:hover {
+        color: var(--menu-hover-color);
+    }
 
-        h4, h5, h6 {
-            font-weight: 500;
-            color: var(--secondary-color);
-        }
+    .menu-item.current-menu-item a {
+        color: var(--menu-active-color);
+    }
 
-        .button {
-            background-color: var(--button-color);
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: var(--button-hover-color);
-        }
-
-        .button:active {
-            background-color: var(--button-active-color);
-        }
-
-        .menu-item a {
-            color: var(--menu-link-color);
-            transition: color 0.3s ease;
-        }
-
-        .menu-item.current-menu-item a {
-            color: var(--menu-selected-color);
-        }
-
-        .menu-item a:hover {
-            color: var(--menu-hover-color);
-        }
-
-        .menu-item.current-menu-item a {
-            color: var(--menu-active-color);
-        }
-
-/*        body {
-            font-family: <?php echo esc_attr( get_theme_mod( 'body_font_family', 'Arial, sans-serif' ) ); ?>;
-        }
-        */
-        a, .primary-color {
-            color: <?php echo esc_attr( get_theme_mod( 'primary_color', '#0073aa' ) ); ?>;
-        }
-
-        .site-header {
-            <?php 
-            $header_bg_color = get_theme_mod( 'header_background_color', '#ffffff' );
-            if ( $header_bg_color ) {
-                echo "background-color: " . esc_attr( $header_bg_color ) . ";\n";
-            }
-
-            $header_bg_image = get_theme_mod( 'header_background_image' );
-            if ( $header_bg_image ) {
-                echo "background-image: url('" . esc_url( $header_bg_image ) . "');\n";
-                echo "background-size: cover;\n";
-                echo "background-position: center;\n";
-            }
-
-            $header_padding = get_theme_mod( 'header_padding', '20px 20px 20px 20px' );
-            if ( $header_padding ) {
-                echo "padding: " . esc_attr( $header_padding ) . ";\n";
-            }
-
-            $header_margin = get_theme_mod( 'header_margin', '0 0 0 0' );
-            if ( $header_margin ) {
-                echo "margin: " . esc_attr( $header_margin ) . ";\n";
-            }
-
-            $header_height = get_theme_mod( 'header_height', 'auto' );
-            if ( $header_height ) {
-                echo "height: " . esc_attr( $header_height ) . ";\n";
-            }
-            
-            $header_layout = get_theme_mod( 'header_layout', 'default' );
-            if ( 'centered' === $header_layout ) {
-                echo "text-align: center;\n";
-            }
-            ?>
-        }
-
-        .footer-widgets {
-            <?php
-            $footer_columns = get_theme_mod( 'footer_columns', 4 );
-            echo "display: grid;\n";
-            echo "grid-template-columns: repeat(" . esc_attr( $footer_columns ) . ", 1fr);\n";
-            echo "gap: 30px;\n";
-            ?>
-        }
-    </style>
-    <?php
+    /* Cores primárias */
+    a, .primary-color {
+        color: ' . esc_attr(get_theme_mod('primary_color', '#0073aa')) . ';
+    }
+    
+    /* Estilos para o cabeçalho */
+    .site-header {';
+    
+    // Adicionar estilos dinâmicos para o cabeçalho
+    $header_bg_color = get_theme_mod('header_background_color', '#ffffff');
+    if ($header_bg_color) {
+        echo 'background-color: ' . esc_attr($header_bg_color) . ';';
+    }
+    
+    $header_bg_image = get_theme_mod('header_background_image');
+    if ($header_bg_image) {
+        echo 'background-image: url(\'' . esc_url($header_bg_image) . '\');';
+        echo 'background-size: cover;';
+        echo 'background-position: center;';
+    }
+    
+    $header_padding = get_theme_mod('header_padding', '20px 20px 20px 20px');
+    if ($header_padding) {
+        echo 'padding: ' . esc_attr($header_padding) . ';';
+    }
+    
+    $header_margin = get_theme_mod('header_margin', '0 0 0 0');
+    if ($header_margin) {
+        echo 'margin: ' . esc_attr($header_margin) . ';';
+    }
+    
+    $header_height = get_theme_mod('header_height', 'auto');
+    if ($header_height) {
+        echo 'height: ' . esc_attr($header_height) . ';';
+    }
+    
+    $header_layout = get_theme_mod('header_layout', 'default');
+    if ('centered' === $header_layout) {
+        echo 'text-align: center;';
+    }
+    
+    echo '}';
+    
+    // Estilos para o rodapé
+    $footer_columns = get_theme_mod('footer_columns', 4);
+    echo '.footer-widgets {';
+    echo 'display: grid;';
+    echo 'grid-template-columns: repeat(' . esc_attr($footer_columns) . ', 1fr);';
+    echo 'gap: 30px;';
+    echo '}';
+    
+    // Estilos para Campos de Formulário
+    echo '.input-form-uenf,
+    .textarea-form-uenf,
+    .select-form-uenf {';
+    echo 'width: 100%;';
+    echo 'margin-bottom: 15px;';
+    echo 'font-family: inherit;';
+    echo 'font-size: 16px;';
+    echo 'line-height: 1.5;';
+    echo 'transition: all 0.3s ease;';
+    echo 'box-sizing: border-box;';
+    echo 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ';';
+    echo 'border: 1px solid ' . esc_attr(get_theme_mod('form_input_border_color', '#cccccc')) . ';';
+    echo 'padding: 8px 12px;';
+    echo '}';
+    
+    // Estilo para foco nos campos
+    echo '.input-form-uenf:focus,
+    .textarea-form-uenf:focus,
+    .select-form-uenf:focus {';
+    echo 'outline: none;';
+    echo 'border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ';';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ';';
+    echo 'box-shadow: 0 0 0 2px rgba(29, 55, 113, 0.1);';
+    echo '}';
+    
+    // Estilo para textarea
+    echo '.textarea-form-uenf {';
+    echo 'min-height: 120px;';
+    echo 'resize: vertical;';
+    echo '}';
+    
+    // Estilo para select personalizado
+    echo '.select-form-uenf {';
+    echo '-webkit-appearance: none;';
+    echo '-moz-appearance: none;';
+    echo 'background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e");';
+    echo 'background-repeat: no-repeat;';
+    echo 'background-position: right 10px center;';
+    echo 'background-size: 1em;';
+    echo 'padding-right: 2.5em;';
+    echo '}';
+    
+    // Estilos para Botões de Formulário
+    echo '.btn-submit-uenf,
+    .btn-form-uenf,
+    button[type="submit"].btn-uenf {';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';';
+    echo 'color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';';
+    echo 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '4px')) . ';';
+    echo 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 20px')) . ';';
+    echo 'border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';';
+    echo 'cursor: pointer;';
+    echo 'font-size: 16px;';
+    echo 'font-weight: 500;';
+    echo 'text-align: center;';
+    echo 'text-decoration: none;';
+    echo 'display: inline-block;';
+    echo 'transition: all 0.3s ease;';
+    echo '}';
+    
+    // Estilo para hover do botão
+    echo '.btn-submit-uenf:hover,
+    .btn-form-uenf:hover,
+    button[type="submit"].btn-uenf:hover {';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color)) . ';';
+    echo 'color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';';
+    echo 'border-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color)) . ';';
+    echo 'transform: translateY(-1px);';
+    echo 'box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);';
+    echo '}';
+    
+    // Estilo para botão ativo
+    echo '.btn-submit-uenf:active,
+    .btn-form-uenf:active,
+    button[type="submit"].btn-uenf:active {';
+    echo 'transform: translateY(0);';
+    echo 'box-shadow: none;';
+    echo '}';
+    
+    // Estilo para foco no botão
+    echo '.btn-submit-uenf:focus,
+    .btn-form-uenf:focus,
+    button[type="submit"].btn-uenf:focus {';
+    echo 'outline: none;';
+    echo 'box-shadow: 0 0 0 2px rgba(29, 55, 113, 0.25);';
+    echo '}';
+    
+    // Estilo para labels
+    echo '.form-label-uenf {';
+    echo 'display: block;';
+    echo 'margin-bottom: 5px;';
+    echo 'font-weight: 500;';
+    echo 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';';
+    echo '}';
+    
+    // Estilo para grupos de formulário
+    echo '.form-group-uenf {';
+    echo 'margin-bottom: 20px;';
+    echo '}';
+    
+    // Fechar a tag de estilo
+    echo '</style>';
 }
 add_action('wp_head', 'cct_customize_css', 100); 

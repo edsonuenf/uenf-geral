@@ -32,64 +32,154 @@
 
                     <h4><?php echo get_bloginfo( 'name' ); ?></h4>
                     <p><strong>Email:</strong> <?php dynamic_sidebar( 'endereco-email-setor' ); ?><br>
-                    <strong>Telefone:</strong> <?php 
-                        ob_start();
-                        dynamic_sidebar('telefone-setor');
-                        $telefone_widget = ob_get_clean();
-                        echo formatarTelefoneBrasil($telefone_widget);
-                    ?></p>
+                    <strong>Telefone:</strong> <?php dynamic_sidebar('telefone-setor'); ?></p>
                 </div>
             </div>
             <?php if (get_theme_mod('disable_footer_sidebar', false)) : ?>
-            <style>
-                .footer-widget:last-child {
-                    display: none;
-                }
-            </style>
+            <?php add_filter('body_class', function($classes) { $classes[] = 'footer-sidebar-disabled'; return $classes; }); ?>
             <?php endif; ?>
         </div>
     </div>
 </footer>
 </div><!-- #page -->
 
-<!-- Botão de atalhos -->
-<div class="shortcut-icon" data-start-y="50%" title="Atalhos Rápidos">
-<i class="fas fa-cog"></i>
-</div>
-
-<!-- Painel de atalhos -->
-<div class="shortcut-panel">
-<div class="shortcut-panel-header">
-    <h3>Atalhos Rápidos</h3>
-    <button class="close-panel">&times;</button>
-</div>
-<div class="shortcut-panel-content">
-    <a href="<?php echo home_url(); ?>" class="shortcut-item">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
-    <a href="<?php echo esc_url(home_url()); ?>/contato" class="shortcut-item">
-        <i class="fas fa-envelope"></i>
-        <span>Contato</span>
-    </a>
-    <a href="#footer" class="shortcut-item">
-        <i class="fas fa-phone"></i>
-        <span>Telefone</span>
-    </a>
-    <a href="<?php echo esc_url(home_url()); ?>/contato" target="_blank" class="shortcut-item">
-        <i class="fas fa-map-marker-alt"></i>
-        <span>Localização</span>
-    </a>
-</div>
-</div>
-
 <a href="#" class="back-to-top">
-<i class="fas fa-arrow-up"></i>
+    <i class="fas fa-arrow-up"></i>
 </a>
 
 <?php wp_footer(); ?>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/shortcut-panel.js"></script>
+<?php // Painel de atalhos reativado com container dedicado
+if (!is_admin()) : ?>
+<!-- Container dedicado para o painel de atalhos -->
+<div id="uenf-shortcut-panel-container">
+    <div class="shortcut-icon" data-start-y="50%" title="Atalhos Rápidos">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <div class="shortcut-panel">
+        <div class="shortcut-panel-header">
+            <h3>Atalhos Rápidos</h3>
+            <button class="close-panel" aria-label="Fechar painel de atalhos">&times;</button>
+        </div>
+        <div class="shortcut-panel-content">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="shortcut-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/contato')); ?>" class="shortcut-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contato</span>
+            </a>
+            <a href="#footer" class="shortcut-item" data-scroll="smooth">
+                <i class="fas fa-phone"></i>
+                <span>Telefone</span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/localizacao')); ?>" class="shortcut-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Localização</span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/noticias')); ?>" class="shortcut-item">
+                <i class="fas fa-newspaper"></i>
+                <span>Notícias</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Garante que o DOM esteja totalmente carregado
+jQuery(document).ready(function($) {
+    // Verifica se o container existe
+    var $panelContainer = $('#uenf-shortcut-panel-container');
+    if ($panelContainer.length === 0) return;
+    
+    // Move o container para o final do body para evitar problemas de z-index
+    $panelContainer.appendTo('body');
+    
+    // Inicializa o painel de atalhos
+    function initShortcutPanel() {
+        var $icon = $panelContainer.find('.shortcut-icon');
+        var $panel = $panelContainer.find('.shortcut-panel');
+        var $closeBtn = $panelContainer.find('.close-panel');
+        
+        // Função para abrir o painel
+        function openPanel() {
+            $panel.addClass('active');
+            $icon.addClass('active');
+            $('body').css('overflow', 'hidden');
+        }
+        
+        // Função para fechar o painel
+        function closePanel() {
+            $panel.removeClass('active');
+            $icon.removeClass('active');
+            $('body').css('overflow', '');
+        }
+        
+        // Evento de clique no ícone
+        $icon.on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if ($panel.hasClass('active')) {
+                closePanel();
+            } else {
+                openPanel();
+            }
+        });
+        
+        // Evento de clique no botão fechar
+        $closeBtn.on('click', function(e) {
+            e.preventDefault();
+            closePanel();
+        });
+        
+        // Fechar ao clicar fora do painel
+        $(document).on('click', function(e) {
+            if ($(e.target).closest('.shortcut-panel').length === 0 && 
+                $(e.target).closest('.shortcut-icon').length === 0) {
+                closePanel();
+            }
+        });
+        
+        // Prevenir fechamento ao clicar dentro do painel
+        $panel.on('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        // Fechar com a tecla ESC
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                closePanel();
+            }
+        });
+        
+        // Scroll suave para links internos
+        $('.shortcut-item[href^="#"]').on('click', function(e) {
+            var target = $(this).attr('href');
+            if (target !== '#') {
+                e.preventDefault();
+                closePanel();
+                
+                if ($(target).length) {
+                    $('html, body').animate({
+                        scrollTop: $(target).offset().top - 100
+                    }, 800);
+                }
+            }
+        });
+        
+        console.log('Painel de atalhos inicializado com sucesso!');
+    }
+    
+    // Inicializa o painel
+    initShortcutPanel();
+});
+</script>
+
+<script src="<?php echo esc_url(get_template_directory_uri() . '/js/shortcut-panel.js'); ?>"></script>
+<?php endif; ?>
 
 </body>
 </html> 

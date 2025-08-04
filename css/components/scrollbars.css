@@ -1,5 +1,5 @@
 /* ========================================
-   VARIÁVEIS PARA PERSONALIZAÇÃO DAS BARRAS DE ROLAGEM
+   VARIÁVEIS PARA PERSONALIZAÇÃO DAS BARRAS DE ROLAGEM E SUBMENUS
    Baseado no esquema de cores oficiais do tema UENF
    Cores oficiais: #1D3771 (azul escuro), #4B6397 (azul médio), #F5F5F5 (fundo claro)
 ========================================= */
@@ -8,20 +8,30 @@
   --scrollbar-width: 10px;
   
   /* Cores da trilha (fundo) */
-  --scrollbar-track-bg: rgba(29, 55, 113, 0.1); /* Azul UENF muito claro */
-  --scrollbar-track-border: 1px solid rgba(29, 55, 113, 0.2);
-  --scrollbar-track-border-radius: 6px;
+  --scrollbar-track-bg: rgba(29, 55, 113, 0.05); /* Azul UENF muito claro */
+  --scrollbar-track-border: 1px solid rgba(29, 55, 113, 0.1);
+  --scrollbar-track-border-radius: 8px;
   
   /* Cores do thumb (indicador) */
-  --scrollbar-thumb-bg: #1d3771; /* Azul UENF sólido */
-  --scrollbar-thumb-hover-bg: #2a4a8a; /* Azul UENF um pouco mais claro */
+  --scrollbar-thumb-bg: rgba(29, 55, 113, 0.5); /* Azul UENF com transparência */
+  --scrollbar-thumb-hover-bg: rgba(29, 55, 113, 0.7); /* Azul UENF um pouco mais forte */
   --scrollbar-thumb-active-bg: #1a315f; /* Azul UENF mais escuro */
-  --scrollbar-thumb-border: 1px solid rgba(255, 255, 255, 0.3);
+  --scrollbar-thumb-border: 2px solid transparent;
   --scrollbar-thumb-border-radius: 6px;
   
   /* Sombras */
-  --scrollbar-thumb-shadow: 0 0 5px rgba(29, 55, 113, 0.2);
-  --scrollbar-track-shadow: inset 0 0 3px rgba(29, 55, 113, 0.1);
+  --scrollbar-thumb-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --scrollbar-track-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+  
+  /* Cores para submenus */
+  --submenu-bg: rgba(0, 0, 0, 0.05);
+  --submenu-hover-bg: rgba(29, 55, 113, 0.1);
+  --submenu-active-bg: rgba(29, 55, 113, 0.15);
+  --submenu-border-color: rgba(255, 255, 255, 0.1);
+  --submenu-indicator: '›';
+  --submenu-indicator-color: rgba(255, 255, 255, 0.7);
+  --submenu-indicator-active: rotate(90deg);
+  --submenu-transition: all 0.3s ease;
 }
 
 /* ========================================
@@ -31,18 +41,84 @@
 [data-theme="dark"], 
 .dark-theme,
 body.dark {
-  --scrollbar-track-bg: rgba(29, 55, 113, 0.15); /* Azul UENF escuro com transparência */
+  --scrollbar-track-bg: rgba(29, 55, 113, 0.15);
   --scrollbar-track-border: 1px solid rgba(29, 55, 113, 0.3);
-  --scrollbar-thumb-bg: #2a4a8a; /* Azul UENF médio */
-  --scrollbar-thumb-hover-bg: #1d3771; /* Azul UENF escuro */
-  --scrollbar-thumb-active-bg: #1a315f; /* Azul UENF mais escuro */
-  --scrollbar-thumb-border: 1px solid rgba(255, 255, 255, 0.2);
-  --scrollbar-track-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
-  --scrollbar-thumb-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  --scrollbar-thumb-bg: rgba(74, 108, 180, 0.6);
+  --scrollbar-thumb-hover-bg: rgba(74, 108, 180, 0.8);
+  --scrollbar-thumb-active-bg: #4a6cb4;
+  --scrollbar-thumb-border: 2px solid rgba(255, 255, 255, 0.05);
+  --scrollbar-track-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  
+  /* Ajustes para submenus no tema escuro */
+  --submenu-bg: rgba(255, 255, 255, 0.03);
+  --submenu-hover-bg: rgba(74, 108, 180, 0.15);
+  --submenu-active-bg: rgba(74, 108, 180, 0.25);
+  --submenu-border-color: rgba(255, 255, 255, 0.05);
+  --submenu-indicator-color: rgba(255, 255, 255, 0.6);
 }
 
 /* ========================================
-   WEBKIT BROWSERS (Chrome, Safari, Edge)
+   MELHORIAS PARA MENUS E SUBMENUS
+   Estilos para melhorar a usabilidade e acessibilidade
+========================================= */
+/* Removido os pseudo-elementos ::after que causavam duplicação de setas */
+/* As setas agora são controladas apenas pelo JavaScript */
+
+/* Mantendo o espaçamento para o indicador que será adicionado pelo JS */
+.menu-item-has-children > a,
+.page_item_has_children > a {
+  position: relative;
+  padding-right: 30px !important; /* Espaço para o indicador */
+}
+
+/* Estilo para subníveis */
+.new-menu .sub-menu,
+.new-menu .children {
+  position: relative;
+  border-left: 3px solid var(--submenu-border-color);
+  margin-left: 12px;
+  padding-left: 5px;
+  overflow: hidden;
+  transition: var(--submenu-transition);
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Quando o submenu está ativo/aberto */
+.new-menu .menu-item-active > .sub-menu,
+.new-menu .menu-item-active > .children,
+.new-menu .page_item_has_children.current-menu-item > .children {
+  max-height: 2000px; /* Valor alto para acomodar o conteúdo */
+  opacity: 1;
+  visibility: visible;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Destaque para o item ativo */
+.new-menu .current-menu-item > a,
+.new-menu .current-menu-ancestor > a,
+.new-menu .menu-item-active > a {
+  background: var(--submenu-active-bg) !important;
+  border-left: 3px solid #fff !important;
+  padding-left: 20px !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+}
+
+/* Efeito de hover nos itens do menu */
+.new-menu > li > a:hover,
+.new-menu .sub-menu > li > a:hover,
+.new-menu .children > li > a:hover {
+  background: var(--submenu-hover-bg) !important;
+  padding-left: 25px !important;
+  transition: var(--submenu-transition);
+}
+
+/* ========================================
+   BARRA DE ROLAGEM - WEBKIT (Chrome, Safari, Edge)
 ========================================= */
 /* Largura da barra de rolagem */
 ::-webkit-scrollbar {
@@ -122,67 +198,7 @@ body.dark {
 /* ========================================
    BARRAS DE ROLAGEM PARA MENUS
    Estilos específicos para os menus suspensos
-========================================= */
-.uenf-nav ul.sub-menu,
-.uenf-nav ul.children {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.uenf-nav ul.sub-menu::-webkit-scrollbar,
-.uenf-nav ul.children::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.uenf-nav ul.sub-menu::-webkit-scrollbar-track,
-.uenf-nav ul.children::-webkit-scrollbar-track {
-  background: rgba(29, 55, 113, 0.1); /* Fundo azul UENF muito claro */
-  border: 1px solid rgba(29, 55, 113, 0.2);
-  border-radius: 3px;
-  margin: 5px 0;
-}
-
-.uenf-nav ul.sub-menu::-webkit-scrollbar-thumb,
-.uenf-nav ul.children::-webkit-scrollbar-thumb {
-  background: #1d3771; /* Azul UENF escuro */
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-.uenf-nav ul.sub-menu::-webkit-scrollbar-thumb:hover,
-.uenf-nav ul.children::-webkit-scrollbar-thumb:hover {
-  background: #2a4a8a; /* Azul UENF um pouco mais claro */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilo para o tema escuro */
-[data-theme="dark"] .uenf-nav ul.sub-menu::-webkit-scrollbar-track,
-[data-theme="dark"] .uenf-nav ul.children::-webkit-scrollbar-track,
-.dark-theme .uenf-nav ul.sub-menu::-webkit-scrollbar-track,
-.dark-theme .uenf-nav ul.children::-webkit-scrollbar-track {
-  background: rgba(29, 55, 113, 0.2); /* Fundo azul UENF escuro com transparência */
-  border: 1px solid rgba(29, 55, 113, 0.3);
-}
-
-[data-theme="dark"] .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb,
-[data-theme="dark"] .uenf-nav ul.children::-webkit-scrollbar-thumb,
-.dark-theme .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb,
-.dark-theme .uenf-nav ul.children::-webkit-scrollbar-thumb {
-  background: #1d3771; /* Azul UENF escuro */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-[data-theme="dark"] .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb:hover,
-[data-theme="dark"] .uenf-nav ul.children::-webkit-scrollbar-thumb:hover,
-.dark-theme .uenf-nav ul.sub-menu::-webkit-scrollbar-thumb:hover,
-.dark-theme .uenf-nav ul.children::-webkit-scrollbar-thumb:hover {
-  background: #2a4a8a; /* Azul UENF um pouco mais claro */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
+=========================================/* Estilos do menu foram movidos para o novo componente em components/menu/ */
 
 /* ========================================
    RESPONSIVIDADE
@@ -192,11 +208,7 @@ body.dark {
     --scrollbar-width: 6px;
   }
   
-  .uenf-nav ul.sub-menu,
-  .uenf-nav ul.children {
-    max-height: 60vh;
-    overflow-y: auto;
-  }
+  /* Estilos do menu foram movidos para o novo componente em components/menu/ */
 }
 
 /* ========================================

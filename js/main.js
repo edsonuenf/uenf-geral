@@ -31,12 +31,12 @@
         element.classList.remove('menu-item-active');
         
         // Fecha o submenu direto
-        const submenu = element.querySelector('> .sub-menu, > .children');
+        const submenu = element.querySelector('.sub-menu') || element.querySelector('.children');
         if (submenu) {
             submenu.classList.remove('show');
             
             // Remove a rotação da seta
-            const toggle = element.querySelector('> a > .submenu-toggle');
+            const toggle = element.querySelector('a .submenu-toggle');
             if (toggle) {
                 toggle.classList.remove('rotated');
             }
@@ -50,7 +50,7 @@
     // Função para verificar se um elemento tem submenu aberto
     function hasOpenSubmenu(element) {
         if (!element) return false;
-        const submenu = element.querySelector('> .sub-menu.show, > .children.show');
+        const submenu = element.querySelector('.sub-menu.show') || element.querySelector('.children.show');
         return submenu !== null;
     }
     
@@ -58,9 +58,10 @@
     function closeAllSubmenus() {
         document.querySelectorAll('.menu-item-has-children, .page_item_has_children').forEach(item => {
             item.classList.remove('menu-item-active');
-            const submenu = item.querySelector('> .sub-menu, > .children');
+            // Usando seletores separados para evitar problemas de sintaxe
+            const submenu = item.querySelector('.sub-menu') || item.querySelector('.children');
             if (submenu) submenu.classList.remove('show');
-            const toggle = item.querySelector('> a > .submenu-toggle');
+            const toggle = item.querySelector('a .submenu-toggle');
             if (toggle) {
                 toggle.classList.remove('rotated');
                 // Garante que a seta aponte para baixo
@@ -73,7 +74,7 @@
     // Submenu active state
     function initSubmenuActive() {
         // Remove ícones duplicados que possam ter sido adicionados pelo WordPress
-        document.querySelectorAll('.menu-item-has-children > a > .submenu-toggle, .page_item_has_children > a > .submenu-toggle').forEach(icon => {
+        document.querySelectorAll('.menu-item-has-children a .submenu-toggle, .page_item_has_children a .submenu-toggle').forEach(icon => {
             icon.remove();
         });
         
@@ -107,7 +108,7 @@
                 if (isSubmenu) {
                     // Verifica se o clique foi no link ou na seta
                     const isClickOnToggle = e.target.closest('.submenu-toggle') !== null;
-                    const isClickOnLink = e.target === this || e.target === this.querySelector('a');
+                    const isClickOnLink = e.target === this || e.target.tagName === 'A';
                     
                     // Se o clique foi no link e o submenu já está aberto, fecha tudo
                     if ((isClickOnLink || isClickOnToggle) && hasOpenSubmenu(parentLi)) {
@@ -126,7 +127,7 @@
                         // Abre este item
                         parentLi.classList.add('menu-item-active');
                         if (submenu) submenu.classList.add('show');
-                        const toggle = this.querySelector('.submenu-toggle');
+                        const toggle = this.querySelector('a .submenu-toggle');
                         if (toggle) toggle.classList.add('rotated');
                     }
                 } 
@@ -139,7 +140,7 @@
                     // Se não está ativo, fecha tudo e abre este
                     else {
                         // Fecha todos os itens de primeiro nível
-                        const topLevelItems = document.querySelectorAll('.menu > .menu-item-has-children, .menu > .page_item_has_children');
+                        const topLevelItems = document.querySelectorAll('.menu .menu-item-has-children, .menu .page_item_has_children');
                         topLevelItems.forEach(menuItem => {
                             closeSubmenuAndChildren(menuItem);
                         });
@@ -147,7 +148,7 @@
                         // Abre este item
                         parentLi.classList.add('menu-item-active');
                         if (submenu) submenu.classList.add('show');
-                        const toggle = this.querySelector('.submenu-toggle');
+                        const toggle = this.querySelector('a .submenu-toggle');
                         if (toggle) toggle.classList.add('rotated');
                     }
                 }

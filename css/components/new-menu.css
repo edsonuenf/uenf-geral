@@ -1,0 +1,297 @@
+/* === MENU PRINCIPAL - ESTILOS BASE === */
+.new-menu,
+.new-menu ul,
+.new-menu li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Estilo do botão de fechar no cabeçalho do offcanvas */
+.offcanvas-header .btn-close {
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  opacity: 0.8;
+  border: none !important;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.offcanvas-header .btn-close:hover,
+.offcanvas-header .btn-close:focus {
+  opacity: 1;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Navbar */
+.navbar-brand-top {
+  background-color: var(--bs-uenf-blue);
+  padding: 0.75rem 0;
+}
+
+.navbar-brand-top img {
+  width: 132px;
+  height: auto;
+}
+
+.navbar-uenf {
+  background-color: var(--bs-uenf-blue-light);
+  padding: 0.5rem 1rem;
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+  border: none;
+  padding: 0;
+  margin-right: 1rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Itens de primeiro nível */
+.new-menu > li {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+/* Links do menu */
+.new-menu a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none !important;
+  color: white !important;
+  transition: background-color 0.3s ease;
+  font-weight: 400;
+  background-color: var(--bs-uenf-blue, #1d3771);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efeito de hover para itens principais e subitens */
+.new-menu > li > a:hover,
+.new-menu > li.menu-item-hover > a,
+.new-menu .sub-menu li > a:hover,
+.new-menu .children li > a:hover {
+  background-color: rgba(255, 255, 255, 0.5) !important; /* Fundo branco 80% */
+  color: var(--bs-uenf-blue, #1d3771) !important; /* Cor do texto azul para contraste */
+  transition: all 0.2s ease;
+}
+
+/* Item ativo (selecionado) */
+.new-menu .menu-item-active > a,
+.new-menu .current-menu-item > a,
+.new-menu .menu-item-active > a:hover,
+.new-menu .current-menu-item > a:hover {
+  background-color: rgba(255, 255, 255, 0.8) !important; /* Fundo branco 80% de opacidade */
+  color: var(--bs-uenf-blue, #1d3771) !important; /* Cor do texto azul para contraste */
+  font-weight: 700 !important; /* Texto em negrito */
+  position: relative; /* Para posicionar o indicador */
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important; /* Borda lateral azul */
+  padding-left: 16px; /* Ajusta o padding para compensar a borda */
+  transition: all 0.2s ease; /* Suaviza a transição */
+  /* Adiciona um efeito de sombra suave */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Garante que o texto fique em cima de outros elementos */
+  z-index: 1;
+}
+
+/* Ícone de toggle para submenus */
+.new-menu .submenu-toggle {
+  margin-left: 12px; /* Espaçamento à esquerda do ícone */
+  transition: transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0px;
+  font-size: 0.8em;
+  font-weight: bold;
+  position: relative;
+  right: -12px; /* Ajustado para -12px para mover a seta mais para a direita */
+}
+
+/* Remove a rotação para manter apenas a seta para a direita */
+.new-menu .submenu-toggle.rotated {
+  transform: none;
+}
+
+/* Submenus - Estilo base */
+.new-menu .sub-menu,
+.new-menu .children {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease;
+  background-color: var(--bs-uenf-blue, #1d3771);
+  width: 100%;
+  padding-left: 0;
+  margin-left: 0;
+  border-left: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.new-menu .sub-menu.show,
+.new-menu .children.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  max-height: 5000px; /* Valor alto para acomodar submenus grandes */
+}
+
+/* Subníveis aninhados */
+.new-menu .sub-menu .sub-menu,
+.new-menu .children .children {
+  background-color: transparent !important;
+  margin-left: 0;
+  padding-left: 0;
+  border-left: none;
+}
+
+.new-menu .sub-menu .sub-menu .sub-menu,
+.new-menu .children .children .children {
+  background-color: transparent !important;
+  margin-left: 0;
+  padding-left: 0;
+  border-left: none;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 991.98px) {
+  .navbar-brand-top {
+    background-color: var(--bs-uenf-blue);
+  }
+}
+
+/* ===== DESKTOP (acima de 1920px) ===== */
+@media (min-width: 1921px) {
+  /* Ajusta o painel do menu para ser mais largo no desktop */
+  .offcanvas.offcanvas-start {
+    width: 400px; /* Largura maior para o painel no desktop */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
+  }
+  
+  .new-menu {
+    display: block; /* Mantém o menu em bloco para o estilo de lista */
+    width: 100%;
+  }
+  
+  .new-menu > li {
+    width: auto;
+    position: relative;
+  }
+  
+  .new-menu > li > a {
+    padding: 15px 20px;
+    white-space: nowrap;
+  }
+  
+  /* Submenus no desktop */
+  .new-menu .sub-menu,
+  .new-menu .children {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    z-index: 1000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+    /* Subníveis aninhados no desktop */
+  .new-menu .sub-menu .sub-menu,
+  .new-menu .children .children {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 220px;
+    z-index: 1001;
+    margin-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    max-height: none !important;
+  }
+  
+  /* Mostrar subníveis apenas quando ativo (clicado) */
+.new-menu .sub-menu > li.menu-item-has-children.menu-item-active > .sub-menu,
+.new-menu .children > li.page_item_has_children.menu-item-active > .children,
+.new-menu .sub-menu > li.menu-item-has-children > .sub-menu.show,
+.new-menu .children > li.page_item_has_children > .children.show {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  max-height: none !important;
+}
+  
+  /* Ajuste para subníveis aninhados */
+  .new-menu .sub-menu .menu-item-has-children,
+  .new-menu .children .page_item_has_children {
+    position: relative;
+  }
+  
+  /* Removido hover para abrir submenus */
+  /* Apenas o clique abre os submenus */
+}
+
+/* ===== MOBILE (abaixo de 992px) ===== */
+@media (max-width: 991.98px) {
+  .new-menu {
+    width: 100%;
+  }
+  
+  .new-menu .sub-menu,
+  .new-menu .children {
+    padding-left: 15px;
+  }
+  
+  .new-menu .sub-menu .sub-menu,
+  .new-menu .children .children {
+    padding-left: 15px;
+  }
+  
+  /* Esconde os toggles em itens sem filhos */
+  .menu-item:not(.menu-item-has-children) > a > .submenu-toggle {
+    display: none !important;
+  }
+}
+
+/* Acessibilidade: foco visível */
+.new-menu a:focus {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+.new-menu ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Classe para indicar que um item está ativo */
+.menu-item-active > a,
+.menu-item-active > a:hover,
+.menu-item-active > a:focus,
+.current-menu-item > a,
+.current-menu-item > a:hover,
+.current-menu-item > a:focus {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1;
+  transition: all 0.2s ease !important;
+}

@@ -1,137 +1,180 @@
-/* === ESTILOS DO PAINEL DE ATALHOS CARREGADOS COM SUCESSO === */
-/* Reset completo de estilos de foco e contorno */
-:root {
-  --debug-border: none;
-  --focus-outline: none !important;
-  --focus-box-shadow: none !important;
-  --focus-border: none !important;
+/**
+ * Estilos do painel de atalhos
+ */
+
+/* Estilos específicos para o container do painel de atalhos */
+#uenf-shortcut-panel-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99999;
+    pointer-events: none;
+    width: 300px;
+    height: 100vh;
+    overflow: visible;
 }
 
-/* Remove todos os estilos de foco, contorno e bordas de todos os elementos */
-*,
-*:before,
-*:after,
-*:focus,
-*:focus-visible,
-*:focus-within,
-*:active,
-*:hover,
-*:visited {
-  outline: var(--focus-outline);
-  box-shadow: var(--focus-box-shadow);
-  border: var(--focus-border);
-  -webkit-tap-highlight-color: transparent !important;
-  -webkit-focus-ring-color: transparent !important;
-  -moz-outline-style: none !important;
-  outline-style: none !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
+/* Reset de estilos para os elementos dentro do container */
+#uenf-shortcut-panel-container * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    line-height: 1.5;
+    color: #fff;
 }
 
-/* Remove estilos de foco específicos do navegador */
-:focus {
-  outline: var(--focus-outline);
-  outline-offset: 0 !important;
-  box-shadow: var(--focus-box-shadow);
+/* Estilos para o ícone do painel */
+#uenf-shortcut-panel-container .shortcut-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: #1D3771;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    border: none;
+    outline: none;
 }
 
-/* Remove estilos de foco para elementos específicos */
-button:focus,
-input:focus,
-select:focus,
-textarea:focus,
-a:focus,
-[tabindex]:focus,
-[contenteditable]:focus {
-  outline: var(--focus-outline);
-  box-shadow: var(--focus-box-shadow);
-  border: var(--focus-border);
-  -webkit-tap-highlight-color: transparent !important;
+/* Efeito de hover no ícone */
+#uenf-shortcut-panel-container .shortcut-icon:hover {
+    background-color: #142a55;
+    transform: translateY(-50%) scale(1.1);
+    border: none;
 }
 
-/* Remove estilos de foco para navegação por teclado */
-[tabindex]:focus {
-  outline: var(--focus-outline);
-  box-shadow: var(--focus-box-shadow);
+/* Posicionamento do ícone quando o painel está aberto */
+#uenf-shortcut-panel-container .shortcut-panel.active + .shortcut-icon {
+    right: 320px; /* Largura do painel (300px) + margem (20px) */
 }
 
-/* Remove estilos de foco para elementos do painel de atalhos */
-.shortcut-panel *,
-.shortcut-panel *:focus,
-.shortcut-panel *:focus-visible,
-.shortcut-panel *:focus-within,
-.shortcut-panel *:active,
-.shortcut-panel *:hover {
-  outline: var(--focus-outline) !important;
-  box-shadow: var(--focus-box-shadow) !important;
-  border: var(--focus-border) !important;
+/* Estilos para o painel */
+#uenf-shortcut-panel-container .shortcut-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #1d3771;
+    color: white;
+    box-shadow: -2px 0 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
+    overflow-y: auto;
+    pointer-events: auto;
+    padding: 0;
+    margin: 0;
 }
 
-/* Remove contorno de foco em todos os elementos */
-*:focus, *:focus-visible, *:focus-within {
-  outline: none !important;
-  box-shadow: none !important;
-  border-color: transparent !important;
+#uenf-shortcut-panel-container .shortcut-panel.active {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
 }
 
-/* Estilo para links e botões */
-a, button, [role="button"], input, textarea, select, summary {
-  -webkit-tap-highlight-color: transparent !important;
-  -webkit-touch-callout: none !important;
-  -webkit-user-select: none !important;
-  -khtml-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
+/* Cabeçalho do painel */
+#uenf-shortcut-panel-container .shortcut-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Remove estilos de foco do navegador */
-:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
+#uenf-shortcut-panel-container .shortcut-panel-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
-/* Ícone do atalho */
-.shortcut-icon {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  background-color: var(--bs-uenf-blue, #1D3771); /* Fallback explícito */
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: move;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  z-index: 9999;
-  transition: all 0.3s ease;
-  user-select: none;
-  border: none; /* Remove borda de depuração */
+#uenf-shortcut-panel-container .close-panel {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
 }
 
-/* Botão fica por baixo do painel quando aberto */
-.shortcut-panel.active + .shortcut-icon {
-  z-index: 9997; /* Um abaixo do painel (9998) */
-  right: 0 !important;
-  transform: none !important;
-  transition: right 0.3s ease-in-out !important;
+#uenf-shortcut-panel-container .close-panel:hover {
+    opacity: 1;
 }
 
-/* Mantém o efeito de hover */
-.shortcut-icon:hover {
-    background-color: var(--shortcut-button-bg, var(--primary-color));
-    opacity: 0.9;
-    transform: scale(1.1);
+/* Conteúdo do painel */
+#uenf-shortcut-panel-container .shortcut-panel-content {
+    padding: 15px;
 }
 
-/* Classe para quando estiver arrastando */
-.shortcut-icon.dragging {
-  transition: none;
+/* Itens de atalho */
+#uenf-shortcut-panel-container .shortcut-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+
+#uenf-shortcut-panel-container .shortcut-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+#uenf-shortcut-panel-container .shortcut-item i {
+    width: 24px;
+    text-align: center;
+    margin-right: 12px;
+    font-size: 1.1em;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+#uenf-shortcut-panel-container .shortcut-item span {
+    font-size: 0.95em;
+    font-weight: 400;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    #uenf-shortcut-panel-container .shortcut-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    #uenf-shortcut-panel-container .shortcut-icon {
+        bottom: 80px;
+        right: 15px;
+        top: auto;
+        transform: none;
+    }
+    
+    #uenf-shortcut-panel-container .shortcut-icon.active {
+        right: 15px;
+        bottom: 80px;
+        transform: none;
+    }
 }
 
 /* Painel de atalhos */
@@ -143,56 +186,39 @@ a, button, [role="button"], input, textarea, select, summary {
   height: 100%;
   background-color: #1d3771;
   color: white;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: -2px 0 15px rgba(0,0,0,0.2);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
   opacity: 0;
   visibility: hidden;
-  z-index: 1000;
+  z-index: 9998;
   overflow-y: auto;
   transform: translateX(100%);
   display: block !important;
-  
-  /* Estilo de foco removido */
   outline: none !important;
-  box-shadow: none !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Estilo quando o painel está ativo */
+/* Painel ativo */
 .shortcut-panel.active {
-    transform: translateX(0) !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    right: 0 !important;
-    display: block !important;
-    z-index: 9999 !important;
-    transition: transform 0.3s ease-in-out !important;
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ícone ativo */
+.shortcut-icon.active {
+  right: 320px; /* Posição ajustada quando o painel está aberto */
+  background-color: var(--bs-uenf-blue-dark, #142a55);
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* Cabeçalho do painel */
 .shortcut-panel-header {
-  all: unset;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.shortcut-panel-header h3 {
-  all: revert;
-  color: var(--shortcut-header-text-color, var(--white-solid)) !important;
-  margin: 0 !important;
-}
-
-.close-panel {
-  background: none;
-  border: none !important;
-  outline: none !important;
-  color: #ffffff !important;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0 5px;
-  line-height: 1;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
 }
 
 /* Conteúdo do painel */
@@ -200,168 +226,72 @@ a, button, [role="button"], input, textarea, select, summary {
   padding: 15px;
 }
 
-.shortcut-panel-content a {
-  color: #fff !important;
-  text-decoration: none;
-}
-
-/* Estilo base para os itens do painel de atalhos */
-.shortcut-panel-content a.shortcut-item {
+/* Itens de atalho */
+.shortcut-item {
   display: flex;
   align-items: center;
-  padding: 12px 15px;
-  margin-bottom: 8px;
-  color: var(--shortcut-item-text-color, #ffffff);
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  color: #fff;
   text-decoration: none;
-  border-radius: 4px;
-  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
   transition: all 0.2s ease;
-  border: none;
-  outline: none;
-  font-size: var(--shortcut-item-font-size, 16px);
+  border-left: 3px solid transparent;
 }
 
-/* Estados padrão: link, visited e active */
-.shortcut-panel-content a.shortcut-item:link,
-.shortcut-panel-content a.shortcut-item:visited,
-.shortcut-panel-content a.shortcut-item:active {
-  color: var(--shortcut-item-text-color, #ffffff);
-  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
-  text-decoration: none;
+/* Efeito de hover nos itens */
+.shortcut-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
+  border-left-color: #fff;
 }
 
-/* Estilo para o texto e ícone */
-.shortcut-panel-content a.shortcut-item i,
-.shortcut-panel-content a.shortcut-item span {
-  color: inherit;
-  transition: inherit;
-}
-
-.shortcut-panel-content a.shortcut-item i {
-  margin-right: 10px;
-  width: 20px;
+/* Ícones dentro dos itens */
+.shortcut-item i {
+  width: 24px;
   text-align: center;
+  margin-right: 12px;
+  font-size: 1.1em;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-/* Efeito hover - fundo e texto personalizados */
-.shortcut-panel-content {
-  background-color: var(--shortcut-panel-bg, #1d3771);
+/* Texto dentro dos itens */
+.shortcut-item span {
+  font-size: 0.95em;
+  font-weight: 400;
 }
 
-a.shortcut-item:hover {
-  background-color: #ffffff !important; /* Cor de hover padrão */
-  color: #ffffff !important; /* Texto branco no hover */
-  text-decoration: none;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Garante que o texto e ícone usem a cor de hover */
-.shortcut-panel-content a.shortcut-item:hover i,
-.shortcut-panel-content a.shortcut-item:hover span {
-  color: #1d3771 !important; /* Ícones e texto em branco no hover */
-}
-
-/* Estilo para foco */
-.shortcut-panel-content a.shortcut-item:focus {
-  outline: none;
-  box-shadow: none;
-  background-color: var(--shortcut-item-bg, rgba(255, 255, 255, 0.1));
-  color: var(--shortcut-item-text-color, #ffffff);
-}
-
-/* Estilo para quando o item está ativo/focado */
-.shortcut-item:focus-visible {
+/* Botão de fechar */
+.close-panel {
+  background: none;
+  border: none !important;
   outline: none !important;
-  box-shadow: none !important;
+  color: #fff !important;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 5px;
+  line-height: 1;
 }
 
 /* Responsividade */
-@media (max-width: 992px) {
-    .shortcut-panel {
-        --shortcut-panel-width: min(90vw, 320px) !important;
-    }
-    
-    .shortcut-panel.active + .shortcut-icon {
-        right: calc(min(90vw, 320px) + 10px);
-    }
-}
-
 @media (max-width: 768px) {
-    .shortcut-icon {
-        bottom: 16px;
-        right: 16px;
-        top: auto;
-        --shortcut-button-size: 44px !important;
-    }
-    
-    .shortcut-panel {
-        --shortcut-panel-width: min(90vw, 300px) !important;
-        width: 100%;
-        right: -100%;
-    }
-    
-    .shortcut-panel.active {
-        right: 0;
-    }
-    
-    .shortcut-panel-header {
-        padding: 1rem 1.25rem;
-    }
-    
-    .shortcut-panel-header h3 {
-        font-size: 1.125rem;
-    }
-    
-    .shortcut-panel-content {
-        padding: 1rem 1.25rem;
-    }
-    
-    .shortcut-item {
-        padding: 0.75rem 1rem;
-    }
-    
-    .shortcut-item i {
-        font-size: 1.125rem;
-    }
-    
-    .shortcut-item span {
-        font-size: 0.9375rem;
-    }
+  .shortcut-panel {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .shortcut-icon {
+    bottom: 80px;
+    right: 15px;
+  }
 }
 
-@media (max-width: 480px) {
-    .shortcut-icon {
-        --shortcut-button-size: 40px !important;
-        bottom: 12px;
-        right: 12px;
-    }
-    
-    .shortcut-panel {
-        --shortcut-panel-width: 280px !important;
-    }
-    
-    .shortcut-panel-header {
-        padding: 0.875rem 1rem;
-    }
-    
-    .shortcut-panel-header h3 {
-        font-size: 1.0625rem;
-    }
-    
-    .shortcut-panel-content {
-        padding: 0.875rem 1rem;
-    }
-    
-    .shortcut-item {
-        padding: 0.6875rem 0.875rem;
-    }
-    
-    .shortcut-item i {
-        font-size: 1.0625rem;
-        margin-right: 0.75rem;
-    }
-    
-    .shortcut-item span {
-        font-size: 0.875rem;
-    }
+/* Painel de atalhos ativado */
+.shortcut-panel {
+  display: block !important;
+}
+
+.shortcut-icon {
+  display: flex !important;
 }

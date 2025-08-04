@@ -117,7 +117,71 @@
     background-repeat: no-repeat !important;
     background-position: right 0.75rem center !important;
     background-size: 1rem 1rem !important;
-    animation: spin 1s linear infinite;
+}
+
+/* Estilos para campos do Contact Form 7 */
+.wpcf7-form-control:not([type="submit"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.wpcf7-form-control.wpcf7-text,
+.wpcf7-form-control.wpcf7-textarea,
+.wpcf7-form-control.wpcf7-select,
+.wpcf7-form-control.wpcf7-date,
+.wpcf7-form-control.wpcf7-number,
+.wpcf7-form-control.wpcf7-tel,
+.wpcf7-form-control.wpcf7-email,
+.wpcf7-form-control.wpcf7-url,
+.wpcf7-form-control.wpcf7-quiz,
+.wpcf7-form-control.wpcf7-file {
+    border: 1px solid #cccccc !important;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Estilo para foco nos campos */
+.wpcf7-form-control:focus {
+    border-color: #86b7fe !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    outline: 0;
+}
+
+/* Estilo para textarea */
+.wpcf7-textarea {
+    min-height: 100px;
+}
+
+/* Estilo para selects */
+.wpcf7-select {
+    height: auto;
+    background-image: none;
+}
+
+/* Remover seta padrão do select no Firefox */
+.wpcf7-select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Estilo para checkboxes e radios */
+.wpcf7-checkbox .wpcf7-list-item,
+.wpcf7-radio .wpcf7-list-item {
+    margin-right: 1rem;
+}
+
+/* Estilo para o botão de envio */
+.wpcf7-submit {
+    cursor: pointer;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.wpcf7-submit:hover {
+    background-color: #0b5ed7;
 }
 
 /* Animações */

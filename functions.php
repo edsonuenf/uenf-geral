@@ -6,6 +6,9 @@
  * @since 1.0.0
  */
 
+// Inclui o componente de menu personalizado
+require_once get_template_directory() . '/components/menu/uenf-menu.php';
+
 // Definir constantes para cores padrão
 define('CCT_PRIMARY_COLOR', '#1D3771');
 define('CCT_PRIMARY_LIGHT', '#1D3770BF');
@@ -334,34 +337,122 @@ function cct_scripts() {
         $style_version // Usa timestamp do arquivo para versionamento
     );
     
-    // 3.1 Estilo do painel de atalhos (carregado separadamente para garantir que seja sobrescrito)
-    $shortcuts_style_path = get_template_directory() . '/css/components/shortcuts.css';
-    $shortcuts_version = file_exists($shortcuts_style_path) ? filemtime($shortcuts_style_path) : $theme_version;
-    
-    wp_enqueue_style('cct-shortcuts-style',
-        CCT_THEME_URI . '/css/components/shortcuts.css',
-        array('cct-style'), // Depende do estilo principal
-        $shortcuts_version
+    // 3.1 Estilos de componentes (carregados separadamente para garantir que sejam sobrescritos)
+    $components = array(
+        'new-menu' => '/css/components/new-menu.css',
+        'menu-enhancements' => '/css/components/menu-enhancements.css',
+        'scrollbars' => '/css/components/scrollbars.css',
+        'menu-styles' => '/css/components/menu-styles.css', // Estilos específicos do menu
+        'shortcuts' => '/css/components/shortcuts.css' // Estilos do painel de atalhos
     );
+    
+    // Log de depuração detalhado para verificar os estilos
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('=== INÍCIO DO LOG DE ESTILOS ===');
+        error_log('Diretório do tema: ' . get_template_directory());
+        error_log('URI do tema: ' . get_template_directory_uri());
+        error_log('Versão do tema: ' . $theme_version);
+        error_log('Arquivo de estilo principal: ' . $style_path);
+        error_log('Versão do estilo principal: ' . $style_version);
+        
+        foreach ($components as $handle => $path) {
+            $file_path = get_template_directory() . $path;
+            $file_uri = get_template_directory_uri() . $path;
+            $file_exists = file_exists($file_path);
+            $file_version = $file_exists ? filemtime($file_path) : 'N/A';
+            
+            error_log(sprintf(
+                'Estilo: %s | Caminho: %s | URI: %s | Existe: %s | Versão: %s',
+                $handle,
+                $file_path,
+                $file_uri,
+                $file_exists ? 'Sim' : 'Não',
+                $file_version
+            ));
+        }
+        error_log('=== FIM DO LOG DE ESTILOS ===');
+    }
+    
+    foreach ($components as $handle => $path) {
+        $file_path = get_template_directory() . $path;
+        if (file_exists($file_path)) {
+            $file_version = filemtime($file_path);
+            
+            wp_enqueue_style(
+                'cct-' . $handle . '-style',
+                CCT_THEME_URI . $path,
+                array('cct-style'), // Depende do estilo principal
+                $file_version
+            );
+            
+            // Adiciona um parâmetro de consulta para forçar o recarregamento
+            wp_style_add_data('cct-' . $handle . '-style', 'ver', $file_version);
+        }
+    }
     
     // 4. Scripts (carregados no final do documento para melhor performance)
     $js_files = array(
-        'cct-back-to-top' => array('path' => '/js/back-to-top.js', 'deps' => array()),
-        'cct-shortcut-panel' => array('path' => '/js/shortcut-panel.js', 'deps' => array('jquery')),
-        'cct-shortcuts' => array('path' => '/js/shortcuts.js', 'deps' => array('jquery', 'cct-shortcut-panel')),
-        'cct-main' => array('path' => '/js/main.js', 'deps' => array('jquery'))
+        // jQuery (garantir que está carregado primeiro)
+        'jquery' => array(
+            'path' => false, // Usar o jQuery do WordPress
+            'deps' => array()
+        ),
+        // Gerenciador de eventos (deve ser carregado após o jQuery)
+        'cct-event-manager' => array(
+            'path' => '/js/event-manager.js', 
+            'deps' => array('jquery'),
+            'force' => true // Força o carregamento do event-manager.js em todas as páginas
+        ),
+        // Scripts do menu (dependem do jQuery e do event-manager)
+        'cct-menu' => array(
+            'path' => '/components/menu/assets/js/uenf-menu-new.js', // Atualizado para usar a nova versão do menu
+            'deps' => array('jquery', 'cct-event-manager'),
+            'force' => true // Forçar carregamento em todas as páginas
+        ),
+        // Script principal (carregado por último)
+        'cct-main' => array(
+            'path' => '/js/main.js', 
+            'deps' => array('jquery', 'cct-event-manager')
+        ),
+        // Outros scripts (carregados condicionalmente)
+        'cct-back-to-top' => array(
+            'path' => '/js/back-to-top.js', 
+            'deps' => array('jquery')
+        )
     );
     
+    // Garantir que o jQuery seja carregado corretamente
+    wp_enqueue_script('jquery');
+    
+    // Registrar e enfileirar scripts
     foreach ($js_files as $handle => $file) {
+        // Verificar se o script deve ser carregado
+        if (isset($file['enqueue']) && $file['enqueue'] === false && !isset($file['force'])) {
+            continue; // Pula scripts que não devem ser carregados
+        }
+        
         $file_path = get_template_directory() . $file['path'];
         $file_version = file_exists($file_path) ? filemtime($file_path) : $theme_version;
-        wp_enqueue_script(
+        
+        // Registrar o script
+        wp_register_script(
             $handle,
             get_template_directory_uri() . $file['path'],
             $file['deps'],
             $file_version,
             true
         );
+        
+        // Adicionar dados de localização se necessário
+        if ($handle === 'cct-event-manager') {
+            wp_localize_script($handle, 'uenfEventManagerVars', array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'is_admin' => current_user_can('manage_options')
+            ));
+        }
+        
+        // Enfileirar o script
+        wp_enqueue_script($handle);
     }
     
     // 5. Suporte a comentários (carregado apenas quando necessário)
@@ -493,6 +584,26 @@ function uenf_load_addons() {
 // Carrega os addons após o tema estar pronto
 add_action('after_setup_theme', 'uenf_load_addons', 10);
 
+// Verifica a ordem de carregamento dos scripts
+function cct_debug_scripts_footer() {
+    global $wp_scripts;
+    
+    echo '<!-- Scripts enfileirados: -->' . "\n";
+    foreach( $wp_scripts->queue as $handle ) {
+        $src = $wp_scripts->registered[$handle]->src;
+        $deps = implode(', ', $wp_scripts->registered[$handle]->deps);
+        echo "<!-- Script: {$handle} | Src: {$src} | Dependencies: {$deps} -->\n";
+    }
+    
+    // Verifica se o jQuery está carregado corretamente
+    echo '<script>
+        console.log("[DEBUG] jQuery version:", typeof jQuery !== "undefined" ? jQuery.fn.jquery : "jQuery não carregado");
+        console.log("[DEBUG] uenfEventRouter:", typeof uenfEventRouter !== "undefined" ? "Carregado" : "Não carregado");
+        console.log("[DEBUG] UENFMenu:", typeof UENFMenu !== "undefined" ? "Definido" : "Não definido");
+    </script>';
+}
+add_action('wp_print_footer_scripts', 'cct_debug_scripts_footer', 9999);
+
 // Inicializa os addons apenas uma vez
 if (!function_exists('cct_init_addons')) {
     function cct_init_addons() {
@@ -512,16 +623,10 @@ if (!function_exists('cct_init_addons')) {
 }
 
 /**
- * Adiciona suporte a preview em tempo real para o painel de atalhos
+ * Função vazia para manter compatibilidade
  */
 function cct_customizer_live_preview() {
-    wp_enqueue_script(
-        'cct-shortcuts-customizer',
-        get_template_directory_uri() . '/js/shortcuts-customizer.js',
-        array('jquery', 'customize-preview'),
-        CCT_THEME_VERSION,
-        true
-    );
+    // Função mantida para compatibilidade, mas sem funcionalidade
 }
 add_action('customize_preview_init', 'cct_customizer_live_preview');
 

@@ -1,227 +1,225 @@
-console.log('=== INÍCIO DO SCRIPT SHORTCUT-PANEL.JS ===');
+/**
+ * Painel de Atalhos - JavaScript
+ * Componente de navegação rápida para o site da UENF
+ * Versão: 1.1.0 - Atualizado para usar container dedicado
+ */
 
-// Verifica se os estilos estão carregados
-const styles = Array.from(document.styleSheets)
-    .filter(styleSheet => !styleSheet.href || styleSheet.href.includes('shortcuts.css'));
+(function($) {
+    'use strict';
 
-console.log('Estilos carregados:', styles.map(s => s.href || 'inline'));
-
-// Verifica se as variáveis CSS estão disponíveis
-const rootStyles = getComputedStyle(document.documentElement);
-const primaryColor = rootStyles.getPropertyValue('--bs-uenf-blue').trim();
-console.log('Cor primária (--bs-uenf-blue):', primaryColor || 'Não definida');
-
-// Verifica se os elementos existem antes mesmo do DOM estar pronto
-console.log('Procurando elementos...');
-let shortcutIcon = document.querySelector('.shortcut-icon');
-let shortcutPanel = document.querySelector('.shortcut-panel');
-let closeButton = document.querySelector('.close-panel');
-
-console.log('Elementos encontrados no carregamento inicial:', { 
-    shortcutIcon: shortcutIcon ? 'Encontrado' : 'Não encontrado',
-    shortcutPanel: shortcutPanel ? 'Encontrado' : 'Não encontrado',
-    closeButton: closeButton ? 'Encontrado' : 'Não encontrado'
-});
-
-// Log dos estilos aplicados
-if (shortcutIcon) {
-    const iconStyles = window.getComputedStyle(shortcutIcon);
-    console.log('Estilos do ícone:', {
-        backgroundColor: iconStyles.backgroundColor,
-        width: iconStyles.width,
-        height: iconStyles.height,
-        display: iconStyles.display,
-        position: iconStyles.position,
-        zIndex: iconStyles.zIndex
-    });
-}
-
-// Remove estilos de foco de todos os elementos
-function removeFocusStyles() {
-    // Adiciona estilos inline para remover bordas de foco
-    const style = document.createElement('style');
-    style.textContent = `
-        *:focus, *:focus-visible, *:focus-within, *:active {
-            outline: none !important;
-            box-shadow: none !important;
-            border-color: transparent !important;
-        }
-        .shortcut-icon, .shortcut-panel, .shortcut-item {
-            outline: none !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Se algum elemento não foi encontrado, tenta novamente quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', function() {
-    // Remove estilos de foco
-    removeFocusStyles();
-    console.log('DOM completamente carregado');
-    
-    // Atualiza as referências após o DOM estar pronto
-    if (!shortcutIcon) shortcutIcon = document.querySelector('.shortcut-icon');
-    if (!shortcutPanel) shortcutPanel = document.querySelector('.shortcut-panel');
-    if (!closeButton) closeButton = document.querySelector('.close-panel');
-    
-    console.log('Elementos após DOM carregado:', { 
-        shortcutIcon: shortcutIcon ? 'Encontrado' : 'Não encontrado',
-        shortcutPanel: shortcutPanel ? 'Encontrado' : 'Não encontrado',
-        closeButton: closeButton ? 'Encontrado' : 'Não encontrado'
-    });
-    
-    console.log('Elementos encontrados:', {
-        shortcutIcon,
-        shortcutPanel,
-        closeButton
-    });
-    
-    // Estilo do ícone
-    if (shortcutIcon) {
-        shortcutIcon.style.cursor = 'pointer';
+    // Verifica se o jQuery está disponível
+    if (typeof jQuery === 'undefined') {
+        console.warn('jQuery não está disponível. O painel de atalhos requer jQuery.');
+        return;
     }
-    
-    if (shortcutPanel) {
-        // Removendo qualquer borda que possa ter sido adicionada anteriormente
-        shortcutPanel.style.border = 'none';
-        console.log('Estilo do painel:', shortcutPanel.style.cssText);
-    }
-    
-    // Draggable functionality
-    if (shortcutIcon) {
-        let isDragging = false;
-        let offsetY = 0;
+
+    // Configurações padrão
+    const defaults = {
+        containerSelector: '#uenf-shortcut-panel-container',
+        panelSelector: '.shortcut-panel',
+        iconSelector: '.shortcut-icon',
+        closeButtonSelector: '.close-panel',
+        activeClass: 'active',
+        animationDuration: 300,
+        enableSmoothScroll: true
+    };
+
+    // Classe principal do painel de atalhos
+    class ShortcutPanel {
+        constructor(options = {}) {
+            this.settings = { ...defaults, ...options };
+            this.container = $(this.settings.containerSelector);
+            this.panel = this.container.find(this.settings.panelSelector);
+            this.icon = this.container.find(this.settings.iconSelector);
+            this.closeButton = this.container.find(this.settings.closeButtonSelector);
+            this.isOpen = false;
+            
+            // Inicializa o painel quando o DOM estiver pronto
+            $(() => this.init());
+        }
+
+        // Inicializa o painel
+        init() {
+            // Verifica se os elementos necessários existem
+            if (!this.container.length || !this.panel.length || !this.icon.length) {
+                console.warn('Elementos do painel de atalhos não encontrados.');
+                return;
+            }
+
+            // Garante que o container esteja no final do body
+            this.moveContainerToBody();
+            
+            // Adiciona eventos
+            this.addEvents();
+            
+            // Ativa o painel
+            this.enable();
+            
+            console.log('Painel de atalhos inicializado com sucesso!');
+        }
         
-        // Iniciar arrasto
-        shortcutIcon.addEventListener('mousedown', function(e) {
-            console.log('Mouse down no ícone');
-            if (e.button !== 0) return; // Apenas botão esquerdo do mouse
+        // Move o container para o final do body se necessário
+        moveContainerToBody() {
+            if (this.container.parent('body').length === 0) {
+                this.container.appendTo('body');
+            }
+        }
+
+        // Adiciona eventos
+        addEvents() {
+            const self = this;
             
-            isDragging = true;
-            offsetY = e.clientY - shortcutIcon.getBoundingClientRect().top;
-            shortcutIcon.classList.add('dragging');
-            document.body.style.userSelect = 'none';
-            
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-        
-        // Mover durante o arrasto
-        document.addEventListener('mousemove', function(e) {
-            if (!isDragging) return;
-            
-            const y = e.clientY - offsetY;
-            const maxY = window.innerHeight - shortcutIcon.offsetHeight;
-            const newY = Math.min(Math.max(0, y), maxY);
-            
-            shortcutIcon.style.top = newY + 'px';
-            shortcutIcon.style.transform = 'none';
-            
-            e.preventDefault();
-            e.stopPropagation();
-        });
-        
-        // Finalizar arrasto
-        document.addEventListener('mouseup', function(e) {
-            console.log('Mouse up');
-            if (isDragging) {
-                isDragging = false;
-                shortcutIcon.classList.remove('dragging');
-                document.body.style.userSelect = '';
-                
-                const savedY = parseInt(shortcutIcon.style.top) || (window.innerHeight / 2 - 25);
-                localStorage.setItem('shortcutIconY', savedY);
-                
+            // Abre/fecha o painel ao clicar no ícone
+            this.icon.off('click.shortcut').on('click.shortcut', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                return false;
-            }
-        });
-        
-        // Carrega a posição salva
-        const savedY = localStorage.getItem('shortcutIconY');
-        if (savedY) {
-            shortcutIcon.style.top = savedY + 'px';
-            shortcutIcon.style.transform = 'none';
-        }
-    }
-    
-    // Toggle panel
-    if (shortcutIcon && shortcutPanel) {
-        console.log('Adicionando event listeners para o painel');
-        
-        // Adiciona um evento de clique simples
-        shortcutIcon.addEventListener('click', function(e) {
-            console.log('Clique no ícone detectado!');
-            console.log('Estado ANTES do toggle:', {
-                classList: Array.from(shortcutPanel.classList),
-                style: {
-                    transform: window.getComputedStyle(shortcutPanel).transform,
-                    right: window.getComputedStyle(shortcutPanel).right
-                }
+                self.toggle();
             });
-            
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Fecha outros painéis abertos
-            document.querySelectorAll('.shortcut-panel.active').forEach(panel => {
-                if (panel !== shortcutPanel) {
-                    panel.classList.remove('active');
-                }
-            });
-            
-            // Alterna a classe active
-            shortcutPanel.classList.toggle('active');
-            
-            // Força o navegador a reconhecer a mudança
-            void shortcutPanel.offsetWidth;
-            
-            console.log('Estado APÓS o toggle:', {
-                classList: Array.from(shortcutPanel.classList),
-                style: {
-                    transform: window.getComputedStyle(shortcutPanel).transform,
-                    right: window.getComputedStyle(shortcutPanel).right
-                }
-            });
-            
-            return false;
-        });
-    }
-    
-    // Close panel when clicking the close button
-    if (closeButton && shortcutPanel) {
-        closeButton.addEventListener('click', function(e) {
-            console.log('Botão fechar clicado');
-            e.preventDefault();
-            e.stopPropagation();
-            
-            shortcutPanel.classList.remove('active');
-            console.log('Painel fechado');
-            
-            return false;
-        });
-    }
-    
-    // Close panel when clicking outside
-    document.addEventListener('click', function(e) {
-        console.log('Clique global detectado');
-        
-        if (shortcutPanel && 
-            shortcutPanel.classList.contains('active') && 
-            !shortcutPanel.contains(e.target) && 
-            !shortcutIcon.contains(e.target)) {
-            
-            console.log('Clique fora do painel detectado');
-            shortcutPanel.classList.remove('active');
-        }
-    });
-});
 
-// Adiciona um listener global para verificar se algum evento está sendo capturado
-document.addEventListener('click', function(e) {
-    console.log('Clique global detectado (captura):', e.target);
-}, true);
+            // Fecha o painel ao clicar no botão de fechar
+            this.closeButton.off('click.shortcut').on('click.shortcut', function(e) {
+                e.preventDefault();
+                self.close();
+            });
+
+            // Fecha o painel ao clicar fora dele
+            $(document).off('click.shortcut').on('click.shortcut', function(e) {
+                if (self.isOpen && 
+                    !$(e.target).closest(self.settings.panelSelector).length && 
+                    !$(e.target).closest(self.settings.iconSelector).length) {
+                    self.close();
+                }
+            });
+
+            // Previne fechamento ao clicar dentro do painel
+            this.panel.off('click.shortcut').on('click.shortcut', function(e) {
+                e.stopPropagation();
+            });
+
+            // Adiciona rolagem suave para links internos
+            if (this.settings.enableSmoothScroll) {
+                $(document).off('click.shortcut-smooth').on('click.shortcut-smooth', 'a[data-scroll="smooth"]', function(e) {
+                    const $link = $(this);
+                    const target = $link.attr('href');
+                    
+                    if (target && target !== '#' && $(target).length) {
+                        e.preventDefault();
+                        
+                        // Fecha o painel antes de rolar
+                        self.close();
+                        
+                        // Rola suavemente até o alvo
+                        $('html, body').animate({
+                            scrollTop: $(target).offset().top - 100
+                        }, 800, 'swing');
+                    }
+                });
+            }
+
+            // Fecha o painel ao pressionar a tecla ESC
+            $(document).on('keydown', (e) => {
+                if (e.key === 'Escape' && this.isOpen) {
+                    e.preventDefault();
+                    this.close();
+                }
+            });
+        }
+
+        // Abre o painel
+        open() {
+            if (this.isOpen) return;
+            
+            // Adiciona classe ao body para estilização
+            $('body').addClass('shortcut-panel-open');
+            
+            // Adiciona as classes de ativação
+            this.panel.addClass(this.settings.activeClass);
+            this.icon.addClass(this.settings.activeClass);
+            
+            // Atualiza o estado
+            this.isOpen = true;
+            
+            // Desativa a rolagem da página quando o painel está aberto
+            $('body').css('overflow', 'hidden');
+            
+            // Foca no botão de fechar para acessibilidade
+            this.closeButton.attr('tabindex', '0').focus();
+            
+            // Dispara evento personalizado
+            $(document).trigger('shortcutPanel:opened');
+            
+            console.log('Painel de atalhos aberto');
+        }
+
+        // Fecha o painel
+        close() {
+            if (!this.isOpen) return;
+            
+            // Remove a classe do body
+            $('body').removeClass('shortcut-panel-open');
+            
+            // Remove as classes de ativação
+            this.panel.removeClass(this.settings.activeClass);
+            this.icon.removeClass(this.settings.activeClass);
+            
+            // Atualiza o estado
+            this.isOpen = false;
+            
+            // Reativa a rolagem da página
+            $('body').css('overflow', '');
+            
+            // Foca no ícone para acessibilidade
+            this.icon.attr('tabindex', '-1');
+            this.icon.focus();
+            
+            // Dispara evento personalizado
+            $(document).trigger('shortcutPanel:closed');
+            
+            console.log('Painel de atalhos fechado');
+        }
+
+        // Alterna entre abrir e fechar o painel
+        toggle() {
+            if (this.isOpen) {
+                this.close();
+            } else {
+                this.open();
+            }
+        }
+
+        // Desativa o painel temporariamente
+        disable() {
+            this.close();
+            this.icon.hide();
+            this.panel.hide();
+            
+            // Dispara evento personalizado
+            $(document).trigger('shortcutPanel:disabled');
+            
+            console.log('Painel de atalhos desativado');
+        }
+
+        // Reativa o painel
+        enable() {
+            this.icon.show();
+            this.panel.show();
+            
+            // Dispara evento personalizado
+            $(document).trigger('shortcutPanel:enabled');
+            
+            console.log('Painel de atalhos ativado');
+        }
+    }
+
+    // Inicializa o painel quando o DOM estiver pronto
+    $(document).ready(function() {
+        // Cria uma instância do painel
+        const shortcutPanel = new ShortcutPanel();
+        
+        // Expõe a instância globalmente para uso futuro
+        window.shortcutPanel = shortcutPanel;
+        
+        console.log('Painel de atalhos carregado com sucesso!');
+    });
+
+})(jQuery);

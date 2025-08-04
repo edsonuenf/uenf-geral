@@ -1,0 +1,110 @@
+/* ===========================================
+   ESTILOS ESPECÍFICOS PARA O MENU E SUBMENUS
+   Garantindo que os estilos sejam aplicados corretamente
+   =========================================== */
+
+/* Container principal do menu */
+.offcanvas-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 55, 113, 0.4) transparent;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Estilo da barra de rolagem para WebKit (Chrome, Safari, Edge) */
+.offcanvas-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.offcanvas-body::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+  background: rgba(29, 55, 113, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 55, 113, 0.5);
+}
+
+/* Estilo para navegadores Firefox */
+.offcanvas-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 55, 113, 0.3) transparent;
+}
+
+/* Melhorias visuais para submenus */
+.new-menu .sub-menu,
+.new-menu .children {
+  position: relative;
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  margin-left: 15px;
+  padding-left: 5px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Quando o submenu está ativo/aberto */
+.new-menu .menu-item-active > .sub-menu,
+.new-menu .menu-item-active > .children,
+.new-menu .page_item_has_children.current-menu-item > .children {
+  max-height: 2000px;
+  opacity: 1;
+  visibility: visible;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Indicador visual para itens com submenu - Removido pois já é controlado pelo JavaScript */
+.menu-item-has-children > a,
+.page_item_has_children > a {
+  position: relative;
+  padding-right: 30px !important;
+}
+
+/* Destaque para o item ativo */
+.new-menu .current-menu-item > a,
+.new-menu .current-menu-ancestor > a,
+.new-menu .menu-item-active > a,
+.new-menu .current-menu-item > a:hover,
+.new-menu .current-menu-ancestor > a:hover,
+.new-menu .menu-item-active > a:hover {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1;
+  transition: all 0.2s ease !important;
+}
+
+
+/* Efeito de hover nos itens do menu */
+.new-menu > li > a:hover,
+.new-menu .sub-menu > li > a:hover,
+.new-menu .children > li > a:hover {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 25px !important;
+  transition: all 0.3s ease;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 1920px) {
+  .offcanvas-body {
+    padding-right: 5px;
+  }
+  
+  .offcanvas-body::-webkit-scrollbar {
+    width: 6px;
+  }
+}
