@@ -18,7 +18,7 @@
                     Macaé - RJ, Brasil CEP: 27.925-310</p>
                 </div>
             </div>
-            <div class="footer-widget">
+            <div class="footer-widget" id="footer-widget-uenf">
                 <div class="setor-info">
                 <?php
                             if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) :
@@ -63,6 +63,7 @@ if (!is_admin()) : ?>
             <button class="close-panel" aria-label="Fechar painel de atalhos">&times;</button>
         </div>
         <div class="shortcut-panel-content">
+            <!-- ...existing shortcut items... -->
             <a href="<?php echo esc_url(home_url('/')); ?>" class="shortcut-item">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
@@ -71,17 +72,13 @@ if (!is_admin()) : ?>
                 <i class="fas fa-envelope"></i>
                 <span>Contato</span>
             </a>
-            <a href="#footer" class="shortcut-item" data-scroll="smooth">
+            <a href="#footer-widget-uenf" class="shortcut-item" data-scroll="smooth">
                 <i class="fas fa-phone"></i>
                 <span>Telefone</span>
             </a>
-            <a href="<?php echo esc_url(home_url('/localizacao')); ?>" class="shortcut-item">
+            <a href="<?php echo esc_url(home_url('/contato')); ?>" class="shortcut-item">
                 <i class="fas fa-map-marker-alt"></i>
                 <span>Localização</span>
-            </a>
-            <a href="<?php echo esc_url(home_url('/noticias')); ?>" class="shortcut-item">
-                <i class="fas fa-newspaper"></i>
-                <span>Notícias</span>
             </a>
         </div>
     </div>
@@ -170,7 +167,7 @@ jQuery(document).ready(function($) {
             }
         });
         
-        console.log('Painel de atalhos inicializado com sucesso!');
+    // log removido
     }
     
     // Inicializa o painel

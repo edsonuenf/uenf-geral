@@ -321,7 +321,7 @@ function cct_scripts() {
     
     // 1. Fontes externas (carregadas primeiro para evitar FOUT - Flash of Unstyled Text)
     wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), null);
-    wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
+    wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), '6.4.2');
     
     // 2. Frameworks e bibliotecas
     wp_enqueue_style('cct-bootstrap', CCT_THEME_URI . '/assets/bootstrap/bootstrap.min.css', array(), $theme_version);
@@ -466,72 +466,68 @@ add_action('wp_enqueue_scripts', 'cct_scripts');
  * Personalizado breadcrumb com ícone de casa
  */
 function cct_custom_breadcrumb() {
-    if (!is_front_page()) {
-        echo '<nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="' . esc_url(home_url('/')) . '">
-                        <svg aria-hidden="true" class="e-font-icon-svg e-fas-home" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; color: var(--primary-color);">
-                            <path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
-                        </svg>
-                    </a>
-                </li>';
+    echo '<nav aria-label="breadcrumb"><div class="custom-breadcrumb">';
+    // Ícone da casa sempre no início
+    echo '<a href="' . esc_url(home_url('/')) . '" class="cb-home" style="display:inline-flex; align-items:center; vertical-align:middle;">
+        <svg aria-hidden="true" class="e-font-icon-svg e-fas-home" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 2px; display:inline-block; vertical-align:middle;">
+            <path fill="rgb(38,85,125)" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
+        </svg>
+    </a><span style="display:inline-block; width:12px;"></span>';
 
-        // Para páginas normais
-        if (is_page()) {
-            $ancestors = get_post_ancestors(get_the_ID());
-            if ($ancestors) {
-                $ancestors = array_reverse($ancestors);
-                foreach ($ancestors as $ancestor) {
-                    echo '<li class="breadcrumb-item"><a href="' . get_permalink($ancestor) . '" style="color: var(--medium-gray);">' . get_the_title($ancestor) . '</a></li>';
-                }
-            }
-            echo '<li class="breadcrumb-item active"><span>' . get_the_title() . '</span></li>';
-        }
-        // Para posts
-        elseif (is_single()) {
-            $post = get_post();
-            $parent = $post->post_parent;
-            if ($parent) {
-                echo '<li class="breadcrumb-item"><a href="' . get_permalink($parent) . '" style="color: var(--medium-gray);">' . get_the_title($parent) . '</a></li>';
-            }
-            echo '<li class="breadcrumb-item active"><span>' . get_the_title() . '</span></li>';
-        }
-        // Para categorias
-        elseif (is_category()) {
-            $category = get_queried_object();
-            $parent = $category->parent;
-            if ($parent) {
-                $parent_category = get_category($parent);
-                echo '<li class="breadcrumb-item"><a href="' . get_category_link($parent) . '" style="color: var(--medium-gray);">' . $parent_category->name . '</a></li>';
-            }
-            echo '<li class="breadcrumb-item active"><span>' . $category->name . '</span></li>';
-        }
-        // Para tags
-        elseif (is_tag()) {
-            $tag = get_queried_object();
-            echo '<li class="breadcrumb-item active"><span>' . $tag->name . '</span></li>';
-        }
-        // Para autores
-        elseif (is_author()) {
-            $author = get_queried_object();
-            echo '<li class="breadcrumb-item active"><span>' . $author->display_name . '</span></li>';
-        }
-        // Para datas
-        elseif (is_date()) {
-            echo '<li class="breadcrumb-item active"><span>' . get_the_date() . '</span></li>';
-        }
-        // Para busca
-        elseif (is_search()) {
-            echo '<li class="breadcrumb-item active"><span>Resultados da busca</span></li>';
-        }
-        // Para 404
-        elseif (is_404()) {
-            echo '<li class="breadcrumb-item active"><span>Página não encontrada</span></li>';
-        }
+    $items = array();
 
-        echo '</ol></nav>';
+    if (is_front_page()) {
+        // Só a casa, destacada
+        echo '<span style="color: #1a3365; font-weight: bold; margin-left: 4px;">Início</span>';
+    } elseif (is_page()) {
+        $ancestors = get_post_ancestors(get_the_ID());
+        if ($ancestors) {
+            $ancestors = array_reverse($ancestors);
+            foreach ($ancestors as $ancestor) {
+                $items[] = '<a href="' . get_permalink($ancestor) . '" style="color: rgb(38,85,125);">' . get_the_title($ancestor) . '</a>';
+            }
+        }
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_title() . '</span>';
+    } elseif (is_single()) {
+        $post = get_post();
+        $parent = $post->post_parent;
+        if ($parent) {
+            $items[] = '<a href="' . get_permalink($parent) . '" style="color: rgb(38,85,125);">' . get_the_title($parent) . '</a>';
+        }
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_title() . '</span>';
+    } elseif (is_category()) {
+        $category = get_queried_object();
+        $parent = $category->parent;
+        if ($parent) {
+            $parent_category = get_category($parent);
+            $items[] = '<a href="' . get_category_link($parent) . '" style="color: rgb(38,85,125);">' . $parent_category->name . '</a>';
+        }
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $category->name . '</span>';
+    } elseif (is_tag()) {
+        $tag = get_queried_object();
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $tag->name . '</span>';
+    } elseif (is_author()) {
+        $author = get_queried_object();
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $author->display_name . '</span>';
+    } elseif (is_date()) {
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_date() . '</span>';
+    } elseif (is_search()) {
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">Resultados da busca</span>';
+    } elseif (is_404()) {
+        $items[] = '<span style="color: #1a3365; font-weight: bold;">Página não encontrada</span>';
     }
+
+    // Renderiza os itens com separador apenas entre eles
+    if (!is_front_page() && count($items)) {
+        foreach ($items as $i => $item) {
+            if ($i > 0) {
+                echo '<span class="cb-sep" style="color: #888; margin: 0 8px;">»</span>';
+            }
+            echo $item;
+        }
+    }
+
+    echo '</div></nav>';
 }
 
 // Menu personalizado - usando o walker padrão do WordPress

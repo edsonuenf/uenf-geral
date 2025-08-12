@@ -48,14 +48,8 @@ if (class_exists('WP_Customize_Control')) {
         public $default = '#FFFFFF';
 
         public function enqueue() {
-            wp_enqueue_script(
-                'customize-alpha-color-picker',
-                get_template_directory_uri() . '/js/customize-alpha-color-picker.js',
-                array('jquery', 'wp-color-picker'),
-                '1.0.0',
-                true
-            );
-            
+            // Apenas garante que o wp-color-picker está enfileirado
+            wp_enqueue_script('wp-color-picker');
             // Adiciona estilos inline
             $css = '
             .wp-picker-container .wp-picker-holder {

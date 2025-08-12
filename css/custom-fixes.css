@@ -1,3 +1,7 @@
+/* Breadcrumb padding fix */
+.custom-breadcrumb {
+    padding-bottom: 1.25rem;
+}
 /* Correções de espaçamento no header */
 body {
     margin: 0;

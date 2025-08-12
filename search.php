@@ -1,3 +1,35 @@
+<style>
+/* Removido flex do .search-results para alinhar resultados à esquerda */
+/* Centralizar a paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+/* Paginação customizada */
+.pagination .page-numbers {
+    display: inline-block;
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 8px;
+    background: transparent;
+    color: rgb(38, 85, 125);
+    margin: 0 4px;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+.pagination .page-numbers.current {
+    background: rgb(38, 85, 125);
+    color: #fff;
+}
+.pagination .page-numbers:not(.prev):not(.next):not(.dots):not(.current):hover {
+    background: rgb(38, 85, 125) !important;
+    color: #fff !important;
+}
+</style>
 <?php
 /**
  * The template for displaying search results pages
@@ -28,7 +60,7 @@ get_header();
     <section class="line-breadcrumb"></section>
 
 
-    <div class="container">
+    <div class="container py-5">
         <div class="search-page">
             <?php if ( have_posts() ) : ?>
                 <header class="search-header">
@@ -40,16 +72,16 @@ get_header();
                     </div>
                 </header>
 
-                <div class="search-results">
+                <div class="search-results py-4">
                     <?php
                     /* Start the Loop */
                     while ( have_posts() ) :
                         the_post();
                         ?>
-                        <article class="search-result-item">
+                        <article class="search-result-item py-2">
                             <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                             <div class="post-meta">
-                                <span><?php echo get_the_date(); ?></span>
+                                <span style="color: #666666;"><?php echo get_the_date(); ?></span>
                                 <?php if (has_post_thumbnail()) : ?>
                                     <span class="post-thumbnail">
                                         <?php the_post_thumbnail('thumbnail', array('class' => 'img-fluid')); ?>
@@ -59,6 +91,8 @@ get_header();
                             <div class="post-excerpt">
                                 <?php the_excerpt(); ?>
                             </div>
+
+                            <div style="height:1px; background-color:#cccccc; margin:16px 0;"></div>
 
                         </article>
                     <?php

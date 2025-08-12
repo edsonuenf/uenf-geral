@@ -55,7 +55,7 @@
             // Ativa o painel
             this.enable();
             
-            console.log('Painel de atalhos inicializado com sucesso!');
+            // log removido
         }
         
         // Move o container para o final do body se necessário
@@ -148,7 +148,7 @@
             // Dispara evento personalizado
             $(document).trigger('shortcutPanel:opened');
             
-            console.log('Painel de atalhos aberto');
+            // log removido
         }
 
         // Fecha o painel
@@ -175,7 +175,7 @@
             // Dispara evento personalizado
             $(document).trigger('shortcutPanel:closed');
             
-            console.log('Painel de atalhos fechado');
+            // log removido
         }
 
         // Alterna entre abrir e fechar o painel
@@ -196,7 +196,7 @@
             // Dispara evento personalizado
             $(document).trigger('shortcutPanel:disabled');
             
-            console.log('Painel de atalhos desativado');
+            // log removido
         }
 
         // Reativa o painel
@@ -207,7 +207,7 @@
             // Dispara evento personalizado
             $(document).trigger('shortcutPanel:enabled');
             
-            console.log('Painel de atalhos ativado');
+            // log removido
         }
     }
 
@@ -219,7 +219,7 @@
         // Expõe a instância globalmente para uso futuro
         window.shortcutPanel = shortcutPanel;
         
-        console.log('Painel de atalhos carregado com sucesso!');
+    // log removido
     });
 
 })(jQuery);
