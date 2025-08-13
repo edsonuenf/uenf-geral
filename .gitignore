@@ -48,6 +48,9 @@ php.ini.old
 
 # Arquivos de configuração do MySQL
 my.cnf
+
+# Documentação
+PRD.md
 my.cnf.bak
 my.cnf.old
 
