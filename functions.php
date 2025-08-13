@@ -322,17 +322,23 @@ function cct_scripts() {
     // 1. Fontes externas (carregadas primeiro para evitar FOUT - Flash of Unstyled Text)
     wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), null);
     wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), '6.4.2');
-    
+
     // 2. Frameworks e bibliotecas
     wp_enqueue_style('cct-bootstrap', CCT_THEME_URI . '/assets/bootstrap/bootstrap.min.css', array(), $theme_version);
-    
+
+    // 2.1. Variáveis CSS (deve ser carregado antes do style.min.css)
+    $variables_path = get_template_directory() . '/css/variables.css';
+    $variables_version = file_exists($variables_path) ? filemtime($variables_path) : $theme_version;
+    wp_enqueue_style('cct-variables', CCT_THEME_URI . '/css/variables.css', array('cct-bootstrap'), $variables_version);
+
     // 3. Estilo principal (compilado com todos os estilos em um único arquivo)
     wp_enqueue_style('cct-style', 
-        CCT_THEME_URI . '/style.min.css', 
+        CCT_THEME_URI . '/css/style.min.css', 
         array(
             'cct-fonts',
             'cct-fontawesome',
-            'cct-bootstrap'
+            'cct-bootstrap',
+            'cct-variables'
         ), 
         $style_version // Usa timestamp do arquivo para versionamento
     );

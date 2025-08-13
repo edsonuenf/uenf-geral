@@ -1,0 +1,14 @@
+// Estilos do componente de menu
+.menu {
+  background: $primary-color;
+  color: #fff;
+  border-radius: $border-radius;
+  padding: 0.5rem 1rem;
+  a {
+    color: #fff;
+    text-decoration: none;
+    &:hover {
+      color: rgba(255,255,255,0.7);
+    }
+  }
+}

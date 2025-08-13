@@ -1,0 +1,9 @@
+// Estilos do componente de cabeçalho
+.header {
+  background: $primary-color;
+  color: #fff;
+  padding: 1rem 0;
+  .logo {
+    max-height: 60px;
+  }
+}

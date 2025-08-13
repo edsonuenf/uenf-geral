@@ -1,4 +1,15 @@
 # Checklist de Desenvolvimento - Tema UENF Geral
+#️⃣## 🚨 Tarefas Urgentes
+
+- [ ] Migrar gradualmente CSS inline para SCSS/CSS externos nos principais templates (ex: header.php, footer.php, search.php)
+- [ ] Instalar e configurar Sass para SCSS/minificação
+- [ ] Testar visual do tema após cada migração parcial
+- [ ] Atualizar documentação e eliminar duplicatas
+- [ ] Criar painel de configurações em "Aparência > Design" para facilitar ajustes visuais
+- [ ] Revisar e aprimorar opções do Customizer (Personalizar)
+- [ ] Validar .gitignore para garantir que arquivos sensíveis/build não sejam enviados
+- [ ] Sincronizar branches develop/main após mudanças críticas
+
 
 ## 📚 Documentação Importante
 
@@ -192,6 +203,111 @@
 3. Definir prazos
 4. Implementar em sprints
 5. Testar e validar cada funcionalidade
+Atualizado em: 06/06/2025
+
+## 🛠️ Ferramentas de Build e Organização de Código
+
+   - Comando: `npm install -g sass` ou `yarn global add sass`
+   - Criar pasta `scss/` para arquivos fonte
+   - Gerar arquivos minificados em `css/` automaticamente
+   - Centralizar todo o CSS em arquivos `.scss`/`.css`
+   - Centralizar todo o JS em arquivos `.js`
+   - Garantir que arquivos minificados sejam gerados para produção
+
+### Instruções detalhadas para migração e build SCSS
+
+1. Estrutura de arquivos SCSS:
+   - `scss/style.scss`: Arquivo principal, importa todos os outros.
+   - `scss/variables.scss`: Variáveis globais (cores, fontes, bordas).
+   - `scss/layout.scss`: Layout base (body, container).
+   - `scss/components/`: Componentes (menu, header, footer, etc.).
+#### Exemplos práticos
+
+**Exemplo de arquivo de variáveis SCSS (`scss/variables.scss`):**
+```scss
+$primary-color: #1d3771;
+$text-color: #333333;
+$border-radius: 8px;
+```
+
+**Exemplo de uso em componente (`scss/components/menu.scss`):**
+```scss
+.menu {
+   background: $primary-color;
+   color: #fff;
+   border-radius: $border-radius;
+   a {
+      color: #fff;
+      &:hover {
+         color: rgba(255,255,255,0.7);
+      }
+   }
+}
+```
+
+**Exemplo de comando para compilar e minificar:**
+```bash
+sass scss/style.scss css/style.min.css --style=compressed --watch
+```
+
+**Exemplo de como carregar o CSS minificado no `functions.php`:**
+```php
+wp_enqueue_style('uenf-style', get_template_directory_uri() . '/css/style.min.css', array(), filemtime(get_template_directory() . '/css/style.min.css'));
+```
 
 ---
-Atualizado em: 06/06/2025
+### Próximo passo recomendado
+
+1. Migrar o CSS de um componente simples (ex: menu) para o SCSS correspondente.
+2. Compilar o SCSS e testar o visual no navegador.
+3. Validar se o CSS minificado está sendo carregado corretamente pelo tema.
+4. Registrar o progresso no checklist e na documentação.
+
+2. Migração dos estilos:
+   - Mover gradualmente o CSS dos arquivos atuais para os SCSS correspondentes.
+   - Manter a organização modular para facilitar manutenção.
+   - Testar visual do tema a cada etapa.
+
+3. Compilação e minificação:
+   - Usar o comando:
+     ```bash
+     sass scss/style.scss css/style.min.css --style=compressed --watch
+     ```
+   - O arquivo gerado deve ser carregado no tema em vez dos antigos CSS.
+
+4. Carregamento correto no tema:
+   - No `functions.php`, garantir que o tema carregue apenas o CSS minificado gerado pelo Sass.
+   - Remover referências antigas a arquivos CSS que não são mais usados.
+
+5. Documentação e checklist:
+   - Registrar cada etapa migrada e testada.
+   - Atualizar a documentação do projeto conforme mudanças.
+   - Eliminar duplicatas e manter apenas instruções válidas.
+
+## 🔄 Plano de Migração Gradual para SCSS e Minificação
+- [ ] Migrar arquivos CSS para SCSS por partes (componentes, layout, utilitários)
+- [ ] Refatorar gradualmente arquivos PHP/HTML para remover CSS/JS inline
+- [ ] Testar visual do tema a cada etapa para evitar impactos
+- [ ] Validar visual em ambiente de desenvolvimento antes de publicar
+- [ ] Atualizar documentação conforme cada etapa concluída
+- [ ] Eliminar duplicatas e consolidar informações na documentação
+
+## 🖌️ Aparência/Design no WordPress
+- [ ] Criar painel de configurações em "Aparência > Design" para facilitar ajustes visuais
+- [ ] Permitir escolha de cores, fontes, espaçamentos, logo, etc. via painel
+- [ ] Documentar todas as opções disponíveis para o usuário
+
+## 🎨 Personalizar do Tema
+- [ ] Revisar e aprimorar opções do Customizer
+- [ ] Adicionar novas opções de personalização (cores, layout, tipografia)
+- [ ] Garantir que todas as opções estejam documentadas
+
+## 🖼️ Alinhamento de Imagens e Listas (WordPress)
+- [ ] Revisar e ajustar estrutura HTML dos blocos de conteúdo para imagens alinhadas e listas
+- [ ] Garantir que o CSS de alinhamento (`alignleft`, `alignright`, `aligncenter`) está presente e funcional em `style.min.css` e `editor-style.css`
+- [ ] Testar visual de imagens alinhadas com listas (ul/ol) no front-end e editor do WordPress
+- [ ] Corrigir eventuais conflitos de CSS global que afetem listas ou alinhamento
+- [ ] Documentar exemplos de uso correto no PRD.md
+
+---
+Atualizado em: 12/08/2025

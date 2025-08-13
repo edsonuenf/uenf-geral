@@ -1,0 +1,116 @@
+img.alignleft {
+  float: left;
+  margin: 0 20px 20px 0;
+  max-width: 50%;
+}
+
+img.alignleft + ul,
+img.alignleft + ol,
+img.alignleft ~ ul,
+img.alignleft ~ ol {
+  margin-left: 20px;
+}
+
+figure.alignleft + ul,
+figure.alignleft + ol,
+figure.alignleft ~ ul,
+figure.alignleft ~ ol {
+  margin-left: 20px;
+}
+
+div.alignleft + ul,
+div.alignleft + ol,
+div.alignleft ~ ul,
+div.alignleft ~ ol {
+  margin-left: 20px;
+}
+.alignleft,
+.alignleft img {
+  float: left;
+  margin: 0 20px 20px 0;
+  max-width: 50%;
+}
+
+.alignleft ~ ul,
+.alignleft ~ ol,
+img.alignleft ~ ul,
+img.alignleft ~ ol {
+  margin-left: 20px;
+}
+.alignleft + ul,
+.alignleft + ol {
+  margin-left: 20px;
+}
+
+.alignright + ul,
+.alignright + ol {
+  margin-right: 20px;
+}
+// Layout base do tema UENF Geral
+body {
+  font-family: $font-family-base;
+  background: #fff;
+  color: $text-color;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+// Linha visual abaixo do breadcrumb
+.line-breadcrumb {
+  width: 100%;
+  border-bottom: 1px solid #e3eaf2;
+  margin-top: 0;
+  margin-bottom: -4px;
+}
+
+// Alinhamento de imagens como no editor do WordPress
+.alignleft {
+  float: left;
+  margin: 0 20px 20px 0;
+  max-width: 50%;
+}
+.alignright {
+  float: right;
+  margin: 0 0 20px 20px;
+  max-width: 50%;
+}
+.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Cor do h2 na página de busca
+.search-results h2 {
+  color: rgba(29, 55, 112, 0.75);
+}
+
+.custom-breadcrumb {
+  padding-bottom: 12px !important;
+}
+
+// Alinhamento de imagem e lista/texto ao lado
+.pessoal-bloco {
+  display: flex;
+  align-items: flex-start;
+
+  img,
+  .alignleft {
+    margin-right: 24px;
+    max-width: 120px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .pessoal-conteudo {
+    flex: 1;
+    ul, ol {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+  }
+}

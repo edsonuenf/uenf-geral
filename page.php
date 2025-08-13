@@ -20,7 +20,7 @@ get_header();
         </div>
     </section>
 
-    <div class="container py-1">
+    <div class="container">
         <?php cct_custom_breadcrumb(); ?>
     </div>
 

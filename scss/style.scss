@@ -1,0 +1,16 @@
+// Arquivo principal SCSS do tema UENF Geral
+// Importe os arquivos de componentes, layout, variáveis, etc. abaixo
+
+@import 'variables';
+@import 'layout';
+@import 'components/menu';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/hero';
+// Adicione outros imports conforme necessário
+
+body {
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+  background: #fff;
+  color: #333;
+}
