@@ -1,16 +1,186 @@
 // Arquivo principal SCSS do tema UENF Geral
 // Importe os arquivos de componentes, layout, variáveis, etc. abaixo
 
-@import 'variables';
-@import 'layout';
-@import 'components/menu';
-@import 'components/header';
-@import 'components/footer';
-@import 'components/hero';
+@use 'variables';
+@use 'layout';
+@use 'components/menu';
+@use 'components/header';
+@use 'components/footer';
+@use 'components/hero';
 // Adicione outros imports conforme necessário
 
 body {
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   background: #fff;
   color: #333;
+}
+
+/* Content spacing overrides */
+.entry-content {
+  line-height: 1.6;
+
+  p {
+    margin: 0 0 1rem; // separa parágrafos visualmente
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1rem 1.25rem; // espaço e indentação para listas
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 1.25rem 0 0.75rem; // restaura espaçamento de títulos
+  }
+
+  // Imagens alinhadas
+  img.alignleft { margin: 0 20px 20px 0; display: block; }
+  img.alignright { margin: 0 0 20px 20px; display: block; }
+  img.aligncenter { display: block; margin: 20px auto; }
+
+  // Desabilita floats do alinhamento padrão dentro do conteúdo para evitar texto ao lado
+  .alignleft,
+  .wp-caption.alignleft,
+  .wp-block-image.alignleft {
+    float: none !important;
+    display: block !important;
+    margin: 0 0 1rem 0 !important;
+  }
+  .alignright,
+  .wp-caption.alignright,
+  .wp-block-image.alignright {
+    float: none !important;
+    display: block !important;
+    margin: 0 0 1rem 0 !important;
+  }
+
+  // Clearfix do container para considerar floats (se houver)
+  &::after { content: ""; display: block; clear: both; }
+
+  // Se a imagem alinhada estiver dentro do MESMO <p>, cancela o float para não envolver o texto
+  p > img.alignleft,
+  p > img.alignright {
+    float: none !important;
+    display: block !important;
+  }
+
+  // Garante que o primeiro parágrafo após uma imagem/caption alinhada quebre abaixo dela
+  .alignleft + p,
+  .alignright + p,
+  .wp-caption.alignleft + p,
+  .wp-caption.alignright + p,
+  .wp-block-image.alignleft + p,
+  .wp-block-image.alignright + p {
+    clear: both !important;
+  }
+
+  // Previne texto envolvido por floats em elementos de bloco principais
+  p,
+  ul,
+  ol,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 { clear: both; }
+}
+
+/* ===== Ajuste GLOBAL de alinhamento de imagens ===== */
+/* Cobre casos fora de .entry-content (ex: templates específicos) */
+.wp-block-image.alignleft,
+.wp-block-image.alignright,
+figure.alignleft,
+figure.alignright {
+  float: none !important;
+  display: block !important;
+  margin: 0 0 1rem 0 !important;
+}
+
+/* Garante quebra abaixo de imagens/captions alinhadas em qualquer contexto */
+.wp-block-image.alignleft + p,
+.wp-block-image.alignright + p,
+figure.alignleft + p,
+figure.alignright + p { clear: both !important; }
+
+/* Cobrir imagens alinhadas soltas (fora de figure/wp-block-image) */
+img.alignleft,
+img.alignright {
+  float: none !important;
+  display: block !important;
+  margin: 0 0 1rem 0 !important;
+}
+
+img.alignleft + p,
+img.alignright + p { clear: both !important; }
+
+/* ===== Regras específicas para a Home (.page-content) ===== */
+/* Na home queremos que o texto ENROLE ao redor de imagens alinhadas */
+.page-content {
+  img.alignleft,
+  figure.alignleft,
+  .wp-block-image.alignleft {
+    float: left !important;
+    display: block !important;
+    margin: 0 20px 20px 0 !important;
+  }
+
+  img.alignright,
+  figure.alignright,
+  .wp-block-image.alignright {
+    float: right !important;
+    display: block !important;
+    margin: 0 0 20px 20px !important;
+  }
+
+  .aligncenter { display: block !important; margin: 20px auto !important; }
+
+  /* Cancelar o clear do primeiro parágrafo após imagem alinhada na home */
+  .wp-block-image.alignleft + p,
+  .wp-block-image.alignright + p,
+  figure.alignleft + p,
+  figure.alignright + p,
+  img.alignleft + p,
+  img.alignright + p {
+    clear: none !important;
+  }
+}
+
+/* ===== Garantir que parágrafos e títulos quebrem linha e tenham espaçamento ===== */
+/* Reforço global contra resets agressivos que removem margens/alteram display */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol {
+  display: block !important;
+  white-space: normal !important;
+  margin: 0 0 1rem 0 !important;
+  line-height: 1.6 !important;
+}
+
+/* Escopo principal do conteúdo — caso seja necessário mais especificidade */
+.entry-content {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ul,
+  ol {
+    display: block !important;
+    white-space: normal !important;
+    margin: 0 0 1rem 0 !important;
+    line-height: 1.7 !important;
+  }
 }

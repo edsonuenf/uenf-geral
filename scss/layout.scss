@@ -1,3 +1,5 @@
+@use 'variables';
+
 img.alignleft {
   float: left;
   margin: 0 20px 20px 0;
@@ -47,10 +49,11 @@ img.alignleft ~ ol {
   margin-right: 20px;
 }
 // Layout base do tema UENF Geral
+
 body {
-  font-family: $font-family-base;
+  font-family: variables.$font-family-base;
   background: #fff;
-  color: $text-color;
+  color: variables.$text-color;
 }
 
 .container {

@@ -1,8 +1,29 @@
 // Estilos do componente de menu
+@use '../variables';
+
+#menuLateral {
+  /* Força o painel a usar a altura da viewport em todos os navegadores */
+  height: 100dvh; /* Chrome/Safari mais preciso com barras de UI dinâmicas */
+  min-height: 100vh; /* Fallback */
+  display: flex;
+  flex-direction: column;
+}
+#menuLateral .offcanvas-body {
+  /* Faz o corpo ocupar o espaço restante e rolar o conteúdo */
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+/* Evita sobreposição visual dos submenus durante animações */
+.new-menu .sub-menu,
+.new-menu .children {
+  overflow: hidden;
+}
+
 .menu {
-  background: $primary-color;
+  background: variables.$primary-color;
   color: #fff;
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
   padding: 0.5rem 1rem;
   a {
     color: #fff;

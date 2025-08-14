@@ -396,6 +396,8 @@ function cct_scripts() {
         }
     }
     
+    // 3.2 Removido: não enfileirar custom-fixes.css; todas as alterações devem vir do SCSS compilado
+    
     // 4. Scripts (carregados no final do documento para melhor performance)
     $js_files = array(
         // jQuery (garantir que está carregado primeiro)

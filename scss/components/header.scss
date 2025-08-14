@@ -1,6 +1,8 @@
 // Estilos do componente de cabeçalho
+@use '../variables';
+
 .header {
-  background: $primary-color;
+  background: variables.$primary-color;
   color: #fff;
   padding: 1rem 0;
   .logo {

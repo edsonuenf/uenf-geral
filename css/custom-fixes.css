@@ -51,3 +51,82 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+/* ===== Content spacing fixes ===== */
+.entry-content {
+    line-height: 1.6;
+}
+
+.entry-content p {
+    margin: 0 0 1rem; /* separa parágrafos visualmente */
+}
+
+.entry-content ul,
+.entry-content ol {
+    margin: 0 0 1rem 1.25rem; /* espaço e indentação para listas */
+}
+
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 {
+    margin: 1.25rem 0 0.75rem; /* restaura espaçamento de títulos */
+}
+
+.entry-content img.alignleft { margin: 0 20px 20px 0; display: block; }
+.entry-content img.alignright { margin: 0 0 20px 20px; display: block; }
+.entry-content img.aligncenter { display: block; margin: 20px auto; }
+
+/* ===== Alinhamento de imagens e quebra após ===== */
+/* Em conteúdo, desabilitar floats para evitar texto ao lado da imagem */
+.entry-content .alignleft,
+.entry-content .wp-caption.alignleft,
+.entry-content .wp-block-image.alignleft,
+.entry-content img.alignleft {
+    float: none !important;
+    display: block !important;
+    margin: 0 0 1rem 0 !important;
+}
+
+.entry-content .alignright,
+.entry-content .wp-caption.alignright,
+.entry-content .wp-block-image.alignright,
+.entry-content img.alignright {
+    float: none !important;
+    display: block !important;
+    margin: 0 0 1rem 0 !important;
+}
+
+/* Garante que o primeiro parágrafo após uma imagem alinhada quebre abaixo dela */
+.entry-content .alignleft + p,
+.entry-content .alignright + p,
+.entry-content .wp-caption.alignleft + p,
+.entry-content .wp-caption.alignright + p,
+.entry-content .wp-block-image.alignleft + p,
+.entry-content .wp-block-image.alignright + p {
+    clear: both !important;
+}
+
+/* Clearfix para garantir altura correta do container */
+.entry-content::after { content: ""; display: block; clear: both; }
+
+/* Força parágrafos/listas/títulos a iniciarem abaixo de floats (sem texto envolvido) */
+.entry-content p,
+.entry-content ul,
+.entry-content ol,
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 { clear: both; }
+
+/* Caso a imagem alinhada esteja dentro do MESMO <p>, cancelar o float para não envolver o texto */
+.entry-content p > img.alignleft,
+.entry-content p > img.alignright {
+    float: none !important;
+    display: block !important;
+}
+

@@ -50,9 +50,9 @@ get_header();
                         while (have_posts()) :
                             the_post();
                             
-                            // Usando wp_kses_post para permitir HTML seguro no conteúdo
-                            $content = get_the_content();
-                            echo $content ? wp_kses_post($content) : '';
+                            // Use os filtros padrão do WordPress para o conteúdo
+                            // Isso garante wpautop (parágrafos), shortcodes, embeds etc.
+                            the_content();
                         endwhile;
                     else :
                         // Nenhum post encontrado
