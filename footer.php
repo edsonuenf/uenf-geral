@@ -10,10 +10,10 @@
             </div>
             <div class="footer-widget">
                 <div class="enderecos">
-                    <h4>UENF campus Campos dos Goytacazes</h4>
+                    <h4>UENF Campos dos Goytacazes</h4>
                     <p>Av. Alberto Lamego, 200 Parque Califórnia,<br>
                     Campos - RJ, Brasil CEP: 28013-602</p>
-                    <h4>UENF campus Macaé</h4>
+                    <h4>UENF Macaé</h4>
                     <p>Rua Hermenegildo Adolpho Parque Bellavista Imboassica<br>
                     Macaé - RJ, Brasil CEP: 27.925-310</p>
                 </div>
