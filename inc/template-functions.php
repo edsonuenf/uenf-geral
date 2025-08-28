@@ -125,6 +125,8 @@ function cct_google_fonts_url() {
     /* translators: If there are characters in your language that are not supported by the font, translate this to 'off'. Do not translate into your own language. */
     if ( 'off' !== _x( 'on', 'Google font: on or off', 'cct-theme' ) ) {
         $fonts[] = get_theme_mod( 'body_font_family', 'Open Sans:400,700' );
+        // Adiciona Roboto com peso 600 para os itens do menu
+        $fonts[] = 'Roboto:400,500,600,700';
     }
 
     if ( $fonts ) {
