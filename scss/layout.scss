@@ -97,7 +97,7 @@ body {
 }
 
 // Alinhamento de imagem e lista/texto ao lado
-.pessoal-bloco {
+.content-block {
   display: flex;
   align-items: flex-start;
 
@@ -109,7 +109,7 @@ body {
     flex-shrink: 0;
   }
 
-  .pessoal-conteudo {
+  .content-text {
     flex: 1;
     ul, ol {
       margin-top: 0.5em;

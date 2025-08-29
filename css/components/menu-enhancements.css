@@ -10,19 +10,42 @@
   position: relative;
   transition: all 0.3s ease;
   padding-left: 20px !important; /* Espaço para a barra lateral */
+  margin: 0 !important;
+  border-spacing: 0 !important;
+}
+
+/* Remove espaçamentos entre itens */
+.new-menu li {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-spacing: 0 !important;
+  gap: 0 !important;
+}
+
+.new-menu ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
 }
 
 /* Barra lateral para itens ativos */
 .new-menu .current-menu-item > a,
 .new-menu .current-menu-ancestor > a,
 .new-menu .menu-item-active > a {
-  border-left: 4px solid #ffffff !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   padding-left: 16px !important; /* Ajuste para compensar a borda */
 }
 
-/* Efeito de hover para itens de menu */
-.new-menu > li > a:hover,
+/* Efeito de hover para itens de nível 1 */
+.new-menu > li > a:hover {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding-left: 24px !important; /* Efeito de deslocamento suave */
+}
+
+/* Efeito de hover para subitens */
 .new-menu .sub-menu > li > a:hover,
 .new-menu .children > li > a:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;

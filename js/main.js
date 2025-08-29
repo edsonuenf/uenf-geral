@@ -34,17 +34,17 @@
         const submenu = element.querySelector('.sub-menu') || element.querySelector('.children');
         if (submenu) {
             submenu.classList.remove('show');
-            
-            // Remove a rotação da seta
-            const toggle = element.querySelector('a .submenu-toggle');
-            if (toggle) {
-                toggle.classList.remove('rotated');
-            }
-            
-            // Fecha todos os itens filhos recursivamente
-            const children = element.querySelectorAll('.menu-item-has-children, .page_item_has_children');
-            children.forEach(child => closeSubmenuAndChildren(child));
         }
+        
+        // Remove a rotação da seta (seletor corrigido)
+        const toggle = element.querySelector('.submenu-toggle');
+        if (toggle) {
+            toggle.classList.remove('rotated');
+        }
+        
+        // Fecha todos os itens filhos recursivamente
+        const children = element.querySelectorAll('.menu-item-has-children, .page_item_has_children');
+        children.forEach(child => closeSubmenuAndChildren(child));
     }
     
     // Função para verificar se um elemento tem submenu aberto
@@ -61,12 +61,29 @@
             // Usando seletores separados para evitar problemas de sintaxe
             const submenu = item.querySelector('.sub-menu') || item.querySelector('.children');
             if (submenu) submenu.classList.remove('show');
-            const toggle = item.querySelector('a .submenu-toggle');
+            const toggle = item.querySelector('.submenu-toggle');
             if (toggle) {
                 toggle.classList.remove('rotated');
                 // Garante que a seta aponte para baixo
                 toggle.classList.remove('fa-chevron-right');
                 toggle.classList.add('fa-chevron-down');
+            }
+        });
+    }
+    
+    // Função para implementar comportamento accordion (fecha outros itens do mesmo nível)
+    function closeOtherMenuItems(currentItem, container) {
+        const selector = container === 'top-level' ? 
+            '.new-menu > .menu-item-has-children, .new-menu > .page_item_has_children' :
+            '.menu-item-has-children, .page_item_has_children';
+            
+        const items = container === 'top-level' ? 
+            document.querySelectorAll(selector) :
+            Array.from(currentItem.parentElement.children);
+            
+        items.forEach(item => {
+            if (item !== currentItem && (item.classList.contains('menu-item-has-children') || item.classList.contains('page_item_has_children'))) {
+                closeSubmenuAndChildren(item);
             }
         });
     }
@@ -101,55 +118,53 @@
                 const isSubmenu = parentLi.parentElement.classList.contains('sub-menu') || 
                                  parentLi.parentElement.classList.contains('children');
                 
-                // Verifica se o item já está ativo
-                const isActive = parentLi.classList.contains('menu-item-active');
+                // Verifica se o clique foi no link ou na seta
+                const isClickOnToggle = e.target.closest('.submenu-toggle') !== null;
+                const isClickOnLink = e.target === this || e.target.tagName === 'A';
                 
-                // Se for um item de submenu (nível 2 ou mais)
-                if (isSubmenu) {
-                    // Verifica se o clique foi no link ou na seta
-                    const isClickOnToggle = e.target.closest('.submenu-toggle') !== null;
-                    const isClickOnLink = e.target === this || e.target.tagName === 'A';
+                // Só processa se foi clique válido
+                if (isClickOnLink || isClickOnToggle) {
+                    // Verifica se o item já está ativo
+                    const isActive = parentLi.classList.contains('menu-item-active');
                     
-                    // Se o clique foi no link e o submenu já está aberto, fecha tudo
-                    if ((isClickOnLink || isClickOnToggle) && hasOpenSubmenu(parentLi)) {
-                        closeSubmenuAndChildren(parentLi);
-                    } 
-                    // Se o clique foi no link ou na seta e o submenu está fechado, abre
-                    else if (isClickOnLink || isClickOnToggle) {
-                        // Fecha outros itens do mesmo nível
-                        const siblings = Array.from(parentLi.parentElement.children);
-                        siblings.forEach(sibling => {
-                            if (sibling !== parentLi) {
-                                closeSubmenuAndChildren(sibling);
+                    if (!isSubmenu) {
+                        // Para itens de primeiro nível: FECHA TUDO PRIMEIRO (abordagem radical)
+                        document.querySelectorAll('.menu-item-active').forEach(activeItem => {
+                            activeItem.classList.remove('menu-item-active');
+                        });
+                        document.querySelectorAll('.sub-menu.show, .children.show').forEach(openSubmenu => {
+                            openSubmenu.classList.remove('show');
+                        });
+                        document.querySelectorAll('.submenu-toggle.rotated').forEach(rotatedToggle => {
+                            rotatedToggle.classList.remove('rotated');
+                        });
+                        
+                        // Se não estava ativo, abre este item
+                        if (!isActive) {
+                            parentLi.classList.add('menu-item-active');
+                            if (submenu) submenu.classList.add('show');
+                            const toggle = this.querySelector('.submenu-toggle');
+                            if (toggle) toggle.classList.add('rotated');
+                        }
+                    } else {
+                        // Para submenus, fecha apenas irmãos do mesmo nível
+                        const parentMenu = parentLi.parentElement;
+                        const siblings = parentMenu.querySelectorAll(':scope > .menu-item-has-children, :scope > .page_item_has_children');
+                        siblings.forEach(item => {
+                            if (item !== parentLi) {
+                                closeSubmenuAndChildren(item);
                             }
                         });
                         
-                        // Abre este item
-                        parentLi.classList.add('menu-item-active');
-                        if (submenu) submenu.classList.add('show');
-                        const toggle = this.querySelector('a .submenu-toggle');
-                        if (toggle) toggle.classList.add('rotated');
-                    }
-                } 
-                // Se for um item de menu de primeiro nível
-                else {
-                    // Se já está ativo, fecha tudo
-                    if (isActive) {
-                        closeSubmenuAndChildren(parentLi);
-                    } 
-                    // Se não está ativo, fecha tudo e abre este
-                    else {
-                        // Fecha todos os itens de primeiro nível
-                        const topLevelItems = document.querySelectorAll('.menu .menu-item-has-children, .menu .page_item_has_children');
-                        topLevelItems.forEach(menuItem => {
-                            closeSubmenuAndChildren(menuItem);
-                        });
-                        
-                        // Abre este item
-                        parentLi.classList.add('menu-item-active');
-                        if (submenu) submenu.classList.add('show');
-                        const toggle = this.querySelector('a .submenu-toggle');
-                        if (toggle) toggle.classList.add('rotated');
+                        // Toggle do submenu
+                        if (!isActive) {
+                            parentLi.classList.add('menu-item-active');
+                            if (submenu) submenu.classList.add('show');
+                            const toggle = this.querySelector('.submenu-toggle');
+                            if (toggle) toggle.classList.add('rotated');
+                        } else {
+                            closeSubmenuAndChildren(parentLi);
+                        }
                     }
                 }
                 
@@ -265,4 +280,4 @@
         });
     });
 
-})(jQuery); 
+})(jQuery);

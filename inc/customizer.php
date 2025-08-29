@@ -40,6 +40,39 @@ if ( ! class_exists( 'WP_Customize_Color_Control' ) ) {
     }
 }
 
+// Controle personalizado para seleção de ícones
+if (class_exists('WP_Customize_Control')) {
+    class Customize_Icon_Select_Control extends WP_Customize_Control {
+        public $type = 'icon-select';
+        public $icons = array();
+
+        public function __construct($manager, $id, $args = array()) {
+            parent::__construct($manager, $id, $args);
+            if (isset($args['icons'])) {
+                $this->icons = $args['icons'];
+            }
+        }
+
+        public function render_content() {
+            ?>
+            <label>
+                <span class="customize-control-title"><?php echo esc_html($this->label); ?></span>
+                <?php if (!empty($this->description)) : ?>
+                    <span class="description customize-control-description"><?php echo $this->description; ?></span>
+                <?php endif; ?>
+                <select <?php $this->link(); ?>>
+                    <?php foreach ($this->icons as $value => $label) : ?>
+                        <option value="<?php echo esc_attr($value); ?>" <?php selected($this->value(), $value); ?>>
+                            <?php echo esc_html($label); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+            <?php
+        }
+    }
+}
+
 // Controle personalizado para cores com suporte a RGBA
 if (class_exists('WP_Customize_Control')) {
     class Customize_Alpha_Color_Control extends WP_Customize_Control {
@@ -128,6 +161,46 @@ function cct_customize_register( $wp_customize ) {
     $wp_customize->add_panel('cct_colors_panel', array(
         'title' => __('Cores do Tema', 'cct'),
         'priority' => 30,
+    ));
+    
+    // ====================================
+    // Seção: Menu de Navegação
+    // ====================================
+    $wp_customize->add_section('cct_menu_settings', array(
+        'title' => __('Menu de Navegação', 'cct'),
+        'priority' => 35,
+        'description' => __('Configure a aparência do menu de navegação.', 'cct'),
+    ));
+    
+    // Estilo do Menu
+    $wp_customize->add_setting('menu_style', array(
+        'default' => 'modern',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    
+    $wp_customize->add_control('menu_style', array(
+        'label' => __('Estilo do Menu', 'cct'),
+        'section' => 'cct_menu_settings',
+        'type' => 'select',
+        'choices' => array(
+            'modern' => __('Moderno (com gradientes)', 'cct'),
+            'classic' => __('Clássico (cores sólidas)', 'cct'),
+            'minimal' => __('Minimalista', 'cct'),
+        ),
+        'description' => __('Escolha o estilo visual do menu.', 'cct'),
+    ));
+    
+    // Mostrar ícones de hierarquia
+    $wp_customize->add_setting('menu_show_hierarchy_icons', array(
+        'default' => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+    
+    $wp_customize->add_control('menu_show_hierarchy_icons', array(
+        'label' => __('Mostrar Ícones de Hierarquia', 'cct'),
+        'section' => 'cct_menu_settings',
+        'type' => 'checkbox',
+        'description' => __('Exibe setas e símbolos para indicar a hierarquia dos submenus.', 'cct'),
     ));
     
     // ====================================
@@ -1617,6 +1690,42 @@ function cct_customize_css() {
     echo 'resize: vertical;';
     echo '}';
     
+    // Estilos dinâmicos para o menu
+    $menu_style = get_theme_mod('menu_style', 'modern');
+    $show_hierarchy_icons = get_theme_mod('menu_show_hierarchy_icons', true);
+    
+    // Aplicar estilos baseados no estilo selecionado
+    switch ($menu_style) {
+        case 'classic':
+            echo '.new-menu .sub-menu, .new-menu .children {';
+            echo 'background: #1d3771 !important;';
+            echo 'border-left: 3px solid #ffffff !important;';
+            echo '}';
+            break;
+        case 'minimal':
+            echo '.new-menu .sub-menu, .new-menu .children {';
+            echo 'background: rgba(29, 55, 113, 0.95) !important;';
+            echo 'border-left: 1px solid rgba(255, 255, 255, 0.2) !important;';
+            echo 'margin-left: 0 !important;';
+            echo '}';
+            break;
+        default: // modern
+            // Usa os estilos padrão do CSS
+            break;
+    }
+    
+    // Ocultar ícones de hierarquia se desabilitado
+    if (!$show_hierarchy_icons) {
+        echo '.new-menu .sub-menu a::before,';
+        echo '.new-menu .children a::before {';
+        echo 'display: none !important;';
+        echo '}';
+        echo '.new-menu .sub-menu a,';
+        echo '.new-menu .children a {';
+        echo 'padding-left: 20px !important;';
+        echo '}';
+    }
+    
     // Estilo para select personalizado
     echo '.select-form-uenf {';
     echo '-webkit-appearance: none;';
@@ -1689,4 +1798,4 @@ function cct_customize_css() {
     // Fechar a tag de estilo
     echo '</style>';
 }
-add_action('wp_head', 'cct_customize_css', 100); 
+add_action('wp_head', 'cct_customize_css', 100);

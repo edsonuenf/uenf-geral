@@ -101,15 +101,22 @@ body.dark {
 .new-menu .current-menu-item > a,
 .new-menu .current-menu-ancestor > a,
 .new-menu .menu-item-active > a {
-  background: var(--submenu-active-bg) !important;
-  border-left: 3px solid #fff !important;
-  padding-left: 20px !important;
-  font-weight: 500 !important;
-  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 16px !important;
+  font-weight: 700 !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
-/* Efeito de hover nos itens do menu */
-.new-menu > li > a:hover,
+/* Efeito de hover para itens de nível 1 */
+.new-menu > li > a:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding-left: 25px !important;
+  transition: var(--submenu-transition);
+}
+
+/* Efeito de hover para subitens */
 .new-menu .sub-menu > li > a:hover,
 .new-menu .children > li > a:hover {
   background: var(--submenu-hover-bg) !important;
