@@ -60,34 +60,35 @@
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Itens de primeiro nível */
-.new-menu > li > a {
-  position: relative;
-  z-index: 2;
-  font-size: 0.95rem !important;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-kerning: normal;
-  -webkit-font-feature-settings: "kern" 1;
-  font-feature-settings: "kern" 1;
-}
-
+/* Itens de primeiro nível - sem espaçamentos */
 .new-menu > li {
   display: block;
   position: relative;
   width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
 }
 
-/* Reset de estilos para listas */
-.new-menu,
-.new-menu ul,
+/* Remove espaçamentos da lista */
+.new-menu {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  gap: 0 !important;
+}
+
+.new-menu ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  gap: 0 !important;
+}
+
 .new-menu li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
 }
 
 /* Links do menu */
@@ -95,125 +96,159 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  hyphens: none !important; /* Remove hifenização */
-  white-space: nowrap; /* Impede quebra de linha */
+  padding: 16px 24px;
   text-decoration: none !important;
-  color: rgba(255, 255, 255, 0.836) !important;
-  transition: all 0.2s ease;
-  font-weight: 400; /* Peso padrão para subitens */
-  font-family: inherit; /* Herda a fonte do elemento pai */
-  background-color: var(--bs-uenf-blue, #1d3771);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  line-height: 1.3;
-  margin: 0;
-  word-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
-  hyphens: auto;
-  text-align: left;
+  color: white !important;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Efeito de hover para links */
-.new-menu a:hover {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  color: var(--bs-uenf-blue, #1d3771) !important;
-  transition: all 0.2s ease;
-  transform: translateX(3px);
-  box-shadow: -3px 0 0 0 var(--bs-uenf-blue, #1d3771);
-  hyphens: none !important; /* Remove hifenização */
-  white-space: nowrap; /* Impede quebra de linha */
+/* Transição específica para itens de nível 1 */
+.new-menu > li > a {
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Remove a transformação para itens ativos no hover */
-.new-menu .current-menu-item > a:hover,
-.new-menu .current-page-ancestor > a:hover {
-  transform: none !important;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important;
+/* Efeito de brilho sutil no hover - sem interferir nas cores */
+.new-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.new-menu a:hover::before {
+  left: 100%;
+}
+
+/* Garante que o brilho não interfira no hover de nível 1 */
+.new-menu > li > a:hover::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent) !important;
+}
+
+/* Efeito de hover para itens principais - força máxima */
+.new-menu > li > a:hover,
+.new-menu > li.menu-item-hover > a,
+.offcanvas .new-menu > li > a:hover,
+#menuLateral .new-menu > li > a:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid rgba(29, 55, 113, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Sobrescreve estilos conflitantes do style.min.css */
+.offcanvas-body .new-menu > li > a:hover,
+.offcanvas .new-menu > li > a:hover,
+#menuLateral .new-menu > li > a:hover,
+body .new-menu > li > a:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Efeito de hover para subitens - texto branco 80% */
+.new-menu .sub-menu li > a:hover,
+.new-menu .children li > a:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding-left: 28px;
+  transition: all 0.3s ease;
 }
 
 /* Item ativo (selecionado) */
 .new-menu .menu-item-active > a,
 .new-menu .current-menu-item > a,
 .new-menu .menu-item-active > a:hover,
-.new-menu .current-menu-item > a:hover,
-.new-menu .current-menu-ancestor > a,
-.new-menu .current-page-ancestor > a {
-  background-color: #f8f9fac5 !important;
+.new-menu .current-menu-item > a:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 100%) !important;
   color: var(--bs-uenf-blue, #1d3771) !important;
   font-weight: 700 !important;
   position: relative;
-  border-left: 6px solid var(--bs-uenf-blue, #1d3771) !important; /* Borda azul */
+  border-left: 5px solid var(--bs-uenf-blue, #1d3771) !important;
   padding-left: 20px !important;
-  transition: all 0.3s ease;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95)) !important;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-  hyphens: none !important; /* Remove hifenização */
-  white-space: nowrap; /* Impede quebra de linha */
-  text-align: left; /* Alinha o texto à esquerda */
-  justify-content: space-between; /* Mantém o espaço entre texto e seta */
+  transform: translateX(6px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  z-index: 2;
 }
 
-/* Adiciona uma seta indicadora para itens ativos */
-.new-menu .current-menu-item > a::after,
-.new-menu .current-page-ancestor > a::after {
-  content: "";
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background-color: var(--bs-uenf-blue, #1d3771);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(29, 55, 113, 0.3);
-}
+/* Indicador visual removido conforme solicitado */
 
-/* Destaque para itens pai do item ativo */
-.new-menu .current-menu-ancestor > a,
-.new-menu .current-page-ancestor > a {
-  font-weight: 600 !important;
-  border-left: 6px solid #0d6efd !important; /* Tom mais claro de azul */
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.85)) !important;
-}
-
-/* Ícone de toggle para submenus */
+/* Ícone de toggle com seta simples */
 .new-menu .submenu-toggle {
-  margin-left: 8px;
-  transition: transform 0.3s ease;
+  margin-left: auto;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px; /* Adicionado padding direito */
-  font-size: 0.8em;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.9em;
   font-weight: bold;
-  position: relative;
-  right: 0;
-  min-width: 20px; /* Largura mínima para o botão */
-  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
 }
 
-/* Remove a rotação para manter apenas a seta para a direita */
+.new-menu .submenu-toggle::before {
+  content: '▶';
+  display: block;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.new-menu .submenu-toggle:hover {
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Ícone quando submenu está aberto - sem background */
 .new-menu .submenu-toggle.rotated {
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
+  border: none;
+}
+
+.new-menu .submenu-toggle.rotated::before {
+  content: '▼';
   transform: none;
+}
+
+.new-menu .submenu-toggle.rotated:hover {
+  transform: scale(1.1);
+  background: transparent;
 }
 
 /* Submenus - Estilo base */
 .new-menu .sub-menu,
 .new-menu .children {
   display: none;
-  overflow: visible; /* Alterado de hidden para visible */
+  overflow: hidden;
   max-height: 0;
-  transition: max-height 0.3s ease-in-out, opacity 0.3s ease;
-  background-color: var(--bs-uenf-blue, #1d3771);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.95) 0%, rgba(29, 55, 113, 0.85) 100%);
   width: 100%;
   padding-left: 0;
   margin-left: 0;
-  border-left: none;
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
   opacity: 0;
   visibility: hidden;
+  backdrop-filter: blur(2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .new-menu .sub-menu.show,
@@ -221,243 +256,186 @@
   display: block;
   opacity: 1;
   visibility: visible;
-  max-height: 5000px; /* Valor alto para acomodar submenus grandes */
+  max-height: 5000px;
+  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hierarquia visual simplificada e mais clara */
+
+/* Nível 1 - Submenus principais */
+.new-menu .sub-menu,
+.new-menu .children {
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.9) 0%, rgba(29, 55, 113, 0.8) 100%);
+  border-left: 4px solid rgba(255, 255, 255, 0.3);
+  margin-left: 8px;
+}
+
+.new-menu .sub-menu a,
+.new-menu .children a {
+  padding: 14px 20px 14px 24px;
+  font-size: 0.9em;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  position: relative;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.new-menu .sub-menu a::before,
+.new-menu .children a::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.new-menu .sub-menu a:hover,
+.new-menu .children a:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding-left: 28px;
+  transition: all 0.3s ease;
+}
+
+.new-menu .sub-menu a:hover::before,
+.new-menu .children a:hover::before {
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateX(2px);
+}
+
+/* Nível 2 - Submenus secundários */
+.new-menu .sub-menu .sub-menu,
+.new-menu .children .children {
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.8) 0%, rgba(29, 55, 113, 0.7) 100%);
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  margin-left: 16px;
+}
+
+.new-menu .sub-menu .sub-menu a,
+.new-menu .children .children a {
+  padding: 12px 16px 12px 20px;
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.new-menu .sub-menu .sub-menu a::before,
+.new-menu .children .children a::before {
+  content: '';
+  left: 6px;
+  font-size: 0.7em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Nível 3 - Submenus terciários */
+.new-menu .sub-menu .sub-menu .sub-menu,
+.new-menu .children .children .children {
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.7) 0%, rgba(29, 55, 113, 0.6) 100%);
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  margin-left: 20px;
+}
+
+.new-menu .sub-menu .sub-menu .sub-menu a,
+.new-menu .children .children .children a {
+  padding: 10px 12px 10px 16px;
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.new-menu .sub-menu .sub-menu .sub-menu a::before,
+.new-menu .children .children .children a::before {
+  content: '';
+  left: 4px;
+  font-size: 0.6em;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 /* Subníveis aninhados */
-.new-menu .sub-menu,
-.new-menu .children {
-  position: static;
-  width: 100%;
-  min-width: auto;
-  z-index: 1;
-  background-color: var(--bs-uenf-blue, #1d3771) !important;
-  margin: 0;
-  padding: 0 0 0 15px;
-  border: none;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  box-shadow: none;
-  transform: scaleY(0);
-  pointer-events: none;
-  display: block !important;
-  transform-origin: top;
-  height: 0;
-  line-height: 0;
-  font-size: 0;
-  margin-top: -1px; /* Remove espaço extra */
+.new-menu .sub-menu .sub-menu,
+.new-menu .children .children {
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.85) 0%, rgba(29, 55, 113, 0.75) 100%) !important;
+  margin-left: 16px;
+  padding-left: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Ajuste para subníveis aninhados */
-.new-menu .sub-menu,
-.new-menu .children,
-.new-menu .sub-menu .sub-menu,
-.new-menu .children .children,
 .new-menu .sub-menu .sub-menu .sub-menu,
 .new-menu .children .children .children {
-  box-sizing: border-box;
-  word-wrap: break-word;
-  white-space: normal;
-  position: static !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 0 0 15px !important;
-  border: none !important;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  pointer-events: none;
-  display: block !important;
-  transition: all 0.3s ease;
-  transform: none !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  border-left: 2px solid transparent !important;
-  background-color: transparent !important;
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.75) 0%, rgba(29, 55, 113, 0.65) 100%) !important;
+  margin-left: 16px;
+  padding-left: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Mostrar subníveis apenas quando a classe .show estiver presente */
-.new-menu .sub-menu.show,
-.new-menu .children.show,
-.new-menu .sub-menu .sub-menu.show,
-.new-menu .children .children.show,
-.new-menu .sub-menu .sub-menu .sub-menu.show,
-.new-menu .children .children .children.show,
-.new-menu .sub-menu .sub-menu .sub-menu .sub-menu.show,
-.new-menu .children .children .children .children.show {
-  opacity: 1 !important;
-  max-height: 1000px !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-  padding: 0 0 0 15px !important;
-  display: block !important;
-  transform: none !important;
-  height: auto !important;
-  line-height: 1.2 !important;
-  font-size: inherit !important;
-  margin: 0 !important;
-  overflow: visible !important;
-  border-left: 2px solid rgba(255,255,255,0.1) !important;
-  background-color: rgba(0,0,0,0.1) !important;
-  position: static !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  width: 100% !important;
+/* Estados de foco para acessibilidade */
+.new-menu a:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: -2px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px);
 }
 
-/* Subníveis aninhados - mostrar apenas com a classe .show */
+/* Melhorias de responsividade */
+@media (max-width: 768px) {
+  .new-menu a {
+    padding: 14px 20px;
+    font-size: 0.95em;
+  }
+  
+  .new-menu .submenu-toggle {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .new-menu .sub-menu a,
+  .new-menu .children a {
+    padding: 10px 16px 10px 28px;
+    font-size: 0.85em;
+  }
+}
 
-/* Container principal do menu */
+/* Efeito de carregamento suave */
 .new-menu {
-  width: 100%;
-  overflow: visible; /* Remove todas as barras de rolagem */
-  padding: 0;
-  margin: 0;
-  height: auto;
-  min-height: 100%;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Container do offcanvas - onde a rolagem deve ocorrer quando necessário */
-.offcanvas-body {
-  overflow-y: auto; /* Habilita rolagem vertical apenas quando necessário */
-  -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos móveis */
-  padding-right: 0; /* Remove padding para evitar barra de rolagem dupla */
-  margin-right: 0;
-  height: calc(100vh - 60px); /* Ajusta a altura para o espaço disponível */
-  max-height: none !important; /* Remove qualquer max-height que possa estar sendo aplicado */
-}
-
-/* Estilo base para os itens do menu */
-.new-menu > li,
-.new-menu .sub-menu > li,
-.new-menu .children > li {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.new-menu > li > a,
-.new-menu .sub-menu > li > a,
-.new-menu .children > li > a {
-  white-space: normal !important;
-  word-wrap: break-word !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  align-items: center;
-  padding: 10px 15px 10px 20px;
-}
-
-/* Estilo base para submenus */
-.new-menu .sub-menu,
-.new-menu .children {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box;
-  position: static !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  transform: none !important;
-  margin: 0 !important;
-  max-height: 0 !important;
-  height: 0 !important;
-  transition: all 0.3s ease !important;
-  overflow: hidden !important;
-  padding: 0 0 0 15px !important;
-  border-left: 2px solid transparent !important;
-  background-color: transparent !important;
-  width: 100% !important;
-  display: block !important;
-}
-
-.new-menu .sub-menu.show,
-.new-menu .children.show {
-  max-height: 1000px !important;
-  height: auto !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-  overflow: visible !important;
-  position: static !important;
-  line-height: 1.2 !important;
-  font-size: inherit !important;
-  margin: 0 0 0 15px !important;
-  transform: none !important;
-  padding: 0 0 0 15px !important;
-  border-top: none !important;
-  width: 100% !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  background-color: rgba(0,0,0,0.1) !important;
-  border-left: 2px solid rgba(255,255,255,0.1) !important;
-}
-
-/* Forçar posicionamento vertical para todos os subníveis */
-.new-menu,
-.new-menu ul,
-.new-menu li,
-.new-menu a,
-.new-menu li a {
-  box-sizing: border-box !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  overflow-x: hidden !important;
-  word-wrap: break-word !important;
-  white-space: normal !important;
-  text-overflow: ellipsis !important;
-  word-break: break-word !important;
-  hyphens: auto;
-}
-
-.new-menu ul {
-  position: static !important;
-  float: none !important;
-  width: 100% !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  transform: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Melhorar a área de clique */
-.new-menu .menu-item-has-children > a,
-.new-menu .page_item_has_children > a {
-  position: relative;
-  padding-right: 30px !important;
-}
-
-/* Mostra a seta apenas se houver submenu */
-.new-menu > li.menu-item-has-children > a:after,
-.new-menu > li.page_item_has_children > a:after {
-  content: '⌄';
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1em;
-}
-
-/* Remove a seta dos itens de submenu */
-.new-menu .sub-menu .menu-item-has-children > a:after,
-.new-menu .children .page_item_has_children > a:after {
-  display: none;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 991.98px) {
   .navbar-brand-top {
     background-color: var(--bs-uenf-blue);
+  }
+}
+
+/* ===== DESKTOP (acima de 1200px) ===== */
+@media (min-width: 1201px) {
+  /* Ajusta o painel do menu para resoluções acima de 1200px */
+  .offcanvas.offcanvas-start {
+    width: 360px; /* Largura de 360px para resoluções acima de 1200px */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
   }
 }
 
@@ -504,22 +482,11 @@
     left: 100%;
     min-width: 220px;
     z-index: 1001;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bs-uenf-blue, #1d3771) !important;
+    margin-top: 0;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-  }
-  
-  /* Ajuste para garantir que os submenus fiquem visíveis ao passar o mouse */
-  .new-menu > li.menu-item-has-children:hover > .sub-menu,
-  .new-menu > li.page_item_has_children:hover > .children,
-  .new-menu .sub-menu > li.menu-item-has-children:hover > .sub-menu,
-  .new-menu .children > li.page_item_has_children:hover > .children {
-    opacity: 1 !important;
-    visibility: visible !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    max-height: none !important;
   }
   
   /* Mostrar subníveis apenas quando ativo (clicado) */
