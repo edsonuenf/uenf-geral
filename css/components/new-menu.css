@@ -188,50 +188,50 @@ body .new-menu > li > a:hover {
 /* Ícone de toggle com seta simples */
 .new-menu .submenu-toggle {
   margin-left: auto;
-  margin-right: 0px;
+  margin-right: 12px;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  font-size: 0.7em;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.9em;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
 }
 
 .new-menu .submenu-toggle::before {
-  content: '→';
+  content: '▶';
   display: block;
   line-height: 1;
   transition: all 0.3s ease;
 }
 
 .new-menu .submenu-toggle:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: transparent;
   color: rgba(255, 255, 255, 1);
   transform: scale(1.1);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Ícone quando submenu está aberto - azul UENF */
+/* Ícone quando submenu está aberto - sem background */
 .new-menu .submenu-toggle.rotated {
-  background: var(--bs-uenf-blue, #1d3771);
+  background: transparent;
   color: rgba(255, 255, 255, 1);
-  border-color: var(--bs-uenf-blue, #1d3771);
+  border: none;
 }
 
 .new-menu .submenu-toggle.rotated::before {
-  content: '↓';
+  content: '▼';
   transform: none;
 }
 
 .new-menu .submenu-toggle.rotated:hover {
   transform: scale(1.1);
-  background: rgba(29, 55, 113, 0.8);
+  background: transparent;
 }
 
 /* Submenus - Estilo base */
@@ -295,7 +295,7 @@ body .new-menu > li > a:hover {
 
 .new-menu .sub-menu a::before,
 .new-menu .children a::before {
-  content: '→';
+  content: '';
   position: absolute;
   left: 8px;
   color: rgba(255, 255, 255, 0.6);
@@ -334,7 +334,7 @@ body .new-menu > li > a:hover {
 
 .new-menu .sub-menu .sub-menu a::before,
 .new-menu .children .children a::before {
-  content: '▸';
+  content: '';
   left: 6px;
   font-size: 0.7em;
   color: rgba(255, 255, 255, 0.5);
@@ -357,7 +357,7 @@ body .new-menu > li > a:hover {
 
 .new-menu .sub-menu .sub-menu .sub-menu a::before,
 .new-menu .children .children .children a::before {
-  content: '•';
+  content: '';
   left: 4px;
   font-size: 0.6em;
   color: rgba(255, 255, 255, 0.4);
@@ -428,6 +428,15 @@ body .new-menu > li > a:hover {
 @media (max-width: 991.98px) {
   .navbar-brand-top {
     background-color: var(--bs-uenf-blue);
+  }
+}
+
+/* ===== DESKTOP (acima de 1200px) ===== */
+@media (min-width: 1201px) {
+  /* Ajusta o painel do menu para resoluções acima de 1200px */
+  .offcanvas.offcanvas-start {
+    width: 360px; /* Largura de 360px para resoluções acima de 1200px */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
   }
 }
 
