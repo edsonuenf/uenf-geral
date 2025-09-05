@@ -28,6 +28,23 @@ define('CCT_FONT_SIZE_LG', '1.25rem');
 define('CCT_FONT_SIZE_XL', '1.5rem');
 define('CCT_FONT_SIZE_XXL', '2rem');
 
+// Configurações padrão do customizer
+define('CCT_DEFAULT_MENU_STYLE', 'modern');
+define('CCT_DEFAULT_MENU_HIERARCHY_ICONS', true);
+define('CCT_DEFAULT_PANEL_WIDTH', '300px');
+define('CCT_DEFAULT_TRANSPARENT', 'transparent');
+
+// Valores de configuração
+define('CCT_DEFAULT_LAZY_LOADING', true);
+define('CCT_DEFAULT_FOOTER_COLUMNS', 3);
+define('CCT_DEFAULT_SOCIAL_ALIGNMENT', 'center');
+
+// Cores com transparência
+define('CCT_PRIMARY_RGBA', 'rgba(29, 55, 113, 0.95)');
+define('CCT_WHITE_RGBA_08', 'rgba(255, 255, 255, 0.8)');
+define('CCT_WHITE_RGBA_01', 'rgba(255, 255, 255, 0.1)');
+define('CCT_BLACK_RGBA_02', 'rgba(0, 0, 0, 0.2)');
+
 // Espaçamentos
 define('CCT_SPACING_UNIT', '1rem'); // @since 1.0.0
 

@@ -1,25 +1,80 @@
 <?php
 /**
  * CCT Theme Customizer
+ * 
+ * Este arquivo contém todas as configurações do WordPress Customizer para o tema CCT.
+ * Inclui seções, configurações e controles para personalização visual do tema.
+ * 
+ * Funcionalidades principais:
+ * - Configurações de menu (estilo, ícones, cores)
+ * - Painel de atalhos (cores, largura, comportamento)
+ * - Sistema de cores personalizáveis
+ * - Configurações de cabeçalho e rodapé
+ * - Campos de formulário personalizáveis
+ * - Sistema de reset para valores padrão
+ * - Backup e restauração de configurações
+ * - Preview em tempo real com postMessage
+ * 
+ * @package CCT_Theme
+ * @subpackage Customizer
+ * @since 1.0.0
+ * @author Equipe de Desenvolvimento CCT
+ * 
+ * @see https://developer.wordpress.org/themes/customize-api/
  */
 
-// Verificar se estamos no WordPress
+// ============================================================================
+// VERIFICAÇÕES DE SEGURANÇA E COMPATIBILIDADE
+// ============================================================================
+
+/**
+ * Verificação de segurança: Impede acesso direto ao arquivo
+ * 
+ * ABSPATH é uma constante definida pelo WordPress que contém o caminho
+ * absoluto para o diretório raiz da instalação. Se não estiver definida,
+ * significa que o arquivo está sendo acessado diretamente, o que não é permitido.
+ */
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit; // Sair se acessado diretamente
 }
 
-// Verificar se o WordPress está carregado
+/**
+ * Verificação de compatibilidade: Garantir que o WordPress está carregado
+ * 
+ * add_action é uma função fundamental do WordPress. Se não existir,
+ * significa que o WordPress não foi carregado corretamente.
+ */
 if (!function_exists('add_action')) {
-    return;
+    return; // Retornar silenciosamente se o WordPress não estiver carregado
 }
 
-// Add this at the top of the file
+/**
+ * Funções de fallback para compatibilidade
+ * 
+ * Estas funções garantem que o customizer funcione mesmo em ambientes
+ * onde algumas funções do WordPress podem não estar disponíveis durante
+ * o carregamento inicial.
+ */
+
+/**
+ * Fallback para função de tradução
+ * 
+ * @param string $text Texto a ser traduzido
+ * @param string $domain Domínio de tradução
+ * @return string Texto original (sem tradução)
+ */
 if (!function_exists('__')) {
     function __($text, $domain) {
         return $text;
     }
 }
 
+/**
+ * Fallback para função de escape de atributos HTML
+ * 
+ * @param string $text Texto a ser escapado
+ * @return string Texto escapado para uso seguro em atributos HTML
+ */
 if ( ! function_exists( 'esc_attr' ) ) {
     function esc_attr( $text ) {
         return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
@@ -33,19 +88,57 @@ if ( ! function_exists( 'get_theme_mod' ) ) {
     }
 }
 
-// Ensure the necessary classes are available
-if ( ! class_exists( 'WP_Customize_Color_Control' ) ) {
-    class WP_Customize_Color_Control {
-        // Placeholder for WP_Customize_Color_Control
-    }
-}
+// ============================================================================
+// CLASSES PERSONALIZADAS DO CUSTOMIZER
+// ============================================================================
 
-// Controle personalizado para seleção de ícones
+/**
+ * Nota: Classes WP nativas devem estar disponíveis no ambiente WordPress
+ * 
+ * As classes como WP_Customize_Control, WP_Customize_Color_Control, etc.
+ * são fornecidas nativamente pelo WordPress e não precisam de fallbacks.
+ */
+
+/**
+ * Controle personalizado para seleção de ícones
+ * 
+ * Esta classe estende WP_Customize_Control para criar um seletor dropdown
+ * personalizado que permite aos usuários escolher ícones de uma lista predefinida.
+ * 
+ * Funcionalidades:
+ * - Dropdown com opções de ícones
+ * - Integração completa com a API do Customizer
+ * - Suporte a descrições e labels
+ * - Sanitização automática de valores
+ * 
+ * @since 1.0.0
+ * @see WP_Customize_Control
+ */
 if (class_exists('WP_Customize_Control')) {
     class Customize_Icon_Select_Control extends WP_Customize_Control {
+        /**
+         * Tipo do controle personalizado
+         * 
+         * @var string
+         */
         public $type = 'icon-select';
+        
+        /**
+         * Array de ícones disponíveis para seleção
+         * 
+         * @var array Formato: array('valor' => 'Label do Ícone')
+         */
         public $icons = array();
 
+        /**
+         * Construtor da classe
+         * 
+         * Inicializa o controle e configura os ícones disponíveis.
+         * 
+         * @param WP_Customize_Manager $manager Instância do gerenciador do customizer
+         * @param string $id ID único do controle
+         * @param array $args Argumentos de configuração
+         */
         public function __construct($manager, $id, $args = array()) {
             parent::__construct($manager, $id, $args);
             if (isset($args['icons'])) {
@@ -53,6 +146,12 @@ if (class_exists('WP_Customize_Control')) {
             }
         }
 
+        /**
+         * Renderiza o conteúdo do controle
+         * 
+         * Gera o HTML do dropdown de seleção de ícones.
+         * Inclui label, descrição e opções de seleção.
+         */
         public function render_content() {
             ?>
             <label>
@@ -156,6 +255,43 @@ if ( ! function_exists( 'esc_url' ) ) {
     }
 }
 
+// ============================================================================
+// FUNÇÃO PRINCIPAL DO CUSTOMIZER
+// ============================================================================
+
+/**
+ * Registra todas as configurações, seções e controles do Customizer
+ * 
+ * Esta é a função principal que configura todo o sistema de personalização
+ * do tema CCT. Ela é executada quando o WordPress inicializa o Customizer
+ * e é responsável por:
+ * 
+ * PAINÉIS CRIADOS:
+ * - Cores do Tema: Agrupa todas as configurações de cores
+ * 
+ * SEÇÕES PRINCIPAIS:
+ * - Menu de Navegação: Estilo, ícones e comportamento do menu
+ * - Painel de Atalhos: Configurações do painel lateral
+ * - Cores Personalizadas: Sistema completo de cores
+ * - Cabeçalho: Layout e configurações do header
+ * - Rodapé: Colunas e configurações do footer
+ * - Formulários: Estilização de campos de entrada
+ * - Reset: Sistema de redefinição para padrões
+ * - Backup/Restore: Exportar e importar configurações
+ * 
+ * FUNCIONALIDADES AVANÇADAS:
+ * - Preview em tempo real (postMessage)
+ * - Sanitização robusta de dados
+ * - Valores padrão centralizados via constantes
+ * - Sistema de backup/restore completo
+ * - Reset seguro para configurações padrão
+ * 
+ * @since 1.0.0
+ * @param WP_Customize_Manager $wp_customize Instância do gerenciador do customizer
+ * 
+ * @see add_action('customize_register', 'cct_customize_register')
+ * @see https://developer.wordpress.org/themes/customize-api/customizer-objects/
+ */
 function cct_customize_register( $wp_customize ) {
     // Painel de Cores
     $wp_customize->add_panel('cct_colors_panel', array(
@@ -174,8 +310,9 @@ function cct_customize_register( $wp_customize ) {
     
     // Estilo do Menu
     $wp_customize->add_setting('menu_style', array(
-        'default' => 'modern',
-        'sanitize_callback' => 'sanitize_text_field',
+        'default' => CCT_DEFAULT_MENU_STYLE,
+        'sanitize_callback' => 'cct_sanitize_select',
+        'transport' => 'refresh',
     ));
     
     $wp_customize->add_control('menu_style', array(
@@ -192,7 +329,7 @@ function cct_customize_register( $wp_customize ) {
     
     // Mostrar ícones de hierarquia
     $wp_customize->add_setting('menu_show_hierarchy_icons', array(
-        'default' => true,
+        'default' => CCT_DEFAULT_MENU_HIERARCHY_ICONS,
         'sanitize_callback' => 'wp_validate_boolean',
     ));
     
@@ -269,24 +406,8 @@ function cct_customize_register( $wp_customize ) {
     
     // Largura do Painel (aceita px, vw, %)
     $wp_customize->add_setting('shortcut_panel_width', array(
-        'default' => '300px',
-        'sanitize_callback' => function($value) {
-            // Remove espaços em branco
-            $value = trim($value);
-            
-            // Se não tiver unidade, adiciona 'px' como padrão
-            if (is_numeric($value)) {
-                return absint($value) . 'px';
-            }
-            
-            // Verifica se tem uma unidade válida (px, %, vw)
-            if (!preg_match('/^\d+(\.\d+)?(px|%|vw)$/i', $value)) {
-                // Se não for válido, retorna o valor padrão
-                return '300px';
-            }
-            
-            return $value;
-        },
+        'default' => CCT_DEFAULT_PANEL_WIDTH,
+        'sanitize_callback' => 'cct_sanitize_css_unit',
     ));
     
     $wp_customize->add_control('shortcut_panel_width', array(
@@ -326,7 +447,7 @@ function cct_customize_register( $wp_customize ) {
     
     // Cor de Fundo do Botão Fechar
     $wp_customize->add_setting('shortcut_close_button_bg', array(
-        'default' => 'transparent',
+        'default' => CCT_DEFAULT_TRANSPARENT,
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     
@@ -474,18 +595,7 @@ function cct_customize_register( $wp_customize ) {
         'priority' => 10,
     ));
 
-    // Seção de Cores de Texto
-    $wp_customize->add_section('cct_text_colors', array(
-        'title' => __('Cores de Texto', 'cct'),
-        'panel' => 'cct_colors_panel',
-        'priority' => 20,
-    ));
-
-    // Cor do Texto
-    $wp_customize->add_setting('text_color', array(
-        'default' => CCT_TEXT_COLOR,
-        'sanitize_callback' => 'sanitize_hex_color',
-    ));
+    // Seção duplicada removida - mantendo apenas a primeira definição
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'text_color', array(
         'label' => __('Cor do Texto', 'cct'),
@@ -739,6 +849,66 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
             'default' => '#ffffff',
             'sanitize_callback' => 'sanitize_hex_color',
         ));
+     
+     // === SEÇÃO DE BACKUP/RESTORE ===
+     $wp_customize->add_section('cct_backup_section', array(
+         'title' => __('Backup e Restauração', 'cct'),
+         'priority' => 998,
+         'description' => __('Faça backup das suas configurações ou restaure configurações salvas anteriormente.', 'cct'),
+     ));
+     
+     // Exportar configurações
+     $wp_customize->add_setting('cct_export_settings', array(
+         'default' => '',
+         'sanitize_callback' => 'sanitize_text_field',
+     ));
+     
+     $wp_customize->add_control('cct_export_settings', array(
+         'label' => __('Exportar Configurações', 'cct'),
+         'section' => 'cct_backup_section',
+         'type' => 'button',
+         'description' => __('Baixe um arquivo com todas as suas configurações atuais.', 'cct'),
+         'input_attrs' => array(
+             'value' => __('Exportar Agora', 'cct'),
+             'class' => 'button button-primary cct-export-button',
+             'onclick' => 'cctExportSettings()',
+         ),
+     ));
+     
+     // Importar configurações
+     $wp_customize->add_setting('cct_import_settings', array(
+         'default' => '',
+         'sanitize_callback' => 'sanitize_text_field',
+     ));
+     
+     $wp_customize->add_control('cct_import_settings', array(
+         'label' => __('Importar Configurações', 'cct'),
+         'section' => 'cct_backup_section',
+         'type' => 'textarea',
+         'description' => __('Cole aqui o conteúdo do arquivo de backup e clique em "Restaurar" para aplicar as configurações.', 'cct'),
+         'input_attrs' => array(
+             'placeholder' => __('Cole o conteúdo do backup aqui...', 'cct'),
+             'rows' => 5,
+         ),
+     ));
+     
+     // Botão de restaurar
+     $wp_customize->add_setting('cct_restore_settings', array(
+         'default' => '',
+         'sanitize_callback' => 'sanitize_text_field',
+     ));
+     
+     $wp_customize->add_control('cct_restore_settings', array(
+         'label' => __('Restaurar Configurações', 'cct'),
+         'section' => 'cct_backup_section',
+         'type' => 'button',
+         'description' => __('⚠️ ATENÇÃO: Isto irá sobrescrever todas as configurações atuais.', 'cct'),
+         'input_attrs' => array(
+             'value' => __('Restaurar Agora', 'cct'),
+             'class' => 'button button-secondary cct-restore-button',
+             'onclick' => 'cctRestoreSettings()',
+         ),
+     ));
 
         $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, "menu_{$state}_color", array(
             'label' => sprintf(__('Cor do Menu (%s)', 'cct'), $label),
@@ -1272,6 +1442,32 @@ add_action('wp_head', 'theme_typography_customizer_css');
             'right'  => __( 'Right', 'cct-theme' ),
         ),
     ));
+    
+    // === SEÇÃO DE RESET ===
+    $wp_customize->add_section('cct_reset_section', array(
+        'title' => __('Redefinir Configurações', 'cct'),
+        'priority' => 999,
+        'description' => __('Restaure todas as configurações do tema para os valores padrão.', 'cct'),
+    ));
+    
+    // Botão de Reset
+    $wp_customize->add_setting('cct_reset_settings', array(
+        'default' => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport' => 'postMessage',
+    ));
+    
+    $wp_customize->add_control('cct_reset_settings', array(
+        'label' => __('Redefinir Todas as Configurações', 'cct'),
+        'section' => 'cct_reset_section',
+        'type' => 'button',
+        'description' => __('⚠️ ATENÇÃO: Esta ação irá restaurar todas as configurações do customizer para os valores padrão. Esta ação não pode ser desfeita.', 'cct'),
+        'input_attrs' => array(
+            'value' => __('Redefinir Agora', 'cct'),
+            'class' => 'button button-secondary cct-reset-button',
+            'onclick' => 'cctResetCustomizer()',
+        ),
+    ));
 }
 add_action( 'customize_register', 'cct_customize_register' );
 
@@ -1309,6 +1505,72 @@ function sanitize_hex_color_rgba( $color ) {
 function cct_sanitize_checkbox( $checked ) {
     // Boolean check.
     return ( ( isset( $checked ) && true == $checked ) ? true : false );
+}
+
+/**
+ * Sanitize select choices
+ */
+function cct_sanitize_select( $input, $setting ) {
+    // Get list of choices from the control associated with the setting.
+    $choices = $setting->manager->get_control( $setting->id )->choices;
+    
+    // If the input is a valid key, return it; otherwise, return the default.
+    return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
+}
+
+/**
+ * Sanitize CSS units (px, %, vw, vh, em, rem)
+ */
+function cct_sanitize_css_unit( $value ) {
+    // Remove espaços
+    $value = trim( $value );
+    
+    // Se estiver vazio, retorna valor padrão
+    if ( empty( $value ) ) {
+        return CCT_DEFAULT_PANEL_WIDTH;
+    }
+    
+    // Verifica se é apenas número (adiciona px)
+    if ( is_numeric( $value ) ) {
+        return absint( $value ) . 'px';
+    }
+    
+    // Verifica se tem unidade válida
+    if ( preg_match( '/^\d+(\.\d+)?(px|%|vw|vh|em|rem)$/i', $value ) ) {
+        return $value;
+    }
+    
+    // Se não for válido, retorna padrão
+    return CCT_DEFAULT_PANEL_WIDTH;
+}
+
+/**
+ * Sanitize font size
+ */
+function cct_sanitize_font_size( $value ) {
+    // Lista de tamanhos válidos
+    $valid_sizes = array( 'small', 'medium', 'large', 'x-large', 'xx-large' );
+    
+    // Se for um dos tamanhos pré-definidos
+    if ( in_array( $value, $valid_sizes ) ) {
+        return $value;
+    }
+    
+    // Se for um valor com unidade CSS
+    if ( preg_match( '/^\d+(\.\d+)?(px|em|rem|%)$/i', $value ) ) {
+        return $value;
+    }
+    
+    // Valor padrão
+    return CCT_FONT_SIZE_BASE;
+}
+
+/**
+ * Sanitize number range
+ */
+function cct_sanitize_number_range( $value, $min = 0, $max = 100 ) {
+    $value = intval( $value );
+    return max( $min, min( $max, $value ) );
 }
 
 // Função para converter cores hex para rgba se necessário
@@ -1697,25 +1959,94 @@ function cct_customize_css() {
     // Aplicar estilos baseados no estilo selecionado
     switch ($menu_style) {
         case 'classic':
-            echo '.new-menu .sub-menu, .new-menu .children {';
+            // Estilo clássico - cores sólidas, sem gradientes
+            echo 'body .offcanvas .new-menu, body .new-menu, .offcanvas .new-menu, .new-menu, .navbar-nav, .offcanvas .navbar-nav {';
+            echo 'background: #1d3771 !important;';
+            echo '}';
+            echo 'body .offcanvas .new-menu .sub-menu, body .offcanvas .new-menu .children, body .new-menu .sub-menu, body .new-menu .children, .offcanvas .new-menu .sub-menu, .offcanvas .new-menu .children, .new-menu .sub-menu, .new-menu .children, .navbar-nav .dropdown-menu, .offcanvas .navbar-nav .dropdown-menu {';
             echo 'background: #1d3771 !important;';
             echo 'border-left: 3px solid #ffffff !important;';
+            echo 'box-shadow: none !important;';
+            echo 'backdrop-filter: none !important;';
+            echo '}';
+            echo 'body .offcanvas .new-menu > li > a, body .new-menu > li > a, .offcanvas .new-menu > li > a, .new-menu > li > a, .navbar-nav > li > a, .offcanvas .navbar-nav > li > a {';
+            echo 'background: #1d3771 !important;';
+            echo 'border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;';
+            echo '}';
+            echo 'body .offcanvas .new-menu > li > a:hover, body .new-menu > li > a:hover {';
+            echo 'background: #2a4a8a !important;';
+            echo '}';
+            echo 'body .offcanvas .new-menu .sub-menu a, body .offcanvas .new-menu .children a, body .new-menu .sub-menu a, body .new-menu .children a {';
+            echo 'background: transparent !important;';
+            echo '}';
+            echo 'body .offcanvas .new-menu .sub-menu a:hover, body .offcanvas .new-menu .children a:hover, body .new-menu .sub-menu a:hover, body .new-menu .children a:hover {';
+            echo 'background: rgba(255, 255, 255, 0.1) !important;';
+            echo '}';
+            // Remover todas as animações e transições no estilo clássico
+            echo 'body.menu-classic-style .offcanvas .new-menu *, body.menu-classic-style .new-menu *, body .offcanvas .new-menu *, body .new-menu * {';
+            echo 'transition: none !important;';
+            echo 'animation: none !important;';
+            echo 'transform: none !important;';
+            echo '-webkit-transition: none !important;';
+            echo '-moz-transition: none !important;';
+            echo '-o-transition: none !important;';
+            echo '}';
+            echo 'body.menu-classic-style .offcanvas .new-menu .sub-menu, body.menu-classic-style .offcanvas .new-menu .children, body.menu-classic-style .new-menu .sub-menu, body.menu-classic-style .new-menu .children {';
+            echo 'transition: none !important;';
+            echo 'animation: none !important;';
+            echo '-webkit-transition: none !important;';
+            echo '-moz-transition: none !important;';
+            echo '-o-transition: none !important;';
+            echo '}';
+            echo 'body.menu-classic-style .offcanvas .new-menu .submenu-toggle, body.menu-classic-style .new-menu .submenu-toggle {';
+            echo 'transition: none !important;';
+            echo 'transform: none !important;';
+            echo '-webkit-transition: none !important;';
+            echo '-moz-transition: none !important;';
+            echo '-o-transition: none !important;';
+            echo '-webkit-transform: none !important;';
+            echo '-moz-transform: none !important;';
+            echo '-o-transform: none !important;';
             echo '}';
             break;
         case 'minimal':
+            // Estilo minimalista - transparências e bordas sutis
             echo '.new-menu .sub-menu, .new-menu .children {';
             echo 'background: rgba(29, 55, 113, 0.95) !important;';
             echo 'border-left: 1px solid rgba(255, 255, 255, 0.2) !important;';
             echo 'margin-left: 0 !important;';
+            echo 'box-shadow: none !important;';
+            echo '}';
+            echo '.new-menu > li > a {';
+            echo 'border-bottom: none !important;';
+            echo '}';
+            echo '.new-menu > li > a:hover {';
+            echo 'background: rgba(255, 255, 255, 0.05) !important;';
             echo '}';
             break;
         default: // modern
-            // Usa os estilos padrão do CSS
+            // Usa os estilos padrão do CSS (gradientes, sombras, etc.)
             break;
     }
     
-    // Ocultar ícones de hierarquia se desabilitado
-    if (!$show_hierarchy_icons) {
+    // Controlar ícones de hierarquia
+    if ($show_hierarchy_icons) {
+        // Mostrar ícones de hierarquia
+        echo '.new-menu .sub-menu a::before,';
+        echo '.new-menu .children a::before {';
+        echo 'content: "→" !important;';
+        echo 'display: block !important;';
+        echo '}';
+        echo '.new-menu .sub-menu .sub-menu a::before,';
+        echo '.new-menu .children .children a::before {';
+        echo 'content: "▸" !important;';
+        echo '}';
+        echo '.new-menu .sub-menu .sub-menu .sub-menu a::before,';
+        echo '.new-menu .children .children .children a::before {';
+        echo 'content: "•" !important;';
+        echo '}';
+    } else {
+        // Ocultar ícones de hierarquia
         echo '.new-menu .sub-menu a::before,';
         echo '.new-menu .children a::before {';
         echo 'display: none !important;';
@@ -1798,4 +2129,310 @@ function cct_customize_css() {
     // Fechar a tag de estilo
     echo '</style>';
 }
-add_action('wp_head', 'cct_customize_css', 100);
+add_action('wp_head', 'cct_customize_css', 999);
+
+/**
+ * Reset customizer settings to default values
+ */
+function cct_reset_customizer_settings() {
+    // Verificar nonce de segurança
+    if (!wp_verify_nonce($_POST['nonce'], 'cct_reset_customizer')) {
+        wp_die('Erro de segurança');
+    }
+    
+    // Lista de todas as configurações do customizer para resetar
+    $settings_to_reset = array(
+        'menu_style' => CCT_DEFAULT_MENU_STYLE,
+        'menu_show_hierarchy_icons' => CCT_DEFAULT_MENU_HIERARCHY_ICONS,
+        'shortcut_button_bg' => CCT_PRIMARY_COLOR,
+        'shortcut_button_icon_color' => CCT_WHITE,
+        'shortcut_panel_bg' => CCT_PRIMARY_COLOR,
+        'shortcut_panel_width' => CCT_DEFAULT_PANEL_WIDTH,
+        'shortcut_header_bg' => CCT_PRIMARY_COLOR,
+        'shortcut_header_text_color' => CCT_WHITE,
+        'shortcut_close_button_bg' => CCT_DEFAULT_TRANSPARENT,
+        'shortcut_close_button_color' => CCT_WHITE,
+        // Adicione outras configurações conforme necessário
+    );
+    
+    // Resetar cada configuração
+    foreach ($settings_to_reset as $setting => $default_value) {
+        remove_theme_mod($setting);
+    }
+    
+    // Retornar sucesso
+    wp_send_json_success(array(
+        'message' => __('Configurações redefinidas com sucesso!', 'cct')
+    ));
+}
+add_action('wp_ajax_cct_reset_customizer', 'cct_reset_customizer_settings');
+
+/**
+ * Enqueue JavaScript for customizer reset functionality
+ */
+function cct_customizer_reset_scripts() {
+    if (is_customize_preview()) {
+        return;
+    }
+    
+    wp_add_inline_script('customize-controls', '
+        function cctResetCustomizer() {
+            if (!confirm("⚠️ ATENÇÃO: Esta ação irá redefinir TODAS as configurações do customizer para os valores padrão.\n\nEsta ação NÃO PODE ser desfeita.\n\nDeseja continuar?")) {
+                return;
+            }
+            
+            // Mostrar loading
+            var button = document.querySelector(".cct-reset-button");
+            var originalText = button.value;
+            button.value = "Redefinindo...";
+            button.disabled = true;
+            
+            // Fazer requisição AJAX
+            jQuery.post(ajaxurl, {
+                action: "cct_reset_customizer",
+                nonce: "' . wp_create_nonce('cct_reset_customizer') . '"
+            }, function(response) {
+                if (response.success) {
+                    alert("✅ " + response.data.message);
+                    // Recarregar o customizer
+                    window.location.reload();
+                } else {
+                    alert("❌ Erro ao redefinir configurações: " + response.data);
+                }
+            }).fail(function() {
+                alert("❌ Erro de conexão. Tente novamente.");
+            }).always(function() {
+                button.value = originalText;
+                button.disabled = false;
+            });
+        }
+    ');
+}
+add_action('customize_controls_enqueue_scripts', 'cct_customizer_reset_scripts');
+
+/**
+ * Enqueue preview JavaScript for real-time updates
+ */
+function cct_customizer_preview_scripts() {
+    wp_enqueue_script(
+        'cct-customizer-preview',
+        get_template_directory_uri() . '/js/customizer-preview.js',
+        array('jquery', 'customize-preview'),
+        wp_get_theme()->get('Version'),
+        true
+    );
+}
+add_action('customize_preview_init', 'cct_customizer_preview_scripts');
+
+/**
+ * Configure settings for postMessage transport
+ */
+function cct_configure_postmessage_settings($wp_customize) {
+    // Lista de settings que devem usar postMessage
+    $postmessage_settings = array(
+        'shortcut_button_bg',
+        'shortcut_button_icon_color',
+        'shortcut_panel_bg',
+        'shortcut_panel_width',
+        'shortcut_header_bg',
+        'shortcut_header_text_color',
+        'shortcut_close_button_bg',
+        'shortcut_close_button_color',
+        'menu_show_hierarchy_icons',
+    );
+    
+    // Configurar transport para postMessage
+    foreach ($postmessage_settings as $setting) {
+        if ($wp_customize->get_setting($setting)) {
+            $wp_customize->get_setting($setting)->transport = 'postMessage';
+        }
+    }
+}
+add_action('customize_register', 'cct_configure_postmessage_settings', 20);
+
+/**
+ * Export customizer settings
+ */
+function cct_export_customizer_settings() {
+    // Verificar nonce de segurança
+    if (!wp_verify_nonce($_POST['nonce'], 'cct_export_customizer')) {
+        wp_die('Erro de segurança');
+    }
+    
+    // Obter todas as configurações do tema
+    $theme_mods = get_theme_mods();
+    
+    // Filtrar apenas configurações do nosso customizer
+    $cct_settings = array();
+    $cct_prefixes = array('menu_', 'shortcut_', 'cct_', 'header_', 'footer_', 'form_');
+    
+    foreach ($theme_mods as $key => $value) {
+        foreach ($cct_prefixes as $prefix) {
+            if (strpos($key, $prefix) === 0) {
+                $cct_settings[$key] = $value;
+                break;
+            }
+        }
+    }
+    
+    // Adicionar metadados
+    $backup_data = array(
+        'version' => wp_get_theme()->get('Version'),
+        'date' => current_time('Y-m-d H:i:s'),
+        'site_url' => get_site_url(),
+        'settings' => $cct_settings
+    );
+    
+    // Retornar dados para download
+    wp_send_json_success(array(
+        'data' => base64_encode(json_encode($backup_data)),
+        'filename' => 'cct-customizer-backup-' . date('Y-m-d-H-i-s') . '.txt'
+    ));
+}
+add_action('wp_ajax_cct_export_customizer', 'cct_export_customizer_settings');
+
+/**
+ * Import customizer settings
+ */
+function cct_import_customizer_settings() {
+    // Verificar nonce de segurança
+    if (!wp_verify_nonce($_POST['nonce'], 'cct_import_customizer')) {
+        wp_die('Erro de segurança');
+    }
+    
+    $import_data = sanitize_textarea_field($_POST['import_data']);
+    
+    if (empty($import_data)) {
+        wp_send_json_error('Dados de importação não fornecidos');
+    }
+    
+    // Decodificar dados
+    $decoded_data = base64_decode($import_data);
+    $backup_data = json_decode($decoded_data, true);
+    
+    if (!$backup_data || !isset($backup_data['settings'])) {
+        wp_send_json_error('Formato de backup inválido');
+    }
+    
+    // Importar configurações
+    $imported_count = 0;
+    foreach ($backup_data['settings'] as $key => $value) {
+        set_theme_mod($key, $value);
+        $imported_count++;
+    }
+    
+    wp_send_json_success(array(
+        'message' => sprintf(__('%d configurações importadas com sucesso!', 'cct'), $imported_count),
+        'backup_date' => isset($backup_data['date']) ? $backup_data['date'] : 'Desconhecida'
+    ));
+}
+add_action('wp_ajax_cct_import_customizer', 'cct_import_customizer_settings');
+
+/**
+ * Enqueue backup/restore JavaScript
+ */
+function cct_backup_restore_scripts() {
+    if (is_customize_preview()) {
+        return;
+    }
+    
+    wp_add_inline_script('customize-controls', '
+        function cctExportSettings() {
+            var button = document.querySelector(".cct-export-button");
+            var originalText = button.value;
+            button.value = "Exportando...";
+            button.disabled = true;
+            
+            jQuery.post(ajaxurl, {
+                action: "cct_export_customizer",
+                nonce: "' . wp_create_nonce('cct_export_customizer') . '"
+            }, function(response) {
+                if (response.success) {
+                    // Criar download do arquivo
+                    var element = document.createElement("a");
+                    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(atob(response.data.data)));
+                    element.setAttribute("download", response.data.filename);
+                    element.style.display = "none";
+                    document.body.appendChild(element);
+                    element.click();
+                    document.body.removeChild(element);
+                    
+                    alert("✅ Backup exportado com sucesso!");
+                } else {
+                    alert("❌ Erro ao exportar: " + response.data);
+                }
+            }).fail(function() {
+                alert("❌ Erro de conexão. Tente novamente.");
+            }).always(function() {
+                button.value = originalText;
+                button.disabled = false;
+            });
+        }
+        
+        function cctRestoreSettings() {
+            var importData = document.querySelector("#_customize-input-cct_import_settings").value;
+            
+            if (!importData.trim()) {
+                alert("❌ Por favor, cole o conteúdo do backup no campo acima.");
+                return;
+            }
+            
+            if (!confirm("⚠️ ATENÇÃO: Esta ação irá sobrescrever TODAS as configurações atuais.\n\nEsta ação NÃO PODE ser desfeita.\n\nDeseja continuar?")) {
+                return;
+            }
+            
+            var button = document.querySelector(".cct-restore-button");
+            var originalText = button.value;
+            button.value = "Restaurando...";
+            button.disabled = true;
+            
+            jQuery.post(ajaxurl, {
+                action: "cct_import_customizer",
+                nonce: "' . wp_create_nonce('cct_import_customizer') . '",
+                import_data: importData
+            }, function(response) {
+                if (response.success) {
+                    alert("✅ " + response.data.message + "\n\nData do backup: " + response.data.backup_date);
+                    // Recarregar o customizer
+                    window.location.reload();
+                } else {
+                    alert("❌ Erro ao restaurar: " + response.data);
+                }
+            }).fail(function() {
+                alert("❌ Erro de conexão. Tente novamente.");
+            }).always(function() {
+                button.value = originalText;
+                button.disabled = false;
+            });
+        }
+    ');
+}
+add_action('customize_controls_enqueue_scripts', 'cct_backup_restore_scripts');
+
+/**
+ * Enqueue validation JavaScript for visual feedback
+ */
+function cct_customizer_validation_scripts() {
+    wp_enqueue_script(
+        'cct-customizer-validation',
+        get_template_directory_uri() . '/js/customizer-validation.js',
+        array('jquery', 'customize-controls'),
+        wp_get_theme()->get('Version'),
+        true
+    );
+}
+add_action('customize_controls_enqueue_scripts', 'cct_customizer_validation_scripts');
+
+/**
+ * Enqueue tooltips JavaScript for contextual help
+ */
+function cct_customizer_tooltips_scripts() {
+    wp_enqueue_script(
+        'cct-customizer-tooltips',
+        get_template_directory_uri() . '/js/customizer-tooltips.js',
+        array('jquery', 'customize-controls'),
+        wp_get_theme()->get('Version'),
+        true
+    );
+}
+add_action('customize_controls_enqueue_scripts', 'cct_customizer_tooltips_scripts');

@@ -88,8 +88,33 @@
         });
     }
     
+    // Função para verificar se o estilo clássico está ativo
+    function checkClassicMenuStyle() {
+        // Verifica se há CSS inline que indica estilo clássico
+        const styles = document.querySelectorAll('style');
+        let isClassic = false;
+        
+        styles.forEach(style => {
+            if (style.textContent.includes('body .new-menu') && 
+                style.textContent.includes('transition: none !important')) {
+                isClassic = true;
+            }
+        });
+        
+        // Adiciona classe ao body para controle via CSS
+        if (isClassic) {
+            document.body.classList.add('menu-classic-style');
+        } else {
+            document.body.classList.remove('menu-classic-style');
+        }
+        
+        return isClassic;
+    }
+
     // Submenu active state
     function initSubmenuActive() {
+        // Verifica o estilo do menu
+        const isClassicStyle = checkClassicMenuStyle();
         // Remove ícones duplicados que possam ter sido adicionados pelo WordPress
         document.querySelectorAll('.menu-item-has-children a .submenu-toggle, .page_item_has_children a .submenu-toggle').forEach(icon => {
             icon.remove();
