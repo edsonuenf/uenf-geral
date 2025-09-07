@@ -1,0 +1,940 @@
+/**
+ * Sistema de Responsive Breakpoints CCT - Estilos Frontend
+ * 
+ * Sistema completo de breakpoints responsivos incluindo:
+ * - Grid system flexível
+ * - Containers responsivos
+ * - Classes utilitárias
+ * - Componentes adaptativos
+ * - Debug e desenvolvimento
+ * 
+ * @package CCT_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS Base para Breakpoints
+   ========================================================================== */
+
+:root {
+    /* Breakpoints padrão */
+    --cct-bp-xs-min: 0px;
+    --cct-bp-xs-max: 575px;
+    --cct-bp-sm-min: 576px;
+    --cct-bp-sm-max: 767px;
+    --cct-bp-md-min: 768px;
+    --cct-bp-md-max: 991px;
+    --cct-bp-lg-min: 992px;
+    --cct-bp-lg-max: 1199px;
+    --cct-bp-xl-min: 1200px;
+    --cct-bp-xl-max: 1399px;
+    --cct-bp-xxl-min: 1400px;
+    
+    /* Containers */
+    --cct-bp-xs-container: 100%;
+    --cct-bp-sm-container: 540px;
+    --cct-bp-md-container: 720px;
+    --cct-bp-lg-container: 960px;
+    --cct-bp-xl-container: 1140px;
+    --cct-bp-xxl-container: 1320px;
+    
+    /* Gutters */
+    --cct-bp-xs-gutter: 16px;
+    --cct-bp-sm-gutter: 20px;
+    --cct-bp-md-gutter: 24px;
+    --cct-bp-lg-gutter: 30px;
+    --cct-bp-xl-gutter: 32px;
+    --cct-bp-xxl-gutter: 40px;
+    
+    /* Colunas */
+    --cct-bp-xs-columns: 1;
+    --cct-bp-sm-columns: 2;
+    --cct-bp-md-columns: 3;
+    --cct-bp-lg-columns: 4;
+    --cct-bp-xl-columns: 6;
+    --cct-bp-xxl-columns: 12;
+    
+    /* Variáveis dinâmicas (atualizadas via JavaScript) */
+    --cct-current-bp: 'lg';
+    --cct-current-min-width: 992px;
+    --cct-current-max-width: 1199px;
+    --cct-current-container: 960px;
+    --cct-current-gutter: 30px;
+    --cct-current-columns: 4;
+    --cct-screen-width: 1200px;
+    --cct-screen-height: 800px;
+    --cct-device-type: 'desktop';
+    --cct-orientation: 'landscape';
+    
+    /* Grid system */
+    --cct-grid-columns: 12;
+    --cct-grid-gutter: 30px;
+    --cct-grid-gutter-half: calc(var(--cct-grid-gutter) / 2);
+}
+
+/* ==========================================================================
+   Sistema de Container
+   ========================================================================== */
+
+/* Container base */
+.cct-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--cct-grid-gutter-half);
+    padding-right: var(--cct-grid-gutter-half);
+}
+
+/* Container fluido */
+.cct-container-fluid {
+    width: 100%;
+    padding-left: var(--cct-grid-gutter-half);
+    padding-right: var(--cct-grid-gutter-half);
+}
+
+/* Comportamento do container baseado na configuração */
+.cct-container-fluid .cct-container {
+    max-width: none;
+}
+
+.cct-container-fixed .cct-container {
+    max-width: var(--cct-current-container);
+}
+
+.cct-container-hybrid .cct-container {
+    max-width: var(--cct-current-container);
+}
+
+/* ==========================================================================
+   Sistema de Grid Flexbox
+   ========================================================================== */
+
+.cct-grid-flexbox .cct-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(var(--cct-grid-gutter) / -2);
+    margin-right: calc(var(--cct-grid-gutter) / -2);
+}
+
+.cct-grid-flexbox .cct-col {
+    flex: 1 0 0%;
+    padding-left: var(--cct-grid-gutter-half);
+    padding-right: var(--cct-grid-gutter-half);
+}
+
+/* Colunas auto */
+.cct-grid-flexbox .cct-col-auto {
+    flex: 0 0 auto;
+    width: auto;
+}
+
+/* Colunas específicas */
+.cct-grid-flexbox .cct-col-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+.cct-grid-flexbox .cct-col-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+.cct-grid-flexbox .cct-col-3 { flex: 0 0 25%; max-width: 25%; }
+.cct-grid-flexbox .cct-col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.cct-grid-flexbox .cct-col-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+.cct-grid-flexbox .cct-col-6 { flex: 0 0 50%; max-width: 50%; }
+.cct-grid-flexbox .cct-col-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+.cct-grid-flexbox .cct-col-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+.cct-grid-flexbox .cct-col-9 { flex: 0 0 75%; max-width: 75%; }
+.cct-grid-flexbox .cct-col-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+.cct-grid-flexbox .cct-col-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+.cct-grid-flexbox .cct-col-12 { flex: 0 0 100%; max-width: 100%; }
+
+/* ==========================================================================
+   Sistema de Grid CSS Grid
+   ========================================================================== */
+
+.cct-grid-css-grid .cct-row {
+    display: grid;
+    grid-template-columns: repeat(var(--cct-grid-columns), 1fr);
+    gap: var(--cct-grid-gutter);
+}
+
+.cct-grid-css-grid .cct-col {
+    grid-column: span 1;
+}
+
+/* Colunas específicas para CSS Grid */
+.cct-grid-css-grid .cct-col-1 { grid-column: span 1; }
+.cct-grid-css-grid .cct-col-2 { grid-column: span 2; }
+.cct-grid-css-grid .cct-col-3 { grid-column: span 3; }
+.cct-grid-css-grid .cct-col-4 { grid-column: span 4; }
+.cct-grid-css-grid .cct-col-5 { grid-column: span 5; }
+.cct-grid-css-grid .cct-col-6 { grid-column: span 6; }
+.cct-grid-css-grid .cct-col-7 { grid-column: span 7; }
+.cct-grid-css-grid .cct-col-8 { grid-column: span 8; }
+.cct-grid-css-grid .cct-col-9 { grid-column: span 9; }
+.cct-grid-css-grid .cct-col-10 { grid-column: span 10; }
+.cct-grid-css-grid .cct-col-11 { grid-column: span 11; }
+.cct-grid-css-grid .cct-col-12 { grid-column: span 12; }
+
+/* ==========================================================================
+   Classes Responsivas por Breakpoint
+   ========================================================================== */
+
+/* Extra Small (xs) - 0px a 575px */
+@media (max-width: 575px) {
+    .cct-container {
+        max-width: var(--cct-bp-xs-container);
+        padding-left: calc(var(--cct-bp-xs-gutter) / 2);
+        padding-right: calc(var(--cct-bp-xs-gutter) / 2);
+    }
+    
+    .cct-row {
+        margin-left: calc(var(--cct-bp-xs-gutter) / -2);
+        margin-right: calc(var(--cct-bp-xs-gutter) / -2);
+    }
+    
+    .cct-col {
+        padding-left: calc(var(--cct-bp-xs-gutter) / 2);
+        padding-right: calc(var(--cct-bp-xs-gutter) / 2);
+    }
+    
+    /* Colunas específicas para xs */
+    .cct-col-xs-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+    .cct-col-xs-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+    .cct-col-xs-3 { flex: 0 0 25%; max-width: 25%; }
+    .cct-col-xs-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .cct-col-xs-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+    .cct-col-xs-6 { flex: 0 0 50%; max-width: 50%; }
+    .cct-col-xs-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+    .cct-col-xs-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+    .cct-col-xs-9 { flex: 0 0 75%; max-width: 75%; }
+    .cct-col-xs-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+    .cct-col-xs-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+    .cct-col-xs-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    /* CSS Grid para xs */
+    .cct-grid-css-grid .cct-col-xs-1 { grid-column: span 1; }
+    .cct-grid-css-grid .cct-col-xs-2 { grid-column: span 2; }
+    .cct-grid-css-grid .cct-col-xs-3 { grid-column: span 3; }
+    .cct-grid-css-grid .cct-col-xs-4 { grid-column: span 4; }
+    .cct-grid-css-grid .cct-col-xs-5 { grid-column: span 5; }
+    .cct-grid-css-grid .cct-col-xs-6 { grid-column: span 6; }
+    .cct-grid-css-grid .cct-col-xs-7 { grid-column: span 7; }
+    .cct-grid-css-grid .cct-col-xs-8 { grid-column: span 8; }
+    .cct-grid-css-grid .cct-col-xs-9 { grid-column: span 9; }
+    .cct-grid-css-grid .cct-col-xs-10 { grid-column: span 10; }
+    .cct-grid-css-grid .cct-col-xs-11 { grid-column: span 11; }
+    .cct-grid-css-grid .cct-col-xs-12 { grid-column: span 12; }
+}
+
+/* Small (sm) - 576px a 767px */
+@media (min-width: 576px) and (max-width: 767px) {
+    .cct-container {
+        max-width: var(--cct-bp-sm-container);
+        padding-left: calc(var(--cct-bp-sm-gutter) / 2);
+        padding-right: calc(var(--cct-bp-sm-gutter) / 2);
+    }
+    
+    .cct-row {
+        margin-left: calc(var(--cct-bp-sm-gutter) / -2);
+        margin-right: calc(var(--cct-bp-sm-gutter) / -2);
+    }
+    
+    .cct-col {
+        padding-left: calc(var(--cct-bp-sm-gutter) / 2);
+        padding-right: calc(var(--cct-bp-sm-gutter) / 2);
+    }
+    
+    /* Colunas específicas para sm */
+    .cct-col-sm-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+    .cct-col-sm-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+    .cct-col-sm-3 { flex: 0 0 25%; max-width: 25%; }
+    .cct-col-sm-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .cct-col-sm-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+    .cct-col-sm-6 { flex: 0 0 50%; max-width: 50%; }
+    .cct-col-sm-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+    .cct-col-sm-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+    .cct-col-sm-9 { flex: 0 0 75%; max-width: 75%; }
+    .cct-col-sm-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+    .cct-col-sm-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+    .cct-col-sm-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    /* CSS Grid para sm */
+    .cct-grid-css-grid .cct-col-sm-1 { grid-column: span 1; }
+    .cct-grid-css-grid .cct-col-sm-2 { grid-column: span 2; }
+    .cct-grid-css-grid .cct-col-sm-3 { grid-column: span 3; }
+    .cct-grid-css-grid .cct-col-sm-4 { grid-column: span 4; }
+    .cct-grid-css-grid .cct-col-sm-5 { grid-column: span 5; }
+    .cct-grid-css-grid .cct-col-sm-6 { grid-column: span 6; }
+    .cct-grid-css-grid .cct-col-sm-7 { grid-column: span 7; }
+    .cct-grid-css-grid .cct-col-sm-8 { grid-column: span 8; }
+    .cct-grid-css-grid .cct-col-sm-9 { grid-column: span 9; }
+    .cct-grid-css-grid .cct-col-sm-10 { grid-column: span 10; }
+    .cct-grid-css-grid .cct-col-sm-11 { grid-column: span 11; }
+    .cct-grid-css-grid .cct-col-sm-12 { grid-column: span 12; }
+}
+
+/* Medium (md) - 768px a 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+    .cct-container {
+        max-width: var(--cct-bp-md-container);
+        padding-left: calc(var(--cct-bp-md-gutter) / 2);
+        padding-right: calc(var(--cct-bp-md-gutter) / 2);
+    }
+    
+    .cct-row {
+        margin-left: calc(var(--cct-bp-md-gutter) / -2);
+        margin-right: calc(var(--cct-bp-md-gutter) / -2);
+    }
+    
+    .cct-col {
+        padding-left: calc(var(--cct-bp-md-gutter) / 2);
+        padding-right: calc(var(--cct-bp-md-gutter) / 2);
+    }
+    
+    /* Colunas específicas para md */
+    .cct-col-md-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+    .cct-col-md-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+    .cct-col-md-3 { flex: 0 0 25%; max-width: 25%; }
+    .cct-col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .cct-col-md-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+    .cct-col-md-6 { flex: 0 0 50%; max-width: 50%; }
+    .cct-col-md-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+    .cct-col-md-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+    .cct-col-md-9 { flex: 0 0 75%; max-width: 75%; }
+    .cct-col-md-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+    .cct-col-md-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+    .cct-col-md-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    /* CSS Grid para md */
+    .cct-grid-css-grid .cct-col-md-1 { grid-column: span 1; }
+    .cct-grid-css-grid .cct-col-md-2 { grid-column: span 2; }
+    .cct-grid-css-grid .cct-col-md-3 { grid-column: span 3; }
+    .cct-grid-css-grid .cct-col-md-4 { grid-column: span 4; }
+    .cct-grid-css-grid .cct-col-md-5 { grid-column: span 5; }
+    .cct-grid-css-grid .cct-col-md-6 { grid-column: span 6; }
+    .cct-grid-css-grid .cct-col-md-7 { grid-column: span 7; }
+    .cct-grid-css-grid .cct-col-md-8 { grid-column: span 8; }
+    .cct-grid-css-grid .cct-col-md-9 { grid-column: span 9; }
+    .cct-grid-css-grid .cct-col-md-10 { grid-column: span 10; }
+    .cct-grid-css-grid .cct-col-md-11 { grid-column: span 11; }
+    .cct-grid-css-grid .cct-col-md-12 { grid-column: span 12; }
+}
+
+/* Large (lg) - 992px a 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .cct-container {
+        max-width: var(--cct-bp-lg-container);
+        padding-left: calc(var(--cct-bp-lg-gutter) / 2);
+        padding-right: calc(var(--cct-bp-lg-gutter) / 2);
+    }
+    
+    .cct-row {
+        margin-left: calc(var(--cct-bp-lg-gutter) / -2);
+        margin-right: calc(var(--cct-bp-lg-gutter) / -2);
+    }
+    
+    .cct-col {
+        padding-left: calc(var(--cct-bp-lg-gutter) / 2);
+        padding-right: calc(var(--cct-bp-lg-gutter) / 2);
+    }
+    
+    /* Colunas específicas para lg */
+    .cct-col-lg-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+    .cct-col-lg-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+    .cct-col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+    .cct-col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .cct-col-lg-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+    .cct-col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+    .cct-col-lg-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+    .cct-col-lg-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+    .cct-col-lg-9 { flex: 0 0 75%; max-width: 75%; }
+    .cct-col-lg-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+    .cct-col-lg-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+    .cct-col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    /* CSS Grid para lg */
+    .cct-grid-css-grid .cct-col-lg-1 { grid-column: span 1; }
+    .cct-grid-css-grid .cct-col-lg-2 { grid-column: span 2; }
+    .cct-grid-css-grid .cct-col-lg-3 { grid-column: span 3; }
+    .cct-grid-css-grid .cct-col-lg-4 { grid-column: span 4; }
+    .cct-grid-css-grid .cct-col-lg-5 { grid-column: span 5; }
+    .cct-grid-css-grid .cct-col-lg-6 { grid-column: span 6; }
+    .cct-grid-css-grid .cct-col-lg-7 { grid-column: span 7; }
+    .cct-grid-css-grid .cct-col-lg-8 { grid-column: span 8; }
+    .cct-grid-css-grid .cct-col-lg-9 { grid-column: span 9; }
+    .cct-grid-css-grid .cct-col-lg-10 { grid-column: span 10; }
+    .cct-grid-css-grid .cct-col-lg-11 { grid-column: span 11; }
+    .cct-grid-css-grid .cct-col-lg-12 { grid-column: span 12; }
+}
+
+/* Extra Large (xl) - 1200px a 1399px */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .cct-container {
+        max-width: var(--cct-bp-xl-container);
+        padding-left: calc(var(--cct-bp-xl-gutter) / 2);
+        padding-right: calc(var(--cct-bp-xl-gutter) / 2);
+    }
+    
+    .cct-row {
+        margin-left: calc(var(--cct-bp-xl-gutter) / -2);
+        margin-right: calc(var(--cct-bp-xl-gutter) / -2);
+    }
+    
+    .cct-col {
+        padding-left: calc(var(--cct-bp-xl-gutter) / 2);
+        padding-right: calc(var(--cct-bp-xl-gutter) / 2);
+    }
+    
+    /* Colunas específicas para xl */
+    .cct-col-xl-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+    .cct-col-xl-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+    .cct-col-xl-3 { flex: 0 0 25%; max-width: 25%; }
+    .cct-col-xl-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .cct-col-xl-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+    .cct-col-xl-6 { flex: 0 0 50%; max-width: 50%; }
+    .cct-col-xl-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+    .cct-col-xl-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+    .cct-col-xl-9 { flex: 0 0 75%; max-width: 75%; }
+    .cct-col-xl-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+    .cct-col-xl-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+    .cct-col-xl-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    /* CSS Grid para xl */
+    .cct-grid-css-grid .cct-col-xl-1 { grid-column: span 1; }
+    .cct-grid-css-grid .cct-col-xl-2 { grid-column: span 2; }
+    .cct-grid-css-grid .cct-col-xl-3 { grid-column: span 3; }
+    .cct-grid-css-grid .cct-col-xl-4 { grid-column: span 4; }
+    .cct-grid-css-grid .cct-col-xl-5 { grid-column: span 5; }
+    .cct-grid-css-grid .cct-col-xl-6 { grid-column: span 6; }
+    .cct-grid-css-grid .cct-col-xl-7 { grid-column: span 7; }
+    .cct-grid-css-grid .cct-col-xl-8 { grid-column: span 8; }
+    .cct-grid-css-grid .cct-col-xl-9 { grid-column: span 9; }
+    .cct-grid-css-grid .cct-col-xl-10 { grid-column: span 10; }
+    .cct-grid-css-grid .cct-col-xl-11 { grid-column: span 11; }
+    .cct-grid-css-grid .cct-col-xl-12 { grid-column: span 12; }
+}
+
+/* Extra Extra Large (xxl) - 1400px+ */
+@media (min-width: 1400px) {
+    .cct-container {
+        max-width: var(--cct-bp-xxl-container);
+        padding-left: calc(var(--cct-bp-xxl-gutter) / 2);
+        padding-right: calc(var(--cct-bp-xxl-gutter) / 2);
+    }
+    
+    .cct-row {
+        margin-left: calc(var(--cct-bp-xxl-gutter) / -2);
+        margin-right: calc(var(--cct-bp-xxl-gutter) / -2);
+    }
+    
+    .cct-col {
+        padding-left: calc(var(--cct-bp-xxl-gutter) / 2);
+        padding-right: calc(var(--cct-bp-xxl-gutter) / 2);
+    }
+    
+    /* Colunas específicas para xxl */
+    .cct-col-xxl-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+    .cct-col-xxl-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+    .cct-col-xxl-3 { flex: 0 0 25%; max-width: 25%; }
+    .cct-col-xxl-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+    .cct-col-xxl-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+    .cct-col-xxl-6 { flex: 0 0 50%; max-width: 50%; }
+    .cct-col-xxl-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+    .cct-col-xxl-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+    .cct-col-xxl-9 { flex: 0 0 75%; max-width: 75%; }
+    .cct-col-xxl-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+    .cct-col-xxl-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+    .cct-col-xxl-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    /* CSS Grid para xxl */
+    .cct-grid-css-grid .cct-col-xxl-1 { grid-column: span 1; }
+    .cct-grid-css-grid .cct-col-xxl-2 { grid-column: span 2; }
+    .cct-grid-css-grid .cct-col-xxl-3 { grid-column: span 3; }
+    .cct-grid-css-grid .cct-col-xxl-4 { grid-column: span 4; }
+    .cct-grid-css-grid .cct-col-xxl-5 { grid-column: span 5; }
+    .cct-grid-css-grid .cct-col-xxl-6 { grid-column: span 6; }
+    .cct-grid-css-grid .cct-col-xxl-7 { grid-column: span 7; }
+    .cct-grid-css-grid .cct-col-xxl-8 { grid-column: span 8; }
+    .cct-grid-css-grid .cct-col-xxl-9 { grid-column: span 9; }
+    .cct-grid-css-grid .cct-col-xxl-10 { grid-column: span 10; }
+    .cct-grid-css-grid .cct-col-xxl-11 { grid-column: span 11; }
+    .cct-grid-css-grid .cct-col-xxl-12 { grid-column: span 12; }
+}
+
+/* ==========================================================================
+   Classes Utilitárias de Visibilidade
+   ========================================================================== */
+
+/* Ocultar em breakpoints específicos */
+@media (max-width: 575px) {
+    .cct-hidden-xs { display: none !important; }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .cct-hidden-sm { display: none !important; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .cct-hidden-md { display: none !important; }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .cct-hidden-lg { display: none !important; }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .cct-hidden-xl { display: none !important; }
+}
+
+@media (min-width: 1400px) {
+    .cct-hidden-xxl { display: none !important; }
+}
+
+/* Mostrar apenas em breakpoints específicos */
+.cct-visible-xs,
+.cct-visible-sm,
+.cct-visible-md,
+.cct-visible-lg,
+.cct-visible-xl,
+.cct-visible-xxl {
+    display: none !important;
+}
+
+@media (max-width: 575px) {
+    .cct-visible-xs { display: block !important; }
+    .cct-visible-xs.cct-inline { display: inline !important; }
+    .cct-visible-xs.cct-inline-block { display: inline-block !important; }
+    .cct-visible-xs.cct-flex { display: flex !important; }
+    .cct-visible-xs.cct-grid { display: grid !important; }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .cct-visible-sm { display: block !important; }
+    .cct-visible-sm.cct-inline { display: inline !important; }
+    .cct-visible-sm.cct-inline-block { display: inline-block !important; }
+    .cct-visible-sm.cct-flex { display: flex !important; }
+    .cct-visible-sm.cct-grid { display: grid !important; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .cct-visible-md { display: block !important; }
+    .cct-visible-md.cct-inline { display: inline !important; }
+    .cct-visible-md.cct-inline-block { display: inline-block !important; }
+    .cct-visible-md.cct-flex { display: flex !important; }
+    .cct-visible-md.cct-grid { display: grid !important; }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .cct-visible-lg { display: block !important; }
+    .cct-visible-lg.cct-inline { display: inline !important; }
+    .cct-visible-lg.cct-inline-block { display: inline-block !important; }
+    .cct-visible-lg.cct-flex { display: flex !important; }
+    .cct-visible-lg.cct-grid { display: grid !important; }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .cct-visible-xl { display: block !important; }
+    .cct-visible-xl.cct-inline { display: inline !important; }
+    .cct-visible-xl.cct-inline-block { display: inline-block !important; }
+    .cct-visible-xl.cct-flex { display: flex !important; }
+    .cct-visible-xl.cct-grid { display: grid !important; }
+}
+
+@media (min-width: 1400px) {
+    .cct-visible-xxl { display: block !important; }
+    .cct-visible-xxl.cct-inline { display: inline !important; }
+    .cct-visible-xxl.cct-inline-block { display: inline-block !important; }
+    .cct-visible-xxl.cct-flex { display: flex !important; }
+    .cct-visible-xxl.cct-grid { display: grid !important; }
+}
+
+/* ==========================================================================
+   Classes Utilitárias de Dispositivo
+   ========================================================================== */
+
+/* Ocultar por tipo de dispositivo */
+.cct-device-mobile .cct-hidden-mobile,
+.cct-device-tablet .cct-hidden-tablet,
+.cct-device-desktop .cct-hidden-desktop {
+    display: none !important;
+}
+
+/* Mostrar apenas em tipos específicos */
+.cct-visible-mobile,
+.cct-visible-tablet,
+.cct-visible-desktop {
+    display: none !important;
+}
+
+.cct-device-mobile .cct-visible-mobile,
+.cct-device-tablet .cct-visible-tablet,
+.cct-device-desktop .cct-visible-desktop {
+    display: block !important;
+}
+
+/* Classes para orientação */
+.cct-orientation-portrait .cct-hidden-portrait,
+.cct-orientation-landscape .cct-hidden-landscape {
+    display: none !important;
+}
+
+.cct-visible-portrait,
+.cct-visible-landscape {
+    display: none !important;
+}
+
+.cct-orientation-portrait .cct-visible-portrait,
+.cct-orientation-landscape .cct-visible-landscape {
+    display: block !important;
+}
+
+/* Classes para touch */
+.cct-touch .cct-hidden-touch,
+.cct-no-touch .cct-hidden-no-touch {
+    display: none !important;
+}
+
+.cct-visible-touch,
+.cct-visible-no-touch {
+    display: none !important;
+}
+
+.cct-touch .cct-visible-touch,
+.cct-no-touch .cct-visible-no-touch {
+    display: block !important;
+}
+
+/* ==========================================================================
+   Componentes Adaptativos
+   ========================================================================== */
+
+/* Imagens responsivas */
+.cct-img-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Vídeos responsivos */
+.cct-video-responsive {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+}
+
+.cct-video-responsive iframe,
+.cct-video-responsive object,
+.cct-video-responsive embed,
+.cct-video-responsive video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Tabelas responsivas */
+.cct-table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.cct-table-responsive table {
+    min-width: 600px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   Alinhamento e Justificação Responsivos
+   ========================================================================== */
+
+/* Alinhamento de texto */
+.cct-text-left { text-align: left !important; }
+.cct-text-center { text-align: center !important; }
+.cct-text-right { text-align: right !important; }
+.cct-text-justify { text-align: justify !important; }
+
+/* Alinhamento responsivo */
+@media (max-width: 575px) {
+    .cct-text-xs-left { text-align: left !important; }
+    .cct-text-xs-center { text-align: center !important; }
+    .cct-text-xs-right { text-align: right !important; }
+}
+
+@media (min-width: 576px) {
+    .cct-text-sm-left { text-align: left !important; }
+    .cct-text-sm-center { text-align: center !important; }
+    .cct-text-sm-right { text-align: right !important; }
+}
+
+@media (min-width: 768px) {
+    .cct-text-md-left { text-align: left !important; }
+    .cct-text-md-center { text-align: center !important; }
+    .cct-text-md-right { text-align: right !important; }
+}
+
+@media (min-width: 992px) {
+    .cct-text-lg-left { text-align: left !important; }
+    .cct-text-lg-center { text-align: center !important; }
+    .cct-text-lg-right { text-align: right !important; }
+}
+
+@media (min-width: 1200px) {
+    .cct-text-xl-left { text-align: left !important; }
+    .cct-text-xl-center { text-align: center !important; }
+    .cct-text-xl-right { text-align: right !important; }
+}
+
+/* Justificação flexbox */
+.cct-justify-start { justify-content: flex-start !important; }
+.cct-justify-center { justify-content: center !important; }
+.cct-justify-end { justify-content: flex-end !important; }
+.cct-justify-between { justify-content: space-between !important; }
+.cct-justify-around { justify-content: space-around !important; }
+.cct-justify-evenly { justify-content: space-evenly !important; }
+
+/* Alinhamento flexbox */
+.cct-align-start { align-items: flex-start !important; }
+.cct-align-center { align-items: center !important; }
+.cct-align-end { align-items: flex-end !important; }
+.cct-align-stretch { align-items: stretch !important; }
+.cct-align-baseline { align-items: baseline !important; }
+
+/* ==========================================================================
+   Espaçamento Responsivo
+   ========================================================================== */
+
+/* Margens responsivas */
+.cct-m-0 { margin: 0 !important; }
+.cct-m-1 { margin: 0.25rem !important; }
+.cct-m-2 { margin: 0.5rem !important; }
+.cct-m-3 { margin: 1rem !important; }
+.cct-m-4 { margin: 1.5rem !important; }
+.cct-m-5 { margin: 3rem !important; }
+
+.cct-mt-0 { margin-top: 0 !important; }
+.cct-mt-1 { margin-top: 0.25rem !important; }
+.cct-mt-2 { margin-top: 0.5rem !important; }
+.cct-mt-3 { margin-top: 1rem !important; }
+.cct-mt-4 { margin-top: 1.5rem !important; }
+.cct-mt-5 { margin-top: 3rem !important; }
+
+.cct-mb-0 { margin-bottom: 0 !important; }
+.cct-mb-1 { margin-bottom: 0.25rem !important; }
+.cct-mb-2 { margin-bottom: 0.5rem !important; }
+.cct-mb-3 { margin-bottom: 1rem !important; }
+.cct-mb-4 { margin-bottom: 1.5rem !important; }
+.cct-mb-5 { margin-bottom: 3rem !important; }
+
+.cct-ml-0 { margin-left: 0 !important; }
+.cct-ml-1 { margin-left: 0.25rem !important; }
+.cct-ml-2 { margin-left: 0.5rem !important; }
+.cct-ml-3 { margin-left: 1rem !important; }
+.cct-ml-4 { margin-left: 1.5rem !important; }
+.cct-ml-5 { margin-left: 3rem !important; }
+
+.cct-mr-0 { margin-right: 0 !important; }
+.cct-mr-1 { margin-right: 0.25rem !important; }
+.cct-mr-2 { margin-right: 0.5rem !important; }
+.cct-mr-3 { margin-right: 1rem !important; }
+.cct-mr-4 { margin-right: 1.5rem !important; }
+.cct-mr-5 { margin-right: 3rem !important; }
+
+/* Paddings responsivos */
+.cct-p-0 { padding: 0 !important; }
+.cct-p-1 { padding: 0.25rem !important; }
+.cct-p-2 { padding: 0.5rem !important; }
+.cct-p-3 { padding: 1rem !important; }
+.cct-p-4 { padding: 1.5rem !important; }
+.cct-p-5 { padding: 3rem !important; }
+
+.cct-pt-0 { padding-top: 0 !important; }
+.cct-pt-1 { padding-top: 0.25rem !important; }
+.cct-pt-2 { padding-top: 0.5rem !important; }
+.cct-pt-3 { padding-top: 1rem !important; }
+.cct-pt-4 { padding-top: 1.5rem !important; }
+.cct-pt-5 { padding-top: 3rem !important; }
+
+.cct-pb-0 { padding-bottom: 0 !important; }
+.cct-pb-1 { padding-bottom: 0.25rem !important; }
+.cct-pb-2 { padding-bottom: 0.5rem !important; }
+.cct-pb-3 { padding-bottom: 1rem !important; }
+.cct-pb-4 { padding-bottom: 1.5rem !important; }
+.cct-pb-5 { padding-bottom: 3rem !important; }
+
+.cct-pl-0 { padding-left: 0 !important; }
+.cct-pl-1 { padding-left: 0.25rem !important; }
+.cct-pl-2 { padding-left: 0.5rem !important; }
+.cct-pl-3 { padding-left: 1rem !important; }
+.cct-pl-4 { padding-left: 1.5rem !important; }
+.cct-pl-5 { padding-left: 3rem !important; }
+
+.cct-pr-0 { padding-right: 0 !important; }
+.cct-pr-1 { padding-right: 0.25rem !important; }
+.cct-pr-2 { padding-right: 0.5rem !important; }
+.cct-pr-3 { padding-right: 1rem !important; }
+.cct-pr-4 { padding-right: 1.5rem !important; }
+.cct-pr-5 { padding-right: 3rem !important; }
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug para breakpoints */
+.cct-breakpoints-debug::before {
+    content: 'Breakpoint: ' var(--cct-current-bp) ' | Largura: ' var(--cct-screen-width) ' | Dispositivo: ' var(--cct-device-type);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 0, 0, 0.9);
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 10001;
+    text-align: center;
+}
+
+/* Grid debug */
+.cct-grid-debug .cct-row {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px dashed red;
+}
+
+.cct-grid-debug .cct-col {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px dashed green;
+    min-height: 50px;
+}
+
+.cct-grid-debug .cct-container {
+    background: rgba(0, 0, 255, 0.1);
+    border: 1px dashed blue;
+}
+
+/* Container debug */
+.cct-container-debug {
+    position: relative;
+}
+
+.cct-container-debug::before {
+    content: 'Container: ' var(--cct-current-container) ' | Gutter: ' var(--cct-current-gutter);
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: rgba(0, 0, 255, 0.8);
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-family: monospace;
+    border-radius: 3px;
+    z-index: 1000;
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    /* Forçar layout de desktop para impressão */
+    .cct-container {
+        max-width: none !important;
+        padding: 0 !important;
+    }
+    
+    .cct-row {
+        margin: 0 !important;
+    }
+    
+    .cct-col {
+        padding: 0 !important;
+        flex: none !important;
+        max-width: none !important;
+    }
+    
+    /* Ocultar elementos não essenciais */
+    .cct-hidden-print {
+        display: none !important;
+    }
+    
+    /* Mostrar apenas elementos de impressão */
+    .cct-visible-print {
+        display: block !important;
+    }
+    
+    /* Remover debug */
+    .cct-breakpoints-debug::before,
+    .cct-container-debug::before {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .cct-container,
+    .cct-row,
+    .cct-col {
+        transition: none !important;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .cct-grid-debug .cct-row {
+        border-color: #000;
+        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .cct-grid-debug .cct-col {
+        border-color: #000;
+        background: rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ==========================================================================
+   Compatibilidade com Navegadores Antigos
+   ========================================================================== */
+
+/* Fallback para navegadores sem suporte a CSS Grid */
+@supports not (display: grid) {
+    .cct-grid-css-grid .cct-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .cct-grid-css-grid .cct-col {
+        flex: 1 0 0%;
+    }
+}
+
+/* Fallback para navegadores sem suporte a Flexbox */
+@supports not (display: flex) {
+    .cct-row {
+        display: block;
+    }
+    
+    .cct-col {
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+/* Fallback para navegadores sem suporte a CSS Custom Properties */
+@supports not (--css: variables) {
+    .cct-container {
+        max-width: 1140px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .cct-row {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    
+    .cct-col {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

@@ -81,6 +81,47 @@ class CCT_Customizer_Loader {
         // Lista de módulos a serem carregados
         $module_files = array(
             'class-menu-customizer.php',
+            'class-typography-customizer.php',
+            'class-typography-controls.php',
+            
+            // Módulos de cores
+        'class-color-manager.php',
+        'class-color-controls.php',
+        
+        // Módulos de ícones
+        'class-icon-manager.php',
+        'class-icon-controls.php',
+        
+        // Módulos de layout
+        'class-layout-manager.php',
+        'class-layout-controls.php',
+        
+        // Módulos de animações
+        'class-animation-manager.php',
+        'class-animation-controls.php',
+        
+        // Módulos de gradientes
+        'class-gradient-manager.php',
+        'class-gradient-controls.php',
+        
+        // Módulos de sombras
+        'class-shadow-manager.php',
+        'class-shadow-controls.php',
+        
+        // Módulos de biblioteca de padrões
+        'class-pattern-library-manager.php',
+        'class-pattern-library-controls.php',
+        
+        // Módulos de modo escuro/claro
+        'class-dark-mode-manager.php',
+        
+        // Módulos de responsive breakpoints
+        'class-responsive-breakpoints-manager.php',
+        'class-breakpoint-manager-control.php',
+        
+        // Módulos de design tokens
+        'class-design-tokens-manager.php',
+        'class-design-tokens-control.php',
             // Adicione outros módulos aqui conforme necessário
         );
         
@@ -131,10 +172,40 @@ class CCT_Customizer_Loader {
      * @return string Nome da classe
      */
     private function get_class_name_from_file($filename) {
-        // Remove extensão .php
-        $name = str_replace('.php', '', $filename);
+        // Mapeamento específico para nomes de classes
+        $class_map = array(
+            'class-menu-customizer.php' => 'CCT_Menu_Customizer',
+            'class-typography-customizer.php' => 'CCT_Typography_Customizer',
+            'class-typography-controls.php' => 'CCT_Typography_Preview_Control', // Primeira classe do arquivo
+            'class-color-customizer.php' => 'CCT_Color_Customizer',
+            'class-color-manager.php' => 'CCT_Color_Manager',
+            'class-color-controls.php' => 'CCT_Color_Palette_Preview_Control', // Classe principal do arquivo
+            'class-icon-manager.php' => 'CCT_Icon_Manager',
+            'class-icon-controls.php' => 'CCT_Icon_Category_Browser_Control', // Classe principal do arquivo
+            'class-layout-manager.php' => 'CCT_Layout_Manager',
+            'class-layout-controls.php' => 'CCT_Grid_Preview_Control', // Classe principal do arquivo
+            'class-animation-manager.php' => 'CCT_Animation_Manager',
+            'class-animation-controls.php' => 'CCT_Animation_Preview_Control', // Classe principal do arquivo
+            'class-gradient-manager.php' => 'CCT_Gradient_Manager',
+            'class-gradient-controls.php' => 'CCT_Gradient_Browser_Control', // Classe principal do arquivo
+            'class-shadow-manager.php' => 'CCT_Shadow_Manager',
+            'class-shadow-controls.php' => 'CCT_Elevation_Preview_Control', // Classe principal do arquivo
+            'class-pattern-library-manager.php' => 'CCT_Pattern_Library_Manager',
+            'class-pattern-library-controls.php' => 'CCT_Pattern_Browser_Control', // Classe principal do arquivo
+            'class-dark-mode-manager.php' => 'CCT_Dark_Mode_Manager',
+            'class-responsive-breakpoints-manager.php' => 'CCT_Responsive_Breakpoints_Manager',
+            'class-breakpoint-manager-control.php' => 'CCT_Breakpoint_Manager_Control',
+            'class-design-tokens-manager.php' => 'CCT_Design_Tokens_Manager',
+            'class-design-tokens-control.php' => 'CCT_Design_Tokens_Control',
+        );
         
-        // Converte de kebab-case para PascalCase
+        // Verificar se existe mapeamento específico
+        if (isset($class_map[$filename])) {
+            return $class_map[$filename];
+        }
+        
+        // Fallback para conversão automática
+        $name = str_replace('.php', '', $filename);
         $parts = explode('-', $name);
         $class_name = '';
         
@@ -142,7 +213,6 @@ class CCT_Customizer_Loader {
             $class_name .= ucfirst($part);
         }
         
-        // Adiciona prefixo CCT_ se não existir
         if (strpos($class_name, 'CCT') !== 0) {
             $class_name = 'CCT_' . $class_name;
         }

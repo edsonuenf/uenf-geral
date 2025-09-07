@@ -1,0 +1,933 @@
+/**
+ * Sistema de Design Tokens CCT - Estilos Frontend
+ * 
+ * Sistema completo de design tokens incluindo:
+ * - Variáveis CSS geradas dinamicamente
+ * - Classes utilitárias baseadas em tokens
+ * - Componentes com tokens aplicados
+ * - Documentação visual
+ * - Debug e desenvolvimento
+ * 
+ * @package CCT_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS Base dos Design Tokens
+   ========================================================================== */
+
+:root {
+    /* Estas variáveis são geradas dinamicamente pelo sistema de tokens */
+    /* Cores primitivas */
+    --cct-colors-base-white: #ffffff;
+    --cct-colors-base-black: #000000;
+    --cct-colors-base-transparent: transparent;
+    
+    /* Cores cinza */
+    --cct-colors-gray-50: #f9fafb;
+    --cct-colors-gray-100: #f3f4f6;
+    --cct-colors-gray-200: #e5e7eb;
+    --cct-colors-gray-300: #d1d5db;
+    --cct-colors-gray-400: #9ca3af;
+    --cct-colors-gray-500: #6b7280;
+    --cct-colors-gray-600: #4b5563;
+    --cct-colors-gray-700: #374151;
+    --cct-colors-gray-800: #1f2937;
+    --cct-colors-gray-900: #111827;
+    
+    /* Cores azul */
+    --cct-colors-blue-50: #eff6ff;
+    --cct-colors-blue-100: #dbeafe;
+    --cct-colors-blue-500: #3b82f6;
+    --cct-colors-blue-600: #2563eb;
+    --cct-colors-blue-700: #1d4ed8;
+    
+    /* Cores semânticas */
+    --cct-colors-red-50: #fef2f2;
+    --cct-colors-red-500: #ef4444;
+    --cct-colors-red-600: #dc2626;
+    --cct-colors-green-50: #f0fdf4;
+    --cct-colors-green-500: #22c55e;
+    --cct-colors-green-600: #16a34a;
+    --cct-colors-yellow-50: #fefce8;
+    --cct-colors-yellow-500: #eab308;
+    --cct-colors-yellow-600: #ca8a04;
+    
+    /* Tipografia */
+    --cct-typography-font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --cct-typography-font-family-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --cct-typography-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    
+    --cct-typography-font-size-xs: 0.75rem;
+    --cct-typography-font-size-sm: 0.875rem;
+    --cct-typography-font-size-base: 1rem;
+    --cct-typography-font-size-lg: 1.125rem;
+    --cct-typography-font-size-xl: 1.25rem;
+    --cct-typography-font-size-2xl: 1.5rem;
+    --cct-typography-font-size-3xl: 1.875rem;
+    --cct-typography-font-size-4xl: 2.25rem;
+    
+    --cct-typography-font-weight-thin: 100;
+    --cct-typography-font-weight-light: 300;
+    --cct-typography-font-weight-normal: 400;
+    --cct-typography-font-weight-medium: 500;
+    --cct-typography-font-weight-semibold: 600;
+    --cct-typography-font-weight-bold: 700;
+    
+    --cct-typography-line-height-none: 1;
+    --cct-typography-line-height-tight: 1.25;
+    --cct-typography-line-height-snug: 1.375;
+    --cct-typography-line-height-normal: 1.5;
+    --cct-typography-line-height-relaxed: 1.625;
+    --cct-typography-line-height-loose: 2;
+    
+    /* Espaçamentos */
+    --cct-spacing-0: 0px;
+    --cct-spacing-1: 0.25rem;
+    --cct-spacing-2: 0.5rem;
+    --cct-spacing-3: 0.75rem;
+    --cct-spacing-4: 1rem;
+    --cct-spacing-5: 1.25rem;
+    --cct-spacing-6: 1.5rem;
+    --cct-spacing-8: 2rem;
+    --cct-spacing-10: 2.5rem;
+    --cct-spacing-12: 3rem;
+    --cct-spacing-16: 4rem;
+    --cct-spacing-20: 5rem;
+    --cct-spacing-24: 6rem;
+    
+    /* Bordas */
+    --cct-border-radius-none: 0px;
+    --cct-border-radius-sm: 0.125rem;
+    --cct-border-radius-base: 0.25rem;
+    --cct-border-radius-md: 0.375rem;
+    --cct-border-radius-lg: 0.5rem;
+    --cct-border-radius-xl: 0.75rem;
+    --cct-border-radius-2xl: 1rem;
+    --cct-border-radius-full: 9999px;
+    
+    /* Sombras */
+    --cct-shadows-none: none;
+    --cct-shadows-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --cct-shadows-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --cct-shadows-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --cct-shadows-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --cct-shadows-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --cct-shadows-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* Transições */
+    --cct-transitions-duration-fast: 150ms;
+    --cct-transitions-duration-normal: 300ms;
+    --cct-transitions-duration-slow: 500ms;
+    
+    --cct-transitions-easing-linear: linear;
+    --cct-transitions-easing-ease: ease;
+    --cct-transitions-easing-ease-in: ease-in;
+    --cct-transitions-easing-ease-out: ease-out;
+    --cct-transitions-easing-ease-in-out: ease-in-out;
+    
+    /* Tokens semânticos */
+    --cct-colors-text-primary: var(--cct-colors-gray-900);
+    --cct-colors-text-secondary: var(--cct-colors-gray-600);
+    --cct-colors-text-muted: var(--cct-colors-gray-400);
+    --cct-colors-text-inverse: var(--cct-colors-base-white);
+    
+    --cct-colors-background-primary: var(--cct-colors-base-white);
+    --cct-colors-background-secondary: var(--cct-colors-gray-50);
+    --cct-colors-background-tertiary: var(--cct-colors-gray-100);
+    
+    --cct-colors-border-default: var(--cct-colors-gray-200);
+    --cct-colors-border-muted: var(--cct-colors-gray-100);
+    --cct-colors-border-strong: var(--cct-colors-gray-300);
+    
+    --cct-colors-brand-primary: var(--cct-colors-blue-600);
+    --cct-colors-brand-secondary: var(--cct-colors-blue-500);
+    
+    --cct-colors-feedback-success: var(--cct-colors-green-600);
+    --cct-colors-feedback-warning: var(--cct-colors-yellow-600);
+    --cct-colors-feedback-error: var(--cct-colors-red-600);
+    --cct-colors-feedback-info: var(--cct-colors-blue-600);
+    
+    /* Tokens de componente */
+    --cct-spacing-component-xs: var(--cct-spacing-2);
+    --cct-spacing-component-sm: var(--cct-spacing-4);
+    --cct-spacing-component-md: var(--cct-spacing-6);
+    --cct-spacing-component-lg: var(--cct-spacing-8);
+    --cct-spacing-component-xl: var(--cct-spacing-12);
+    
+    --cct-spacing-layout-section: var(--cct-spacing-16);
+    --cct-spacing-layout-container: var(--cct-spacing-6);
+}
+
+/* ==========================================================================
+   Classes Utilitárias Baseadas em Tokens
+   ========================================================================== */
+
+/* Cores de texto */
+.cct-text-primary { color: var(--cct-colors-text-primary) !important; }
+.cct-text-secondary { color: var(--cct-colors-text-secondary) !important; }
+.cct-text-muted { color: var(--cct-colors-text-muted) !important; }
+.cct-text-inverse { color: var(--cct-colors-text-inverse) !important; }
+
+.cct-text-brand-primary { color: var(--cct-colors-brand-primary) !important; }
+.cct-text-brand-secondary { color: var(--cct-colors-brand-secondary) !important; }
+
+.cct-text-success { color: var(--cct-colors-feedback-success) !important; }
+.cct-text-warning { color: var(--cct-colors-feedback-warning) !important; }
+.cct-text-error { color: var(--cct-colors-feedback-error) !important; }
+.cct-text-info { color: var(--cct-colors-feedback-info) !important; }
+
+/* Cores de fundo */
+.cct-bg-primary { background-color: var(--cct-colors-background-primary) !important; }
+.cct-bg-secondary { background-color: var(--cct-colors-background-secondary) !important; }
+.cct-bg-tertiary { background-color: var(--cct-colors-background-tertiary) !important; }
+
+.cct-bg-brand-primary { background-color: var(--cct-colors-brand-primary) !important; }
+.cct-bg-brand-secondary { background-color: var(--cct-colors-brand-secondary) !important; }
+
+.cct-bg-success { background-color: var(--cct-colors-feedback-success) !important; }
+.cct-bg-warning { background-color: var(--cct-colors-feedback-warning) !important; }
+.cct-bg-error { background-color: var(--cct-colors-feedback-error) !important; }
+.cct-bg-info { background-color: var(--cct-colors-feedback-info) !important; }
+
+/* Cores de borda */
+.cct-border-default { border-color: var(--cct-colors-border-default) !important; }
+.cct-border-muted { border-color: var(--cct-colors-border-muted) !important; }
+.cct-border-strong { border-color: var(--cct-colors-border-strong) !important; }
+
+.cct-border-brand { border-color: var(--cct-colors-brand-primary) !important; }
+.cct-border-success { border-color: var(--cct-colors-feedback-success) !important; }
+.cct-border-warning { border-color: var(--cct-colors-feedback-warning) !important; }
+.cct-border-error { border-color: var(--cct-colors-feedback-error) !important; }
+.cct-border-info { border-color: var(--cct-colors-feedback-info) !important; }
+
+/* Tipografia */
+.cct-font-sans { font-family: var(--cct-typography-font-family-sans) !important; }
+.cct-font-serif { font-family: var(--cct-typography-font-family-serif) !important; }
+.cct-font-mono { font-family: var(--cct-typography-font-family-mono) !important; }
+
+.cct-text-xs { font-size: var(--cct-typography-font-size-xs) !important; }
+.cct-text-sm { font-size: var(--cct-typography-font-size-sm) !important; }
+.cct-text-base { font-size: var(--cct-typography-font-size-base) !important; }
+.cct-text-lg { font-size: var(--cct-typography-font-size-lg) !important; }
+.cct-text-xl { font-size: var(--cct-typography-font-size-xl) !important; }
+.cct-text-2xl { font-size: var(--cct-typography-font-size-2xl) !important; }
+.cct-text-3xl { font-size: var(--cct-typography-font-size-3xl) !important; }
+.cct-text-4xl { font-size: var(--cct-typography-font-size-4xl) !important; }
+
+.cct-font-thin { font-weight: var(--cct-typography-font-weight-thin) !important; }
+.cct-font-light { font-weight: var(--cct-typography-font-weight-light) !important; }
+.cct-font-normal { font-weight: var(--cct-typography-font-weight-normal) !important; }
+.cct-font-medium { font-weight: var(--cct-typography-font-weight-medium) !important; }
+.cct-font-semibold { font-weight: var(--cct-typography-font-weight-semibold) !important; }
+.cct-font-bold { font-weight: var(--cct-typography-font-weight-bold) !important; }
+
+.cct-leading-none { line-height: var(--cct-typography-line-height-none) !important; }
+.cct-leading-tight { line-height: var(--cct-typography-line-height-tight) !important; }
+.cct-leading-snug { line-height: var(--cct-typography-line-height-snug) !important; }
+.cct-leading-normal { line-height: var(--cct-typography-line-height-normal) !important; }
+.cct-leading-relaxed { line-height: var(--cct-typography-line-height-relaxed) !important; }
+.cct-leading-loose { line-height: var(--cct-typography-line-height-loose) !important; }
+
+/* Espaçamentos */
+.cct-m-0 { margin: var(--cct-spacing-0) !important; }
+.cct-m-1 { margin: var(--cct-spacing-1) !important; }
+.cct-m-2 { margin: var(--cct-spacing-2) !important; }
+.cct-m-3 { margin: var(--cct-spacing-3) !important; }
+.cct-m-4 { margin: var(--cct-spacing-4) !important; }
+.cct-m-5 { margin: var(--cct-spacing-5) !important; }
+.cct-m-6 { margin: var(--cct-spacing-6) !important; }
+.cct-m-8 { margin: var(--cct-spacing-8) !important; }
+.cct-m-10 { margin: var(--cct-spacing-10) !important; }
+.cct-m-12 { margin: var(--cct-spacing-12) !important; }
+.cct-m-16 { margin: var(--cct-spacing-16) !important; }
+.cct-m-20 { margin: var(--cct-spacing-20) !important; }
+.cct-m-24 { margin: var(--cct-spacing-24) !important; }
+
+.cct-p-0 { padding: var(--cct-spacing-0) !important; }
+.cct-p-1 { padding: var(--cct-spacing-1) !important; }
+.cct-p-2 { padding: var(--cct-spacing-2) !important; }
+.cct-p-3 { padding: var(--cct-spacing-3) !important; }
+.cct-p-4 { padding: var(--cct-spacing-4) !important; }
+.cct-p-5 { padding: var(--cct-spacing-5) !important; }
+.cct-p-6 { padding: var(--cct-spacing-6) !important; }
+.cct-p-8 { padding: var(--cct-spacing-8) !important; }
+.cct-p-10 { padding: var(--cct-spacing-10) !important; }
+.cct-p-12 { padding: var(--cct-spacing-12) !important; }
+.cct-p-16 { padding: var(--cct-spacing-16) !important; }
+.cct-p-20 { padding: var(--cct-spacing-20) !important; }
+.cct-p-24 { padding: var(--cct-spacing-24) !important; }
+
+/* Espaçamentos direcionais */
+.cct-mt-0 { margin-top: var(--cct-spacing-0) !important; }
+.cct-mt-1 { margin-top: var(--cct-spacing-1) !important; }
+.cct-mt-2 { margin-top: var(--cct-spacing-2) !important; }
+.cct-mt-3 { margin-top: var(--cct-spacing-3) !important; }
+.cct-mt-4 { margin-top: var(--cct-spacing-4) !important; }
+.cct-mt-5 { margin-top: var(--cct-spacing-5) !important; }
+.cct-mt-6 { margin-top: var(--cct-spacing-6) !important; }
+.cct-mt-8 { margin-top: var(--cct-spacing-8) !important; }
+.cct-mt-10 { margin-top: var(--cct-spacing-10) !important; }
+.cct-mt-12 { margin-top: var(--cct-spacing-12) !important; }
+.cct-mt-16 { margin-top: var(--cct-spacing-16) !important; }
+.cct-mt-20 { margin-top: var(--cct-spacing-20) !important; }
+.cct-mt-24 { margin-top: var(--cct-spacing-24) !important; }
+
+.cct-mb-0 { margin-bottom: var(--cct-spacing-0) !important; }
+.cct-mb-1 { margin-bottom: var(--cct-spacing-1) !important; }
+.cct-mb-2 { margin-bottom: var(--cct-spacing-2) !important; }
+.cct-mb-3 { margin-bottom: var(--cct-spacing-3) !important; }
+.cct-mb-4 { margin-bottom: var(--cct-spacing-4) !important; }
+.cct-mb-5 { margin-bottom: var(--cct-spacing-5) !important; }
+.cct-mb-6 { margin-bottom: var(--cct-spacing-6) !important; }
+.cct-mb-8 { margin-bottom: var(--cct-spacing-8) !important; }
+.cct-mb-10 { margin-bottom: var(--cct-spacing-10) !important; }
+.cct-mb-12 { margin-bottom: var(--cct-spacing-12) !important; }
+.cct-mb-16 { margin-bottom: var(--cct-spacing-16) !important; }
+.cct-mb-20 { margin-bottom: var(--cct-spacing-20) !important; }
+.cct-mb-24 { margin-bottom: var(--cct-spacing-24) !important; }
+
+.cct-ml-0 { margin-left: var(--cct-spacing-0) !important; }
+.cct-ml-1 { margin-left: var(--cct-spacing-1) !important; }
+.cct-ml-2 { margin-left: var(--cct-spacing-2) !important; }
+.cct-ml-3 { margin-left: var(--cct-spacing-3) !important; }
+.cct-ml-4 { margin-left: var(--cct-spacing-4) !important; }
+.cct-ml-5 { margin-left: var(--cct-spacing-5) !important; }
+.cct-ml-6 { margin-left: var(--cct-spacing-6) !important; }
+.cct-ml-8 { margin-left: var(--cct-spacing-8) !important; }
+.cct-ml-10 { margin-left: var(--cct-spacing-10) !important; }
+.cct-ml-12 { margin-left: var(--cct-spacing-12) !important; }
+.cct-ml-16 { margin-left: var(--cct-spacing-16) !important; }
+.cct-ml-20 { margin-left: var(--cct-spacing-20) !important; }
+.cct-ml-24 { margin-left: var(--cct-spacing-24) !important; }
+
+.cct-mr-0 { margin-right: var(--cct-spacing-0) !important; }
+.cct-mr-1 { margin-right: var(--cct-spacing-1) !important; }
+.cct-mr-2 { margin-right: var(--cct-spacing-2) !important; }
+.cct-mr-3 { margin-right: var(--cct-spacing-3) !important; }
+.cct-mr-4 { margin-right: var(--cct-spacing-4) !important; }
+.cct-mr-5 { margin-right: var(--cct-spacing-5) !important; }
+.cct-mr-6 { margin-right: var(--cct-spacing-6) !important; }
+.cct-mr-8 { margin-right: var(--cct-spacing-8) !important; }
+.cct-mr-10 { margin-right: var(--cct-spacing-10) !important; }
+.cct-mr-12 { margin-right: var(--cct-spacing-12) !important; }
+.cct-mr-16 { margin-right: var(--cct-spacing-16) !important; }
+.cct-mr-20 { margin-right: var(--cct-spacing-20) !important; }
+.cct-mr-24 { margin-right: var(--cct-spacing-24) !important; }
+
+/* Paddings direcionais */
+.cct-pt-0 { padding-top: var(--cct-spacing-0) !important; }
+.cct-pt-1 { padding-top: var(--cct-spacing-1) !important; }
+.cct-pt-2 { padding-top: var(--cct-spacing-2) !important; }
+.cct-pt-3 { padding-top: var(--cct-spacing-3) !important; }
+.cct-pt-4 { padding-top: var(--cct-spacing-4) !important; }
+.cct-pt-5 { padding-top: var(--cct-spacing-5) !important; }
+.cct-pt-6 { padding-top: var(--cct-spacing-6) !important; }
+.cct-pt-8 { padding-top: var(--cct-spacing-8) !important; }
+.cct-pt-10 { padding-top: var(--cct-spacing-10) !important; }
+.cct-pt-12 { padding-top: var(--cct-spacing-12) !important; }
+.cct-pt-16 { padding-top: var(--cct-spacing-16) !important; }
+.cct-pt-20 { padding-top: var(--cct-spacing-20) !important; }
+.cct-pt-24 { padding-top: var(--cct-spacing-24) !important; }
+
+.cct-pb-0 { padding-bottom: var(--cct-spacing-0) !important; }
+.cct-pb-1 { padding-bottom: var(--cct-spacing-1) !important; }
+.cct-pb-2 { padding-bottom: var(--cct-spacing-2) !important; }
+.cct-pb-3 { padding-bottom: var(--cct-spacing-3) !important; }
+.cct-pb-4 { padding-bottom: var(--cct-spacing-4) !important; }
+.cct-pb-5 { padding-bottom: var(--cct-spacing-5) !important; }
+.cct-pb-6 { padding-bottom: var(--cct-spacing-6) !important; }
+.cct-pb-8 { padding-bottom: var(--cct-spacing-8) !important; }
+.cct-pb-10 { padding-bottom: var(--cct-spacing-10) !important; }
+.cct-pb-12 { padding-bottom: var(--cct-spacing-12) !important; }
+.cct-pb-16 { padding-bottom: var(--cct-spacing-16) !important; }
+.cct-pb-20 { padding-bottom: var(--cct-spacing-20) !important; }
+.cct-pb-24 { padding-bottom: var(--cct-spacing-24) !important; }
+
+.cct-pl-0 { padding-left: var(--cct-spacing-0) !important; }
+.cct-pl-1 { padding-left: var(--cct-spacing-1) !important; }
+.cct-pl-2 { padding-left: var(--cct-spacing-2) !important; }
+.cct-pl-3 { padding-left: var(--cct-spacing-3) !important; }
+.cct-pl-4 { padding-left: var(--cct-spacing-4) !important; }
+.cct-pl-5 { padding-left: var(--cct-spacing-5) !important; }
+.cct-pl-6 { padding-left: var(--cct-spacing-6) !important; }
+.cct-pl-8 { padding-left: var(--cct-spacing-8) !important; }
+.cct-pl-10 { padding-left: var(--cct-spacing-10) !important; }
+.cct-pl-12 { padding-left: var(--cct-spacing-12) !important; }
+.cct-pl-16 { padding-left: var(--cct-spacing-16) !important; }
+.cct-pl-20 { padding-left: var(--cct-spacing-20) !important; }
+.cct-pl-24 { padding-left: var(--cct-spacing-24) !important; }
+
+.cct-pr-0 { padding-right: var(--cct-spacing-0) !important; }
+.cct-pr-1 { padding-right: var(--cct-spacing-1) !important; }
+.cct-pr-2 { padding-right: var(--cct-spacing-2) !important; }
+.cct-pr-3 { padding-right: var(--cct-spacing-3) !important; }
+.cct-pr-4 { padding-right: var(--cct-spacing-4) !important; }
+.cct-pr-5 { padding-right: var(--cct-spacing-5) !important; }
+.cct-pr-6 { padding-right: var(--cct-spacing-6) !important; }
+.cct-pr-8 { padding-right: var(--cct-spacing-8) !important; }
+.cct-pr-10 { padding-right: var(--cct-spacing-10) !important; }
+.cct-pr-12 { padding-right: var(--cct-spacing-12) !important; }
+.cct-pr-16 { padding-right: var(--cct-spacing-16) !important; }
+.cct-pr-20 { padding-right: var(--cct-spacing-20) !important; }
+.cct-pr-24 { padding-right: var(--cct-spacing-24) !important; }
+
+/* Bordas arredondadas */
+.cct-rounded-none { border-radius: var(--cct-border-radius-none) !important; }
+.cct-rounded-sm { border-radius: var(--cct-border-radius-sm) !important; }
+.cct-rounded { border-radius: var(--cct-border-radius-base) !important; }
+.cct-rounded-md { border-radius: var(--cct-border-radius-md) !important; }
+.cct-rounded-lg { border-radius: var(--cct-border-radius-lg) !important; }
+.cct-rounded-xl { border-radius: var(--cct-border-radius-xl) !important; }
+.cct-rounded-2xl { border-radius: var(--cct-border-radius-2xl) !important; }
+.cct-rounded-full { border-radius: var(--cct-border-radius-full) !important; }
+
+/* Sombras */
+.cct-shadow-none { box-shadow: var(--cct-shadows-none) !important; }
+.cct-shadow-sm { box-shadow: var(--cct-shadows-sm) !important; }
+.cct-shadow { box-shadow: var(--cct-shadows-base) !important; }
+.cct-shadow-md { box-shadow: var(--cct-shadows-md) !important; }
+.cct-shadow-lg { box-shadow: var(--cct-shadows-lg) !important; }
+.cct-shadow-xl { box-shadow: var(--cct-shadows-xl) !important; }
+.cct-shadow-2xl { box-shadow: var(--cct-shadows-2xl) !important; }
+
+/* ==========================================================================
+   Componentes com Tokens Aplicados
+   ========================================================================== */
+
+/* Botões baseados em tokens */
+.cct-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--cct-spacing-component-xs);
+    padding: var(--cct-spacing-component-sm) var(--cct-spacing-component-md);
+    font-family: var(--cct-typography-font-family-sans);
+    font-size: var(--cct-typography-font-size-base);
+    font-weight: var(--cct-typography-font-weight-medium);
+    line-height: var(--cct-typography-line-height-none);
+    border: 1px solid transparent;
+    border-radius: var(--cct-border-radius-md);
+    cursor: pointer;
+    transition: all var(--cct-transitions-duration-normal) var(--cct-transitions-easing-ease-in-out);
+    text-decoration: none;
+}
+
+.cct-btn:focus {
+    outline: 2px solid var(--cct-colors-brand-primary);
+    outline-offset: 2px;
+}
+
+.cct-btn-primary {
+    background-color: var(--cct-colors-brand-primary);
+    color: var(--cct-colors-text-inverse);
+    border-color: var(--cct-colors-brand-primary);
+}
+
+.cct-btn-primary:hover {
+    background-color: var(--cct-colors-blue-700);
+    border-color: var(--cct-colors-blue-700);
+}
+
+.cct-btn-secondary {
+    background-color: var(--cct-colors-background-secondary);
+    color: var(--cct-colors-text-primary);
+    border-color: var(--cct-colors-border-default);
+}
+
+.cct-btn-secondary:hover {
+    background-color: var(--cct-colors-background-tertiary);
+    border-color: var(--cct-colors-border-strong);
+}
+
+.cct-btn-success {
+    background-color: var(--cct-colors-feedback-success);
+    color: var(--cct-colors-text-inverse);
+    border-color: var(--cct-colors-feedback-success);
+}
+
+.cct-btn-warning {
+    background-color: var(--cct-colors-feedback-warning);
+    color: var(--cct-colors-text-inverse);
+    border-color: var(--cct-colors-feedback-warning);
+}
+
+.cct-btn-error {
+    background-color: var(--cct-colors-feedback-error);
+    color: var(--cct-colors-text-inverse);
+    border-color: var(--cct-colors-feedback-error);
+}
+
+/* Tamanhos de botão */
+.cct-btn-sm {
+    padding: var(--cct-spacing-component-xs) var(--cct-spacing-component-sm);
+    font-size: var(--cct-typography-font-size-sm);
+}
+
+.cct-btn-lg {
+    padding: var(--cct-spacing-component-md) var(--cct-spacing-component-lg);
+    font-size: var(--cct-typography-font-size-lg);
+}
+
+/* Cards baseados em tokens */
+.cct-card {
+    background-color: var(--cct-colors-background-primary);
+    border: 1px solid var(--cct-colors-border-default);
+    border-radius: var(--cct-border-radius-lg);
+    padding: var(--cct-spacing-component-lg);
+    box-shadow: var(--cct-shadows-md);
+    transition: all var(--cct-transitions-duration-normal) var(--cct-transitions-easing-ease-in-out);
+}
+
+.cct-card:hover {
+    box-shadow: var(--cct-shadows-lg);
+    transform: translateY(-2px);
+}
+
+.cct-card-elevated {
+    box-shadow: var(--cct-shadows-lg);
+}
+
+.cct-card-elevated:hover {
+    box-shadow: var(--cct-shadows-xl);
+}
+
+/* Inputs baseados em tokens */
+.cct-input {
+    width: 100%;
+    padding: var(--cct-spacing-component-sm) var(--cct-spacing-component-sm);
+    font-family: var(--cct-typography-font-family-sans);
+    font-size: var(--cct-typography-font-size-base);
+    line-height: var(--cct-typography-line-height-normal);
+    color: var(--cct-colors-text-primary);
+    background-color: var(--cct-colors-background-primary);
+    border: 1px solid var(--cct-colors-border-default);
+    border-radius: var(--cct-border-radius-md);
+    transition: all var(--cct-transitions-duration-normal) var(--cct-transitions-easing-ease-in-out);
+}
+
+.cct-input:focus {
+    outline: none;
+    border-color: var(--cct-colors-brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.cct-input:disabled {
+    background-color: var(--cct-colors-background-secondary);
+    color: var(--cct-colors-text-muted);
+    cursor: not-allowed;
+}
+
+.cct-input.error {
+    border-color: var(--cct-colors-feedback-error);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.cct-input.success {
+    border-color: var(--cct-colors-feedback-success);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+/* Badges baseados em tokens */
+.cct-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--cct-spacing-1) var(--cct-spacing-2);
+    font-family: var(--cct-typography-font-family-sans);
+    font-size: var(--cct-typography-font-size-xs);
+    font-weight: var(--cct-typography-font-weight-medium);
+    line-height: var(--cct-typography-line-height-none);
+    border-radius: var(--cct-border-radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.cct-badge-primary {
+    background-color: var(--cct-colors-blue-100);
+    color: var(--cct-colors-blue-700);
+}
+
+.cct-badge-success {
+    background-color: var(--cct-colors-green-50);
+    color: var(--cct-colors-green-600);
+}
+
+.cct-badge-warning {
+    background-color: var(--cct-colors-yellow-50);
+    color: var(--cct-colors-yellow-600);
+}
+
+.cct-badge-error {
+    background-color: var(--cct-colors-red-50);
+    color: var(--cct-colors-red-600);
+}
+
+.cct-badge-neutral {
+    background-color: var(--cct-colors-gray-100);
+    color: var(--cct-colors-gray-600);
+}
+
+/* ==========================================================================
+   Documentação Visual de Tokens
+   ========================================================================== */
+
+/* Container de documentação */
+.cct-token-documentation {
+    font-family: var(--cct-typography-font-family-sans);
+    line-height: var(--cct-typography-line-height-normal);
+}
+
+.cct-token-category {
+    margin-bottom: var(--cct-spacing-layout-section);
+}
+
+.cct-token-category h3 {
+    font-size: var(--cct-typography-font-size-2xl);
+    font-weight: var(--cct-typography-font-weight-bold);
+    color: var(--cct-colors-text-primary);
+    margin-bottom: var(--cct-spacing-component-lg);
+    border-bottom: 2px solid var(--cct-colors-border-default);
+    padding-bottom: var(--cct-spacing-component-sm);
+}
+
+.cct-token-subcategory {
+    margin-bottom: var(--cct-spacing-component-xl);
+}
+
+.cct-token-subcategory h4 {
+    font-size: var(--cct-typography-font-size-xl);
+    font-weight: var(--cct-typography-font-weight-semibold);
+    color: var(--cct-colors-text-secondary);
+    margin-bottom: var(--cct-spacing-component-md);
+}
+
+.cct-tokens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--cct-spacing-component-md);
+}
+
+.cct-token-card {
+    background-color: var(--cct-colors-background-primary);
+    border: 1px solid var(--cct-colors-border-default);
+    border-radius: var(--cct-border-radius-lg);
+    padding: var(--cct-spacing-component-md);
+    transition: all var(--cct-transitions-duration-normal) var(--cct-transitions-easing-ease-in-out);
+}
+
+.cct-token-card:hover {
+    border-color: var(--cct-colors-brand-primary);
+    box-shadow: var(--cct-shadows-md);
+}
+
+.cct-token-header h5 {
+    font-size: var(--cct-typography-font-size-base);
+    font-weight: var(--cct-typography-font-weight-semibold);
+    color: var(--cct-colors-text-primary);
+    margin-bottom: var(--cct-spacing-component-xs);
+}
+
+.cct-token-value {
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-sm);
+    color: var(--cct-colors-text-secondary);
+    background-color: var(--cct-colors-background-secondary);
+    padding: var(--cct-spacing-1) var(--cct-spacing-2);
+    border-radius: var(--cct-border-radius-sm);
+    margin-bottom: var(--cct-spacing-component-xs);
+}
+
+.cct-token-css {
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-xs);
+    color: var(--cct-colors-brand-primary);
+    margin-bottom: var(--cct-spacing-component-xs);
+}
+
+.cct-token-description {
+    font-size: var(--cct-typography-font-size-sm);
+    color: var(--cct-colors-text-muted);
+    line-height: var(--cct-typography-line-height-relaxed);
+}
+
+/* Tabela de tokens */
+.cct-tokens-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--cct-typography-font-family-sans);
+    font-size: var(--cct-typography-font-size-sm);
+    margin-bottom: var(--cct-spacing-component-xl);
+}
+
+.cct-tokens-table th,
+.cct-tokens-table td {
+    padding: var(--cct-spacing-component-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--cct-colors-border-default);
+}
+
+.cct-tokens-table th {
+    background-color: var(--cct-colors-background-secondary);
+    font-weight: var(--cct-typography-font-weight-semibold);
+    color: var(--cct-colors-text-primary);
+}
+
+.cct-tokens-table td {
+    color: var(--cct-colors-text-secondary);
+}
+
+.cct-tokens-table code {
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-xs);
+    background-color: var(--cct-colors-background-secondary);
+    padding: var(--cct-spacing-1);
+    border-radius: var(--cct-border-radius-sm);
+}
+
+/* CSS Variables display */
+.cct-tokens-css {
+    margin-bottom: var(--cct-spacing-component-xl);
+}
+
+.cct-tokens-css h3 {
+    font-size: var(--cct-typography-font-size-xl);
+    font-weight: var(--cct-typography-font-weight-semibold);
+    color: var(--cct-colors-text-primary);
+    margin-bottom: var(--cct-spacing-component-md);
+}
+
+.cct-tokens-css pre {
+    background-color: var(--cct-colors-gray-900);
+    color: var(--cct-colors-gray-100);
+    padding: var(--cct-spacing-component-lg);
+    border-radius: var(--cct-border-radius-lg);
+    overflow-x: auto;
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-sm);
+    line-height: var(--cct-typography-line-height-relaxed);
+}
+
+/* ==========================================================================
+   Preview de Tokens
+   ========================================================================== */
+
+.cct-token-preview-container {
+    font-family: var(--cct-typography-font-family-sans);
+}
+
+.cct-preview-grid .cct-token-category {
+    margin-bottom: var(--cct-spacing-component-xl);
+}
+
+.cct-preview-grid .cct-token-subcategory {
+    margin-bottom: var(--cct-spacing-component-lg);
+}
+
+.cct-preview-grid .cct-token-item {
+    display: flex;
+    align-items: center;
+    gap: var(--cct-spacing-component-sm);
+    padding: var(--cct-spacing-component-sm);
+    border: 1px solid var(--cct-colors-border-default);
+    border-radius: var(--cct-border-radius-md);
+    margin-bottom: var(--cct-spacing-component-xs);
+    transition: all var(--cct-transitions-duration-normal) var(--cct-transitions-easing-ease-in-out);
+}
+
+.cct-preview-grid .cct-token-item:hover {
+    border-color: var(--cct-colors-brand-primary);
+    background-color: var(--cct-colors-background-secondary);
+}
+
+.cct-token-name {
+    font-weight: var(--cct-typography-font-weight-medium);
+    color: var(--cct-colors-text-primary);
+    min-width: 120px;
+}
+
+.cct-token-value {
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-sm);
+    color: var(--cct-colors-text-secondary);
+    flex: 1;
+}
+
+.cct-token-description {
+    font-size: var(--cct-typography-font-size-sm);
+    color: var(--cct-colors-text-muted);
+    font-style: italic;
+}
+
+/* Preview específico para cores */
+.cct-token-preview[data-token*="colors"] {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--cct-border-radius-md);
+    border: 1px solid var(--cct-colors-border-default);
+    display: inline-block;
+    margin-right: var(--cct-spacing-component-sm);
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug para tokens */
+.cct-tokens-debug {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: var(--cct-spacing-component-sm);
+    border-radius: var(--cct-border-radius-md);
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-xs);
+    z-index: 10000;
+    max-width: 300px;
+    box-shadow: var(--cct-shadows-lg);
+}
+
+.cct-tokens-debug h4 {
+    margin: 0 0 var(--cct-spacing-component-xs) 0;
+    color: var(--cct-colors-blue-400);
+    font-size: var(--cct-typography-font-size-sm);
+}
+
+.cct-debug-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--cct-spacing-1);
+}
+
+.cct-debug-item:last-child {
+    margin-bottom: 0;
+}
+
+.cct-debug-label {
+    color: var(--cct-colors-gray-300);
+}
+
+.cct-debug-value {
+    color: var(--cct-colors-green-400);
+    font-weight: var(--cct-typography-font-weight-medium);
+}
+
+/* Highlight de elementos com tokens */
+.cct-token-highlight {
+    outline: 2px dashed var(--cct-colors-brand-primary) !important;
+    outline-offset: 2px !important;
+    position: relative;
+}
+
+.cct-token-highlight::before {
+    content: attr(data-cct-token);
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: var(--cct-colors-brand-primary);
+    color: var(--cct-colors-text-inverse);
+    padding: var(--cct-spacing-1) var(--cct-spacing-2);
+    border-radius: var(--cct-border-radius-sm);
+    font-family: var(--cct-typography-font-family-mono);
+    font-size: var(--cct-typography-font-size-xs);
+    z-index: 1000;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .cct-tokens-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cct-tokens-table {
+        font-size: var(--cct-typography-font-size-xs);
+    }
+    
+    .cct-tokens-table th,
+    .cct-tokens-table td {
+        padding: var(--cct-spacing-component-xs);
+    }
+    
+    .cct-tokens-debug {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: var(--cct-spacing-component-md);
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .cct-tokens-debug {
+        display: none !important;
+    }
+    
+    .cct-token-highlight {
+        outline: none !important;
+    }
+    
+    .cct-token-highlight::before {
+        display: none !important;
+    }
+    
+    .cct-tokens-css pre {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .cct-btn,
+    .cct-card,
+    .cct-input,
+    .cct-token-card,
+    .cct-token-item {
+        transition: none !important;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .cct-token-card {
+        border-width: 2px;
+    }
+    
+    .cct-btn {
+        border-width: 2px;
+    }
+    
+    .cct-input {
+        border-width: 2px;
+    }
+}
+
+/* Modo escuro do sistema */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cct-colors-text-primary: var(--cct-colors-gray-100);
+        --cct-colors-text-secondary: var(--cct-colors-gray-300);
+        --cct-colors-text-muted: var(--cct-colors-gray-500);
+        --cct-colors-text-inverse: var(--cct-colors-gray-900);
+        
+        --cct-colors-background-primary: var(--cct-colors-gray-900);
+        --cct-colors-background-secondary: var(--cct-colors-gray-800);
+        --cct-colors-background-tertiary: var(--cct-colors-gray-700);
+        
+        --cct-colors-border-default: var(--cct-colors-gray-700);
+        --cct-colors-border-muted: var(--cct-colors-gray-800);
+        --cct-colors-border-strong: var(--cct-colors-gray-600);
+    }
+}

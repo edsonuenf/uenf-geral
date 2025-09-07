@@ -39,6 +39,224 @@ define('CCT_DEFAULT_LAZY_LOADING', true);
 define('CCT_DEFAULT_FOOTER_COLUMNS', 3);
 define('CCT_DEFAULT_SOCIAL_ALIGNMENT', 'center');
 
+// Constantes de tipografia
+define('CCT_DEFAULT_HEADING_FONT', 'Roboto');
+define('CCT_DEFAULT_BODY_FONT', 'Open Sans');
+define('CCT_DEFAULT_HEADING_FONT_WEIGHT', '600');
+define('CCT_DEFAULT_BODY_FONT_WEIGHT', '400');
+define('CCT_DEFAULT_BASE_FONT_SIZE', '16');
+define('CCT_DEFAULT_LINE_HEIGHT', '1.6');
+define('CCT_DEFAULT_LETTER_SPACING', '0');
+define('CCT_DEFAULT_TEXT_MAX_WIDTH', '65');
+define('CCT_DEFAULT_TYPOGRAPHY_SCALE', 'major_second');
+define('CCT_DEFAULT_FONT_PAIRING', 'modern_sans');
+
+// Google Fonts API (opcional - pode ser configurada via customizer)
+// define('CCT_GOOGLE_FONTS_API_KEY', 'sua_chave_aqui');
+
+/**
+ * Registra padrões de blocos para Aparência → Design → Padrões
+ */
+function cct_registra_padroes_blocos() {
+    // Padrão: Seção de Chamada (Hero)
+    register_block_pattern(
+        'cct-tema/secao-chamada',
+        array(
+            'title'       => __('Seção de Chamada', 'cct'),
+            'description' => __('Uma seção hero com título, subtítulo e botão de ação', 'cct'),
+            'categories'  => array('call-to-action'),
+            'content'     => '
+                <!-- wp:cover {"overlayColor":"primaria","minHeight":400,"contentPosition":"center center"} -->
+                <div class="wp-block-cover" style="min-height:400px">
+                    <span aria-hidden="true" class="wp-block-cover__background has-primaria-background-color has-background"></span>
+                    <div class="wp-block-cover__inner-container">
+                        <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"gigante"} -->
+                        <h1 class="has-text-align-center has-gigante-font-size">Bem-vindo ao Nosso Site</h1>
+                        <!-- /wp:heading -->
+                        
+                        <!-- wp:paragraph {"align":"center","fontSize":"medio"} -->
+                        <p class="has-text-align-center has-medio-font-size">Descubra soluções inovadoras para o seu negócio</p>
+                        <!-- /wp:paragraph -->
+                        
+                        <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+                        <div class="wp-block-buttons">
+                            <!-- wp:button {"backgroundColor":"destaque","style":{"spacing":{"padding":{"top":"var:preset|spacing|normal","right":"var:preset|spacing|medio","bottom":"var:preset|spacing|normal","left":"var:preset|spacing|medio"}}}} -->
+                            <div class="wp-block-button">
+                                <a class="wp-block-button__link has-destaque-background-color has-background">Saiba Mais</a>
+                            </div>
+                            <!-- /wp:button -->
+                        </div>
+                        <!-- /wp:buttons -->
+                    </div>
+                </div>
+                <!-- /wp:cover -->'
+        )
+    );
+    
+    // Padrão: Seção de Serviços
+    register_block_pattern(
+        'cct-tema/secao-servicos',
+        array(
+            'title'       => __('Seção de Serviços', 'cct'),
+            'description' => __('Grid de 3 colunas com ícones e descrições de serviços', 'cct'),
+            'categories'  => array('featured'),
+            'content'     => '
+                <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|muito-grande","bottom":"var:preset|spacing|muito-grande"}}}} -->
+                <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--muito-grande);padding-bottom:var(--wp--preset--spacing--muito-grande)">
+                    <!-- wp:heading {"textAlign":"center","level":2,"fontSize":"muito-grande"} -->
+                    <h2 class="has-text-align-center has-muito-grande-font-size">Nossos Serviços</h2>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:columns {"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
+                    <div class="wp-block-columns" style="margin-top:var(--wp--preset--spacing--grande)">
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
+                            <h3 class="has-text-align-center has-grande-font-size">🚀 Desenvolvimento</h3>
+                            <!-- /wp:heading -->
+                            
+                            <!-- wp:paragraph {"align":"center"} -->
+                            <p class="has-text-align-center">Criamos soluções web modernas e responsivas para o seu negócio.</p>
+                            <!-- /wp:paragraph -->
+                        </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
+                            <h3 class="has-text-align-center has-grande-font-size">🎨 Design</h3>
+                            <!-- /wp:heading -->
+                            
+                            <!-- wp:paragraph {"align":"center"} -->
+                            <p class="has-text-align-center">Interfaces elegantes e funcionais que encantam seus usuários.</p>
+                            <!-- /wp:paragraph -->
+                        </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
+                            <h3 class="has-text-align-center has-grande-font-size">⚡ Performance</h3>
+                            <!-- /wp:heading -->
+                            
+                            <!-- wp:paragraph {"align":"center"} -->
+                            <p class="has-text-align-center">Otimização avançada para máxima velocidade e eficiência.</p>
+                            <!-- /wp:paragraph -->
+                        </div>
+                        <!-- /wp:column -->
+                    </div>
+                    <!-- /wp:columns -->
+                </div>
+                <!-- /wp:group -->'
+        )
+    );
+    
+    // Padrão: Seção de Depoimentos
+    register_block_pattern(
+        'cct-tema/secao-depoimentos',
+        array(
+            'title'       => __('Seção de Depoimentos', 'cct'),
+            'description' => __('Área de depoimentos com citações destacadas', 'cct'),
+            'categories'  => array('testimonials'),
+            'content'     => '
+                <!-- wp:group {"backgroundColor":"fundo-claro","style":{"spacing":{"padding":{"top":"var:preset|spacing|muito-grande","bottom":"var:preset|spacing|muito-grande","left":"var:preset|spacing|medio","right":"var:preset|spacing|medio"}}}} -->
+                <div class="wp-block-group has-fundo-claro-background-color has-background" style="padding-top:var(--wp--preset--spacing--muito-grande);padding-right:var(--wp--preset--spacing--medio);padding-bottom:var(--wp--preset--spacing--muito-grande);padding-left:var(--wp--preset--spacing--medio)">
+                    <!-- wp:heading {"textAlign":"center","level":2,"fontSize":"muito-grande"} -->
+                    <h2 class="has-text-align-center has-muito-grande-font-size">O que dizem nossos clientes</h2>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:columns {"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
+                    <div class="wp-block-columns" style="margin-top:var(--wp--preset--spacing--grande)">
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:quote {"style":{"border":{"left":{"color":"var:preset|color|primaria","width":"4px"}}}} -->
+                            <blockquote class="wp-block-quote" style="border-left-color:var(--wp--preset--color--primaria);border-left-width:4px">
+                                <p>"Excelente trabalho! A equipe superou todas as nossas expectativas."</p>
+                                <cite><strong>Maria Silva</strong><br>CEO, Empresa ABC</cite>
+                            </blockquote>
+                            <!-- /wp:quote -->
+                        </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:quote {"style":{"border":{"left":{"color":"var:preset|color|primaria","width":"4px"}}}} -->
+                            <blockquote class="wp-block-quote" style="border-left-color:var(--wp--preset--color--primaria);border-left-width:4px">
+                                <p>"Profissionais competentes e resultado final impecável."</p>
+                                <cite><strong>João Santos</strong><br>Diretor, Tech Solutions</cite>
+                            </blockquote>
+                            <!-- /wp:quote -->
+                        </div>
+                        <!-- /wp:column -->
+                    </div>
+                    <!-- /wp:columns -->
+                </div>
+                <!-- /wp:group -->'
+        )
+    );
+    
+    // Padrão: Seção de Contato
+    register_block_pattern(
+        'cct-tema/secao-contato',
+        array(
+            'title'       => __('Seção de Contato', 'cct'),
+            'description' => __('Área de contato com informações e call-to-action', 'cct'),
+            'categories'  => array('call-to-action'),
+            'content'     => '
+                <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|muito-grande","bottom":"var:preset|spacing|muito-grande"}}}} -->
+                <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--muito-grande);padding-bottom:var(--wp--preset--spacing--muito-grande)">
+                    <!-- wp:heading {"textAlign":"center","level":2,"fontSize":"muito-grande"} -->
+                    <h2 class="has-text-align-center has-muito-grande-font-size">Entre em Contato</h2>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:paragraph {"align":"center","fontSize":"medio"} -->
+                    <p class="has-text-align-center has-medio-font-size">Pronto para começar seu projeto? Vamos conversar!</p>
+                    <!-- /wp:paragraph -->
+                    
+                    <!-- wp:columns {"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
+                    <div class="wp-block-columns" style="margin-top:var(--wp--preset--spacing--grande)">
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
+                            <h3 class="has-text-align-center has-grande-font-size">📧 Email</h3>
+                            <!-- /wp:heading -->
+                            
+                            <!-- wp:paragraph {"align":"center"} -->
+                            <p class="has-text-align-center">contato@seusite.com</p>
+                            <!-- /wp:paragraph -->
+                        </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
+                            <h3 class="has-text-align-center has-grande-font-size">📱 Telefone</h3>
+                            <!-- /wp:heading -->
+                            
+                            <!-- wp:paragraph {"align":"center"} -->
+                            <p class="has-text-align-center">(11) 99999-9999</p>
+                            <!-- /wp:paragraph -->
+                        </div>
+                        <!-- /wp:column -->
+                    </div>
+                    <!-- /wp:columns -->
+                    
+                    <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
+                    <div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--grande)">
+                        <!-- wp:button {"backgroundColor":"primaria"} -->
+                        <div class="wp-block-button">
+                            <a class="wp-block-button__link has-primaria-background-color has-background">Solicitar Orçamento</a>
+                        </div>
+                        <!-- /wp:button -->
+                    </div>
+                    <!-- /wp:buttons -->
+                </div>
+                <!-- /wp:group -->'
+        )
+    );
+}
+add_action('init', 'cct_registra_padroes_blocos');
+
 // Cores com transparência
 define('CCT_PRIMARY_RGBA', 'rgba(29, 55, 113, 0.95)');
 define('CCT_WHITE_RGBA_08', 'rgba(255, 255, 255, 0.8)');
@@ -82,6 +300,206 @@ if (!defined('CCT_THEME_URI')) {
 
 // Carregar arquivos de suporte
 require_once CCT_THEME_DIR . '/inc/customizer.php';
+
+// Incluir Editor CSS Avançado
+require get_template_directory() . '/inc/design-editor/css-editor-loader.php';
+
+// Carregamento direto do Sistema de Tipografia (solução alternativa)
+add_action('customize_register', function($wp_customize) {
+    // Carregar arquivos do sistema de tipografia
+    $typography_files = array(
+        get_template_directory() . '/inc/customizer/class-customizer-base.php',
+        get_template_directory() . '/inc/customizer/class-typography-customizer.php',
+        get_template_directory() . '/inc/customizer/class-typography-controls.php'
+    );
+    
+    foreach ($typography_files as $file) {
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    }
+    
+    // Carregar arquivos do sistema de cores
+     $color_files = array(
+         get_template_directory() . '/inc/customizer/class-color-manager.php',
+         get_template_directory() . '/inc/customizer/class-color-controls.php'
+     );
+     
+     foreach ($color_files as $file) {
+         if (file_exists($file)) {
+             require_once $file;
+         }
+     }
+     
+     // Carregar arquivos do sistema de ícones
+      $icon_files = array(
+          get_template_directory() . '/inc/customizer/class-icon-manager.php',
+          get_template_directory() . '/inc/customizer/class-icon-controls.php'
+      );
+      
+      foreach ($icon_files as $file) {
+          if (file_exists($file)) {
+              require_once $file;
+          }
+      }
+      
+      // Carregar arquivos do sistema de layout
+       $layout_files = array(
+           get_template_directory() . '/inc/customizer/class-layout-manager.php',
+           get_template_directory() . '/inc/customizer/class-layout-controls.php'
+       );
+       
+       foreach ($layout_files as $file) {
+           if (file_exists($file)) {
+               require_once $file;
+           }
+       }
+       
+       // Carregar arquivos do sistema de animações
+        $animation_files = array(
+            get_template_directory() . '/inc/customizer/class-animation-manager.php',
+            get_template_directory() . '/inc/customizer/class-animation-controls.php'
+        );
+        
+        foreach ($animation_files as $file) {
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        }
+        
+        // Carregar arquivos do sistema de gradientes
+         $gradient_files = array(
+             get_template_directory() . '/inc/customizer/class-gradient-manager.php',
+             get_template_directory() . '/inc/customizer/class-gradient-controls.php'
+         );
+         
+         foreach ($gradient_files as $file) {
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         }
+         
+         // Carregar arquivos do sistema de sombras
+         $shadow_files = array(
+             get_template_directory() . '/inc/customizer/class-shadow-manager.php',
+             get_template_directory() . '/inc/customizer/class-shadow-controls.php'
+         );
+         
+         foreach ($shadow_files as $file) {
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         }
+         
+         // Carregar arquivos da biblioteca de padrões
+         $pattern_files = array(
+             get_template_directory() . '/inc/customizer/class-pattern-library-manager.php',
+             get_template_directory() . '/inc/customizer/class-pattern-library-controls.php'
+         );
+         
+         foreach ($pattern_files as $file) {
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         }
+         
+         // Carregar arquivos do modo escuro/claro
+         $dark_mode_files = array(
+             get_template_directory() . '/inc/customizer/class-dark-mode-manager.php'
+         );
+         
+         foreach ($dark_mode_files as $file) {
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         }
+         
+         // Carregar arquivos do sistema de breakpoints
+         $breakpoints_files = array(
+             get_template_directory() . '/inc/customizer/class-responsive-breakpoints-manager.php',
+             get_template_directory() . '/inc/customizer/class-breakpoint-manager-control.php'
+         );
+         
+         foreach ($breakpoints_files as $file) {
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         }
+         
+         // Carregar arquivos do sistema de design tokens
+         $design_tokens_files = array(
+             get_template_directory() . '/inc/customizer/class-design-tokens-manager.php',
+             get_template_directory() . '/inc/customizer/class-design-tokens-control.php'
+         );
+         
+         foreach ($design_tokens_files as $file) {
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         }
+    
+    // Instanciar módulo de tipografia se a classe existir
+    if (class_exists('CCT_Typography_Customizer')) {
+        new CCT_Typography_Customizer($wp_customize);
+    }
+    
+    // Instanciar módulo de cores se a classe existir
+     if (class_exists('CCT_Color_Manager')) {
+         new CCT_Color_Manager($wp_customize);
+     }
+     
+     // Instanciar módulo de ícones se a classe existir
+      if (class_exists('CCT_Icon_Manager')) {
+          new CCT_Icon_Manager($wp_customize);
+      }
+      
+      // Instanciar módulo de layout se a classe existir
+       if (class_exists('CCT_Layout_Manager')) {
+           new CCT_Layout_Manager($wp_customize);
+       }
+       
+       // Instanciar módulo de animações se a classe existir
+        if (class_exists('CCT_Animation_Manager')) {
+            $animation_manager = new CCT_Animation_Manager();
+            $animation_manager->register($wp_customize);
+        }
+        
+        // Instanciar módulo de gradientes se a classe existir
+         if (class_exists('CCT_Gradient_Manager')) {
+             $gradient_manager = new CCT_Gradient_Manager();
+             $gradient_manager->register($wp_customize);
+         }
+         
+         // Instanciar módulo de sombras se a classe existir
+         if (class_exists('CCT_Shadow_Manager')) {
+             $shadow_manager = new CCT_Shadow_Manager();
+             $shadow_manager->register($wp_customize);
+         }
+         
+         // Instanciar módulo de biblioteca de padrões se a classe existir
+         if (class_exists('CCT_Pattern_Library_Manager')) {
+             $pattern_manager = new CCT_Pattern_Library_Manager();
+             $pattern_manager->register($wp_customize);
+         }
+         
+         // Instanciar módulo de modo escuro se a classe existir
+         if (class_exists('CCT_Dark_Mode_Manager')) {
+             $dark_mode_manager = new CCT_Dark_Mode_Manager();
+             $dark_mode_manager->register($wp_customize);
+         }
+         
+         // Instanciar módulo de breakpoints se a classe existir
+         if (class_exists('CCT_Responsive_Breakpoints_Manager')) {
+             $breakpoints_manager = new CCT_Responsive_Breakpoints_Manager();
+             $breakpoints_manager->register($wp_customize);
+         }
+         
+         // Instanciar módulo de design tokens se a classe existir
+         if (class_exists('CCT_Design_Tokens_Manager')) {
+             $design_tokens_manager = new CCT_Design_Tokens_Manager();
+             $design_tokens_manager->register($wp_customize);
+         }
+}, 15); // Prioridade 15 para carregar após outros módulos
 require_once CCT_THEME_DIR . '/inc/template-tags.php';
 require_once CCT_THEME_DIR . '/inc/template-functions.php';
 require_once CCT_THEME_DIR . '/inc/optimization.php';
