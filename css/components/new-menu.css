@@ -140,7 +140,7 @@
 .new-menu > li.menu-item-hover > a,
 .offcanvas .new-menu > li > a:hover,
 #menuLateral .new-menu > li > a:hover {
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   color: rgba(255, 255, 255, 0.8) !important;
   transform: translateX(4px) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
@@ -148,12 +148,14 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Sobrescreve estilos conflitantes do style.min.css */
+/* Sobrescreve estilos conflitantes do style.min.css e variáveis CSS */
 .offcanvas-body .new-menu > li > a:hover,
 .offcanvas .new-menu > li > a:hover,
 #menuLateral .new-menu > li > a:hover,
-body .new-menu > li > a:hover {
-  background: rgba(255, 255, 255, 0.8) !important;
+body .new-menu > li > a:hover,
+.new-menu > li.menu-item > a:hover,
+.menu-item > a:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
@@ -197,7 +199,7 @@ body .new-menu > li > a:hover {
   height: auto;
   border-radius: 0;
   background: transparent;
-  font-size: 0.8em;
+  font-size: 0.7em;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
   border: none;
@@ -266,6 +268,49 @@ body .new-menu > li > a:hover {
     opacity: 0;
     transform: translateY(-10px);
   }
+
+/* Força a cor branca com transparência sobrescrevendo variáveis CSS */
+body .offcanvas .new-menu .menu-item a:hover,
+body .offcanvas-body .new-menu .menu-item a:hover,
+body #menuLateral .new-menu .menu-item a:hover,
+body .offcanvas .new-menu > li > a:hover,
+body .offcanvas-body .new-menu > li > a:hover,
+body #menuLateral .new-menu > li > a:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Correções para posicionamento e espaçamento do offcanvas */
+.offcanvas.offcanvas-start {
+  left: 0 !important;
+  right: auto !important;
+  transform: translateX(-100%) !important;
+}
+
+.offcanvas.offcanvas-start.show {
+  transform: translateX(0) !important;
+}
+
+.offcanvas-header {
+  padding: 1rem !important;
+  margin: 0 !important;
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.offcanvas-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+#menuLateral {
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+  border: none !important;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Correções de espaçamento movidas para spacing-fixes.css para melhor ordem de carregamento */
   to {
     opacity: 1;
     transform: translateY(0);

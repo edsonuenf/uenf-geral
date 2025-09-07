@@ -1,11 +1,11 @@
-# Design System CCT - Tema WordPress Avançado
+# 🎓 Tema UENF Geral - WordPress Theme
 
-> **Um sistema completo de design para WordPress com 7 módulos profissionais**
-
-[![Versão](https://img.shields.io/badge/versão-1.0.0-blue.svg)](https://github.com/cct/design-system)
-[![WordPress](https://img.shields.io/badge/WordPress-5.0+-green.svg)](https://wordpress.org/)
+[![WordPress](https://img.shields.io/badge/WordPress-6.0+-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4+-purple.svg)](https://php.net/)
-[![Licença](https://img.shields.io/badge/licença-GPL%20v2+-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![License](https://img.shields.io/badge/License-GPL%20v2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![Version](https://img.shields.io/badge/Version-2.0.0-orange.svg)](https://github.com/edsonuenf/uenf-geral/releases)
+
+> **Tema WordPress avançado para a Universidade Estadual do Norte Fluminense (UENF) com Design System CCT integrado.**
 
 ## 🚀 Visão Geral
 

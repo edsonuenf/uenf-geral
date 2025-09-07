@@ -758,8 +758,10 @@ function cct_scripts() {
     wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), null);
     wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), '6.4.2');
 
-    // 2. Frameworks e bibliotecas
-    wp_enqueue_style('cct-bootstrap', CCT_THEME_URI . '/assets/bootstrap/bootstrap.min.css', array(), $theme_version);
+    // 2. Frameworks e bibliotecas (Bootstrap CDN completo para garantir funcionalidade do offcanvas)
+    wp_enqueue_style('cct-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', array(), '5.3.2');
+    wp_style_add_data('cct-bootstrap', 'integrity', 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN');
+    wp_style_add_data('cct-bootstrap', 'crossorigin', 'anonymous');
 
     // 2.1. Variáveis CSS (deve ser carregado antes do style.min.css)
     $variables_path = get_template_directory() . '/css/variables.css';
@@ -778,7 +780,11 @@ function cct_scripts() {
         $style_version // Usa timestamp do arquivo para versionamento
     );
     
-    // 3.1 Estilos de componentes (carregados separadamente para garantir que sejam sobrescritos)
+    // 3.1 Estilos adicionais (removidos do header.php para melhor performance)
+    wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);
+    wp_enqueue_style('cct-custom-fixes', CCT_THEME_URI . '/css/custom-fixes.css', array('cct-styles-additional'), $style_version);
+    
+    // 3.2 Estilos de componentes (carregados separadamente para garantir que sejam sobrescritos)
     $components = array(
         'new-menu' => '/css/components/new-menu.css',
         'menu-enhancements' => '/css/components/menu-enhancements.css',
@@ -831,7 +837,17 @@ function cct_scripts() {
         }
     }
     
-    // 3.2 Removido: não enfileirar custom-fixes.css; todas as alterações devem vir do SCSS compilado
+    // 3.2 Correções de espaçamento (carregado por último para garantir precedência)
+    $spacing_fixes_path = get_template_directory() . '/css/spacing-fixes.css';
+    if (file_exists($spacing_fixes_path)) {
+        $spacing_fixes_version = filemtime($spacing_fixes_path);
+        wp_enqueue_style(
+            'cct-spacing-fixes',
+            CCT_THEME_URI . '/css/spacing-fixes.css',
+            array('cct-style', 'cct-new-menu-style'), // Depende de todos os outros estilos
+            $spacing_fixes_version
+        );
+    }
     
     // 4. Scripts (carregados no final do documento para melhor performance)
     $js_files = array(
@@ -852,10 +868,17 @@ function cct_scripts() {
             'deps' => array('jquery', 'cct-event-manager'),
             'force' => true // Forçar carregamento em todas as páginas
         ),
+        // Bootstrap JS (removido do header.php para melhor performance)
+        'cct-bootstrap-js' => array(
+            'path' => false, // Usar CDN para Bootstrap JS
+            'deps' => array('jquery'),
+            'force' => true,
+            'cdn' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
+        ),
         // Script principal (carregado por último)
         'cct-main' => array(
             'path' => '/js/main.js', 
-            'deps' => array('jquery', 'cct-event-manager')
+            'deps' => array('jquery', 'cct-event-manager', 'cct-bootstrap-js')
         ),
         // Outros scripts (carregados condicionalmente)
         'cct-back-to-top' => array(
@@ -874,17 +897,28 @@ function cct_scripts() {
             continue; // Pula scripts que não devem ser carregados
         }
         
-        $file_path = get_template_directory() . $file['path'];
-        $file_version = file_exists($file_path) ? filemtime($file_path) : $theme_version;
-        
-        // Registrar o script
-        wp_register_script(
-            $handle,
-            get_template_directory_uri() . $file['path'],
-            $file['deps'],
-            $file_version,
-            true
-        );
+        // Lidar com scripts CDN
+        if (isset($file['cdn']) && $file['cdn']) {
+            wp_register_script(
+                $handle,
+                $file['cdn'],
+                $file['deps'],
+                null, // Sem versão para CDN
+                true
+            );
+        } else {
+            $file_path = get_template_directory() . $file['path'];
+            $file_version = file_exists($file_path) ? filemtime($file_path) : $theme_version;
+            
+            // Registrar o script
+            wp_register_script(
+                $handle,
+                get_template_directory_uri() . $file['path'],
+                $file['deps'],
+                $file_version,
+                true
+            );
+        }
         
         // Adicionar dados de localização se necessário
         if ($handle === 'cct-event-manager') {

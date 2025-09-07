@@ -10,11 +10,7 @@
     <?php if ( function_exists( 'wp_head' ) ) : ?>
     <?php wp_head(); ?> <!-- Hook do WordPress para incluir scripts e estilos no cabeçalho -->
     <?php endif; ?>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="<?php echo esc_url(get_template_directory_uri()); ?>/css/styles.css">
-    <link rel="stylesheet" href="<?php echo esc_url(get_template_directory_uri()); ?>/css/custom-fixes.css">
+    <!-- Estilos carregados via wp_enqueue_style no functions.php para melhor performance -->
 
 
 </head>
@@ -112,8 +108,7 @@ if ( function_exists( 'wp_body_open' ) ) {
     
     </div><!-- #content -->
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!-- JavaScript carregado via wp_enqueue_script no functions.php para melhor performance -->
 
 <script>
 (function() {
