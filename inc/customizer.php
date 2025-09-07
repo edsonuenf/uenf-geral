@@ -1461,11 +1461,11 @@ add_action('wp_head', 'theme_typography_customizer_css');
         'label' => __('Redefinir Todas as Configurações', 'cct'),
         'section' => 'cct_reset_section',
         'type' => 'button',
-        'description' => __('⚠️ ATENÇÃO: Esta ação irá restaurar todas as configurações do customizer para os valores padrão. Esta ação não pode ser desfeita.', 'cct'),
+        'description' => __('ATENÇÃO: Esta ação irá restaurar todas as configurações do customizer para os valores padrão. Esta ação não pode ser desfeita.', 'cct'),
         'input_attrs' => array(
             'value' => __('Redefinir Agora', 'cct'),
             'class' => 'button button-secondary cct-reset-button',
-            'onclick' => 'cctResetCustomizer()',
+            'data-action' => 'reset-customizer',
         ),
     ));
 }
@@ -2176,36 +2176,43 @@ function cct_customizer_reset_scripts() {
     }
     
     wp_add_inline_script('customize-controls', '
-        function cctResetCustomizer() {
-            if (!confirm("⚠️ ATENÇÃO: Esta ação irá redefinir TODAS as configurações do customizer para os valores padrão.\n\nEsta ação NÃO PODE ser desfeita.\n\nDeseja continuar?")) {
-                return;
-            }
-            
-            // Mostrar loading
-            var button = document.querySelector(".cct-reset-button");
-            var originalText = button.value;
-            button.value = "Redefinindo...";
-            button.disabled = true;
-            
-            // Fazer requisição AJAX
-            jQuery.post(ajaxurl, {
-                action: "cct_reset_customizer",
-                nonce: "' . wp_create_nonce('cct_reset_customizer') . '"
-            }, function(response) {
-                if (response.success) {
-                    alert("✅ " + response.data.message);
-                    // Recarregar o customizer
-                    window.location.reload();
-                } else {
-                    alert("❌ Erro ao redefinir configurações: " + response.data);
+        jQuery(document).ready(function($) {
+            // Event delegation para botão de reset
+            $(document).on("click", "[data-action=reset-customizer]", function(e) {
+                e.preventDefault();
+                
+                if (!confirm("ATENÇÃO: Esta ação irá redefinir TODAS as configurações do customizer para os valores padrão.\n\nEsta ação NÃO PODE ser desfeita.\n\nDeseja continuar?")) {
+                    return;
                 }
-            }).fail(function() {
-                alert("❌ Erro de conexão. Tente novamente.");
-            }).always(function() {
-                button.value = originalText;
-                button.disabled = false;
-            });
-        }
+                
+                var button = $(this);
+                var originalText = button.val();
+                button.val("Redefinindo...").prop("disabled", true);
+                
+                // Verificar se jQuery e ajaxurl existem
+                if (typeof ajaxurl === "undefined") {
+                    alert("Erro: AJAX não disponível");
+                    button.val(originalText).prop("disabled", false);
+                    return;
+                }
+                
+                $.post(ajaxurl, {
+                    action: "cct_reset_customizer",
+                    nonce: "' . wp_create_nonce('cct_reset_customizer') . '"
+                }, function(response) {
+                    if (response.success) {
+                        alert("Configurações redefinidas com sucesso!");
+                        window.location.reload();
+                    } else {
+                         alert("Erro ao redefinir configurações: " + (response.data || "Erro desconhecido"));
+                     }
+                 }).fail(function() {
+                     alert("Erro de conexão. Tente novamente.");
+                 }).always(function() {
+                     button.val(originalText).prop("disabled", false);
+                 });
+             });
+         });
     ');
 }
 add_action('customize_controls_enqueue_scripts', 'cct_customizer_reset_scripts');

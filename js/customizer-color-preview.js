@@ -388,9 +388,16 @@
     };
     
     // Inicializa quando o preview estiver pronto
-    wp.customize.preview.bind('ready', function() {
-        CCTColorPreview.init();
-    });
+    if (typeof wp.customize !== 'undefined' && wp.customize.preview) {
+        wp.customize.preview.bind('ready', function() {
+            CCTColorPreview.init();
+        });
+    } else {
+        // Fallback se não estiver no preview do customizer
+        $(document).ready(function() {
+            CCTColorPreview.init();
+        });
+    }
     
     // Adiciona estilos base para o preview
     $('<style>').text(`

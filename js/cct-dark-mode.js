@@ -742,7 +742,7 @@
 /**
  * Extensões para integração com outros módulos
  */
-(function() {
+(function($) {
     'use strict';
     
     // Integração com sistema de animações
@@ -751,7 +751,7 @@
             // Pausar animações durante transição
             if (data.isUserTriggered) {
                 CCTAnimations.pauseAnimations();
-                setTimeout(() => {
+                setTimeout(function() {
                     CCTAnimations.resumeAnimations();
                 }, 300);
             }
@@ -769,9 +769,12 @@
     
     // Integração com sistema de gradientes
     $(document).on('cct:darkModeChanged', function(e, data) {
-        if (typeof CCTGradients !== 'undefined') {
+        if (typeof CCTGradients !== 'undefined' && typeof CCTGradients.updateGradientsForTheme === 'function') {
             // Atualizar gradientes para o novo modo
             CCTGradients.updateGradientsForTheme(data.currentMode);
+        } else if (typeof CCTGradients !== 'undefined' && typeof CCTGradients.adjustGradientsForDarkMode === 'function') {
+            // Fallback para método alternativo
+            CCTGradients.adjustGradientsForDarkMode(data.currentMode === 'dark');
         }
     });
     
@@ -783,4 +786,4 @@
         }
     });
     
-})();
+})(jQuery);

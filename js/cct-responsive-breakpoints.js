@@ -744,16 +744,91 @@
                 cctBreakpoints.breakpoints || {}
             );
         }
+        // Sistema de cache para performance
+        const breakpointCache = new Map();
+        
+        // Função para cache de breakpoints
+        function cacheBreakpoint(key, value) {
+            breakpointCache.set(key, {
+                value: value,
+                timestamp: Date.now()
+            });
+        }
+        
+        // Função para recuperar do cache
+        function getCachedBreakpoint(key, maxAge = 5000) {
+            const cached = breakpointCache.get(key);
+            if (cached && (Date.now() - cached.timestamp) < maxAge) {
+                return cached.value;
+            }
+            return null;
+        }
+        
+        // Função para determinar breakpoint atual
+     function getCurrentBreakpoint(width) {
+         if (width <= 768) {
+             return 'mobile';
+         } else if (width <= 1024) {
+             return 'tablet';
+         } else if (width <= 1200) {
+             return 'desktop';
+         } else {
+             return 'wide';
+         }
+     }
+
+     // Função para determinar tipo de dispositivo
+     function getDeviceType(breakpoint) {
+         switch(breakpoint) {
+             case 'mobile':
+                 return 'mobile';
+             case 'tablet':
+                 return 'tablet';
+             case 'desktop':
+             case 'wide':
+                 return 'desktop';
+             default:
+                 return 'desktop';
+         }
+     }
+
+    // Otimização de performance para resize
+    let resizeObserver;
+    if (window.ResizeObserver) {
+        resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (entry.target === document.body) {
+                    const width = entry.contentRect.width;
+                    const cachedBreakpoint = getCachedBreakpoint('current');
+                    const currentBreakpoint = getCurrentBreakpoint(width);
+                        
+                        if (cachedBreakpoint !== currentBreakpoint) {
+                            cacheBreakpoint('current', currentBreakpoint);
+                            $(document).trigger('cct:breakpointChanged', {
+                                width: width,
+                                breakpoint: currentBreakpoint,
+                                deviceType: getDeviceType(currentBreakpoint)
+                            });
+                        }
+                    }
+                }
+            });
+            
+            resizeObserver.observe(document.body);
+        }
+        
+        // Cleanup ao sair da página
+        $(window).on('beforeunload', function() {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+            breakpointCache.clear();
+        });
     });
     
-})(jQuery);
-
-/**
- * Extensões para integração com outros módulos
- */
-(function() {
-    'use strict';
-    
+    /**
+     * Extensões para integração com outros módulos
+     */
     // Integração com sistema de modo escuro
     $(document).on('cct:breakpointChanged', function(e, data) {
         if (typeof CCTDarkMode !== 'undefined') {
@@ -771,10 +846,12 @@
     $(document).on('cct:breakpointChanged', function(e, data) {
         if (typeof CCTAnimations !== 'undefined') {
             // Ajustar animações baseado no dispositivo
-            if (data.deviceType === 'mobile') {
-                CCTAnimations.setPerformanceMode('fast');
-            } else {
-                CCTAnimations.setPerformanceMode('quality');
+            if (typeof CCTAnimations !== 'undefined' && typeof CCTAnimations.setPerformanceMode === 'function') {
+                if (data.deviceType === 'mobile') {
+                    CCTAnimations.setPerformanceMode('fast');
+                } else {
+                    CCTAnimations.setPerformanceMode('quality');
+                }
             }
         }
     });
@@ -809,7 +886,7 @@
         });
     });
     
-})();
+})(jQuery);
 
 /**
  * CSS para debug e elementos dinâmicos

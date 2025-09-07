@@ -827,9 +827,6 @@
 /**
  * Extensões para integração com outros módulos
  */
-(function() {
-    'use strict';
-    
     // Integração com sistema de cores
     $(document).on('cct:tokenChanged', function(e, data) {
         if (data.path.startsWith('colors.') && typeof CCTColorManager !== 'undefined') {
@@ -861,11 +858,11 @@
             CCTLayout.updateFromTokens();
         }
     });
-    
-})();
+
+})(jQuery);
 
 /**
- * Utilitários globais para design tokens
+ * Utilitarios globais para tokens
  */
 window.CCTTokenUtils = {
     
