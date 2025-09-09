@@ -96,7 +96,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 16px 8px 16px 24px;
   text-decoration: none !important;
   color: white !important;
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -190,7 +190,7 @@ body .new-menu > li > a:hover,
 /* Ícone de toggle com seta simples */
 .new-menu .submenu-toggle {
   margin-left: auto;
-  margin-right: 12px;
+  margin-right: -12px;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;

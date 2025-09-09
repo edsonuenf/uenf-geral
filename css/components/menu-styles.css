@@ -9,6 +9,7 @@
   scrollbar-color: rgba(29, 55, 113, 0.4) transparent;
   overflow-y: auto;
   padding-right: 0px;
+  padding-left: 0px;
 }
 
 /* Remove espaçamentos entre itens de menu */
