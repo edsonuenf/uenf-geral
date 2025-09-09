@@ -468,21 +468,22 @@ class CCT_Responsive_Breakpoints_Manager {
             'type' => 'checkbox',
         ));
         
-        // Controle personalizado para gerenciamento de breakpoints
-        require_once get_template_directory() . '/inc/customizer/class-breakpoint-manager-control.php';
-        
-        $this->wp_customize->add_control(new CCT_Breakpoint_Manager_Control(
-            $this->wp_customize,
+        // Controle personalizado para gerenciamento de breakpoints (usando controle padrão temporariamente)
+        $this->wp_customize->add_control(
             $this->prefix . 'manager',
             array(
                 'label' => __('Gerenciador de Breakpoints', 'cct'),
                 'description' => __('Adicione, edite e organize seus breakpoints personalizados.', 'cct'),
                 'section' => $this->prefix . 'management',
                 'settings' => $this->prefix . 'custom_breakpoints',
+                'type' => 'select',
+                'choices' => array(
+                    'manager' => __('Gerenciador será implementado em versão futura', 'cct')
+                ),
                 'breakpoints' => $this->get_active_breakpoints(),
                 'templates' => $this->breakpoint_templates
             )
-        ));
+        );
         
         // Controles por breakpoint
         foreach ($this->get_active_breakpoints() as $bp_key => $breakpoint) {

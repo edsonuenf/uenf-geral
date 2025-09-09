@@ -65,6 +65,7 @@ class CCT_Customizer_Loader {
      * Inicializa o carregador
      */
     private function init() {
+        error_log('CCT Customizer Loader inicializado: ' . date('Y-m-d H:i:s'));
         add_action('customize_register', array($this, 'load_modules'));
         add_action('wp_head', array($this, 'output_css'), 999);
     }
@@ -75,60 +76,129 @@ class CCT_Customizer_Loader {
      * @param WP_Customize_Manager $wp_customize
      */
     public function load_modules($wp_customize) {
+        error_log('CCT: Iniciando carregamento de módulos do customizer');
+        
         // Carregar classe base primeiro
         $this->load_file('class-customizer-base.php');
         
-        // Lista de módulos a serem carregados
-        $module_files = array(
+        // Verificar se a classe base foi carregada corretamente
+        if (!class_exists('CCT_Customizer_Base')) {
+            error_log('CCT: Classe base CCT_Customizer_Base não encontrada. Alguns módulos podem não funcionar corretamente.');
+        } else {
+            error_log('CCT: Classe base CCT_Customizer_Base carregada com sucesso');
+        }
+        
+        // Verificar gerenciador de extensões
+        $extension_manager = function_exists('cct_extension_manager') ? cct_extension_manager() : null;
+        
+        // Lista de módulos básicos (sempre carregados)
+        $basic_modules = array(
             'class-menu-customizer.php',
-            'class-typography-customizer.php',
-            'class-typography-controls.php',
-            
-            // Módulos de cores
-        'class-color-manager.php',
-        'class-color-controls.php',
-        
-        // Módulos de ícones
-        'class-icon-manager.php',
-        'class-icon-controls.php',
-        
-        // Módulos de layout
-        'class-layout-manager.php',
-        'class-layout-controls.php',
-        
-        // Módulos de animações
-        'class-animation-manager.php',
-        'class-animation-controls.php',
-        
-        // Módulos de gradientes
-        'class-gradient-manager.php',
-        'class-gradient-controls.php',
-        
-        // Módulos de sombras
-        'class-shadow-manager.php',
-        'class-shadow-controls.php',
-        
-        // Módulos de biblioteca de padrões
-        'class-pattern-library-manager.php',
-        'class-pattern-library-controls.php',
-        
-        // Módulos de modo escuro/claro
-        'class-dark-mode-manager.php',
-        
-        // Módulos de responsive breakpoints
-        'class-responsive-breakpoints-manager.php',
-        'class-breakpoint-manager-control.php',
-        
-        // Módulos de design tokens
-        'class-design-tokens-manager.php',
-        'class-design-tokens-control.php',
-            // Adicione outros módulos aqui conforme necessário
         );
         
-        // Carregar cada módulo
-        foreach ($module_files as $file) {
-            $this->load_module($file, $wp_customize);
+        // Lista de módulos condicionais (baseados em extensões)
+        $conditional_modules = array(
+            // Tipografia
+            'typography' => array(
+                'class-typography-customizer.php',
+                'class-typography-controls.php',
+            ),
+            // Cores
+            'colors' => array(
+                'class-color-manager.php',
+                'class-color-controls.php',
+            ),
+            // Ícones
+            'icons' => array(
+                'class-icon-manager.php',
+                'class-icon-controls.php',
+            ),
+            // Layout
+            'layout' => array(
+                'class-layout-manager.php',
+                'class-layout-controls.php',
+            ),
+            // Animações
+            'animations' => array(
+                'class-animation-manager.php',
+                'class-animation-controls.php',
+            ),
+            // Gradientes
+            'gradients' => array(
+                'class-gradient-manager.php',
+                'class-gradient-controls.php',
+            ),
+            // Sombras
+            'shadows' => array(
+                'class-shadow-manager.php',
+                'class-shadow-controls.php',
+            ),
+            // Biblioteca de padrões
+            'patterns' => array(
+                'class-pattern-library-manager.php',
+                'class-pattern-library-controls.php',
+            ),
+            // Modo escuro
+            'dark_mode' => array(
+                'class-dark-mode-manager.php',
+            ),
+            // Breakpoints responsivos
+            'responsive' => array(
+                'class-responsive-breakpoints-manager.php',
+                'class-breakpoint-manager-control.php',
+            ),
+        );
+        
+        // Carregar módulos básicos
+        $module_files = $basic_modules;
+        
+        // Carregar módulos condicionais baseados em extensões ativas
+        if ($extension_manager) {
+            foreach ($conditional_modules as $extension_id => $files) {
+                if ($extension_manager->is_extension_active($extension_id)) {
+                    $module_files = array_merge($module_files, $files);
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("CCT Loader: Carregando módulos da extensão '{$extension_id}'");
+                    }
+                } else {
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("CCT Loader: Extensão '{$extension_id}' desativada - módulos não carregados");
+                    }
+                }
+            }
+        } else {
+            // Se não há gerenciador, carregar todos (fallback)
+            foreach ($conditional_modules as $files) {
+                $module_files = array_merge($module_files, $files);
+            }
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT Loader: Gerenciador de extensões não disponível - carregando todos os módulos');
+            }
         }
+        
+        // Adicionar módulos sempre carregados
+         $always_load = array(
+             // Módulos de design tokens
+             'class-design-tokens-manager.php',
+             'class-design-tokens-control.php',
+             // Adicione outros módulos aqui conforme necessário
+         );
+         
+         // Mesclar módulos sempre carregados
+         $module_files = array_merge($module_files, $always_load);
+         
+         if (defined('WP_DEBUG') && WP_DEBUG) {
+             error_log('CCT Loader: Total de módulos a carregar: ' . count($module_files));
+         }
+        
+        // Carregar cada módulo
+        error_log('CCT: Carregando ' . count($module_files) . ' módulos');
+        foreach ($module_files as $file) {
+            error_log('CCT: Tentando carregar módulo: ' . $file);
+            $result = $this->load_module($file, $wp_customize);
+            error_log('CCT: Módulo ' . $file . ' - Resultado: ' . ($result ? 'SUCESSO' : 'FALHA'));
+        }
+        error_log('CCT: Carregamento de módulos concluído. Total de módulos carregados: ' . count($this->modules));
         
         // Manter funcionalidades existentes do customizer original
         $this->load_legacy_customizer($wp_customize);
@@ -154,15 +224,44 @@ class CCT_Customizer_Loader {
      * @param WP_Customize_Manager $wp_customize
      */
     private function load_module($filename, $wp_customize) {
+        // Verificar se o arquivo existe e é legível
+        $file_path = $this->modules_dir . $filename;
+        if (!file_exists($file_path) || !is_readable($file_path)) {
+            error_log("CCT: Arquivo não encontrado ou não legível: {$file_path}");
+            return false;
+        }
+        
         $this->load_file($filename);
         
         // Determinar nome da classe baseado no nome do arquivo
         $class_name = $this->get_class_name_from_file($filename);
         
         if (class_exists($class_name)) {
-            $module_instance = new $class_name($wp_customize);
-            $this->modules[$class_name] = $module_instance;
+            error_log("CCT: Classe {$class_name} encontrada, tentando instanciar");
+            try {
+                // Usar padrão moderno com register() se disponível
+                if (method_exists($class_name, 'register')) {
+                    error_log("CCT: Usando padrão moderno para {$class_name}");
+                    $module_instance = new $class_name();
+                    $module_instance->register($wp_customize);
+                    error_log("CCT: Módulo {$class_name} registrado com sucesso");
+                } else {
+                    error_log("CCT: Usando padrão antigo para {$class_name}");
+                    // Fallback para padrão antigo
+                    $module_instance = new $class_name($wp_customize);
+                }
+                $this->modules[$class_name] = $module_instance;
+                error_log("CCT: Módulo {$class_name} adicionado à lista de módulos");
+            } catch (Exception $e) {
+                error_log("CCT: Erro ao instanciar módulo {$class_name}: " . $e->getMessage());
+                return false;
+            }
+        } else {
+            error_log("CCT: Classe {$class_name} não encontrada no arquivo {$filename}");
+            return false;
         }
+        
+        return true;
     }
     
     /**

@@ -22,7 +22,21 @@ if (!defined('ABSPATH')) {
 /**
  * Classe para gerenciamento avançado de cores
  */
-class CCT_Color_Manager extends CCT_Customizer_Base {
+class CCT_Color_Manager {
+    
+    /**
+     * Instância do WP_Customize_Manager
+     * 
+     * @var WP_Customize_Manager
+     */
+    private $wp_customize;
+    
+    /**
+     * Prefixo para configurações
+     * 
+     * @var string
+     */
+    private $prefix = 'cct_colors_';
     
     /**
      * Paletas de cores predefinidas
@@ -44,9 +58,38 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
      * @param WP_Customize_Manager $wp_customize
      */
     public function __construct($wp_customize) {
-        parent::__construct($wp_customize);
+        $this->wp_customize = $wp_customize;
         $this->init_color_palettes();
         $this->init_accessibility_rules();
+    }
+    
+    /**
+     * Registra o módulo no customizer
+     * 
+     * @param WP_Customize_Manager $wp_customize
+     */
+    public function register($wp_customize) {
+        $this->wp_customize = $wp_customize;
+        $this->init_hooks();
+        $this->register_customizer();
+    }
+    
+    /**
+     * Inicializa os hooks
+     */
+    private function init_hooks() {
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('wp_head', array($this, 'output_custom_css'));
+        add_action('wp_footer', array($this, 'output_custom_js'));
+    }
+    
+    /**
+     * Registra configurações no Customizer
+     */
+    public function register_customizer() {
+        $this->add_color_sections();
+        $this->add_color_settings();
+        $this->add_color_controls();
     }
     
     /**
@@ -179,39 +222,56 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
      * Adiciona seções de cores
      */
     private function add_color_sections() {
-        // Painel principal de cores
-        $this->wp_customize->add_panel('cct_color_panel', array(
-            'title' => __('Gerenciador de Cores', 'cct'),
+        // Verificar se a extensão está ativa antes de criar o painel
+        $extension_manager = cct_extension_manager();
+        if (!$extension_manager || !$extension_manager->is_extension_active('colors')) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT Colors: Extensão desativada - painel não criado');
+            }
+            return; // Sair sem criar o painel
+        }
+        
+        // Criar painel de cores (só se extensão estiver ativa)
+        $this->wp_customize->add_panel($this->prefix . 'panel', array(
+            'title' => __('🎨 Gerenciador de Cores', 'cct'),
             'description' => __('Sistema avançado de gerenciamento de cores com paletas e verificador de acessibilidade.', 'cct'),
-            'priority' => 170,
+            'priority' => 130,
+            'capability' => 'edit_theme_options',
         ));
         
+        // Debug log para verificar criação
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT Colors: Painel de cores criado (extensão ativa)');
+        }
+        
+        // Continuar com a criação das seções
+        
         // Seção de paletas predefinidas
-        $this->add_section('color_palettes', array(
+        $this->wp_customize->add_section($this->prefix . 'color_palettes', array(
             'title' => __('Paletas Predefinidas', 'cct'),
             'description' => __('Escolha entre paletas profissionais ou crie a sua própria.', 'cct'),
-            'panel' => 'cct_color_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 10,
         ));
         
         // Seção de cores personalizadas
-        $this->add_section('custom_colors', array(
+        $this->wp_customize->add_section($this->prefix . 'custom_colors', array(
             'title' => __('Cores Personalizadas', 'cct'),
             'description' => __('Configure cores individuais para elementos específicos.', 'cct'),
-            'panel' => 'cct_color_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 20,
         ));
         
         // Seção de gerador de cores
-        $this->add_section('color_generator', array(
+        $this->wp_customize->add_section($this->prefix . 'color_generator', array(
             'title' => __('Gerador de Cores', 'cct'),
             'description' => __('Gere paletas harmoniosas automaticamente.', 'cct'),
-            'panel' => 'cct_color_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 30,
         ));
         
         // Seção de acessibilidade
-        $this->add_section('color_accessibility', array(
+        $this->wp_customize->add_section('color_accessibility', array(
             'title' => __('Verificador de Acessibilidade', 'cct'),
             'description' => __('Analise o contraste e conformidade WCAG das suas cores.', 'cct'),
             'panel' => 'cct_color_panel',
@@ -224,7 +284,7 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
      */
     private function add_color_settings() {
         // Paleta selecionada
-        $this->add_setting('selected_palette', array(
+        $this->wp_customize->add_setting('selected_palette', array(
             'default' => 'corporate',
             'sanitize_callback' => 'sanitize_text_field',
             'transport' => 'postMessage',
@@ -251,7 +311,7 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
                 ? $this->color_palettes['corporate']['colors'][$role] 
                 : $default_colors[$role];
                 
-            $this->add_setting("palette_{$role}", array(
+            $this->wp_customize->add_setting("palette_{$role}", array(
                 'default' => $default_color,
                 'sanitize_callback' => 'sanitize_hex_color',
                 'transport' => 'postMessage',
@@ -259,25 +319,25 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
         }
         
         // Configurações do gerador
-        $this->add_setting('generator_base_color', array(
+        $this->wp_customize->add_setting('generator_base_color', array(
             'default' => '#1d3771',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport' => 'postMessage',
         ));
         
-        $this->add_setting('generator_harmony_type', array(
+        $this->wp_customize->add_setting('generator_harmony_type', array(
             'default' => 'complementary',
             'sanitize_callback' => 'sanitize_text_field',
             'transport' => 'postMessage',
         ));
         
         // Configurações de acessibilidade
-        $this->add_setting('accessibility_standard', array(
+        $this->wp_customize->add_setting('accessibility_standard', array(
             'default' => 'wcag_aa',
             'sanitize_callback' => 'sanitize_text_field',
         ));
         
-        $this->add_setting('check_contrast', array(
+        $this->wp_customize->add_setting('check_contrast', array(
             'default' => true,
             'sanitize_callback' => 'rest_sanitize_boolean',
         ));
@@ -288,7 +348,7 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
      */
     private function add_color_controls() {
         // Seletor de paleta
-        $this->add_control('selected_palette', array(
+        $this->wp_customize->add_control('selected_palette', array(
             'label' => __('Paleta Predefinida', 'cct'),
             'description' => __('Escolha uma paleta profissional como ponto de partida.', 'cct'),
             'section' => $this->prefix . 'color_palettes',
@@ -298,15 +358,15 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
         
         // Preview da paleta
         $this->wp_customize->add_control(
-            new CCT_Color_Palette_Preview_Control(
-                $this->wp_customize,
-                'cct_palette_preview',
-                array(
-                    'label' => __('Preview da Paleta', 'cct'),
-                    'section' => $this->prefix . 'color_palettes',
-                    'settings' => $this->prefix . 'selected_palette',
-                    'palettes' => $this->color_palettes,
-                )
+            'cct_palette_preview',
+            array(
+                'label' => __('Preview das Paletas', 'cct'),
+                'section' => $this->prefix . 'color_palettes',
+                'settings' => $this->prefix . 'selected_palette',
+                'type' => 'select',
+                'choices' => array(
+                    'preview' => __('Preview será implementado em versão futura', 'cct')
+                ),
             )
         );
         
@@ -350,7 +410,7 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
             )
         );
         
-        $this->add_control('generator_harmony_type', array(
+        $this->wp_customize->add_control('generator_harmony_type', array(
             'label' => __('Tipo de Harmonia', 'cct'),
             'description' => __('Escolha o tipo de harmonia cromática.', 'cct'),
             'section' => $this->prefix . 'color_generator',
@@ -366,22 +426,20 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
         
         // Gerador de paleta
         $this->wp_customize->add_control(
-            new CCT_Color_Generator_Control(
-                $this->wp_customize,
-                'cct_color_generator',
-                array(
-                    'label' => __('Gerar Paleta', 'cct'),
-                    'section' => $this->prefix . 'color_generator',
-                    'settings' => array(
-                        $this->prefix . 'generator_base_color',
-                        $this->prefix . 'generator_harmony_type'
-                    ),
-                )
+            'cct_color_generator',
+            array(
+                'label' => __('Gerar Paleta', 'cct'),
+                'section' => $this->prefix . 'color_generator',
+                'settings' => $this->prefix . 'generator_base_color',
+                'type' => 'select',
+                'choices' => array(
+                    'generator' => __('Gerador será implementado em versão futura', 'cct')
+                ),
             )
         );
         
         // Verificador de acessibilidade
-        $this->add_control('accessibility_standard', array(
+        $this->wp_customize->add_control('accessibility_standard', array(
             'label' => __('Padrão de Acessibilidade', 'cct'),
             'description' => __('Escolha o padrão WCAG para verificação.', 'cct'),
             'section' => $this->prefix . 'color_accessibility',
@@ -392,7 +450,7 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
             ),
         ));
         
-        $this->add_control('check_contrast', array(
+        $this->wp_customize->add_control('check_contrast', array(
             'label' => __('Verificar Contraste Automaticamente', 'cct'),
             'description' => __('Analisa automaticamente o contraste das cores.', 'cct'),
             'section' => $this->prefix . 'color_accessibility',
@@ -401,19 +459,15 @@ class CCT_Color_Manager extends CCT_Customizer_Base {
         
         // Analisador de contraste
         $this->wp_customize->add_control(
-            new CCT_Contrast_Analyzer_Control(
-                $this->wp_customize,
-                'cct_contrast_analyzer',
-                array(
-                    'label' => __('Análise de Contraste', 'cct'),
-                    'section' => $this->prefix . 'color_accessibility',
-                    'settings' => array(
-                        $this->prefix . 'palette_primary',
-                        $this->prefix . 'palette_light',
-                        $this->prefix . 'accessibility_standard'
-                    ),
-                    'accessibility_rules' => $this->accessibility_rules,
-                )
+            'cct_contrast_analyzer',
+            array(
+                'label' => __('Análise de Contraste', 'cct'),
+                'section' => $this->prefix . 'color_accessibility',
+                'settings' => $this->prefix . 'palette_primary',
+                'type' => 'select',
+                'choices' => array(
+                    'analyzer' => __('Analisador será implementado em versão futura', 'cct')
+                ),
             )
         );
     }

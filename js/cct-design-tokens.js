@@ -827,6 +827,7 @@
 /**
  * Extensões para integração com outros módulos
  */
+(function($) {
     // Integração com sistema de cores
     $(document).on('cct:tokenChanged', function(e, data) {
         if (data.path.startsWith('colors.') && typeof CCTColorManager !== 'undefined') {

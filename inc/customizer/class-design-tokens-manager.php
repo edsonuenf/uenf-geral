@@ -1093,23 +1093,24 @@ class CCT_Design_Tokens_Manager {
             'type' => 'text',
         ));
         
-        // Controle personalizado para gerenciamento de tokens
-        require_once get_template_directory() . '/inc/customizer/class-design-tokens-control.php';
-        
-        $this->wp_customize->add_control(new CCT_Design_Tokens_Control(
-            $this->wp_customize,
+        // Controle personalizado para gerenciamento de tokens (usando controle padrão temporariamente)
+        $this->wp_customize->add_control(
             $this->prefix . 'manager',
             array(
                 'label' => __('Gerenciador de Tokens', 'cct'),
                 'description' => __('Interface visual para gerenciar todos os design tokens.', 'cct'),
                 'section' => $this->prefix . 'management',
-                'settings' => $this->prefix . 'primitive_tokens',
+                'settings' => $this->prefix . 'token_data',
+                'type' => 'select',
+                'choices' => array(
+                    'manager' => __('Gerenciador será implementado em versão futura', 'cct')
+                ),
                 'primitive_tokens' => $this->primitive_tokens,
                 'semantic_tokens' => $this->semantic_tokens,
                 'component_tokens' => $this->component_tokens,
                 'export_formats' => $this->export_formats
             )
-        ));
+        );
     }
     
     /**

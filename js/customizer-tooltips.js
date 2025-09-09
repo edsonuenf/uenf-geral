@@ -1,160 +1,395 @@
 /**
- * Sistema de Tooltips do Customizer CCT
+ * Sistema de Tooltips e Hints para o Customizer
  * 
- * Fornece ajuda contextual através de tooltips informativos
- * para todos os controles do customizer.
+ * Fornece documentação contextual e hints informativos
+ * para melhorar a experiência do usuário no customizer.
  * 
  * @package CCT_Theme
- * @subpackage Customizer
  * @since 1.0.0
  */
 
 (function($) {
     'use strict';
-
-    /**
-     * Classe principal de tooltips
-     */
-    class CCTCustomizerTooltips {
+    
+    // Configuração dos tooltips
+    const tooltipConfig = {
+        // Tipografia
+        'typography_font_family': {
+            title: '🎨 Família da Fonte',
+            content: 'Escolha a fonte principal do seu site. Google Fonts são carregadas automaticamente para melhor performance.',
+            tips: [
+                'Ubuntu: Moderna e legível, ideal para sites institucionais',
+                'Roboto: Clean e profissional, perfeita para conteúdo técnico',
+                'Open Sans: Versátil e amigável, ótima para blogs',
+                'Montserrat: Elegante e impactante, ideal para títulos'
+            ]
+        },
+        'typography_body_size': {
+            title: '📏 Tamanho da Fonte',
+            content: 'Define o tamanho base do texto. Recomendamos entre 14px e 18px para melhor legibilidade.',
+            tips: [
+                '16px: Tamanho padrão recomendado pela W3C',
+                '14px: Para sites com muito conteúdo',
+                '18px: Para melhor acessibilidade e leitura'
+            ]
+        },
+        'typography_body_weight': {
+            title: '💪 Peso da Fonte',
+            content: 'Controla a espessura do texto. Valores maiores tornam o texto mais destacado.',
+            tips: [
+                '300: Texto leve, ideal para citações',
+                '400: Peso normal, padrão para corpo de texto',
+                '600-700: Texto em destaque, ideal para títulos'
+            ]
+        },
+        'typography_line_height': {
+            title: '📐 Altura da Linha',
+            content: 'Espaçamento entre linhas. Valores entre 1.4 e 1.8 melhoram a legibilidade.',
+            tips: [
+                '1.4: Texto compacto, economiza espaço',
+                '1.6: Valor ideal para a maioria dos casos',
+                '1.8: Melhor para textos longos e acessibilidade'
+            ]
+        },
+        'typography_letter_spacing': {
+            title: '🔤 Espaçamento entre Letras',
+            content: 'Ajusta o espaço entre caracteres. Use com moderação para não prejudicar a leitura.',
+            tips: [
+                '0px: Espaçamento padrão da fonte',
+                '0.5-1px: Sutil melhoria na legibilidade',
+                '2px+: Apenas para títulos e destaques'
+            ]
+        },
         
+        // Cores
+        'colors_primary': {
+            title: '🎨 Cor Primária',
+            content: 'Cor principal do seu site. Será usada em botões, links e elementos de destaque.',
+            tips: [
+                'Escolha uma cor que represente sua marca',
+                'Teste o contraste com texto branco e preto',
+                'Considere a psicologia das cores para seu público'
+            ]
+        },
+        
+        // Layout
+        'layout_container_width': {
+            title: '📐 Largura do Container',
+            content: 'Define a largura máxima do conteúdo. Valores entre 1200px e 1400px são ideais.',
+            tips: [
+                '1200px: Padrão, funciona bem na maioria dos casos',
+                '1400px: Para sites com muito conteúdo visual',
+                '100%: Layout fluido, se adapta a qualquer tela'
+            ]
+        },
+        
+        // Header
+        'header_height': {
+            title: '📏 Altura do Cabeçalho',
+            content: 'Altura do cabeçalho do site. Considere o espaço necessário para logo e menu.',
+            tips: [
+                '60-80px: Cabeçalho compacto',
+                '80-120px: Altura padrão recomendada',
+                '120px+: Para logos grandes ou múltiplas linhas'
+            ]
+        }
+    };
+    
+    // Documentação avançada para popups
+    const advancedDocs = {
+        'typography_section': {
+            title: '📚 Guia Completo de Tipografia',
+            sections: [
+                {
+                    title: 'Princípios Básicos',
+                    content: [
+                        'A tipografia é fundamental para a experiência do usuário',
+                        'Escolha no máximo 2-3 famílias de fonte diferentes',
+                        'Mantenha consistência nos tamanhos e pesos',
+                        'Priorize sempre a legibilidade sobre o estilo'
+                    ]
+                },
+                {
+                    title: 'Combinações Recomendadas',
+                    content: [
+                        'Títulos: Montserrat Bold + Corpo: Open Sans Regular',
+                        'Títulos: Oswald Medium + Corpo: Lato Regular',
+                        'Títulos: Roboto Bold + Corpo: Roboto Regular',
+                        'Títulos: Ubuntu Bold + Corpo: Ubuntu Regular'
+                    ]
+                },
+                {
+                    title: 'Acessibilidade',
+                    content: [
+                        'Tamanho mínimo: 14px para texto principal',
+                        'Contraste mínimo: 4.5:1 para texto normal',
+                        'Contraste mínimo: 3:1 para texto grande (18px+)',
+                        'Evite texto em itálico para grandes blocos'
+                    ]
+                }
+            ]
+        },
+        
+        'colors_section': {
+            title: '🎨 Guia de Cores e Branding',
+            sections: [
+                {
+                    title: 'Teoria das Cores',
+                    content: [
+                        'Azul: Confiança, profissionalismo, tecnologia',
+                        'Verde: Natureza, crescimento, saúde',
+                        'Vermelho: Energia, urgência, paixão',
+                        'Laranja: Criatividade, entusiasmo, amigável'
+                    ]
+                },
+                {
+                    title: 'Paleta de Cores',
+                    content: [
+                        'Cor primária: Identidade principal da marca',
+                        'Cor secundária: Complementa a primária',
+                        'Cores neutras: Cinzas para texto e fundos',
+                        'Cores de ação: Para botões e CTAs'
+                    ]
+                }
+            ]
+        }
+    };
+    
+    // Classe principal do sistema de tooltips
+    class CustomizerTooltips {
         constructor() {
-            this.tooltips = {};
             this.init();
         }
         
-        /**
-         * Inicializa o sistema de tooltips
-         */
         init() {
-            this.setupTooltipStyles();
-            this.defineTooltipContent();
-            this.bindTooltipEvents();
-            this.createTooltipElements();
-            console.log('CCT Customizer Tooltips: Initialized');
+            this.createTooltipStyles();
+            this.bindEvents();
+            this.addTooltipsToControls();
+            this.addHelpButtons();
         }
         
-        /**
-         * Adiciona estilos CSS para tooltips
-         */
-        setupTooltipStyles() {
+        createTooltipStyles() {
             const styles = `
                 <style id="cct-tooltip-styles">
                     .cct-tooltip {
+                        position: relative;
+                        display: inline-block;
+                        margin-left: 5px;
+                        cursor: help;
+                    }
+                    
+                    .cct-tooltip-icon {
+                        width: 16px;
+                        height: 16px;
+                        background: #0073aa;
+                        color: white;
+                        border-radius: 50%;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 11px;
+                        font-weight: bold;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .cct-tooltip-icon:hover {
+                        background: #005a87;
+                        transform: scale(1.1);
+                    }
+                    
+                    .cct-tooltip-content {
                         position: absolute;
-                        background: #333;
-                        color: #fff;
-                        padding: 8px 12px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        line-height: 1.4;
-                        max-width: 250px;
+                        bottom: 100%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: #2c3338;
+                        color: white;
+                        padding: 15px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                        width: 300px;
                         z-index: 999999;
                         opacity: 0;
                         visibility: hidden;
-                        transition: opacity 0.3s, visibility 0.3s;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-                        word-wrap: break-word;
+                        transition: all 0.3s ease;
+                        margin-bottom: 10px;
                     }
                     
-                    .cct-tooltip.show {
+                    .cct-tooltip:hover .cct-tooltip-content {
                         opacity: 1;
                         visibility: visible;
                     }
                     
-                    .cct-tooltip::before {
+                    .cct-tooltip-content::after {
                         content: '';
                         position: absolute;
-                        top: -5px;
+                        top: 100%;
                         left: 50%;
                         transform: translateX(-50%);
-                        border-left: 5px solid transparent;
-                        border-right: 5px solid transparent;
-                        border-bottom: 5px solid #333;
-                    }
-                    
-                    .cct-tooltip.bottom::before {
-                        top: auto;
-                        bottom: -5px;
-                        border-bottom: none;
-                        border-top: 5px solid #333;
-                    }
-                    
-                    .cct-tooltip.left::before {
-                        top: 50%;
-                        left: -5px;
-                        transform: translateY(-50%);
-                        border-left: none;
-                        border-right: 5px solid #333;
-                        border-top: 5px solid transparent;
-                        border-bottom: 5px solid transparent;
-                    }
-                    
-                    .cct-tooltip.right::before {
-                        top: 50%;
-                        left: auto;
-                        right: -5px;
-                        transform: translateY(-50%);
-                        border-right: none;
-                        border-left: 5px solid #333;
-                        border-top: 5px solid transparent;
-                        border-bottom: 5px solid transparent;
-                    }
-                    
-                    .cct-help-icon {
-                        display: inline-block;
-                        width: 16px;
-                        height: 16px;
-                        background: #666;
-                        color: #fff;
-                        border-radius: 50%;
-                        text-align: center;
-                        line-height: 16px;
-                        font-size: 11px;
-                        font-weight: bold;
-                        margin-left: 5px;
-                        cursor: help;
-                        vertical-align: middle;
-                    }
-                    
-                    .cct-help-icon:hover {
-                        background: #0073aa;
-                    }
-                    
-                    .customize-control:hover .cct-help-icon {
-                        background: #0073aa;
-                    }
-                    
-                    .cct-tooltip-content {
-                        margin-bottom: 8px;
-                    }
-                    
-                    .cct-tooltip-content:last-child {
-                        margin-bottom: 0;
+                        border: 8px solid transparent;
+                        border-top-color: #2c3338;
                     }
                     
                     .cct-tooltip-title {
                         font-weight: bold;
-                        margin-bottom: 4px;
-                        color: #fff;
+                        margin-bottom: 8px;
+                        font-size: 13px;
+                        color: #00a0d2;
                     }
                     
-                    .cct-tooltip-description {
-                        color: #ddd;
-                        margin-bottom: 6px;
+                    .cct-tooltip-text {
+                        font-size: 12px;
+                        line-height: 1.5;
+                        margin-bottom: 10px;
                     }
                     
-                    .cct-tooltip-example {
-                        color: #a8d8a8;
-                        font-style: italic;
-                        font-size: 11px;
+                    .cct-tooltip-tips {
+                        border-top: 1px solid #444;
+                        padding-top: 10px;
                     }
                     
                     .cct-tooltip-tip {
-                        color: #ffd700;
                         font-size: 11px;
-                        border-top: 1px solid #555;
-                        padding-top: 6px;
-                        margin-top: 6px;
+                        margin-bottom: 5px;
+                        opacity: 0.9;
+                        padding-left: 10px;
+                        position: relative;
+                    }
+                    
+                    .cct-tooltip-tip::before {
+                        content: '💡';
+                        position: absolute;
+                        left: -5px;
+                        font-size: 10px;
+                    }
+                    
+                    .cct-help-button {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        border: none;
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 11px;
+                        font-weight: 600;
+                        margin: 10px 0;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    }
+                    
+                    .cct-help-button:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    }
+                    
+                    .cct-popup-overlay {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0,0,0,0.7);
+                        z-index: 9999999;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .cct-popup-overlay.active {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                    
+                    .cct-popup {
+                        background: white;
+                        border-radius: 12px;
+                        padding: 30px;
+                        max-width: 600px;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                        transform: scale(0.9);
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .cct-popup-overlay.active .cct-popup {
+                        transform: scale(1);
+                    }
+                    
+                    .cct-popup-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                        padding-bottom: 15px;
+                        border-bottom: 2px solid #f0f0f0;
+                    }
+                    
+                    .cct-popup-title {
+                        font-size: 20px;
+                        font-weight: bold;
+                        color: #2c3338;
+                        margin: 0;
+                    }
+                    
+                    .cct-popup-close {
+                        background: #ff4757;
+                        color: white;
+                        border: none;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .cct-popup-close:hover {
+                        background: #ff3742;
+                        transform: scale(1.1);
+                    }
+                    
+                    .cct-popup-section {
+                        margin-bottom: 25px;
+                    }
+                    
+                    .cct-popup-section-title {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: #0073aa;
+                        margin-bottom: 10px;
+                        padding: 8px 12px;
+                        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                        border-radius: 6px;
+                        border-left: 4px solid #0073aa;
+                    }
+                    
+                    .cct-popup-content {
+                        line-height: 1.6;
+                        color: #555;
+                    }
+                    
+                    .cct-popup-content ul {
+                        margin: 10px 0;
+                        padding-left: 20px;
+                    }
+                    
+                    .cct-popup-content li {
+                        margin-bottom: 8px;
+                        position: relative;
+                    }
+                    
+                    .cct-popup-content li::before {
+                        content: '✨';
+                        position: absolute;
+                        left: -20px;
+                        font-size: 12px;
                     }
                 </style>
             `;
@@ -162,233 +397,150 @@
             $('head').append(styles);
         }
         
-        /**
-         * Define o conteúdo dos tooltips para cada controle
-         */
-        defineTooltipContent() {
-            this.tooltips = {
-                'cct_menu_style': {
-                    title: 'Estilo do Menu',
-                    description: 'Escolha entre diferentes estilos visuais para o menu de navegação.',
-                    example: 'Moderno: gradientes e efeitos | Clássico: cores sólidas | Minimalista: transparente',
-                    tip: 'O estilo clássico é recomendado para sites corporativos.'
-                },
-                
-                'cct_menu_show_hierarchy_icons': {
-                    title: 'Ícones de Hierarquia',
-                    description: 'Mostra setas e símbolos que indicam submenus e hierarquia de navegação.',
-                    example: 'Ativado: ▶ Página Principal | Desativado: Página Principal',
-                    tip: 'Melhora a usabilidade em menus com muitos níveis.'
-                },
-                
-                'cct_shortcut_button_bg': {
-                    title: 'Cor do Botão de Atalho',
-                    description: 'Define a cor de fundo do botão que abre o painel de atalhos.',
-                    example: 'Recomendado: cores que contrastem com o fundo da página',
-                    tip: 'Use cores da identidade visual do site para consistência.'
-                },
-                
-                'cct_shortcut_panel_width': {
-                    title: 'Largura do Painel',
-                    description: 'Controla a largura do painel de atalhos quando aberto.',
-                    example: 'Valores aceitos: 300px, 25%, 20vw, 15em',
-                    tip: 'Larguras entre 250px e 400px oferecem melhor usabilidade.'
-                },
-                
-                'cct_shortcut_panel_bg': {
-                    title: 'Fundo do Painel',
-                    description: 'Cor de fundo do painel de atalhos.',
-                    example: 'Sugestão: cores escuras para melhor legibilidade',
-                    tip: 'Certifique-se de que há contraste suficiente com o texto.'
-                },
-                
-                'cct_export_settings': {
-                    title: 'Exportar Configurações',
-                    description: 'Baixa um arquivo com todas as configurações atuais do customizer.',
-                    example: 'Arquivo gerado: cct-customizer-backup-YYYY-MM-DD.txt',
-                    tip: 'Faça backup antes de grandes alterações no tema.'
-                },
-                
-                'cct_import_settings': {
-                    title: 'Importar Configurações',
-                    description: 'Cole aqui o conteúdo de um arquivo de backup para restaurar configurações.',
-                    example: 'Abra o arquivo .txt do backup e cole todo o conteúdo',
-                    tip: 'Sempre faça backup das configurações atuais antes de importar.'
-                },
-                
-                'cct_reset_settings': {
-                    title: 'Redefinir Configurações',
-                    description: 'Restaura todas as configurações do customizer para os valores padrão do tema.',
-                    example: 'ATENÇÃO: Esta ação não pode ser desfeita!',
-                    tip: 'Exporte suas configurações antes de usar esta função.'
+        bindEvents() {
+            // Fechar popup ao clicar no overlay
+            $(document).on('click', '.cct-popup-overlay', (e) => {
+                if (e.target === e.currentTarget) {
+                    this.closePopup();
                 }
-            };
-        }
-        
-        /**
-         * Vincula eventos de tooltip aos controles
-         */
-        bindTooltipEvents() {
-            // Aguardar carregamento dos controles
-            setTimeout(() => {
-                this.addHelpIcons();
-                this.bindHoverEvents();
-            }, 1000);
-        }
-        
-        /**
-         * Adiciona ícones de ajuda aos controles
-         */
-        addHelpIcons() {
-            Object.keys(this.tooltips).forEach(controlId => {
-                const $control = $(`#customize-control-${controlId}`);
-                const $label = $control.find('.customize-control-title');
-                
-                if ($label.length && !$label.find('.cct-help-icon').length) {
-                    $label.append('<span class="cct-help-icon" data-tooltip="' + controlId + '">?</span>');
+            });
+            
+            // Fechar popup com ESC
+            $(document).on('keydown', (e) => {
+                if (e.keyCode === 27) {
+                    this.closePopup();
                 }
             });
         }
         
-        /**
-         * Vincula eventos de hover
-         */
-        bindHoverEvents() {
-            $(document).on('mouseenter', '.cct-help-icon', (e) => {
-                const tooltipId = $(e.target).data('tooltip');
-                this.showTooltip(e.target, tooltipId);
-            });
-            
-            $(document).on('mouseleave', '.cct-help-icon', () => {
-                this.hideTooltip();
+        addTooltipsToControls() {
+            // Aguarda o customizer estar pronto
+            wp.customize.bind('ready', () => {
+                setTimeout(() => {
+                    Object.keys(tooltipConfig).forEach(controlId => {
+                        this.addTooltipToControl(controlId);
+                    });
+                }, 1000);
             });
         }
         
-        /**
-         * Cria elementos de tooltip
-         */
-        createTooltipElements() {
-            if ($('#cct-tooltip').length === 0) {
-                $('body').append('<div id="cct-tooltip" class="cct-tooltip"></div>');
+        addTooltipToControl(controlId) {
+            const control = $(`#customize-control-${controlId}`);
+            if (control.length && tooltipConfig[controlId]) {
+                const config = tooltipConfig[controlId];
+                const label = control.find('label, .customize-control-title').first();
+                
+                if (label.length) {
+                    const tooltip = this.createTooltip(config);
+                    label.append(tooltip);
+                }
             }
         }
         
-        /**
-         * Mostra tooltip
-         */
-        showTooltip(element, tooltipId) {
-            const tooltipData = this.tooltips[tooltipId];
-            if (!tooltipData) return;
-            
-            const $tooltip = $('#cct-tooltip');
-            const $element = $(element);
-            
-            // Construir conteúdo do tooltip
-            let content = '';
-            
-            if (tooltipData.title) {
-                content += `<div class="cct-tooltip-title">${tooltipData.title}</div>`;
+        createTooltip(config) {
+            let tipsHtml = '';
+            if (config.tips && config.tips.length > 0) {
+                tipsHtml = `
+                    <div class="cct-tooltip-tips">
+                        ${config.tips.map(tip => `<div class="cct-tooltip-tip">${tip}</div>`).join('')}
+                    </div>
+                `;
             }
             
-            if (tooltipData.description) {
-                content += `<div class="cct-tooltip-description">${tooltipData.description}</div>`;
-            }
-            
-            if (tooltipData.example) {
-                content += `<div class="cct-tooltip-example">Exemplo: ${tooltipData.example}</div>`;
-            }
-            
-            if (tooltipData.tip) {
-                content += `<div class="cct-tooltip-tip">💡 Dica: ${tooltipData.tip}</div>`;
-            }
-            
-            $tooltip.html(content);
-            
-            // Posicionar tooltip
-            this.positionTooltip($tooltip, $element);
-            
-            // Mostrar tooltip
-            $tooltip.addClass('show');
+            return $(`
+                <span class="cct-tooltip">
+                    <span class="cct-tooltip-icon">?</span>
+                    <div class="cct-tooltip-content">
+                        <div class="cct-tooltip-title">${config.title}</div>
+                        <div class="cct-tooltip-text">${config.content}</div>
+                        ${tipsHtml}
+                    </div>
+                </span>
+            `);
         }
         
-        /**
-         * Posiciona o tooltip
-         */
-        positionTooltip($tooltip, $element) {
-            const elementRect = $element[0].getBoundingClientRect();
-            const tooltipWidth = $tooltip.outerWidth();
-            const tooltipHeight = $tooltip.outerHeight();
-            const windowWidth = $(window).width();
-            const windowHeight = $(window).height();
-            
-            let top = elementRect.top - tooltipHeight - 10;
-            let left = elementRect.left + (elementRect.width / 2) - (tooltipWidth / 2);
-            let position = 'top';
-            
-            // Verificar se cabe acima
-            if (top < 0) {
-                top = elementRect.bottom + 10;
-                position = 'bottom';
-            }
-            
-            // Verificar se cabe horizontalmente
-            if (left < 10) {
-                left = 10;
-            } else if (left + tooltipWidth > windowWidth - 10) {
-                left = windowWidth - tooltipWidth - 10;
-            }
-            
-            // Verificar se cabe na tela
-            if (top + tooltipHeight > windowHeight - 10) {
-                top = windowHeight - tooltipHeight - 10;
-            }
-            
-            $tooltip
-                .removeClass('top bottom left right')
-                .addClass(position)
-                .css({
-                    top: top + 'px',
-                    left: left + 'px'
+        addHelpButtons() {
+            wp.customize.bind('ready', () => {
+                setTimeout(() => {
+                    // Adiciona botões de ajuda para seções específicas
+                    Object.keys(advancedDocs).forEach(sectionId => {
+                        this.addHelpButtonToSection(sectionId);
+                    });
+                }, 1500);
+            });
+        }
+        
+        addHelpButtonToSection(sectionId) {
+            const section = $(`#accordion-section-${sectionId}`);
+            if (section.length && advancedDocs[sectionId]) {
+                const button = $(`
+                    <button class="cct-help-button" data-section="${sectionId}">
+                        📚 Guia Completo
+                    </button>
+                `);
+                
+                button.on('click', (e) => {
+                    e.preventDefault();
+                    this.showAdvancedHelp(sectionId);
                 });
-        }
-        
-        /**
-         * Esconde tooltip
-         */
-        hideTooltip() {
-            $('#cct-tooltip').removeClass('show');
-        }
-        
-        /**
-         * Adiciona tooltip personalizado
-         */
-        addCustomTooltip(controlId, tooltipData) {
-            this.tooltips[controlId] = tooltipData;
-            
-            // Adicionar ícone se o controle já existir
-            const $control = $(`#customize-control-${controlId}`);
-            if ($control.length) {
-                const $label = $control.find('.customize-control-title');
-                if ($label.length && !$label.find('.cct-help-icon').length) {
-                    $label.append('<span class="cct-help-icon" data-tooltip="' + controlId + '">?</span>');
-                }
+                
+                section.find('.accordion-section-content').prepend(button);
             }
+        }
+        
+        showAdvancedHelp(sectionId) {
+            const doc = advancedDocs[sectionId];
+            if (!doc) return;
+            
+            const sectionsHtml = doc.sections.map(section => `
+                <div class="cct-popup-section">
+                    <h3 class="cct-popup-section-title">${section.title}</h3>
+                    <div class="cct-popup-content">
+                        <ul>
+                            ${section.content.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `).join('');
+            
+            const popup = $(`
+                <div class="cct-popup-overlay">
+                    <div class="cct-popup">
+                        <div class="cct-popup-header">
+                            <h2 class="cct-popup-title">${doc.title}</h2>
+                            <button class="cct-popup-close">×</button>
+                        </div>
+                        <div class="cct-popup-body">
+                            ${sectionsHtml}
+                        </div>
+                    </div>
+                </div>
+            `);
+            
+            popup.find('.cct-popup-close').on('click', () => {
+                this.closePopup();
+            });
+            
+            $('body').append(popup);
+            
+            setTimeout(() => {
+                popup.addClass('active');
+            }, 10);
+        }
+        
+        closePopup() {
+            $('.cct-popup-overlay').removeClass('active');
+            setTimeout(() => {
+                $('.cct-popup-overlay').remove();
+            }, 300);
         }
     }
-
-    /**
-     * Inicializar quando o customizer estiver pronto
-     */
-    $(document).ready(function() {
+    
+    // Inicializa o sistema quando o customizer estiver pronto
+    $(document).ready(() => {
         if (typeof wp !== 'undefined' && wp.customize) {
-            wp.customize.bind('ready', function() {
-                window.cctTooltips = new CCTCustomizerTooltips();
-            });
-        } else {
-            setTimeout(() => {
-                window.cctTooltips = new CCTCustomizerTooltips();
-            }, 1500);
+            new CustomizerTooltips();
         }
     });
-
+    
 })(jQuery);

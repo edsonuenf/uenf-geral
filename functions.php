@@ -6,6 +6,22 @@
  * @since 1.0.0
  */
 
+// Corrigir erro de buffer zlib
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Desabilitar compressão zlib para evitar erro ob_end_flush
+if (function_exists('ini_set')) {
+    ini_set('zlib.output_compression', 'Off');
+    ini_set('output_buffering', 'Off');
+}
+
+// Limpar qualquer buffer existente
+if (ob_get_level()) {
+    ob_end_clean();
+}
+
 // Inclui o componente de menu personalizado
 require_once get_template_directory() . '/components/menu/uenf-menu.php';
 
@@ -299,6 +315,10 @@ if (!defined('CCT_THEME_URI')) {
 }
 
 // Carregar arquivos de suporte
+// Carregar Gerenciador de Extensões primeiro
+require_once CCT_THEME_DIR . '/inc/extensions/class-extension-manager.php';
+
+// Carregar customizer
 require_once CCT_THEME_DIR . '/inc/customizer.php';
 
 // Incluir Editor CSS Avançado
@@ -438,68 +458,634 @@ add_action('customize_register', function($wp_customize) {
              }
          }
     
-    // Instanciar módulo de tipografia se a classe existir
-    if (class_exists('CCT_Typography_Customizer')) {
-        new CCT_Typography_Customizer($wp_customize);
-    }
+    // Usar o Gerenciador de Extensões para carregar módulos
+    $extension_manager = cct_extension_manager();
     
-    // Instanciar módulo de cores se a classe existir
-     if (class_exists('CCT_Color_Manager')) {
-         new CCT_Color_Manager($wp_customize);
+    // Carregar extensões através do gerenciador (incluindo tipografia)
+     cct_init_customizer_extensions($wp_customize, $extension_manager);
+     
+     // Inicialização condicional das extensões (respeitando configurações do gerenciador)
+     
+     // Tipografia - só inicializa se estiver ativa
+     if (class_exists('CCT_Typography_Customizer') && $extension_manager && $extension_manager->is_extension_active('typography')) {
+         try {
+             $typography_manager = new CCT_Typography_Customizer($wp_customize);
+             
+             if (defined('WP_DEBUG') && WP_DEBUG) {
+                 error_log('CCT: Tipografia inicializada (extensão ativa)');
+             }
+         } catch (Exception $e) {
+             if (defined('WP_DEBUG') && WP_DEBUG) {
+                 error_log('CCT: Erro ao inicializar tipografia: ' . $e->getMessage());
+             }
+         }
+     } elseif (defined('WP_DEBUG') && WP_DEBUG) {
+         error_log('CCT: Tipografia não inicializada (extensão desativada)');
      }
      
-     // Instanciar módulo de ícones se a classe existir
-      if (class_exists('CCT_Icon_Manager')) {
-          new CCT_Icon_Manager($wp_customize);
-      }
-      
-      // Instanciar módulo de layout se a classe existir
-       if (class_exists('CCT_Layout_Manager')) {
-           new CCT_Layout_Manager($wp_customize);
-       }
-       
-       // Instanciar módulo de animações se a classe existir
-        if (class_exists('CCT_Animation_Manager')) {
-            $animation_manager = new CCT_Animation_Manager();
-            $animation_manager->register($wp_customize);
-        }
-        
-        // Instanciar módulo de gradientes se a classe existir
-         if (class_exists('CCT_Gradient_Manager')) {
-             $gradient_manager = new CCT_Gradient_Manager();
-             $gradient_manager->register($wp_customize);
+     // Cores - só inicializa se estiver ativa
+     if (class_exists('CCT_Color_Manager') && $extension_manager && $extension_manager->is_extension_active('colors')) {
+         try {
+             $color_manager = new CCT_Color_Manager($wp_customize);
+             
+             if (defined('WP_DEBUG') && WP_DEBUG) {
+                 error_log('CCT: Gerenciador de cores inicializado (extensão ativa)');
+             }
+         } catch (Exception $e) {
+             if (defined('WP_DEBUG') && WP_DEBUG) {
+                 error_log('CCT: Erro ao inicializar cores: ' . $e->getMessage());
+             }
          }
-         
-         // Instanciar módulo de sombras se a classe existir
-         if (class_exists('CCT_Shadow_Manager')) {
-             $shadow_manager = new CCT_Shadow_Manager();
-             $shadow_manager->register($wp_customize);
+     } elseif (defined('WP_DEBUG') && WP_DEBUG) {
+         error_log('CCT: Cores não inicializadas (extensão desativada)');
+     }
+     
+     // Ícones - só inicializa se estiver ativa
+     if (class_exists('CCT_Icon_Manager') && $extension_manager && $extension_manager->is_extension_active('icons')) {
+         try {
+             $icon_manager = new CCT_Icon_Manager($wp_customize);
+             
+             if (defined('WP_DEBUG') && WP_DEBUG) {
+                 error_log('CCT: Gerenciador de ícones inicializado (extensão ativa)');
+             }
+         } catch (Exception $e) {
+             if (defined('WP_DEBUG') && WP_DEBUG) {
+                 error_log('CCT: Erro ao inicializar ícones: ' . $e->getMessage());
+             }
          }
-         
-         // Instanciar módulo de biblioteca de padrões se a classe existir
-         if (class_exists('CCT_Pattern_Library_Manager')) {
-             $pattern_manager = new CCT_Pattern_Library_Manager();
-             $pattern_manager->register($wp_customize);
-         }
-         
-         // Instanciar módulo de modo escuro se a classe existir
-         if (class_exists('CCT_Dark_Mode_Manager')) {
-             $dark_mode_manager = new CCT_Dark_Mode_Manager();
-             $dark_mode_manager->register($wp_customize);
-         }
-         
-         // Instanciar módulo de breakpoints se a classe existir
-         if (class_exists('CCT_Responsive_Breakpoints_Manager')) {
-             $breakpoints_manager = new CCT_Responsive_Breakpoints_Manager();
-             $breakpoints_manager->register($wp_customize);
-         }
-         
-         // Instanciar módulo de design tokens se a classe existir
-         if (class_exists('CCT_Design_Tokens_Manager')) {
-             $design_tokens_manager = new CCT_Design_Tokens_Manager();
-             $design_tokens_manager->register($wp_customize);
-         }
+     } elseif (defined('WP_DEBUG') && WP_DEBUG) {
+         error_log('CCT: Ícones não inicializados (extensão desativada)');
+     }
 }, 15); // Prioridade 15 para carregar após outros módulos
+
+/**
+ * Adiciona menu administrativo do Tema UENF
+ */
+function cct_add_admin_menu() {
+    // Menu principal do Tema UENF
+    add_menu_page(
+        'Tema UENF',                    // Título da página
+        '🎓 Tema UENF',                 // Título do menu
+        'manage_options',               // Capacidade necessária
+        'tema-uenf',                    // Slug do menu
+        'cct_admin_page_callback',      // Função callback
+        'dashicons-graduation-cap',     // Ícone
+        30                              // Posição
+    );
+    
+    // Submenu: Gerenciador de Extensões
+    add_submenu_page(
+        'tema-uenf',                    // Menu pai
+        'Gerenciador de Extensões',     // Título da página
+        '🔧 Extensões',                 // Título do submenu
+        'manage_options',               // Capacidade necessária
+        'tema-uenf-extensoes',          // Slug
+        'cct_extensions_page_callback'  // Função callback
+    );
+    
+    // Submenu: Customizer
+    add_submenu_page(
+        'tema-uenf',                    // Menu pai
+        'Personalizar Tema',            // Título da página
+        '🎨 Personalizar',              // Título do submenu
+        'manage_options',               // Capacidade necessária
+        'customize.php'                 // Link direto para o customizer
+    );
+}
+add_action('admin_menu', 'cct_add_admin_menu');
+
+/**
+ * Página principal do Tema UENF
+ */
+function cct_admin_page_callback() {
+    ?>
+    <div class="wrap">
+        <h1>🎓 Tema UENF</h1>
+        <p>Bem-vindo ao painel de controle do Tema UENF. Gerencie todas as funcionalidades e configurações do seu tema.</p>
+        
+        <div class="card" style="max-width: 800px;">
+            <h2>🚀 Acesso Rápido</h2>
+            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-primary">🔧 Gerenciar Extensões</a></p>
+            <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-secondary">🎨 Personalizar Tema</a></p>
+        </div>
+        
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2>📊 Status do Sistema</h2>
+            <?php
+            $extension_manager = cct_extension_manager();
+            if ($extension_manager) {
+                $active_count = 0;
+                $total_count = 0;
+                
+                $extensions = $extension_manager->get_all_extensions();
+                $total_count = count($extensions);
+                
+                foreach ($extensions as $id => $extension) {
+                    if ($extension_manager->is_extension_active($id)) {
+                        $active_count++;
+                    }
+                }
+                
+                echo '<p><strong>Extensões Ativas:</strong> ' . $active_count . ' de ' . $total_count . '</p>';
+                
+                $percentage = $total_count > 0 ? ($active_count / $total_count) * 100 : 0;
+                if ($percentage <= 30) {
+                    echo '<p><strong>Performance:</strong> 🟢 Excelente</p>';
+                } elseif ($percentage <= 60) {
+                    echo '<p><strong>Performance:</strong> 🟡 Boa</p>';
+                } elseif ($percentage <= 80) {
+                    echo '<p><strong>Performance:</strong> 🟠 Moderada</p>';
+                } else {
+                    echo '<p><strong>Performance:</strong> 🔴 Pesada</p>';
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Página do Gerenciador de Extensões
+ */
+function cct_extensions_page_callback() {
+    // Processar formulário se enviado
+    if (isset($_POST['cct_update_extensions']) && wp_verify_nonce($_POST['cct_extensions_nonce'], 'cct_extensions_action')) {
+        $extension_manager = cct_extension_manager();
+        if ($extension_manager) {
+            $extensions = $extension_manager->get_all_extensions();
+            
+            // Atualizar cada extensão
+            foreach ($extensions as $id => $extension) {
+                $is_enabled = isset($_POST['extension_' . $id]) ? true : false;
+                $extension_manager->toggle_extension($id, $is_enabled);
+            }
+            
+            echo '<div class="notice notice-success is-dismissible" style="border-left: 4px solid #46b450; background: #f7fcf0; padding: 12px 15px; margin: 20px 0; border-radius: 4px;"><p style="margin: 0; color: #155724; font-weight: 500;">🎉 Configurações de extensões atualizadas com sucesso!</p></div>';
+        }
+    }
+    
+    // CSS personalizado para melhor UX/UI
+    echo '<style>
+    .cct-extensions-page {
+        background: #f1f1f1;
+        margin: -20px -20px 0 -10px;
+        padding: 20px;
+        min-height: calc(100vh - 32px);
+    }
+    .cct-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .cct-header h1 {
+        margin: 0 0 10px 0;
+        font-size: 2.2em;
+        font-weight: 600;
+    }
+    .cct-header p {
+        margin: 0;
+        opacity: 0.9;
+        font-size: 1.1em;
+    }
+    .cct-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border: 1px solid #e1e5e9;
+        transition: all 0.3s ease;
+    }
+    .cct-card:hover {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+    .cct-card h2 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 1.4em;
+        font-weight: 600;
+        border-bottom: 2px solid #f8f9fa;
+        padding-bottom: 10px;
+    }
+    .cct-controls {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    .cct-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+    }
+    .cct-btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+    .cct-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    .cct-btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(86, 171, 47, 0.3);
+    }
+    .cct-btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(86, 171, 47, 0.4);
+        color: white;
+    }
+    .cct-btn-danger {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+    }
+    .cct-btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        color: white;
+    }
+    .cct-btn-save {
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        color: white;
+        padding: 12px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
+    }
+    .cct-btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        color: white;
+    }
+    .cct-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .cct-table th {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        color: #495057;
+        border-bottom: 2px solid #dee2e6;
+    }
+    .cct-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f1f3f4;
+        vertical-align: middle;
+    }
+    .cct-table tr:hover {
+        background: #f8f9fa;
+    }
+    .cct-checkbox {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: #667eea;
+    }
+    .cct-status-active {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+    }
+    .cct-status-inactive {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+    }
+    .cct-extension-title {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 15px;
+    }
+    .cct-description {
+        color: #6c757d;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    .cct-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .cct-stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border: 1px solid #e1e5e9;
+    }
+    .cct-stat-number {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    .cct-stat-label {
+        color: #6c757d;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    </style>';
+    
+    ?>
+    <div class="cct-extensions-page">
+        <div class="cct-header">
+            <h1>🔧 Gerenciador de Extensões</h1>
+            <p>Controle todas as funcionalidades avançadas do tema. Desative extensões não utilizadas para melhorar a performance.</p>
+        </div>
+        
+        <?php
+        // Estatísticas das extensões
+        $extension_manager = cct_extension_manager();
+        if ($extension_manager) {
+            $extensions = $extension_manager->get_all_extensions();
+            $total_count = count($extensions);
+            $active_count = 0;
+            
+            foreach ($extensions as $id => $extension) {
+                if ($extension_manager->is_extension_active($id)) {
+                    $active_count++;
+                }
+            }
+            
+            $inactive_count = $total_count - $active_count;
+            $percentage = $total_count > 0 ? round(($active_count / $total_count) * 100) : 0;
+            ?>
+            <div class="cct-stats">
+                <div class="cct-stat-card">
+                    <div class="cct-stat-number" style="color: #667eea;"><?php echo $total_count; ?></div>
+                    <div class="cct-stat-label">Total de Extensões</div>
+                </div>
+                <div class="cct-stat-card">
+                    <div class="cct-stat-number" style="color: #4CAF50;"><?php echo $active_count; ?></div>
+                    <div class="cct-stat-label">Extensões Ativas</div>
+                </div>
+                <div class="cct-stat-card">
+                    <div class="cct-stat-number" style="color: #ff6b6b;"><?php echo $inactive_count; ?></div>
+                    <div class="cct-stat-label">Extensões Inativas</div>
+                </div>
+                <div class="cct-stat-card">
+                    <div class="cct-stat-number" style="color: #ffa726;"><?php echo $percentage; ?>%</div>
+                    <div class="cct-stat-label">Taxa de Utilização</div>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+        
+        <div class="cct-card">
+            <h2>⚡ Acesso Rápido</h2>
+            <p style="margin-bottom: 20px; color: #6c757d;">Configure as extensões ativas diretamente no Customizer do WordPress:</p>
+            <a href="<?php echo admin_url('customize.php'); ?>" class="cct-btn cct-btn-primary">🎨 Abrir Customizer</a>
+            <p style="margin-top: 15px; font-size: 13px; color: #6c757d;">💡 <strong>Dica:</strong> No Customizer, procure por: <strong>🎓 Tema UENF → 🔧 Gerenciador de Extensões</strong></p>
+        </div>
+        
+        <div class="cct-card">
+            <h2>📋 Gerenciar Extensões</h2>
+            <?php
+            if ($extension_manager && !empty($extensions)) {
+                ?>
+                <form method="post" action="">
+                    <?php wp_nonce_field('cct_extensions_action', 'cct_extensions_nonce'); ?>
+                    
+                    <div class="cct-controls">
+                        <button type="button" id="select-all-extensions" class="cct-btn cct-btn-success">✅ Selecionar Todas</button>
+                        <button type="button" id="deselect-all-extensions" class="cct-btn cct-btn-danger">❌ Desmarcar Todas</button>
+                    </div>
+                    
+                    <table class="cct-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px; text-align: center;">Ativar</th>
+                                <th>Extensão</th>
+                                <th style="width: 120px; text-align: center;">Status</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($extensions as $id => $extension) {
+                                $is_active = $extension_manager->is_extension_active($id);
+                                $status_class = $is_active ? 'cct-status-active' : 'cct-status-inactive';
+                                $status_text = $is_active ? '✅ Ativa' : '❌ Inativa';
+                                $title = isset($extension['title']) ? $extension['title'] : ucfirst($id);
+                                $description = isset($extension['description']) ? $extension['description'] : 'Sem descrição disponível';
+                                
+                                echo '<tr>';
+                                echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox cct-checkbox" ' . checked($is_active, true, false) . '></td>';
+                                echo '<td><span class="cct-extension-title">' . esc_html($title) . '</span></td>';
+                                echo '<td style="text-align: center;"><span class="' . $status_class . '">' . $status_text . '</span></td>';
+                                echo '<td><span class="cct-description">' . esc_html($description) . '</span></td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    
+                    <div style="margin-top: 25px; text-align: center;">
+                        <input type="submit" name="cct_update_extensions" class="cct-btn cct-btn-save" value="💾 Salvar Configurações">
+                    </div>
+                </form>
+                
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Selecionar todas as extensões
+                    document.getElementById('select-all-extensions').addEventListener('click', function() {
+                        var checkboxes = document.querySelectorAll('.extension-checkbox');
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.checked = true;
+                        });
+                        
+                        // Feedback visual
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 150);
+                    });
+                    
+                    // Desmarcar todas as extensões
+                    document.getElementById('deselect-all-extensions').addEventListener('click', function() {
+                        var checkboxes = document.querySelectorAll('.extension-checkbox');
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.checked = false;
+                        });
+                        
+                        // Feedback visual
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 150);
+                    });
+                    
+                    // Animação nos checkboxes
+                    document.querySelectorAll('.extension-checkbox').forEach(function(checkbox) {
+                        checkbox.addEventListener('change', function() {
+                            var row = this.closest('tr');
+                            if (this.checked) {
+                                row.style.background = 'linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%)';
+                            } else {
+                                row.style.background = '';
+                            }
+                        });
+                    });
+                });
+                </script>
+                <?php
+            } else {
+                echo '<div style="text-align: center; padding: 40px; color: #6c757d;">';
+                echo '<div style="font-size: 48px; margin-bottom: 20px;">📦</div>';
+                echo '<h3>Nenhuma extensão encontrada</h3>';
+                echo '<p>O gerenciador de extensões não está disponível ou não há extensões registradas.</p>';
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Garante que o sistema global de extensões esteja ativo (sem forçar extensões específicas)
+ */
+function cct_ensure_global_system_activated() {
+    // Garantir apenas que o sistema global esteja ativo
+    if (get_theme_mod('cct_extensions_global_enabled') === false) {
+        set_theme_mod('cct_extensions_global_enabled', true);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Sistema global de extensões ativado');
+        }
+    }
+    
+    // Não forçar mais a ativação de extensões específicas
+    // Permitir que o usuário tenha controle total sobre quais extensões ativar
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('CCT: Sistema de extensões inicializado - controle total do usuário');
+    }
+}
+add_action('after_setup_theme', 'cct_ensure_global_system_activated', 5);
+
+/**
+ * Inicializa extensões do customizer através do gerenciador
+ */
+function cct_init_customizer_extensions($wp_customize, $extension_manager) {
+    // Verificar se o gerenciador está disponível
+    if (!$extension_manager || !is_object($extension_manager)) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Gerenciador de extensões não disponível');
+        }
+        return;
+    }
+    
+    // Garantir que o sistema esteja habilitado globalmente
+     $global_enabled = get_theme_mod('cct_extensions_global_enabled', true);
+     
+     // Forçar ativação se não estiver definido
+     if ($global_enabled === null || $global_enabled === false) {
+         set_theme_mod('cct_extensions_global_enabled', true);
+         $global_enabled = true;
+         
+         if (defined('WP_DEBUG') && WP_DEBUG) {
+             error_log('CCT: Sistema de extensões foi reativado automaticamente');
+         }
+     }
+     
+     if (!$global_enabled) {
+         if (defined('WP_DEBUG') && WP_DEBUG) {
+             error_log('CCT: Sistema de extensões desabilitado globalmente - não carregando extensões');
+         }
+         return;
+     }
+    
+    // Mapeamento de extensões para classes
+     $extension_classes = array(
+         'colors' => 'CCT_Color_Manager',
+         'icons' => 'CCT_Icon_Manager', 
+         'typography' => 'CCT_Typography_Customizer',
+         'dark_mode' => 'CCT_Dark_Mode_Manager',
+         'shadows' => 'CCT_Shadow_Manager',
+         'breakpoints' => 'CCT_Responsive_Breakpoints_Manager',
+         'design_tokens' => 'CCT_Design_Tokens_Manager',
+         'patterns' => 'CCT_Pattern_Library_Manager',
+         'gradients' => 'CCT_Gradient_Manager',
+         'animations' => 'CCT_Animation_Manager'
+     );
+    
+    // Classes que precisam de $wp_customize no construtor
+      $constructor_classes = array('colors', 'icons', 'typography');
+     
+     // Carregar cada extensão se estiver ativa
+     foreach ($extension_classes as $extension_id => $class_name) {
+         if ($extension_manager->is_extension_active($extension_id) && class_exists($class_name)) {
+             try {
+                 // Verificar se a classe precisa de $wp_customize no construtor
+                 if (in_array($extension_id, $constructor_classes)) {
+                     // Classes que recebem $wp_customize no construtor
+                     $manager = new $class_name($wp_customize);
+                     
+                     // Verificar se tem método init
+                     if (method_exists($manager, 'init')) {
+                         $manager->init();
+                     }
+                 } else {
+                     // Classes que usam método register
+                     $manager = new $class_name();
+                     
+                     if (method_exists($manager, 'register')) {
+                         $manager->register($wp_customize);
+                     }
+                 }
+                 
+                 // Log para debug
+                 if (defined('WP_DEBUG') && WP_DEBUG) {
+                     error_log("CCT: Extensão {$extension_id} carregada com sucesso");
+                 }
+                 
+             } catch (Exception $e) {
+                 // Log de erro
+                 if (defined('WP_DEBUG') && WP_DEBUG) {
+                     error_log("CCT: Erro ao carregar extensão {$extension_id}: " . $e->getMessage());
+                 }
+             }
+         } else {
+             // Log quando extensão está desabilitada
+             if (defined('WP_DEBUG') && WP_DEBUG && !$extension_manager->is_extension_active($extension_id)) {
+                 error_log("CCT: Extensão {$extension_id} está desabilitada");
+             }
+         }
+     }
+}
 require_once CCT_THEME_DIR . '/inc/template-tags.php';
 require_once CCT_THEME_DIR . '/inc/template-functions.php';
 require_once CCT_THEME_DIR . '/inc/optimization.php';
@@ -1057,22 +1643,33 @@ function uenf_load_addons() {
 // Carrega os addons após o tema estar pronto
 add_action('after_setup_theme', 'uenf_load_addons', 10);
 
-// Verifica a ordem de carregamento dos scripts
+// Verifica a ordem de carregamento dos scripts (apenas se WP_DEBUG ativo)
 function cct_debug_scripts_footer() {
-    global $wp_scripts;
-    
-    echo '<!-- Scripts enfileirados: -->' . "\n";
-    foreach( $wp_scripts->queue as $handle ) {
-        $src = $wp_scripts->registered[$handle]->src;
-        $deps = implode(', ', $wp_scripts->registered[$handle]->deps);
-        echo "<!-- Script: {$handle} | Src: {$src} | Dependencies: {$deps} -->\n";
+    // Só executa se WP_DEBUG estiver ativo
+    if (!defined('WP_DEBUG') || !WP_DEBUG) {
+        return;
     }
     
-    // Verifica se o jQuery está carregado corretamente
+    global $wp_scripts;
+    
+    // Usar error_log em vez de echo para evitar problemas de output buffering
+    if (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+        $debug_info = "Scripts enfileirados: ";
+        foreach( $wp_scripts->queue as $handle ) {
+            $src = $wp_scripts->registered[$handle]->src;
+            $deps = implode(', ', $wp_scripts->registered[$handle]->deps);
+            $debug_info .= "Script: {$handle} | Src: {$src} | Dependencies: {$deps}; ";
+        }
+        error_log($debug_info);
+    }
+    
+    // JavaScript debug apenas no console
     echo '<script>
-        console.log("[DEBUG] jQuery version:", typeof jQuery !== "undefined" ? jQuery.fn.jquery : "jQuery não carregado");
-        console.log("[DEBUG] uenfEventRouter:", typeof uenfEventRouter !== "undefined" ? "Carregado" : "Não carregado");
-        console.log("[DEBUG] UENFMenu:", typeof UENFMenu !== "undefined" ? "Definido" : "Não definido");
+        if (typeof console !== "undefined") {
+            console.log("[CCT DEBUG] jQuery version:", typeof jQuery !== "undefined" ? jQuery.fn.jquery : "jQuery não carregado");
+            console.log("[CCT DEBUG] uenfEventRouter:", typeof uenfEventRouter !== "undefined" ? "Carregado" : "Não carregado");
+            console.log("[CCT DEBUG] UENFMenu:", typeof UENFMenu !== "undefined" ? "Definido" : "Não definido");
+        }
     </script>';
 }
 add_action('wp_print_footer_scripts', 'cct_debug_scripts_footer', 9999);

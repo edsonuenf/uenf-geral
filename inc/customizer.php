@@ -293,11 +293,11 @@ if ( ! function_exists( 'esc_url' ) ) {
  * @see https://developer.wordpress.org/themes/customize-api/customizer-objects/
  */
 function cct_customize_register( $wp_customize ) {
-    // Painel de Cores
-    $wp_customize->add_panel('cct_colors_panel', array(
-        'title' => __('Cores do Tema', 'cct'),
-        'priority' => 30,
-    ));
+    // Painel de Cores - Comentado temporariamente para teste
+    // $wp_customize->add_panel('cct_colors_panel', array(
+    //     'title' => __('Cores do Tema', 'cct'),
+    //     'priority' => 30,
+    // ));
     
     // ====================================
     // Seção: Menu de Navegação
@@ -1468,6 +1468,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
             'data-action' => 'reset-customizer',
         ),
     ));
+    
+    // Seção de gerenciador de extensões removida - usando apenas o gerenciador principal
 }
 add_action( 'customize_register', 'cct_customize_register' );
 
@@ -1607,14 +1609,14 @@ function maybe_convert_to_rgba($color) {
 // Output Customizer CSS
 function cct_customize_css() {
     
-    // Iniciar a saída do CSS
-    echo '<style type="text/css' . '" id="cct-custom-css">' . "\n";
-    
     // Obter valores dos temas
     $primary_color = defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771';
     
+    // Usar output buffering seguro
+    $css_output = '<style type="text/css" id="cct-custom-css">' . "\n";
+    
     // Estilos para campos de formulário
-    echo '.input-form-uenf,
+    $css_output .= '.input-form-uenf,
     .textarea-form-uenf,
     .select-form-uenf {
         width: 100%;
@@ -1631,7 +1633,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo para hover nos campos
-    echo '.input-form-uenf:hover,
+    $css_output .= '.input-form-uenf:hover,
     .textarea-form-uenf:hover,
     .select-form-uenf:hover {
         border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . ';
@@ -1639,7 +1641,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo para foco nos campos
-    echo '.input-form-uenf:focus,
+    $css_output .= '.input-form-uenf:focus,
     .textarea-form-uenf:focus,
     .select-form-uenf:focus {
         outline: none;
@@ -1649,13 +1651,13 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo para textarea
-    echo '.textarea-form-uenf {
+    $css_output .= '.textarea-form-uenf {
         min-height: 120px;
         resize: vertical;
     }' . "\n\n";
     
     // Estilo para select personalizado
-    echo '.select-form-uenf {
+    $css_output .= '.select-form-uenf {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
@@ -1667,7 +1669,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilos para botões
-    echo '.btn-submit-uenf,
+    $css_output .= '.btn-submit-uenf,
     .btn-form-uenf,
     button[type="submit"].btn-uenf {
         display: inline-block;
@@ -1689,7 +1691,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo hover para botões
-    echo '.btn-submit-uenf:hover,
+    $css_output .= '.btn-submit-uenf:hover,
     .btn-form-uenf:hover,
     button[type="submit"].btn-uenf:hover {
         background-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color . 'e6')) . ';
@@ -1700,7 +1702,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo ativo para botões
-    echo '.btn-submit-uenf:active,
+    $css_output .= '.btn-submit-uenf:active,
     .btn-form-uenf:active,
     button[type="submit"].btn-uenf:active {
         transform: translateY(0);
@@ -1708,7 +1710,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo para foco no botão
-    echo '.btn-submit-uenf:focus,
+    $css_output .= '.btn-submit-uenf:focus,
     .btn-form-uenf:focus,
     button[type="submit"].btn-uenf:focus {
         outline: none;
@@ -1716,7 +1718,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo para labels
-    echo '.form-label-uenf {
+    $css_output .= '.form-label-uenf {
         display: block;
         margin-bottom: 5px;
         font-weight: 500;
@@ -1724,7 +1726,7 @@ function cct_customize_css() {
     }' . "\n\n";
     
     // Estilo para grupos de formulário
-    echo '.form-group-uenf {
+    $css_output .= '.form-group-uenf {
         margin-bottom: 20px;
     }' . "\n";
     
@@ -2069,65 +2071,68 @@ function cct_customize_css() {
     echo '}';
     
     // Estilos para Botões de Formulário
-    echo '.btn-submit-uenf,
+    $css_output .= '.btn-submit-uenf,
     .btn-form-uenf,
     button[type="submit"].btn-uenf {';
-    echo 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';';
-    echo 'color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';';
-    echo 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '4px')) . ';';
-    echo 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 20px')) . ';';
-    echo 'border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';';
-    echo 'cursor: pointer;';
-    echo 'font-size: 16px;';
-    echo 'font-weight: 500;';
-    echo 'text-align: center;';
-    echo 'text-decoration: none;';
-    echo 'display: inline-block;';
-    echo 'transition: all 0.3s ease;';
-    echo '}';
+    $css_output .= 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';';
+    $css_output .= 'color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';';
+    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '4px')) . ';';
+    $css_output .= 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 20px')) . ';';
+    $css_output .= 'border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';';
+    $css_output .= 'cursor: pointer;';
+    $css_output .= 'font-size: 16px;';
+    $css_output .= 'font-weight: 500;';
+    $css_output .= 'text-align: center;';
+    $css_output .= 'text-decoration: none;';
+    $css_output .= 'display: inline-block;';
+    $css_output .= 'transition: all 0.3s ease;';
+    $css_output .= '}';
     
     // Estilo para hover do botão
-    echo '.btn-submit-uenf:hover,
+    $css_output .= '.btn-submit-uenf:hover,
     .btn-form-uenf:hover,
     button[type="submit"].btn-uenf:hover {';
-    echo 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color)) . ';';
-    echo 'color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';';
-    echo 'border-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color)) . ';';
-    echo 'transform: translateY(-1px);';
-    echo 'box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);';
-    echo '}';
+    $css_output .= 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color)) . ';';
+    $css_output .= 'color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';';
+    $css_output .= 'border-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color)) . ';';
+    $css_output .= 'transform: translateY(-1px);';
+    $css_output .= 'box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);';
+    $css_output .= '}';
     
     // Estilo para botão ativo
-    echo '.btn-submit-uenf:active,
+    $css_output .= '.btn-submit-uenf:active,
     .btn-form-uenf:active,
     button[type="submit"].btn-uenf:active {';
-    echo 'transform: translateY(0);';
-    echo 'box-shadow: none;';
-    echo '}';
+    $css_output .= 'transform: translateY(0);';
+    $css_output .= 'box-shadow: none;';
+    $css_output .= '}';
     
     // Estilo para foco no botão
-    echo '.btn-submit-uenf:focus,
+    $css_output .= '.btn-submit-uenf:focus,
     .btn-form-uenf:focus,
     button[type="submit"].btn-uenf:focus {';
-    echo 'outline: none;';
-    echo 'box-shadow: 0 0 0 2px rgba(29, 55, 113, 0.25);';
-    echo '}';
+    $css_output .= 'outline: none;';
+    $css_output .= 'box-shadow: 0 0 0 2px rgba(29, 55, 113, 0.25);';
+    $css_output .= '}';
     
     // Estilo para labels
-    echo '.form-label-uenf {';
-    echo 'display: block;';
-    echo 'margin-bottom: 5px;';
-    echo 'font-weight: 500;';
-    echo 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';';
-    echo '}';
+    $css_output .= '.form-label-uenf {';
+    $css_output .= 'display: block;';
+    $css_output .= 'margin-bottom: 5px;';
+    $css_output .= 'font-weight: 500;';
+    $css_output .= 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';';
+    $css_output .= '}';
     
     // Estilo para grupos de formulário
-    echo '.form-group-uenf {';
-    echo 'margin-bottom: 20px;';
-    echo '}';
+    $css_output .= '.form-group-uenf {';
+    $css_output .= 'margin-bottom: 20px;';
+    $css_output .= '}';
     
     // Fechar a tag de estilo
-    echo '</style>';
+    $css_output .= '</style>';
+    
+    // Output seguro sem interferir com buffer
+    echo $css_output;
 }
 add_action('wp_head', 'cct_customize_css', 999);
 
@@ -2417,6 +2422,78 @@ function cct_backup_restore_scripts() {
 add_action('customize_controls_enqueue_scripts', 'cct_backup_restore_scripts');
 
 /**
+ * Enqueue extension manager JavaScript
+ */
+function cct_extension_manager_scripts() {
+    if (is_customize_preview()) {
+        return;
+    }
+    
+    wp_add_inline_script('customize-controls', '
+        function cctEnableAllExtensions() {
+            // Ativar controle global
+            if (wp.customize.control("cct_extensions_global_enabled")) {
+                wp.customize.control("cct_extensions_global_enabled").setting.set(true);
+            }
+            
+            // Ativar todas as extensões individuais
+            var extensionControls = [
+                "cct_extension_dark_mode_enabled",
+                "cct_extension_shadows_enabled",
+                "cct_extension_breakpoints_enabled",
+                "cct_extension_gradients_enabled",
+                "cct_extension_animations_enabled",
+                "cct_extension_patterns_enabled",
+                "cct_extension_design_tokens_enabled",
+                "cct_extension_colors_enabled",
+                "cct_extension_icons_enabled",
+                "cct_extension_typography_enabled"
+            ];
+            
+            extensionControls.forEach(function(controlId) {
+                if (wp.customize.control(controlId)) {
+                    wp.customize.control(controlId).setting.set(true);
+                }
+            });
+            
+            alert("✅ Todas as extensões foram ativadas!");
+        }
+        
+        function cctDisableAllExtensions() {
+            if (confirm("⚠️ Tem certeza que deseja desativar todas as extensões?\n\nIsso pode afetar a aparência do seu site.")) {
+                // Desativar todas as extensões individuais
+                var extensionControls = [
+                    "cct_extension_dark_mode_enabled",
+                    "cct_extension_shadows_enabled",
+                    "cct_extension_breakpoints_enabled",
+                    "cct_extension_gradients_enabled",
+                    "cct_extension_animations_enabled",
+                    "cct_extension_patterns_enabled",
+                    "cct_extension_design_tokens_enabled",
+                    "cct_extension_colors_enabled",
+                    "cct_extension_icons_enabled",
+                    "cct_extension_typography_enabled"
+                ];
+                
+                extensionControls.forEach(function(controlId) {
+                    if (wp.customize.control(controlId)) {
+                        wp.customize.control(controlId).setting.set(false);
+                    }
+                });
+                
+                // Opcionalmente desativar o controle global também
+                if (wp.customize.control("cct_extensions_global_enabled")) {
+                    wp.customize.control("cct_extensions_global_enabled").setting.set(false);
+                }
+                
+                alert("❌ Todas as extensões foram desativadas!");
+            }
+        }
+    ');
+}
+add_action('customize_controls_enqueue_scripts', 'cct_extension_manager_scripts');
+
+/**
  * Enqueue validation JavaScript for visual feedback
  */
 function cct_customizer_validation_scripts() {
@@ -2443,3 +2520,322 @@ function cct_customizer_tooltips_scripts() {
     );
 }
 add_action('customize_controls_enqueue_scripts', 'cct_customizer_tooltips_scripts');
+
+/**
+ * Adiciona sistema de combinações de fontes predefinidas
+ */
+function cct_font_combinations_customizer($wp_customize) {
+    // Adicionar painel de Tipografia Avançada - Comentado temporariamente para teste
+    // $wp_customize->add_panel('cct_typography_panel', array(
+    //     'title' => __('Tipografia Avançada', 'cct'),
+    //     'description' => __('Configure fontes, escalas tipográficas e combinações profissionais.', 'cct'),
+    //     'priority' => 160,
+    // ));
+    
+    // Seção de Combinações de Fontes - Comentado temporariamente para teste
+    // $wp_customize->add_section('cct_font_combinations', array(
+    //     'title' => __('Combinações de Fontes', 'cct'),
+    //     'description' => __('Pairings profissionais de fontes com preview em tempo real.', 'cct'),
+    //     'panel' => 'cct_typography_panel',
+    //     'priority' => 10,
+    // ));
+    
+    // Adicionar preview control customizado - Comentado temporariamente para teste
+    // $wp_customize->add_setting('cct_font_preview_dummy', array(
+    //     'default' => '',
+    //     'sanitize_callback' => 'sanitize_text_field',
+    //     'transport' => 'postMessage',
+    // ));
+    // 
+    // $wp_customize->add_control('cct_font_preview_dummy', array(
+    //     'label' => __('Preview da Combinação', 'cct'),
+    //     'description' => __('Visualize como ficará a tipografia com a combinação selecionada.', 'cct'),
+    //     'section' => 'cct_font_combinations',
+    //     'type' => 'hidden',
+    //     'priority' => 15,
+    // ));
+    // 
+    // // Configuração para combinação predefinida
+    // $wp_customize->add_setting('cct_font_pairing_preset', array(
+    //     'default' => 'theme_default',
+    //     'sanitize_callback' => 'cct_sanitize_font_pairing',
+    //     'transport' => 'refresh',
+    // ));
+    // 
+    // // Controle para seleção de combinação
+    // $wp_customize->add_control('cct_font_pairing_preset', array(
+    //     'label' => __('Combinação Predefinida', 'cct'),
+    //     'description' => __('Escolha uma combinação profissional de fontes.', 'cct'),
+    //     'section' => 'cct_font_combinations',
+    //     'type' => 'select',
+    //     'choices' => array(
+    //         'theme_default' => 'Padrão do Tema - Usar as fontes padrão do tema atual',
+    //         'uenf_default' => 'UENF Padrão - Ubuntu + Open Sans (identidade institucional)',
+    //         'corporate' => 'Corporativo - Roboto + Lato (profissional e confiável)',
+     //         'editorial' => 'Editorial - Merriweather + PT Sans (perfeito para blogs)',
+     //         'creative' => 'Criativo - Playfair Display + Source Sans Pro (moderno)',
+     //         'academic' => 'Acadêmico - Crimson Text + Open Sans (elegante e legível)',
+     //         'tech' => 'Tecnológico - Orbitron + Roboto (moderno e futurista)',
+     //     ),
+     // ));
+     // 
+     // // Configuração para aplicar automaticamente
+     // $wp_customize->add_setting('cct_apply_font_pairing', array(
+     //     'default' => true,
+     //     'sanitize_callback' => 'wp_validate_boolean',
+     //     'transport' => 'refresh',
+     // ));
+     // 
+     // // Controle para aplicação automática
+     // $wp_customize->add_control('cct_apply_font_pairing', array(
+     //     'label' => __('Aplicar Combinação Automaticamente', 'cct'),
+     //     'description' => __('Aplica automaticamente as fontes da combinação selecionada.', 'cct'),
+     //     'section' => 'cct_font_combinations',
+     //     'type' => 'checkbox',
+     // ));
+}
+add_action('customize_register', 'cct_font_combinations_customizer');
+
+/**
+ * Sanitiza a seleção de font pairing
+ */
+function cct_sanitize_font_pairing($input) {
+    $valid_choices = array('theme_default', 'uenf_default', 'corporate', 'editorial', 'creative', 'academic', 'tech');
+    return in_array($input, $valid_choices) ? $input : 'theme_default';
+}
+
+/**
+ * Carrega Google Fonts baseado na combinação selecionada
+ */
+function cct_enqueue_font_combinations() {
+    $font_pairing = get_theme_mod('cct_font_pairing_preset', 'theme_default');
+    $apply_pairing = get_theme_mod('cct_apply_font_pairing', true);
+    
+    if (!$apply_pairing || $font_pairing === 'theme_default') {
+        return;
+    }
+    
+    $font_combinations = array(
+        'uenf_default' => array(
+            'heading' => 'Ubuntu:wght@500;700',
+            'body' => 'Open+Sans:wght@400;600',
+        ),
+        'corporate' => array(
+            'heading' => 'Roboto:wght@600',
+            'body' => 'Lato:wght@400',
+        ),
+        'editorial' => array(
+            'heading' => 'Merriweather:wght@600',
+            'body' => 'PT+Sans:wght@400',
+        ),
+        'creative' => array(
+            'heading' => 'Playfair+Display:wght@600',
+            'body' => 'Source+Sans+Pro:wght@400',
+        ),
+        'academic' => array(
+            'heading' => 'Crimson+Text:wght@600',
+            'body' => 'Open+Sans:wght@400',
+        ),
+        'tech' => array(
+            'heading' => 'Orbitron:wght@600',
+            'body' => 'Roboto:wght@400',
+        ),
+    );
+    
+    if (isset($font_combinations[$font_pairing])) {
+        $fonts = $font_combinations[$font_pairing];
+        $font_url = 'https://fonts.googleapis.com/css2?family=' . $fonts['heading'] . '&family=' . $fonts['body'] . '&display=swap';
+        
+        // Cache busting baseado na combinação selecionada
+        $version = $font_pairing . '_v1';
+        
+        // Remove fontes anteriores para evitar conflitos
+        wp_dequeue_style('cct-font-combinations');
+        wp_deregister_style('cct-font-combinations');
+        
+        // Carrega nova combinação com prioridade alta
+        wp_enqueue_style('cct-font-combinations', $font_url, array(), $version);
+        
+        // Preload para melhor performance
+        add_action('wp_head', function() use ($font_url) {
+            echo '<link rel="preload" href="' . esc_url($font_url) . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
+            echo '<noscript><link rel="stylesheet" href="' . esc_url($font_url) . '"></noscript>';
+        }, 1);
+    }
+}
+add_action('wp_enqueue_scripts', 'cct_enqueue_font_combinations');
+
+/**
+ * Aplica CSS das combinações de fontes
+ */
+function cct_font_combinations_css() {
+    $font_pairing = get_theme_mod('cct_font_pairing_preset', 'theme_default');
+    $apply_pairing = get_theme_mod('cct_apply_font_pairing', true);
+    
+    if (!$apply_pairing || $font_pairing === 'theme_default') {
+        return;
+    }
+    
+    $font_styles = array(
+        'uenf_default' => array(
+            'heading' => '"Ubuntu", "Arial", sans-serif',
+            'body' => '"Open Sans", "Helvetica", sans-serif',
+        ),
+        'corporate' => array(
+            'heading' => '"Roboto", "Arial", sans-serif',
+            'body' => '"Lato", "Helvetica", sans-serif',
+        ),
+        'editorial' => array(
+            'heading' => '"Merriweather", "Georgia", serif',
+            'body' => '"PT Sans", "Arial", sans-serif',
+        ),
+        'creative' => array(
+            'heading' => '"Playfair Display", "Times", serif',
+            'body' => '"Source Sans Pro", "Arial", sans-serif',
+        ),
+        'academic' => array(
+            'heading' => '"Crimson Text", "Times", serif',
+            'body' => '"Open Sans", "Arial", sans-serif',
+        ),
+        'tech' => array(
+            'heading' => '"Orbitron", "Arial", sans-serif',
+            'body' => '"Roboto", "Arial", sans-serif',
+        ),
+    );
+    
+    if (isset($font_styles[$font_pairing])) {
+        $styles = $font_styles[$font_pairing];
+        
+        // Usar output buffering seguro para evitar conflitos
+        $css_output = '<style type="text/css" id="cct-font-combinations-css">';
+        $css_output .= '/* CCT Font Combinations - Priority CSS */';
+        $css_output .= 'h1, h2, h3, h4, h5, h6, .entry-title, .site-title, .page-title, .post-title { font-family: ' . $styles['heading'] . ' !important; font-display: swap; }';
+        $css_output .= 'body, .entry-content, p, .content-area, .site-description, .widget, .menu { font-family: ' . $styles['body'] . ' !important; font-display: swap; }';
+        $css_output .= '/* Force font loading */';
+        $css_output .= 'body.fonts-loaded h1, body.fonts-loaded h2, body.fonts-loaded h3, body.fonts-loaded h4, body.fonts-loaded h5, body.fonts-loaded h6 { font-family: ' . $styles['heading'] . ' !important; }';
+        $css_output .= 'body.fonts-loaded, body.fonts-loaded p, body.fonts-loaded .entry-content { font-family: ' . $styles['body'] . ' !important; }';
+        $css_output .= '</style>';
+        
+        // JavaScript para verificar carregamento das fontes
+        $js_output = '<script>';
+        $js_output .= 'document.addEventListener("DOMContentLoaded", function() {';
+        $js_output .= '  if (document.fonts && document.fonts.ready) {';
+        $js_output .= '    document.fonts.ready.then(function() {';
+        $js_output .= '      document.body.classList.add("fonts-loaded");';
+        $js_output .= '    });';
+        $js_output .= '  } else {';
+        $js_output .= '    setTimeout(function() {';
+        $js_output .= '      document.body.classList.add("fonts-loaded");';
+        $js_output .= '    }, 3000);';
+        $js_output .= '  }';
+        $js_output .= '});';
+        $js_output .= '</script>';
+        
+        // Output seguro sem interferir com buffer
+        echo $css_output . $js_output;
+    }
+}
+add_action('wp_head', 'cct_font_combinations_css', 999);
+
+/**
+ * Adiciona JavaScript para preview em tempo real no customizer
+ */
+function cct_font_combinations_preview_js() {
+    wp_enqueue_script(
+        'cct-font-combinations-preview',
+        get_template_directory_uri() . '/js/customizer-typography.js',
+        array('jquery', 'customize-preview'),
+        wp_get_theme()->get('Version'),
+        true
+    );
+    
+    // Adicionar JavaScript inline para preview
+    wp_add_inline_script('cct-font-combinations-preview', '
+        (function($) {
+            // Aguarda o customizer estar pronto
+            $(document).ready(function() {
+                if (typeof wp !== "undefined" && wp.customize) {
+                    
+                    // Função para aplicar tipografia no preview
+                    function applyTypographyPreview(newval) {
+                        console.log("Aplicando preview:", newval);
+                        
+                        // Remove estilos anteriores
+                        $("#cct-preview-typography").remove();
+                        
+                        var css = "";
+                        var fontLink = "";
+                        
+                        switch(newval) {
+                            case "uenf_default":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Ubuntu:wght@500;700&family=Open+Sans:wght@400;600&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Ubuntu\",\"Arial\",sans-serif!important}body,.entry-content,p,.content-area{font-family:\"Open Sans\",\"Helvetica\",sans-serif!important}";
+                                break;
+                            case "classic_serif":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+Pro:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Playfair Display\",\"Times\",serif!important}body,.entry-content,p,.content-area{font-family:\"Source Sans Pro\",\"Arial\",sans-serif!important}";
+                                break;
+                            case "modern_sans":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Montserrat\",\"Arial\",sans-serif!important}body,.entry-content,p,.content-area{font-family:\"Open Sans\",\"Helvetica\",sans-serif!important}";
+                                break;
+                            case "humanist":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Merriweather:wght@600&family=Lato:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Merriweather\",\"Georgia\",serif!important}body,.entry-content,p,.content-area{font-family:\"Lato\",\"Helvetica\",sans-serif!important}";
+                                break;
+                            case "geometric":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Nunito:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Poppins\",\"Arial\",sans-serif!important}body,.entry-content,p,.content-area{font-family:\"Nunito\",\"Helvetica\",sans-serif!important}";
+                                break;
+                            case "editorial":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600&family=PT+Sans:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Crimson Text\",\"Times\",serif!important}body,.entry-content,p,.content-area{font-family:\"PT Sans\",\"Arial\",sans-serif!important}";
+                                break;
+                            case "tech":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Orbitron\",\"Arial\",sans-serif!important}body,.entry-content,p,.content-area{font-family:\"Roboto\",\"Arial\",sans-serif!important}";
+                                break;
+                            case "corporate":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@600&family=Lato:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Roboto\",\"Arial\",sans-serif!important}body,.entry-content,p,.content-area{font-family:\"Lato\",\"Helvetica\",sans-serif!important}";
+                                break;
+                            case "creative":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+Pro:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Playfair Display\",\"Times\",serif!important}body,.entry-content,p,.content-area{font-family:\"Source Sans Pro\",\"Arial\",sans-serif!important}";
+                                break;
+                            case "academic":
+                                fontLink = "<link href=\"https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600&family=Open+Sans:wght@400&display=swap\" rel=\"stylesheet\">";
+                                css = "h1,h2,h3,h4,h5,h6,.entry-title,.site-title{font-family:\"Crimson Text\",\"Times\",serif!important}body,.entry-content,p,.content-area{font-family:\"Open Sans\",\"Arial\",sans-serif!important}";
+                                break;
+                            case "theme_default":
+                            default:
+                                css = "/* Padrão do tema */";
+                                break;
+                        }
+                        
+                        // Aplica as mudanças no preview
+                        if (fontLink) {
+                            $("head").append(fontLink);
+                        }
+                        $("head").append("<style id=\"cct-preview-typography\">" + css + "</style>");
+                        
+                        // Força re-render
+                        $("body").addClass("cct-typography-updated").removeClass("cct-typography-updated");
+                    }
+                    
+                    // Bind para mudanças na configuração
+                    wp.customize("cct_font_pairing_preset", function(value) {
+                        value.bind(applyTypographyPreview);
+                    });
+                    
+                    // Aplica configuração inicial
+                    var initialValue = wp.customize("cct_font_pairing_preset").get();
+                    if (initialValue) {
+                        applyTypographyPreview(initialValue);
+                    }
+                }
+            });
+        })(jQuery);
+    ');
+}
+add_action('customize_preview_init', 'cct_font_combinations_preview_js');

@@ -55,7 +55,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
     /**
      * Inicializa as configurações de tipografia
      */
-    protected function init() {
+    public function init() {
         $this->init_google_fonts_api();
         $this->init_typography_scales();
         $this->init_font_pairings();
@@ -124,38 +124,38 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     private function init_font_pairings() {
         $this->font_pairings = array(
-            'classic_serif' => array(
-                'name' => 'Clássico Serif',
-                'description' => 'Combinação elegante para textos formais',
+            'theme_default' => array(
+                'name' => 'Padrão do Tema',
+                'description' => 'Usar as fontes padrão do tema atual',
+                'heading' => 'inherit',
+                'body' => 'inherit',
+                'category' => 'default'
+            ),
+            'academic' => array(
+                'name' => 'Acadêmico',
+                'description' => 'Elegante e legível',
+                'heading' => 'Crimson Text',
+                'body' => 'Open Sans',
+                'category' => 'academic'
+            ),
+            'corporate' => array(
+                'name' => 'Corporativo',
+                'description' => 'Profissional e confiável',
+                'heading' => 'Roboto',
+                'body' => 'Lato',
+                'category' => 'business'
+            ),
+            'creative' => array(
+                'name' => 'Criativo',
+                'description' => 'Moderno e expressivo',
                 'heading' => 'Playfair Display',
                 'body' => 'Source Sans Pro',
-                'category' => 'elegant'
-            ),
-            'modern_sans' => array(
-                'name' => 'Moderno Sans',
-                'description' => 'Clean e contemporâneo',
-                'heading' => 'Montserrat',
-                'body' => 'Open Sans',
-                'category' => 'modern'
-            ),
-            'humanist' => array(
-                'name' => 'Humanista',
-                'description' => 'Amigável e legível',
-                'heading' => 'Merriweather',
-                'body' => 'Lato',
-                'category' => 'friendly'
-            ),
-            'geometric' => array(
-                'name' => 'Geométrico',
-                'description' => 'Preciso e minimalista',
-                'heading' => 'Poppins',
-                'body' => 'Nunito',
-                'category' => 'minimal'
+                'category' => 'creative'
             ),
             'editorial' => array(
                 'name' => 'Editorial',
                 'description' => 'Perfeito para blogs e artigos',
-                'heading' => 'Crimson Text',
+                'heading' => 'Merriweather',
                 'body' => 'PT Sans',
                 'category' => 'editorial'
             ),
@@ -173,12 +173,26 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      * Adiciona seções de tipografia no customizer (Aparência → Personalizar)
      */
     private function add_typography_sections() {
-        // Painel principal "Tipografia Avançada" no customizer
+        // Verificar se a extensão está ativa antes de criar o painel
+        $extension_manager = cct_extension_manager();
+        if (!$extension_manager || !$extension_manager->is_extension_active('typography')) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT Typography: Extensão desativada - painel não criado');
+            }
+            return; // Sair sem criar o painel
+        }
+        
+        // Criar painel de tipografia (só se extensão estiver ativa)
         $this->wp_customize->add_panel('cct_typography_panel', array(
-            'title' => __('Tipografia Avançada', 'cct'),
-            'description' => __('Configure fontes, escalas tipográficas e pairings profissionais.', 'cct'),
+            'title' => __('📝 Tipografia Avançada', 'cct'),
+            'description' => __('Configure fontes, escalas tipográficas e pairings profissionais. Sistema completo de tipografia com Google Fonts, escalas harmoniosas e combinações profissionais.', 'cct'),
             'priority' => 160,
         ));
+        
+        // Debug log para verificar criação
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT Typography: Painel de tipografia criado (extensão ativa)');
+        }
         
         // Seção de Google Fonts
         $this->add_section('typography_google_fonts', array(
@@ -327,18 +341,32 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     private function add_font_pairing_settings() {
         // Seletor de pairing predefinido
-        $this->add_setting('font_pairing_preset', array(
-            'default' => 'modern_sans',
+        $this->add_setting('cct_font_pairing_preset', array(
+            'default' => 'theme_default',
             'sanitize_callback' => array($this, 'sanitize_font_pairing'),
             'transport' => 'refresh',
         ));
         
-        $this->add_control('font_pairing_preset', array(
+        $this->add_control('cct_font_pairing_preset', array(
             'label' => __('Combinação Predefinida', 'cct'),
             'description' => __('Escolha uma combinação profissional de fontes.', 'cct'),
             'section' => $this->prefix . 'typography_font_pairing',
             'type' => 'select',
             'choices' => $this->get_font_pairing_choices(),
+        ));
+        
+        // Aplicar pairing automaticamente
+        $this->add_setting('cct_apply_font_pairing', array(
+            'default' => true,
+            'sanitize_callback' => 'wp_validate_boolean',
+            'transport' => 'refresh',
+        ));
+        
+        $this->add_control('cct_apply_font_pairing', array(
+            'label' => __('Aplicar Combinação Automaticamente', 'cct'),
+            'description' => __('Aplica automaticamente as fontes da combinação selecionada.', 'cct'),
+            'section' => $this->prefix . 'typography_font_pairing',
+            'type' => 'checkbox',
         ));
         
         // Preview do pairing
@@ -349,7 +377,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
                 array(
                     'label' => __('Preview da Combinação', 'cct'),
                     'section' => $this->prefix . 'typography_font_pairing',
-                    'settings' => $this->prefix . 'font_pairing_preset',
+                    'settings' => 'cct_font_pairing_preset',
                     'font_pairings' => $this->font_pairings,
                 )
             )
@@ -504,7 +532,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_setting('custom_font_upload', array(
             'default' => '',
             'sanitize_callback' => 'esc_url_raw',
-            'transport' => 'refresh',
+            'transport' => 'postMessage',
         ));
         
         $this->wp_customize->add_control(
@@ -524,7 +552,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_setting('custom_font_name', array(
             'default' => '',
             'sanitize_callback' => 'sanitize_text_field',
-            'transport' => 'refresh',
+            'transport' => 'postMessage',
         ));
         
         $this->add_control('custom_font_name', array(
@@ -541,6 +569,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
     private function add_hooks() {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_google_fonts'));
         add_action('wp_head', array($this, 'output_typography_css'), 999);
+        add_action('customize_preview_init', array($this, 'enqueue_preview_scripts'));
         add_action('wp_ajax_cct_refresh_google_fonts', array($this, 'ajax_refresh_google_fonts'));
         add_action('wp_ajax_cct_get_font_variants', array($this, 'ajax_get_font_variants'));
     }
@@ -549,19 +578,39 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      * Carrega fontes do Google
      */
     public function enqueue_google_fonts() {
-        $heading_font = $this->get_theme_mod('heading_font_family', 'Roboto');
-        $body_font = $this->get_theme_mod('body_font_family', 'Open Sans');
-        $heading_weight = $this->get_theme_mod('heading_font_weight', '600');
-        $body_weight = $this->get_theme_mod('body_font_weight', '400');
+        // Verificar se há font pairing selecionado
+        $font_pairing = $this->get_theme_mod('cct_font_pairing_preset', 'theme_default');
+        $apply_pairing = $this->get_theme_mod('cct_apply_font_pairing', true);
+        
+        if (!empty($font_pairing) && $apply_pairing && isset($this->font_pairings[$font_pairing])) {
+            // Usar fontes do pairing
+            $pairing = $this->font_pairings[$font_pairing];
+            
+            if ($font_pairing === 'theme_default') {
+                // Não carregar Google Fonts, usar padrão do tema
+                return;
+            }
+            
+            $heading_font = $pairing['heading'];
+            $body_font = $pairing['body'];
+            $heading_weight = '600';
+            $body_weight = '400';
+        } else {
+            // Usar fontes individuais
+            $heading_font = $this->get_theme_mod('heading_font_family', 'Roboto');
+            $body_font = $this->get_theme_mod('body_font_family', 'Open Sans');
+            $heading_weight = $this->get_theme_mod('heading_font_weight', '600');
+            $body_weight = $this->get_theme_mod('body_font_weight', '400');
+        }
         
         $fonts = array();
         
         if ($heading_font && $heading_font !== 'inherit') {
-            $fonts[] = $heading_font . ':' . $heading_weight;
+            $fonts[] = urlencode($heading_font) . ':wght@' . $heading_weight;
         }
         
         if ($body_font && $body_font !== 'inherit' && $body_font !== $heading_font) {
-            $fonts[] = $body_font . ':' . $body_weight;
+            $fonts[] = urlencode($body_font) . ':wght@' . $body_weight;
         }
         
         if (!empty($fonts)) {
@@ -584,16 +633,48 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
     }
     
     /**
+     * Enfileira scripts para preview do customizer
+     */
+    public function enqueue_preview_scripts() {
+        wp_enqueue_script(
+            'cct-typography-preview',
+            get_template_directory_uri() . '/js/customizer-typography-preview.js',
+            array('jquery', 'customize-preview'),
+            filemtime(get_template_directory() . '/js/customizer-typography-preview.js'),
+            true
+        );
+    }
+    
+    /**
      * Gera CSS baseado nas configurações
      */
     public function generate_typography_css() {
         $css = '';
         
-        // Fontes
-        $heading_font = $this->get_theme_mod('heading_font_family', 'Roboto');
-        $body_font = $this->get_theme_mod('body_font_family', 'Open Sans');
-        $heading_weight = $this->get_theme_mod('heading_font_weight', '600');
-        $body_weight = $this->get_theme_mod('body_font_weight', '400');
+        // Verificar se há font pairing selecionado
+        $font_pairing = $this->get_theme_mod('cct_font_pairing_preset', 'theme_default');
+        $apply_pairing = $this->get_theme_mod('cct_apply_font_pairing', true);
+        
+        if (!empty($font_pairing) && $apply_pairing && isset($this->font_pairings[$font_pairing])) {
+            // Usar fontes do pairing
+            $pairing = $this->font_pairings[$font_pairing];
+            
+            if ($font_pairing === 'theme_default') {
+                // Não aplicar CSS customizado, usar padrão do tema
+                return '';
+            }
+            
+            $heading_font = $pairing['heading'];
+            $body_font = $pairing['body'];
+            $heading_weight = '600';
+            $body_weight = '400';
+        } else {
+            // Usar fontes individuais
+            $heading_font = $this->get_theme_mod('heading_font_family', 'Roboto');
+            $body_font = $this->get_theme_mod('body_font_family', 'Open Sans');
+            $heading_weight = $this->get_theme_mod('heading_font_weight', '600');
+            $body_weight = $this->get_theme_mod('body_font_weight', '400');
+        }
         
         // Configurações de leitura
         $line_height = $this->get_theme_mod('line_height', '1.6');
@@ -604,26 +685,26 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $scale = $this->get_theme_mod('typography_scale', 'major_second');
         $base_size = $this->get_theme_mod('base_font_size', '16');
         
-        // CSS para corpo do texto
-        $css .= 'body, .entry-content, p, .content-area {';
-        if ($body_font && $body_font !== 'inherit') {
-            $css .= 'font-family: "' . $body_font . '", sans-serif;';
-        }
-        $css .= 'font-weight: ' . $body_weight . ';';
-        $css .= 'font-size: ' . $base_size . 'px;';
-        $css .= 'line-height: ' . $line_height . ';';
-        if ($letter_spacing != '0') {
-            $css .= 'letter-spacing: ' . $letter_spacing . 'px;';
-        }
-        $css .= '}';
-        
         // CSS para títulos
-        $css .= 'h1, h2, h3, h4, h5, h6, .entry-title, .site-title {';
         if ($heading_font && $heading_font !== 'inherit') {
-            $css .= 'font-family: "' . $heading_font . '", sans-serif;';
+            $css .= 'h1, h2, h3, h4, h5, h6, .entry-title, .site-title {';
+            $css .= 'font-family: "' . $heading_font . '", sans-serif !important;';
+            $css .= 'font-weight: ' . $heading_weight . ' !important;';
+            $css .= '}';
         }
-        $css .= 'font-weight: ' . $heading_weight . ';';
-        $css .= '}';
+        
+        // CSS para corpo do texto
+        if ($body_font && $body_font !== 'inherit') {
+            $css .= 'body, .entry-content, p, .content-area {';
+            $css .= 'font-family: "' . $body_font . '", sans-serif !important;';
+            $css .= 'font-weight: ' . $body_weight . ' !important;';
+            $css .= 'font-size: ' . $base_size . 'px;';
+            $css .= 'line-height: ' . $line_height . ';';
+            if ($letter_spacing != '0') {
+                $css .= 'letter-spacing: ' . $letter_spacing . 'px;';
+            }
+            $css .= '}';
+        }
         
         // Escala tipográfica
         if (isset($this->typography_scales[$scale])) {
@@ -731,7 +812,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      * Sanitiza font pairing
      */
     public function sanitize_font_pairing($input) {
-        return array_key_exists($input, $this->font_pairings) ? $input : 'modern_sans';
+        return array_key_exists($input, $this->font_pairings) ? $input : 'theme_default';
     }
     
     /**

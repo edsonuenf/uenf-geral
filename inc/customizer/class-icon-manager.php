@@ -21,9 +21,23 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Classe para gerenciamento avançado de ícones
+ * Classe para gerenciamento de ícones
  */
-class CCT_Icon_Manager extends CCT_Customizer_Base {
+class CCT_Icon_Manager {
+    
+    /**
+     * Instância do WP_Customize_Manager
+     * 
+     * @var WP_Customize_Manager
+     */
+    private $wp_customize;
+    
+    /**
+     * Prefixo para configurações
+     * 
+     * @var string
+     */
+    private $prefix = 'cct_icons_';
     
     /**
      * Biblioteca de ícones SVG
@@ -52,20 +66,45 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
      * @param WP_Customize_Manager $wp_customize
      */
     public function __construct($wp_customize) {
-        parent::__construct($wp_customize);
+        $this->wp_customize = $wp_customize;
         $this->init_icon_library();
         $this->init_icon_categories();
         $this->init_optimization_settings();
     }
     
     /**
-     * Inicializa o módulo
+     * Registra o módulo no customizer
+     * 
+     * @param WP_Customize_Manager $wp_customize
      */
-    public function init() {
+    public function register($wp_customize) {
+        $this->init_hooks();
+        $this->init();
+    }
+    
+    /**
+     * Inicializa os hooks
+     */
+    private function init_hooks() {
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_icon_scripts'));
+        add_action('wp_head', array($this, 'output_custom_css'));
+        add_action('wp_footer', array($this, 'output_custom_js'));
+    }
+    
+    /**
+     * Registra configurações no Customizer
+     */
+    public function register_customizer() {
         $this->add_icon_sections();
         $this->add_icon_settings();
         $this->add_icon_controls();
-        $this->enqueue_icon_scripts();
+    }
+    
+    /**
+     * Inicializa o módulo
+     */
+    public function init() {
+        $this->register_customizer();
         $this->register_icon_hooks();
     }
     
@@ -215,42 +254,57 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
      * Adiciona seções de ícones
      */
     private function add_icon_sections() {
-        // Painel principal de ícones
-        $this->wp_customize->add_panel('cct_icon_panel', array(
-            'title' => __('Sistema de Ícones', 'cct'),
+        // Verificar se a extensão está ativa antes de criar o painel
+        $extension_manager = cct_extension_manager();
+        if (!$extension_manager || !$extension_manager->is_extension_active('icons')) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT Icons: Extensão desativada - painel não criado');
+            }
+            return; // Sair sem criar o painel
+        }
+        
+        // Criar painel de ícones (só se extensão estiver ativa)
+        $this->wp_customize->add_panel($this->prefix . 'panel', array(
+            'title' => __('🎯 Sistema de Ícones', 'cct'),
             'description' => __('Biblioteca SVG completa com gerenciador avançado de ícones.', 'cct'),
-            'priority' => 180,
+            'priority' => 140,
+            'capability' => 'edit_theme_options',
         ));
         
+        // Debug log para verificar criação
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT Icons: Painel de ícones criado (extensão ativa)');
+        }
+        
         // Seção da biblioteca de ícones
-        $this->add_section('icon_library', array(
+        $this->wp_customize->add_section($this->prefix . 'icon_library', array(
             'title' => __('Biblioteca de Ícones', 'cct'),
             'description' => __('Navegue e selecione ícones da biblioteca SVG.', 'cct'),
-            'panel' => 'cct_icon_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 10,
         ));
         
         // Seção de ícones personalizados
-        $this->add_section('custom_icons', array(
+        $this->wp_customize->add_section($this->prefix . 'custom_icons', array(
             'title' => __('Ícones Personalizados', 'cct'),
             'description' => __('Faça upload e gerencie seus próprios ícones SVG.', 'cct'),
-            'panel' => 'cct_icon_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 20,
         ));
         
         // Seção de configurações de ícones
-        $this->add_section('icon_settings', array(
+        $this->wp_customize->add_section($this->prefix . 'icon_settings', array(
             'title' => __('Configurações de Ícones', 'cct'),
             'description' => __('Configure tamanhos, cores e otimizações.', 'cct'),
-            'panel' => 'cct_icon_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 30,
         ));
         
         // Seção de otimização
-        $this->add_section('icon_optimization', array(
+        $this->wp_customize->add_section($this->prefix . 'icon_optimization', array(
             'title' => __('Otimização SVG', 'cct'),
             'description' => __('Configurações avançadas de otimização de SVG.', 'cct'),
-            'panel' => 'cct_icon_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 40,
         ));
     }
@@ -260,45 +314,45 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
      */
     private function add_icon_settings() {
         // Categoria selecionada
-        $this->add_setting('selected_category', array(
+        $this->wp_customize->add_setting('selected_category', array(
             'default' => 'ui',
             'sanitize_callback' => 'sanitize_text_field',
             'transport' => 'postMessage',
         ));
         
         // Ícones favoritos
-        $this->add_setting('favorite_icons', array(
+        $this->wp_customize->add_setting('favorite_icons', array(
             'default' => json_encode(array()),
             'sanitize_callback' => array($this, 'sanitize_json_array'),
             'transport' => 'postMessage',
         ));
         
         // Ícones personalizados
-        $this->add_setting('custom_icons_data', array(
+        $this->wp_customize->add_setting('custom_icons_data', array(
             'default' => json_encode(array()),
             'sanitize_callback' => array($this, 'sanitize_json_array'),
         ));
         
         // Configurações de tamanho
-        $this->add_setting('default_icon_size', array(
+        $this->wp_customize->add_setting('default_icon_size', array(
             'default' => '24',
             'sanitize_callback' => 'absint',
             'transport' => 'postMessage',
         ));
         
-        $this->add_setting('icon_sizes', array(
+        $this->wp_customize->add_setting('icon_sizes', array(
             'default' => json_encode(array('16', '20', '24', '32', '48', '64')),
             'sanitize_callback' => array($this, 'sanitize_json_array'),
         ));
         
         // Configurações de cor
-        $this->add_setting('default_icon_color', array(
+        $this->wp_customize->add_setting('default_icon_color', array(
             'default' => '#333333',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport' => 'postMessage',
         ));
         
-        $this->add_setting('icon_hover_color', array(
+        $this->wp_customize->add_setting('icon_hover_color', array(
             'default' => '#0073aa',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport' => 'postMessage',
@@ -307,7 +361,7 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
         // Configurações de otimização
         if (is_array($this->optimization_settings) && !empty($this->optimization_settings)) {
             foreach ($this->optimization_settings as $setting => $default) {
-                $this->add_setting("optimization_{$setting}", array(
+                $this->wp_customize->add_setting("optimization_{$setting}", array(
                     'default' => $default,
                     'sanitize_callback' => 'rest_sanitize_boolean',
                 ));
@@ -315,12 +369,12 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
         }
         
         // Configurações de acessibilidade
-        $this->add_setting('enable_aria_labels', array(
+        $this->wp_customize->add_setting('enable_aria_labels', array(
             'default' => true,
             'sanitize_callback' => 'rest_sanitize_boolean',
         ));
         
-        $this->add_setting('icon_alt_text_template', array(
+        $this->wp_customize->add_setting('icon_alt_text_template', array(
             'default' => __('Ícone {name}', 'cct'),
             'sanitize_callback' => 'sanitize_text_field',
         ));
@@ -330,61 +384,59 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
      * Adiciona controles de ícones
      */
     private function add_icon_controls() {
-        // Navegador de categorias
+        // Navegador de categorias (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Icon_Category_Browser_Control(
-                $this->wp_customize,
-                'cct_icon_category_browser',
-                array(
-                    'label' => __('Categorias de Ícones', 'cct'),
-                    'section' => $this->prefix . 'icon_library',
-                    'settings' => $this->prefix . 'selected_category',
-                    'categories' => $this->icon_categories,
-                )
+            'cct_icon_category_browser',
+            array(
+                'label' => __('Categorias de Ícones', 'cct'),
+                'section' => $this->prefix . 'icon_library',
+                'settings' => $this->prefix . 'selected_category',
+                'type' => 'select',
+                'choices' => array(
+                    'browser' => __('Navegador será implementado em versão futura', 'cct')
+                ),
             )
         );
         
-        // Biblioteca de ícones
+        // Biblioteca de ícones (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Icon_Library_Control(
-                $this->wp_customize,
-                'cct_icon_library',
-                array(
-                    'label' => __('Biblioteca de Ícones', 'cct'),
-                    'section' => $this->prefix . 'icon_library',
-                    'settings' => array(
-                        $this->prefix . 'selected_category',
-                        $this->prefix . 'favorite_icons'
-                    ),
-                    'icon_library' => $this->icon_library,
-                    'categories' => $this->icon_categories,
-                )
+            'cct_icon_library',
+            array(
+                'label' => __('Biblioteca de Ícones', 'cct'),
+                'section' => $this->prefix . 'icon_library',
+                'settings' => $this->prefix . 'selected_category',
+                'type' => 'select',
+                'choices' => array(
+                    'library' => __('Biblioteca será implementada em versão futura', 'cct')
+                ),
             )
         );
         
-        // Upload de ícones personalizados
+        // Upload de ícones personalizados (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Icon_Upload_Control(
-                $this->wp_customize,
-                'cct_icon_upload',
-                array(
-                    'label' => __('Upload de Ícones SVG', 'cct'),
-                    'description' => __('Faça upload de arquivos SVG personalizados.', 'cct'),
-                    'section' => $this->prefix . 'custom_icons',
-                    'settings' => $this->prefix . 'custom_icons_data',
-                )
+            'cct_icon_upload',
+            array(
+                'label' => __('Upload de Ícones SVG', 'cct'),
+                'description' => __('Faça upload de arquivos SVG personalizados.', 'cct'),
+                'section' => $this->prefix . 'custom_icons',
+                'settings' => $this->prefix . 'custom_icons_data',
+                'type' => 'select',
+                'choices' => array(
+                    'upload' => __('Upload será implementado em versão futura', 'cct')
+                ),
             )
         );
         
-        // Gerenciador de ícones personalizados
+        // Gerenciador de ícones personalizados (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Custom_Icon_Manager_Control(
-                $this->wp_customize,
-                'cct_custom_icon_manager',
-                array(
-                    'label' => __('Gerenciar Ícones Personalizados', 'cct'),
-                    'section' => $this->prefix . 'custom_icons',
-                    'settings' => $this->prefix . 'custom_icons_data',
+            'cct_custom_icon_manager',
+            array(
+                'label' => __('Gerenciar Ícones Personalizados', 'cct'),
+                'section' => $this->prefix . 'custom_icons',
+                'settings' => $this->prefix . 'custom_icons_data',
+                'type' => 'select',
+                'choices' => array(
+                    'manager' => __('Gerenciador será implementado em versão futura', 'cct')
                 )
             )
         );
@@ -443,7 +495,7 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
         );
         
         foreach ($optimization_controls as $setting => $label) {
-            $this->add_control("optimization_{$setting}", array(
+            $this->wp_customize->add_control("optimization_{$setting}", array(
                 'label' => $label,
                 'section' => $this->prefix . 'icon_optimization',
                 'type' => 'checkbox',
@@ -451,14 +503,14 @@ class CCT_Icon_Manager extends CCT_Customizer_Base {
         }
         
         // Configurações de acessibilidade
-        $this->add_control('enable_aria_labels', array(
+        $this->wp_customize->add_control('enable_aria_labels', array(
             'label' => __('Habilitar ARIA Labels', 'cct'),
             'description' => __('Adiciona automaticamente labels de acessibilidade aos ícones.', 'cct'),
             'section' => $this->prefix . 'icon_optimization',
             'type' => 'checkbox',
         ));
         
-        $this->add_control('icon_alt_text_template', array(
+        $this->wp_customize->add_control('icon_alt_text_template', array(
             'label' => __('Template de Texto Alternativo', 'cct'),
             'description' => __('Use {name} para o nome do ícone. Ex: "Ícone {name}"', 'cct'),
             'section' => $this->prefix . 'icon_optimization',

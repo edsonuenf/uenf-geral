@@ -21,9 +21,23 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Classe para gerenciamento avançado de layout
+ * Classe para gerenciamento de layout
  */
-class CCT_Layout_Manager extends CCT_Customizer_Base {
+class CCT_Layout_Manager {
+    
+    /**
+     * Instância do WP_Customize_Manager
+     * 
+     * @var WP_Customize_Manager
+     */
+    private $wp_customize;
+    
+    /**
+     * Prefixo para configurações
+     * 
+     * @var string
+     */
+    private $prefix = 'cct_layout_';
     
     /**
      * Configurações de grid
@@ -55,11 +69,8 @@ class CCT_Layout_Manager extends CCT_Customizer_Base {
     
     /**
      * Construtor
-     * 
-     * @param WP_Customize_Manager $wp_customize
      */
-    public function __construct($wp_customize) {
-        parent::__construct($wp_customize);
+    public function __construct() {
         $this->init_grid_settings();
         $this->init_breakpoints();
         $this->init_container_presets();
@@ -67,13 +78,39 @@ class CCT_Layout_Manager extends CCT_Customizer_Base {
     }
     
     /**
-     * Inicializa o módulo
+     * Registra o módulo no customizer
+     * 
+     * @param WP_Customize_Manager $wp_customize
      */
-    public function init() {
+    public function register($wp_customize) {
+        $this->wp_customize = $wp_customize;
+        $this->init_hooks();
+        $this->init();
+    }
+    
+    /**
+     * Inicializa os hooks
+     */
+    private function init_hooks() {
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_layout_scripts'));
+        add_action('wp_head', array($this, 'output_custom_css'));
+        add_action('wp_footer', array($this, 'output_custom_js'));
+    }
+    
+    /**
+     * Registra configurações no Customizer
+     */
+    public function register_customizer() {
         $this->add_layout_sections();
         $this->add_layout_settings();
         $this->add_layout_controls();
-        $this->enqueue_layout_scripts();
+    }
+    
+    /**
+     * Inicializa o módulo
+     */
+    private function init() {
+        $this->register_customizer();
         $this->register_layout_hooks();
     }
     
@@ -261,49 +298,50 @@ class CCT_Layout_Manager extends CCT_Customizer_Base {
      */
     private function add_layout_sections() {
         // Painel principal de layout
-        $this->wp_customize->add_panel('cct_layout_panel', array(
+        $this->wp_customize->add_panel($this->prefix . 'panel', array(
             'title' => __('Componentes de Layout', 'cct'),
             'description' => __('Sistema avançado de grid e containers responsivos.', 'cct'),
-            'priority' => 190,
+            'priority' => 150,
+            'capability' => 'edit_theme_options',
         ));
         
         // Seção de configurações de grid
-        $this->add_section('grid_system', array(
+        $this->wp_customize->add_section($this->prefix . 'grid_system', array(
             'title' => __('Sistema de Grid', 'cct'),
             'description' => __('Configure o grid responsivo e suas propriedades.', 'cct'),
-            'panel' => 'cct_layout_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 10,
         ));
         
         // Seção de containers
-        $this->add_section('containers', array(
+        $this->wp_customize->add_section($this->prefix . 'containers', array(
             'title' => __('Containers', 'cct'),
             'description' => __('Gerencie containers e suas configurações.', 'cct'),
-            'panel' => 'cct_layout_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 20,
         ));
         
         // Seção de breakpoints
-        $this->add_section('breakpoints', array(
+        $this->wp_customize->add_section($this->prefix . 'breakpoints', array(
             'title' => __('Breakpoints Responsivos', 'cct'),
             'description' => __('Configure pontos de quebra para responsividade.', 'cct'),
-            'panel' => 'cct_layout_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 30,
         ));
         
         // Seção de espaçamentos
-        $this->add_section('spacing', array(
+        $this->wp_customize->add_section($this->prefix . 'spacing', array(
             'title' => __('Sistema de Espaçamentos', 'cct'),
             'description' => __('Configure margens, paddings e espaçamentos.', 'cct'),
-            'panel' => 'cct_layout_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 40,
         ));
         
         // Seção de layout builder
-        $this->add_section('layout_builder', array(
+        $this->wp_customize->add_section($this->prefix . 'layout_builder', array(
             'title' => __('Construtor de Layout', 'cct'),
             'description' => __('Ferramenta visual para criar layouts personalizados.', 'cct'),
-            'panel' => 'cct_layout_panel',
+            'panel' => $this->prefix . 'panel',
             'priority' => 50,
         ));
     }
@@ -484,20 +522,17 @@ class CCT_Layout_Manager extends CCT_Customizer_Base {
             ),
         ));
         
-        // Preview do grid
+        // Preview do grid (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Grid_Preview_Control(
-                $this->wp_customize,
-                'cct_grid_preview',
-                array(
-                    'label' => __('Preview do Grid', 'cct'),
-                    'section' => $this->prefix . 'grid_system',
-                    'settings' => array(
-                        $this->prefix . 'grid_columns',
-                        $this->prefix . 'grid_gutter',
-                        $this->prefix . 'grid_max_width'
-                    ),
-                )
+            'cct_grid_preview',
+            array(
+                'label' => __('Preview do Grid', 'cct'),
+                'section' => $this->prefix . 'grid_system',
+                'settings' => $this->prefix . 'grid_columns',
+                'type' => 'select',
+                'choices' => array(
+                    'preview' => __('Preview será implementado em versão futura', 'cct')
+                ),
             )
         );
         
@@ -528,59 +563,57 @@ class CCT_Layout_Manager extends CCT_Customizer_Base {
             )
         );
         
-        // Gerenciador de containers
+        // Gerenciador de containers (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Container_Manager_Control(
-                $this->wp_customize,
-                'cct_container_manager',
-                array(
-                    'label' => __('Gerenciador de Containers', 'cct'),
-                    'section' => $this->prefix . 'containers',
-                    'container_presets' => $this->container_presets,
-                )
+            'cct_container_manager',
+            array(
+                'label' => __('Gerenciador de Containers', 'cct'),
+                'section' => $this->prefix . 'containers',
+                'type' => 'select',
+                'choices' => array(
+                    'manager' => __('Gerenciador será implementado em versão futura', 'cct')
+                ),
             )
         );
         
-        // Controles de breakpoints
+        // Controles de breakpoints (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Breakpoint_Manager_Control(
-                $this->wp_customize,
-                'cct_breakpoint_manager',
-                array(
-                    'label' => __('Gerenciador de Breakpoints', 'cct'),
-                    'section' => $this->prefix . 'breakpoints',
-                    'breakpoints' => $this->breakpoints,
-                )
+            'cct_breakpoint_manager',
+            array(
+                'label' => __('Gerenciador de Breakpoints', 'cct'),
+                'section' => $this->prefix . 'breakpoints',
+                'type' => 'select',
+                'choices' => array(
+                    'manager' => __('Gerenciador será implementado em versão futura', 'cct')
+                ),
             )
         );
         
-        // Controles de espaçamentos
+        // Controles de espaçamentos (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Spacing_Scale_Control(
-                $this->wp_customize,
-                'cct_spacing_scale',
-                array(
-                    'label' => __('Escala de Espaçamentos', 'cct'),
-                    'description' => __('Configure os valores da escala de espaçamentos.', 'cct'),
-                    'section' => $this->prefix . 'spacing',
-                )
+            'cct_spacing_scale',
+            array(
+                'label' => __('Escala de Espaçamentos', 'cct'),
+                'description' => __('Configure os valores da escala de espaçamentos.', 'cct'),
+                'section' => $this->prefix . 'spacing',
+                'type' => 'select',
+                'choices' => array(
+                    'scale' => __('Escala será implementada em versão futura', 'cct')
+                ),
             )
         );
         
-        // Layout builder
+        // Layout builder (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            new CCT_Layout_Builder_Control(
-                $this->wp_customize,
-                'cct_layout_builder',
-                array(
-                    'label' => __('Construtor Visual de Layout', 'cct'),
-                    'section' => $this->prefix . 'layout_builder',
-                    'settings' => array(
-                        $this->prefix . 'custom_layouts',
-                        $this->prefix . 'active_layout'
-                    ),
-                    'layout_sections' => $this->layout_sections,
-                )
+            'cct_layout_builder',
+            array(
+                'label' => __('Construtor Visual de Layout', 'cct'),
+                'section' => $this->prefix . 'layout_builder',
+                'settings' => $this->prefix . 'custom_layouts',
+                'type' => 'select',
+                'choices' => array(
+                    'builder' => __('Construtor será implementado em versão futura', 'cct')
+                ),
             )
         );
     }
