@@ -2839,3 +2839,24 @@ function cct_font_combinations_preview_js() {
     ');
 }
 add_action('customize_preview_init', 'cct_font_combinations_preview_js');
+
+// ============================================================================
+// SISTEMA DE BUSCA PERSONALIZADO
+// ============================================================================
+
+// Incluir controles do sistema de busca
+require_once get_template_directory() . '/inc/customizer/class-search-customizer-controls.php';
+
+// Incluir sistema de busca avançada
+require_once get_template_directory() . '/inc/class-advanced-search.php';
+
+/**
+ * Adicionar CSS dinâmico da busca
+ */
+function cct_search_customizer_css() {
+    $css = CCT_Search_Customizer_Controls::generate_css();
+    if (!empty($css)) {
+        echo '<style type="text/css" id="cct-search-customizer-css">' . $css . '</style>';
+    }
+}
+add_action('wp_head', 'cct_search_customizer_css');

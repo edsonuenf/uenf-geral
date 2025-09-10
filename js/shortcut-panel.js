@@ -19,7 +19,7 @@
         panelSelector: '.shortcut-panel',
         iconSelector: '.shortcut-icon',
         closeButtonSelector: '.close-panel',
-        activeClass: 'active',
+        expandedClass: 'expanded',
         animationDuration: 300,
         enableSmoothScroll: true
     };
@@ -132,9 +132,8 @@
             // Adiciona classe ao body para estilização
             $('body').addClass('shortcut-panel-open');
             
-            // Adiciona as classes de ativação
-            this.panel.addClass(this.settings.activeClass);
-            this.icon.addClass(this.settings.activeClass);
+            // Expande o container usando largura
+            this.container.addClass(this.settings.expandedClass);
             
             // Atualiza o estado
             this.isOpen = true;
@@ -158,9 +157,8 @@
             // Remove a classe do body
             $('body').removeClass('shortcut-panel-open');
             
-            // Remove as classes de ativação
-            this.panel.removeClass(this.settings.activeClass);
-            this.icon.removeClass(this.settings.activeClass);
+            // Retrai o container removendo a classe expanded
+            this.container.removeClass(this.settings.expandedClass);
             
             // Atualiza o estado
             this.isOpen = false;

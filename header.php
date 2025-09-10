@@ -58,7 +58,13 @@ if ( function_exists( 'wp_body_open' ) ) {
 
           <div class="header-grid-col2">
             <div class="search-container">
-              <?php dynamic_sidebar('ivory-search-uenf'); ?>
+              <?php 
+              // Verificar se a extensão de busca personalizada está ativa
+              $search_extension_active = get_theme_mod('cct_extension_search_customizer_enabled', false);
+              if ($search_extension_active) {
+                  get_search_form();
+              }
+              ?>
             </div>
 
             <div class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1" aria-labelledby="menuLateralLabel">

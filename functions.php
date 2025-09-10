@@ -1292,16 +1292,7 @@ function cct_widgets_init() {
         'before_title'  => '',
         'after_title'   => '',
     ));
-    // Área de menu e busca
-    register_sidebar(array(
-        'name'          => 'Ivory Search UENF',
-        'id'            => 'ivory-search-uenf',
-        'description'   => esc_html__('Add header widgets here.', 'cct-theme'),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
+    // Área de busca personalizada removida - substituída por solução nativa
     // Área de idiomas
     register_sidebar(array(
         'name'          => 'idiomas UENF',
@@ -1376,7 +1367,9 @@ function cct_scripts() {
         'menu-enhancements' => '/css/components/menu-enhancements.css',
         'scrollbars' => '/css/components/scrollbars.css',
         'menu-styles' => '/css/components/menu-styles.css', // Estilos específicos do menu
-        'shortcuts' => '/css/components/shortcuts.css' // Estilos do painel de atalhos
+        'shortcuts' => '/css/components/shortcuts.css', // Estilos do painel de atalhos
+        'search-modern' => '/css/search-modern.css', // Estilos modernos da página de busca
+        'search-retractable' => '/css/components/search-retractable.css' // Estilos da busca retrátil
     );
     
     // Log de depuração detalhado para verificar os estilos
@@ -1470,6 +1463,11 @@ function cct_scripts() {
         'cct-back-to-top' => array(
             'path' => '/js/back-to-top.js', 
             'deps' => array('jquery')
+        ),
+        // Script da busca retrátil
+        'cct-search-retractable' => array(
+            'path' => '/js/search-retractable.js',
+            'deps' => array('jquery', 'cct-event-manager')
         )
     );
     

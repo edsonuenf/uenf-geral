@@ -173,6 +173,15 @@ class CCT_Extension_Manager {
                 'category' => 'design',
                 'priority' => 100,
                 'dependencies' => array()
+            ),
+            'search_customizer' => array(
+                'name' => '🔍 Sistema de Busca Personalizado',
+                'description' => 'Sistema de busca nativo que substitui plugins externos como Ivory Search',
+                'class' => 'CCT_Search_Customizer',
+                'file' => 'class-search-customizer.php',
+                'category' => 'interface',
+                'priority' => 110,
+                'dependencies' => array()
             )
         );
         
@@ -277,13 +286,16 @@ class CCT_Extension_Manager {
             'priority' => 25,
         ));
         
-        // Painel do Gerenciador de Extensões (sub-painel)
+        // Painel do Gerenciador de Extensões (sub-painel) - REMOVIDO
+        // Não é mais necessário pois já existe no menu Tema UENF
+        /*
         $wp_customize->add_panel('cct_extensions', array(
             'title' => '🔧 Gerenciador de Extensões',
             'description' => 'Controle todas as funcionalidades avançadas do tema. Desative extensões não utilizadas para melhorar a performance.',
             'panel' => 'cct_theme_uenf', // Painel pai
             'priority' => 10,
         ));
+        */
         
         // Painel para extensões ativas (sub-painel do Tema UENF)
         $active_count = $this->get_active_extensions_count();
@@ -301,6 +313,9 @@ class CCT_Extension_Manager {
             error_log('CCT Extension Manager: Painel criado com sucesso');
         }
         
+        // Seções do Gerenciador de Extensões - REMOVIDAS
+        // Não são mais necessárias pois já existe no menu Tema UENF
+        /*
         // Seção de controle global
         $wp_customize->add_section('cct_extensions_global', array(
             'title' => '⚙️ Controle Global',
@@ -335,7 +350,11 @@ class CCT_Extension_Manager {
             'panel' => 'cct_extensions',
             'priority' => 20,
         ));
+        */
         
+        // Controles do Gerenciador de Extensões - REMOVIDOS
+        // Não são mais necessários pois já existe no menu Tema UENF
+        /*
         // Controle de teste
         $wp_customize->add_setting('cct_test_extension', array(
             'default' => true,
@@ -383,6 +402,7 @@ class CCT_Extension_Manager {
             
             $priority += 10;
         }
+        */
         
         // Removida seção de ações rápidas para evitar duplicação com o controle global
         
