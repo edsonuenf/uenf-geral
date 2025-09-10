@@ -40,7 +40,7 @@
 
 /* Efeito de hover para itens de nível 1 */
 .new-menu > li > a:hover {
-  background-color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
   color: rgba(255, 255, 255, 0.8) !important;
   padding-left: 24px !important; /* Efeito de deslocamento suave */
 }
@@ -49,6 +49,7 @@
 .new-menu .sub-menu > li > a:hover,
 .new-menu .children > li > a:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   padding-left: 24px !important; /* Efeito de deslocamento suave */
 }
 
