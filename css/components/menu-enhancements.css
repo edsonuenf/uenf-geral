@@ -38,19 +38,56 @@
   padding-left: 16px !important; /* Ajuste para compensar a borda */
 }
 
-/* Efeito de hover para itens de nível 1 */
+/* Efeito de hover para itens de nível 1 - fundo branco 70%, texto azul, seta azul */
 .new-menu > li > a:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   padding-left: 24px !important; /* Efeito de deslocamento suave */
 }
 
-/* Efeito de hover para subitens */
+/* Setas azuis no hover dos itens de nível 1 */
+.new-menu > li > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Efeito de hover para subitens - mantém 60% */
 .new-menu .sub-menu > li > a:hover,
 .new-menu .children > li > a:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   padding-left: 24px !important; /* Efeito de deslocamento suave */
+}
+
+/* Hover para containers de nível 1 - fundo branco 70%, texto azul, seta azul */
+.new-menu > li.menu-item-has-children > a:hover,
+.new-menu > li.page_item_has_children > a:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 24px !important;
+}
+
+/* Setas azuis no hover dos containers de nível 1 */
+.new-menu > li.menu-item-has-children > a:hover::after,
+.new-menu > li.page_item_has_children > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Hover para itens ativos - texto azul e seta azul */
+.new-menu .current-menu-item > a:hover,
+.new-menu .current-page-item > a:hover,
+.new-menu .menu-item-active > a:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 24px !important;
+  font-weight: 700 !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Setas azuis no hover dos itens ativos */
+.new-menu .current-menu-item > a:hover::after,
+.new-menu .current-page-item > a:hover::after,
+.new-menu .menu-item-active > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
 /* Barra lateral para hover */

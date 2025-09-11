@@ -133,11 +133,11 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent) !important;
 }
 
-/* Estilo padrão para todos os itens - fundo branco 30%, texto azul - FORÇA MÁXIMA */
+/* Estilo padrão para todos os itens - fundo branco 60%, texto azul - FORÇA MÁXIMA */
 body .offcanvas .new-menu a,
 body #menuLateral .new-menu a,
 body .new-menu a {
-  background: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
   color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
@@ -152,11 +152,11 @@ body .new-menu > li.page_item_has_children > a {
   color: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Hover para todos os itens com link - mantém fundo branco 30% - FORÇA MÁXIMA */
-body .offcanvas .new-menu a:hover,
-body #menuLateral .new-menu a:hover,
-body .new-menu a:hover {
-  background: rgba(255, 255, 255, 0.3) !important;
+/* Hover para itens de nível 1 - fundo branco 70%, texto azul, seta azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu > li > a:hover,
+body #menuLateral .new-menu > li > a:hover,
+body .new-menu > li > a:hover {
+  background: rgba(255, 255, 255, 0.7) !important;
   color: var(--bs-uenf-blue, #1d3771) !important;
   transform: translateX(4px) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
@@ -164,15 +164,51 @@ body .new-menu a:hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Hover para containers de nível 1 - mantém fundo azul - FORÇA MÁXIMA */
+/* Setas azuis no hover dos itens de nível 1 */
+body .offcanvas .new-menu > li > a:hover::after,
+body #menuLateral .new-menu > li > a:hover::after,
+body .new-menu > li > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Hover para outros itens - mantém fundo branco 60% */
+body .offcanvas .new-menu .sub-menu a:hover,
+body #menuLateral .new-menu .sub-menu a:hover,
+body .new-menu .sub-menu a:hover,
+body .offcanvas .new-menu .children a:hover,
+body #menuLateral .new-menu .children a:hover,
+body .new-menu .children a:hover {
+  background: rgba(255, 255, 255, 0.6) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Hover para containers de nível 1 - fundo branco 70%, texto azul, seta azul - FORÇA MÁXIMA */
 body .offcanvas .new-menu > li.menu-item-has-children > a:hover,
 body #menuLateral .new-menu > li.menu-item-has-children > a:hover,
 body .new-menu > li.menu-item-has-children > a:hover,
 body .offcanvas .new-menu > li.page_item_has_children > a:hover,
 body #menuLateral .new-menu > li.page_item_has_children > a:hover,
 body .new-menu > li.page_item_has_children > a:hover {
-  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Setas azuis no hover dos containers de nível 1 */
+body .offcanvas .new-menu > li.menu-item-has-children > a:hover::after,
+body #menuLateral .new-menu > li.menu-item-has-children > a:hover::after,
+body .new-menu > li.menu-item-has-children > a:hover::after,
+body .offcanvas .new-menu > li.page_item_has_children > a:hover::after,
+body #menuLateral .new-menu > li.page_item_has_children > a:hover::after,
+body .new-menu > li.page_item_has_children > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
 /* Itens finais ativos/abertos - fundo branco, texto azul - FORÇA MÁXIMA */
@@ -189,6 +225,38 @@ body .new-menu .menu-item-active > a {
   color: var(--bs-uenf-blue, #1d3771) !important;
   border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
   font-weight: 700 !important;
+}
+
+/* Hover para itens ativos - texto azul e seta azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu .current-menu-item > a:hover,
+body #menuLateral .new-menu .current-menu-item > a:hover,
+body .new-menu .current-menu-item > a:hover,
+body .offcanvas .new-menu .current-page-item > a:hover,
+body #menuLateral .new-menu .current-page-item > a:hover,
+body .new-menu .current-page-item > a:hover,
+body .offcanvas .new-menu .menu-item-active > a:hover,
+body #menuLateral .new-menu .menu-item-active > a:hover,
+body .new-menu .menu-item-active > a:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Setas azuis no hover dos itens ativos */
+body .offcanvas .new-menu .current-menu-item > a:hover::after,
+body #menuLateral .new-menu .current-menu-item > a:hover::after,
+body .new-menu .current-menu-item > a:hover::after,
+body .offcanvas .new-menu .current-page-item > a:hover::after,
+body #menuLateral .new-menu .current-page-item > a:hover::after,
+body .new-menu .current-page-item > a:hover::after,
+body .offcanvas .new-menu .menu-item-active > a:hover::after,
+body #menuLateral .new-menu .menu-item-active > a:hover::after,
+body .new-menu .menu-item-active > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
 /* Sobrescreve estilos conflitantes do style.min.css e variáveis CSS */

@@ -82,18 +82,24 @@ padding: 0 1rem;
 /* Responsive Layout */
 @media (max-width: 768px) {
   .container {
-    padding: 0 0.5rem;
+    padding: 0 15px;
   }
   
   .column {
     flex: 100%;
+  }
+  
+  /* Garantir que elementos não encostem nas margens */
+  body {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 /* Linha do breadcrumb - exceto na página inicial */
 body:not(.home) .line-breadcrumb {
   margin-top: -12px;
-  padding: 0 12px;
+  padding: 0 15px;
   border-bottom: 1px solid #386A9430 !important;
 }
 

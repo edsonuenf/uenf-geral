@@ -122,22 +122,125 @@ body {
 /* Media Queries para responsividade */
 @media (max-width: 576px) {
   .container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Breadcrumb menor em mobile */
+  .breadcrumb,
+  .custom-breadcrumb,
+  .line-breadcrumb {
+    font-size: calc(1rem - 2px) !important;
   }
 }
 
 @media (max-width: 768px) {
   .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Header e logo com padding adequado */
+  .header,
+  .navbar-brand,
+  .logo {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Hero section deve ocupar tela toda */
+  .hero-section {
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    position: relative !important;
+  }
+  
+  /* Container dentro do hero mantém largura controlada */
+  .hero-section .container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 15px !important;
+  }
+  
+  /* Conteúdo principal com padding */
+  .entry-content,
+  .page-content,
+  main {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Breadcrumb menor em mobile - padding igual ao hero */
+  .breadcrumb,
+  .custom-breadcrumb,
+  .line-breadcrumb {
+    font-size: calc(1rem - 2px) !important;
+  }
+  
+  /* Garantir que line-breadcrumb tenha padding igual ao hero */
+  body:not(.home) .line-breadcrumb {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 }
 
 @media (max-width: 992px) {
   .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Header e logo com padding adequado */
+  .header,
+  .navbar-brand,
+  .logo {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Hero section deve ocupar tela toda */
+  .hero-section {
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    position: relative !important;
+  }
+  
+  /* Container dentro do hero mantém largura controlada */
+  .hero-section .container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 15px !important;
+  }
+  
+  /* Conteúdo principal com padding */
+  .page-content,
+  main {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .entry-content {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+ 
+  /* Garantir que line-breadcrumb tenha padding igual ao hero */
+  body:not(.home) .line-breadcrumb {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 }
 
@@ -188,25 +291,31 @@ body {
 
 /* CORREÇÃO DEFINITIVA - Especificidade Ultra-Alta para sobrescrever style.min.css */
 
-/* Nível 1 - Hover com especificidade máxima */
+/* Nível 1 - Hover com fundo branco 70%, texto azul, seta azul */
 body .offcanvas#menuLateral .new-menu > li > a:hover,
 body .offcanvas#menuLateral .new-menu > li.menu-item-hover > a,
 body .offcanvas#menuLateral .new-menu > li.menu-item > a:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   transform: translateX(4px) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-  border-left: 4px solid rgba(29, 55, 113, 0.3) !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Nível 2+ - Submenus Hover */
+/* Setas azuis no hover dos itens de nível 1 */
+body .offcanvas#menuLateral .new-menu > li > a:hover::after,
+body .offcanvas#menuLateral .new-menu > li.menu-item > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Nível 2+ - Submenus Hover - mantém fundo branco 60% */
 body .offcanvas#menuLateral .new-menu .sub-menu li > a:hover,
 body .offcanvas#menuLateral .new-menu .children li > a:hover,
 body .offcanvas#menuLateral .new-menu .sub-menu .menu-item > a:hover,
 body .offcanvas#menuLateral .new-menu .children .menu-item > a:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   padding-left: 35px !important;
   transition: all 0.3s ease !important;
 }
@@ -247,12 +356,22 @@ body .offcanvas#menuLateral .new-menu > li.current-menu-item > a {
 
 /* Nível 1 - Itens Ativos no Hover (mantém cor azul UENF) */
 body .offcanvas#menuLateral .new-menu > li.menu-item-active > a:hover,
-body .offcanvas#menuLateral .new-menu > li.current-menu-item > a:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%) !important;
+body .offcanvas#menuLateral .new-menu > li.current-menu-item > a:hover,
+body .offcanvas#menuLateral .new-menu > li.current-page-item > a:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
   color: var(--bs-uenf-blue, #1d3771) !important;
   font-weight: 700 !important;
-  transform: translateX(2px) !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Setas azuis no hover dos itens ativos */
+body .offcanvas#menuLateral .new-menu > li.menu-item-active > a:hover::after,
+body .offcanvas#menuLateral .new-menu > li.current-menu-item > a:hover::after,
+body .offcanvas#menuLateral .new-menu > li.current-page-item > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
 /* Força sobrescrita de qualquer variável CSS conflitante */
