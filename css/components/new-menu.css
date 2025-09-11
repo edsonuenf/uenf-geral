@@ -98,10 +98,8 @@
   align-items: center;
   padding: 16px 8px 16px 24px;
   text-decoration: none !important;
-  color: rgba(255, 255, 255, 0.8) !important;
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 500;
-  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
@@ -135,17 +133,62 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent) !important;
 }
 
-/* Efeito de hover para itens principais - força máxima */
-.new-menu > li > a:hover,
-.new-menu > li.menu-item-hover > a,
-.offcanvas .new-menu > li > a:hover,
-#menuLateral .new-menu > li > a:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+/* Estilo padrão para todos os itens - fundo branco 30%, texto azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu a,
+body #menuLateral .new-menu a,
+body .new-menu a {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Apenas containers de nível 1 (raiz) têm fundo azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu > li.menu-item-has-children > a,
+body #menuLateral .new-menu > li.menu-item-has-children > a,
+body .new-menu > li.menu-item-has-children > a,
+body .offcanvas .new-menu > li.page_item_has_children > a,
+body #menuLateral .new-menu > li.page_item_has_children > a,
+body .new-menu > li.page_item_has_children > a {
+  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Hover para todos os itens com link - mantém fundo branco 30% - FORÇA MÁXIMA */
+body .offcanvas .new-menu a:hover,
+body #menuLateral .new-menu a:hover,
+body .new-menu a:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   transform: translateX(4px) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
   border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Hover para containers de nível 1 - mantém fundo azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu > li.menu-item-has-children > a:hover,
+body #menuLateral .new-menu > li.menu-item-has-children > a:hover,
+body .new-menu > li.menu-item-has-children > a:hover,
+body .offcanvas .new-menu > li.page_item_has_children > a:hover,
+body #menuLateral .new-menu > li.page_item_has_children > a:hover,
+body .new-menu > li.page_item_has_children > a:hover {
+  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Itens finais ativos/abertos - fundo branco, texto azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu .current-menu-item > a,
+body #menuLateral .new-menu .current-menu-item > a,
+body .new-menu .current-menu-item > a,
+body .offcanvas .new-menu .current-page-item > a,
+body #menuLateral .new-menu .current-page-item > a,
+body .new-menu .current-page-item > a,
+body .offcanvas .new-menu .menu-item-active > a,
+body #menuLateral .new-menu .menu-item-active > a,
+body .new-menu .menu-item-active > a {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
 }
 
 /* Sobrescreve estilos conflitantes do style.min.css e variáveis CSS */
@@ -155,18 +198,11 @@
 body .new-menu > li > a:hover,
 .new-menu > li.menu-item > a:hover,
 .menu-item > a:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
-/* Efeito de hover para subitens - texto branco 80% */
-.new-menu .sub-menu li > a:hover,
-.new-menu .children li > a:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
-  padding-left: 28px;
-  transition: all 0.3s ease;
-}
+
 
 /* Item ativo (selecionado) */
 .new-menu .menu-item-active > a,
@@ -322,20 +358,18 @@ body #menuLateral .new-menu > li > a:hover {
 /* Nível 1 - Submenus principais */
 .new-menu .sub-menu,
 .new-menu .children {
-  background: linear-gradient(135deg, rgba(29, 55, 113, 0.9) 0%, rgba(29, 55, 113, 0.8) 100%);
   border-left: 4px solid rgba(255, 255, 255, 0.3);
   margin-left: 8px;
 }
 
+/* Submenus nível 1 - apenas estrutura */
 .new-menu .sub-menu a,
 .new-menu .children a {
   padding: 14px 20px 14px 24px;
   font-size: 0.9em;
   font-weight: 400;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: transparent;
   position: relative;
-  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .new-menu .sub-menu a::before,
@@ -370,11 +404,11 @@ body #menuLateral .new-menu > li > a:hover {
   margin-left: 16px;
 }
 
+/* Submenus nível 2 - apenas estrutura */
 .new-menu .sub-menu .sub-menu a,
 .new-menu .children .children a {
   padding: 12px 16px 12px 20px;
   font-size: 0.85em;
-  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .new-menu .sub-menu .sub-menu a::before,
@@ -393,11 +427,11 @@ body #menuLateral .new-menu > li > a:hover {
   margin-left: 20px;
 }
 
+/* Submenus nível 3 - apenas estrutura */
 .new-menu .sub-menu .sub-menu .sub-menu a,
 .new-menu .children .children .children a {
   padding: 10px 12px 10px 16px;
   font-size: 0.8em;
-  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .new-menu .sub-menu .sub-menu .sub-menu a::before,
@@ -411,7 +445,6 @@ body #menuLateral .new-menu > li > a:hover {
 /* Subníveis aninhados */
 .new-menu .sub-menu .sub-menu,
 .new-menu .children .children {
-  background: linear-gradient(135deg, rgba(29, 55, 113, 0.85) 0%, rgba(29, 55, 113, 0.75) 100%) !important;
   margin-left: 16px;
   padding-left: 0;
   border-left: 2px solid rgba(255, 255, 255, 0.15);
@@ -419,7 +452,6 @@ body #menuLateral .new-menu > li > a:hover {
 
 .new-menu .sub-menu .sub-menu .sub-menu,
 .new-menu .children .children .children {
-  background: linear-gradient(135deg, rgba(29, 55, 113, 0.75) 0%, rgba(29, 55, 113, 0.65) 100%) !important;
   margin-left: 16px;
   padding-left: 0;
   border-left: 1px solid rgba(255, 255, 255, 0.1);

@@ -93,14 +93,11 @@
   padding-right: 30px !important;
 }
 
-/* Destaque para o item ativo */
+/* Destaque para o item ativo - itens finais com fundo branco */
 .new-menu .current-menu-item > a,
-.new-menu .current-menu-ancestor > a,
-.new-menu .menu-item-active > a,
-.new-menu .current-menu-item > a:hover,
-.new-menu .current-menu-ancestor > a:hover,
-.new-menu .menu-item-active > a:hover {
-  background-color: rgba(255, 255, 255, 0.5) !important;
+.new-menu .current-page-item > a,
+.new-menu .menu-item-active > a {
+  background: rgba(255, 255, 255, 0.9) !important;
   color: var(--bs-uenf-blue, #1d3771) !important;
   font-weight: 700 !important;
   border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
@@ -110,11 +107,47 @@
   transition: all 0.2s ease !important;
 }
 
+/* Containers ativos mantêm fundo azul */
+.new-menu .current-menu-ancestor > a {
+  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 700 !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.8) !important;
+  padding-left: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1;
+  transition: all 0.2s ease !important;
+}
+
+.new-menu .current-menu-item > a:hover,
+.new-menu .current-page-item > a:hover,
+.new-menu .menu-item-active > a:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1;
+  transition: all 0.2s ease !important;
+}
+
+.new-menu .current-menu-ancestor > a:hover {
+  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 700 !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.8) !important;
+  padding-left: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1;
+  transition: all 0.2s ease !important;
+}
+
 
 /* Efeito de hover para itens de nível 1 */
 .new-menu > li > a:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
   padding-left: 25px !important;
   transition: all 0.3s ease;
 }
@@ -122,8 +155,17 @@
 /* Efeito de hover para subitens */
 .new-menu .sub-menu > li > a:hover,
 .new-menu .children > li > a:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 25px !important;
+  transition: all 0.3s ease;
+}
+
+/* Hover para containers de nível 1 - mantém fundo azul */
+.new-menu > li.menu-item-has-children > a:hover,
+.new-menu > li.page_item_has_children > a:hover {
+  background-color: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   padding-left: 25px !important;
   transition: all 0.3s ease;
 }
