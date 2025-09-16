@@ -137,8 +137,8 @@
 body .offcanvas .new-menu a,
 body #menuLateral .new-menu a,
 body .new-menu a {
-  background: rgba(255, 255, 255, 0.6) !important;
-  color: var(--bs-uenf-blue, #1d3771) !important;
+  color: #ffffff !important;
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
 }
 
 /* Apenas containers de nível 1 (raiz) têm fundo azul - FORÇA MÁXIMA */
