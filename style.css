@@ -39,7 +39,7 @@ body, .site-header, .navbar-brand-top {
 
 body {
     color: var(--text-color);
-    font-weight: 300;
+    font-weight: 400;
 }
 
 h1{
@@ -123,5 +123,5 @@ h4{
 
 .menu-item.current-menu-item a {
     color: var(--menu-active-color);
-} 
+}
 

@@ -5,7 +5,7 @@
   --title-h1: var(--bs-uenf-blue-light);
   --primary-color: var(--bs-uenf-blue);
   --primary-color-light: var(--bs-uenf-blue-light);
-  --text-color: rgb(51, 51, 51);
+  --text-color: #333;
   --orange-color: #f5121b;
   --border-color: rgba(255, 255, 255, 0.2);
   --hover-bg: #54689290;
@@ -24,6 +24,7 @@
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
   --font-size-xxl: 2rem;
+  --font-weight-normal: 400;
   --line-height: 1.5;
   --letter-spacing: -1px;
 }

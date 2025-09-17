@@ -46,7 +46,7 @@ define('CCT_FONT_SIZE_XXL', '2rem');
 
 // Configurações padrão do customizer
 define('CCT_DEFAULT_MENU_STYLE', 'modern');
-define('CCT_DEFAULT_MENU_HIERARCHY_ICONS', true);
+define('CCT_DEFAULT_MENU_HIERARCHY_ICONS', false);
 define('CCT_DEFAULT_PANEL_WIDTH', '300px');
 define('CCT_DEFAULT_TRANSPARENT', 'transparent');
 
@@ -1293,6 +1293,7 @@ function cct_widgets_init() {
         'after_title'   => '',
     ));
     // Área de busca personalizada removida - substituída por solução nativa
+    // Widget de redes sociais removido - usando configurações do customizer
     // Área de idiomas
     register_sidebar(array(
         'name'          => 'idiomas UENF',
@@ -1305,6 +1306,70 @@ function cct_widgets_init() {
     ));
 }
 add_action('widgets_init', 'cct_widgets_init');
+
+/**
+ * Gera CSS dinâmico para redes sociais
+ */
+function cct_get_social_media_css() {
+    // Garantir que o valor padrão seja 36 se não estiver definido ou for inválido
+    $icon_size = get_theme_mod('social_media_icon_size', 36);
+    if (empty($icon_size) || $icon_size < 20 || $icon_size > 80) {
+        $icon_size = 36;
+    }
+    
+    $icon_color = get_theme_mod('social_media_icon_color', 'rgba(255, 255, 255, 0.6)');
+    $bg_color = get_theme_mod('social_media_bg_color', '#1d3771');
+    $border_width = get_theme_mod('social_media_border_width', 0);
+    $border_color = get_theme_mod('social_media_border_color', '#ffffff');
+    $border_radius = get_theme_mod('social_media_border_radius', 50);
+    
+    $font_size = round($icon_size * 0.45); // Proporção do ícone em relação ao container
+    
+    return sprintf(
+        'width: %dpx; height: %dpx; font-size: %dpx; color: %s !important; background-color: %s; border: %dpx solid %s; border-radius: %d%%;',
+        $icon_size,
+        $icon_size,
+        $font_size,
+        esc_attr($icon_color),
+        esc_attr($bg_color),
+        $border_width,
+        esc_attr($border_color),
+        $border_radius
+    );
+}
+
+/**
+ * Exibe as redes sociais configuradas no customizer
+ */
+function cct_display_social_media() {
+    $social_networks = array('facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'telegram', 'whatsapp');
+    $alignment = get_theme_mod('social_media_alignment', 'right');
+    $icon_gap = get_theme_mod('social_media_icon_gap', 6);
+    $social_css = cct_get_social_media_css();
+    
+    $output = '<div class="social-media-links" style="text-align: ' . esc_attr($alignment) . '; gap: ' . esc_attr($icon_gap) . 'px;">';
+    $has_links = false;
+    
+    foreach ($social_networks as $network) {
+        $link = get_theme_mod($network . '_link', '');
+        $icon = get_theme_mod($network . '_icon', 'fab fa-' . $network);
+        
+        if (!empty($link)) {
+            $has_links = true;
+            $output .= '<a href="' . esc_url($link) . '" target="_blank" rel="noopener noreferrer" class="social-link social-' . esc_attr($network) . '" style="' . $social_css . '" title="' . esc_attr(ucfirst($network)) . '">';
+            $output .= '<i class="' . esc_attr($icon) . '" aria-hidden="true"></i>';
+            $output .= '<span class="screen-reader-text">' . esc_html(ucfirst($network)) . '</span>';
+            $output .= '</a>';
+        }
+    }
+    
+    $output .= '</div>';
+    
+    // Só exibe se houver pelo menos uma rede social configurada
+    if ($has_links) {
+        echo $output;
+    }
+}
 
 function formatarTelefoneBrasil($numero) {
     // Remove qualquer caractere que não seja número
@@ -1525,6 +1590,7 @@ add_action('wp_enqueue_scripts', 'cct_scripts');
 
 /**
  * Personalizado breadcrumb com ícone de casa
+ * Links apenas para páginas sem filhos
  */
 function cct_custom_breadcrumb() {
     echo '<nav aria-label="breadcrumb"><div class="custom-breadcrumb">';
@@ -1545,15 +1611,52 @@ function cct_custom_breadcrumb() {
         if ($ancestors) {
             $ancestors = array_reverse($ancestors);
             foreach ($ancestors as $ancestor) {
-                $items[] = '<a href="' . get_permalink($ancestor) . '" style="color: rgb(38,85,125);">' . get_the_title($ancestor) . '</a>';
+                // Verificar se a página ancestral tem filhos usando WP_Query
+                $child_query = new WP_Query(array(
+                    'post_type' => 'page',
+                    'post_parent' => $ancestor,
+                    'post_status' => 'publish',
+                    'posts_per_page' => 1,
+                    'fields' => 'ids'
+                ));
+                
+                $has_children = $child_query->have_posts();
+                wp_reset_postdata();
+                
+                if (!$has_children) {
+                    // Página sem filhos - criar link
+                    $items[] = '<a href="' . get_permalink($ancestor) . '" style="color: rgb(38,85,125);" title="' . esc_attr(get_the_title($ancestor)) . '">' . get_the_title($ancestor) . '</a>';
+                } else {
+                    // Página com filhos - apenas texto
+                    $items[] = '<span style="color: #666; font-weight: normal;" title="Esta página possui subpáginas">' . get_the_title($ancestor) . '</span>';
+                }
             }
         }
+        // Página atual sempre como texto (sem link)
         $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_title() . '</span>';
     } elseif (is_single()) {
         $post = get_post();
         $parent = $post->post_parent;
         if ($parent) {
-            $items[] = '<a href="' . get_permalink($parent) . '" style="color: rgb(38,85,125);">' . get_the_title($parent) . '</a>';
+            // Verificar se a página pai tem filhos usando WP_Query
+            $child_query = new WP_Query(array(
+                'post_type' => 'page',
+                'post_parent' => $parent,
+                'post_status' => 'publish',
+                'posts_per_page' => 1,
+                'fields' => 'ids'
+            ));
+            
+            $has_children = $child_query->have_posts();
+            wp_reset_postdata();
+            
+            if (!$has_children) {
+                // Página pai sem filhos - criar link
+                $items[] = '<a href="' . get_permalink($parent) . '" style="color: rgb(38,85,125);">' . get_the_title($parent) . '</a>';
+            } else {
+                // Página pai com filhos - apenas texto
+                $items[] = '<span style="color: #666; font-weight: normal;">' . get_the_title($parent) . '</span>';
+            }
         }
         $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_title() . '</span>';
     } elseif (is_category()) {
@@ -1561,7 +1664,20 @@ function cct_custom_breadcrumb() {
         $parent = $category->parent;
         if ($parent) {
             $parent_category = get_category($parent);
-            $items[] = '<a href="' . get_category_link($parent) . '" style="color: rgb(38,85,125);">' . $parent_category->name . '</a>';
+            // Para categorias, verificar se tem subcategorias
+            $subcategories = get_categories(array(
+                'parent' => $parent,
+                'hide_empty' => false,
+                'number' => 1
+            ));
+            
+            if (empty($subcategories)) {
+                // Categoria pai sem filhos - criar link
+                $items[] = '<a href="' . get_category_link($parent) . '" style="color: rgb(38,85,125);">' . $parent_category->name . '</a>';
+            } else {
+                // Categoria pai com filhos - apenas texto
+                $items[] = '<span style="color: #666; font-weight: normal;">' . $parent_category->name . '</span>';
+            }
         }
         $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $category->name . '</span>';
     } elseif (is_tag()) {

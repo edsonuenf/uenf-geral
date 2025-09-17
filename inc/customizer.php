@@ -1442,8 +1442,133 @@ add_action('wp_head', 'theme_typography_customizer_css');
             'right'  => __( 'Right', 'cct-theme' ),
         ),
     ));
-    
-    // === SEÇÃO DE RESET ===
+
+    // Icon Size
+    $wp_customize->add_setting( 'social_media_icon_size', array(
+        'default'           => '36',
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( 'social_media_icon_size', array(
+        'label'       => __( 'Icon Size (px)', 'cct-theme' ),
+        'section'     => 'cct_social_media',
+        'type'        => 'range',
+        'input_attrs' => array(
+            'min'  => 20,
+            'max'  => 80,
+            'step' => 2,
+        ),
+    ));
+
+    // Icon Color
+    $wp_customize->add_setting( 'social_media_icon_color', array(
+        'default'           => 'rgba(255, 255, 255, 0.6)',
+        'sanitize_callback' => 'cct_sanitize_color_with_alpha',
+    ) );
+
+    $wp_customize->add_control( 'social_media_icon_color', array(
+        'label'       => __( 'Icon Color', 'cct-theme' ),
+        'section'     => 'cct_social_media',
+        'type'        => 'text',
+        'description' => __( 'Use formato: rgba(255, 255, 255, 0.6) ou #ffffff', 'cct-theme' ),
+        'input_attrs' => array(
+            'placeholder' => 'rgba(255, 255, 255, 0.6)',
+        ),
+    ) );
+
+    // Background Color
+    $wp_customize->add_setting( 'social_media_bg_color', array(
+        'default'           => '#1d3771',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'social_media_bg_color', array(
+        'label'    => __( 'Background Color', 'cct-theme' ),
+        'section'  => 'cct_social_media',
+    ) ) );
+
+    // Border Width
+    $wp_customize->add_setting( 'social_media_border_width', array(
+        'default'           => '0',
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( 'social_media_border_width', array(
+        'label'       => __( 'Border Width (px)', 'cct-theme' ),
+        'section'     => 'cct_social_media',
+        'type'        => 'range',
+        'input_attrs' => array(
+            'min'  => 0,
+            'max'  => 10,
+            'step' => 1,
+        ),
+    ));
+
+    // Border Color
+    $wp_customize->add_setting( 'social_media_border_color', array(
+        'default'           => '#ffffff',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'social_media_border_color', array(
+        'label'    => __( 'Border Color', 'cct-theme' ),
+        'section'  => 'cct_social_media',
+    ) ) );
+
+    // Border Radius
+     $wp_customize->add_setting( 'social_media_border_radius', array(
+         'default'           => '50',
+         'sanitize_callback' => 'absint',
+     ) );
+
+     $wp_customize->add_control( 'social_media_border_radius', array(
+         'label'       => __( 'Border Radius (%)', 'cct-theme' ),
+         'section'     => 'cct_social_media',
+         'type'        => 'range',
+         'input_attrs' => array(
+             'min'  => 0,
+             'max'  => 50,
+             'step' => 5,
+         ),
+      ));
+
+     // Icon Gap
+     $wp_customize->add_setting( 'social_media_icon_gap', array(
+         'default'           => '6',
+         'sanitize_callback' => 'absint',
+     ) );
+
+     $wp_customize->add_control( 'social_media_icon_gap', array(
+         'label'       => __( 'Icon Gap (px)', 'cct-theme' ),
+         'section'     => 'cct_social_media',
+         'type'        => 'range',
+         'input_attrs' => array(
+             'min'  => 0,
+             'max'  => 20,
+             'step' => 1,
+         ),
+     ));
+
+     // Reset Button for Social Media
+     $wp_customize->add_setting( 'social_media_reset', array(
+         'default'           => '',
+         'sanitize_callback' => 'sanitize_text_field',
+         'transport'         => 'postMessage',
+     ) );
+
+     $wp_customize->add_control( 'social_media_reset', array(
+         'label'       => __( 'Restaurar Padrões', 'cct-theme' ),
+         'section'     => 'cct_social_media',
+         'type'        => 'button',
+         'description' => __( 'Clique para restaurar todas as configurações de redes sociais para os valores padrão.', 'cct-theme' ),
+         'input_attrs' => array(
+             'value' => __( 'Restaurar Padrões', 'cct-theme' ),
+             'class' => 'button button-secondary cct-social-reset-button',
+             'data-action' => 'reset-social-media',
+         ),
+     ));
+     
+     // === SEÇÃO DE RESET ===
     $wp_customize->add_section('cct_reset_section', array(
         'title' => __('Redefinir Configurações', 'cct'),
         'priority' => 999,
@@ -1794,7 +1919,7 @@ function cct_customize_css() {
     body {
         color: var(--text-color);
         font-family: ' . esc_attr(get_theme_mod('body_font_family', 'Times, system-ui, Arial, Ubuntu, "Open Sans", "Helvetica Neue", sans-serif')) . ';
-        font-weight: 300;
+        font-weight: 400;
     }
     
     /* Estilos para links */
@@ -2237,6 +2362,55 @@ function cct_customizer_preview_scripts() {
 add_action('customize_preview_init', 'cct_customizer_preview_scripts');
 
 /**
+ * Enfileira scripts de preview para redes sociais
+ */
+function cct_social_media_customizer_preview_scripts() {
+    wp_enqueue_script(
+        'cct-social-media-preview',
+        get_template_directory_uri() . '/js/customizer-social-media-preview.js',
+        array('jquery', 'customize-preview'),
+        '1.0.0',
+        true
+    );
+}
+add_action('customize_preview_init', 'cct_social_media_customizer_preview_scripts');
+
+/**
+ * Enfileira scripts de reset para redes sociais no customizer
+ */
+function cct_social_media_customizer_reset_scripts() {
+    wp_enqueue_script(
+        'cct-social-media-reset',
+        get_template_directory_uri() . '/js/customizer-social-media-reset.js',
+        array('jquery', 'customize-controls'),
+        '1.0.0',
+        true
+    );
+    
+    wp_enqueue_style(
+        'cct-social-media-reset-css',
+        get_template_directory_uri() . '/css/customizer-social-reset.css',
+        array(),
+        '1.0.0'
+    );
+}
+add_action('customize_controls_enqueue_scripts', 'cct_social_media_customizer_reset_scripts');
+
+/**
+ * Enfileira scripts para exibição de valores nos controles range
+ */
+function cct_customizer_range_display_scripts() {
+    wp_enqueue_script(
+        'cct-range-display',
+        get_template_directory_uri() . '/js/customizer-range-display.js',
+        array('jquery', 'customize-controls'),
+        '1.0.0',
+        true
+    );
+}
+add_action('customize_controls_enqueue_scripts', 'cct_customizer_range_display_scripts');
+
+/**
  * Configure settings for postMessage transport
  */
 function cct_configure_postmessage_settings($wp_customize) {
@@ -2602,6 +2776,40 @@ add_action('customize_register', 'cct_font_combinations_customizer');
 function cct_sanitize_font_pairing($input) {
     $valid_choices = array('theme_default', 'uenf_default', 'corporate', 'editorial', 'creative', 'academic', 'tech');
     return in_array($input, $valid_choices) ? $input : 'theme_default';
+}
+
+/**
+ * Sanitize color with alpha (rgba or hex)
+ */
+function cct_sanitize_color_with_alpha( $color ) {
+    // Se estiver vazio, retorna o padrão
+    if ( empty( $color ) ) {
+        return 'rgba(255, 255, 255, 0.6)';
+    }
+    
+    // Se for rgba
+    if ( strpos( $color, 'rgba' ) !== false ) {
+        // Validar formato rgba
+        if ( preg_match( '/^rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]*\.?[0-9]+)\s*\)$/', $color, $matches ) ) {
+            $r = intval( $matches[1] );
+            $g = intval( $matches[2] );
+            $b = intval( $matches[3] );
+            $a = floatval( $matches[4] );
+            
+            // Validar valores
+            if ( $r >= 0 && $r <= 255 && $g >= 0 && $g <= 255 && $b >= 0 && $b <= 255 && $a >= 0 && $a <= 1 ) {
+                return $color;
+            }
+        }
+    }
+    
+    // Se for hex, validar
+    if ( strpos( $color, '#' ) === 0 ) {
+        return sanitize_hex_color( $color );
+    }
+    
+    // Se não for válido, retorna o padrão
+    return 'rgba(255, 255, 255, 0.6)';
 }
 
 /**

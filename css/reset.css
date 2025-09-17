@@ -11,11 +11,12 @@ html {
 }
 
 body {
-    font-family: var(--font-family);
-    line-height: var(--line-height);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  color: var(--text-color);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+  padding: 0;
 }
 
 /* Reset de elementos específicos */

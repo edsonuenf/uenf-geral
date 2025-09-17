@@ -33,14 +33,17 @@ if ( function_exists( 'wp_body_open' ) ) {
       <div class="bg-header-logo">
         <div class="container">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="logo">
                 <a href="https://uenf.br" target="_blank">
                   <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/logo-uenf-transparente.png" alt="UENF">
                 </a>
               </div>
             </div>
-            <div class="col-md-6 idiomas-bandeiras d-flex align-items-end justify-content-end">
+            <div class="col-md-4 idiomas-bandeiras d-flex align-items-end justify-content-end">
+                <?php cct_display_social_media(); ?>
+            </div>
+            <div class="col-md-4 social-media d-flex align-items-end justify-content-end">
                 <?php dynamic_sidebar('idiomas-uenf'); ?>
             </div>
           </div>
