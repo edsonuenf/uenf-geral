@@ -614,10 +614,16 @@ class CCT_Search_Customizer_Controls {
      * Scripts para preview
      */
     public static function preview_scripts() {
+        // Garantir que as dependências do WordPress estejam carregadas
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('underscore');
+        wp_enqueue_script('backbone');
+        wp_enqueue_script('wp-util');
+        
         wp_enqueue_script(
             'cct-search-customizer-preview',
             get_template_directory_uri() . '/js/customizer-search-preview.js',
-            array('customize-preview'),
+            array('customize-preview', 'jquery', 'underscore', 'backbone', 'wp-util'),
             filemtime(get_template_directory() . '/js/customizer-search-preview.js'),
             true
         );
@@ -627,10 +633,16 @@ class CCT_Search_Customizer_Controls {
      * Adiciona scripts do customizer
      */
     public static function enqueue_customizer_scripts() {
+        // Garantir que as dependências do WordPress estejam carregadas
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('underscore');
+        wp_enqueue_script('backbone');
+        wp_enqueue_script('wp-util');
+        
         wp_enqueue_script(
             'cct-search-customizer',
             get_template_directory_uri() . '/js/customizer-search.js',
-            array('jquery', 'customize-controls'),
+            array('jquery', 'customize-controls', 'underscore', 'backbone', 'wp-util'),
             wp_get_theme()->get('Version'),
             true
         );
@@ -638,6 +650,12 @@ class CCT_Search_Customizer_Controls {
         // Adicionar JavaScript inline para atualizar valores dos range sliders
         wp_add_inline_script('cct-search-customizer', '
             jQuery(document).ready(function($) {
+                // Verificar se wp.customize está disponível
+                if (typeof wp === "undefined" || typeof wp.customize === "undefined") {
+                    console.warn("wp.customize não está disponível no search customizer");
+                    return;
+                }
+                
                 // Função para atualizar valores dos range sliders
                 function updateRangeValue(setting, value, suffix) {
                     $(".range-value[data-setting=\"" + setting + "\"]").text(value);

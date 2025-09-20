@@ -1,0 +1,807 @@
+/**
+ * Sistema de Modo Escuro/Claro CCT - Estilos Frontend
+ * 
+ * Sistema completo de modo escuro/claro incluindo:
+ * - Variáveis CSS para ambos os modos
+ * - Transições suaves entre modos
+ * - Componentes de toggle
+ * - Integração com todos os módulos
+ * - Responsividade e acessibilidade
+ * 
+ * @package CCT_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS Base
+   ========================================================================== */
+
+:root {
+    /* Cores modo claro (padrão) */
+    --cct-color-background: #ffffff;
+    --cct-color-surface: #f8f9fa;
+    --cct-color-primary: #0073aa;
+    --cct-color-secondary: #666666;
+    --cct-color-accent: #ff6b6b;
+    --cct-color-text: #333333;
+    --cct-color-text-secondary: #666666;
+    --cct-color-text-muted: #999999;
+    --cct-color-border: #e0e0e0;
+    --cct-color-shadow: rgba(0, 0, 0, 0.1);
+    --cct-color-overlay: rgba(255, 255, 255, 0.9);
+    --cct-color-success: #28a745;
+    --cct-color-warning: #ffc107;
+    --cct-color-error: #dc3545;
+    --cct-color-info: #17a2b8;
+    
+    /* Configurações de transição */
+    --cct-dark-mode-transition-duration: 0.3s;
+    --cct-dark-mode-transition-easing: ease-in-out;
+    --cct-dark-mode-transition-properties: background-color, color, border-color, box-shadow, fill, stroke;
+    
+    /* Z-index para toggles */
+    --cct-dark-mode-toggle-z: 9999;
+    
+    /* Tamanhos dos toggles */
+    --cct-toggle-size-small: 32px;
+    --cct-toggle-size-medium: 40px;
+    --cct-toggle-size-large: 48px;
+}
+
+/* Cores modo escuro */
+[data-theme='dark'] {
+    --cct-color-background: #1a1a1a;
+    --cct-color-surface: #2a2a2a;
+    --cct-color-primary: #4a9eff;
+    --cct-color-secondary: #b0b0b0;
+    --cct-color-accent: #ff8a8a;
+    --cct-color-text: #ffffff;
+    --cct-color-text-secondary: #cccccc;
+    --cct-color-text-muted: #888888;
+    --cct-color-border: #404040;
+    --cct-color-shadow: rgba(0, 0, 0, 0.3);
+    --cct-color-overlay: rgba(0, 0, 0, 0.9);
+    --cct-color-success: #4caf50;
+    --cct-color-warning: #ff9800;
+    --cct-color-error: #f44336;
+    --cct-color-info: #2196f3;
+}
+
+/* ==========================================================================
+   Transições Globais
+   ========================================================================== */
+
+/* Aplicar transições a todos os elementos quando habilitado */
+.cct-smooth-transitions *,
+.cct-smooth-transitions *::before,
+.cct-smooth-transitions *::after {
+    transition: var(--cct-dark-mode-transition-properties) var(--cct-dark-mode-transition-duration) var(--cct-dark-mode-transition-easing);
+}
+
+/* Excluir elementos que não devem ter transição */
+.cct-smooth-transitions img,
+.cct-smooth-transitions video,
+.cct-smooth-transitions iframe,
+.cct-smooth-transitions canvas,
+.cct-smooth-transitions .no-transition,
+.cct-smooth-transitions .cct-no-transition {
+    transition: none !important;
+}
+
+/* Estado de transição ativo */
+.cct-transitioning {
+    pointer-events: none;
+}
+
+.cct-transitioning * {
+    transition-duration: var(--cct-dark-mode-transition-duration) !important;
+}
+
+/* ==========================================================================
+   Estilos Base dos Elementos
+   ========================================================================== */
+
+/* Body e HTML */
+body {
+    background-color: var(--cct-color-background);
+    color: var(--cct-color-text);
+}
+
+/* Elementos de texto */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--cct-color-text);
+}
+
+p, span, div {
+    color: var(--cct-color-text);
+}
+
+a {
+    color: var(--cct-color-primary);
+}
+
+a:hover {
+    color: var(--cct-color-accent);
+}
+
+/* Elementos de formulário */
+input, textarea, select {
+    background-color: var(--cct-color-surface);
+    color: var(--cct-color-text);
+    border-color: var(--cct-color-border);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--cct-color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--cct-color-primary-rgb, 0, 115, 170), 0.1);
+}
+
+/* Botões */
+button, .button, input[type="submit"], input[type="button"] {
+    background-color: var(--cct-color-primary);
+    color: var(--cct-color-background);
+    border-color: var(--cct-color-primary);
+}
+
+button:hover, .button:hover {
+    background-color: var(--cct-color-accent);
+    border-color: var(--cct-color-accent);
+}
+
+/* Bordas e divisores */
+hr, .separator {
+    border-color: var(--cct-color-border);
+}
+
+/* Cards e superfícies */
+.card, .panel, .widget {
+    background-color: var(--cct-color-surface);
+    border-color: var(--cct-color-border);
+    box-shadow: 0 2px 4px var(--cct-color-shadow);
+}
+
+/* ==========================================================================
+   Componentes de Toggle
+   ========================================================================== */
+
+/* Container base do toggle */
+.cct-dark-mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+/* Toggle fixo */
+.cct-fixed-dark-mode-toggle {
+    position: fixed;
+    z-index: var(--cct-dark-mode-toggle-z);
+    padding: 8px;
+}
+
+/* Posicionamento do toggle fixo */
+.cct-position-top-left {
+    top: 20px;
+    left: 20px;
+}
+
+.cct-position-top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.cct-position-bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.cct-position-bottom-right {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Botão de toggle */
+.cct-toggle-btn,
+.cct-toggle-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--cct-color-surface);
+    color: var(--cct-color-text);
+    border: 1px solid var(--cct-color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px var(--cct-color-shadow);
+}
+
+.cct-toggle-icon-btn {
+    padding: 8px;
+    border-radius: 50%;
+    width: var(--cct-toggle-size-medium);
+    height: var(--cct-toggle-size-medium);
+}
+
+.cct-toggle-btn:hover,
+.cct-toggle-icon-btn:hover {
+    background: var(--cct-color-primary);
+    color: var(--cct-color-background);
+    border-color: var(--cct-color-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--cct-color-shadow);
+}
+
+.cct-toggle-btn:active,
+.cct-toggle-icon-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px var(--cct-color-shadow);
+}
+
+/* Ícones do toggle */
+.cct-toggle-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+/* Ícone de sol */
+.cct-toggle-icon.cct-icon-sun::before {
+    content: '☀️';
+    font-size: 16px;
+}
+
+/* Ícone de lua */
+.cct-toggle-icon.cct-icon-moon::before {
+    content: '🌙';
+    font-size: 16px;
+}
+
+/* Animação de rotação do ícone */
+.cct-mode-dark .cct-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Texto do toggle */
+.cct-toggle-text {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Toggle Switch (Estilo iOS)
+   ========================================================================== */
+
+.cct-toggle-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cct-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cct-toggle-slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: var(--cct-color-border);
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+    box-shadow: inset 0 1px 3px var(--cct-color-shadow);
+}
+
+.cct-toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--cct-color-background);
+    border-radius: 50%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px var(--cct-color-shadow);
+}
+
+.cct-toggle-input:checked + .cct-toggle-slider {
+    background: var(--cct-color-primary);
+}
+
+.cct-toggle-input:checked + .cct-toggle-slider::before {
+    transform: translateX(26px);
+}
+
+.cct-toggle-input:focus + .cct-toggle-slider {
+    box-shadow: inset 0 1px 3px var(--cct-color-shadow), 0 0 0 3px rgba(var(--cct-color-primary-rgb, 0, 115, 170), 0.2);
+}
+
+/* ==========================================================================
+   Tamanhos dos Toggles
+   ========================================================================== */
+
+/* Tamanho pequeno */
+.cct-size-small .cct-toggle-btn,
+.cct-size-small .cct-toggle-icon-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    width: var(--cct-toggle-size-small);
+    height: var(--cct-toggle-size-small);
+}
+
+.cct-size-small .cct-toggle-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.cct-size-small .cct-toggle-icon::before {
+    font-size: 14px;
+}
+
+.cct-size-small .cct-toggle-slider {
+    width: 40px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.cct-size-small .cct-toggle-slider::before {
+    width: 16px;
+    height: 16px;
+}
+
+.cct-size-small .cct-toggle-input:checked + .cct-toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* Tamanho grande */
+.cct-size-large .cct-toggle-btn,
+.cct-size-large .cct-toggle-icon-btn {
+    padding: 12px 16px;
+    font-size: 16px;
+    width: var(--cct-toggle-size-large);
+    height: var(--cct-toggle-size-large);
+}
+
+.cct-size-large .cct-toggle-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.cct-size-large .cct-toggle-icon::before {
+    font-size: 20px;
+}
+
+.cct-size-large .cct-toggle-slider {
+    width: 60px;
+    height: 28px;
+    border-radius: 14px;
+}
+
+.cct-size-large .cct-toggle-slider::before {
+    width: 24px;
+    height: 24px;
+}
+
+.cct-size-large .cct-toggle-input:checked + .cct-toggle-slider::before {
+    transform: translateX(32px);
+}
+
+/* ==========================================================================
+   Indicadores de Tema
+   ========================================================================== */
+
+.cct-theme-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: var(--cct-color-surface);
+    color: var(--cct-color-text-secondary);
+    border: 1px solid var(--cct-color-border);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.cct-theme-icon {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cct-theme-icon.cct-icon-sun::before {
+    content: '☀️';
+    font-size: 12px;
+}
+
+.cct-theme-icon.cct-icon-moon::before {
+    content: '🌙';
+    font-size: 12px;
+}
+
+.cct-theme-text {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   Admin Bar Integration
+   ========================================================================== */
+
+#wpadminbar .cct-admin-bar-dark-mode {
+    cursor: pointer;
+}
+
+#wpadminbar .cct-admin-bar-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    transition: opacity 0.2s ease;
+}
+
+#wpadminbar .cct-admin-bar-toggle:hover {
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   Integração com Módulos Existentes
+   ========================================================================== */
+
+/* Sistema de Sombras */
+[data-theme='dark'] .cct-elevation-1,
+[data-theme='dark'] .cct-elevation-2,
+[data-theme='dark'] .cct-elevation-4,
+[data-theme='dark'] .cct-elevation-6,
+[data-theme='dark'] .cct-elevation-8,
+[data-theme='dark'] .cct-elevation-12,
+[data-theme='dark'] .cct-elevation-16,
+[data-theme='dark'] .cct-elevation-24 {
+    --cct-shadow-color: 0, 0, 0;
+}
+
+/* Sistema de Gradientes */
+[data-theme='dark'] .cct-bg-gradient-ocean {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+[data-theme='dark'] .cct-bg-gradient-sunset {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+/* Sistema de Ícones */
+[data-theme='dark'] .cct-icon {
+    fill: var(--cct-color-text);
+    color: var(--cct-color-text);
+}
+
+/* Sistema de Animações */
+[data-theme='dark'] .cct-animate {
+    --cct-animation-shadow: var(--cct-color-shadow);
+}
+
+/* Biblioteca de Padrões */
+[data-theme='dark'] .cct-pattern-card {
+    background: var(--cct-color-surface);
+    border-color: var(--cct-color-border);
+}
+
+[data-theme='dark'] .cct-faq-accordion .cct-faq-item {
+    background: var(--cct-color-surface);
+    border-color: var(--cct-color-border);
+}
+
+[data-theme='dark'] .cct-pricing-plan {
+    background: var(--cct-color-surface);
+    border-color: var(--cct-color-border);
+}
+
+[data-theme='dark'] .cct-team-member {
+    background: var(--cct-color-surface);
+    border-color: var(--cct-color-border);
+}
+
+[data-theme='dark'] .cct-portfolio-item {
+    background: var(--cct-color-surface);
+    border-color: var(--cct-color-border);
+}
+
+/* ==========================================================================
+   Estados de Foco e Acessibilidade
+   ========================================================================== */
+
+/* Foco visível */
+.cct-toggle-btn:focus,
+.cct-toggle-icon-btn:focus {
+    outline: 2px solid var(--cct-color-primary);
+    outline-offset: 2px;
+}
+
+.cct-toggle-input:focus + .cct-toggle-slider {
+    outline: 2px solid var(--cct-color-primary);
+    outline-offset: 2px;
+}
+
+/* Estados desabilitados */
+.cct-toggle-btn:disabled,
+.cct-toggle-icon-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .cct-toggle-btn,
+    .cct-toggle-icon-btn {
+        border-width: 2px;
+    }
+    
+    .cct-toggle-slider {
+        border: 2px solid var(--cct-color-border);
+    }
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Mobile */
+@media (max-width: 768px) {
+    .cct-fixed-dark-mode-toggle {
+        padding: 6px;
+    }
+    
+    .cct-position-top-left,
+    .cct-position-top-right {
+        top: 15px;
+    }
+    
+    .cct-position-top-left,
+    .cct-position-bottom-left {
+        left: 15px;
+    }
+    
+    .cct-position-top-right,
+    .cct-position-bottom-right {
+        right: 15px;
+    }
+    
+    .cct-position-bottom-left,
+    .cct-position-bottom-right {
+        bottom: 15px;
+    }
+    
+    .cct-toggle-text {
+        display: none;
+    }
+    
+    .cct-size-large .cct-toggle-btn,
+    .cct-size-large .cct-toggle-icon-btn {
+        width: var(--cct-toggle-size-medium);
+        height: var(--cct-toggle-size-medium);
+        padding: 8px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cct-fixed-dark-mode-toggle {
+        padding: 7px;
+    }
+}
+
+/* ==========================================================================
+   Preferências do Sistema
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .cct-smooth-transitions *,
+    .cct-smooth-transitions *::before,
+    .cct-smooth-transitions *::after {
+        transition: none !important;
+    }
+    
+    .cct-toggle-icon {
+        transition: none !important;
+    }
+    
+    .cct-toggle-slider::before {
+        transition: none !important;
+    }
+}
+
+/* Modo escuro automático do sistema */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --cct-color-background: #1a1a1a;
+        --cct-color-surface: #2a2a2a;
+        --cct-color-primary: #4a9eff;
+        --cct-color-secondary: #b0b0b0;
+        --cct-color-accent: #ff8a8a;
+        --cct-color-text: #ffffff;
+        --cct-color-text-secondary: #cccccc;
+        --cct-color-text-muted: #888888;
+        --cct-color-border: #404040;
+        --cct-color-shadow: rgba(0, 0, 0, 0.3);
+        --cct-color-overlay: rgba(0, 0, 0, 0.9);
+        --cct-color-success: #4caf50;
+        --cct-color-warning: #ff9800;
+        --cct-color-error: #f44336;
+        --cct-color-info: #2196f3;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .cct-dark-mode-toggle,
+    .cct-fixed-dark-mode-toggle,
+    .cct-theme-indicator {
+        display: none !important;
+    }
+    
+    /* Forçar modo claro para impressão */
+    * {
+        background: white !important;
+        color: black !important;
+        border-color: #ccc !important;
+        box-shadow: none !important;
+    }
+}
+
+/* ==========================================================================
+   Animações Especiais
+   ========================================================================== */
+
+/* Animação de entrada do toggle fixo */
+@keyframes cct-toggle-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.cct-fixed-dark-mode-toggle {
+    animation: cct-toggle-fade-in 0.3s ease-out;
+}
+
+/* Animação de pulsação para chamar atenção */
+@keyframes cct-toggle-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px var(--cct-color-shadow);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px var(--cct-color-shadow);
+    }
+}
+
+.cct-toggle-pulse {
+    animation: cct-toggle-pulse 2s ease-in-out infinite;
+}
+
+/* Animação de rotação do ícone */
+@keyframes cct-icon-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cct-toggle-icon.cct-rotating {
+    animation: cct-icon-rotate 0.5s ease-in-out;
+}
+
+/* ==========================================================================
+   Utilitários
+   ========================================================================== */
+
+/* Classe para forçar modo claro */
+.cct-force-light-mode {
+    --cct-color-background: #ffffff !important;
+    --cct-color-surface: #f8f9fa !important;
+    --cct-color-text: #333333 !important;
+    --cct-color-border: #e0e0e0 !important;
+}
+
+/* Classe para forçar modo escuro */
+.cct-force-dark-mode {
+    --cct-color-background: #1a1a1a !important;
+    --cct-color-surface: #2a2a2a !important;
+    --cct-color-text: #ffffff !important;
+    --cct-color-border: #404040 !important;
+}
+
+/* Classe para desabilitar transições */
+.cct-no-dark-mode-transition,
+.cct-no-dark-mode-transition * {
+    transition: none !important;
+}
+
+/* Classe para ocultar em modo escuro */
+[data-theme='dark'] .cct-hide-in-dark {
+    display: none !important;
+}
+
+/* Classe para ocultar em modo claro */
+[data-theme='light'] .cct-hide-in-light,
+:root:not([data-theme]) .cct-hide-in-light {
+    display: none !important;
+}
+
+/* Classe para mostrar apenas em modo escuro */
+.cct-show-in-dark {
+    display: none !important;
+}
+
+[data-theme='dark'] .cct-show-in-dark {
+    display: block !important;
+}
+
+/* Classe para mostrar apenas em modo claro */
+.cct-show-in-light {
+    display: none !important;
+}
+
+[data-theme='light'] .cct-show-in-light,
+:root:not([data-theme]) .cct-show-in-light {
+    display: block !important;
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug */
+.cct-dark-mode-debug {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cct-color-surface);
+    color: var(--cct-color-text);
+    padding: 8px 12px;
+    border: 1px solid var(--cct-color-border);
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+/* Indicador de modo ativo */
+.cct-dark-mode-debug::before {
+    content: 'Modo: ' attr(data-current-mode);
+}
+
+/* Informações de performance */
+.cct-dark-mode-debug::after {
+    content: ' | Transições: ' attr(data-transitions-enabled);
+}

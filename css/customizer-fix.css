@@ -1,0 +1,78 @@
+/**
+ * Correções específicas para o WordPress Customizer
+ * Resolve problemas de visualização no iframe do customizer
+ */
+
+/* Correção para iframe do customizer */
+body.customizer-preview {
+    overflow-x: visible !important;
+    min-width: auto !important;
+}
+
+/* Garantir que o conteúdo seja visível no customizer */
+body.customizer-preview #page {
+    overflow-x: visible !important;
+    min-width: auto !important;
+}
+
+/* Correção para container no customizer */
+body.customizer-preview .container {
+    max-width: 100% !important;
+    overflow-x: visible !important;
+}
+
+/* Remover transições que podem causar problemas no customizer */
+body.customizer-preview * {
+    transition: none !important;
+}
+
+/* Garantir que elementos com position fixed funcionem no iframe */
+body.customizer-preview .back-to-top,
+body.customizer-preview .shortcuts-container {
+    position: absolute !important;
+}
+
+/* Correção para z-index no customizer */
+body.customizer-preview [style*="z-index"] {
+    z-index: auto !important;
+}
+
+/* Garantir que o layout seja responsivo no customizer */
+body.customizer-preview {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Correção específica para elementos que podem estar causando overflow */
+body.customizer-preview .hero-section,
+body.customizer-preview .header,
+body.customizer-preview .footer {
+    overflow-x: visible !important;
+    width: 100% !important;
+}
+
+/* Remover indicador de preview ativo se estiver causando problemas */
+body.customize-preview-active::before {
+    display: none !important;
+}
+
+/* Garantir que imagens sejam responsivas no customizer */
+body.customizer-preview img,
+body.customizer-preview iframe,
+body.customizer-preview video {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Correção para menu no customizer */
+body.customizer-preview .new-menu,
+body.customizer-preview #menuLateral {
+    overflow-x: visible !important;
+}
+
+/* Debug: adicionar borda para identificar problemas */
+/*
+body.customizer-preview {
+    border: 2px solid red !important;
+}
+*/

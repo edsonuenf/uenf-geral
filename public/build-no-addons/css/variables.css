@@ -1,0 +1,30 @@
+/* Variables and Theme Colors */
+:root {
+  --bs-uenf-blue: #1D3771;
+  --bs-uenf-blue-light: #1D3770BF;
+  --title-h1: var(--bs-uenf-blue-light);
+  --primary-color: var(--bs-uenf-blue);
+  --primary-color-light: var(--bs-uenf-blue-light);
+  --text-color: #333;
+  --orange-color: #f5121b;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --hover-bg: #54689290;
+  --active-bg: #54689295;
+  --white: rgba(255, 255, 255, 0.9);
+  --white-solid: #ffffff;
+  --black: #000000;
+  --hero-bg: #386A9430;
+  --transition: all 0.3s ease;
+}
+
+/* Typography */
+:root {
+  --font-family: Ubuntu, system-ui, -apple-system, Roboto, Oxygen, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 2rem;
+  --font-weight-normal: 400;
+  --line-height: 1.5;
+  --letter-spacing: -1px;
+}

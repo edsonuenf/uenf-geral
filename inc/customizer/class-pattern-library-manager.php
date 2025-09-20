@@ -41,6 +41,13 @@ class CCT_Pattern_Library_Manager {
     private $prefix = 'cct_patterns_';
     
     /**
+     * ID do painel de design
+     * 
+     * @var string
+     */
+    private $panel_id = 'cct_design_panel';
+    
+    /**
      * Padrões de FAQ
      * 
      * @var array
@@ -480,75 +487,79 @@ class CCT_Pattern_Library_Manager {
     }
     
     /**
-     * Adiciona painel de padrões
+     * Adiciona painel de padrões (agora como seção no painel Design)
      */
     private function add_pattern_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Biblioteca de Padrões', 'cct'),
-            'description' => __('Seções prontas para FAQ, Pricing, Team e Portfolio com templates customizáveis.', 'cct'),
-            'priority' => 190,
-            'capability' => 'edit_theme_options',
-        ));
+        // A biblioteca de padrões agora é uma seção dentro do painel Design
+        // O painel Design é criado pelo Design_Panel_Manager
     }
     
     /**
      * Adiciona seções de padrões
      */
     private function add_pattern_sections() {
+        // Seção principal de Padrões no painel Design
+        $this->wp_customize->add_section($this->prefix . 'main', array(
+            'title' => __('Padrões', 'cct'),
+            'description' => __('Biblioteca de padrões com seções prontas para FAQ, Pricing, Team e Portfolio.', 'cct'),
+            'panel' => 'cct_design_panel',
+            'priority' => 30,
+        ));
+        
         // Seção de configurações gerais
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações globais da biblioteca de padrões.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 10,
+            'panel' => 'cct_design_panel',
+            'priority' => 31,
         ));
         
         // Seção FAQ
         $this->wp_customize->add_section($this->prefix . 'faq', array(
             'title' => __('Padrões FAQ', 'cct'),
             'description' => __('Seções de perguntas frequentes com diferentes layouts.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 20,
+            'panel' => 'cct_design_panel',
+            'priority' => 32,
         ));
         
         // Seção Pricing
         $this->wp_customize->add_section($this->prefix . 'pricing', array(
             'title' => __('Padrões Pricing', 'cct'),
             'description' => __('Tabelas de preços e planos com layouts variados.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 30,
+            'panel' => 'cct_design_panel',
+            'priority' => 33,
         ));
         
         // Seção Team
         $this->wp_customize->add_section($this->prefix . 'team', array(
             'title' => __('Padrões Team', 'cct'),
             'description' => __('Seções de equipe com diferentes apresentações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 40,
+            'panel' => 'cct_design_panel',
+            'priority' => 34,
         ));
         
         // Seção Portfolio
         $this->wp_customize->add_section($this->prefix . 'portfolio', array(
             'title' => __('Padrões Portfolio', 'cct'),
             'description' => __('Galerias de projetos com layouts profissionais.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 50,
+            'panel' => 'cct_design_panel',
+            'priority' => 35,
         ));
         
         // Seção de estilos
         $this->wp_customize->add_section($this->prefix . 'styles', array(
             'title' => __('Estilos Globais', 'cct'),
             'description' => __('Configurações de cores, tipografia e espaçamentos.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 60,
+            'panel' => 'cct_design_panel',
+            'priority' => 36,
         ));
         
         // Seção de templates
         $this->wp_customize->add_section($this->prefix . 'templates', array(
             'title' => __('Templates Prontos', 'cct'),
             'description' => __('Templates completos para diferentes tipos de site.', 'cct'),
-            'panel' => $this->prefix . 'panel',
-            'priority' => 70,
+            'panel' => 'cct_design_panel',
+            'priority' => 37,
         ));
     }
     
@@ -787,6 +798,282 @@ class CCT_Pattern_Library_Manager {
             'type' => 'select',
             'choices' => $this->get_template_choices(),
         ));
+        
+        // Controles de conteúdo dos patterns
+        $this->add_content_controls();
+    }
+    
+    /**
+     * Adiciona controles de edição de conteúdo dos patterns
+     */
+    private function add_content_controls() {
+        // Seção para conteúdo dos patterns
+        $this->wp_customize->add_section($this->prefix . 'content', array(
+            'title' => __('Conteúdo dos Patterns', 'cct'),
+            'description' => __('Edite o conteúdo dos patterns disponíveis.', 'cct'),
+            'panel' => $this->panel_id,
+            'priority' => 25,
+        ));
+        
+        // Controles para FAQ
+        $this->add_faq_content_controls();
+        
+        // Controles para Pricing
+        $this->add_pricing_content_controls();
+        
+        // Controles para Team
+        $this->add_team_content_controls();
+        
+        // Controles para Portfolio
+        $this->add_portfolio_content_controls();
+    }
+    
+    /**
+     * Adiciona controles de conteúdo para FAQ
+     */
+    private function add_faq_content_controls() {
+        // Número de FAQs
+        $this->add_setting('faq_count', array(
+            'default' => 5,
+            'sanitize_callback' => 'absint',
+        ));
+        
+        $this->add_control('faq_count', array(
+            'label' => __('Número de FAQs', 'cct'),
+            'description' => __('Quantas perguntas frequentes exibir.', 'cct'),
+            'section' => $this->prefix . 'content',
+            'type' => 'number',
+            'input_attrs' => array(
+                'min' => 1,
+                'max' => 20,
+                'step' => 1,
+            ),
+        ));
+        
+        // FAQs individuais
+        for ($i = 1; $i <= 10; $i++) {
+            // Pergunta
+            $this->add_setting("faq_question_{$i}", array(
+                'default' => sprintf(__('Pergunta %d', 'cct'), $i),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("faq_question_{$i}", array(
+                'label' => sprintf(__('Pergunta %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+            
+            // Resposta
+            $this->add_setting("faq_answer_{$i}", array(
+                'default' => sprintf(__('Resposta para a pergunta %d', 'cct'), $i),
+                'sanitize_callback' => 'wp_kses_post',
+            ));
+            
+            $this->add_control("faq_answer_{$i}", array(
+                'label' => sprintf(__('Resposta %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'textarea',
+            ));
+            
+            // Categoria
+            $this->add_setting("faq_category_{$i}", array(
+                'default' => __('Geral', 'cct'),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("faq_category_{$i}", array(
+                'label' => sprintf(__('Categoria %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+        }
+    }
+    
+    /**
+     * Adiciona controles de conteúdo para Pricing
+     */
+    private function add_pricing_content_controls() {
+        // Número de planos
+        $this->add_setting('pricing_count', array(
+            'default' => 3,
+            'sanitize_callback' => 'absint',
+        ));
+        
+        $this->add_control('pricing_count', array(
+            'label' => __('Número de Planos', 'cct'),
+            'description' => __('Quantos planos de preços exibir.', 'cct'),
+            'section' => $this->prefix . 'content',
+            'type' => 'number',
+            'input_attrs' => array(
+                'min' => 1,
+                'max' => 6,
+                'step' => 1,
+            ),
+        ));
+        
+        // Planos individuais
+        for ($i = 1; $i <= 6; $i++) {
+            // Nome do plano
+            $this->add_setting("pricing_plan_name_{$i}", array(
+                'default' => sprintf(__('Plano %d', 'cct'), $i),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("pricing_plan_name_{$i}", array(
+                'label' => sprintf(__('Nome do Plano %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+            
+            // Preço
+            $this->add_setting("pricing_plan_price_{$i}", array(
+                'default' => '99',
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("pricing_plan_price_{$i}", array(
+                'label' => sprintf(__('Preço do Plano %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+            
+            // Descrição
+            $this->add_setting("pricing_plan_description_{$i}", array(
+                'default' => sprintf(__('Descrição do plano %d', 'cct'), $i),
+                'sanitize_callback' => 'wp_kses_post',
+            ));
+            
+            $this->add_control("pricing_plan_description_{$i}", array(
+                'label' => sprintf(__('Descrição do Plano %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'textarea',
+            ));
+        }
+    }
+    
+    /**
+     * Adiciona controles de conteúdo para Team
+     */
+    private function add_team_content_controls() {
+        // Número de membros
+        $this->add_setting('team_count', array(
+            'default' => 4,
+            'sanitize_callback' => 'absint',
+        ));
+        
+        $this->add_control('team_count', array(
+            'label' => __('Número de Membros', 'cct'),
+            'description' => __('Quantos membros da equipe exibir.', 'cct'),
+            'section' => $this->prefix . 'content',
+            'type' => 'number',
+            'input_attrs' => array(
+                'min' => 1,
+                'max' => 12,
+                'step' => 1,
+            ),
+        ));
+        
+        // Membros individuais
+        for ($i = 1; $i <= 12; $i++) {
+            // Nome
+            $this->add_setting("team_member_name_{$i}", array(
+                'default' => sprintf(__('Membro %d', 'cct'), $i),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("team_member_name_{$i}", array(
+                'label' => sprintf(__('Nome do Membro %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+            
+            // Cargo
+            $this->add_setting("team_member_position_{$i}", array(
+                'default' => sprintf(__('Cargo %d', 'cct'), $i),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("team_member_position_{$i}", array(
+                'label' => sprintf(__('Cargo do Membro %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+            
+            // Biografia
+            $this->add_setting("team_member_bio_{$i}", array(
+                'default' => sprintf(__('Biografia do membro %d', 'cct'), $i),
+                'sanitize_callback' => 'wp_kses_post',
+            ));
+            
+            $this->add_control("team_member_bio_{$i}", array(
+                'label' => sprintf(__('Biografia do Membro %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'textarea',
+            ));
+        }
+    }
+    
+    /**
+     * Adiciona controles de conteúdo para Portfolio
+     */
+    private function add_portfolio_content_controls() {
+        // Número de projetos
+        $this->add_setting('portfolio_count', array(
+            'default' => 6,
+            'sanitize_callback' => 'absint',
+        ));
+        
+        $this->add_control('portfolio_count', array(
+            'label' => __('Número de Projetos', 'cct'),
+            'description' => __('Quantos projetos do portfólio exibir.', 'cct'),
+            'section' => $this->prefix . 'content',
+            'type' => 'number',
+            'input_attrs' => array(
+                'min' => 1,
+                'max' => 20,
+                'step' => 1,
+            ),
+        ));
+        
+        // Projetos individuais
+        for ($i = 1; $i <= 20; $i++) {
+            // Título
+            $this->add_setting("portfolio_project_title_{$i}", array(
+                'default' => sprintf(__('Projeto %d', 'cct'), $i),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("portfolio_project_title_{$i}", array(
+                'label' => sprintf(__('Título do Projeto %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+            
+            // Descrição
+            $this->add_setting("portfolio_project_description_{$i}", array(
+                'default' => sprintf(__('Descrição do projeto %d', 'cct'), $i),
+                'sanitize_callback' => 'wp_kses_post',
+            ));
+            
+            $this->add_control("portfolio_project_description_{$i}", array(
+                'label' => sprintf(__('Descrição do Projeto %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'textarea',
+            ));
+            
+            // Categoria
+            $this->add_setting("portfolio_project_category_{$i}", array(
+                'default' => __('Web Design', 'cct'),
+                'sanitize_callback' => 'sanitize_text_field',
+            ));
+            
+            $this->add_control("portfolio_project_category_{$i}", array(
+                'label' => sprintf(__('Categoria do Projeto %d', 'cct'), $i),
+                'section' => $this->prefix . 'content',
+                'type' => 'text',
+            ));
+        }
     }
     
     /**
@@ -1058,7 +1345,34 @@ class CCT_Pattern_Library_Manager {
         }
         
         $output .= '<div class="cct-faq-content">';
-        $output .= do_shortcode($content);
+        
+        // Se não há conteúdo personalizado, usar dados do customizer
+        if (empty($content)) {
+            $faq_count = get_theme_mod($this->prefix . 'faq_count', 5);
+            
+            for ($i = 1; $i <= $faq_count; $i++) {
+                $question = get_theme_mod($this->prefix . "faq_question_{$i}", sprintf(__('Pergunta %d', 'cct'), $i));
+                $answer = get_theme_mod($this->prefix . "faq_answer_{$i}", sprintf(__('Resposta para a pergunta %d', 'cct'), $i));
+                $category = get_theme_mod($this->prefix . "faq_category_{$i}", __('Geral', 'cct'));
+                
+                if (!empty($question) && !empty($answer)) {
+                    $item_id = 'faq-' . sanitize_title($question);
+                    
+                    $output .= '<div class="cct-faq-item" data-category="' . esc_attr($category) . '" id="' . esc_attr($item_id) . '">';
+                    $output .= '<div class="cct-faq-question">';
+                    $output .= '<h3>' . esc_html($question) . '</h3>';
+                    $output .= '<span class="cct-faq-icon"></span>';
+                    $output .= '</div>';
+                    $output .= '<div class="cct-faq-answer">';
+                    $output .= wpautop($answer);
+                    $output .= '</div>';
+                    $output .= '</div>';
+                }
+            }
+        } else {
+            $output .= do_shortcode($content);
+        }
+        
         $output .= '</div>';
         $output .= '</div>';
         
@@ -1130,7 +1444,53 @@ class CCT_Pattern_Library_Manager {
         }
         
         $output .= '<div class="cct-pricing-content" data-currency="' . esc_attr($atts['currency']) . '">';
-        $output .= do_shortcode($content);
+        
+        // Se não há conteúdo personalizado, usar dados do customizer
+        if (empty($content)) {
+            $pricing_count = get_theme_mod($this->prefix . 'pricing_count', 3);
+            
+            for ($i = 1; $i <= $pricing_count; $i++) {
+                $plan_name = get_theme_mod($this->prefix . "pricing_plan_name_{$i}", sprintf(__('Plano %d', 'cct'), $i));
+                $plan_price = get_theme_mod($this->prefix . "pricing_plan_price_{$i}", '99');
+                $plan_description = get_theme_mod($this->prefix . "pricing_plan_description_{$i}", sprintf(__('Descrição do plano %d', 'cct'), $i));
+                
+                if (!empty($plan_name) && !empty($plan_price)) {
+                    $classes = array('cct-pricing-plan');
+                    
+                    // Marcar o plano do meio como popular se houver 3 planos
+                    if ($pricing_count == 3 && $i == 2) {
+                        $classes[] = 'cct-pricing-popular';
+                    }
+                    
+                    $output .= '<div class="' . implode(' ', $classes) . '">';
+                    
+                    if (in_array('cct-pricing-popular', $classes)) {
+                        $output .= '<div class="cct-pricing-badge">' . __('Mais Popular', 'cct') . '</div>';
+                    }
+                    
+                    $output .= '<div class="cct-pricing-header">';
+                    $output .= '<h3 class="cct-pricing-name">' . esc_html($plan_name) . '</h3>';
+                    $output .= '<div class="cct-pricing-price">';
+                    $output .= '<span class="cct-price-amount">' . esc_html($atts['currency']) . esc_html($plan_price) . '</span>';
+                    $output .= '<span class="cct-price-period">/' . __('mês', 'cct') . '</span>';
+                    $output .= '</div>';
+                    $output .= '</div>';
+                    
+                    $output .= '<div class="cct-pricing-body">';
+                    $output .= '<div class="cct-pricing-description">' . wpautop($plan_description) . '</div>';
+                    $output .= '</div>';
+                    
+                    $output .= '<div class="cct-pricing-footer">';
+                    $output .= '<a href="#" class="cct-pricing-button">' . __('Escolher Plano', 'cct') . '</a>';
+                    $output .= '</div>';
+                    
+                    $output .= '</div>';
+                }
+            }
+        } else {
+            $output .= do_shortcode($content);
+        }
+        
         $output .= '</div>';
         $output .= '</div>';
         

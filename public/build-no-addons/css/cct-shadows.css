@@ -1,0 +1,848 @@
+/**
+ * Sistema de Sombras CCT - Estilos Frontend
+ * 
+ * Sistema completo de elevação e profundidade incluindo:
+ * - 8 níveis de elevação baseados no Material Design
+ * - Classes utilitárias para diferentes elementos
+ * - Animações e transições suaves
+ * - Responsividade e acessibilidade
+ * - Otimizações de performance
+ * - Fallbacks para navegadores antigos
+ * 
+ * @package CCT_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS para Sistema de Sombras
+   ========================================================================== */
+
+:root {
+    /* Cor base das sombras */
+    --cct-shadow-color: 0, 0, 0;
+    --cct-shadow-color-hex: #000000;
+    
+    /* Opacidades para diferentes níveis */
+    --cct-shadow-opacity-subtle: 0.08;
+    --cct-shadow-opacity-light: 0.12;
+    --cct-shadow-opacity-medium: 0.16;
+    --cct-shadow-opacity-strong: 0.20;
+    --cct-shadow-opacity-intense: 0.25;
+    --cct-shadow-opacity-dramatic: 0.30;
+    
+    /* Configurações de animação */
+    --cct-shadow-transition-duration: 0.3s;
+    --cct-shadow-transition-easing: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --cct-shadow-transition-fast: 0.15s;
+    --cct-shadow-transition-slow: 0.5s;
+    
+    /* Intensidades personalizáveis */
+    --cct-shadow-blur-multiplier: 1;
+    --cct-shadow-spread-multiplier: 1;
+    --cct-shadow-offset-multiplier: 1;
+    
+    /* Configurações de performance */
+    --cct-shadow-gpu-acceleration: translateZ(0);
+    --cct-shadow-will-change: box-shadow;
+    
+    /* Sombras predefinidas por nível */
+    --cct-elevation-0: none;
+    --cct-elevation-1: 0 1px 3px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-light)), 
+                       0 1px 2px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-intense));
+    --cct-elevation-2: 0 3px 6px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-medium)), 
+                       0 3px 6px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-strong));
+    --cct-elevation-4: 0 10px 20px rgba(var(--cct-shadow-color), 0.19), 
+                       0 6px 6px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-strong));
+    --cct-elevation-6: 0 14px 28px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-intense)), 
+                       0 10px 10px rgba(var(--cct-shadow-color), 0.22);
+    --cct-elevation-8: 0 19px 38px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-dramatic)), 
+                       0 15px 12px rgba(var(--cct-shadow-color), 0.22);
+    --cct-elevation-12: 0 25px 50px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-intense)), 
+                        0 12px 24px rgba(var(--cct-shadow-color), 0.22);
+    --cct-elevation-16: 0 30px 60px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-dramatic)), 
+                        0 18px 36px rgba(var(--cct-shadow-color), 0.22);
+    --cct-elevation-24: 0 38px 76px rgba(var(--cct-shadow-color), 0.35), 
+                        0 24px 48px rgba(var(--cct-shadow-color), 0.22);
+    
+    /* Sombras coloridas */
+    --cct-shadow-blue: 59, 130, 246;
+    --cct-shadow-green: 34, 197, 94;
+    --cct-shadow-red: 239, 68, 68;
+    --cct-shadow-yellow: 245, 158, 11;
+    --cct-shadow-purple: 147, 51, 234;
+    --cct-shadow-pink: 236, 72, 153;
+    --cct-shadow-indigo: 99, 102, 241;
+    --cct-shadow-teal: 20, 184, 166;
+    
+    /* Z-index para elevações */
+    --cct-z-elevation-0: 0;
+    --cct-z-elevation-1: 1;
+    --cct-z-elevation-2: 2;
+    --cct-z-elevation-4: 4;
+    --cct-z-elevation-6: 6;
+    --cct-z-elevation-8: 8;
+    --cct-z-elevation-12: 12;
+    --cct-z-elevation-16: 16;
+    --cct-z-elevation-24: 24;
+}
+
+/* ==========================================================================
+   Classes Base de Elevação
+   ========================================================================== */
+
+/* Classe base para elementos com sombra */
+.cct-shadow {
+    position: relative;
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Otimização de performance */
+.cct-shadow-optimized {
+    transform: var(--cct-shadow-gpu-acceleration);
+    will-change: var(--cct-shadow-will-change);
+    backface-visibility: hidden;
+}
+
+/* ==========================================================================
+   Níveis de Elevação (Material Design)
+   ========================================================================== */
+
+/* Nível 0 - Plano */
+.cct-elevation-0 {
+    box-shadow: var(--cct-elevation-0);
+    z-index: var(--cct-z-elevation-0);
+}
+
+/* Nível 1 - Muito Baixo */
+.cct-elevation-1 {
+    box-shadow: var(--cct-elevation-1);
+    z-index: var(--cct-z-elevation-1);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 2 - Baixo */
+.cct-elevation-2 {
+    box-shadow: var(--cct-elevation-2);
+    z-index: var(--cct-z-elevation-2);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 4 - Médio */
+.cct-elevation-4 {
+    box-shadow: var(--cct-elevation-4);
+    z-index: var(--cct-z-elevation-4);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 6 - Médio-Alto */
+.cct-elevation-6 {
+    box-shadow: var(--cct-elevation-6);
+    z-index: var(--cct-z-elevation-6);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 8 - Alto */
+.cct-elevation-8 {
+    box-shadow: var(--cct-elevation-8);
+    z-index: var(--cct-z-elevation-8);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 12 - Muito Alto */
+.cct-elevation-12 {
+    box-shadow: var(--cct-elevation-12);
+    z-index: var(--cct-z-elevation-12);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 16 - Extremo */
+.cct-elevation-16 {
+    box-shadow: var(--cct-elevation-16);
+    z-index: var(--cct-z-elevation-16);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* Nível 24 - Máximo */
+.cct-elevation-24 {
+    box-shadow: var(--cct-elevation-24);
+    z-index: var(--cct-z-elevation-24);
+    transition: box-shadow var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+/* ==========================================================================
+   Efeitos de Hover (Elevação Dinâmica)
+   ========================================================================== */
+
+/* Hover: Nível 1 → 2 */
+.cct-elevation-hover-1:hover {
+    box-shadow: var(--cct-elevation-2);
+    transform: translateY(-1px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 2 → 4 */
+.cct-elevation-hover-2:hover {
+    box-shadow: var(--cct-elevation-4);
+    transform: translateY(-2px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 4 → 6 */
+.cct-elevation-hover-4:hover {
+    box-shadow: var(--cct-elevation-6);
+    transform: translateY(-2px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 6 → 8 */
+.cct-elevation-hover-6:hover {
+    box-shadow: var(--cct-elevation-8);
+    transform: translateY(-3px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 8 → 12 */
+.cct-elevation-hover-8:hover {
+    box-shadow: var(--cct-elevation-12);
+    transform: translateY(-3px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 12 → 16 */
+.cct-elevation-hover-12:hover {
+    box-shadow: var(--cct-elevation-16);
+    transform: translateY(-4px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 16 → 24 */
+.cct-elevation-hover-16:hover {
+    box-shadow: var(--cct-elevation-24);
+    transform: translateY(-4px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* ==========================================================================
+   Estados Interativos
+   ========================================================================== */
+
+/* Estado de foco */
+.cct-elevation-focus:focus {
+    outline: 3px solid rgba(59, 130, 246, 0.3);
+    outline-offset: 2px;
+}
+
+/* Estado ativo (pressionado) */
+.cct-elevation-active:active {
+    transform: translateY(1px) var(--cct-shadow-gpu-acceleration);
+    box-shadow: var(--cct-elevation-1);
+    transition: all var(--cct-shadow-transition-fast) var(--cct-shadow-transition-easing);
+}
+
+/* Estado desabilitado */
+.cct-elevation-disabled {
+    box-shadow: var(--cct-elevation-1);
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Sombras Coloridas
+   ========================================================================== */
+
+/* Sombra azul */
+.cct-shadow-blue {
+    --cct-shadow-color: var(--cct-shadow-blue);
+}
+
+/* Sombra verde */
+.cct-shadow-green {
+    --cct-shadow-color: var(--cct-shadow-green);
+}
+
+/* Sombra vermelha */
+.cct-shadow-red {
+    --cct-shadow-color: var(--cct-shadow-red);
+}
+
+/* Sombra amarela */
+.cct-shadow-yellow {
+    --cct-shadow-color: var(--cct-shadow-yellow);
+}
+
+/* Sombra roxa */
+.cct-shadow-purple {
+    --cct-shadow-color: var(--cct-shadow-purple);
+}
+
+/* Sombra rosa */
+.cct-shadow-pink {
+    --cct-shadow-color: var(--cct-shadow-pink);
+}
+
+/* Sombra índigo */
+.cct-shadow-indigo {
+    --cct-shadow-color: var(--cct-shadow-indigo);
+}
+
+/* Sombra teal */
+.cct-shadow-teal {
+    --cct-shadow-color: var(--cct-shadow-teal);
+}
+
+/* ==========================================================================
+   Variações de Intensidade
+   ========================================================================== */
+
+/* Sombras sutis */
+.cct-shadow-subtle {
+    --cct-shadow-opacity-light: 0.06;
+    --cct-shadow-opacity-medium: 0.08;
+    --cct-shadow-opacity-strong: 0.10;
+    --cct-shadow-opacity-intense: 0.12;
+    --cct-shadow-opacity-dramatic: 0.15;
+}
+
+/* Sombras suaves */
+.cct-shadow-soft {
+    --cct-shadow-opacity-light: 0.08;
+    --cct-shadow-opacity-medium: 0.10;
+    --cct-shadow-opacity-strong: 0.12;
+    --cct-shadow-opacity-intense: 0.15;
+    --cct-shadow-opacity-dramatic: 0.18;
+}
+
+/* Sombras normais (padrão) */
+.cct-shadow-normal {
+    /* Usa valores padrão das variáveis */
+}
+
+/* Sombras intensas */
+.cct-shadow-intense {
+    --cct-shadow-opacity-light: 0.15;
+    --cct-shadow-opacity-medium: 0.20;
+    --cct-shadow-opacity-strong: 0.25;
+    --cct-shadow-opacity-intense: 0.30;
+    --cct-shadow-opacity-dramatic: 0.35;
+}
+
+/* Sombras dramáticas */
+.cct-shadow-dramatic {
+    --cct-shadow-opacity-light: 0.20;
+    --cct-shadow-opacity-medium: 0.25;
+    --cct-shadow-opacity-strong: 0.30;
+    --cct-shadow-opacity-intense: 0.35;
+    --cct-shadow-opacity-dramatic: 0.45;
+}
+
+/* ==========================================================================
+   Componentes Específicos
+   ========================================================================== */
+
+/* Cards com sombra */
+.cct-shadow-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+}
+
+.cct-shadow-card:hover {
+    transform: translateY(-2px) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Botões com sombra */
+.cct-shadow-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    background: #0073aa;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--cct-shadow-transition-duration) var(--cct-shadow-transition-easing);
+    transform: var(--cct-shadow-gpu-acceleration);
+}
+
+.cct-shadow-button:hover {
+    transform: translateY(-1px) var(--cct-shadow-gpu-acceleration);
+    text-decoration: none;
+    color: white;
+}
+
+.cct-shadow-button:active {
+    transform: translateY(0) var(--cct-shadow-gpu-acceleration);
+}
+
+/* Modais com sombra */
+.cct-shadow-modal {
+    background: white;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Tooltips com sombra */
+.cct-shadow-tooltip {
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 1000;
+}
+
+/* Dropdowns com sombra */
+.cct-shadow-dropdown {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 0;
+    min-width: 200px;
+    position: absolute;
+    z-index: 100;
+}
+
+/* Headers com sombra */
+.cct-shadow-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* Sidebars com sombra */
+.cct-shadow-sidebar {
+    background: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    overflow-y: auto;
+    z-index: 40;
+}
+
+/* ==========================================================================
+   Sombras Internas (Inset)
+   ========================================================================== */
+
+/* Sombra interna sutil */
+.cct-shadow-inset-subtle {
+    box-shadow: inset 0 1px 2px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-light));
+}
+
+/* Sombra interna média */
+.cct-shadow-inset-medium {
+    box-shadow: inset 0 2px 4px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-medium));
+}
+
+/* Sombra interna forte */
+.cct-shadow-inset-strong {
+    box-shadow: inset 0 3px 6px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-strong));
+}
+
+/* ==========================================================================
+   Animações Especiais
+   ========================================================================== */
+
+/* Animação de pulsação */
+.cct-shadow-pulse {
+    animation: cct-shadow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cct-shadow-pulse {
+    0%, 100% {
+        box-shadow: var(--cct-elevation-2);
+    }
+    50% {
+        box-shadow: var(--cct-elevation-8);
+    }
+}
+
+/* Animação de flutuação */
+.cct-shadow-float {
+    animation: cct-shadow-float 3s ease-in-out infinite;
+}
+
+@keyframes cct-shadow-float {
+    0%, 100% {
+        transform: translateY(0) var(--cct-shadow-gpu-acceleration);
+        box-shadow: var(--cct-elevation-2);
+    }
+    50% {
+        transform: translateY(-8px) var(--cct-shadow-gpu-acceleration);
+        box-shadow: var(--cct-elevation-8);
+    }
+}
+
+/* Animação de respiração */
+.cct-shadow-breathe {
+    animation: cct-shadow-breathe 4s ease-in-out infinite;
+}
+
+@keyframes cct-shadow-breathe {
+    0%, 100% {
+        transform: scale(1) var(--cct-shadow-gpu-acceleration);
+        box-shadow: var(--cct-elevation-2);
+    }
+    50% {
+        transform: scale(1.02) var(--cct-shadow-gpu-acceleration);
+        box-shadow: var(--cct-elevation-6);
+    }
+}
+
+/* ==========================================================================
+   Utilitários de Sombra
+   ========================================================================== */
+
+/* Remover sombra */
+.cct-shadow-none {
+    box-shadow: none !important;
+}
+
+/* Sombra apenas no topo */
+.cct-shadow-top {
+    box-shadow: 0 -4px 8px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-medium));
+}
+
+/* Sombra apenas na base */
+.cct-shadow-bottom {
+    box-shadow: 0 4px 8px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-medium));
+}
+
+/* Sombra apenas à esquerda */
+.cct-shadow-left {
+    box-shadow: -4px 0 8px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-medium));
+}
+
+/* Sombra apenas à direita */
+.cct-shadow-right {
+    box-shadow: 4px 0 8px rgba(var(--cct-shadow-color), var(--cct-shadow-opacity-medium));
+}
+
+/* Sombra circular */
+.cct-shadow-circle {
+    border-radius: 50%;
+}
+
+/* Sombra com bordas arredondadas */
+.cct-shadow-rounded {
+    border-radius: 8px;
+}
+
+.cct-shadow-rounded-lg {
+    border-radius: 12px;
+}
+
+.cct-shadow-rounded-xl {
+    border-radius: 16px;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Mobile (até 768px) */
+@media (max-width: 768px) {
+    /* Reduzir elevações altas em mobile */
+    .cct-elevation-12 {
+        box-shadow: var(--cct-elevation-8);
+    }
+    
+    .cct-elevation-16 {
+        box-shadow: var(--cct-elevation-8);
+    }
+    
+    .cct-elevation-24 {
+        box-shadow: var(--cct-elevation-8);
+    }
+    
+    /* Reduzir animações em mobile */
+    .cct-shadow-pulse,
+    .cct-shadow-float,
+    .cct-shadow-breathe {
+        animation-duration: 4s;
+    }
+    
+    /* Ajustar componentes para mobile */
+    .cct-shadow-card {
+        padding: 15px;
+        border-radius: 6px;
+    }
+    
+    .cct-shadow-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .cct-shadow-modal {
+        width: 95%;
+        border-radius: 8px;
+    }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cct-shadow-card {
+        padding: 18px;
+    }
+}
+
+/* Desktop grande (1200px+) */
+@media (min-width: 1200px) {
+    .cct-shadow-card {
+        padding: 24px;
+    }
+    
+    .cct-shadow-button {
+        padding: 14px 28px;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .cct-elevation-0, .cct-elevation-1, .cct-elevation-2, .cct-elevation-4,
+    .cct-elevation-6, .cct-elevation-8, .cct-elevation-12, .cct-elevation-16, .cct-elevation-24,
+    .cct-shadow-card, .cct-shadow-button {
+        transition: none;
+    }
+    
+    .cct-elevation-hover-1:hover,
+    .cct-elevation-hover-2:hover,
+    .cct-elevation-hover-4:hover,
+    .cct-elevation-hover-6:hover,
+    .cct-elevation-hover-8:hover,
+    .cct-elevation-hover-12:hover,
+    .cct-elevation-hover-16:hover {
+        transform: none;
+    }
+    
+    .cct-shadow-pulse,
+    .cct-shadow-float,
+    .cct-shadow-breathe {
+        animation: none;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    :root {
+        --cct-shadow-opacity-light: 0.20;
+        --cct-shadow-opacity-medium: 0.25;
+        --cct-shadow-opacity-strong: 0.30;
+        --cct-shadow-opacity-intense: 0.35;
+        --cct-shadow-opacity-dramatic: 0.45;
+    }
+    
+    .cct-shadow-button {
+        border: 2px solid rgba(var(--cct-shadow-color), 0.3);
+    }
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cct-shadow-color: 255, 255, 255;
+        --cct-shadow-opacity-light: 0.05;
+        --cct-shadow-opacity-medium: 0.08;
+        --cct-shadow-opacity-strong: 0.12;
+        --cct-shadow-opacity-intense: 0.15;
+        --cct-shadow-opacity-dramatic: 0.20;
+    }
+    
+    .cct-shadow-card {
+        background: #1a1a1a;
+        border: 1px solid #333;
+    }
+    
+    .cct-shadow-dropdown {
+        background: #2a2a2a;
+        border-color: #444;
+    }
+    
+    .cct-shadow-header {
+        background: #1a1a1a;
+        border-bottom-color: #333;
+    }
+    
+    .cct-shadow-sidebar {
+        background: #1a1a1a;
+    }
+}
+
+/* ==========================================================================
+   Fallbacks para Navegadores Antigos
+   ========================================================================== */
+
+/* IE11 fallbacks */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .cct-elevation-1 {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+    
+    .cct-elevation-2 {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    }
+    
+    .cct-elevation-4 {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+    }
+    
+    .cct-elevation-8 {
+        box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30);
+    }
+    
+    .cct-shadow {
+        transform: none;
+    }
+}
+
+/* Safari fallbacks */
+@supports not (transform: translateZ(0)) {
+    .cct-shadow-optimized {
+        transform: none;
+    }
+}
+
+/* Firefox fallbacks */
+@-moz-document url-prefix() {
+    .cct-shadow {
+        will-change: auto;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .cct-elevation-0, .cct-elevation-1, .cct-elevation-2, .cct-elevation-4,
+    .cct-elevation-6, .cct-elevation-8, .cct-elevation-12, .cct-elevation-16, .cct-elevation-24,
+    .cct-shadow-card, .cct-shadow-button, .cct-shadow-modal {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .cct-shadow-pulse,
+    .cct-shadow-float,
+    .cct-shadow-breathe {
+        animation: none !important;
+    }
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug */
+.cct-shadows-debug .cct-elevation-1,
+.cct-shadows-debug .cct-elevation-2,
+.cct-shadows-debug .cct-elevation-4,
+.cct-shadows-debug .cct-elevation-6,
+.cct-shadows-debug .cct-elevation-8,
+.cct-shadows-debug .cct-elevation-12,
+.cct-shadows-debug .cct-elevation-16,
+.cct-shadows-debug .cct-elevation-24 {
+    position: relative;
+}
+
+.cct-shadows-debug .cct-elevation-1::before,
+.cct-shadows-debug .cct-elevation-2::before,
+.cct-shadows-debug .cct-elevation-4::before,
+.cct-shadows-debug .cct-elevation-6::before,
+.cct-shadows-debug .cct-elevation-8::before,
+.cct-shadows-debug .cct-elevation-12::before,
+.cct-shadows-debug .cct-elevation-16::before,
+.cct-shadows-debug .cct-elevation-24::before {
+    content: attr(class);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Informações de performance */
+.cct-shadows-debug::after {
+    content: 'CCT Shadows Debug Mode - ' attr(data-shadow-count) ' shadows active';
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Customizações Específicas do Tema
+   ========================================================================== */
+
+/* Integração com componentes do tema */
+.site-header.cct-shadow-header {
+    margin-bottom: 0;
+}
+
+.entry-content .cct-shadow-button {
+    margin: 10px 5px;
+}
+
+.widget .cct-shadow-card {
+    margin-bottom: 20px;
+}
+
+.comment-list .cct-shadow-card {
+    margin-bottom: 15px;
+}
+
+/* Compatibilidade com plugins */
+.woocommerce .cct-shadow-button {
+    display: inline-block;
+    text-align: center;
+}
+
+.contact-form-7 .cct-shadow-button {
+    border: none;
+    cursor: pointer;
+}
+
+.wp-block-button .cct-shadow-button {
+    width: 100%;
+}
+
+/* Ajustes para editor de blocos */
+.wp-block .cct-shadow {
+    margin: 0;
+}
+
+.editor-styles-wrapper .cct-shadow-button {
+    pointer-events: none;
+}
+
+/* Customizações para diferentes tipos de post */
+.single-post .cct-shadow-card {
+    margin-bottom: 30px;
+}
+
+.archive .cct-shadow-card {
+    margin-bottom: 25px;
+}
+
+.search-results .cct-shadow-card {
+    margin-bottom: 20px;
+}

@@ -263,6 +263,25 @@
     
 })(jQuery);
 
+// Atalhos de teclado globais e API externa
+(function($) {
+    'use strict';
+    
+    $(document).ready(function() {
+        // Atalhos de teclado globais (opcional)
+        $(document).keydown(function(e) {
+            // Ctrl + K ou Cmd + K para abrir busca
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                if (window.searchRetractable) {
+                    window.searchRetractable.toggle();
+                }
+            }
+        });
+    });
+    
+})(jQuery);
+
 /**
  * API pública para controle externo
  */
@@ -289,14 +308,3 @@ window.SearchRetractableAPI = {
         return window.searchRetractable ? window.searchRetractable.isOpen() : false;
     }
 };
-
-// Atalhos de teclado globais (opcional)
-$(document).keydown(function(e) {
-    // Ctrl + K ou Cmd + K para abrir busca
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        if (window.searchRetractable) {
-            window.searchRetractable.toggle();
-        }
-    }
-});

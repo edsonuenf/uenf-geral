@@ -1,0 +1,706 @@
+/* === MENU PRINCIPAL - ESTILOS BASE === */
+.new-menu,
+.new-menu ul,
+.new-menu li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Estilo do botão de fechar no cabeçalho do offcanvas */
+.offcanvas-header .btn-close {
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  opacity: 0.8;
+  border: none !important;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.offcanvas-header .btn-close:hover,
+.offcanvas-header .btn-close:focus {
+  opacity: 1;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Navbar */
+.navbar-brand-top {
+  background-color: var(--bs-uenf-blue);
+  padding: 0.75rem 0;
+}
+
+.navbar-brand-top img {
+  width: 132px;
+  height: auto;
+}
+
+.navbar-uenf {
+  background-color: var(--bs-uenf-blue-light);
+  padding: 0.5rem 1rem;
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+  border: none;
+  padding: 0;
+  margin-right: 1rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Itens de primeiro nível - sem espaçamentos */
+.new-menu > li {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Remove espaçamentos da lista */
+.new-menu {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  gap: 0 !important;
+}
+
+.new-menu ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  gap: 0 !important;
+}
+
+.new-menu li {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Links do menu */
+.new-menu a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 8px 16px 24px;
+  text-decoration: none !important;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Transição específica para itens de nível 1 */
+.new-menu > li > a {
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Efeito de brilho sutil no hover - sem interferir nas cores */
+.new-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.new-menu a:hover::before {
+  left: 100%;
+}
+
+/* Garante que o brilho não interfira no hover de nível 1 */
+.new-menu > li > a:hover::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent) !important;
+}
+
+/* Estilo padrão para todos os itens - fundo branco 60%, texto azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu a,
+body #menuLateral .new-menu a,
+body .new-menu a {
+  color: #ffffff !important;
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Apenas containers de nível 1 (raiz) têm fundo azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu > li.menu-item-has-children > a,
+body #menuLateral .new-menu > li.menu-item-has-children > a,
+body .new-menu > li.menu-item-has-children > a,
+body .offcanvas .new-menu > li.page_item_has_children > a,
+body #menuLateral .new-menu > li.page_item_has_children > a,
+body .new-menu > li.page_item_has_children > a {
+  background: linear-gradient(135deg, var(--bs-uenf-blue, #1d3771) 0%, rgba(29, 55, 113, 0.95) 100%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Hover para itens de nível 1 - fundo branco 70%, texto azul, seta azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu > li > a:hover,
+body #menuLateral .new-menu > li > a:hover,
+body .new-menu > li > a:hover {
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Setas azuis no hover dos itens de nível 1 */
+body .offcanvas .new-menu > li > a:hover::after,
+body #menuLateral .new-menu > li > a:hover::after,
+body .new-menu > li > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Hover para outros itens - mantém fundo branco 60% */
+body .offcanvas .new-menu .sub-menu a:hover,
+body #menuLateral .new-menu .sub-menu a:hover,
+body .new-menu .sub-menu a:hover,
+body .offcanvas .new-menu .children a:hover,
+body #menuLateral .new-menu .children a:hover,
+body .new-menu .children a:hover {
+  background: rgba(255, 255, 255, 0.6) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Hover para containers de nível 1 - fundo branco 70%, texto azul, seta azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu > li.menu-item-has-children > a:hover,
+body #menuLateral .new-menu > li.menu-item-has-children > a:hover,
+body .new-menu > li.menu-item-has-children > a:hover,
+body .offcanvas .new-menu > li.page_item_has_children > a:hover,
+body #menuLateral .new-menu > li.page_item_has_children > a:hover,
+body .new-menu > li.page_item_has_children > a:hover {
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Setas azuis no hover dos containers de nível 1 */
+body .offcanvas .new-menu > li.menu-item-has-children > a:hover::after,
+body #menuLateral .new-menu > li.menu-item-has-children > a:hover::after,
+body .new-menu > li.menu-item-has-children > a:hover::after,
+body .offcanvas .new-menu > li.page_item_has_children > a:hover::after,
+body #menuLateral .new-menu > li.page_item_has_children > a:hover::after,
+body .new-menu > li.page_item_has_children > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Itens finais ativos/abertos - fundo branco, texto azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu .current-menu-item > a,
+body #menuLateral .new-menu .current-menu-item > a,
+body .new-menu .current-menu-item > a,
+body .offcanvas .new-menu .current-page-item > a,
+body #menuLateral .new-menu .current-page-item > a,
+body .new-menu .current-page-item > a,
+body .offcanvas .new-menu .menu-item-active > a,
+body #menuLateral .new-menu .menu-item-active > a,
+body .new-menu .menu-item-active > a {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+}
+
+/* Hover para itens ativos - texto azul e seta azul - FORÇA MÁXIMA */
+body .offcanvas .new-menu .current-menu-item > a:hover,
+body #menuLateral .new-menu .current-menu-item > a:hover,
+body .new-menu .current-menu-item > a:hover,
+body .offcanvas .new-menu .current-page-item > a:hover,
+body #menuLateral .new-menu .current-page-item > a:hover,
+body .new-menu .current-page-item > a:hover,
+body .offcanvas .new-menu .menu-item-active > a:hover,
+body #menuLateral .new-menu .menu-item-active > a:hover,
+body .new-menu .menu-item-active > a:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Setas azuis no hover dos itens ativos */
+body .offcanvas .new-menu .current-menu-item > a:hover::after,
+body #menuLateral .new-menu .current-menu-item > a:hover::after,
+body .new-menu .current-menu-item > a:hover::after,
+body .offcanvas .new-menu .current-page-item > a:hover::after,
+body #menuLateral .new-menu .current-page-item > a:hover::after,
+body .new-menu .current-page-item > a:hover::after,
+body .offcanvas .new-menu .menu-item-active > a:hover::after,
+body #menuLateral .new-menu .menu-item-active > a:hover::after,
+body .new-menu .menu-item-active > a:hover::after {
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+/* Sobrescreve estilos conflitantes do style.min.css e variáveis CSS */
+.offcanvas-body .new-menu > li > a:hover,
+.offcanvas .new-menu > li > a:hover,
+#menuLateral .new-menu > li > a:hover,
+body .new-menu > li > a:hover,
+.new-menu > li.menu-item > a:hover,
+.menu-item > a:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+
+
+/* Item ativo (selecionado) */
+.new-menu .menu-item-active > a,
+.new-menu .current-menu-item > a,
+.new-menu .menu-item-active > a:hover,
+.new-menu .current-menu-item > a:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 100%) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  position: relative;
+  border-left: 5px solid var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 20px !important;
+  transform: translateX(6px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  z-index: 2;
+}
+
+/* Indicador visual removido conforme solicitado */
+
+/* Ícone de toggle com seta simples */
+.new-menu .submenu-toggle {
+  margin-left: auto;
+  margin-right: -12px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+}
+
+.new-menu .submenu-toggle::before {
+  content: '▶';
+  display: block;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.new-menu .submenu-toggle:hover {
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Ícone quando submenu está aberto - sem background */
+.new-menu .submenu-toggle.rotated {
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
+  border: none;
+}
+
+.new-menu .submenu-toggle.rotated::before {
+  content: '▼';
+  transform: none;
+}
+
+.new-menu .submenu-toggle.rotated:hover {
+  transform: scale(1.1);
+  background: transparent;
+}
+
+/* Submenus - Estilo base */
+.new-menu .sub-menu,
+.new-menu .children {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.95) 0%, rgba(29, 55, 113, 0.85) 100%);
+  width: 100%;
+  padding-left: 0;
+  margin-left: 0;
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.new-menu .sub-menu.show,
+.new-menu .children.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  max-height: 5000px;
+  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+/* Força a cor branca com transparência sobrescrevendo variáveis CSS */
+body .offcanvas .new-menu .menu-item a:hover,
+body .offcanvas-body .new-menu .menu-item a:hover,
+body #menuLateral .new-menu .menu-item a:hover,
+body .offcanvas .new-menu > li > a:hover,
+body .offcanvas-body .new-menu > li > a:hover,
+body #menuLateral .new-menu > li > a:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Correções para posicionamento e espaçamento do offcanvas */
+.offcanvas.offcanvas-start {
+  left: 0 !important;
+  right: auto !important;
+  transform: translateX(-100%) !important;
+}
+
+.offcanvas.offcanvas-start.show {
+  transform: translateX(0) !important;
+}
+
+.offcanvas-header {
+  padding: 1rem !important;
+  margin: 0 !important;
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.offcanvas-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+}
+
+#menuLateral {
+  background-color: var(--bs-uenf-blue, #1d3771) !important;
+  border: none !important;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Correções de espaçamento movidas para spacing-fixes.css para melhor ordem de carregamento */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hierarquia visual simplificada e mais clara */
+
+/* Nível 1 - Submenus principais */
+.new-menu .sub-menu,
+.new-menu .children {
+  border-left: 4px solid rgba(255, 255, 255, 0.3);
+  margin-left: 8px;
+}
+
+/* Submenus nível 1 - apenas estrutura */
+.new-menu .sub-menu a,
+.new-menu .children a {
+  padding: 14px 20px 14px 24px;
+  font-size: 0.9em;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.new-menu .sub-menu a::before,
+.new-menu .children a::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.new-menu .sub-menu a:hover,
+.new-menu .children a:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding-left: 28px;
+  transition: all 0.3s ease;
+}
+
+.new-menu .sub-menu a:hover::before,
+.new-menu .children a:hover::before {
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateX(2px);
+}
+
+/* Nível 2 - Submenus secundários */
+.new-menu .sub-menu .sub-menu,
+.new-menu .children .children {
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.8) 0%, rgba(29, 55, 113, 0.7) 100%);
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  margin-left: 16px;
+}
+
+/* Submenus nível 2 - apenas estrutura */
+.new-menu .sub-menu .sub-menu a,
+.new-menu .children .children a {
+  padding: 12px 16px 12px 20px;
+  font-size: 0.85em;
+}
+
+.new-menu .sub-menu .sub-menu a::before,
+.new-menu .children .children a::before {
+  content: '';
+  left: 6px;
+  font-size: 0.7em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Nível 3 - Submenus terciários */
+.new-menu .sub-menu .sub-menu .sub-menu,
+.new-menu .children .children .children {
+  background: linear-gradient(135deg, rgba(29, 55, 113, 0.7) 0%, rgba(29, 55, 113, 0.6) 100%);
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  margin-left: 20px;
+}
+
+/* Submenus nível 3 - apenas estrutura */
+.new-menu .sub-menu .sub-menu .sub-menu a,
+.new-menu .children .children .children a {
+  padding: 10px 12px 10px 16px;
+  font-size: 0.8em;
+}
+
+.new-menu .sub-menu .sub-menu .sub-menu a::before,
+.new-menu .children .children .children a::before {
+  content: '';
+  left: 4px;
+  font-size: 0.6em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Subníveis aninhados */
+.new-menu .sub-menu .sub-menu,
+.new-menu .children .children {
+  margin-left: 16px;
+  padding-left: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.new-menu .sub-menu .sub-menu .sub-menu,
+.new-menu .children .children .children {
+  margin-left: 16px;
+  padding-left: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estados de foco para acessibilidade */
+.new-menu a:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: -2px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  transform: translateX(4px);
+}
+
+/* Melhorias de responsividade */
+@media (max-width: 768px) {
+  .new-menu a {
+    padding: 14px 20px;
+    font-size: 0.95em;
+  }
+  
+  .new-menu .submenu-toggle {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .new-menu .sub-menu a,
+  .new-menu .children a {
+    padding: 10px 16px 10px 28px;
+    font-size: 0.85em;
+  }
+}
+
+/* Efeito de carregamento suave */
+.new-menu {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 991.98px) {
+  .navbar-brand-top {
+    background-color: var(--bs-uenf-blue);
+  }
+}
+
+/* ===== DESKTOP (acima de 1200px) ===== */
+@media (min-width: 1201px) {
+  /* Ajusta o painel do menu para resoluções acima de 1200px */
+  .offcanvas.offcanvas-start {
+    width: 360px; /* Largura de 360px para resoluções acima de 1200px */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
+  }
+}
+
+/* ===== DESKTOP (acima de 1920px) ===== */
+@media (min-width: 1921px) {
+  /* Ajusta o painel do menu para ser mais largo no desktop */
+  .offcanvas.offcanvas-start {
+    width: 400px; /* Largura maior para o painel no desktop */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
+  }
+  
+  .new-menu {
+    display: block; /* Mantém o menu em bloco para o estilo de lista */
+    width: 100%;
+  }
+  
+  .new-menu > li {
+    width: auto;
+    position: relative;
+  }
+  
+  .new-menu > li > a {
+    padding: 15px 20px;
+    white-space: nowrap;
+  }
+  
+  /* Submenus no desktop */
+  .new-menu .sub-menu,
+  .new-menu .children {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    z-index: 1000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+    /* Subníveis aninhados no desktop */
+  .new-menu .sub-menu .sub-menu,
+  .new-menu .children .children {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 220px;
+    z-index: 1001;
+    margin-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    max-height: none !important;
+  }
+  
+  /* Mostrar subníveis apenas quando ativo (clicado) */
+.new-menu .sub-menu > li.menu-item-has-children.menu-item-active > .sub-menu,
+.new-menu .children > li.page_item_has_children.menu-item-active > .children,
+.new-menu .sub-menu > li.menu-item-has-children > .sub-menu.show,
+.new-menu .children > li.page_item_has_children > .children.show {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  max-height: none !important;
+}
+  
+  /* Ajuste para subníveis aninhados */
+  .new-menu .sub-menu .menu-item-has-children,
+  .new-menu .children .page_item_has_children {
+    position: relative;
+  }
+  
+  /* Removido hover para abrir submenus */
+  /* Apenas o clique abre os submenus */
+}
+
+/* ===== MOBILE (abaixo de 992px) ===== */
+@media (max-width: 991.98px) {
+  .new-menu {
+    width: 100%;
+  }
+  
+  .new-menu .sub-menu,
+  .new-menu .children {
+    padding-left: 15px;
+  }
+  
+  .new-menu .sub-menu .sub-menu,
+  .new-menu .children .children {
+    padding-left: 15px;
+  }
+  
+  /* Esconde os toggles em itens sem filhos */
+  .menu-item:not(.menu-item-has-children) > a > .submenu-toggle {
+    display: none !important;
+  }
+}
+
+/* Acessibilidade: foco visível */
+.new-menu a:focus {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+.new-menu ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Classe para indicar que um item está ativo */
+.menu-item-active > a,
+.menu-item-active > a:hover,
+.menu-item-active > a:focus,
+.current-menu-item > a,
+.current-menu-item > a:hover,
+.current-menu-item > a:focus {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--bs-uenf-blue, #1d3771) !important;
+  font-weight: 700 !important;
+  border-left: 4px solid var(--bs-uenf-blue, #1d3771) !important;
+  padding-left: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1;
+  transition: all 0.2s ease !important;
+}

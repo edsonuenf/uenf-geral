@@ -1,0 +1,110 @@
+/* ===========================================
+   ESTILIZAÇÃO AVANÇADA DA BARRA DE ROLAGEM
+   Compatível com WebKit (Chrome, Safari, Edge) e Firefox
+   =========================================== */
+
+/* Estilo base para a barra de rolagem */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+/* Trilha da barra de rolagem */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+/* Alça da barra de rolagem */
+::-webkit-scrollbar-thumb {
+  background: rgba(29, 55, 113, 0.4);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.3s ease;
+}
+
+/* Efeito hover na alça */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 55, 113, 0.6);
+  border: 2px solid transparent;
+}
+
+/* Botões da barra de rolagem (setas) */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Estilo para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 55, 113, 0.4) rgba(0, 0, 0, 0.05);
+}
+
+/* ===========================================
+   ESTILOS ESPECÍFICOS PARA O MENU
+   =========================================== */
+
+/* Container principal do menu com barra de rolagem */
+.offcanvas-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 55, 113, 0.4) transparent;
+}
+
+.offcanvas-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.offcanvas-body::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+  background: rgba(29, 55, 113, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 55, 113, 0.5);
+}
+
+/* Melhorias para o menu em dispositivos móveis */
+@media (max-width: 1920px) {
+  .offcanvas-body {
+    padding-right: 5px; /* Espaço para a barra de rolagem */
+  }
+  
+  .offcanvas-body::-webkit-scrollbar {
+    width: 6px;
+  }
+}
+
+/* ===========================================
+   MELHORIAS DE VISUALIZAÇÃO PARA SUBMENUS
+   =========================================== */
+
+/* Removido os pseudo-elementos ::after que causavam duplicação de setas */
+/* As setas agora são controladas apenas pelo JavaScript */
+
+/* Melhorias visuais para subníveis */
+.new-menu .sub-menu,
+.new-menu .children {
+  position: relative;
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  margin-left: 15px;
+  padding-left: 5px;
+}
+
+/* Destaque para o item ativo */
+.new-menu .current-menu-item > a,
+.new-menu .current-menu-ancestor > a,
+.new-menu .menu-item-active > a {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), transparent) !important;
+  border-left: 4px solid #fff !important;
+  padding-left: 16px !important;
+  font-weight: 500 !important;
+}

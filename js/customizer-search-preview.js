@@ -11,6 +11,12 @@
 (function($) {
     'use strict';
     
+    // Verificar se wp.customize está disponível
+    if (typeof wp === 'undefined' || typeof wp.customize === 'undefined') {
+        console.warn('WordPress Customizer API not available');
+        return;
+    }
+    
     // Aguardar carregamento do customizer
     wp.customize('cct_search_button_color', function(value) {
         value.bind(function(newval) {

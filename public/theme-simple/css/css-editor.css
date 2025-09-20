@@ -1,0 +1,668 @@
+/**
+ * Estilos do Editor CSS Avançado
+ * 
+ * Fornece uma interface moderna e profissional para o editor CSS
+ * com syntax highlighting, sidebar funcional e elementos visuais.
+ * 
+ * @package CCT_Theme
+ * @subpackage Design_Editor
+ * @since 1.0.0
+ */
+
+/* ============================================================================
+   LAYOUT PRINCIPAL
+   ============================================================================ */
+
+.cct-css-editor {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cct-css-editor .wp-heading-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #1d3771;
+}
+
+.cct-css-editor .wp-heading-inline .dashicons {
+    font-size: 28px;
+    color: #1d3771;
+}
+
+/* ============================================================================
+   TOOLBAR
+   ============================================================================ */
+
+.cct-editor-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cct-file-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cct-file-selector label {
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+.cct-file-select {
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+}
+
+.cct-file-description {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.cct-editor-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cct-editor-actions .button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.cct-editor-actions .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.cct-editor-actions .button .dashicons {
+    font-size: 16px;
+}
+
+/* ============================================================================
+   CONTAINER PRINCIPAL
+   ============================================================================ */
+
+.cct-editor-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+    min-height: 600px;
+}
+
+/* ============================================================================
+   ÁREA DO EDITOR
+   ============================================================================ */
+
+.cct-editor-main {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.cct-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1d3771 0%, #2c5aa0 100%);
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.cct-editor-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.cct-editor-status {
+    display: flex;
+    gap: 15px;
+}
+
+.cct-status-indicator {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cct-status-indicator.saved {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.cct-status-indicator.unsaved {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.cct-status-indicator.saving {
+    background: rgba(0, 123, 255, 0.2);
+    color: #007bff;
+}
+
+.cct-status-indicator.error {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+.cct-status-indicator.auto-saved {
+    background: rgba(108, 117, 125, 0.2);
+    color: #6c757d;
+}
+
+.cct-status-indicator.valid {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.cct-status-indicator.invalid {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* ============================================================================
+   CODEMIRROR CUSTOMIZAÇÃO
+   ============================================================================ */
+
+.cct-editor-wrapper {
+    position: relative;
+}
+
+.cct-editor-wrapper .CodeMirror {
+    height: 500px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    border-radius: 0;
+}
+
+.cct-editor-wrapper .CodeMirror-gutters {
+    background: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+.cct-editor-wrapper .CodeMirror-linenumber {
+    color: #6c757d;
+    padding: 0 8px;
+}
+
+.cct-editor-wrapper .CodeMirror-cursor {
+    border-left: 2px solid #1d3771;
+}
+
+.cct-editor-wrapper .CodeMirror-selected {
+    background: rgba(29, 55, 113, 0.1);
+}
+
+/* ============================================================================
+   RODAPÉ DO EDITOR
+   ============================================================================ */
+
+.cct-editor-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-top: 1px solid #dee2e6;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.cct-editor-info {
+    display: flex;
+    gap: 20px;
+}
+
+.cct-editor-shortcuts {
+    display: flex;
+    gap: 15px;
+}
+
+.cct-shortcut {
+    background: rgba(29, 55, 113, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+/* ============================================================================
+   SIDEBAR
+   ============================================================================ */
+
+.cct-editor-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cct-sidebar-section {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cct-sidebar-section h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin: 0;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.cct-sidebar-section h4 .dashicons {
+    font-size: 16px;
+    color: #1d3771;
+}
+
+/* ============================================================================
+   LISTA DE BACKUPS
+   ============================================================================ */
+
+.cct-backups-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cct-backup-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f3f4;
+    transition: background-color 0.2s ease;
+}
+
+.cct-backup-item:hover {
+    background: #f8f9fa;
+}
+
+.cct-backup-item:last-child {
+    border-bottom: none;
+}
+
+.cct-backup-info strong {
+    display: block;
+    color: #495057;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.cct-backup-user {
+    color: #6c757d;
+    font-size: 11px;
+}
+
+.cct-restore-backup {
+    padding: 4px 8px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cct-no-backups {
+    padding: 20px 15px;
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    margin: 0;
+}
+
+/* ============================================================================
+   DICAS DE CSS
+   ============================================================================ */
+
+.cct-css-tips {
+    padding: 15px;
+}
+
+.cct-tip {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-left: 3px solid #1d3771;
+    border-radius: 0 4px 4px 0;
+}
+
+.cct-tip:last-child {
+    margin-bottom: 0;
+}
+
+.cct-tip strong {
+    display: block;
+    color: #495057;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.cct-tip code {
+    display: block;
+    background: white;
+    border: 1px solid #dee2e6;
+    padding: 6px 8px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 11px;
+    color: #1d3771;
+    overflow-x: auto;
+}
+
+/* ============================================================================
+   FERRAMENTAS
+   ============================================================================ */
+
+.cct-tools {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cct-tools .button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-start;
+    padding: 8px 12px;
+    font-size: 13px;
+    text-align: left;
+}
+
+.cct-tools .button .dashicons {
+    font-size: 16px;
+}
+
+/* ============================================================================
+   ESTATÍSTICAS
+   ============================================================================ */
+
+.cct-stats {
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.cct-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #1d3771;
+}
+
+.cct-stat-label {
+    font-size: 12px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.cct-stat-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d3771;
+}
+
+/* ============================================================================
+   MODAL
+   ============================================================================ */
+
+.cct-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cct-modal-content {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.cct-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1d3771 0%, #2c5aa0 100%);
+    color: white;
+    padding: 15px 20px;
+}
+
+.cct-modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.cct-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cct-modal-body {
+    padding: 20px;
+}
+
+.cct-modal-body p {
+    margin: 0;
+    line-height: 1.5;
+    color: #495057;
+}
+
+.cct-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* ============================================================================
+   NOTIFICAÇÕES
+   ============================================================================ */
+
+.cct-notifications {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    z-index: 999998;
+    max-width: 400px;
+}
+
+.cct-notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 10px;
+    padding: 12px 16px;
+    border-left: 4px solid #28a745;
+    animation: slideInRight 0.3s ease;
+}
+
+.cct-notification-error {
+    border-left-color: #dc3545;
+}
+
+.cct-notification-warning {
+    border-left-color: #ffc107;
+}
+
+.cct-notification-info {
+    border-left-color: #17a2b8;
+}
+
+.cct-notification-message {
+    flex: 1;
+    font-size: 14px;
+    color: #495057;
+    white-space: pre-line;
+}
+
+.cct-notification-close {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================================================
+   RESPONSIVIDADE
+   ============================================================================ */
+
+@media (max-width: 1200px) {
+    .cct-editor-container {
+        grid-template-columns: 1fr 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    .cct-editor-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .cct-editor-toolbar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .cct-file-selector {
+        justify-content: center;
+    }
+    
+    .cct-editor-actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .cct-editor-footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .cct-editor-info,
+    .cct-editor-shortcuts {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .cct-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .cct-tools .button {
+        justify-content: center;
+    }
+}
+
+/* ============================================================================
+   TEMA ESCURO (OPCIONAL)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+    .cct-css-editor {
+        color-scheme: dark;
+    }
+    
+    /* Implementar tema escuro se necessário */
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+    .cct-editor-toolbar,
+    .cct-editor-sidebar,
+    .cct-editor-footer {
+        display: none;
+    }
+    
+    .cct-editor-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .cct-editor-wrapper .CodeMirror {
+        height: auto;
+    }
+}

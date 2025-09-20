@@ -72,6 +72,9 @@ define('CCT_DEFAULT_FONT_PAIRING', 'modern_sans');
 
 /**
  * Registra padrões de blocos para Aparência → Design → Padrões
+ * 
+ * NOTA: Os patterns FAQ e Pricing agora estão na pasta /patterns como arquivos nativos do WordPress.
+ * Esta função mantém apenas os patterns básicos para compatibilidade.
  */
 function cct_registra_padroes_blocos() {
     // Padrão: Seção de Chamada (Hero)
@@ -321,6 +324,9 @@ require_once CCT_THEME_DIR . '/inc/extensions/class-extension-manager.php';
 // Carregar customizer
 require_once CCT_THEME_DIR . '/inc/customizer.php';
 
+// Carregar sistema de reset de configurações
+require_once CCT_THEME_DIR . '/inc/class-theme-reset-manager.php';
+
 // Incluir Editor CSS Avançado
 require get_template_directory() . '/inc/design-editor/css-editor-loader.php';
 
@@ -525,34 +531,54 @@ function cct_add_admin_menu() {
     // Menu principal do Tema UENF
     add_menu_page(
         'Tema UENF',                    // Título da página
-        '🎓 Tema UENF',                 // Título do menu
+        'Tema UENF',                    // Título do menu (removido emoji)
         'manage_options',               // Capacidade necessária
         'tema-uenf',                    // Slug do menu
         'cct_admin_page_callback',      // Função callback
-        'dashicons-graduation-cap',     // Ícone
-        30                              // Posição
+        'dashicons-admin-appearance',   // Ícone padrão do WordPress
+        20                              // Posição padrão entre menus principais
     );
     
     // Submenu: Gerenciador de Extensões
     add_submenu_page(
         'tema-uenf',                    // Menu pai
         'Gerenciador de Extensões',     // Título da página
-        '🔧 Extensões',                 // Título do submenu
+        'Extensões',                    // Título do submenu
         'manage_options',               // Capacidade necessária
         'tema-uenf-extensoes',          // Slug
         'cct_extensions_page_callback'  // Função callback
+    );
+    
+    // Submenu: Reset de Configurações
+    add_submenu_page(
+        'tema-uenf',                    // Menu pai
+        'Reset de Configurações',       // Título da página
+        'Reset de Configurações',       // Título do submenu
+        'manage_options',               // Capacidade necessária
+        'tema-uenf-reset',              // Slug
+        'cct_reset_page_callback'       // Função callback
+    );
+    
+    // Submenu: Documentação de Personalização
+    add_submenu_page(
+        'tema-uenf',                    // Menu pai
+        'Documentação de Personalização', // Título da página
+        'Documentação Design',          // Título do submenu
+        'manage_options',               // Capacidade necessária
+        'tema-uenf-docs-design',        // Slug
+        'cct_docs_design_page_callback' // Função callback
     );
     
     // Submenu: Customizer
     add_submenu_page(
         'tema-uenf',                    // Menu pai
         'Personalizar Tema',            // Título da página
-        '🎨 Personalizar',              // Título do submenu
+        'Personalizar',                 // Título do submenu
         'manage_options',               // Capacidade necessária
         'customize.php'                 // Link direto para o customizer
     );
 }
-add_action('admin_menu', 'cct_add_admin_menu');
+add_action('admin_menu', 'cct_add_admin_menu', 5);
 
 /**
  * Página principal do Tema UENF
@@ -602,6 +628,270 @@ function cct_admin_page_callback() {
             ?>
         </div>
     </div>
+    <?php
+}
+
+/**
+ * Página de Documentação de Personalização do Design
+ */
+function cct_docs_design_page_callback() {
+    $docs_file = get_template_directory() . '/GUIA-CONFIGURACAO-DESIGN.md';
+    $docs_content = '';
+    
+    if (file_exists($docs_file)) {
+        $docs_content = file_get_contents($docs_file);
+        // Converte Markdown avançado para HTML
+        $docs_content = preg_replace('/^# (.+)$/m', '<h1 class="docs-h1">$1</h1>', $docs_content);
+        $docs_content = preg_replace('/^## (.+)$/m', '<h2 class="docs-h2">$1</h2>', $docs_content);
+        $docs_content = preg_replace('/^### (.+)$/m', '<h3 class="docs-h3">$1</h3>', $docs_content);
+        $docs_content = preg_replace('/^#### (.+)$/m', '<h4 class="docs-h4">$1</h4>', $docs_content);
+        $docs_content = preg_replace('/\*\*(.+?)\*\*/', '<strong class="docs-bold">$1</strong>', $docs_content);
+        $docs_content = preg_replace('/\*(.+?)\*/', '<em class="docs-italic">$1</em>', $docs_content);
+        $docs_content = preg_replace('/`(.+?)`/', '<code class="docs-code">$1</code>', $docs_content);
+        $docs_content = preg_replace('/^- (.+)$/m', '<li class="docs-li">$1</li>', $docs_content);
+        $docs_content = preg_replace('/(<li class="docs-li">.*<\/li>)/s', '<ul class="docs-ul">$1</ul>', $docs_content);
+        $docs_content = preg_replace('/^> (.+)$/m', '<blockquote class="docs-quote">$1</blockquote>', $docs_content);
+        $docs_content = nl2br($docs_content);
+    } else {
+        $docs_content = '<div class="docs-error"><p>📄 Arquivo de documentação não encontrado.</p></div>';
+    }
+    
+    ?>    <style>    /* Força o modo claro para a página de documentação */    body.wp-admin,    #wpwrap,    #wpcontent,    .wrap {        background-color: #f1f1f1 !important;        color: #333 !important;    }        .docs-container {        max-width: 1200px;        margin: 0 auto;        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;        background-color: #f1f1f1 !important;        color: #333 !important;    }
+    .docs-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .docs-header h1 {
+        margin: 0 0 10px 0;
+        font-size: 2.5em;
+        font-weight: 700;
+    }
+    .docs-header p {
+        margin: 0;
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+    .docs-nav {
+        background: white;
+        border: 1px solid #e1e5e9;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .docs-nav h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 1.2em;
+    }
+    .docs-nav-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .docs-content {
+        background: white;
+        border: 1px solid #e1e5e9;
+        border-radius: 8px;
+        padding: 40px;
+        line-height: 1.7;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+    .docs-h1 {
+        color: #2c3e50;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 10px;
+        margin: 30px 0 20px 0;
+        font-size: 2.2em;
+    }
+    .docs-h2 {
+        color: #34495e;
+        margin: 25px 0 15px 0;
+        font-size: 1.8em;
+        position: relative;
+        padding-left: 20px;
+    }
+    .docs-h2:before {
+        content: '▶';
+        position: absolute;
+        left: 0;
+        color: #3498db;
+        font-size: 0.8em;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .docs-h3 {
+        color: #2c3e50;
+        margin: 20px 0 12px 0;
+        font-size: 1.4em;
+        border-left: 4px solid #3498db;
+        padding-left: 15px;
+    }
+    .docs-h4 {
+        color: #34495e;
+        margin: 15px 0 10px 0;
+        font-size: 1.2em;
+    }
+    .docs-bold {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    .docs-italic {
+        color: #7f8c8d;
+    }
+    .docs-code {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 0.9em;
+        color: #e74c3c;
+    }
+    .docs-ul {
+        margin: 15px 0;
+        padding-left: 0;
+    }
+    .docs-li {
+        list-style: none;
+        margin: 8px 0;
+        padding-left: 25px;
+        position: relative;
+    }
+    .docs-li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #27ae60;
+        font-weight: bold;
+    }
+    .docs-quote {
+        background: #f8f9fa;
+        border-left: 4px solid #3498db;
+        margin: 20px 0;
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+        color: #2c3e50;
+    }
+    .docs-error {
+        background: #fff5f5;
+        border: 1px solid #fed7d7;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        color: #c53030;
+    }
+    .docs-footer {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .docs-footer h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.3em;
+    }
+    .docs-footer .button {
+        margin: 5px;
+        padding: 12px 24px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    .docs-footer .button-primary {
+        background: white;
+        color: #667eea;
+        border: 2px solid white;
+    }
+    .docs-footer .button-primary:hover {
+        background: transparent;
+        color: white;
+        transform: translateY(-2px);
+    }
+    .docs-footer .button-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+    .docs-footer .button-secondary:hover {
+        background: white;
+        color: #f5576c;
+        transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+        .docs-header, .docs-content, .docs-footer {
+            padding: 20px;
+        }
+        .docs-header h1 {
+            font-size: 2em;
+        }
+        .docs-nav-buttons {
+            flex-direction: column;
+        }
+    }
+    </style>
+    
+    <div class="wrap docs-container">
+        <div class="docs-header">
+            <h1>📖 Documentação de Personalização do Design</h1>
+            <p>Guia completo e interativo para personalizar o visual do seu site usando o Tema UENF</p>
+        </div>
+        
+        <div class="docs-nav">
+            <h3>🚀 Acesso Rápido</h3>
+            <div class="docs-nav-buttons">
+                <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Abrir Customizer</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-secondary">🔧 Gerenciar Extensões</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-reset'); ?>" class="button button-secondary">🔄 Reset Configurações</a>
+            </div>
+        </div>
+        
+        <div class="docs-content">
+            <?php echo $docs_content; ?>
+        </div>
+        
+        <div class="docs-footer">
+            <h3>🎯 Próximos Passos</h3>
+            <p style="margin-bottom: 20px;">Agora que você conhece as opções de personalização, comece a criar seu design único!</p>
+            <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Começar Personalização</a>
+            <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Voltar ao Painel</a>
+        </div>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adiciona smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Adiciona efeito de highlight ao passar o mouse sobre seções
+        document.querySelectorAll('.docs-h2, .docs-h3').forEach(heading => {
+            heading.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            heading.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    });
+    </script>
     <?php
 }
 
@@ -1237,6 +1527,24 @@ function cct_theme_setup() {
 
     // Add theme support for selective refresh for widgets
     add_theme_support('customize-selective-refresh-widgets');
+    
+    // Add support for block patterns
+    add_theme_support('core-block-patterns');
+    
+    // Register block pattern categories
+    if (function_exists('register_block_pattern_category')) {
+        register_block_pattern_category('uenf-patterns', array(
+            'label' => __('UENF Patterns', 'cct-theme'),
+        ));
+        
+        register_block_pattern_category('uenf-faq', array(
+            'label' => __('FAQ', 'cct-theme'),
+        ));
+        
+        register_block_pattern_category('uenf-pricing', array(
+            'label' => __('Pricing', 'cct-theme'),
+        ));
+    }
 }
 add_action('after_setup_theme', 'cct_theme_setup');
 
@@ -1426,6 +1734,22 @@ function cct_scripts() {
     wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);
     wp_enqueue_style('cct-custom-fixes', CCT_THEME_URI . '/css/custom-fixes.css', array('cct-styles-additional'), $style_version);
     
+    // 3.1.1 Estilos dos Block Patterns
+    $patterns_css_path = get_template_directory() . '/css/patterns.css';
+    if (file_exists($patterns_css_path)) {
+        $patterns_css_version = filemtime($patterns_css_path);
+        wp_enqueue_style('cct-patterns', CCT_THEME_URI . '/css/patterns.css', array('cct-style'), $patterns_css_version);
+    }
+    
+    // 3.1.2 Correções específicas para o WordPress Customizer
+    if (is_customize_preview()) {
+        $customizer_fix_path = get_template_directory() . '/css/customizer-fix.css';
+        if (file_exists($customizer_fix_path)) {
+            $customizer_fix_version = filemtime($customizer_fix_path);
+            wp_enqueue_style('cct-customizer-fix', CCT_THEME_URI . '/css/customizer-fix.css', array('cct-style'), $customizer_fix_version);
+        }
+    }
+    
     // 3.2 Estilos de componentes (carregados separadamente para garantir que sejam sobrescritos)
     $components = array(
         'new-menu' => '/css/components/new-menu.css',
@@ -1533,6 +1857,12 @@ function cct_scripts() {
         'cct-search-retractable' => array(
             'path' => '/js/search-retractable.js',
             'deps' => array('jquery', 'cct-event-manager')
+        ),
+        // Script dos Block Patterns
+        'cct-patterns' => array(
+            'path' => '/js/patterns.js',
+            'deps' => array('jquery'),
+            'force' => true
         )
     );
     
@@ -1867,3 +2197,92 @@ function uenf_filter_hidden_pages_from_menu($sorted_menu_items, $args) {
     return $filtered_items;
 }
 add_filter('wp_get_nav_menu_items', 'uenf_filter_hidden_pages_from_menu', 999, 2);
+
+/**
+ * Página de Reset de Configurações
+ */
+function cct_reset_page_callback() {
+    // Verificar se o usuário tem permissão
+    if (!current_user_can('manage_options')) {
+        wp_die(__('Você não tem permissão para acessar esta página.'));
+    }
+    
+    // Processar ações de reset se enviadas
+    if (isset($_POST['action']) && wp_verify_nonce($_POST['reset_nonce'], 'cct_reset_action')) {
+        $reset_manager = UENF_Theme_Reset_Manager::get_instance();
+        $message = '';
+        $message_type = 'success';
+        
+        switch ($_POST['action']) {
+            case 'reset_theme':
+                $result = $reset_manager->reset_theme_settings();
+                $message = $result ? 'Configurações do tema resetadas com sucesso!' : 'Erro ao resetar configurações do tema.';
+                $message_type = $result ? 'success' : 'error';
+                break;
+                
+            case 'reset_extensions':
+                $extension_manager = cct_extension_manager();
+                if ($extension_manager) {
+                    $result = $extension_manager->reset_all_extensions();
+                    $message = $result ? 'Configurações de extensões resetadas com sucesso!' : 'Erro ao resetar configurações de extensões.';
+                    $message_type = $result ? 'success' : 'error';
+                }
+                break;
+                
+            case 'reset_all':
+                $result = $reset_manager->reset_all_settings();
+                $message = $result ? 'Todas as configurações resetadas com sucesso!' : 'Erro ao resetar todas as configurações.';
+                $message_type = $result ? 'success' : 'error';
+                break;
+        }
+        
+        if ($message) {
+            echo '<div class="notice notice-' . $message_type . ' is-dismissible"><p>' . esc_html($message) . '</p></div>';
+        }
+    }
+    ?>
+    <div class="wrap">
+        <h1>🔄 Reset de Configurações</h1>
+        <p>Use esta página para resetar configurações do tema e extensões para os valores padrão.</p>
+        
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2>⚠️ Atenção</h2>
+            <p><strong>Esta ação não pode ser desfeita!</strong> Certifique-se de fazer um backup das suas configurações antes de prosseguir.</p>
+        </div>
+        
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2>🔄 Opções de Reset</h2>
+            
+            <form method="post" style="margin-bottom: 20px;">
+                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
+                <input type="hidden" name="action" value="reset_theme">
+                <h3>Reset do Tema</h3>
+                <p>Reseta apenas as configurações do tema (cores, tipografia, layout, etc.)</p>
+                <button type="submit" class="button button-secondary" onclick="return confirm('Tem certeza que deseja resetar as configurações do tema? Esta ação não pode ser desfeita.');">🎨 Resetar Tema</button>
+            </form>
+            
+            <form method="post" style="margin-bottom: 20px;">
+                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
+                <input type="hidden" name="action" value="reset_extensions">
+                <h3>Reset de Extensões</h3>
+                <p>Reseta apenas as configurações das extensões ativas</p>
+                <button type="submit" class="button button-secondary" onclick="return confirm('Tem certeza que deseja resetar as configurações das extensões? Esta ação não pode ser desfeita.');">🔧 Resetar Extensões</button>
+            </form>
+            
+            <form method="post">
+                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
+                <input type="hidden" name="action" value="reset_all">
+                <h3>Reset Completo</h3>
+                <p><strong>Reseta TODAS as configurações</strong> (tema + extensões)</p>
+                <button type="submit" class="button button-primary" style="background-color: #dc3545; border-color: #dc3545;" onclick="return confirm('ATENÇÃO: Esta ação irá resetar TODAS as configurações do tema e extensões. Esta ação não pode ser desfeita. Tem certeza que deseja continuar?');">🗑️ Reset Completo</button>
+            </form>
+        </div>
+        
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2>📋 Acesso Rápido</h2>
+            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Voltar ao Tema UENF</a></p>
+            <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Abrir Customizer</a></p>
+        </div>
+    </div>
+    <?php
+}

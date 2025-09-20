@@ -1,0 +1,28 @@
+/* FontAwesome 6 já está carregado via CDN, este arquivo serve apenas para customizações */
+
+/* Customizações específicas para ícones sociais */
+.social-media-links .fab,
+.social-media-links .fa-brands {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Garantir que os ícones FontAwesome 6 funcionem corretamente */
+.fa-facebook-f,
+.fa-twitter,
+.fa-instagram,
+.fa-linkedin-in,
+.fa-youtube,
+.fa-telegram,
+.fa-whatsapp {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+}
+
+/* Fallback para ícones que podem ter nomes diferentes no FA6 */
+.fa-telegram-plane {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+}
+
+/* Adicione mais customizações se necessário */

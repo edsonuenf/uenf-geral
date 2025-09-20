@@ -1,0 +1,559 @@
+/* ============================================================================
+   BUSCA RETRÁTIL - SISTEMA DE EXPANSÃO/RETRAÇÃO
+   ============================================================================ */
+
+/* ============================================================================
+   VERSÃO INLINE - SUBSTITUI O BOTÃO NORMAL
+   ============================================================================ */
+
+/* Container da busca retrátil inline */
+.search-retractable-inline {
+    position: relative;
+    display: inline-block;
+}
+
+/* Botão toggle inline (substitui o botão normal) */
+.search-retractable-toggle-inline {
+    padding: 12px 16px;
+    background: var(--primary-color, #1d3771);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-height: 44px; /* Altura mínima para acessibilidade */
+}
+
+.search-retractable-toggle-inline:hover {
+    background: var(--primary-color-dark, #152a5a);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.search-retractable-toggle-inline:active {
+    transform: translateY(0);
+}
+
+/* Formulário inline expandido */
+.search-retractable-form-inline {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(-10px);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin-top: 8px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+    min-width: 300px;
+    width: max-content;
+}
+
+/* Estado expandido inline */
+.search-retractable-form-inline.expanded {
+    opacity: 1;
+    transform: translateY(0);
+    display: block !important;
+}
+
+/* Formulário dentro do container inline */
+.search-retractable-form-inline .custom-search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    position: relative;
+}
+
+/* Campo de busca no modo inline */
+.search-retractable-form-inline .search-field {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-retractable-form-inline .search-field:focus {
+    border-color: var(--primary-color, #1d3771);
+    box-shadow: 0 0 0 3px rgba(29, 55, 113, 0.1);
+}
+
+/* Botão de submit no modo inline */
+.search-retractable-form-inline .search-submit {
+    padding: 12px 16px;
+    background: var(--primary-color, #1d3771);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-retractable-form-inline .search-submit:hover {
+    background: var(--primary-color-dark, #152a5a);
+    transform: translateY(-1px);
+}
+
+/* Botão de fechar inline */
+.search-retractable-close-inline {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-retractable-close-inline:hover {
+    background: #c82333;
+    transform: scale(1.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsividade para versão inline */
+@media (max-width: 768px) {
+    .search-retractable-form-inline {
+        min-width: 280px;
+        padding: 15px;
+    }
+    
+    .search-retractable-toggle-inline {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-retractable-form-inline {
+        min-width: 250px;
+        padding: 12px;
+        left: 0;
+        transform: translateY(-10px);
+        width: calc(100vw - 40px);
+        max-width: 300px;
+    }
+    
+    .search-retractable-form-inline.expanded {
+        transform: translateY(0);
+    }
+    
+    .search-retractable-form-inline .custom-search-form {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .search-retractable-form-inline .search-field {
+        width: 100%;
+    }
+    
+    .search-retractable-form-inline .search-submit {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .search-retractable-close-inline {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+        top: -6px;
+        right: -6px;
+    }
+}
+
+/* Estados de foco e acessibilidade para versão inline */
+.search-retractable-toggle-inline:focus,
+.search-retractable-close-inline:focus {
+    outline: 2px solid var(--primary-color, #1d3771);
+    outline-offset: 2px;
+}
+
+/* Modo escuro para versão inline */
+@media (prefers-color-scheme: dark) {
+    .search-retractable-form-inline {
+        background: #2d3748;
+        color: white;
+    }
+    
+    .search-retractable-form-inline .search-field {
+        background: #4a5568;
+        border-color: #718096;
+        color: white;
+    }
+    
+    .search-retractable-form-inline .search-field::placeholder {
+        color: #a0aec0;
+    }
+}
+
+/* ============================================================================
+   VERSÃO FLUTUANTE - ORIGINAL
+   ============================================================================ */
+
+/* Container principal da busca retrátil */
+.search-retractable-container {
+    position: fixed;
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+/* Posicionamento do container */
+.search-retractable-container[data-position="top-left"] {
+    top: 20px;
+    left: 20px;
+}
+
+.search-retractable-container[data-position="top-right"] {
+    top: 20px;
+    right: 20px;
+}
+
+.search-retractable-container[data-position="bottom-left"] {
+    bottom: 20px;
+    left: 20px;
+}
+
+.search-retractable-container[data-position="bottom-right"] {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Botão de toggle (ícone) */
+.search-retractable-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color, #1d3771);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10001;
+}
+
+.search-retractable-toggle:hover {
+    background: var(--primary-color-dark, #152a5a);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.search-retractable-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Formulário retrátil */
+.search-retractable-form {
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    min-width: 300px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 10000;
+}
+
+/* Posicionamento do formulário baseado na posição do botão */
+.search-retractable-container[data-position="top-left"] .search-retractable-form {
+    top: 60px;
+    left: 0;
+}
+
+.search-retractable-container[data-position="top-right"] .search-retractable-form {
+    top: 60px;
+    right: 0;
+}
+
+.search-retractable-container[data-position="bottom-left"] .search-retractable-form {
+    bottom: 60px;
+    left: 0;
+}
+
+.search-retractable-container[data-position="bottom-right"] .search-retractable-form {
+    bottom: 60px;
+    right: 0;
+}
+
+/* Estado expandido */
+.search-retractable-form.expanded {
+    opacity: 1;
+    transform: scale(1);
+    display: block !important;
+}
+
+/* Formulário dentro do container retrátil */
+.search-retractable-form .custom-search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    position: relative;
+}
+
+/* Campo de busca no modo retrátil */
+.search-retractable-form .search-field {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-retractable-form .search-field:focus {
+    border-color: var(--primary-color, #1d3771);
+    box-shadow: 0 0 0 3px rgba(29, 55, 113, 0.1);
+}
+
+/* Botão de submit no modo retrátil */
+.search-retractable-form .search-submit {
+    padding: 12px 16px;
+    background: var(--primary-color, #1d3771);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-retractable-form .search-submit:hover {
+    background: var(--primary-color-dark, #152a5a);
+    transform: translateY(-1px);
+}
+
+/* Botão de fechar */
+.search-retractable-close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.3s ease;
+    z-index: 10002;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-retractable-close:hover {
+    background: #c82333;
+    transform: scale(1.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Overlay para fechar ao clicar fora */
+.search-retractable-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.search-retractable-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .search-retractable-container {
+        position: fixed;
+    }
+    
+    .search-retractable-container[data-position="top-left"],
+    .search-retractable-container[data-position="bottom-left"] {
+        left: 10px;
+    }
+    
+    .search-retractable-container[data-position="top-right"],
+    .search-retractable-container[data-position="bottom-right"] {
+        right: 10px;
+    }
+    
+    .search-retractable-container[data-position="top-left"],
+    .search-retractable-container[data-position="top-right"] {
+        top: 10px;
+    }
+    
+    .search-retractable-container[data-position="bottom-left"],
+    .search-retractable-container[data-position="bottom-right"] {
+        bottom: 10px;
+    }
+    
+    .search-retractable-form {
+        min-width: 280px;
+        padding: 15px;
+    }
+    
+    .search-retractable-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-retractable-form {
+        min-width: 250px;
+        padding: 12px;
+    }
+    
+    .search-retractable-form .custom-search-form {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .search-retractable-form .search-field {
+        width: 100%;
+    }
+    
+    .search-retractable-form .search-submit {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .search-retractable-close {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+        top: -6px;
+        right: -6px;
+    }
+}
+
+/* Animações */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounceOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(0.95);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+}
+
+.search-retractable-form.bounce-in {
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.search-retractable-form.bounce-out {
+    animation: bounceOut 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+/* Estados de foco e acessibilidade */
+.search-retractable-toggle:focus,
+.search-retractable-close:focus {
+    outline: 2px solid var(--primary-color, #1d3771);
+    outline-offset: 2px;
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+    .search-retractable-form {
+        background: #2d3748;
+        color: white;
+    }
+    
+    .search-retractable-form .search-field {
+        background: #4a5568;
+        border-color: #718096;
+        color: white;
+    }
+    
+    .search-retractable-form .search-field::placeholder {
+        color: #a0aec0;
+    }
+}
+
+/* Integração com tema */
+.search-retractable-container .search-text {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Esconder texto em mobile se configurado */
+@media (max-width: 576px) {
+    .search-retractable-container .search-submit .search-text {
+        display: none;
+    }
+}
