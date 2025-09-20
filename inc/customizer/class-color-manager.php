@@ -262,6 +262,14 @@ class CCT_Color_Manager {
             'priority' => 20,
         ));
         
+        // Seção de cores de texto
+        $this->wp_customize->add_section($this->prefix . 'text_colors', array(
+            'title' => __('Cores de Texto', 'cct'),
+            'description' => __('Configure as cores do texto do site.', 'cct'),
+            'panel' => $this->prefix . 'panel',
+            'priority' => 25,
+        ));
+        
         // Seção de gerador de cores
         $this->wp_customize->add_section($this->prefix . 'color_generator', array(
             'title' => __('Gerador de Cores', 'cct'),
@@ -341,6 +349,20 @@ class CCT_Color_Manager {
             'default' => true,
             'sanitize_callback' => 'rest_sanitize_boolean',
         ));
+        
+        // Configuração de cor de texto padrão
+        $this->wp_customize->add_setting($this->prefix . 'text_color', array(
+            'default' => '#333333',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'postMessage',
+        ));
+        
+        // Configuração de cor de texto dos títulos
+        $this->wp_customize->add_setting($this->prefix . 'heading_text_color', array(
+            'default' => '#333333',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'postMessage',
+        ));
     }
     
     /**
@@ -395,6 +417,34 @@ class CCT_Color_Manager {
                 )
             );
         }
+        
+        // Controle de cor de texto padrão
+        $this->wp_customize->add_control(
+            new WP_Customize_Color_Control(
+                $this->wp_customize,
+                'cct_text_color',
+                array(
+                    'label' => __('Cor do Texto', 'cct'),
+                    'description' => __('Cor padrão do texto do site.', 'cct'),
+                    'section' => $this->prefix . 'text_colors',
+                    'settings' => $this->prefix . 'text_color',
+                )
+            )
+        );
+        
+        // Controle de cor de texto dos títulos
+        $this->wp_customize->add_control(
+            new WP_Customize_Color_Control(
+                $this->wp_customize,
+                'cct_heading_text_color',
+                array(
+                    'label' => __('Cor dos Títulos', 'cct'),
+                    'description' => __('Cor do texto dos títulos (h1, h2, h3, etc.).', 'cct'),
+                    'section' => $this->prefix . 'text_colors',
+                    'settings' => $this->prefix . 'heading_text_color',
+                )
+            )
+        );
         
         // Gerador de cores
         $this->wp_customize->add_control(
@@ -511,6 +561,57 @@ class CCT_Color_Manager {
             '1.0.0',
             true
         );
+    }
+    
+    /**
+     * Gera CSS personalizado para cores de texto
+     */
+    public function output_custom_css() {
+        $text_color = get_theme_mod($this->prefix . 'text_color', '#333333');
+        $heading_text_color = get_theme_mod($this->prefix . 'heading_text_color', '#333333');
+        
+        $css = "";
+        
+        // CSS para cor de texto padrão
+        if ($text_color !== '#333333') {
+            $css .= "body, p, span, div, li, td, th { color: {$text_color} !important; }\n";
+        }
+        
+        // CSS para cor de texto dos títulos
+        if ($heading_text_color !== '#333333') {
+            $css .= "h1, h2, h3, h4, h5, h6 { color: {$heading_text_color} !important; }\n";
+        }
+        
+        if (!empty($css)) {
+            echo "<style type='text/css' id='cct-text-colors-css'>\n" . $css . "</style>\n";
+        }
+    }
+    
+    /**
+     * Gera JavaScript personalizado para preview em tempo real
+     */
+    public function output_custom_js() {
+        if (is_customize_preview()) {
+            ?>
+            <script type="text/javascript">
+            (function($) {
+                // Preview em tempo real para cor de texto
+                wp.customize('<?php echo $this->prefix; ?>text_color', function(value) {
+                    value.bind(function(newval) {
+                        $('body, p, span, div, li, td, th').css('color', newval);
+                    });
+                });
+                
+                // Preview em tempo real para cor de títulos
+                wp.customize('<?php echo $this->prefix; ?>heading_text_color', function(value) {
+                    value.bind(function(newval) {
+                        $('h1, h2, h3, h4, h5, h6').css('color', newval);
+                    });
+                });
+            })(jQuery);
+            </script>
+            <?php
+        }
     }
     
     /**
