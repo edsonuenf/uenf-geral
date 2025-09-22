@@ -1,0 +1,130 @@
+/* Correção para remover espaços em branco no hero e header */
+
+/* Reset completo para body e html */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Garantir que o site container não tenha margens */
+#page.site {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+/* Header sem margens */
+#masthead.site-header {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+/* Seção do hero sem margens */
+.hero-section {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    background-color: var(--hero-bg);
+    position: relative;
+}
+
+/* Container do hero */
+.hero-section .container {
+    max-width: 1200px;
+    margin: 0 auto !important;
+    padding: 0 15px;
+    width: 100%;
+}
+
+/* Título do hero */
+.hero-title {
+    margin: 0 !important;
+    padding: 40px 0 30px 0;
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+    color: var(--bs-uenf-blue);
+}
+
+/* Main content sem margem superior */
+#primary.site-main {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Remover qualquer margem do primeiro elemento após o header */
+.site-header + * {
+    margin-top: 0 !important;
+}
+
+/* Garantir que não há espaço entre header e hero */
+.site-header {
+    margin-bottom: 0 !important;
+}
+
+.hero-section {
+    margin-top: 0 !important;
+}
+
+/* Correção para elementos Bootstrap que podem adicionar margem */
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .hero-section {
+        width: 100vw;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+    }
+    
+    .hero-section .container {
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        padding: 30px 0 20px 0;
+        font-size: 2rem;
+    }
+}
+
+/* Garantir que elementos WordPress não adicionem margem */
+.wp-block-group,
+.wp-block-cover,
+.entry-content {
+    margin-top: 0 !important;
+}
+
+/* Correção específica para o tema */
+body:not(.home) .line-breadcrumb {
+    margin-top: 0 !important;
+}
+
+/* Remover qualquer padding/margin do topo da página */
+.site-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Garantir que o header logo não tenha margem extra */
+.bg-header-logo {
+    margin: 0 !important;
+    padding: 12px 0;
+}
+
+/* Navbar sem margem */
+.navbar-brand-top,
+.navbar-uenf {
+    margin: 0 !important;
+}

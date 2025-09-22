@@ -735,11 +735,13 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_setting('form_button_bg_color', array(
         'default' => CCT_PRIMARY_COLOR,
         'sanitize_callback' => 'sanitize_hex_color',
+        'transport' => 'postMessage',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_bg_color', array(
         'label' => __('Cor de Fundo do Botão', 'cct'),
         'section' => 'cct_form_buttons',
         'settings' => 'form_button_bg_color',
+        'description' => __('Esta cor também será aplicada aos botões do WordPress no editor.', 'cct'),
     )));
 
     // Cor de Fundo do Botão ao Passar o Mouse (Hover)
@@ -757,11 +759,13 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_setting('form_button_text_color', array(
         'default' => '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
+        'transport' => 'postMessage',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_text_color', array(
         'label' => __('Cor do Texto do Botão', 'cct'),
         'section' => 'cct_form_buttons',
         'settings' => 'form_button_text_color',
+        'description' => __('Esta cor também será aplicada ao texto dos botões do WordPress no editor.', 'cct'),
     )));
 
     // Cor do Texto do Botão ao Passar o Mouse (Hover)
@@ -777,7 +781,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Raio da Borda do Botão (aceita px, %, em, rem)
     $wp_customize->add_setting('form_button_border_radius', array(
-        'default' => '4px',
+        'default' => '12px',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('form_button_border_radius', array(
@@ -789,7 +793,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Espaçamento Interno do Botão (top, right, bottom, left)
     $wp_customize->add_setting('form_button_padding', array(
-        'default' => '10px 20px 10px 20px',
+        'default' => '15px 15px 15px 15px',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('form_button_padding', array(
@@ -801,7 +805,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     
     // Borda do Botão
     $wp_customize->add_setting('form_button_border_width', array(
-        'default' => '1px',
+        'default' => '0',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('form_button_border_width', array(
@@ -1811,35 +1815,49 @@ function cct_customize_css() {
         padding-right: 35px;
     }' . "\n\n";
     
+    // Variáveis CSS para botões de formulário
+    $css_output .= ':root {
+        --form-button-bg-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';
+        --form-button-text-color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';
+        --form-button-bg-hover-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color . 'e6')) . ';
+        --form-button-text-hover-color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';
+        --form-button-border-width: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ';
+        --form-button-border-color: ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';
+        --form-button-border-hover-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . 'e6')) . ';
+        --form-button-padding: ' . esc_attr(get_theme_mod('form_button_padding', '8px 15px 8px 15px')) . ';
+        --form-button-border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '12px')) . ';
+    }' . "\n\n";
+    
     // Estilos para botões
     $css_output .= '.btn-submit-uenf,
     .btn-form-uenf,
-    button[type="submit"].btn-uenf {
+    button[type="submit"].btn-uenf,
+    .wpcf7-submit {
         display: inline-block;
         font-weight: 500;
         text-align: center;
         white-space: nowrap;
         vertical-align: middle;
         user-select: none;
-        border: 1px solid transparent;
-        padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 20px')) . ';
+        border: var(--form-button-border-width) solid var(--form-button-border-color);
+        padding: var(--form-button-padding);
         font-size: 16px;
         line-height: 1.5;
-        border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '4px')) . ';
+        border-radius: var(--form-button-border-radius);
         transition: all 0.3s ease;
         cursor: pointer;
-        background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';
-        color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';
-        border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';
+        background-color: var(--form-button-bg-color);
+        color: var(--form-button-text-color);
     }' . "\n\n";
     
     // Estilo hover para botões
     $css_output .= '.btn-submit-uenf:hover,
     .btn-form-uenf:hover,
-    button[type="submit"].btn-uenf:hover {
-        background-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color . 'e6')) . ';
-        color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';
-        border-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . 'e6')) . ';
+    button[type="submit"].btn-uenf:hover,
+    .wpcf7-submit:hover {
+        background-color: var(--form-button-bg-hover-color);
+        color: var(--form-button-text-hover-color);
+        border-color: var(--form-button-border-hover-color);
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }' . "\n\n";
@@ -1847,7 +1865,8 @@ function cct_customize_css() {
     // Estilo ativo para botões
     $css_output .= '.btn-submit-uenf:active,
     .btn-form-uenf:active,
-    button[type="submit"].btn-uenf:active {
+    button[type="submit"].btn-uenf:active,
+    .wpcf7-submit:active {
         transform: translateY(0);
         box-shadow: none;
     }' . "\n\n";
@@ -1855,9 +1874,10 @@ function cct_customize_css() {
     // Estilo para foco no botão
     $css_output .= '.btn-submit-uenf:focus,
     .btn-form-uenf:focus,
-    button[type="submit"].btn-uenf:focus {
+    button[type="submit"].btn-uenf:focus,
+    .wpcf7-submit:focus {
         outline: none;
-        box-shadow: 0 0 0 2px ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . '40')) . ';
+        box-shadow: 0 0 0 2px var(--form-button-border-hover-color);
     }' . "\n\n";
     
     // Estilo para labels
@@ -2219,8 +2239,8 @@ function cct_customize_css() {
     button[type="submit"].btn-uenf {';
     $css_output .= 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';';
     $css_output .= 'color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';';
-    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '4px')) . ';';
-    $css_output .= 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 20px')) . ';';
+    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '12px')) . ';';
+    $css_output .= 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '8px 15px 8px 15px')) . ';';
     $css_output .= 'border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';';
     $css_output .= 'cursor: pointer;';
     $css_output .= 'font-size: 16px;';
@@ -3086,3 +3106,58 @@ function cct_search_customizer_css() {
     }
 }
 add_action('wp_head', 'cct_search_customizer_css');
+
+/**
+ * Filtrar theme.json para sincronizar com configurações do Customizer
+ */
+function cct_filter_theme_json_theme($theme_json) {
+    $new_data = array(
+        'version' => 2,
+        'styles' => array(
+            'elements' => array(
+                'button' => array(
+                    'color' => array(
+                        'background' => get_theme_mod('form_button_bg_color', '#1d3771'),
+                        'text' => get_theme_mod('form_button_text_color', '#ffffff')
+                    ),
+                    'border' => array(
+                        'radius' => get_theme_mod('form_button_border_radius', '12px')
+                    ),
+                    ':hover' => array(
+                        'color' => array(
+                            'background' => get_theme_mod('form_button_bg_hover_color', '#152a54')
+                        )
+                    )
+                )
+            ),
+            'blocks' => array(
+                'core/button' => array(
+                    'color' => array(
+                        'background' => get_theme_mod('form_button_bg_color', '#1d3771'),
+                        'text' => get_theme_mod('form_button_text_color', '#ffffff')
+                    ),
+                    'border' => array(
+                        'radius' => get_theme_mod('form_button_border_radius', '12px')
+                    )
+                )
+            )
+        )
+    );
+    
+    return $theme_json->update_with($new_data);
+}
+add_filter('wp_theme_json_data_theme', 'cct_filter_theme_json_theme');
+
+/**
+ * JavaScript para preview do Customizer
+ */
+function cct_customize_preview_js() {
+    wp_enqueue_script(
+        'cct-customizer-preview',
+        get_template_directory_uri() . '/js/customizer-preview.js',
+        array('customize-preview'),
+        '1.0.0',
+        true
+    );
+}
+add_action('customize_preview_init', 'cct_customize_preview_js');

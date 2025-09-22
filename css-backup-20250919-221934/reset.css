@@ -75,22 +75,8 @@ select,
 textarea {
     margin: 0;
     padding: 0;
-    outline: none;
-}
-
-/* Manter bordas para campos de formulário (exceto botões) */
-input:not([type="submit"]):not([type="button"]):not([type="reset"]),
-select,
-textarea {
-    border: 1px solid #333;
-}
-
-/* Remover bordas apenas dos botões */
-button,
-input[type="submit"],
-input[type="button"],
-input[type="reset"] {
     border: none;
+    outline: none;
 }
 
 /* Reset de tabelas */

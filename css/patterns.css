@@ -134,12 +134,20 @@
 
 /* Button Hover Effects */
 .wp-block-button .wp-block-button__link {
+    background-color: var(--form-button-bg-color, var(--wp--preset--color--primary));
+    color: var(--form-button-text-color, #ffffff);
+    padding: var(--form-button-padding, 8px 15px 8px 15px);
+    border: var(--form-button-border-width, 0) solid var(--form-button-border-color, transparent);
+    border-radius: var(--form-button-border-radius, 12px);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
 .wp-block-button .wp-block-button__link:hover {
+    background-color: var(--form-button-hover-bg-color, var(--wp--preset--color--primary));
+    color: var(--form-button-hover-text-color, #ffffff);
+    border-color: var(--form-button-hover-border-color, transparent);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -210,12 +218,23 @@
     }
 }
 
+/* Button Active and Focus States */
+.wp-block-button .wp-block-button__link:active {
+    background-color: var(--form-button-active-bg-color, var(--wp--preset--color--primary));
+    color: var(--form-button-active-text-color, #ffffff);
+    border-color: var(--form-button-active-border-color, transparent);
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
 /* Accessibility Improvements */
 .faq-accordion-container .wp-block-details summary:focus,
 .faq-tabs-nav .faq-tab-button:focus,
 .wp-block-button .wp-block-button__link:focus {
-    outline: 2px solid var(--wp--preset--color--primary);
+    outline: 2px solid var(--form-button-border-color, var(--wp--preset--color--primary));
     outline-offset: 2px;
+    background-color: var(--form-button-hover-bg-color, var(--wp--preset--color--primary));
+    color: var(--form-button-hover-text-color, #ffffff);
 }
 
 /* Reduced Motion Support */

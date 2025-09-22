@@ -28,7 +28,7 @@ require_once get_template_directory() . '/components/menu/uenf-menu.php';
 // Definir constantes para cores padrão
 define('CCT_PRIMARY_COLOR', '#1D3771');
 define('CCT_PRIMARY_LIGHT', '#1D3770BF');
-define('CCT_TEXT_COLOR', '#26557D');
+define('CCT_TEXT_COLOR', '#333');
 define('CCT_LINK_COLOR', '#26557D');
 define('CCT_LINK_HOVER_COLOR', '#1D3771');
 define('CCT_WHITE', '#FFFFFF');
@@ -1718,6 +1718,20 @@ function cct_scripts() {
     $variables_version = file_exists($variables_path) ? filemtime($variables_path) : $theme_version;
     wp_enqueue_style('cct-variables', CCT_THEME_URI . '/css/variables.css', array('cct-bootstrap'), $variables_version);
 
+    // 2.5 Reset CSS (deve ser carregado antes de todos os outros estilos)
+    $reset_css_path = get_template_directory() . '/css/reset.css';
+    if (file_exists($reset_css_path)) {
+        $reset_css_version = filemtime($reset_css_path);
+        wp_enqueue_style('cct-reset', CCT_THEME_URI . '/css/reset.css', array(), $reset_css_version);
+    }
+    
+    // 2.6 Correção específica para hero e header (carregado após reset)
+    $hero_header_fix_path = get_template_directory() . '/css/hero-header-fix.css';
+    if (file_exists($hero_header_fix_path)) {
+        $hero_header_fix_version = filemtime($hero_header_fix_path);
+        wp_enqueue_style('cct-hero-header-fix', CCT_THEME_URI . '/css/hero-header-fix.css', array('cct-reset'), $hero_header_fix_version);
+    }
+    
     // 3. Estilo principal (compilado com todos os estilos em um único arquivo)
     wp_enqueue_style('cct-style', 
         CCT_THEME_URI . '/css/style.min.css', 
@@ -1725,10 +1739,12 @@ function cct_scripts() {
             'cct-fonts',
             'cct-fontawesome',
             'cct-bootstrap',
-            'cct-variables'
+            'cct-variables',
+            'cct-reset',
+            'cct-hero-header-fix'
         ), 
         $style_version // Usa timestamp do arquivo para versionamento
-    );
+     );
     
     // 3.1 Estilos adicionais (removidos do header.php para melhor performance)
     wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);

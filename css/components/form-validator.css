@@ -119,6 +119,33 @@
     background-size: 1rem 1rem !important;
 }
 
+/* Estilos para campos de formulário padrão */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+select,
+textarea {
+    border: 1px solid #ddd !important;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+}
+
 /* Estilos para campos do Contact Form 7 */
 .wpcf7-form-control:not([type="submit"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
 .wpcf7-form-control.wpcf7-text,
@@ -131,29 +158,228 @@
 .wpcf7-form-control.wpcf7-url,
 .wpcf7-form-control.wpcf7-quiz,
 .wpcf7-form-control.wpcf7-file {
-    border: 1px solid #cccccc !important;
+    border: 1px solid #ddd !important;
     width: 100%;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin-bottom: 16px;
 }
 
-/* Estilo para foco nos campos */
+/* Estados visuais melhorados para campos de formulário */
+
+/* Hover */
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="tel"]:hover,
+input[type="url"]:hover,
+input[type="search"]:hover,
+input[type="number"]:hover,
+input[type="date"]:hover,
+input[type="time"]:hover,
+input[type="datetime-local"]:hover,
+input[type="month"]:hover,
+input[type="week"]:hover,
+select:hover,
+textarea:hover,
+.wpcf7-form-control:not([type="submit"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):hover {
+    border-color: #1d3771 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(29, 55, 113, 0.1);
+}
+
+/* Focus */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+select:focus,
+textarea:focus,
 .wpcf7-form-control:focus {
-    border-color: #86b7fe !important;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    border-color: #1d3771 !important;
+    box-shadow: 0 0 0 3px rgba(29, 55, 113, 0.15) !important;
     outline: 0;
+    transform: translateY(-1px);
+}
+
+/* Estados de validação */
+.wpcf7-form-control.wpcf7-not-valid,
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important;
+}
+
+.wpcf7-form-control.wpcf7-not-valid:focus,
+input.is-invalid:focus,
+select.is-invalid:focus,
+textarea.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Estado de sucesso */
+input.is-valid,
+select.is-valid,
+textarea.is-valid {
+    border-color: #198754 !important;
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15) !important;
+}
+
+input.is-valid:focus,
+select.is-valid:focus,
+textarea.is-valid:focus {
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.25) !important;
 }
 
 /* Estilo para textarea */
-.wpcf7-textarea {
-    min-height: 100px;
+.wpcf7-textarea,
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Estilos para labels e textos de formulário */
+label,
+.wpcf7-form-control-wrap label,
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Indicadores de campos obrigatórios */
+label.required::after,
+.required-field::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Textos de ajuda */
+.form-text,
+.wpcf7-form-control-wrap .form-text {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+/* Mensagens de erro do Contact Form 7 */
+.wpcf7-not-valid-tip {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Mensagens de resposta do Contact Form 7 */
+.wpcf7-response-output {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.wpcf7-mail-sent-ok {
+    background-color: #d1edff;
+    border: 1px solid #0ea5e9;
+    color: #0369a1;
+}
+
+.wpcf7-mail-sent-ng,
+.wpcf7-aborted,
+.wpcf7-validation-errors {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #dc2626;
 }
 
 /* Estilo para selects */
-.wpcf7-select {
+.wpcf7-select,
+select {
     height: auto;
     background-image: none;
+    cursor: pointer;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="search"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    select,
+    textarea,
+    .wpcf7-form-control:not([type="submit"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
+        font-size: 16px; /* Evita zoom no iOS */
+        padding: 14px 16px;
+        margin-bottom: 20px;
+    }
+    
+    .wpcf7-textarea,
+    textarea {
+        min-height: 100px;
+    }
+    
+    label,
+    .wpcf7-form-control-wrap label,
+    .form-label {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .wpcf7-response-output {
+        padding: 16px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="search"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    select,
+    textarea,
+    .wpcf7-form-control:not([type="submit"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
+        padding: 16px;
+        margin-bottom: 24px;
+        border-radius: 12px;
+    }
 }
 
 /* Remover seta padrão do select no Firefox */
@@ -169,19 +395,41 @@
     margin-right: 1rem;
 }
 
-/* Estilo para o botão de envio */
+/* Estilo para o botão de envio - Integrado com Personalizar */
 .wpcf7-submit {
     cursor: pointer;
-    background-color: #0d6efd;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    transition: background-color 0.15s ease-in-out;
+    background-color: var(--form-button-bg-color, #0d6efd);
+    color: var(--form-button-text-color, white);
+    border: var(--form-button-border-width, 0) solid var(--form-button-border-color, #0d6efd);
+    padding: var(--form-button-padding, 8px 15px 8px 15px);
+    border-radius: var(--form-button-border-radius, 0.25rem);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 .wpcf7-submit:hover {
-    background-color: #0b5ed7;
+    background-color: var(--form-button-bg-hover-color, #0b5ed7);
+    color: var(--form-button-text-hover-color, white);
+    border-color: var(--form-button-border-hover-color, #0b5ed7);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wpcf7-submit:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.wpcf7-submit:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--form-button-border-hover-color, rgba(13, 110, 253, 0.25));
 }
 
 /* Animações */

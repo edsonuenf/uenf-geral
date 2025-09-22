@@ -136,6 +136,132 @@
     }
 
     /**
+     * Preview para botões de formulário
+     */
+    function bindFormButtonPreviews() {
+        // Cor de fundo do botão
+        wp.customize('form_button_bg_color', function(value) {
+            value.bind(function(newval) {
+                $('head').find('#cct-form-button-bg-color').remove();
+                $('head').append('<style id="cct-form-button-bg-color">' +
+                    '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
+                    '.wp-block-button__link, .wpcf7-submit { ' +
+                    'background-color: ' + newval + ' !important; }' +
+                    '</style>');
+            });
+        });
+
+        // Cor do texto do botão
+        wp.customize('form_button_text_color', function(value) {
+            value.bind(function(newval) {
+                $('head').find('#cct-form-button-text-color').remove();
+                $('head').append('<style id="cct-form-button-text-color">' +
+                    '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
+                    '.wp-block-button__link, .wpcf7-submit { ' +
+                    'color: ' + newval + ' !important; }' +
+                    '</style>');
+            });
+        });
+
+        // Cor de fundo hover do botão
+        wp.customize('form_button_bg_hover_color', function(value) {
+            value.bind(function(newval) {
+                $('head').find('#cct-form-button-bg-hover-color').remove();
+                $('head').append('<style id="cct-form-button-bg-hover-color">' +
+                    '.btn-submit-uenf:hover, .btn-form-uenf:hover, button[type="submit"].btn-uenf:hover, ' +
+                    '.wp-block-button__link:hover, .wpcf7-submit:hover { ' +
+                    'background-color: ' + newval + ' !important; }' +
+                    '</style>');
+            });
+        });
+
+        // Raio da borda do botão
+        wp.customize('form_button_border_radius', function(value) {
+            value.bind(function(newval) {
+                $('head').find('#cct-form-button-border-radius').remove();
+                $('head').append('<style id="cct-form-button-border-radius">' +
+                    '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
+                    '.wp-block-button__link, .wpcf7-submit { ' +
+                    'border-radius: ' + newval + ' !important; }' +
+                    '</style>');
+            });
+        });
+
+        // Padding do botão
+        wp.customize('form_button_padding', function(value) {
+            value.bind(function(newval) {
+                $('head').find('#cct-form-button-padding').remove();
+                $('head').append('<style id="cct-form-button-padding">' +
+                    '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
+                    '.wp-block-button__link, .wpcf7-submit { ' +
+                    'padding: ' + newval + ' !important; }' +
+                    '</style>');
+            });
+        });
+    }
+
+    /**
+     * Função para preview de botões do WordPress Block Editor
+     */
+    function bindBlockButtonPreviews() {
+        // Background color
+        wp.customize('form_button_bg_color', function(value) {
+            value.bind(function(newval) {
+                $('.wp-block-button .wp-block-button__link').css('background-color', newval);
+            });
+        });
+
+        // Text color
+        wp.customize('form_button_text_color', function(value) {
+            value.bind(function(newval) {
+                $('.wp-block-button .wp-block-button__link').css('color', newval);
+            });
+        });
+
+        // Hover background color
+        wp.customize('form_button_hover_bg_color', function(value) {
+            value.bind(function(newval) {
+                updateHoverStyles('.wp-block-button .wp-block-button__link', 'background-color', newval);
+            });
+        });
+
+        // Hover text color
+        wp.customize('form_button_hover_text_color', function(value) {
+            value.bind(function(newval) {
+                updateHoverStyles('.wp-block-button .wp-block-button__link', 'color', newval);
+            });
+        });
+
+        // Border radius
+        wp.customize('form_button_border_radius', function(value) {
+            value.bind(function(newval) {
+                $('.wp-block-button .wp-block-button__link').css('border-radius', newval + 'px');
+            });
+        });
+
+        // Padding
+        wp.customize('form_button_padding', function(value) {
+            value.bind(function(newval) {
+                $('.wp-block-button .wp-block-button__link').css('padding', newval);
+            });
+        });
+
+        // Border width
+        wp.customize('form_button_border_width', function(value) {
+            value.bind(function(newval) {
+                $('.wp-block-button .wp-block-button__link').css('border-width', newval + 'px');
+            });
+        });
+
+        // Border color
+        wp.customize('form_button_border_color', function(value) {
+            value.bind(function(newval) {
+                $('.wp-block-button .wp-block-button__link').css('border-color', newval);
+            });
+        });
+    }
+
+    /**
      * Inicializar todos os previews
      */
     function initializePreviews() {
@@ -152,6 +278,10 @@
         bindMenuStylePreview();
         bindHierarchyIconsPreview();
         bindPanelWidthPreview();
+        bindFormButtonPreviews();
+        
+        // Bind WordPress Block Editor button previews
+        bindBlockButtonPreviews();
         
         // Log para debug
         console.log('CCT Customizer Preview: Initialized');

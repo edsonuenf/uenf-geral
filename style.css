@@ -91,21 +91,52 @@ h4{
 
 
 .button {
-    background-color: var(--button-color);
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
+    background-color: var(--form-button-bg-color, var(--button-color));
+    color: var(--form-button-text-color, #ffffff);
+    padding: var(--form-button-padding, 10px 20px);
+    border: var(--form-button-border-width, 0) solid var(--form-button-border-color, transparent);
+    border-radius: var(--form-button-border-radius, 4px) !important;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* Correção específica para botões de formulário - sobrescreve border-radius: 50% */
+.wpcf7-submit,
+.btn-submit-uenf,
+.btn-form-uenf,
+button[type="submit"].btn-uenf,
+.wp-block-button__link,
+input[type="submit"],
+button[type="submit"],
+.button {
+    border-radius: var(--form-button-border-radius, 4px) !important;
+}
+
+/* Garantir que elementos específicos mantenham border-radius: 50% */
+.shortcut-icon,
+.back-to-top {
+    border-radius: 50% !important;
 }
 
 .button:hover {
-    background-color: var(--button-hover-color);
+    background-color: var(--form-button-hover-bg-color, var(--button-hover-color));
+    color: var(--form-button-hover-text-color, #ffffff);
+    border-color: var(--form-button-hover-border-color, transparent);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button:active {
-    background-color: var(--button-active-color);
+    background-color: var(--form-button-active-bg-color, var(--button-active-color));
+    color: var(--form-button-active-text-color, #ffffff);
+    border-color: var(--form-button-active-border-color, transparent);
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .menu-item a {
