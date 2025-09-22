@@ -101,6 +101,8 @@ body:not(.home) .line-breadcrumb {
   margin-top: -12px;
   padding: 0 15px;
   border-bottom: 1px solid #386A9430 !important;
+  height: 1px;
+  width: 100%;
 }
 
 /* Alinhamento de Imagens */
