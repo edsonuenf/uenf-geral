@@ -156,3 +156,83 @@ button[type="submit"],
     color: var(--menu-active-color);
 }
 
+/* ===== Alinhamento de Imagens ===== */
+.alignleft {
+    float: left !important;
+    margin: 0 20px 20px 0 !important;
+    display: block !important;
+}
+
+.alignright {
+    float: right !important;
+    margin: 0 0 20px 20px !important;
+    display: block !important;
+}
+
+.aligncenter {
+    display: block !important;
+    margin: 20px auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Alinhamento correto de imagens no conteúdo */
+.entry-content img.alignleft,
+.entry-content .wp-caption.alignleft,
+.entry-content .wp-block-image.alignleft {
+    float: left !important;
+    margin: 0 20px 20px 0 !important;
+    display: block !important;
+}
+
+.entry-content img.alignright,
+.entry-content .wp-caption.alignright,
+.entry-content .wp-block-image.alignright {
+    float: right !important;
+    margin: 0 0 20px 20px !important;
+    display: block !important;
+}
+
+.entry-content img.aligncenter,
+.entry-content .wp-caption.aligncenter,
+.entry-content .wp-block-image.aligncenter {
+    display: block !important;
+    margin: 20px auto !important;
+    float: none !important;
+}
+
+/* Clearfix para garantir altura correta do container */
+.entry-content::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* Garantir que as imagens não ultrapassem o container */
+.wp-caption,
+.wp-caption.aligncenter,
+.wp-caption.alignleft,
+.wp-caption.alignright {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Estilo para imagens dentro de posts/páginas */
+.entry-content img,
+.comment-content img,
+.widget img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    .alignleft,
+    .alignright {
+        float: none !important;
+        display: block !important;
+        margin: 20px auto !important;
+        max-width: 100% !important;
+    }
+}
+

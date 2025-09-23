@@ -58,7 +58,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
-        filename: 'css/[name].css'
+        filename: 'css/[name].min.css'
       })
     ],
     optimization: {
