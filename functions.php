@@ -327,6 +327,9 @@ require_once CCT_THEME_DIR . '/inc/customizer.php';
 // Carregar sistema de reset de configurações
 require_once CCT_THEME_DIR . '/inc/class-theme-reset-manager.php';
 
+// Carregar limpador de temas padrão
+require_once CCT_THEME_DIR . '/inc/class-default-themes-cleaner.php';
+
 // Incluir Editor CSS Avançado
 require get_template_directory() . '/inc/design-editor/css-editor-loader.php';
 
