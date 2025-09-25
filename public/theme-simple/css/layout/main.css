@@ -116,12 +116,7 @@ body:not(.home) .line-breadcrumb {
     display: block !important;
 }
 
-.aligncenter {
-    display: block !important;
-    margin: 20px auto !important;
-    max-width: 100% !important;
-    height: auto !important;
-}
+/* Regras de alinhamento de imagem removidas - agora controladas pelo style.min.css principal */
 
 /* Limpar floats */
 .clearfix:after {
@@ -145,15 +140,4 @@ body:not(.home) .line-breadcrumb {
 .widget img {
     max-width: 100% !important;
     height: auto !important;
-}
-
-/* Ajustes para dispositivos móveis */
-@media (max-width: 768px) {
-    .alignleft,
-    .alignright {
-        float: none !important;
-        display: block !important;
-        margin: 20px auto !important;
-        max-width: 100% !important;
-    }
 }

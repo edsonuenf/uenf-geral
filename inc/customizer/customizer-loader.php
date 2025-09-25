@@ -94,6 +94,7 @@ class CCT_Customizer_Loader {
         // Lista de módulos básicos (sempre carregados)
         $basic_modules = array(
             'class-menu-customizer.php',
+            'class-design-panel-manager.php',
         );
         
         // Lista de módulos condicionais (baseados em extensões)
@@ -296,6 +297,7 @@ class CCT_Customizer_Loader {
             'class-breakpoint-manager-control.php' => 'CCT_Breakpoint_Manager_Control',
             'class-design-tokens-manager.php' => 'CCT_Design_Tokens_Manager',
             'class-design-tokens-control.php' => 'CCT_Design_Tokens_Control',
+            'class-design-panel-manager.php' => 'UENF\CCT\Customizer\Design_Panel_Manager',
         );
         
         // Verificar se existe mapeamento específico

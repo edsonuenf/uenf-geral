@@ -5,21 +5,8 @@
     padding: 20px;
 }
 
-/* Alinhamento de imagens */
-.alignleft {
-    float: left;
-    margin-right: 20px;
-}
-
-.alignright {
-    float: right;
-    margin-left: 20px;
-}
-
-.aligncenter {
-    display: block;
-    margin: 0 auto;
-}
+/* NOTA: Regras básicas de alinhamento (.alignleft, .alignright, .aligncenter) */
+/* são controladas pelo style.min.css principal para consistência */
 
 /* Tamanhos de imagens */
 img.size-uenf-large {

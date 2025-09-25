@@ -107,10 +107,71 @@ body {
     clear: both; 
 }
 
-/* Caso a imagem alinhada esteja dentro do MESMO <p>, cancelar o float para não envolver o texto */
+/* Este arquivo contém apenas correções específicas e sobrescritas necessárias */
+
+
+/* ===== CORREÇÃO PRINCIPAL: Permitir alinhamento correto em páginas ===== */
+/* Sobrescreve as regras restritivas do style.min.css para permitir texto ao lado de imagens */
+/* Versão com máxima especificidade CSS para garantir aplicação */
+
+/* Imagens alinhadas à esquerda - permite texto ao lado */
+body .entry-content img.alignleft,
+body .entry-content figure.alignleft,
+body .entry-content .wp-block-image.alignleft,
+body .entry-content .wp-block-image.alignleft img {
+    float: left !important;
+    margin: 0 20px 20px 0 !important;
+    display: block !important;
+    clear: none !important;
+    max-width: 300px !important;
+}
+
+/* Imagens alinhadas à direita - permite texto ao lado */
+body .entry-content img.alignright,
+body .entry-content figure.alignright,
+body .entry-content .wp-block-image.alignright,
+body .entry-content .wp-block-image.alignright img {
+    float: right !important;
+    margin: 0 0 20px 20px !important;
+    display: block !important;
+    clear: none !important;
+    max-width: 300px !important;
+}
+
+/* Imagens centralizadas */
+body .entry-content img.aligncenter,
+body .entry-content figure.aligncenter,
+body .entry-content .wp-block-image.aligncenter,
+body .entry-content .wp-block-image.aligncenter img {
+    display: block !important;
+    margin: 20px auto !important;
+    float: none !important;
+    clear: both !important;
+}
+
+/* Permitir que o texto flua ao lado das imagens alinhadas */
+body .entry-content .alignleft + p,
+body .entry-content .alignright + p,
+body .entry-content .wp-caption.alignleft + p,
+body .entry-content .wp-caption.alignright + p,
+body .entry-content .wp-block-image.alignleft + p,
+body .entry-content .wp-block-image.alignright + p {
+    clear: none !important;
+    margin-top: 0 !important;
+}
+
+/* Força aplicação em parágrafos que contêm imagens alinhadas */
+body .entry-content p:has(img.alignleft),
+body .entry-content p:has(img.alignright) {
+    overflow: visible !important;
+    clear: none !important;
+}
+
+/* Evitar que imagens dentro de parágrafos flutuem (comportamento específico) */
 .entry-content p > img.alignleft,
 .entry-content p > img.alignright {
     float: none !important;
     display: block !important;
+    margin: 0 0 1rem 0 !important;
 }
 

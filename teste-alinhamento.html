@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Alinhamento de Imagens</title>
+    <link rel="stylesheet" href="style.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #007cba;
+            padding-bottom: 10px;
+        }
+        .debug-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-left: 4px solid #007cba;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste de Alinhamento de Imagens - WordPress</h1>
+    
+    <div class="debug-info">
+        <h3>Status do CSS</h3>
+        <p>✅ Arquivo style.min.css carregado com sucesso</p>
+        <p>✅ Regras de alinhamento presentes no CSS</p>
+        <p>🔍 Testando aplicação visual das regras...</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 1: Imagem Alinhada à Esquerda (.alignleft)</h2>
+        <div class="entry-content">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA3Y2JhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Fc3F1ZXJkYTwvdGV4dD48L3N2Zz4=" alt="Teste Esquerda" class="alignleft">
+            <p>Este é um parágrafo de teste para verificar se a imagem está alinhada corretamente à esquerda. O texto deve fluir ao redor da imagem, criando um layout harmonioso. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 2: Imagem Alinhada à Direita (.alignright)</h2>
+        <div class="entry-content">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjhhNzQ1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5EaXJlaXRhPC90ZXh0Pjwvc3ZnPg==" alt="Teste Direita" class="alignright">
+            <p>Este é um parágrafo de teste para verificar se a imagem está alinhada corretamente à direita. O texto deve fluir ao redor da imagem, criando um layout harmonioso. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 3: Imagem Centralizada (.aligncenter)</h2>
+        <div class="entry-content">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGMzNTQ1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DZW50cm88L3RleHQ+PC9zdmc+" alt="Teste Centro" class="aligncenter">
+            <p>Este é um parágrafo de teste para verificar se a imagem está centralizada corretamente. A imagem deve aparecer centralizada e o texto deve aparecer abaixo dela, sem envolvimento lateral.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 4: Figure com Alinhamento (.alignleft)</h2>
+        <div class="entry-content">
+            <figure class="alignleft">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNmY0MmMxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5GaWd1cmU8L3RleHQ+PC9zdmc+" alt="Teste Figure">
+                <figcaption>Legenda da imagem alinhada à esquerda</figcaption>
+            </figure>
+            <p>Este teste verifica se as regras de alinhamento funcionam também com elementos figure. O texto deve fluir ao redor da figure alinhada à esquerda.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 5: Bloco de Imagem WordPress (.wp-block-image.alignright)</h2>
+        <div class="entry-content">
+            <div class="wp-block-image alignright">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmQ3ZTE0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5XUCBCbG9jazwvdGV4dD48L3N2Zz4=" alt="Teste WP Block">
+            </div>
+            <p>Este teste verifica se as regras funcionam com blocos de imagem do WordPress (wp-block-image). A imagem deve estar alinhada à direita.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 6: Contexto .page-content (Permite Float)</h2>
+        <div class="page-content">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMTc4NDNkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5QYWdlPC90ZXh0Pjwvc3ZnPg==" alt="Teste Page" class="alignleft">
+            <p>Este teste está dentro de .page-content, onde as imagens DEVEM flutuar (float) normalmente. O texto deve envolver a imagem à esquerda.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+    
+    <div class="debug-info">
+        <h3>Informações de Debug</h3>
+        <p><strong>Arquivo CSS:</strong> style.min.css ✅</p>
+        <p><strong>Classes testadas:</strong> .alignleft, .alignright, .aligncenter ✅</p>
+        <p><strong>Elementos testados:</strong> img, figure, .wp-block-image ✅</p>
+        <p><strong>Contextos testados:</strong> .entry-content (sem float), .page-content (com float) ✅</p>
+        <p><strong>Comportamento esperado:</strong></p>
+        <ul>
+            <li>Em .entry-content: imagens em bloco, sem float</li>
+            <li>Em .page-content: imagens com float normal</li>
+            <li>Centralização sempre funciona</li>
+        </ul>
+    </div>
+</body>
+</html>

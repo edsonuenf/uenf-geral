@@ -11,6 +11,53 @@
     <?php wp_head(); ?> <!-- Hook do WordPress para incluir scripts e estilos no cabeçalho -->
     <?php endif; ?>
     <!-- Estilos carregados via wp_enqueue_style no functions.php para melhor performance -->
+    
+    <!-- CSS inline para correção de alinhamento de imagens -->
+    <style type="text/css">
+    /* Força alinhamento de imagens com máxima prioridade */
+    body .entry-content img.alignleft,
+    body .entry-content figure.alignleft,
+    body .entry-content .wp-block-image.alignleft,
+    body .entry-content .wp-block-image.alignleft img {
+        float: left !important;
+        margin: 0 20px 20px 0 !important;
+        display: block !important;
+        clear: none !important;
+        max-width: 300px !important;
+    }
+    
+    body .entry-content img.alignright,
+    body .entry-content figure.alignright,
+    body .entry-content .wp-block-image.alignright,
+    body .entry-content .wp-block-image.alignright img {
+        float: right !important;
+        margin: 0 0 20px 20px !important;
+        display: block !important;
+        clear: none !important;
+        max-width: 300px !important;
+    }
+    
+    body .entry-content img.aligncenter,
+    body .entry-content figure.aligncenter,
+    body .entry-content .wp-block-image.aligncenter,
+    body .entry-content .wp-block-image.aligncenter img {
+        display: block !important;
+        margin: 20px auto !important;
+        float: none !important;
+        clear: both !important;
+    }
+    
+    /* Permitir texto ao lado das imagens */
+    body .entry-content .alignleft + p,
+    body .entry-content .alignright + p,
+    body .entry-content .wp-caption.alignleft + p,
+    body .entry-content .wp-caption.alignright + p,
+    body .entry-content .wp-block-image.alignleft + p,
+    body .entry-content .wp-block-image.alignright + p {
+        clear: none !important;
+        margin-top: 0 !important;
+    }
+    </style>
 
 
 </head>
