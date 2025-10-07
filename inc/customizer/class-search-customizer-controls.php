@@ -162,7 +162,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_border_radius_top_left', array(
             'default' => 25,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_border_radius_top_left', array(
@@ -182,7 +182,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_border_radius_top_right', array(
             'default' => 0,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_border_radius_top_right', array(
@@ -202,7 +202,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_border_radius_bottom_left', array(
             'default' => 25,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_border_radius_bottom_left', array(
@@ -222,7 +222,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_border_radius_bottom_right', array(
             'default' => 0,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_border_radius_bottom_right', array(
@@ -279,7 +279,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_button_border_radius_top_left', array(
             'default' => 0,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_top_left', array(
@@ -299,7 +299,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_button_border_radius_top_right', array(
             'default' => 4,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_top_right', array(
@@ -319,7 +319,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_button_border_radius_bottom_left', array(
             'default' => 0,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_bottom_left', array(
@@ -339,7 +339,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_button_border_radius_bottom_right', array(
             'default' => 4,
             'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
+            'transport' => 'postMessage'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_bottom_right', array(
@@ -1059,9 +1059,9 @@ class CCT_Search_Customizer_Controls {
         $button_border_width = get_theme_mod('cct_search_button_border_width', 1);
         
         // Border radius individuais - Campo
-        $field_border_radius_top_left = get_theme_mod('cct_search_border_radius_top_left', 4);
+        $field_border_radius_top_left = get_theme_mod('cct_search_border_radius_top_left', 25);
         $field_border_radius_top_right = get_theme_mod('cct_search_border_radius_top_right', 0);
-        $field_border_radius_bottom_left = get_theme_mod('cct_search_border_radius_bottom_left', 4);
+        $field_border_radius_bottom_left = get_theme_mod('cct_search_border_radius_bottom_left', 25);
         $field_border_radius_bottom_right = get_theme_mod('cct_search_border_radius_bottom_right', 0);
         
         // Border radius individuais - Botão
