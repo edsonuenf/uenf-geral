@@ -47,16 +47,16 @@
             
             // Configurar elementos baseado na versão
             if (this.isInline) {
-                this.toggleButton = this.container.find('.search-retractable-toggle-inline');
+                this.toggleButton = this.container.find('.search-retractable-toggle-inline.search-custom-uenf');
                 this.form = this.container.find('.search-retractable-form-inline');
-                this.closeButton = this.container.find('.search-retractable-close-inline');
+                this.closeButton = this.container.find('.search-retractable-close-inline.search-custom-uenf');
             } else {
-                this.toggleButton = this.container.find('.search-retractable-toggle');
+                this.toggleButton = this.container.find('.search-retractable-toggle.search-custom-uenf');
                 this.form = this.container.find('.search-retractable-form');
-                this.closeButton = this.container.find('.search-retractable-close');
+                this.closeButton = this.container.find('.search-retractable-close.search-custom-uenf');
             }
             
-            this.searchField = this.form.find('.search-field');
+            this.searchField = this.form.find('.search-field.search-custom-uenf');
             
             // Debug
             console.log('Search Retractable: Elementos configurados (' + (this.isInline ? 'inline' : 'flutuante') + ')');

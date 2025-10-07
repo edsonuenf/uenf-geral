@@ -781,7 +781,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Raio da Borda do Botão (aceita px, %, em, rem)
     $wp_customize->add_setting('form_button_border_radius', array(
-        'default' => '12px',
+        'default' => '0px 25px 25px 0px',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('form_button_border_radius', array(
@@ -1825,7 +1825,7 @@ function cct_customize_css() {
         --form-button-border-color: ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';
         --form-button-border-hover-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . 'e6')) . ';
         --form-button-padding: ' . esc_attr(get_theme_mod('form_button_padding', '8px 15px 8px 15px')) . ';
-        --form-button-border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '12px')) . ';
+        --form-button-border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')) . ';
     }' . "\n\n";
     
     // Estilos para botões
@@ -2239,7 +2239,7 @@ function cct_customize_css() {
     button[type="submit"].btn-uenf {';
     $css_output .= 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';';
     $css_output .= 'color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';';
-    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '12px')) . ';';
+    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')) . ';';
     $css_output .= 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '8px 15px 8px 15px')) . ';';
     $css_output .= 'border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';';
     $css_output .= 'cursor: pointer;';
@@ -3121,7 +3121,7 @@ function cct_filter_theme_json_theme($theme_json) {
                         'text' => get_theme_mod('form_button_text_color', '#ffffff')
                     ),
                     'border' => array(
-                        'radius' => get_theme_mod('form_button_border_radius', '12px')
+                        'radius' => get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')
                     ),
                     ':hover' => array(
                         'color' => array(
@@ -3137,7 +3137,7 @@ function cct_filter_theme_json_theme($theme_json) {
                         'text' => get_theme_mod('form_button_text_color', '#ffffff')
                     ),
                     'border' => array(
-                        'radius' => get_theme_mod('form_button_border_radius', '12px')
+                        'radius' => get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')
                     )
                 )
             )

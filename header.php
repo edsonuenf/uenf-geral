@@ -107,7 +107,7 @@ if ( function_exists( 'wp_body_open' ) ) {
           </div>
 
           <div class="header-grid-col2">
-            <div class="search-container">
+            <div class="search-container search-custom-uenf">
               <?php 
               // Verificar se a extensão de busca personalizada está ativa
               $search_extension_active = get_theme_mod('cct_extension_search_customizer_enabled', false);

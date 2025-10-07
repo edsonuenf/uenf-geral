@@ -47,6 +47,7 @@ class CCT_Search_Customizer_Controls {
         
         $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_button_color', array(
             'label' => 'Cor do Botão',
+            'description' => 'Define a cor de fundo do botão de busca',
             'section' => 'cct_search_customizer',
             'settings' => 'cct_search_button_color'
         )));
@@ -60,11 +61,32 @@ class CCT_Search_Customizer_Controls {
         
         $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_button_hover_color', array(
             'label' => 'Cor do Botão (Hover)',
+            'description' => 'Cor do botão quando o mouse passa sobre ele',
             'section' => 'cct_search_customizer',
             'settings' => 'cct_search_button_hover_color'
         )));
         
-        // Cor da borda
+        // Espessura da borda do campo de busca
+        $wp_customize->add_setting('cct_search_border_width', array(
+            'default' => 1,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_border_width', array(
+            'label' => 'Espessura da Borda do Campo de Busca',
+            'description' => 'Espessura da borda em pixels: <span class="range-value" data-setting="cct_search_border_width">1</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 5,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Cor da borda do campo de busca
         $wp_customize->add_setting('cct_search_border_color', array(
             'default' => '#ddd',
             'sanitize_callback' => 'sanitize_hex_color',
@@ -72,23 +94,286 @@ class CCT_Search_Customizer_Controls {
         ));
         
         $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_border_color', array(
-            'label' => 'Cor da Borda',
+            'label' => 'Cor da Borda do Campo de Busca',
+            'description' => 'Define a cor da borda do campo de entrada de texto',
             'section' => 'cct_search_customizer',
             'settings' => 'cct_search_border_color'
         )));
         
+        // Cor de fundo do campo de texto
+        $wp_customize->add_setting('cct_search_field_bg_color', array(
+            'default' => '#ffffff',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_field_bg_color', array(
+            'label' => 'Cor de Fundo do Campo de Texto',
+            'description' => 'Define a cor de fundo do campo de entrada de texto',
+            'section' => 'cct_search_customizer',
+            'settings' => 'cct_search_field_bg_color'
+        )));
+        
+        // Cor do texto no campo de busca
+        $wp_customize->add_setting('cct_search_field_text_color', array(
+            'default' => '#333333',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_field_text_color', array(
+            'label' => 'Cor do Texto do Campo',
+            'description' => 'Define a cor do texto digitado no campo de busca',
+            'section' => 'cct_search_customizer',
+            'settings' => 'cct_search_field_text_color'
+        )));
+        
+        // Cor do placeholder
+        $wp_customize->add_setting('cct_search_field_placeholder_color', array(
+            'default' => '#999999',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_field_placeholder_color', array(
+            'label' => 'Cor do Placeholder',
+            'description' => 'Define a cor do texto de placeholder no campo de busca',
+            'section' => 'cct_search_customizer',
+            'settings' => 'cct_search_field_placeholder_color'
+        )));
+        
+        // Cor de foco do campo
+        $wp_customize->add_setting('cct_search_field_focus_color', array(
+            'default' => '#1d3771',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_field_focus_color', array(
+            'label' => 'Cor de Foco do Campo',
+            'description' => 'Define a cor da borda quando o campo está em foco',
+            'section' => 'cct_search_customizer',
+            'settings' => 'cct_search_field_focus_color'
+        )));
+        
+        // === BORDER RADIUS INDIVIDUAIS - CAMPO DE BUSCA ===
+        
+        // Border radius top-left do campo
+        $wp_customize->add_setting('cct_search_border_radius_top_left', array(
+            'default' => 25,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_border_radius_top_left', array(
+            'label' => 'Border Radius Superior Esquerdo - Campo',
+            'description' => 'Define o raio da borda superior esquerda do campo. Valor: <span class="range-value" data-setting="cct_search_border_radius_top_left">25</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Border radius top-right do campo
+        $wp_customize->add_setting('cct_search_border_radius_top_right', array(
+            'default' => 0,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_border_radius_top_right', array(
+            'label' => 'Border Radius Superior Direito - Campo',
+            'description' => 'Define o raio da borda superior direita do campo. Valor: <span class="range-value" data-setting="cct_search_border_radius_top_right">0</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Border radius bottom-left do campo
+        $wp_customize->add_setting('cct_search_border_radius_bottom_left', array(
+            'default' => 25,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_border_radius_bottom_left', array(
+            'label' => 'Border Radius Inferior Esquerdo - Campo',
+            'description' => 'Define o raio da borda inferior esquerda do campo. Valor: <span class="range-value" data-setting="cct_search_border_radius_bottom_left">25</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Border radius bottom-right do campo
+        $wp_customize->add_setting('cct_search_border_radius_bottom_right', array(
+            'default' => 0,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_border_radius_bottom_right', array(
+            'label' => 'Border Radius Inferior Direito - Campo',
+            'description' => 'Define o raio da borda inferior direita do campo. Valor: <span class="range-value" data-setting="cct_search_border_radius_bottom_right">0</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+
+        
+        // Cor da borda do botão
+        $wp_customize->add_setting('cct_search_button_border_color', array(
+            'default' => '#1d3771',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cct_search_button_border_color', array(
+            'label' => 'Cor da Borda do Botão',
+            'description' => 'Define a cor da borda do botão de busca',
+            'section' => 'cct_search_customizer',
+            'settings' => 'cct_search_button_border_color'
+        )));
+        
+        // Espessura da borda do botão
+        $wp_customize->add_setting('cct_search_button_border_width', array(
+            'default' => 1,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_button_border_width', array(
+            'label' => 'Espessura da Borda do Botão',
+            'description' => 'Espessura da borda em pixels: <span class="range-value" data-setting="cct_search_button_border_width">1</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 5,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // === BORDER RADIUS INDIVIDUAIS - BOTÃO DE BUSCA ===
+        
+        // Border radius top-left do botão
+        $wp_customize->add_setting('cct_search_button_border_radius_top_left', array(
+            'default' => 0,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_button_border_radius_top_left', array(
+            'label' => 'Border Radius Superior Esquerdo - Botão',
+            'description' => 'Define o raio da borda superior esquerda do botão. Valor: <span class="range-value" data-setting="cct_search_button_border_radius_top_left">0</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Border radius top-right do botão
+        $wp_customize->add_setting('cct_search_button_border_radius_top_right', array(
+            'default' => 4,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_button_border_radius_top_right', array(
+            'label' => 'Border Radius Superior Direito - Botão',
+            'description' => 'Define o raio da borda superior direita do botão. Valor: <span class="range-value" data-setting="cct_search_button_border_radius_top_right">4</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Border radius bottom-left do botão
+        $wp_customize->add_setting('cct_search_button_border_radius_bottom_left', array(
+            'default' => 0,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_button_border_radius_bottom_left', array(
+            'label' => 'Border Radius Inferior Esquerdo - Botão',
+            'description' => 'Define o raio da borda inferior esquerda do botão. Valor: <span class="range-value" data-setting="cct_search_button_border_radius_bottom_left">0</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
+        // Border radius bottom-right do botão
+        $wp_customize->add_setting('cct_search_button_border_radius_bottom_right', array(
+            'default' => 4,
+            'sanitize_callback' => 'absint',
+            'transport' => 'refresh'
+        ));
+        
+        $wp_customize->add_control('cct_search_button_border_radius_bottom_right', array(
+            'label' => 'Border Radius Inferior Direito - Botão',
+            'description' => 'Define o raio da borda inferior direita do botão. Valor: <span class="range-value" data-setting="cct_search_button_border_radius_bottom_right">4</span>px',
+            'section' => 'cct_search_customizer',
+            'type' => 'range',
+            'input_attrs' => array(
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+                'data-value-display' => 'px'
+            )
+        ));
+        
         // === DIMENSÕES ===
         
-        // Altura (padding)
+        // Altura (padding) - Valor
         $wp_customize->add_setting('cct_search_padding_vertical', array(
             'default' => 6,
             'sanitize_callback' => 'absint',
             'transport' => 'refresh'
         ));
         
+        // Altura (padding) - Unidade
+        $wp_customize->add_setting('cct_search_padding_vertical_unit', array(
+            'default' => 'px',
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport' => 'refresh'
+        ));
+        
         $wp_customize->add_control('cct_search_padding_vertical', array(
             'label' => 'Altura (Padding Vertical)',
-            'description' => 'Valor em pixels: <span class="range-value" data-setting="cct_search_padding_vertical">6</span>px',
+            'description' => 'Define a altura interna dos campos. Valor: <span class="range-value" data-setting="cct_search_padding_vertical">6</span><span class="unit-value" data-setting="cct_search_padding_vertical_unit">px</span>',
             'section' => 'cct_search_customizer',
             'type' => 'range',
             'input_attrs' => array(
@@ -99,16 +384,36 @@ class CCT_Search_Customizer_Controls {
             )
         ));
         
-        // Largura máxima
+        $wp_customize->add_control('cct_search_padding_vertical_unit', array(
+            'label' => 'Unidade - Altura',
+            'description' => 'Selecione a unidade de medida para a altura',
+            'section' => 'cct_search_customizer',
+            'type' => 'select',
+            'choices' => array(
+                'px' => 'Pixels (px)',
+                'em' => 'Em (em)',
+                'rem' => 'Rem (rem)',
+                '%' => 'Porcentagem (%)'
+            )
+        ));
+        
+        // Largura máxima - Valor
         $wp_customize->add_setting('cct_search_max_width', array(
             'default' => 300,
             'sanitize_callback' => 'absint',
             'transport' => 'refresh'
         ));
         
+        // Largura máxima - Unidade
+        $wp_customize->add_setting('cct_search_max_width_unit', array(
+            'default' => 'px',
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport' => 'refresh'
+        ));
+        
         $wp_customize->add_control('cct_search_max_width', array(
             'label' => 'Largura Máxima',
-            'description' => 'Valor em pixels: <span class="range-value" data-setting="cct_search_max_width">300</span>px',
+            'description' => 'Define a largura máxima do formulário de busca. Valor: <span class="range-value" data-setting="cct_search_max_width">300</span><span class="unit-value" data-setting="cct_search_max_width_unit">px</span>',
             'section' => 'cct_search_customizer',
             'type' => 'range',
             'input_attrs' => array(
@@ -119,27 +424,22 @@ class CCT_Search_Customizer_Controls {
             )
         ));
         
-        // === BORDAS ===
-        
-        // Raio das bordas
-        $wp_customize->add_setting('cct_search_border_radius', array(
-            'default' => 4,
-            'sanitize_callback' => 'absint',
-            'transport' => 'refresh'
-        ));
-        
-        $wp_customize->add_control('cct_search_border_radius', array(
-            'label' => 'Raio das Bordas',
-            'description' => 'Valor em pixels: <span class="range-value" data-setting="cct_search_border_radius">4</span>px',
+        $wp_customize->add_control('cct_search_max_width_unit', array(
+            'label' => 'Unidade - Largura',
+            'description' => 'Selecione a unidade de medida para a largura',
             'section' => 'cct_search_customizer',
-            'type' => 'range',
-            'input_attrs' => array(
-                'min' => 0,
-                'max' => 25,
-                'step' => 1,
-                'data-value-display' => 'px'
+            'type' => 'select',
+            'choices' => array(
+                'px' => 'Pixels (px)',
+                'em' => 'Em (em)',
+                'rem' => 'Rem (rem)',
+                '%' => 'Porcentagem (%)'
             )
         ));
+        
+        // === BORDAS ===
+        
+        // === BORDAS DO BOTÃO ===
         
         // === TIPOGRAFIA ===
         
@@ -150,9 +450,15 @@ class CCT_Search_Customizer_Controls {
             'transport' => 'refresh'
         ));
         
+        $wp_customize->add_setting('cct_search_font_size_unit', array(
+            'default' => 'px',
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport' => 'refresh'
+        ));
+        
         $wp_customize->add_control('cct_search_font_size', array(
             'label' => 'Tamanho da Fonte',
-            'description' => 'Valor em pixels: <span class="range-value" data-setting="cct_search_font_size">14</span>px',
+            'description' => 'Define o tamanho do texto nos campos de busca. Valor: <span class="range-value" data-setting="cct_search_font_size">14</span><span class="unit-value" data-setting="cct_search_font_size_unit">px</span>',
             'section' => 'cct_search_customizer',
             'type' => 'range',
             'input_attrs' => array(
@@ -160,6 +466,19 @@ class CCT_Search_Customizer_Controls {
                 'max' => 20,
                 'step' => 1,
                 'data-value-display' => 'px'
+            )
+        ));
+        
+        $wp_customize->add_control('cct_search_font_size_unit', array(
+            'label' => 'Unidade do Tamanho da Fonte',
+            'description' => 'Selecione a unidade de medida para o tamanho da fonte.',
+            'section' => 'cct_search_customizer',
+            'type' => 'select',
+            'choices' => array(
+                'px' => 'Pixels (px)',
+                'em' => 'Em (em)',
+                'rem' => 'Rem (rem)',
+                '%' => 'Porcentagem (%)'
             )
         ));
         
@@ -174,6 +493,7 @@ class CCT_Search_Customizer_Controls {
         
         $wp_customize->add_control('cct_search_box_shadow', array(
             'label' => 'Adicionar Sombra',
+            'description' => 'Adiciona uma sombra sutil ao formulário de busca para destacá-lo',
             'section' => 'cct_search_customizer',
             'type' => 'checkbox'
         ));
@@ -187,6 +507,7 @@ class CCT_Search_Customizer_Controls {
         
         $wp_customize->add_control('cct_search_transitions', array(
             'label' => 'Ativar Transições',
+            'description' => 'Ativa animações suaves (0.3s) para mudanças de cor e efeitos hover',
             'section' => 'cct_search_customizer',
             'type' => 'checkbox'
         ));
@@ -344,7 +665,7 @@ class CCT_Search_Customizer_Controls {
         
         // Mostrar texto do botão - Desktop
         $wp_customize->add_setting('cct_search_show_button_text_desktop', array(
-            'default' => true,
+            'default' => false,
             'sanitize_callback' => 'wp_validate_boolean',
             'transport' => 'refresh'
         ));
@@ -358,7 +679,7 @@ class CCT_Search_Customizer_Controls {
         
         // Mostrar texto do botão - Tablet
         $wp_customize->add_setting('cct_search_show_button_text_tablet', array(
-            'default' => true,
+            'default' => false,
             'sanitize_callback' => 'wp_validate_boolean',
             'transport' => 'refresh'
         ));
@@ -665,7 +986,16 @@ class CCT_Search_Customizer_Controls {
                  var rangeSettings = {
                       "cct_search_padding_vertical": "px",
                       "cct_search_max_width": "px",
-                      "cct_search_border_radius": "px",
+                      "cct_search_border_width": "px",
+                      "cct_search_button_border_width": "px",
+                      "cct_search_border_radius_top_left": "px",
+                      "cct_search_border_radius_top_right": "px",
+                      "cct_search_border_radius_bottom_left": "px",
+                      "cct_search_border_radius_bottom_right": "px",
+                      "cct_search_button_border_radius_top_left": "px",
+                      "cct_search_button_border_radius_top_right": "px",
+                      "cct_search_button_border_radius_bottom_left": "px",
+                      "cct_search_button_border_radius_bottom_right": "px",
                       "cct_search_font_size": "px",
                       "cct_search_results_per_page": " resultados",
                       "cct_search_retractable_button_height": "px",
@@ -708,12 +1038,41 @@ class CCT_Search_Customizer_Controls {
         $button_color = get_theme_mod('cct_search_button_color', '#1d3771');
         $button_hover_color = get_theme_mod('cct_search_button_hover_color', '#152a5a');
         $border_color = get_theme_mod('cct_search_border_color', '#ddd');
+        $button_border_color = get_theme_mod('cct_search_button_border_color', '#1d3771');
+        
+        // Cores do campo de texto
+        $field_bg_color = get_theme_mod('cct_search_field_bg_color', '#ffffff');
+        $field_text_color = get_theme_mod('cct_search_field_text_color', '#333333');
+        $field_placeholder_color = get_theme_mod('cct_search_field_placeholder_color', '#999999');
+        $field_focus_color = get_theme_mod('cct_search_field_focus_color', '#1d3771');
         
         // Dimensões
         $padding_vertical = get_theme_mod('cct_search_padding_vertical', 6);
+        $padding_vertical_unit = get_theme_mod('cct_search_padding_vertical_unit', 'px');
         $max_width = get_theme_mod('cct_search_max_width', 300);
-        $border_radius = get_theme_mod('cct_search_border_radius', 4);
+        $max_width_unit = get_theme_mod('cct_search_max_width_unit', 'px');
         $font_size = get_theme_mod('cct_search_font_size', 14);
+        $font_size_unit = get_theme_mod('cct_search_font_size_unit', 'px');
+        
+        // Bordas
+        $border_width = get_theme_mod('cct_search_border_width', 1);
+        $button_border_width = get_theme_mod('cct_search_button_border_width', 1);
+        
+        // Border radius individuais - Campo
+        $field_border_radius_top_left = get_theme_mod('cct_search_border_radius_top_left', 4);
+        $field_border_radius_top_right = get_theme_mod('cct_search_border_radius_top_right', 0);
+        $field_border_radius_bottom_left = get_theme_mod('cct_search_border_radius_bottom_left', 4);
+        $field_border_radius_bottom_right = get_theme_mod('cct_search_border_radius_bottom_right', 0);
+        
+        // Border radius individuais - Botão
+        $button_border_radius_top_left = get_theme_mod('cct_search_button_border_radius_top_left', 0);
+        $button_border_radius_top_right = get_theme_mod('cct_search_button_border_radius_top_right', 4);
+        $button_border_radius_bottom_left = get_theme_mod('cct_search_button_border_radius_bottom_left', 0);
+        $button_border_radius_bottom_right = get_theme_mod('cct_search_button_border_radius_bottom_right', 4);
+        
+        // Border radius (usando configurações globais como fallback)
+        $form_border_radius = get_theme_mod('form_border_radius', '4px');
+        $form_button_border_radius = get_theme_mod('form_button_border_radius', '0px 25px 25px 0px');
         
         // Efeitos
         $box_shadow = get_theme_mod('cct_search_box_shadow', false);
@@ -725,56 +1084,76 @@ class CCT_Search_Customizer_Controls {
         $css .= "\n/* Sistema de Busca - Customizer */\n";
         
         // Container
-        $css .= ".search-container {\n";
-        $css .= "    max-width: {$max_width}px;\n";
+        $css .= ".search-container.search-custom-uenf {\n";
+        $css .= "    max-width: {$max_width}{$max_width_unit};\n";
         $css .= "}\n";
         
         // Campo de busca
-        $css .= ".search-container input[type='search'] {\n";
+        $css .= ".search-container.search-custom-uenf input[type='search'].search-custom-uenf {\n";
         $css .= "    width: calc(100% - 50px) !important;\n"; // Largura dinâmica menos botão
-        $css .= "    max-width: " . ($max_width - 50) . "px !important;\n"; // Max width menos botão
-        $css .= "    padding: {$padding_vertical}px 12px;\n";
+        if ($max_width_unit === 'px') {
+            $css .= "    max-width: " . ($max_width - 50) . "px !important;\n"; // Max width menos botão
+        } else {
+            $css .= "    max-width: calc({$max_width}{$max_width_unit} - 50px) !important;\n";
+        }
+        $css .= "    padding: {$padding_vertical}{$padding_vertical_unit} 12px;\n";
         $css .= "    border-color: {$border_color};\n";
-        $css .= "    border-radius: {$border_radius}px 0 0 {$border_radius}px;\n";
-        $css .= "    font-size: {$font_size}px;\n";
+        $css .= "    border-width: {$border_width}px;\n";
+        $css .= "    border-radius: {$field_border_radius_top_left}px {$field_border_radius_top_right}px {$field_border_radius_bottom_right}px {$field_border_radius_bottom_left}px;\n";
+        $css .= "    font-size: {$font_size}{$font_size_unit};\n";
+        $css .= "    background-color: {$field_bg_color};\n";
+        $css .= "    color: {$field_text_color};\n";
         if ($transitions) {
             $css .= "    transition: all 0.3s ease;\n";
          }
          $css .= "}\n";
+         
+         // Placeholder do campo de busca
+         $css .= ".search-container.search-custom-uenf input[type='search'].search-custom-uenf::placeholder {\n";
+         $css .= "    color: {$field_placeholder_color};\n";
+         $css .= "}\n";
+         
+         // Estado de foco do campo de busca
+         $css .= ".search-container.search-custom-uenf input[type='search'].search-custom-uenf:focus {\n";
+         $css .= "    border-color: {$field_focus_color};\n";
+         $css .= "    outline: none;\n";
+         $css .= "    box-shadow: 0 0 0 2px rgba(" . implode(',', sscanf($field_focus_color, '#%02x%02x%02x')) . ", 0.2);\n";
+         $css .= "}\n";
         
         // Botão (input e button)
-        $css .= ".search-container input[type='submit'],\n";
-        $css .= ".search-container button[type='submit'],\n";
-        $css .= ".search-container .search-submit {\n";
-        $css .= "    padding: {$padding_vertical}px 12px;\n";
+        $css .= ".search-container.search-custom-uenf input[type='submit'].search-custom-uenf,\n";
+        $css .= ".search-container.search-custom-uenf button[type='submit'].search-custom-uenf,\n";
+        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf {\n";
+        $css .= "    padding: {$padding_vertical}{$padding_vertical_unit} 12px;\n";
         $css .= "    background: {$button_color} !important;\n";
-        $css .= "    border-color: {$button_color} !important;\n";
+        $css .= "    border-color: {$button_border_color} !important;\n";
+        $css .= "    border-width: {$button_border_width}px;\n";
         $css .= "    color: white !important;\n";
-        $css .= "    border-radius: 0 {$border_radius}px {$border_radius}px 0;\n";
-        $css .= "    font-size: {$font_size}px;\n";
+        $css .= "    border-radius: {$button_border_radius_top_left}px {$button_border_radius_top_right}px {$button_border_radius_bottom_right}px {$button_border_radius_bottom_left}px;\n";
+        $css .= "    font-size: {$font_size}{$font_size_unit};\n";
         if ($transitions) {
             $css .= "    transition: all 0.3s ease;\n";
         }
         $css .= "}\n";
         
         // Hover do botão
-        $css .= ".search-container input[type='submit']:hover,\n";
-        $css .= ".search-container button[type='submit']:hover,\n";
-        $css .= ".search-container .search-submit:hover {\n";
+        $css .= ".search-container.search-custom-uenf input[type='submit'].search-custom-uenf:hover,\n";
+        $css .= ".search-container.search-custom-uenf button[type='submit'].search-custom-uenf:hover,\n";
+        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf:hover {\n";
         $css .= "    background: {$button_hover_color} !important;\n";
-         $css .= "    border-color: {$button_hover_color} !important;\n";
+         $css .= "    border-color: {$button_border_color} !important;\n";
          $css .= "}\n";
         
         // Sombra
         if ($box_shadow) {
-            $css .= ".search-container form {\n";
+            $css .= ".search-container.search-custom-uenf form.search-custom-uenf {\n";
             $css .= "    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n";
             $css .= "}\n";
         }
         
         // Controle responsivo do texto do botão
-        $show_text_desktop = get_theme_mod('cct_search_show_button_text_desktop', true);
-        $show_text_tablet = get_theme_mod('cct_search_show_button_text_tablet', true);
+        $show_text_desktop = get_theme_mod('cct_search_show_button_text_desktop', false);
+        $show_text_tablet = get_theme_mod('cct_search_show_button_text_tablet', false);
         $show_text_mobile = get_theme_mod('cct_search_show_button_text_mobile', false);
         $hide_mobile_tablet = get_theme_mod('cct_search_hide_text_mobile_tablet', false);
         
@@ -782,14 +1161,14 @@ class CCT_Search_Customizer_Controls {
         $css .= "\n/* Controle responsivo do texto do botão */\n";
         
         // Primeiro, definir comportamento padrão para todos
-        $css .= ".search-container .search-submit .search-text {\n";
+        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf .search-text {\n";
         $css .= "    display: inline;\n";
         $css .= "}\n";
         
         // Controle combinado Mobile + Tablet (<=992px)
         if ($hide_mobile_tablet) {
             $css .= "@media (max-width: 992px) {\n";
-            $css .= "    .search-container .search-submit .search-text {\n";
+            $css .= "    .search-container.search-custom-uenf .search-submit.search-custom-uenf .search-text {\n";
             $css .= "        display: none !important;\n";
             $css .= "    }\n";
             $css .= "}\n";
@@ -799,7 +1178,7 @@ class CCT_Search_Customizer_Controls {
             // Desktop (>=993px) - breakpoint exclusivo
             if (!$show_text_desktop) {
                 $css .= "@media (min-width: 993px) {\n";
-                $css .= "    .search-container .search-submit .search-text {\n";
+                $css .= "    .search-container.search-custom-uenf .search-submit.search-custom-uenf .search-text {\n";
                 $css .= "        display: none !important;\n";
                 $css .= "    }\n";
                 $css .= "}\n";
@@ -808,7 +1187,7 @@ class CCT_Search_Customizer_Controls {
             // Tablet (577px-992px) - breakpoint exclusivo
             if (!$show_text_tablet) {
                 $css .= "@media (min-width: 577px) and (max-width: 992px) {\n";
-                $css .= "    .search-container .search-submit .search-text {\n";
+                $css .= "    .search-container.search-custom-uenf .search-submit.search-custom-uenf .search-text {\n";
                 $css .= "        display: none !important;\n";
                 $css .= "    }\n";
                 $css .= "}\n";
@@ -817,7 +1196,7 @@ class CCT_Search_Customizer_Controls {
             // Mobile (<=576px) - breakpoint exclusivo
             if (!$show_text_mobile) {
                 $css .= "@media (max-width: 576px) {\n";
-                $css .= "    .search-container .search-submit .search-text {\n";
+                $css .= "    .search-container.search-custom-uenf .search-submit.search-custom-uenf .search-text {\n";
                 $css .= "        display: none !important;\n";
                 $css .= "    }\n";
                 $css .= "}\n";
@@ -835,8 +1214,8 @@ class CCT_Search_Customizer_Controls {
         // Desktop (>=993px)
         if (!$show_form_desktop) {
             $css .= "@media (min-width: 993px) {\n";
-            $css .= "    .search-container,\n";
-            $css .= "    .custom-search-form {\n";
+            $css .= "    .search-container.search-custom-uenf,\n";
+            $css .= "    .custom-search-form.search-custom-uenf {\n";
             $css .= "        display: none !important;\n";
             $css .= "    }\n";
             $css .= "}\n";
@@ -845,8 +1224,8 @@ class CCT_Search_Customizer_Controls {
         // Tablet (577px-992px)
         if (!$show_form_tablet) {
             $css .= "@media (min-width: 577px) and (max-width: 992px) {\n";
-            $css .= "    .search-container,\n";
-            $css .= "    .custom-search-form {\n";
+            $css .= "    .search-container.search-custom-uenf,\n";
+            $css .= "    .custom-search-form.search-custom-uenf {\n";
             $css .= "        display: none !important;\n";
             $css .= "    }\n";
             $css .= "}\n";
@@ -855,8 +1234,8 @@ class CCT_Search_Customizer_Controls {
         // Mobile (<=576px)
         if (!$show_form_mobile) {
             $css .= "@media (max-width: 576px) {\n";
-            $css .= "    .search-container,\n";
-            $css .= "    .custom-search-form {\n";
+            $css .= "    .search-container.search-custom-uenf,\n";
+            $css .= "    .custom-search-form.search-custom-uenf {\n";
             $css .= "        display: none !important;\n";
             $css .= "    }\n";
             $css .= "}\n";
@@ -876,43 +1255,43 @@ class CCT_Search_Customizer_Controls {
             $css .= "\n/* CSS da Busca Retrátil */\n";
             
             // Botão flutuante
-            $css .= ".search-retractable-toggle {\n";
+            $css .= ".search-retractable-toggle.search-custom-uenf {\n";
             $css .= "    background: {$button_color} !important;\n";
             $css .= "    font-size: {$button_font_size}px !important;\n";
             $css .= "}\n";
-            $css .= ".search-retractable-toggle i {\n";
+            $css .= ".search-retractable-toggle.search-custom-uenf i {\n";
             $css .= "    font-size: {$icon_size}px !important;\n";
             $css .= "}\n";
-            $css .= ".search-retractable-toggle:hover {\n";
+            $css .= ".search-retractable-toggle.search-custom-uenf:hover {\n";
             $css .= "    background: {$button_hover_color} !important;\n";
             $css .= "}\n";
             
             // Botão inline
-            $css .= ".search-retractable-toggle-inline {\n";
+            $css .= ".search-retractable-toggle-inline.search-custom-uenf {\n";
             $css .= "    background: {$button_color} !important;\n";
             $css .= "    padding: {$button_height}px {$button_width}px !important;\n";
             $css .= "    font-size: {$button_font_size}px !important;\n";
             $css .= "}\n";
-            $css .= ".search-retractable-toggle-inline i {\n";
+            $css .= ".search-retractable-toggle-inline.search-custom-uenf i {\n";
             $css .= "    font-size: {$icon_size}px !important;\n";
             $css .= "}\n";
-            $css .= ".search-retractable-toggle-inline:hover {\n";
+            $css .= ".search-retractable-toggle-inline.search-custom-uenf:hover {\n";
             $css .= "    background: {$button_hover_color} !important;\n";
             $css .= "}\n";
             
             // Botões de submit nos formulários
-            $css .= ".search-retractable-form .search-submit,\n";
-            $css .= ".search-retractable-form-inline .search-submit {\n";
+            $css .= ".search-retractable-form .search-submit.search-custom-uenf,\n";
+            $css .= ".search-retractable-form-inline .search-submit.search-custom-uenf {\n";
             $css .= "    background: {$button_color} !important;\n";
             $css .= "    padding: {$button_height}px {$button_width}px !important;\n";
             $css .= "    font-size: {$button_font_size}px !important;\n";
             $css .= "}\n";
-            $css .= ".search-retractable-form .search-submit i,\n";
-            $css .= ".search-retractable-form-inline .search-submit i {\n";
+            $css .= ".search-retractable-form .search-submit.search-custom-uenf i,\n";
+            $css .= ".search-retractable-form-inline .search-submit.search-custom-uenf i {\n";
             $css .= "    font-size: {$icon_size}px !important;\n";
             $css .= "}\n";
-            $css .= ".search-retractable-form .search-submit:hover,\n";
-            $css .= ".search-retractable-form-inline .search-submit:hover {\n";
+            $css .= ".search-retractable-form .search-submit.search-custom-uenf:hover,\n";
+            $css .= ".search-retractable-form-inline .search-submit.search-custom-uenf:hover {\n";
             $css .= "    background: {$button_hover_color} !important;\n";
             $css .= "}\n";
         }
