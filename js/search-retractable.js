@@ -72,11 +72,29 @@
                 this.toggle();
             });
             
+            // Navegação por teclado para o botão toggle
+            this.toggleButton.on('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.toggle();
+                }
+            });
+            
             // Evento do botão fechar
             this.closeButton.on('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 this.close();
+            });
+            
+            // Navegação por teclado para o botão fechar
+            this.closeButton.on('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.close();
+                }
             });
             
             // Fechar ao clicar no overlay

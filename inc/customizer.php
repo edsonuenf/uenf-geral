@@ -648,6 +648,15 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Removida a seção de cores de botões conforme solicitado
 
+    // ====================================
+    // Painel: Personalizando
+    // ====================================
+    $wp_customize->add_panel('cct_personalizando_panel', array(
+        'title' => __('Personalizando', 'cct'),
+        'priority' => 34, // Posicionado antes de Formulários
+        'capability' => 'edit_theme_options',
+    ));
+
     // Seção de Formulários (nível superior, mesmo nível de Cores do Tema)
     $wp_customize->add_panel('cct_forms_panel', array(
         'title' => __('Formulários', 'cct'),

@@ -83,8 +83,13 @@
     });
     
     // Variáveis para armazenar valores e unidades
-    var paddingVerticalValue = wp.customize('cct_search_padding_vertical')();
-    var paddingVerticalUnit = wp.customize('cct_search_padding_vertical_unit')();
+    var paddingVerticalValue = 0;
+    var paddingVerticalUnit = 'px';
+    
+    function initializePaddingValues() {
+        paddingVerticalValue = wp.customize('cct_search_padding_vertical')() || 0;
+        paddingVerticalUnit = wp.customize('cct_search_padding_vertical_unit')() || 'px';
+    }
     
     function updatePaddingVertical() {
         var value = paddingVerticalValue + paddingVerticalUnit;
@@ -111,8 +116,13 @@
     });
     
     // Variáveis para largura máxima
-    var maxWidthValue = wp.customize('cct_search_max_width')();
-    var maxWidthUnit = wp.customize('cct_search_max_width_unit')();
+    var maxWidthValue = 100;
+    var maxWidthUnit = '%';
+    
+    function initializeMaxWidthValues() {
+        maxWidthValue = wp.customize('cct_search_max_width')() || 100;
+        maxWidthUnit = wp.customize('cct_search_max_width_unit')() || '%';
+    }
     
     function updateMaxWidth() {
         var value = maxWidthValue + maxWidthUnit;
@@ -149,11 +159,19 @@
     
     // Border radius individuais - Campo de busca
     var fieldBorderRadiusValues = {
-        topLeft: wp.customize('cct_search_border_radius_top_left')(),
-        topRight: wp.customize('cct_search_border_radius_top_right')(),
-        bottomLeft: wp.customize('cct_search_border_radius_bottom_left')(),
-        bottomRight: wp.customize('cct_search_border_radius_bottom_right')()
+        topLeft: 0,
+        topRight: 0,
+        bottomLeft: 0,
+        bottomRight: 0
     };
+    
+    // Função para inicializar valores
+    function initializeFieldBorderRadiusValues() {
+        fieldBorderRadiusValues.topLeft = wp.customize('cct_search_border_radius_top_left')() || 0;
+        fieldBorderRadiusValues.topRight = wp.customize('cct_search_border_radius_top_right')() || 0;
+        fieldBorderRadiusValues.bottomLeft = wp.customize('cct_search_border_radius_bottom_left')() || 0;
+        fieldBorderRadiusValues.bottomRight = wp.customize('cct_search_border_radius_bottom_right')() || 0;
+    }
     
     function updateFieldBorderRadius() {
         var borderRadius = fieldBorderRadiusValues.topLeft + 'px ' + 
@@ -193,11 +211,19 @@
     
     // Border radius individuais - Botão de busca
     var buttonBorderRadiusValues = {
-        topLeft: wp.customize('cct_search_button_border_radius_top_left')(),
-        topRight: wp.customize('cct_search_button_border_radius_top_right')(),
-        bottomLeft: wp.customize('cct_search_button_border_radius_bottom_left')(),
-        bottomRight: wp.customize('cct_search_button_border_radius_bottom_right')()
+        topLeft: 0,
+        topRight: 4,
+        bottomLeft: 0,
+        bottomRight: 4
     };
+    
+    // Função para inicializar valores do botão
+    function initializeButtonBorderRadiusValues() {
+        buttonBorderRadiusValues.topLeft = wp.customize('cct_search_button_border_radius_top_left')() || 0;
+        buttonBorderRadiusValues.topRight = wp.customize('cct_search_button_border_radius_top_right')() || 4;
+        buttonBorderRadiusValues.bottomLeft = wp.customize('cct_search_button_border_radius_bottom_left')() || 0;
+        buttonBorderRadiusValues.bottomRight = wp.customize('cct_search_button_border_radius_bottom_right')() || 4;
+    }
     
     function updateButtonBorderRadius() {
         var borderRadius = buttonBorderRadiusValues.topLeft + 'px ' + 
@@ -238,8 +264,13 @@
     });
     
     // Variáveis para tamanho da fonte
-    var fontSizeValue = wp.customize('cct_search_font_size')();
-    var fontSizeUnit = wp.customize('cct_search_font_size_unit')();
+    var fontSizeValue = 16;
+    var fontSizeUnit = 'px';
+    
+    function initializeFontSizeValues() {
+        fontSizeValue = wp.customize('cct_search_font_size')() || 16;
+        fontSizeUnit = wp.customize('cct_search_font_size_unit')() || 'px';
+    }
     
     function updateFontSize() {
         var value = fontSizeValue + fontSizeUnit;
@@ -368,16 +399,34 @@
     /**
      * Inicialização
      */
-    $(document).ready(function() {
+    wp.customize.bind('ready', function() {
         // Adicionar classe para identificar preview
         $('body').addClass('customizer-search-preview');
         
-        // Inicializar funções
-        updateBorderRadius();
+        // Inicializar valores
+        initializeFieldBorderRadiusValues();
+        initializeButtonBorderRadiusValues();
+        initializePaddingValues();
+        initializeMaxWidthValues();
+        initializeFontSizeValues();
+        
+        // Aplicar estilos iniciais
+        updateFieldBorderRadius();
         updateButtonBorderRadius();
+        updatePaddingVertical();
+        updateMaxWidth();
+        updateFontSize();
         
         // Log para debug
         console.log('CCT Search Customizer Preview: Inicializado');
+    });
+    
+    // Fallback para quando o customizer não estiver disponível
+    $(document).ready(function() {
+        if (typeof wp === 'undefined' || typeof wp.customize === 'undefined') {
+            console.log('Customizer não disponível, usando fallback');
+            return;
+        }
     });
     
 })(jQuery);

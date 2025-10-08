@@ -22,6 +22,64 @@
         }
     }
 
+    // Navegação por teclado para menu
+    function initKeyboardNavigation() {
+        // Adiciona suporte para teclas Enter e Espaço nos toggles de submenu
+        document.addEventListener('keydown', function(e) {
+            const target = e.target;
+            
+            // Verifica se é um toggle de submenu
+            if (target.classList.contains('submenu-toggle')) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    target.click();
+                }
+            }
+            
+            // Verifica se é um link de menu com submenu
+            if (target.classList.contains('menu-link') && target.hasAttribute('aria-haspopup')) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const toggle = target.querySelector('.submenu-toggle');
+                    if (toggle) {
+                        toggle.click();
+                    }
+                }
+            }
+            
+            // Navegação com setas
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                const menuItems = Array.from(document.querySelectorAll('.new-menu a, .submenu-toggle'));
+                const currentIndex = menuItems.indexOf(target);
+                
+                if (currentIndex !== -1) {
+                    e.preventDefault();
+                    let nextIndex;
+                    
+                    if (e.key === 'ArrowDown') {
+                        nextIndex = (currentIndex + 1) % menuItems.length;
+                    } else {
+                        nextIndex = (currentIndex - 1 + menuItems.length) % menuItems.length;
+                    }
+                    
+                    menuItems[nextIndex].focus();
+                }
+            }
+            
+            // Fechar submenu com Escape
+            if (e.key === 'Escape') {
+                const openSubmenu = document.querySelector('.menu-item-active');
+                if (openSubmenu) {
+                    closeSubmenuAndChildren(openSubmenu);
+                    const menuLink = openSubmenu.querySelector('.menu-link');
+                    if (menuLink) {
+                        menuLink.focus();
+                    }
+                }
+            }
+        });
+    }
+
 
     // Função para fechar um submenu e todos os seus filhos
     function closeSubmenuAndChildren(element) {
@@ -290,6 +348,7 @@
     // Initialize all functions when DOM is ready
     $(document).ready(function() {
         initMobileMenu();
+        initKeyboardNavigation(); // Inicializa navegação por teclado
         initSmoothScroll();
         initStickyHeader();
         initBackToTop();

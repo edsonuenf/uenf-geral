@@ -112,7 +112,7 @@ h4{
 button[type="submit"].btn-uenf,
 .wp-block-button__link,
 input[type="submit"],
-button[type="submit"],
+button[type="submit"]:not(.search-custom-uenf),
 .button {
     border-radius: var(--form-button-border-radius, 12px) !important;
 }

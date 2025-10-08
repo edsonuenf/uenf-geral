@@ -53,7 +53,9 @@
 }
 
 .navbar-toggler:focus {
-  box-shadow: none;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 .navbar-toggler-icon {
@@ -527,11 +529,14 @@ body #menuLateral .new-menu > li > a:hover {
 
 /* Estados de foco para acessibilidade */
 .new-menu a:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.8);
-  outline-offset: -2px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%) !important;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%) !important;
   color: var(--bs-uenf-blue, #1d3771) !important;
   transform: translateX(4px);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  position: relative;
 }
 
 /* Melhorias de responsividade */

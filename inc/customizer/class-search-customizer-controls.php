@@ -33,7 +33,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_section('cct_search_customizer', array(
             'title' => '🔍 Sistema de Busca',
             'description' => 'Personalize a aparência e comportamento do formulário de busca',
-            'priority' => 35
+            'priority' => 33
         ));
         
         // === CORES ===
@@ -279,7 +279,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_button_border_radius_top_left', array(
             'default' => 0,
             'sanitize_callback' => 'absint',
-            'transport' => 'postMessage'
+            'transport' => 'refresh'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_top_left', array(
@@ -297,9 +297,9 @@ class CCT_Search_Customizer_Controls {
         
         // Border radius top-right do botão
         $wp_customize->add_setting('cct_search_button_border_radius_top_right', array(
-            'default' => 4,
+            'default' => 25,
             'sanitize_callback' => 'absint',
-            'transport' => 'postMessage'
+            'transport' => 'refresh'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_top_right', array(
@@ -319,7 +319,7 @@ class CCT_Search_Customizer_Controls {
         $wp_customize->add_setting('cct_search_button_border_radius_bottom_left', array(
             'default' => 0,
             'sanitize_callback' => 'absint',
-            'transport' => 'postMessage'
+            'transport' => 'refresh'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_bottom_left', array(
@@ -337,9 +337,9 @@ class CCT_Search_Customizer_Controls {
         
         // Border radius bottom-right do botão
         $wp_customize->add_setting('cct_search_button_border_radius_bottom_right', array(
-            'default' => 4,
+            'default' => 25,
             'sanitize_callback' => 'absint',
-            'transport' => 'postMessage'
+            'transport' => 'refresh'
         ));
         
         $wp_customize->add_control('cct_search_button_border_radius_bottom_right', array(
@@ -1066,13 +1066,12 @@ class CCT_Search_Customizer_Controls {
         
         // Border radius individuais - Botão
         $button_border_radius_top_left = get_theme_mod('cct_search_button_border_radius_top_left', 0);
-        $button_border_radius_top_right = get_theme_mod('cct_search_button_border_radius_top_right', 4);
+        $button_border_radius_top_right = get_theme_mod('cct_search_button_border_radius_top_right', 25);
         $button_border_radius_bottom_left = get_theme_mod('cct_search_button_border_radius_bottom_left', 0);
-        $button_border_radius_bottom_right = get_theme_mod('cct_search_button_border_radius_bottom_right', 4);
+        $button_border_radius_bottom_right = get_theme_mod('cct_search_button_border_radius_bottom_right', 25);
         
         // Border radius (usando configurações globais como fallback)
         $form_border_radius = get_theme_mod('form_border_radius', '4px');
-        $form_button_border_radius = get_theme_mod('form_button_border_radius', '0px 25px 25px 0px');
         
         // Efeitos
         $box_shadow = get_theme_mod('cct_search_box_shadow', false);
@@ -1123,7 +1122,10 @@ class CCT_Search_Customizer_Controls {
         // Botão (input e button)
         $css .= ".search-container.search-custom-uenf input[type='submit'].search-custom-uenf,\n";
         $css .= ".search-container.search-custom-uenf button[type='submit'].search-custom-uenf,\n";
-        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf {\n";
+        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf,\n";
+        $css .= "input[type='submit'].search-custom-uenf,\n";
+        $css .= "button[type='submit'].search-custom-uenf,\n";
+        $css .= ".search-submit.search-custom-uenf {\n";
         $css .= "    padding: {$padding_vertical}{$padding_vertical_unit} 12px;\n";
         $css .= "    background: {$button_color} !important;\n";
         $css .= "    border-color: {$button_border_color} !important;\n";
@@ -1139,7 +1141,10 @@ class CCT_Search_Customizer_Controls {
         // Hover do botão
         $css .= ".search-container.search-custom-uenf input[type='submit'].search-custom-uenf:hover,\n";
         $css .= ".search-container.search-custom-uenf button[type='submit'].search-custom-uenf:hover,\n";
-        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf:hover {\n";
+        $css .= ".search-container.search-custom-uenf .search-submit.search-custom-uenf:hover,\n";
+        $css .= "input[type='submit'].search-custom-uenf:hover,\n";
+        $css .= "button[type='submit'].search-custom-uenf:hover,\n";
+        $css .= ".search-submit.search-custom-uenf:hover {\n";
         $css .= "    background: {$button_hover_color} !important;\n";
          $css .= "    border-color: {$button_border_color} !important;\n";
          $css .= "}\n";

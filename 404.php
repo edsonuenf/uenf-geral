@@ -103,72 +103,33 @@ get_header();
     font-weight: bold;
 }
 
-/* Estilos para busca na página 404 - aparência moderna */
-.action-card .custom-search-form {
-    display: flex;
-    align-items: center;
-    background: #f8f9fa;
-    border-radius: 25px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Estilos para busca na página 404 - usar estilos do Sistema de Busca */
+.action-card .search-container {
     margin-bottom: 1rem;
-    border: 1px solid #e9ecef;
-    transition: all 0.3s ease;
+    max-width: 100%;
 }
 
-.action-card .custom-search-form:focus-within {
-    box-shadow: 0 4px 15px rgba(29, 55, 113, 0.15);
-    border-color: var(--bs-uenf-blue, #1d3771);
+.action-card .search-container .custom-search-form {
+    display: flex;
+    align-items: stretch; /* Garante que os elementos tenham a mesma altura */
+    width: 100%;
 }
 
-.action-card .custom-search-form .search-field {
+.action-card .search-container .search-field {
     flex: 1;
-    padding: 12px 20px;
-    border: none;
-    background: transparent;
-    outline: none;
-    font-size: 14px;
-    color: #495057;
+    height: auto;
+    min-height: 38px; /* Altura mínima consistente */
+    box-sizing: border-box;
 }
 
-.action-card .custom-search-form .search-field::placeholder {
-    color: #6c757d;
-    font-style: italic;
-}
-
-.action-card .custom-search-form .search-submit {
-    padding: 10px 20px;
-    background: var(--bs-uenf-blue, #1d3771);
-    color: white !important;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
+.action-card .search-container .search-submit {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s ease;
-    margin: 2px;
-    min-width: 80px;
-    justify-content: center;
-}
-
-.action-card .custom-search-form .search-submit:hover {
-    background: #2c5aa0;
-    color: white !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(29, 55, 113, 0.3);
-}
-
-.action-card .custom-search-form .search-submit .search-text {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: white !important;
-}
-
-.action-card .custom-search-form .search-submit i {
-    font-size: 14px;
-    color: white !important;
+    height: auto;
+    min-height: 38px; /* Mesma altura mínima do campo */
+    box-sizing: border-box;
+    padding: 6px 12px; /* Mesmo padding do campo */
 }
 
 .home-button {
@@ -363,32 +324,43 @@ get_header();
     <section class="error-404-modern">
         <div class="error-container">
             <!-- Cabeçalho do Erro -->
-            <div class="error-header">
-                <div class="error-number">404</div>
+            <header class="error-header">
+                <div class="error-number" aria-hidden="true">404</div>
                 <h1 class="error-title">Oops! Página não encontrada</h1>
                 <p class="error-subtitle">
                     A página que você está procurando pode ter sido removida, teve seu nome alterado ou está temporariamente indisponível.
                 </p>
-            </div>
+            </header>
 
             <!-- Ações Principais -->
             <div class="error-actions">
                 <!-- Campo de Busca -->
                 <div class="action-card">
-                    <h3>
-                        <span class="action-icon">🔍</span>
+                    <h2>
+                        <span class="action-icon" aria-hidden="true">🔍</span>
                         Buscar Conteúdo
-                    </h3>
+                    </h2>
                     <p>Encontre o que você está procurando usando nossa busca interna:</p>
-                    <?php get_search_form(); ?>
+                    <div class="search-container search-custom-uenf">
+                        <!-- Busca Normal -->
+                        <form role="search" method="get" class="custom-search-form search-custom-uenf" action="<?php echo home_url('/'); ?>">
+                            <label for="search-field-404" class="visually-hidden">Termo de busca</label>
+                            <input type="search" id="search-field-404" class="search-field search-custom-uenf" placeholder="Buscar..." value="" name="s" aria-describedby="search-help-404" />
+                            <button type="submit" class="search-submit search-custom-uenf" aria-label="Executar busca">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <span class="search-text">Buscar</span>
+                            </button>
+                        </form>
+                        <div id="search-help-404" class="visually-hidden">Digite os termos que deseja buscar no site</div>
+                    </div>
                 </div>
 
                 <!-- Botão Home -->
                 <div class="action-card">
-                    <h3>
-                        <span class="action-icon">🏠</span>
+                    <h2>
+                        <span class="action-icon" aria-hidden="true">🏠</span>
                         Voltar ao Início
-                    </h3>
+                    </h2>
                     <p>Retorne à página inicial e explore nosso conteúdo:</p>
                     <a href="<?php echo home_url(); ?>" class="home-button">
                         <span>←</span>
@@ -398,8 +370,8 @@ get_header();
             </div>
 
             <!-- Sugestões de Conteúdo -->
-            <div class="suggestions-section">
-                <h2 class="suggestions-title">Conteúdo que pode interessar</h2>
+            <section class="suggestions-section" aria-labelledby="suggestions-title">
+                <h2 id="suggestions-title" class="suggestions-title">Conteúdo que pode interessar</h2>
                 <div class="suggestions-grid">
                     <?php
                     // Buscar 5 posts recentes
