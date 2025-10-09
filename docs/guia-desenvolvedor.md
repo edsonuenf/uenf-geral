@@ -606,6 +606,204 @@ test: adiciona ou modifica testes
 chore: tarefas de manutenção
 ```
 
+## 🚀 Build e Deploy
+
+### Estrutura de Build
+
+O tema utiliza **Webpack** para compilação e otimização de assets:
+
+```
+webpack.config.js          # Configuração do Webpack
+package.json               # Dependências e scripts NPM
+assets/
+├── dist/                  # Arquivos compilados (gerados)
+│   ├── css/
+│   │   └── style.min.css  # CSS minificado
+│   └── js/
+│       ├── main.js        # JavaScript principal
+│       └── style.js       # JavaScript de estilos
+├── fonts/                 # Fontes do tema
+├── images/                # Imagens estáticas
+└── js/                    # JavaScript fonte
+```
+
+### Scripts NPM Disponíveis
+
+```bash
+# Desenvolvimento - watch mode com hot reload
+npm run watch
+
+# Produção - build otimizado e minificado
+npm run build
+
+# Instalação de dependências
+npm install
+```
+
+### Processo de Build de Produção
+
+#### 1. Preparação do Ambiente
+
+```bash
+# Verificar se está na branch correta
+git branch --show-current
+
+# Instalar dependências (se necessário)
+npm install
+```
+
+#### 2. Execução do Build
+
+```bash
+# Build de produção
+npm run build
+```
+
+**Arquivos gerados:**
+- `assets/dist/css/style.min.css` (~3.35 KiB minificado)
+- `assets/dist/js/main.js` (~4.84 KiB minificado)
+- `assets/dist/js/style.js` (JavaScript de estilos)
+
+#### 3. Verificação dos Assets
+
+```bash
+# Verificar se os arquivos foram gerados
+ls -la assets/dist/css/
+ls -la assets/dist/js/
+```
+
+### Estratégia de Branches
+
+#### Branch de Desenvolvimento: `sistema-de-busca`
+- Desenvolvimento ativo de funcionalidades
+- Testes e experimentações
+- Assets não compilados (desenvolvimento)
+
+#### Branch de Produção: `production`
+- **Apenas código pronto para produção**
+- **Assets compilados e otimizados**
+- **Versionamento de releases**
+
+### Workflow de Deploy
+
+#### Criação da Branch de Produção
+
+```bash
+# 1. Criar branch de produção
+git checkout -b production
+
+# 2. Instalar dependências
+npm install
+
+# 3. Build de produção
+npm run build
+
+# 4. Commit dos assets compilados
+git add assets/dist/
+git commit -m "build: Adiciona arquivos de produção compilados
+
+- Gera assets/dist/css/style.min.css (3.35 KiB minificado)
+- Gera assets/dist/js/main.js (4.84 KiB minificado)
+- Build executado com webpack --mode=production"
+
+# 5. Push para GitHub
+git push -u origin production
+```
+
+#### Atualizações da Branch de Produção
+
+```bash
+# 1. Voltar para desenvolvimento
+git checkout sistema-de-busca
+
+# 2. Fazer mudanças e commits normalmente
+git add .
+git commit -m "feat: nova funcionalidade"
+git push origin sistema-de-busca
+
+# 3. Atualizar produção
+git checkout production
+git merge sistema-de-busca
+
+# 4. Rebuild dos assets
+npm run build
+
+# 5. Commit e push
+git add assets/dist/
+git commit -m "build: Atualiza assets de produção"
+git push origin production
+```
+
+### Configuração do Webpack
+
+O `webpack.config.js` está configurado para:
+
+- **Modo desenvolvimento**: Source maps, hot reload
+- **Modo produção**: Minificação, otimização, tree shaking
+- **Entry points**: `js/main.js` e `style.css`
+- **Output**: `assets/dist/`
+
+### Dicas Importantes
+
+#### ⚠️ Assets Compilados
+- **NUNCA** commite `node_modules/`
+- **SEMPRE** commite `assets/dist/` na branch `production`
+- **NUNCA** commite `assets/dist/` nas branches de desenvolvimento
+
+#### 🔧 Troubleshooting
+
+**Erro: "Module not found"**
+```bash
+# Limpar cache e reinstalar
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Erro: "Permission denied"**
+```bash
+# Linux/Mac - ajustar permissões
+chmod +x node_modules/.bin/webpack
+```
+
+**Build falha silenciosamente**
+```bash
+# Executar com verbose
+npm run build -- --verbose
+```
+
+#### 📦 Deploy em Servidor
+
+1. **Via Git** (recomendado):
+```bash
+# No servidor
+git clone https://github.com/usuario/repo.git
+git checkout production
+# Assets já estão compilados
+```
+
+2. **Via FTP/Upload**:
+- Fazer download da branch `production`
+- Upload apenas dos arquivos necessários
+- **Incluir** pasta `assets/dist/`
+
+#### 🔄 Rollback
+
+Em caso de problemas:
+```bash
+# Voltar para commit anterior
+git checkout production
+git reset --hard HEAD~1
+git push --force-with-lease origin production
+```
+
+### Monitoramento de Performance
+
+Após deploy, verificar:
+- **Tamanho dos assets**: Manter CSS < 5KB, JS < 10KB
+- **Tempo de carregamento**: < 3 segundos
+- **Core Web Vitals**: LCP, FID, CLS
+- **Console do navegador**: Sem erros JavaScript
+
 ## Suporte e Recursos
 
 ### Documentação Adicional

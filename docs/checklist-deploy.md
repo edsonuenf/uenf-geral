@@ -71,18 +71,52 @@
 
 ## 🚀 Processo de Deploy
 
-### ✅ Preparação do Pacote
-- [ ] **Limpeza**: Remover arquivos de desenvolvimento (.git, node_modules, etc.)
+### ✅ Preparação da Branch de Produção
+
+#### Build e Compilação
+- [ ] **Branch atual**: Verificar se está na branch de desenvolvimento (`sistema-de-busca`)
+- [ ] **Dependências**: Executar `npm install` se necessário
+- [ ] **Criar branch production**: `git checkout -b production` (primeira vez)
+- [ ] **Instalar dependências**: `npm install` na branch production
+- [ ] **Build de produção**: `npm run build`
+- [ ] **Verificar assets**: Confirmar geração de `assets/dist/css/style.min.css` e `assets/dist/js/main.js`
+
+#### Versionamento e Documentação
 - [ ] **Versioning**: Atualizar número da versão no style.css
 - [ ] **Changelog**: Atualizar arquivo de changelog
 - [ ] **README**: Atualizar documentação
-- [ ] **Compactação**: Criar arquivo ZIP do tema
+- [ ] **Commit assets**: `git add assets/dist/` e commit com mensagem descritiva
 
-### ✅ Teste do Pacote
-- [ ] **Extração**: Testar extração do ZIP
-- [ ] **Instalação**: Testar instalação via WordPress admin
-- [ ] **Ativação**: Testar ativação do tema
-- [ ] **Configurações**: Verificar se configurações são mantidas
+#### Publicação no GitHub
+- [ ] **Push inicial**: `git push -u origin production` (primeira vez)
+- [ ] **Push atualização**: `git push origin production` (atualizações)
+- [ ] **Verificar GitHub**: Confirmar que branch production está no repositório
+
+### ✅ Atualizações da Branch de Produção
+
+#### Workflow de Atualização
+- [ ] **Voltar para desenvolvimento**: `git checkout sistema-de-busca`
+- [ ] **Fazer mudanças**: Desenvolver e commitar normalmente
+- [ ] **Push desenvolvimento**: `git push origin sistema-de-busca`
+- [ ] **Checkout produção**: `git checkout production`
+- [ ] **Merge mudanças**: `git merge sistema-de-busca`
+- [ ] **Rebuild assets**: `npm run build`
+- [ ] **Commit assets**: `git add assets/dist/` e commit
+- [ ] **Push produção**: `git push origin production`
+
+### ✅ Deploy em Servidor
+
+#### Via Git (Recomendado)
+- [ ] **Clone repositório**: `git clone [repo-url]` no servidor
+- [ ] **Checkout produção**: `git checkout production`
+- [ ] **Verificar assets**: Confirmar que `assets/dist/` existe e está populado
+- [ ] **Configurar WordPress**: Ativar tema via admin ou wp-cli
+
+#### Via FTP/Upload
+- [ ] **Download branch**: Baixar branch `production` do GitHub
+- [ ] **Verificar assets**: Confirmar que `assets/dist/` está incluído
+- [ ] **Upload seletivo**: Fazer upload apenas dos arquivos necessários
+- [ ] **Preservar configurações**: Manter configurações existentes do WordPress
 
 ### ✅ Deploy em Produção
 - [ ] **Backup**: Fazer backup completo do site
@@ -119,6 +153,54 @@
 
 ---
 
+## 🔧 Dicas Importantes sobre Webpack e Assets
+
+### ⚡ Performance e Otimização
+- **Assets compilados**: Os arquivos em `assets/dist/` são otimizados para produção
+- **Minificação**: CSS e JS são automaticamente minificados no build
+- **Source maps**: Disponíveis apenas em desenvolvimento
+- **Cache busting**: Webpack gera hashes para controle de cache
+
+### 🚨 Problemas Comuns e Soluções
+
+#### Assets não carregam
+- **Verificar**: Se `assets/dist/` existe e contém os arquivos
+- **Solução**: Executar `npm run build` novamente
+- **Causa comum**: Deploy sem executar build de produção
+
+#### Estilos não aplicados
+- **Verificar**: Se `style.min.css` está sendo carregado
+- **Solução**: Limpar cache do navegador e do WordPress
+- **Causa comum**: Cache antigo ou path incorreto
+
+#### JavaScript não funciona
+- **Verificar**: Console do navegador para erros
+- **Solução**: Verificar se `main.js` está carregado corretamente
+- **Causa comum**: Dependências não resolvidas ou sintaxe ES6 não suportada
+
+### 📁 Estrutura de Assets
+
+```
+assets/
+├── src/           # Arquivos fonte (desenvolvimento)
+│   ├── css/
+│   ├── js/
+│   └── images/
+└── dist/          # Arquivos compilados (produção)
+    ├── css/
+    │   └── style.min.css
+    └── js/
+        ├── main.js
+        └── style.js
+```
+
+### 🔄 Comandos Úteis
+
+- `npm run build`: Build de produção
+- `npm run dev`: Build de desenvolvimento
+- `npm run watch`: Watch mode para desenvolvimento
+- `npm install`: Instalar/atualizar dependências
+
 ## 📝 Notas Importantes
 
 - **Sempre testar em ambiente de staging primeiro**
@@ -126,6 +208,8 @@
 - **Ter equipe de suporte disponível durante deploy**
 - **Documentar qualquer problema encontrado**
 - **Manter comunicação com stakeholders**
+- **NUNCA fazer deploy sem executar `npm run build`**
+- **Sempre verificar se `assets/dist/` está no repositório**
 
 ---
 

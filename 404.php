@@ -21,11 +21,17 @@ get_header();
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    width: 100%;
 }
 
 .error-header {
     text-align: center;
     margin-bottom: 3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .error-number {
@@ -35,6 +41,8 @@ get_header();
     line-height: 1;
     margin-bottom: 1rem;
     text-shadow: 0 4px 8px rgba(29, 55, 113, 0.1);
+    text-align: center;
+    width: 100%;
 }
 
 .error-title {
@@ -43,19 +51,19 @@ get_header();
     color: var(--bs-uenf-blue, #1d3771);
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
+    text-align: center;
+    width: 100%;
 }
 
 .error-subtitle {
     font-size: 1.2rem;
     color: #6c757d;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem auto;
     max-width: 600px;
-    margin-left: auto !important;
-    margin-right: auto !important;
     line-height: 1.6;
-    text-align: center !important;
-    display: block;
+    text-align: center;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .error-actions {
@@ -165,7 +173,9 @@ get_header();
 }
 
 .suggestions-section {
-    margin-top: 3rem;
+    margin: 3rem auto;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .suggestions-title {
@@ -174,6 +184,7 @@ get_header();
     color: var(--bs-uenf-blue, #1d3771);
     margin-bottom: 1.5rem;
     text-align: center;
+    width: 100%;
 }
 
 .suggestions-grid {
@@ -230,12 +241,14 @@ get_header();
 
 .encouragement-text {
     text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 60px;
-    padding: 1.5rem;
+    margin: 3rem auto 4rem auto;
+    padding: 2rem;
     background: rgba(29, 55, 113, 0.05);
     border-radius: 12px;
     border-left: 4px solid var(--bs-uenf-blue, #1d3771);
+    max-width: 800px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .encouragement-text p {
@@ -243,6 +256,7 @@ get_header();
     margin: 0;
     font-size: 1.1rem;
     line-height: 1.6;
+    text-align: center;
 }
 
 /* Responsividade */
@@ -413,7 +427,7 @@ get_header();
                     endif;
                     ?>
                 </div>
-            </div>
+            </section>
 
             <!-- Texto de Incentivo -->
             <div class="encouragement-text">
