@@ -705,7 +705,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Cor da Borda dos Campos
     $wp_customize->add_setting('form_input_border_color', array(
-        'default' => '#cccccc',
+        'default' => '#333333',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_border_color', array(
@@ -736,6 +736,186 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
         'settings' => 'form_input_bg_hover_color',
     )));
 
+    // Largura dos Campos Input
+    $wp_customize->add_setting('form_input_width', array(
+        'default' => '100%',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_input_width', array(
+        'label' => __('Largura dos Campos Input', 'cct'),
+        'description' => __('Ex: 100%, 300px, 50em', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Largura dos Textarea
+    $wp_customize->add_setting('form_textarea_width', array(
+        'default' => '100%',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_textarea_width', array(
+        'label' => __('Largura dos Textarea', 'cct'),
+        'description' => __('Ex: 100%, 300px, 50em', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Largura dos Select
+    $wp_customize->add_setting('form_select_width', array(
+        'default' => '100%',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_select_width', array(
+        'label' => __('Largura dos Select', 'cct'),
+        'description' => __('Ex: 100%, 300px, 50em', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Espessura da Borda dos Campos
+    $wp_customize->add_setting('form_input_border_width', array(
+        'default' => '1px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_input_border_width', array(
+        'label' => __('Espessura da Borda dos Campos', 'cct'),
+        'description' => __('Ex: 1px, 2px, 0.5em', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Padding Vertical dos Campos (top e bottom)
+    $wp_customize->add_setting('form_input_padding_vertical', array(
+        'default' => '6px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_input_padding_vertical', array(
+        'label' => __('Padding Vertical dos Campos (topo e base)', 'cct'),
+        'description' => __('Ex: 6px, 8px, 0.5em', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Padding Horizontal dos Campos (left e right)
+    $wp_customize->add_setting('form_input_padding_horizontal', array(
+        'default' => '12px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_input_padding_horizontal', array(
+        'label' => __('Padding Horizontal dos Campos (laterais)', 'cct'),
+        'description' => __('Ex: 12px, 15px, 1em', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Border Radius dos Campos Input
+    $wp_customize->add_setting('form_input_border_radius', array(
+        'default' => '25px 25px 25px 25px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_input_border_radius', array(
+        'label' => __('Border Radius dos Campos Input', 'cct'),
+        'description' => __('Ex: 25px 25px 25px 25px (superior-esquerdo, superior-direito, inferior-direito, inferior-esquerdo)', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Border Radius dos Campos Textarea
+    $wp_customize->add_setting('form_textarea_border_radius', array(
+        'default' => '25px 25px 25px 25px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_textarea_border_radius', array(
+        'label' => __('Border Radius dos Campos Textarea', 'cct'),
+        'description' => __('Ex: 25px 25px 25px 25px (superior-esquerdo, superior-direito, inferior-direito, inferior-esquerdo)', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Largura dos Campos Input
+    $wp_customize->add_setting('form_input_width', array(
+        'default' => '400px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_input_width', array(
+        'label' => __('Largura dos Campos Input', 'cct'),
+        'description' => __('Ex: 400px, 100%, 300px', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Largura dos Campos Textarea
+    $wp_customize->add_setting('form_textarea_width', array(
+        'default' => '400px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_textarea_width', array(
+        'label' => __('Largura dos Campos Textarea', 'cct'),
+        'description' => __('Ex: 400px, 100%, 300px', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Largura dos Campos Select
+    $wp_customize->add_setting('form_select_width', array(
+        'default' => '400px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_select_width', array(
+        'label' => __('Largura dos Campos Select', 'cct'),
+        'description' => __('Ex: 400px, 100%, 300px', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Padding Vertical dos Campos
+    $wp_customize->add_setting('form_fields_padding_vertical', array(
+        'default' => '8px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_fields_padding_vertical', array(
+        'label' => __('Padding Vertical dos Campos (topo e base)', 'cct'),
+        'description' => __('Ex: 8px, 10px, 12px', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Largura dos Botões
+    $wp_customize->add_setting('form_button_width', array(
+        'default' => 'auto',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_button_width', array(
+        'label' => __('Largura dos Botões', 'cct'),
+        'description' => __('Use "auto" para largura automática baseada no texto, ou valores como "200px", "100%"', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Padding Horizontal dos Botões
+    $wp_customize->add_setting('form_button_padding_horizontal', array(
+        'default' => '20px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_button_padding_horizontal', array(
+        'label' => __('Padding Horizontal dos Botões (esquerda e direita)', 'cct'),
+        'description' => __('Ex: 20px, 15px, 25px', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
+    // Padding Vertical dos Botões
+    $wp_customize->add_setting('form_button_padding_vertical', array(
+        'default' => '12px',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('form_button_padding_vertical', array(
+        'label' => __('Padding Vertical dos Botões (topo e base)', 'cct'),
+        'description' => __('Ex: 12px, 10px, 15px', 'cct'),
+        'section' => 'cct_form_fields',
+        'type' => 'text',
+    ));
+
     // ====================================
     // Botões de Formulário
     // ====================================
@@ -755,7 +935,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Cor de Fundo do Botão ao Passar o Mouse (Hover)
     $wp_customize->add_setting('form_button_bg_hover_color', array(
-        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'default' => '#1e73be',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_bg_hover_color', array(
@@ -790,7 +970,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Raio da Borda do Botão (aceita px, %, em, rem)
     $wp_customize->add_setting('form_button_border_radius', array(
-        'default' => '0px 25px 25px 0px',
+        'default' => '25px 25px 25px 25px',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('form_button_border_radius', array(
@@ -802,7 +982,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
 
     // Espaçamento Interno do Botão (top, right, bottom, left)
     $wp_customize->add_setting('form_button_padding', array(
-        'default' => '15px 15px 15px 15px',
+        'default' => '10px 15px 10px 15px',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('form_button_padding', array(
@@ -1771,77 +1951,119 @@ function cct_customize_css() {
     // Usar output buffering seguro
     $css_output = '<style type="text/css" id="cct-custom-css">' . "\n";
     
-    // Estilos para campos de formulário
-    $css_output .= '.input-form-uenf,
-    .textarea-form-uenf,
-    .select-form-uenf {
-        width: 100%;
+    // Estilos para campos de formulário Contact Form 7 (excluindo botões)
+    $css_output .= '.wpcf7-form-control:not([type="submit"]):not([type="button"]),
+    .wpcf7-text,
+    .wpcf7-email,
+    .wpcf7-url,
+    .wpcf7-tel,
+    .wpcf7-number,
+    .wpcf7-date,
+    .wpcf7-select {
+        width: ' . esc_attr(get_theme_mod('form_input_width', '100%')) . ' !important;
         margin-bottom: 15px;
         font-family: inherit;
         font-size: 16px;
         line-height: 1.5;
         transition: all 0.3s ease;
         box-sizing: border-box;
-        color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';
-        background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ';
-        border: 1px solid ' . esc_attr(get_theme_mod('form_input_border_color', '#cccccc')) . ';
-        padding: 8px 12px;
+        color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ' !important;
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ' !important;
+        border: ' . esc_attr(get_theme_mod('form_input_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_input_border_color', '#333333')) . ' !important;
+        padding: ' . esc_attr(get_theme_mod('form_fields_padding_vertical', '8px')) . ' ' . esc_attr(get_theme_mod('form_input_padding_horizontal', '12px')) . ' !important;
+        border-radius: ' . esc_attr(get_theme_mod('form_input_border_radius', '25px 25px 25px 25px')) . ' !important;
     }' . "\n\n";
     
-    // Estilo para hover nos campos
-    $css_output .= '.input-form-uenf:hover,
-    .textarea-form-uenf:hover,
-    .select-form-uenf:hover {
-        border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . ';
-        background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ';
-    }' . "\n\n";
-    
-    // Estilo para foco nos campos
-    $css_output .= '.input-form-uenf:focus,
-    .textarea-form-uenf:focus,
-    .select-form-uenf:focus {
-        outline: none;
-        border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . ';
-        background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ';
-        box-shadow: 0 0 0 2px ' . esc_attr(get_theme_mod('form_input_border_hover_color', $primary_color)) . '20;
-    }' . "\n\n";
-    
-    // Estilo para textarea
-    $css_output .= '.textarea-form-uenf {
+    // Estilo específico para textarea
+    $css_output .= '.wpcf7-textarea {
+        width: ' . esc_attr(get_theme_mod('form_textarea_width', '400px')) . ' !important;
         min-height: 120px;
         resize: vertical;
+        margin-bottom: 15px;
+        font-family: inherit;
+        font-size: 16px;
+        line-height: 1.5;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ' !important;
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ' !important;
+        border: ' . esc_attr(get_theme_mod('form_input_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_input_border_color', '#333333')) . ' !important;
+        padding: ' . esc_attr(get_theme_mod('form_fields_padding_vertical', '8px')) . ' ' . esc_attr(get_theme_mod('form_input_padding_horizontal', '12px')) . ' !important;
+        border-radius: ' . esc_attr(get_theme_mod('form_textarea_border_radius', '25px 25px 25px 25px')) . ' !important;
     }' . "\n\n";
     
-    // Estilo para select personalizado
-    $css_output .= '.select-form-uenf {
+    // Estilo específico para select
+    $css_output .= '.wpcf7-select {
+        width: ' . esc_attr(get_theme_mod('form_select_width', '400px')) . ' !important;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23' . ltrim(esc_attr(get_theme_mod('form_input_text_color', '#333333')), '#') . '\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 10px center;
-        background-size: 16px;
-        padding-right: 35px;
+        background-position: right 12px center;
+        background-size: 12px;
     }' . "\n\n";
     
-    // Variáveis CSS para botões de formulário
+    // Estilo para hover nos campos (excluindo botões)
+    $css_output .= '.wpcf7-form-control:not([type="submit"]):not([type="button"]):hover,
+    .wpcf7-text:hover,
+    .wpcf7-email:hover,
+    .wpcf7-url:hover,
+    .wpcf7-tel:hover,
+    .wpcf7-number:hover,
+    .wpcf7-date:hover,
+    .wpcf7-textarea:hover,
+    .wpcf7-select:hover {
+        border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ' !important;
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ' !important;
+    }' . "\n\n";
+    
+    // Estilo para foco nos campos (excluindo botões)
+    $css_output .= '.wpcf7-form-control:not([type="submit"]):not([type="button"]):focus,
+    .wpcf7-text:focus,
+    .wpcf7-email:focus,
+    .wpcf7-url:focus,
+    .wpcf7-tel:focus,
+    .wpcf7-number:focus,
+    .wpcf7-date:focus,
+    .wpcf7-textarea:focus,
+    .wpcf7-select:focus {
+        outline: none !important;
+        border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ' !important;
+        background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ' !important;
+        box-shadow: 0 0 0 2px ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . '20 !important;
+    }' . "\n\n";
+    
+    // Variáveis CSS para campos e botões de formulário
     $css_output .= ':root {
+        --form-input-width: ' . esc_attr(get_theme_mod('form_input_width', '400px')) . ';
+        --form-textarea-width: ' . esc_attr(get_theme_mod('form_textarea_width', '400px')) . ';
+        --form-select-width: ' . esc_attr(get_theme_mod('form_select_width', '400px')) . ';
+        --form-input-border-width: ' . esc_attr(get_theme_mod('form_input_border_width', '1px')) . ';
+        --form-input-border-color: ' . esc_attr(get_theme_mod('form_input_border_color', '#333333')) . ';
+        --form-input-border-hover-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ';
+        --form-fields-padding-vertical: ' . esc_attr(get_theme_mod('form_fields_padding_vertical', '8px')) . ';
+        --form-input-padding-horizontal: ' . esc_attr(get_theme_mod('form_input_padding_horizontal', '12px')) . ';
+        --form-input-border-radius: ' . esc_attr(get_theme_mod('form_input_border_radius', '25px 25px 25px 25px')) . ';
+        --form-textarea-border-radius: ' . esc_attr(get_theme_mod('form_textarea_border_radius', '25px 25px 25px 25px')) . ';
         --form-button-bg-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';
         --form-button-text-color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';
-        --form-button-bg-hover-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', $primary_color . 'e6')) . ';
+        --form-button-bg-hover-color: ' . esc_attr(get_theme_mod('form_button_bg_hover_color', '#1e73be')) . ';
         --form-button-text-hover-color: ' . esc_attr(get_theme_mod('form_button_text_hover_color', '#ffffff')) . ';
         --form-button-border-width: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ';
         --form-button-border-color: ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';
         --form-button-border-hover-color: ' . esc_attr(get_theme_mod('form_button_border_hover_color', $primary_color . 'e6')) . ';
-        --form-button-padding: ' . esc_attr(get_theme_mod('form_button_padding', '8px 15px 8px 15px')) . ';
-        --form-button-border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')) . ';
+        --form-button-padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 15px 10px 15px')) . ';
+        --form-button-padding-vertical: ' . esc_attr(get_theme_mod('form_button_padding_vertical', '12px')) . ';
+        --form-button-padding-horizontal: ' . esc_attr(get_theme_mod('form_button_padding_horizontal', '20px')) . ';
+        --form-button-width: ' . esc_attr(get_theme_mod('form_button_width', 'auto')) . ';
+        --form-button-border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '25px 25px 25px 25px')) . ';
     }' . "\n\n";
     
-    // Estilos para botões
+    // Estilos para botões gerais
     $css_output .= '.btn-submit-uenf,
     .btn-form-uenf,
-    button[type="submit"].btn-uenf,
-    .wpcf7-submit {
+    button[type="submit"].btn-uenf {
         display: inline-block;
         font-weight: 500;
         text-align: center;
@@ -1850,6 +2072,26 @@ function cct_customize_css() {
         user-select: none;
         border: var(--form-button-border-width) solid var(--form-button-border-color);
         padding: var(--form-button-padding);
+        font-size: 16px;
+        line-height: 1.5;
+        border-radius: var(--form-button-border-radius);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background-color: var(--form-button-bg-color);
+        color: var(--form-button-text-color);
+    }' . "\n\n";
+    
+    // Estilos específicos para botões do Contact Form 7
+    $css_output .= '.wpcf7-submit {
+        display: inline-block;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: var(--form-button-border-width) solid var(--form-button-border-color);
+        padding: ' . esc_attr(get_theme_mod('form_button_padding_vertical', '12px')) . ' ' . esc_attr(get_theme_mod('form_button_padding_horizontal', '20px')) . ' !important;
+        width: ' . esc_attr(get_theme_mod('form_button_width', 'auto')) . ' !important;
         font-size: 16px;
         line-height: 1.5;
         border-radius: var(--form-button-border-radius);
@@ -2093,37 +2335,87 @@ function cct_customize_css() {
     echo 'gap: 30px;';
     echo '}';
     
-    // Estilos para Campos de Formulário
-    echo '.input-form-uenf,
-    .textarea-form-uenf,
-    .select-form-uenf {';
-    echo 'width: 100%;';
+    // Estilos para Campos de Formulário Contact Form 7 (excluindo botões)
+    echo '.wpcf7-form-control:not([type="submit"]):not([type="button"]),
+    .wpcf7-text,
+    .wpcf7-email,
+    .wpcf7-url,
+    .wpcf7-tel,
+    .wpcf7-number,
+    .wpcf7-date,
+    .wpcf7-select {';
+    echo 'width: ' . esc_attr(get_theme_mod('form_input_width', '400px')) . ' !important;';
     echo 'margin-bottom: 15px;';
     echo 'font-family: inherit;';
     echo 'font-size: 16px;';
     echo 'line-height: 1.5;';
     echo 'transition: all 0.3s ease;';
     echo 'box-sizing: border-box;';
-    echo 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ';';
-    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ';';
-    echo 'border: 1px solid ' . esc_attr(get_theme_mod('form_input_border_color', '#cccccc')) . ';';
-    echo 'padding: 8px 12px;';
+    echo 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ' !important;';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ' !important;';
+    echo 'border: ' . esc_attr(get_theme_mod('form_input_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_input_border_color', '#333333')) . ' !important;';
+    echo 'padding: ' . esc_attr(get_theme_mod('form_fields_padding_vertical', '8px')) . ' ' . esc_attr(get_theme_mod('form_input_padding_horizontal', '12px')) . ' !important;';
+    echo 'border-radius: ' . esc_attr(get_theme_mod('form_input_border_radius', '25px 25px 25px 25px')) . ' !important;';
     echo '}';
     
-    // Estilo para foco nos campos
-    echo '.input-form-uenf:focus,
-    .textarea-form-uenf:focus,
-    .select-form-uenf:focus {';
-    echo 'outline: none;';
-    echo 'border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ';';
-    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ';';
-    echo 'box-shadow: 0 0 0 2px rgba(29, 55, 113, 0.1);';
-    echo '}';
-    
-    // Estilo para textarea
-    echo '.textarea-form-uenf {';
+    // Estilo específico para textarea
+    echo '.wpcf7-textarea {';
+    echo 'width: ' . esc_attr(get_theme_mod('form_textarea_width', '400px')) . ' !important;';
     echo 'min-height: 120px;';
     echo 'resize: vertical;';
+    echo 'margin-bottom: 15px;';
+    echo 'font-family: inherit;';
+    echo 'font-size: 16px;';
+    echo 'line-height: 1.5;';
+    echo 'transition: all 0.3s ease;';
+    echo 'box-sizing: border-box;';
+    echo 'color: ' . esc_attr(get_theme_mod('form_input_text_color', '#333333')) . ' !important;';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_color', '#ffffff')) . ' !important;';
+    echo 'border: ' . esc_attr(get_theme_mod('form_input_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_input_border_color', '#333333')) . ' !important;';
+    echo 'padding: ' . esc_attr(get_theme_mod('form_fields_padding_vertical', '8px')) . ' ' . esc_attr(get_theme_mod('form_input_padding_horizontal', '12px')) . ' !important;';
+    echo 'border-radius: ' . esc_attr(get_theme_mod('form_textarea_border_radius', '25px 25px 25px 25px')) . ' !important;';
+    echo '}';
+    
+    // Estilo específico para select
+    echo '.wpcf7-select {';
+    echo 'width: ' . esc_attr(get_theme_mod('form_select_width', '100%')) . ' !important;';
+    echo '-webkit-appearance: none;';
+    echo '-moz-appearance: none;';
+    echo 'appearance: none;';
+    echo 'background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23' . ltrim(esc_attr(get_theme_mod('form_input_text_color', '#333333')), '#') . '\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E");';
+    echo 'background-repeat: no-repeat;';
+    echo 'background-position: right 12px center;';
+    echo 'background-size: 12px;';
+    echo '}';
+    
+    // Estilo para hover nos campos (excluindo botões)
+    echo '.wpcf7-form-control:not([type="submit"]):not([type="button"]):hover,
+    .wpcf7-text:hover,
+    .wpcf7-email:hover,
+    .wpcf7-url:hover,
+    .wpcf7-tel:hover,
+    .wpcf7-number:hover,
+    .wpcf7-date:hover,
+    .wpcf7-textarea:hover,
+    .wpcf7-select:hover {';
+    echo 'border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ' !important;';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ' !important;';
+    echo '}';
+    
+    // Estilo para foco nos campos (excluindo botões)
+    echo '.wpcf7-form-control:not([type="submit"]):not([type="button"]):focus,
+    .wpcf7-text:focus,
+    .wpcf7-email:focus,
+    .wpcf7-url:focus,
+    .wpcf7-tel:focus,
+    .wpcf7-number:focus,
+    .wpcf7-date:focus,
+    .wpcf7-textarea:focus,
+    .wpcf7-select:focus {';
+    echo 'outline: none !important;';
+    echo 'border-color: ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . ' !important;';
+    echo 'background-color: ' . esc_attr(get_theme_mod('form_input_bg_hover_color', '#f9f9f9')) . ' !important;';
+    echo 'box-shadow: 0 0 0 2px ' . esc_attr(get_theme_mod('form_input_border_hover_color', '#999999')) . '20 !important;';
     echo '}';
     
     // Estilos dinâmicos para o menu
@@ -2248,8 +2540,8 @@ function cct_customize_css() {
     button[type="submit"].btn-uenf {';
     $css_output .= 'background-color: ' . esc_attr(get_theme_mod('form_button_bg_color', $primary_color)) . ';';
     $css_output .= 'color: ' . esc_attr(get_theme_mod('form_button_text_color', '#ffffff')) . ';';
-    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')) . ';';
-    $css_output .= 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '8px 15px 8px 15px')) . ';';
+    $css_output .= 'border-radius: ' . esc_attr(get_theme_mod('form_button_border_radius', '25px 25px 25px 25px')) . ';';
+    $css_output .= 'padding: ' . esc_attr(get_theme_mod('form_button_padding', '10px 15px 10px 15px')) . ';';
     $css_output .= 'border: ' . esc_attr(get_theme_mod('form_button_border_width', '1px')) . ' solid ' . esc_attr(get_theme_mod('form_button_border_color', $primary_color)) . ';';
     $css_output .= 'cursor: pointer;';
     $css_output .= 'font-size: 16px;';
@@ -3130,11 +3422,11 @@ function cct_filter_theme_json_theme($theme_json) {
                         'text' => get_theme_mod('form_button_text_color', '#ffffff')
                     ),
                     'border' => array(
-                        'radius' => get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')
+                        'radius' => get_theme_mod('form_button_border_radius', '25px 25px 25px 25px')
                     ),
                     ':hover' => array(
                         'color' => array(
-                            'background' => get_theme_mod('form_button_bg_hover_color', '#152a54')
+                            'background' => get_theme_mod('form_button_bg_hover_color', '#1e73be')
                         )
                     )
                 )
@@ -3146,7 +3438,7 @@ function cct_filter_theme_json_theme($theme_json) {
                         'text' => get_theme_mod('form_button_text_color', '#ffffff')
                     ),
                     'border' => array(
-                        'radius' => get_theme_mod('form_button_border_radius', '0px 25px 25px 0px')
+                        'radius' => get_theme_mod('form_button_border_radius', '25px 25px 25px 25px')
                     )
                 )
             )

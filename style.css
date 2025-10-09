@@ -112,9 +112,16 @@ h4{
 button[type="submit"].btn-uenf,
 .wp-block-button__link,
 input[type="submit"],
+input[type="button"],
 button[type="submit"]:not(.search-custom-uenf),
 .button {
-    border-radius: var(--form-button-border-radius, 4px) !important;
+    border-radius: var(--form-button-border-radius, 25px 25px 25px 25px) !important;
+}
+
+/* Configurações específicas para botões do Contact Form 7 */
+.wpcf7-submit {
+    width: var(--form-button-width, auto) !important;
+    padding: var(--form-button-padding-vertical, 12px) var(--form-button-padding-horizontal, 20px) !important;
 }
 
 /* Garantir que elementos específicos mantenham border-radius: 50% */
