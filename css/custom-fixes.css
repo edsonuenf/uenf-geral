@@ -175,3 +175,45 @@ body .entry-content p:has(img.alignright) {
     margin: 0 0 1rem 0 !important;
 }
 
+/* ========================================
+   CORREÇÃO ESPECÍFICA PARA FRONT-PAGE.PHP
+   ======================================== */
+
+/* Permitir float dentro de .page-content .entry-content (front-page.php) */
+.page-content .entry-content img.alignleft,
+.page-content .entry-content figure.alignleft,
+.page-content .entry-content .wp-block-image.alignleft,
+.page-content .entry-content .alignleft {
+    float: left !important;
+    margin: 0 20px 20px 0 !important;
+    display: block !important;
+}
+
+.page-content .entry-content img.alignright,
+.page-content .entry-content figure.alignright,
+.page-content .entry-content .wp-block-image.alignright,
+.page-content .entry-content .alignright {
+    float: right !important;
+    margin: 0 0 20px 20px !important;
+    display: block !important;
+}
+
+.page-content .entry-content .aligncenter {
+    display: block !important;
+    margin: 20px auto !important;
+    float: none !important;
+}
+
+/* Permitir que texto flua ao lado das imagens no front-page */
+.page-content .entry-content .alignleft + p,
+.page-content .entry-content .alignright + p,
+.page-content .entry-content img.alignleft + p,
+.page-content .entry-content img.alignright + p,
+.page-content .entry-content figure.alignleft + p,
+.page-content .entry-content figure.alignright + p,
+.page-content .entry-content .wp-block-image.alignleft + p,
+.page-content .entry-content .wp-block-image.alignright + p {
+    clear: none !important;
+    margin-top: 0 !important;
+}
+

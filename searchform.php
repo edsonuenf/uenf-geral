@@ -17,33 +17,35 @@ $retractable_position = get_theme_mod('cct_search_retractable_position', 'top-ri
 <?php if ($is_retractable) : ?>
     <!-- Busca Retrátil Inline -->
     <div class="search-retractable-inline">
-        <button type="button" class="search-retractable-toggle-inline" aria-label="Abrir busca">
-            <i class="<?php echo esc_attr($retractable_icon); ?>"></i>
+        <button type="button" class="search-retractable-toggle-inline search-custom-uenf" aria-label="Abrir busca" aria-expanded="false" aria-controls="search-retractable-form">
+            <i class="<?php echo esc_attr($retractable_icon); ?>" aria-hidden="true"></i>
             <?php if ($show_button_text) : ?>
                 <span class="search-text"><?php echo esc_html($button_text); ?></span>
             <?php endif; ?>
         </button>
-        <div class="search-retractable-form-inline" style="display: none;">
-            <form role="search" method="get" class="custom-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                <input type="search" class="search-field" placeholder="<?php echo esc_attr($placeholder); ?>" value="<?php echo get_search_query(); ?>" name="s" alt="<?php echo esc_attr($button_text); ?>" />
-                <button type="submit" class="search-submit">
-                    <i class="fas fa-search"></i>
+        <div class="search-retractable-form-inline" id="search-retractable-form" style="display: none;">
+            <form role="search" method="get" class="custom-search-form search-custom-uenf" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                <label for="search-field-retractable" class="visually-hidden">Termo de busca</label>
+                <input type="search" id="search-field-retractable" class="search-field search-custom-uenf" placeholder="<?php echo esc_attr($placeholder); ?>" value="<?php echo get_search_query(); ?>" name="s" aria-describedby="search-help" />
+                <button type="submit" class="search-submit search-custom-uenf" aria-label="Executar busca">
+                    <i class="fas fa-search" aria-hidden="true"></i>
                     <?php if ($show_button_text) : ?>
                         <span class="search-text"><?php echo esc_html($button_text); ?></span>
                     <?php endif; ?>
                 </button>
-                <button type="button" class="search-retractable-close-inline" aria-label="Fechar busca">
-                    <i class="fas fa-times"></i>
+                <button type="button" class="search-retractable-close-inline search-custom-uenf" aria-label="Fechar busca">
+                    <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
             </form>
         </div>
     </div>
 <?php else : ?>
     <!-- Busca Normal -->
-    <form role="search" method="get" class="custom-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-        <input type="search" class="search-field" placeholder="<?php echo esc_attr($placeholder); ?>" value="<?php echo get_search_query(); ?>" name="s" alt="<?php echo esc_attr($button_text); ?>" />
-        <button type="submit" class="search-submit">
-            <i class="fas fa-search"></i>
+    <form role="search" method="get" class="custom-search-form search-custom-uenf" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+        <label for="search-field-normal" class="visually-hidden">Termo de busca</label>
+        <input type="search" id="search-field-normal" class="search-field search-custom-uenf" placeholder="<?php echo esc_attr($placeholder); ?>" value="<?php echo get_search_query(); ?>" name="s" aria-describedby="search-help" />
+        <button type="submit" class="search-submit search-custom-uenf" aria-label="Executar busca">
+            <i class="fas fa-search" aria-hidden="true"></i>
             <?php if ($show_button_text) : ?>
                 <span class="search-text"><?php echo esc_html($button_text); ?></span>
             <?php endif; ?>

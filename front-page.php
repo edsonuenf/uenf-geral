@@ -43,16 +43,21 @@ get_header();
     <section class="page-content py-5">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-lg-12 mx-auto">
                     <?php
                     // Exibe o conteúdo da página inicial com segurança
                     if (have_posts()) :
                         while (have_posts()) :
                             the_post();
-                            
-                            // Use os filtros padrão do WordPress para o conteúdo
-                            // Isso garante wpautop (parágrafos), shortcodes, embeds etc.
-                            the_content();
+                            ?>
+                            <div class="entry-content">
+                                <?php
+                                // Use os filtros padrão do WordPress para o conteúdo
+                                // Isso garante wpautop (parágrafos), shortcodes, embeds etc.
+                                the_content();
+                                ?>
+                            </div>
+                            <?php
                         endwhile;
                     else :
                         // Nenhum post encontrado

@@ -66,8 +66,8 @@ $end_result = min($current_page * $results_per_page, $total_results);
                     <div class="col-md-4">
                         <div class="search-actions">
                             <!-- Nova Busca -->
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#newSearchForm">
-                                <i class="fas fa-search me-2"></i>Nova Busca
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#newSearchForm" aria-expanded="false" aria-controls="newSearchForm">
+                                <i class="fas fa-search me-2" aria-hidden="true"></i>Nova Busca
                             </button>
                         </div>
                     </div>
@@ -76,16 +76,18 @@ $end_result = min($current_page * $results_per_page, $total_results);
                 <!-- Formulário de Nova Busca (Colapsável) -->
                 <div class="collapse mt-3" id="newSearchForm">
                     <div class="card card-body">
-                        <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" class="row g-3">
-                            <div class="col-md-8">
-                                <input type="search" class="form-control" name="s" value="<?php echo esc_attr($search_query); ?>" placeholder="Digite sua busca..." />
-                            </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="fas fa-search me-2"></i>Buscar
+                        <div class="search-container search-custom-uenf">
+                            <!-- Busca Normal -->
+                            <form role="search" method="get" class="custom-search-form search-custom-uenf" action="<?php echo esc_url(home_url('/')); ?>">
+                                <label for="search-field-results" class="visually-hidden">Termo de busca</label>
+                                <input type="search" id="search-field-results" class="search-field search-custom-uenf" placeholder="Buscar..." value="<?php echo esc_attr($search_query); ?>" name="s" aria-describedby="search-help-results" />
+                                <button type="submit" class="search-submit search-custom-uenf" aria-label="Executar busca">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                    <span class="search-text">Buscar</span>
                                 </button>
-                            </div>
-                        </form>
+                            </form>
+                            <div id="search-help-results" class="visually-hidden">Digite os termos que deseja buscar no site</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,8 +104,8 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                             <?php if (has_post_thumbnail()) : ?>
                                                 <div class="col-md-3">
                                                     <div class="result-thumbnail">
-                                                        <a href="<?php the_permalink(); ?>">
-                                                            <?php the_post_thumbnail('medium', array('class' => 'img-fluid rounded')); ?>
+                                                        <a href="<?php the_permalink(); ?>" aria-label="Ver <?php the_title(); ?>">
+                                                            <?php the_post_thumbnail('medium', array('class' => 'img-fluid rounded', 'alt' => get_the_title())); ?>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -126,11 +128,11 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                         <?php endif; ?>
                                                     </div>
                                                     
-                                                    <h3 class="result-title">
-                                                        <a href="<?php the_permalink(); ?>" class="text-decoration-none">
-                                                            <?php the_title(); ?>
-                                                        </a>
-                                                    </h3>
+                                                    <h2 class="result-title">
+                                        <a href="<?php the_permalink(); ?>" class="text-decoration-none">
+                                            <?php the_title(); ?>
+                                        </a>
+                                    </h2>
                                                     
                                                     <div class="result-excerpt text-muted mb-3">
                                                         <?php 
@@ -143,16 +145,16 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                     </div>
                                                     
                                                     <div class="result-actions">
-                                                        <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm">
-                                                            <i class="fas fa-arrow-right me-1"></i>
-                                                            Ler mais
-                                                        </a>
-                                                        <?php if (get_permalink()) : ?>
-                                                            <button class="btn btn-outline-secondary btn-sm ms-2" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" title="Copiar link">
-                                                                <i class="fas fa-link"></i>
-                                                            </button>
-                                                        <?php endif; ?>
-                                                    </div>
+                                        <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>
+                                            Ler mais
+                                        </a>
+                                        <?php if (get_permalink()) : ?>
+                                            <button class="btn btn-outline-secondary btn-sm ms-2" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" aria-label="Copiar link do artigo">
+                                                <i class="fas fa-link" aria-hidden="true"></i>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,16 +206,16 @@ $end_result = min($current_page * $results_per_page, $total_results);
                             
                             <!-- Nova Busca -->
                             <div class="new-search-form">
-                                <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" class="row g-3 justify-content-center">
-                                    <div class="col-md-6">
-                                        <input type="search" class="form-control form-control-lg" name="s" value="" placeholder="Tente uma nova busca..." />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button type="submit" class="btn btn-primary btn-lg w-100">
-                                            <i class="fas fa-search me-2"></i>Buscar
+                                <div class="search-container search-custom-uenf">
+                                    <!-- Busca Normal -->
+                                    <form role="search" method="get" class="custom-search-form search-custom-uenf" action="<?php echo esc_url(home_url('/')); ?>">
+                                        <input type="search" class="search-field search-custom-uenf" placeholder="Buscar..." value="" name="s" alt="Buscar" />
+                                        <button type="submit" class="search-submit search-custom-uenf">
+                                            <i class="fas fa-search"></i>
+                                            <span class="search-text">Buscar</span>
                                         </button>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

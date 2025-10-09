@@ -20,9 +20,9 @@
             console.log('[UENF Search] Tentando inicializar...');
             
             // Buscar elementos
-            this.toggleBtn = document.querySelector('.search-toggle-btn');
-            this.formContainer = document.querySelector('.search-form-container');
-            this.searchField = document.querySelector('.search-field');
+            this.toggleBtn = document.querySelector('.search-toggle-btn.search-custom-uenf');
+            this.formContainer = document.querySelector('.search-form-container.search-custom-uenf');
+            this.searchField = document.querySelector('.search-field.search-custom-uenf');
             
             console.log('[UENF Search] Elementos:', {
                 toggleBtn: !!this.toggleBtn,
@@ -64,7 +64,7 @@
             }
             
             // Permitir submit normal do formulário
-            var submitBtn = document.querySelector('.search-submit');
+            var submitBtn = document.querySelector('.search-submit.search-custom-uenf');
             if (submitBtn) {
                 submitBtn.addEventListener('click', function(e) {
                     // Não prevenir o comportamento padrão do submit
