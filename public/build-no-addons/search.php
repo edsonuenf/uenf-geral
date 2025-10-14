@@ -145,7 +145,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                     <div class="result-actions">
                                                         <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm read-more-btn">
                                                             <i class="fas fa-arrow-right me-1"></i>
-                                                            Ler mais
+                                                            Ler Mais
                                                         </a>
                                                         <?php if (get_permalink()) : ?>
                                                             <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" title="Copiar link">

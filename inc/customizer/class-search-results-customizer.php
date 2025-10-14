@@ -73,7 +73,7 @@ class CCT_Search_Results_Customizer {
 
         // Cor de fundo do destaque
         $wp_customize->add_setting('cct_search_results_highlight_bg_color', array(
-            'default'           => '#fff3ac',
+            'default'           => '#ededc7',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport'         => 'postMessage',
         ));
@@ -135,7 +135,7 @@ class CCT_Search_Results_Customizer {
 
         // Estilos do botão "Nova Busca" (estado normal)
         $wp_customize->add_setting('cct_search_results_new_search_button_bg_color', array(
-            'default'           => '#1d3771',
+            'default'           => '#1e73be',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport'         => 'postMessage',
         ));
@@ -146,7 +146,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_new_search_button_text_color', array(
-            'default'           => '#0d6efd',
+            'default'           => '#ffffff',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport'         => 'postMessage',
         ));
@@ -168,7 +168,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_new_search_button_border_width', array(
-            'default'           => 1,
+            'default'           => 0,
             'sanitize_callback' => 'absint',
             'transport'         => 'postMessage',
         ));
@@ -235,7 +235,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_new_search_button_hover_border_width', array(
-            'default'           => 1,
+            'default'           => 0,
             'sanitize_callback' => 'absint',
             'transport'         => 'postMessage',
         ));
@@ -252,7 +252,7 @@ class CCT_Search_Results_Customizer {
 
         // ===== Botão "Ler mais" (estado normal) =====
         $wp_customize->add_setting('cct_search_results_read_more_button_bg_color', array(
-            'default'           => '#1d3771',
+            'default'           => '#152a5a',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport'         => 'postMessage',
         ));
@@ -285,7 +285,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_read_more_button_border_width', array(
-            'default'           => 1,
+            'default'           => 0,
             'sanitize_callback' => 'absint',
             'transport'         => 'postMessage',
         ));
@@ -318,7 +318,7 @@ class CCT_Search_Results_Customizer {
 
         // ===== Botão "Ler mais" (hover) =====
         $wp_customize->add_setting('cct_search_results_read_more_button_hover_bg_color', array(
-            'default'           => '#152a5a',
+            'default'           => '#1e73be',
             'sanitize_callback' => 'sanitize_hex_color',
             'transport'         => 'postMessage',
         ));
@@ -351,7 +351,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_read_more_button_hover_border_width', array(
-            'default'           => 1,
+            'default'           => 0,
             'sanitize_callback' => 'absint',
             'transport'         => 'postMessage',
         ));
@@ -402,7 +402,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_link_button_border_width', array(
-            'default'           => 1,
+            'default'           => 0,
             'sanitize_callback' => 'absint',
             'transport'         => 'postMessage',
         ));
@@ -468,7 +468,7 @@ class CCT_Search_Results_Customizer {
         )));
 
         $wp_customize->add_setting('cct_search_results_link_button_hover_border_width', array(
-            'default'           => 1,
+            'default'           => 0,
             'sanitize_callback' => 'absint',
             'transport'         => 'postMessage',
         ));
@@ -488,7 +488,7 @@ class CCT_Search_Results_Customizer {
      * Gerar CSS dinâmico para destaque de termos
      */
     public static function generate_css() {
-        $bg   = get_theme_mod('cct_search_results_highlight_bg_color', '#fff3ac');
+        $bg   = get_theme_mod('cct_search_results_highlight_bg_color', '#ededc7');
         $fg   = get_theme_mod('cct_search_results_highlight_text_color', '');
         $wght = get_theme_mod('cct_search_results_highlight_font_weight', '700');
 
@@ -512,16 +512,16 @@ class CCT_Search_Results_Customizer {
         }
 
         // CSS para o botão "Nova Busca" nos resultados
-        $ns_bg         = get_theme_mod('cct_search_results_new_search_button_bg_color', '#1d3771');
-        $ns_text       = get_theme_mod('cct_search_results_new_search_button_text_color', '#0d6efd');
+        $ns_bg         = get_theme_mod('cct_search_results_new_search_button_bg_color', '#1e73be');
+        $ns_text       = get_theme_mod('cct_search_results_new_search_button_text_color', '#ffffff');
         $ns_border     = get_theme_mod('cct_search_results_new_search_button_border_color', '#0d6efd');
-        $ns_border_w   = absint(get_theme_mod('cct_search_results_new_search_button_border_width', 1));
+        $ns_border_w   = absint(get_theme_mod('cct_search_results_new_search_button_border_width', 0));
         $ns_border_r   = absint(get_theme_mod('cct_search_results_new_search_button_border_radius', 25));
 
         $ns_hover_bg   = get_theme_mod('cct_search_results_new_search_button_hover_bg_color', '#152a5a');
         $ns_hover_text = get_theme_mod('cct_search_results_new_search_button_hover_text_color', '#ffffff');
         $ns_hover_bord = get_theme_mod('cct_search_results_new_search_button_hover_border_color', '#0d6efd');
-        $ns_hover_bw   = absint(get_theme_mod('cct_search_results_new_search_button_hover_border_width', 1));
+        $ns_hover_bw   = absint(get_theme_mod('cct_search_results_new_search_button_hover_border_width', 0));
 
         $css .= ".search-actions .new-search-btn, .result-actions .new-search-btn{\n";
         $css .= "    background-color: {$ns_bg} !important;\n";
@@ -547,16 +547,16 @@ class CCT_Search_Results_Customizer {
         $css .= "}\n";
 
         // CSS para o botão "Ler mais" nos resultados (independente)
-        $rm_bg         = get_theme_mod('cct_search_results_read_more_button_bg_color', '#1d3771');
+        $rm_bg         = get_theme_mod('cct_search_results_read_more_button_bg_color', '#152a5a');
         $rm_text       = get_theme_mod('cct_search_results_read_more_button_text_color', '#ffffff');
         $rm_border     = get_theme_mod('cct_search_results_read_more_button_border_color', '#0d6efd');
-        $rm_border_w   = absint(get_theme_mod('cct_search_results_read_more_button_border_width', 1));
+        $rm_border_w   = absint(get_theme_mod('cct_search_results_read_more_button_border_width', 0));
         $rm_border_r   = absint(get_theme_mod('cct_search_results_read_more_button_border_radius', 25));
 
-        $rm_hover_bg   = get_theme_mod('cct_search_results_read_more_button_hover_bg_color', '#152a5a');
+        $rm_hover_bg   = get_theme_mod('cct_search_results_read_more_button_hover_bg_color', '#1e73be');
         $rm_hover_text = get_theme_mod('cct_search_results_read_more_button_hover_text_color', '#ffffff');
         $rm_hover_bord = get_theme_mod('cct_search_results_read_more_button_hover_border_color', '#0d6efd');
-        $rm_hover_bw   = absint(get_theme_mod('cct_search_results_read_more_button_hover_border_width', 1));
+        $rm_hover_bw   = absint(get_theme_mod('cct_search_results_read_more_button_hover_border_width', 0));
 
         $css .= ".result-actions .read-more-btn{\n";
         $css .= "    background-color: {$rm_bg} !important;\n";
@@ -583,7 +583,7 @@ class CCT_Search_Results_Customizer {
         $lk_bg       = get_theme_mod('cct_search_results_link_button_bg_color', '#afb8bf');
         $lk_icon     = get_theme_mod('cct_search_results_link_button_icon_color', '#000000');
         $lk_border   = get_theme_mod('cct_search_results_link_button_border_color', '#0d6efd');
-        $lk_border_w = absint(get_theme_mod('cct_search_results_link_button_border_width', 1));
+        $lk_border_w = absint(get_theme_mod('cct_search_results_link_button_border_width', 0));
         $lk_border_r = absint(get_theme_mod('cct_search_results_link_button_border_radius', 25));
 
         $css .= ".result-actions .copy-link-btn{\n";
@@ -608,7 +608,7 @@ class CCT_Search_Results_Customizer {
         $lk_hover_bg     = get_theme_mod('cct_search_results_link_button_hover_bg_color', '#0d6efd');
         $lk_hover_icon   = get_theme_mod('cct_search_results_link_button_hover_icon_color', '#ffffff');
         $lk_hover_border = get_theme_mod('cct_search_results_link_button_hover_border_color', '#0d6efd');
-        $lk_hover_bw     = absint(get_theme_mod('cct_search_results_link_button_hover_border_width', 1));
+        $lk_hover_bw     = absint(get_theme_mod('cct_search_results_link_button_hover_border_width', 0));
 
         $css .= ".result-actions .copy-link-btn:hover{\n";
         $css .= "    background-color: {$lk_hover_bg} !important;\n";
