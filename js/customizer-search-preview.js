@@ -227,10 +227,10 @@
     }
 
     function updateNewSearchCSS() {
-        var bg   = getCustomizerValue('cct_search_results_new_search_button_bg_color', '#1d3771');
-        var text = getCustomizerValue('cct_search_results_new_search_button_text_color', '#0d6efd');
+        var bg   = getCustomizerValue('cct_search_results_new_search_button_bg_color', '#1e73be');
+        var text = getCustomizerValue('cct_search_results_new_search_button_text_color', '#ffffff');
         var bord = getCustomizerValue('cct_search_results_new_search_button_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_new_search_button_border_width', 1);
+        var bw   = getCustomizerValue('cct_search_results_new_search_button_border_width', 0);
         var br   = getCustomizerValue('cct_search_results_new_search_button_border_radius', 25);
 
         var css = '';
@@ -267,10 +267,10 @@
 
     // ===== Botão "Ler mais" nos resultados =====
     function updateReadMoreCSS() {
-        var bg   = getCustomizerValue('cct_search_results_read_more_button_bg_color', '#1d3771');
+        var bg   = getCustomizerValue('cct_search_results_read_more_button_bg_color', '#152a5a');
         var text = getCustomizerValue('cct_search_results_read_more_button_text_color', '#ffffff');
         var bord = getCustomizerValue('cct_search_results_read_more_button_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_read_more_button_border_width', 1);
+        var bw   = getCustomizerValue('cct_search_results_read_more_button_border_width', 0);
         var br   = getCustomizerValue('cct_search_results_read_more_button_border_radius', 25);
 
         var css = '';
@@ -305,10 +305,10 @@
     });
 
     function updateReadMoreHoverCSS() {
-        var bg   = getCustomizerValue('cct_search_results_read_more_button_hover_bg_color', '#152a5a');
+        var bg   = getCustomizerValue('cct_search_results_read_more_button_hover_bg_color', '#1e73be');
         var text = getCustomizerValue('cct_search_results_read_more_button_hover_text_color', '#ffffff');
         var bord = getCustomizerValue('cct_search_results_read_more_button_hover_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_read_more_button_hover_border_width', 1);
+        var bw   = getCustomizerValue('cct_search_results_read_more_button_hover_border_width', 0);
 
         updateHoverCSS('.result-actions .read-more-btn:hover', {
             'background-color': bg,
@@ -335,7 +335,7 @@
         var bg   = (typeof wp.customize('cct_search_results_new_search_button_hover_bg_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_bg_color')() || '#152a5a') : '#152a5a';
         var text = (typeof wp.customize('cct_search_results_new_search_button_hover_text_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_text_color')() || '#ffffff') : '#ffffff';
         var bord = (typeof wp.customize('cct_search_results_new_search_button_hover_border_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_color')() || '#0d6efd') : '#0d6efd';
-        var bw   = (typeof wp.customize('cct_search_results_new_search_button_hover_border_width') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_width')() || 1) : 1;
+        var bw   = (typeof wp.customize('cct_search_results_new_search_button_hover_border_width') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_width')() || 0) : 0;
 
         updateHoverCSS('.search-actions .new-search-btn:hover', {
             'background-color': bg,
@@ -361,7 +361,7 @@
 
     // ===== Destaque de termos nos resultados =====
     function updateHighlightCSS() {
-        var bg   = getCustomizerValue('cct_search_results_highlight_bg_color', '#fff3ac');
+        var bg   = getCustomizerValue('cct_search_results_highlight_bg_color', '#ededc7');
         var text = getCustomizerValue('cct_search_results_highlight_text_color', '');
         var wght = getCustomizerValue('cct_search_results_highlight_font_weight', '700');
 
@@ -384,7 +384,7 @@
         var bg   = getCustomizerValue('cct_search_results_link_button_bg_color', '#afb8bf');
         var icon = getCustomizerValue('cct_search_results_link_button_icon_color', '#000000');
         var bord = getCustomizerValue('cct_search_results_link_button_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_link_button_border_width', 1);
+        var bw   = getCustomizerValue('cct_search_results_link_button_border_width', 0);
         var br   = getCustomizerValue('cct_search_results_link_button_border_radius', 25);
 
         var css = '';
@@ -423,7 +423,7 @@
         var bg   = getCustomizerValue('cct_search_results_link_button_hover_bg_color', '#0d6efd');
         var icon = getCustomizerValue('cct_search_results_link_button_hover_icon_color', '#ffffff');
         var bord = getCustomizerValue('cct_search_results_link_button_hover_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_link_button_hover_border_width', 1);
+        var bw   = getCustomizerValue('cct_search_results_link_button_hover_border_width', 0);
 
         updateHoverCSS('.result-actions .copy-link-btn:hover', {
             'background-color': bg,
