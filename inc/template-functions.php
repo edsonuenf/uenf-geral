@@ -56,6 +56,11 @@ add_action( 'after_setup_theme', 'cct_custom_image_sizes' );
  * Customize excerpt length
  */
 function cct_custom_excerpt_length( $length ) {
+    // Respeitar configuração do Customizer na página de busca
+    if ( is_search() ) {
+        $len = get_theme_mod( 'cct_search_results_excerpt_length', 20 );
+        return max( 1, absint( $len ) );
+    }
     return 20;
 }
 add_filter( 'excerpt_length', 'cct_custom_excerpt_length', 999 );
@@ -145,4 +150,4 @@ function cct_google_fonts_url() {
 function cct_google_fonts() {
     wp_enqueue_style( 'cct-google-fonts', cct_google_fonts_url(), array(), null );
 }
-add_action( 'wp_enqueue_scripts', 'cct_google_fonts' ); 
+add_action( 'wp_enqueue_scripts', 'cct_google_fonts' );

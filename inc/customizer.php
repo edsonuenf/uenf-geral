@@ -3393,6 +3393,8 @@ add_action('customize_preview_init', 'cct_font_combinations_preview_js');
 
 // Incluir controles do sistema de busca
 require_once get_template_directory() . '/inc/customizer/class-search-customizer-controls.php';
+// Incluir seção de Resultados da Busca
+require_once get_template_directory() . '/inc/customizer/class-search-results-customizer.php';
 
 // Incluir sistema de busca avançada
 require_once get_template_directory() . '/inc/class-advanced-search.php';
@@ -3407,6 +3409,19 @@ function cct_search_customizer_css() {
     }
 }
 add_action('wp_head', 'cct_search_customizer_css');
+
+/**
+ * Adicionar CSS dinâmico dos resultados de busca (destaque de termos)
+ */
+function cct_search_results_customizer_css() {
+    if (class_exists('CCT_Search_Results_Customizer')) {
+        $css = CCT_Search_Results_Customizer::generate_css();
+        if (!empty($css)) {
+            echo '<style type="text/css" id="cct-search-results-customizer-css">' . $css . '</style>';
+        }
+    }
+}
+add_action('wp_head', 'cct_search_results_customizer_css');
 
 /**
  * Filtrar theme.json para sincronizar com configurações do Customizer

@@ -1556,6 +1556,29 @@ function cct_optimize_image_display($html, $post_id, $post_image_id, $size, $att
 add_filter('post_thumbnail_html', 'cct_optimize_image_display', 10, 5);
 add_filter('get_image_tag', 'cct_optimize_image_display', 10, 5);
 
+// Resource hints para fontes e CDNs usados pelo tema
+function cct_add_resource_hints() {
+    // Evitar repetição no admin
+    if (is_admin()) {
+        return;
+    }
+    echo "\n";
+    // Preconnect / dns-prefetch para reduzir TTFB de recursos externos
+    $hosts = array(
+        'https://fonts.googleapis.com',
+        'https://fonts.gstatic.com',
+        'https://cdn.jsdelivr.net',
+        'https://cdnjs.cloudflare.com'
+    );
+    foreach ($hosts as $host) {
+        // Preconnect (com crossorigin quando necessário para fonts.gstatic)
+        $cross = (strpos($host, 'fonts.gstatic.com') !== false) ? ' crossorigin' : '';
+        echo '<link rel="preconnect" href="' . esc_url($host) . '"' . $cross . ' />' . "\n";
+        echo '<link rel="dns-prefetch" href="' . esc_url($host) . '" />' . "\n";
+    }
+}
+add_action('wp_head', 'cct_add_resource_hints', 1);
+
 // Register widget areas
 function cct_widgets_init() {
     register_sidebar(array(
@@ -1887,6 +1910,18 @@ function cct_scripts() {
     
     // Registrar e enfileirar scripts
     foreach ($js_files as $handle => $file) {
+        // Gating de carregamento por contexto
+        $has_primary_menu = has_nav_menu('primary');
+        $is_front_or_page = is_front_page() || is_page();
+
+        // Evitar carregar globalmente quando não necessário
+        if ($handle === 'cct-menu' && !$has_primary_menu && empty($file['force'])) {
+            continue;
+        }
+        if ($handle === 'cct-patterns' && !$is_front_or_page && empty($file['force'])) {
+            continue;
+        }
+
         // Verificar se o script deve ser carregado
         if (isset($file['enqueue']) && $file['enqueue'] === false && !isset($file['force'])) {
             continue; // Pula scripts que não devem ser carregados
@@ -1903,7 +1938,14 @@ function cct_scripts() {
             );
         } else {
             $file_path = get_template_directory() . $file['path'];
-            $file_version = file_exists($file_path) ? filemtime($file_path) : $theme_version;
+            // Evitar 404: só registrar se arquivo existir
+            if (!file_exists($file_path)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('CCT: Script não encontrado: ' . $file_path . ' (handle: ' . $handle . ')');
+                }
+                continue;
+            }
+            $file_version = filemtime($file_path);
             
             // Registrar o script
             wp_register_script(
@@ -2151,6 +2193,37 @@ if (!function_exists('cct_init_addons')) {
     // Garante que os addons sejam inicializados após o tema estar pronto
     add_action('after_setup_theme', 'cct_init_addons', 20);
 }
+
+// Adiciona atributo defer a scripts não críticos
+function cct_add_defer_to_scripts($tag, $handle, $src) {
+    // Não interferir com jQuery ou scripts do core que precisam em head
+    $no_defer = array('jquery', 'comment-reply', 'customize-preview');
+    if (in_array($handle, $no_defer, true)) {
+        return $tag;
+    }
+
+    // Apenas scripts do tema (cct-*) e algumas bibliotecas carregadas no footer
+    $defer_handles_prefix = array('cct-', 'uenf-');
+    $should_defer = false;
+    foreach ($defer_handles_prefix as $prefix) {
+        if (strpos($handle, $prefix) === 0) {
+            $should_defer = true;
+            break;
+        }
+    }
+
+    // Bootstrap via CDN também pode receber defer
+    if ($handle === 'cct-bootstrap-js') {
+        $should_defer = true;
+    }
+
+    if ($should_defer) {
+        // Inserir defer mantendo o tag original
+        $tag = sprintf('<script src="%s" defer></script>' . "\n", esc_url($src));
+    }
+    return $tag;
+}
+add_filter('script_loader_tag', 'cct_add_defer_to_scripts', 10, 3);
 
 /**
  * Função vazia para manter compatibilidade
