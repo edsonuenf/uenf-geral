@@ -18,6 +18,62 @@
     }
     
     // Aguardar carregamento do customizer
+    // Indicador de tamanho do resumo nos resultados da busca
+    function updateExcerptLengthIndicator(val) {
+        var container = $('.search-stats');
+        if (!container.length) {
+            return; // Não estamos na página de resultados de busca
+        }
+
+        // Criar elemento indicador caso não exista
+        var indicator = container.find('.excerpt-length-indicator');
+        if (!indicator.length) {
+            indicator = $('<div class="excerpt-length-indicator text-muted"></div>');
+            // Posicionar ao lado das estatísticas existentes
+            container.append(indicator);
+        }
+
+        var words = parseInt(val, 10);
+        if (isNaN(words) || words < 1) {
+            words = 1;
+        }
+        indicator.text('Resumo: ' + words + ' palavras');
+    }
+
+    // Re-trim dinâmico dos resumos dos resultados de busca
+    function trimWords(text, count) {
+        if (!text) { return ''; }
+        var parts = String(text).trim().split(/\s+/);
+        if (parts.length <= count) { return parts.join(' '); }
+        return parts.slice(0, count).join(' ') + '…';
+    }
+
+    function updateResultExcerpts(val) {
+        var words = parseInt(val, 10);
+        if (isNaN(words) || words < 1) { words = 1; }
+
+        var $results = $('.result-excerpt');
+        if (!$results.length) { return; }
+
+        $results.each(function() {
+            var $el = $(this);
+            var base = $el.attr('data-base-excerpt');
+            if (!base) {
+                base = $el.text();
+            }
+            var trimmed = trimWords(base, words);
+            $el.text(trimmed);
+        });
+    }
+
+    // Bindar ao setting do Customizer para atualização em tempo real
+    wp.customize('cct_search_results_excerpt_length', function(value) {
+        value.bind(function(newval) {
+            updateExcerptLengthIndicator(newval);
+            updateResultExcerpts(newval);
+        });
+    });
+
     wp.customize('cct_search_button_color', function(value) {
         value.bind(function(newval) {
             $('input[type="submit"].search-custom-uenf').css('background-color', newval);
@@ -155,6 +211,254 @@
             $('button[type="submit"].search-custom-uenf').css('border-width', newval + 'px');
             $('.search-submit.search-custom-uenf').css('border-width', newval + 'px');
         });
+    });
+
+    // ===== Botão "Nova Busca" nos resultados =====
+    // Helper para injetar regras CSS dinâmicas
+    function updateRuleCSS(styleId, cssText) {
+        var $style = $('#' + styleId);
+        if ($style.length) { $style.remove(); }
+        $('head').append('<style id="' + styleId + '">' + cssText + '</style>');
+    }
+
+    function getCustomizerValue(id, fallback) {
+        var v = (typeof wp.customize(id) === 'function') ? wp.customize(id)() : undefined;
+        return (typeof v !== 'undefined' && v !== null && v !== '') ? v : fallback;
+    }
+
+    function updateNewSearchCSS() {
+        var bg   = getCustomizerValue('cct_search_results_new_search_button_bg_color', '#1d3771');
+        var text = getCustomizerValue('cct_search_results_new_search_button_text_color', '#0d6efd');
+        var bord = getCustomizerValue('cct_search_results_new_search_button_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('cct_search_results_new_search_button_border_width', 1);
+        var br   = getCustomizerValue('cct_search_results_new_search_button_border_radius', 25);
+
+        var css = '';
+        css += '.search-actions .new-search-btn, .result-actions .new-search-btn{';
+        css += 'background-color:' + bg + ' !important;';
+        css += 'color:' + text + ' !important;';
+        css += 'border-color:' + bord + ' !important;';
+        css += 'border-width:' + bw + 'px !important;';
+        css += 'border-radius:' + br + 'px !important;';
+        css += '}';
+        css += '.search-actions .new-search-btn i, .result-actions .new-search-btn i{';
+        css += 'color:' + text + ' !important;';
+        css += '}';
+
+        updateRuleCSS('cct-search-new-search-css', css);
+    }
+
+    // Bindings (estado normal)
+    wp.customize('cct_search_results_new_search_button_bg_color', function(value) {
+        value.bind(function() { updateNewSearchCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_text_color', function(value) {
+        value.bind(function() { updateNewSearchCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_border_color', function(value) {
+        value.bind(function() { updateNewSearchCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_border_width', function(value) {
+        value.bind(function() { updateNewSearchCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_border_radius', function(value) {
+        value.bind(function() { updateNewSearchCSS(); });
+    });
+
+    // ===== Botão "Ler mais" nos resultados =====
+    function updateReadMoreCSS() {
+        var bg   = getCustomizerValue('cct_search_results_read_more_button_bg_color', '#1d3771');
+        var text = getCustomizerValue('cct_search_results_read_more_button_text_color', '#ffffff');
+        var bord = getCustomizerValue('cct_search_results_read_more_button_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('cct_search_results_read_more_button_border_width', 1);
+        var br   = getCustomizerValue('cct_search_results_read_more_button_border_radius', 25);
+
+        var css = '';
+        css += '.result-actions .read-more-btn{';
+        css += 'background-color:' + bg + ' !important;';
+        css += 'color:' + text + ' !important;';
+        css += 'border-color:' + bord + ' !important;';
+        css += 'border-width:' + bw + 'px !important;';
+        css += 'border-radius:' + br + 'px !important;';
+        css += '}';
+        css += '.result-actions .read-more-btn i{';
+        css += 'color:' + text + ' !important;';
+        css += '}';
+
+        updateRuleCSS('cct-search-read-more-css', css);
+    }
+
+    wp.customize('cct_search_results_read_more_button_bg_color', function(value) {
+        value.bind(function() { updateReadMoreCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_text_color', function(value) {
+        value.bind(function() { updateReadMoreCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_border_color', function(value) {
+        value.bind(function() { updateReadMoreCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_border_width', function(value) {
+        value.bind(function() { updateReadMoreCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_border_radius', function(value) {
+        value.bind(function() { updateReadMoreCSS(); });
+    });
+
+    function updateReadMoreHoverCSS() {
+        var bg   = getCustomizerValue('cct_search_results_read_more_button_hover_bg_color', '#152a5a');
+        var text = getCustomizerValue('cct_search_results_read_more_button_hover_text_color', '#ffffff');
+        var bord = getCustomizerValue('cct_search_results_read_more_button_hover_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('cct_search_results_read_more_button_hover_border_width', 1);
+
+        updateHoverCSS('.result-actions .read-more-btn:hover', {
+            'background-color': bg,
+            'color': text,
+            'border-color': bord,
+            'border-width': bw + 'px'
+        });
+    }
+
+    wp.customize('cct_search_results_read_more_button_hover_bg_color', function(value) {
+        value.bind(function() { updateReadMoreHoverCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_hover_text_color', function(value) {
+        value.bind(function() { updateReadMoreHoverCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_hover_border_color', function(value) {
+        value.bind(function() { updateReadMoreHoverCSS(); });
+    });
+    wp.customize('cct_search_results_read_more_button_hover_border_width', function(value) {
+        value.bind(function() { updateReadMoreHoverCSS(); });
+    });
+
+    function updateNewSearchHoverCSS() {
+        var bg   = (typeof wp.customize('cct_search_results_new_search_button_hover_bg_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_bg_color')() || '#152a5a') : '#152a5a';
+        var text = (typeof wp.customize('cct_search_results_new_search_button_hover_text_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_text_color')() || '#ffffff') : '#ffffff';
+        var bord = (typeof wp.customize('cct_search_results_new_search_button_hover_border_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_color')() || '#0d6efd') : '#0d6efd';
+        var bw   = (typeof wp.customize('cct_search_results_new_search_button_hover_border_width') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_width')() || 1) : 1;
+
+        updateHoverCSS('.search-actions .new-search-btn:hover', {
+            'background-color': bg,
+            'color': text,
+            'border-color': bord,
+            'border-width': bw + 'px'
+        });
+    }
+
+    // Hover bindings
+    wp.customize('cct_search_results_new_search_button_hover_bg_color', function(value) {
+        value.bind(function() { updateNewSearchHoverCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_hover_text_color', function(value) {
+        value.bind(function() { updateNewSearchHoverCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_hover_border_color', function(value) {
+        value.bind(function() { updateNewSearchHoverCSS(); });
+    });
+    wp.customize('cct_search_results_new_search_button_hover_border_width', function(value) {
+        value.bind(function() { updateNewSearchHoverCSS(); });
+    });
+
+    // ===== Destaque de termos nos resultados =====
+    function updateHighlightCSS() {
+        var bg   = getCustomizerValue('cct_search_results_highlight_bg_color', '#fff3ac');
+        var text = getCustomizerValue('cct_search_results_highlight_text_color', '');
+        var wght = getCustomizerValue('cct_search_results_highlight_font_weight', '700');
+
+        var css = 'mark.cct-highlight, .cct-highlight{';
+        css += 'background-color:' + bg + ' !important;';
+        css += 'font-weight:' + wght + ' !important;';
+        if (text && text !== '') {
+            css += 'color:' + text + ' !important;';
+        } else {
+            css += 'color: inherit;';
+        }
+        css += 'padding:0 .15em;border-radius:2px;';
+        css += '}';
+
+        updateRuleCSS('cct-search-highlight-css', css);
+    }
+
+    // ===== Botão de Link (copiar/abrir) nos resultados =====
+    function updateLinkButtonCSS() {
+        var bg   = getCustomizerValue('cct_search_results_link_button_bg_color', '#afb8bf');
+        var icon = getCustomizerValue('cct_search_results_link_button_icon_color', '#000000');
+        var bord = getCustomizerValue('cct_search_results_link_button_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('cct_search_results_link_button_border_width', 1);
+        var br   = getCustomizerValue('cct_search_results_link_button_border_radius', 25);
+
+        var css = '';
+        css += '.result-actions .copy-link-btn{';
+        css += 'background-color:' + bg + ' !important;';
+        css += 'border-color:' + bord + ' !important;';
+        css += 'border-width:' + bw + 'px !important;';
+        css += 'border-radius:' + br + 'px !important;';
+        css += '}';
+        css += '.result-actions .copy-link-btn i{';
+        css += 'color:' + icon + ' !important;';
+        css += '}';
+        // Foco sem borda por padrão
+        css += '.result-actions .copy-link-btn:focus{outline:none !important;border-width:0 !important;border-color:transparent !important;box-shadow:none !important;}';
+
+        updateRuleCSS('cct-search-link-button-css', css);
+    }
+
+    wp.customize('cct_search_results_link_button_bg_color', function(value) {
+        value.bind(function() { updateLinkButtonCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_icon_color', function(value) {
+        value.bind(function() { updateLinkButtonCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_border_color', function(value) {
+        value.bind(function() { updateLinkButtonCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_border_width', function(value) {
+        value.bind(function() { updateLinkButtonCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_border_radius', function(value) {
+        value.bind(function() { updateLinkButtonCSS(); });
+    });
+
+    function updateLinkButtonHoverCSS() {
+        var bg   = getCustomizerValue('cct_search_results_link_button_hover_bg_color', '#0d6efd');
+        var icon = getCustomizerValue('cct_search_results_link_button_hover_icon_color', '#ffffff');
+        var bord = getCustomizerValue('cct_search_results_link_button_hover_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('cct_search_results_link_button_hover_border_width', 1);
+
+        updateHoverCSS('.result-actions .copy-link-btn:hover', {
+            'background-color': bg,
+            'border-color': bord,
+            'border-width': bw + 'px'
+        });
+
+        // Atualizar ícone no hover
+        updateHoverCSS('.result-actions .copy-link-btn:hover i', {
+            'color': icon
+        });
+    }
+
+    wp.customize('cct_search_results_link_button_hover_bg_color', function(value) {
+        value.bind(function() { updateLinkButtonHoverCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_hover_icon_color', function(value) {
+        value.bind(function() { updateLinkButtonHoverCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_hover_border_color', function(value) {
+        value.bind(function() { updateLinkButtonHoverCSS(); });
+    });
+    wp.customize('cct_search_results_link_button_hover_border_width', function(value) {
+        value.bind(function() { updateLinkButtonHoverCSS(); });
+    });
+
+    // Bindings de destaque
+    wp.customize('cct_search_results_highlight_bg_color', function(value) {
+        value.bind(function() { updateHighlightCSS(); });
+    });
+    wp.customize('cct_search_results_highlight_text_color', function(value) {
+        value.bind(function() { updateHighlightCSS(); });
+    });
+    wp.customize('cct_search_results_highlight_font_weight', function(value) {
+        value.bind(function() { updateHighlightCSS(); });
     });
     
     // Border radius individuais - Campo de busca
@@ -416,7 +720,21 @@
         updatePaddingVertical();
         updateMaxWidth();
         updateFontSize();
-        
+        // Aplicar CSS inicial do botão "Nova Busca" (normal e hover)
+        updateNewSearchCSS();
+        updateNewSearchHoverCSS();
+        // Aplicar CSS inicial de destaque
+        updateHighlightCSS();
+
+        // Atualizar indicador e re-trim de resumos com valor inicial
+        if (typeof wp.customize('cct_search_results_excerpt_length') === 'function') {
+            var initialExcerptLen = wp.customize('cct_search_results_excerpt_length')();
+            if (typeof initialExcerptLen !== 'undefined') {
+                updateExcerptLengthIndicator(initialExcerptLen);
+                updateResultExcerpts(initialExcerptLen);
+            }
+        }
+
         // Log para debug
         console.log('CCT Search Customizer Preview: Inicializado');
     });

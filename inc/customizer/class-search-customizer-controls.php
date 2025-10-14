@@ -969,58 +969,90 @@ class CCT_Search_Customizer_Controls {
         );
         
         // Adicionar JavaScript inline para atualizar valores dos range sliders
-        wp_add_inline_script('cct-search-customizer', '
-            jQuery(document).ready(function($) {
-                // Verificar se wp.customize está disponível
-                if (typeof wp === "undefined" || typeof wp.customize === "undefined") {
-                    console.warn("wp.customize não está disponível no search customizer");
-                    return;
-                }
-                
-                // Função para atualizar valores dos range sliders
-                function updateRangeValue(setting, value, suffix) {
-                    $(".range-value[data-setting=\"" + setting + "\"]").text(value);
-                }
-                
-                // Configurar listeners para cada setting
-                 var rangeSettings = {
-                      "cct_search_padding_vertical": "px",
-                      "cct_search_max_width": "px",
-                      "cct_search_border_width": "px",
-                      "cct_search_button_border_width": "px",
-                      "cct_search_border_radius_top_left": "px",
-                      "cct_search_border_radius_top_right": "px",
-                      "cct_search_border_radius_bottom_left": "px",
-                      "cct_search_border_radius_bottom_right": "px",
-                      "cct_search_button_border_radius_top_left": "px",
-                      "cct_search_button_border_radius_top_right": "px",
-                      "cct_search_button_border_radius_bottom_left": "px",
-                      "cct_search_button_border_radius_bottom_right": "px",
-                      "cct_search_font_size": "px",
-                      "cct_search_results_per_page": " resultados",
-                      "cct_search_retractable_button_height": "px",
-                      "cct_search_retractable_button_width": "px",
-                      "cct_search_retractable_button_font_size": "px",
-                      "cct_search_retractable_icon_size": "px"
-                  };
-                
-                // Configurar cada setting
-                $.each(rangeSettings, function(setting, suffix) {
-                    if (wp.customize(setting)) {
-                        // Atualizar valor inicial
-                        var initialValue = wp.customize(setting).get();
-                        updateRangeValue(setting, initialValue, suffix);
-                        
-                        // Listener para mudanças
-                        wp.customize(setting, function(value) {
-                            value.bind(function(newval) {
-                                updateRangeValue(setting, newval, suffix);
-                            });
-                        });
-                    }
+        wp_add_inline_script('cct-search-customizer', <<<'JS'
+jQuery(document).ready(function($) {
+    // Verificar se wp.customize está disponível
+    if (typeof wp === "undefined" || typeof wp.customize === "undefined") {
+        console.warn("wp.customize não está disponível no search customizer");
+        return;
+    }
+
+    // Função para atualizar valores dos range sliders
+    function updateRangeValue(setting, value, suffix) {
+        $(".range-value[data-setting=\"" + setting + "\"]").text(value);
+    }
+
+    // Configurar listeners para cada setting
+    var rangeSettings = {
+        "cct_search_padding_vertical": "px",
+        "cct_search_max_width": "px",
+        "cct_search_border_width": "px",
+        "cct_search_button_border_width": "px",
+        "cct_search_border_radius_top_left": "px",
+        "cct_search_border_radius_top_right": "px",
+        "cct_search_border_radius_bottom_left": "px",
+        "cct_search_border_radius_bottom_right": "px",
+        "cct_search_button_border_radius_top_left": "px",
+        "cct_search_button_border_radius_top_right": "px",
+        "cct_search_button_border_radius_bottom_left": "px",
+        "cct_search_button_border_radius_bottom_right": "px",
+        "cct_search_font_size": "px",
+        "cct_search_results_per_page": " resultados",
+        // Resultados da busca: tamanho do resumo
+        "cct_search_results_excerpt_length": " palavras",
+        "cct_search_retractable_button_height": "px",
+        "cct_search_retractable_button_width": "px",
+        "cct_search_retractable_button_font_size": "px",
+        "cct_search_retractable_icon_size": "px"
+    };
+
+    // Configurar cada setting
+    $.each(rangeSettings, function(setting, suffix) {
+        if (wp.customize(setting)) {
+            // Atualizar valor inicial
+            var initialValue = wp.customize(setting).get();
+            updateRangeValue(setting, initialValue, suffix);
+
+            // Listener para mudanças
+            wp.customize(setting, function(value) {
+                value.bind(function(newval) {
+                    updateRangeValue(setting, newval, suffix);
                 });
             });
-        ');
+        }
+
+        // Fallback: atualizar rótulo diretamente ao mover o slider
+        var controlSelector = "#customize-control-" + setting + " input[type=\"range\"]";
+        var $rangeControl = jQuery(controlSelector);
+        if ($rangeControl.length) {
+            updateRangeValue(setting, $rangeControl.val(), suffix);
+            $rangeControl.on("input change", function() {
+                updateRangeValue(setting, jQuery(this).val(), suffix);
+            });
+        }
+    });
+
+    // Controle numérico (postMessage): tamanho do resumo dos resultados
+    var $excerptNumber = jQuery('#customize-control-cct_search_results_excerpt_length input[type="number"]');
+    if ($excerptNumber.length && typeof wp.customize === 'function') {
+        var excerptSetting = wp.customize('cct_search_results_excerpt_length');
+        if (excerptSetting) {
+            // Atualizar indicador inicial no painel
+            var initVal = excerptSetting.get();
+            if (typeof initVal !== 'undefined') {
+                updateRangeValue('cct_search_results_excerpt_length', initVal, ' palavras');
+            }
+            // Enviar mudanças conforme digita
+            $excerptNumber.on('input', function() {
+                var val = parseInt(jQuery(this).val(), 10);
+                if (isNaN(val) || val < 1) { val = 1; }
+                excerptSetting.set(val);
+            });
+        }
+    }
+});
+JS
+        );
     }
     
     /**

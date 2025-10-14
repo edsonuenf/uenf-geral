@@ -66,7 +66,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                     <div class="col-md-4">
                         <div class="search-actions">
                             <!-- Nova Busca -->
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#newSearchForm">
+                            <button class="btn btn-outline-primary btn-sm new-search-btn" data-bs-toggle="collapse" data-bs-target="#newSearchForm">
                                 <i class="fas fa-search me-2"></i>Nova Busca
                             </button>
                         </div>
@@ -143,12 +143,12 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                     </div>
                                                     
                                                     <div class="result-actions">
-                                                        <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm">
+                                                        <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm read-more-btn">
                                                             <i class="fas fa-arrow-right me-1"></i>
                                                             Ler mais
                                                         </a>
                                                         <?php if (get_permalink()) : ?>
-                                                            <button class="btn btn-outline-secondary btn-sm ms-2" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" title="Copiar link">
+                                                            <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" title="Copiar link">
                                                                 <i class="fas fa-link"></i>
                                                             </button>
                                                         <?php endif; ?>

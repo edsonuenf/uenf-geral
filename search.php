@@ -60,13 +60,14 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                 <div class="results-range text-muted">
                                     Mostrando <?php echo $start_result; ?>-<?php echo $end_result; ?> de <?php echo number_format_i18n($total_results); ?>
                                 </div>
+                                <div class="excerpt-length-indicator text-muted" aria-live="polite"></div>
                             <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="search-actions">
                             <!-- Nova Busca -->
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#newSearchForm" aria-expanded="false" aria-controls="newSearchForm">
+                            <button class="btn btn-outline-primary btn-sm new-search-btn" data-bs-toggle="collapse" data-bs-target="#newSearchForm" aria-expanded="false" aria-controls="newSearchForm">
                                 <i class="fas fa-search me-2" aria-hidden="true"></i>Nova Busca
                             </button>
                         </div>
@@ -101,7 +102,9 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                 <div class="card h-100 shadow-sm">
                                     <div class="card-body">
                                         <div class="row">
-                                            <?php if (has_post_thumbnail()) : ?>
+                                            <?php 
+                                            $show_thumbnail = get_theme_mod('cct_search_results_show_thumbnail', true);
+                                            if ($show_thumbnail && has_post_thumbnail()) : ?>
                                                 <div class="col-md-3">
                                                     <div class="result-thumbnail">
                                                         <a href="<?php the_permalink(); ?>" aria-label="Ver <?php the_title(); ?>">
@@ -114,43 +117,72 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                 <div class="col-12">
                                             <?php endif; ?>
                                                 <div class="result-content">
-                                                    <div class="result-meta mb-2">
-                                                        <span class="badge bg-primary me-2"><?php echo get_post_type_object(get_post_type())->labels->singular_name; ?></span>
-                                                        <span class="text-muted">
-                                                            <i class="fas fa-calendar me-1"></i>
-                                                            <?php echo get_the_date(); ?>
-                                                        </span>
-                                                        <?php if (get_the_author()) : ?>
-                                                            <span class="text-muted ms-3">
-                                                                <i class="fas fa-user me-1"></i>
-                                                                <?php the_author(); ?>
+                                                    <?php if (get_theme_mod('cct_search_results_show_meta', true)) : ?>
+                                                        <div class="result-meta mb-2">
+                                                            <span class="badge bg-primary me-2"><?php echo get_post_type_object(get_post_type())->labels->singular_name; ?></span>
+                                                            <span class="text-muted">
+                                                                <i class="fas fa-calendar me-1"></i>
+                                                                <?php echo get_the_date(); ?>
                                                             </span>
-                                                        <?php endif; ?>
-                                                    </div>
+                                                            <?php if (get_the_author()) : ?>
+                                                                <span class="text-muted ms-3">
+                                                                    <i class="fas fa-user me-1"></i>
+                                                                    <?php the_author(); ?>
+                                                                </span>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endif; ?>
                                                     
                                                     <h2 class="result-title">
                                         <a href="<?php the_permalink(); ?>" class="text-decoration-none">
-                                            <?php the_title(); ?>
+                                            <?php 
+                                            $highlight = get_theme_mod('cct_search_results_highlight_terms', true);
+                                            $title = get_the_title();
+                                            if ($highlight && $search_query) {
+                                                $title = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="cct-highlight">$1</mark>', $title);
+                                            }
+                                            echo $title;
+                                            ?>
                                         </a>
                                     </h2>
                                                     
-                                                    <div class="result-excerpt text-muted mb-3">
+                                                    <div class="result-excerpt text-muted mb-3" data-base-excerpt="<?php 
+                                                        // Base do texto do resumo sem corte, para re-trim dinâmico no preview
+                                                        if (has_excerpt()) {
+                                                            echo esc_attr( wp_strip_all_tags(get_the_excerpt()) );
+                                                        } else {
+                                                            echo esc_attr( wp_strip_all_tags(get_the_content(null, false)) );
+                                                        }
+                                                    ?>">
                                                         <?php 
-                                                        $excerpt = get_the_excerpt();
-                                                        if ($search_query) {
-                                                            $excerpt = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark>$1</mark>', $excerpt);
+                                                        // Tamanho desejado do resumo a partir do Customizer
+                                                        $len = absint(get_theme_mod('cct_search_results_excerpt_length', 20));
+                                                        
+                                                        // Gerar resumo consistente ignorando o filtro global
+                                                        if (has_excerpt()) {
+                                                            $base_text = wp_strip_all_tags(get_the_excerpt());
+                                                        } else {
+                                                            $base_text = wp_strip_all_tags(get_the_content(null, false));
+                                                        }
+                                                        
+                                                        // Aplicar corte com número de palavras desejado
+                                                        $excerpt = wp_trim_words($base_text, max(1, $len), '…');
+                                                        
+                                                        // Destacar termos
+                                                        if (get_theme_mod('cct_search_results_highlight_terms', true) && $search_query) {
+                                                            $excerpt = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="cct-highlight">$1</mark>', $excerpt);
                                                         }
                                                         echo $excerpt;
                                                         ?>
                                                     </div>
                                                     
                                                     <div class="result-actions">
-                                        <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm">
+                                        <a href="<?php the_permalink(); ?>" class="btn btn-outline-primary btn-sm read-more-btn">
                                             <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>
                                             Ler mais
                                         </a>
                                         <?php if (get_permalink()) : ?>
-                                            <button class="btn btn-outline-secondary btn-sm ms-2" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" aria-label="Copiar link do artigo">
+                                            <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" aria-label="Copiar link do artigo">
                                                 <i class="fas fa-link" aria-hidden="true"></i>
                                             </button>
                                         <?php endif; ?>
