@@ -52,13 +52,17 @@ class CCT_Extension_Manager {
             return false;
         }
         
-        // Modo escuro deve estar desativado por padrão
-        if ($extension_id === 'dark_mode') {
-            return get_theme_mod('cct_extension_' . $extension_id . '_enabled', false);
-        }
+        // Defaults de instalação (sem reset executado)
+        $defaults = array(
+            'icons' => true,
+            'colors' => true,
+            'search_customizer' => true,
+            'dark_mode' => false,
+        );
+        $default_enabled = isset($defaults[$extension_id]) ? $defaults[$extension_id] : false;
         
-        // Verificar configuração individual
-        return get_theme_mod('cct_extension_' . $extension_id . '_enabled', true);
+        // Verificar configuração individual com fallback
+        return get_theme_mod('cct_extension_' . $extension_id . '_enabled', $default_enabled);
     }
     
     /**
