@@ -52,13 +52,17 @@ class CCT_Extension_Manager {
             return false;
         }
         
-        // Modo escuro deve estar desativado por padrão
-        if ($extension_id === 'dark_mode') {
-            return get_theme_mod('cct_extension_' . $extension_id . '_enabled', false);
-        }
+        // Defaults de instalação (sem reset executado)
+        $defaults = array(
+            'icons' => true,
+            'colors' => true,
+            'search_customizer' => true,
+            'dark_mode' => false,
+        );
+        $default_enabled = isset($defaults[$extension_id]) ? $defaults[$extension_id] : false;
         
-        // Verificar configuração individual
-        return get_theme_mod('cct_extension_' . $extension_id . '_enabled', true);
+        // Verificar configuração individual com fallback
+        return get_theme_mod('cct_extension_' . $extension_id . '_enabled', $default_enabled);
     }
     
     /**
@@ -521,6 +525,53 @@ class CCT_Extension_Manager {
     }
     
     /**
+     * Define a configuração padrão de ativação das extensões
+     * - Ativos por padrão: icons, colors, search_customizer
+     * - Desativado por padrão: dark_mode
+     * - Demais extensões: desativadas
+     */
+    public function enforce_default_activation() {
+        // Habilitar controle global por padrão
+        set_theme_mod('cct_extensions_global_enabled', true);
+
+        // Mapa de padrões
+        $defaults = array(
+            'icons' => true,
+            'colors' => true,
+            'search_customizer' => true,
+            'dark_mode' => false,
+        );
+
+        // Aplicar defaults para todas as extensões conhecidas
+        foreach ($this->extensions as $id => $extension) {
+            $enabled = isset($defaults[$id]) ? $defaults[$id] : false;
+            set_theme_mod('cct_extension_' . $id . '_enabled', $enabled);
+        }
+    }
+
+    /**
+     * Reset das configurações de uma extensão específica
+     * Mantém apenas o estado de ativação conforme os padrões
+     */
+    public function reset_extension_settings($extension_id) {
+        // Remover todos os mods associados à extensão (se existirem)
+        // Por simplicidade, garantimos o estado de ativação padrão
+        $defaults = array(
+            'icons' => true,
+            'colors' => true,
+            'search_customizer' => true,
+            'dark_mode' => false,
+        );
+
+        $enabled = isset($defaults[$extension_id]) ? $defaults[$extension_id] : false;
+
+        // Resetar flag de ativação para o padrão
+        set_theme_mod('cct_extension_' . $extension_id . '_enabled', $enabled);
+
+        return true;
+    }
+
+    /**
      * Reset todas as configurações de extensões
      */
     public function reset_all_settings() {
@@ -537,6 +588,9 @@ class CCT_Extension_Manager {
             remove_theme_mod('cct_extension_' . $id . '_enabled');
         }
         
+        // Aplicar padrões após reset
+        $this->enforce_default_activation();
+
         return true;
     }
 }
