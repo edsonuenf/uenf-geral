@@ -128,9 +128,8 @@ class UENF_Theme_Reset_Manager {
      * Obtém extensões disponíveis
      */
     public function get_available_extensions() {
-        if (class_exists('UENF_Extension_Manager')) {
-            $extension_manager = UENF_Extension_Manager::get_instance();
-            return $extension_manager->get_all_extensions();
+        if (function_exists('cct_extension_manager')) {
+            return cct_extension_manager()->get_all_extensions();
         }
         return array();
     }
@@ -212,6 +211,11 @@ class UENF_Theme_Reset_Manager {
             foreach ($theme_mods as $mod_name => $mod_value) {
                 remove_theme_mod($mod_name);
             }
+
+            // Reaplicar padrões de ativação das extensões
+            if (function_exists('cct_extension_manager')) {
+                cct_extension_manager()->enforce_default_activation();
+            }
             
             // Log da ação
             if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -233,9 +237,8 @@ class UENF_Theme_Reset_Manager {
      */
     public function reset_extension_settings($extension_id) {
         try {
-            if (class_exists('UENF_Extension_Manager')) {
-                $extension_manager = UENF_Extension_Manager::get_instance();
-                return $extension_manager->reset_extension_settings($extension_id);
+            if (function_exists('cct_extension_manager')) {
+                return cct_extension_manager()->reset_extension_settings($extension_id);
             }
             return false;
             
@@ -260,6 +263,11 @@ class UENF_Theme_Reset_Manager {
             
             // Reset configuração global de extensões
             delete_option('uenf_extensions_config');
+
+            // Reaplicar padrões de ativação das extensões
+            if (function_exists('cct_extension_manager')) {
+                cct_extension_manager()->enforce_default_activation();
+            }
             
             // Log da ação
             if (defined('WP_DEBUG') && WP_DEBUG) {
