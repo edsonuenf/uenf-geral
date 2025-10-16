@@ -1643,9 +1643,9 @@ add_action('widgets_init', 'cct_widgets_init');
  */
 function cct_get_social_media_css() {
     // Garantir que o valor padrão seja 36 se não estiver definido ou for inválido
-    $icon_size = get_theme_mod('social_media_icon_size', 36);
+    $icon_size = get_theme_mod('social_media_icon_size', 32);
     if (empty($icon_size) || $icon_size < 20 || $icon_size > 80) {
-        $icon_size = 36;
+        $icon_size = 32;
     }
     
     $icon_color = get_theme_mod('social_media_icon_color', 'rgba(255, 255, 255, 0.6)');

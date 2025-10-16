@@ -1656,7 +1656,7 @@ add_action('wp_head', 'theme_typography_customizer_css');
 
     // Icon Size
     $wp_customize->add_setting( 'social_media_icon_size', array(
-        'default'           => '36',
+        'default'           => '32',
         'sanitize_callback' => 'absint',
     ) );
 

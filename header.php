@@ -87,11 +87,13 @@ if ( function_exists( 'wp_body_open' ) ) {
                 </a>
               </div>
             </div>
-            <div class="col-md-4 idiomas-bandeiras d-flex align-items-end justify-content-end">
-                <?php cct_display_social_media(); ?>
-            </div>
-            <div class="col-md-4 social-media d-flex align-items-end justify-content-end">
-                <?php dynamic_sidebar('idiomas-uenf'); ?>
+            <div class="col-md-8 header-media-grid">
+                <div class="idiomas-bandeiras">
+                    <?php dynamic_sidebar('idiomas-uenf'); ?>
+                </div>
+                <div class="social-media">
+                    <?php cct_display_social_media(); ?>
+                </div>
             </div>
           </div>
         </div>

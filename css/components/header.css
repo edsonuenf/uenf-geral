@@ -124,6 +124,18 @@
 /* Idiomas */
 .idiomas-bandeiras {
   text-align: right;
+  /* Centralizar verticalmente o conteúdo dentro da coluna */
+  align-items: center !important;
+}
+
+/* Social Media (coluna de idiomas) - centralizar verticalmente */
+.social-media {
+  align-items: center !important;
+}
+
+/* Aumentar a especificidade para sobrepor Bootstrap quando existir align-items-end */
+.social-media.align-items-end {
+  align-items: center !important;
 }
 
 .idiomas-bandeiras ul li {
@@ -131,3 +143,45 @@
 }
 
 /* Responsive Header */
+
+/* Grid para idiomas e social media no topo do header */
+.header-media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: end;
+  justify-items: end;
+  gap: 12px;
+}
+.bg-header-logo .header-media-grid {
+  padding-right: 0 !important; /* remove gutter da coluna à direita */
+}
+.header-media-grid .idiomas-bandeiras,
+.header-media-grid .social-media {
+  display: grid;
+  align-items: center;
+  justify-items: end;
+  text-align: right;
+}
+
+/* Garantir que o bloco social-media fique colado à direita */
+.header-media-grid .social-media {
+  justify-self: end;
+}
+
+/* Remover margem à direita para alinhar com a busca */
+.header-media-grid .social-media-links {
+  margin-right: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .header-media-grid {
+    grid-template-columns: 1fr;
+    justify-content: end;
+    gap: 8px;
+  }
+  .header-media-grid .idiomas-bandeiras,
+  .header-media-grid .social-media {
+    justify-items: end;
+  }
+}

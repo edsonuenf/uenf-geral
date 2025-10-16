@@ -8,7 +8,7 @@
 
     // Valores padrão das configurações
     var defaultValues = {
-        'social_media_icon_size': 36,
+        'social_media_icon_size': 32,
         'social_media_icon_color': 'rgba(255, 255, 255, 0.6)',
         'social_media_bg_color': '#1d3771',
         'social_media_border_width': 0,
