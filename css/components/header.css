@@ -143,3 +143,30 @@
 }
 
 /* Responsive Header */
+
+/* Grid para idiomas e social media no topo do header */
+.header-media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: end;
+  gap: 12px;
+}
+.header-media-grid .idiomas-bandeiras,
+.header-media-grid .social-media {
+  display: grid;
+  align-items: center;
+  justify-items: end;
+}
+
+@media (max-width: 768px) {
+  .header-media-grid {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 8px;
+  }
+  .header-media-grid .idiomas-bandeiras,
+  .header-media-grid .social-media {
+    justify-items: center;
+  }
+}
