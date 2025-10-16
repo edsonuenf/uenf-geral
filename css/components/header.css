@@ -124,6 +124,8 @@
 /* Idiomas */
 .idiomas-bandeiras {
   text-align: right;
+  /* Centralizar verticalmente o conteúdo dentro da coluna */
+  align-items: center !important;
 }
 
 .idiomas-bandeiras ul li {
