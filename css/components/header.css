@@ -153,6 +153,9 @@
   justify-items: end;
   gap: 12px;
 }
+.bg-header-logo .header-media-grid {
+  padding-right: 0 !important; /* remove gutter da coluna à direita */
+}
 .header-media-grid .idiomas-bandeiras,
 .header-media-grid .social-media {
   display: grid;
