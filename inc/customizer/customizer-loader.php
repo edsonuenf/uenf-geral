@@ -95,6 +95,7 @@ class CCT_Customizer_Loader {
         $basic_modules = array(
             'class-menu-customizer.php',
             'class-design-panel-manager.php',
+            'class-404-customizer.php',
         );
         
         // Lista de módulos condicionais (baseados em extensões)
