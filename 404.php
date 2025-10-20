@@ -5,6 +5,19 @@
  */
 
 get_header();
+
+// Inclui a classe do customizer 404
+if (file_exists(get_template_directory() . '/inc/customizer/class-404-customizer.php')) {
+    require_once get_template_directory() . '/inc/customizer/class-404-customizer.php';
+}
+
+// Carrega o CSS da página 404
+$css_404_path = get_template_directory() . '/assets/css/404.css';
+if (file_exists($css_404_path)) {
+    $css_404_url = get_template_directory_uri() . '/assets/css/404.css';
+    $css_404_version = filemtime($css_404_path);
+    wp_enqueue_style('cct-404-style', $css_404_url, array('cct-style'), $css_404_version);
+}
 ?>
 
 <style>
@@ -189,54 +202,124 @@ get_header();
 
 .suggestions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .suggestion-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     border: 1px solid #e9ecef;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100%;
+    position: relative;
 }
 
 .suggestion-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border: 2px solid var(--bs-uenf-blue, #1d3771);
+    transition: all 0.3s ease;
+}
+
+.suggestion-thumbnail {
+    flex: 0 0 200px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.suggestion-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.suggestion-card:hover .suggestion-thumbnail img {
+    transform: scale(1.05);
 }
 
 .suggestion-content {
-    padding: 1.5rem;
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
-.suggestion-content h4 {
-    margin-bottom: 0.75rem;
+.suggestion-title {
+    margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
-    font-weight: 600;
+    line-height: 1.4;
 }
 
-.suggestion-content h4 a {
-    color: var(--bs-uenf-blue, #1d3771);
+.suggestion-title a {
+    color: #1d3771;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.suggestion-content h4 a:hover {
+.suggestion-title a:hover {
     color: #2c5aa0;
+    text-decoration: underline;
 }
 
-.suggestion-content p {
+.suggestion-excerpt {
     color: #6c757d;
-    margin-bottom: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
-    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .suggestion-meta {
-    font-size: 0.85rem;
-    color: #adb5bd;
+    font-size: 0.8rem;
+    color: #868e96;
+    margin-top: auto;
+}
+
+.suggestion-meta .date {
+    display: inline-flex;
+    align-items: center;
+}
+
+.suggestion-meta .date:before {
+    content: "\f073";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 5px;
+    font-size: 0.8em;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .suggestion-card {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .suggestion-thumbnail {
+        flex: 0 0 100%;
+        height: 180px;
+    }
+    
+    .suggestion-content {
+        padding: 1rem;
+    }
 }
 
 .encouragement-text {
@@ -340,10 +423,8 @@ get_header();
             <!-- Cabeçalho do Erro -->
             <header class="error-header">
                 <div class="error-number" aria-hidden="true">404</div>
-                <h1 class="error-title">Oops! Página não encontrada</h1>
-                <p class="error-subtitle">
-                    A página que você está procurando pode ter sido removida, teve seu nome alterado ou está temporariamente indisponível.
-                </p>
+                <h1 class="error-title"><?php echo esc_html(get_theme_mod('cct_404_title', 'Oops! Página não encontrada')); ?></h1>
+                <p class="error-subtitle"><?php echo wp_kses_post(get_theme_mod('cct_404_subtitle', 'A página que você está procurando pode ter sido removida, ter mudado de nome ou está temporariamente indisponível.')); ?></p>
             </header>
 
             <!-- Ações Principais -->
@@ -383,60 +464,85 @@ get_header();
                 </div>
             </div>
 
-            <!-- Sugestões de Conteúdo -->
-            <section class="suggestions-section" aria-labelledby="suggestions-title">
-                <h2 id="suggestions-title" class="suggestions-title">Conteúdo que pode interessar</h2>
-                <div class="suggestions-grid">
-                    <?php
-                    // Buscar 5 posts recentes
-                    $recent_posts = new WP_Query(array(
-                        'posts_per_page' => 5,
-                        'post_status' => 'publish',
-                        'orderby' => 'date',
-                        'order' => 'DESC'
-                    ));
+            <!-- Conteúdo que pode interessar -->
+            <?php  
+            // Verifica se a classe CCT_404_Customizer existe
+            if (class_exists('CCT_404_Customizer')) {
+                error_log('Classe CCT_404_Customizer encontrada');
+
+                // Verifica se a função get_related_content existe na classe
+                if (method_exists('CCT_404_Customizer', 'get_related_content')) {
+                    error_log('Método get_related_content encontrado');
                     
-                    if ($recent_posts->have_posts()) :
-                        while ($recent_posts->have_posts()) : $recent_posts->the_post();
-                    ?>
-                        <article class="suggestion-card">
-                            <div class="suggestion-content">
-                                <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                                <p><?php echo wp_trim_words(get_the_excerpt(), 20); ?></p>
-                                <div class="suggestion-meta">
-                                    <span class="date"><?php echo get_the_date('d/m/Y'); ?></span>
+                    // Obtém a consulta de posts relacionados
+                    $related_query = CCT_404_Customizer::get_related_content();
+                    
+                    // Log da consulta
+                    error_log('Tipo de retorno: ' . get_class($related_query));
+                    error_log('Número de posts encontrados: ' . $related_query->found_posts);
+                    error_log('Número de posts na consulta: ' . $related_query->post_count);
+                    
+                    // Verifica se a consulta retornou resultados
+                    if ($related_query->have_posts()) {
+                        error_log('A consulta retornou posts');
+                        // Obtém o título da seção
+                        $related_title = get_theme_mod('cct_404_related_title', 'Conteúdo que pode interessar');
+                        ?>
+                        <section class="related-content-section py-5">
+                            <div class="container">
+                                <h2 class="section-title mb-4"><?php echo esc_html($related_title); ?></h2>
+                                <div class="suggestions-grid">
+                                    <?php 
+                                    while ($related_query->have_posts()) : 
+                                        $related_query->the_post(); 
+                                        ?>
+                                        <article class="suggestion-card">
+                                            <?php if (has_post_thumbnail()) : ?>
+                                                <a href="<?php the_permalink(); ?>" class="suggestion-thumbnail">
+                                                    <?php the_post_thumbnail('medium', array('class' => 'img-fluid')); ?>
+                                                </a>
+                                            <?php endif; ?>
+                                            <div class="suggestion-content">
+                                                <h3 class="suggestion-title">
+                                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                                </h3>
+                                                <div class="suggestion-excerpt">
+                                                    <?php echo wp_trim_words(get_the_excerpt(), 20); ?>
+                                                </div>
+                                                <div class="suggestion-meta">
+                                                    <span class="date">
+                                                        <i class="far fa-calendar-alt"></i> 
+                                                        <?php echo get_the_date('d/m/Y'); ?>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    <?php 
+                                    endwhile; 
+                                    wp_reset_postdata(); 
+                                    ?>
                                 </div>
                             </div>
-                        </article>
-                    <?php
-                        endwhile;
-                        wp_reset_postdata();
-                    else :
-                        // Fallback para páginas estáticas
-                        $pages = get_pages(array('number' => 5, 'sort_column' => 'menu_order'));
-                        foreach ($pages as $page) :
-                    ?>
-                        <article class="suggestion-card">
-                            <div class="suggestion-content">
-                                <h4><a href="<?php echo get_permalink($page->ID); ?>"><?php echo $page->post_title; ?></a></h4>
-                                <p><?php echo wp_trim_words($page->post_excerpt ?: $page->post_content, 20); ?></p>
-                            </div>
-                        </article>
-                    <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </div>
-            </section>
+                        </section>
+                        <?php
+                    } else {
+                        error_log('Nenhum post relacionado encontrado.');
+                    }
+                } else {
+                    error_log('O método get_related_content não existe na classe CCT_404_Customizer');
+                }
+            } else {
+                error_log('A classe CCT_404_Customizer não foi encontrada');
+            }
+            ?>
 
             <!-- Texto de Incentivo -->
-            <div class="encouragement-text">
-                <p>
-                    <strong>Não desista!</strong> Nosso site tem muito conteúdo interessante para explorar. 
-                    Use a busca acima, navegue pelo menu principal ou explore as sugestões de conteúdo. 
-                    Estamos aqui para ajudar você a encontrar exatamente o que precisa.
+            <div class="encouragement-text text-center py-4">
+                <p class="mb-0">
+                    Não desista! Nosso site tem muito conteúdo interessante para explorar. Use a busca acima, navegue pelo menu principal ou explore as sugestões de conteúdo. Estamos aqui para ajudar você a encontrar exatamente o que precisa.
                 </p>
             </div>
+
         </div>
     </section>
 </main>

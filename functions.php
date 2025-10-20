@@ -6,6 +6,28 @@
  * @since 1.0.0
  */
 
+// Inclui a classe CCT_404_Customizer
+function cct_load_404_customizer() {
+    $file_path = get_template_directory() . '/inc/customizer/class-404-customizer.php';
+    if (file_exists($file_path)) {
+        require_once $file_path;
+        
+        // Verifica se a classe foi carregada corretamente
+        if (class_exists('CCT_404_Customizer')) {
+            error_log('Classe CCT_404_Customizer carregada com sucesso!');
+            // Inicializa a classe se necessário
+            if (method_exists('CCT_404_Customizer', 'init')) {
+                CCT_404_Customizer::init();
+            }
+        } else {
+            error_log('ERRO: A classe CCT_404_Customizer não foi definida no arquivo.');
+        }
+    } else {
+        error_log('ERRO: Arquivo não encontrado: ' . $file_path);
+    }
+}
+add_action('after_setup_theme', 'cct_load_404_customizer', 5);
+
 // Corrigir erro de buffer zlib
 if (!defined('ABSPATH')) {
     exit;
@@ -1382,6 +1404,11 @@ require_once CCT_THEME_DIR . '/inc/optimization.php';
 require_once CCT_THEME_DIR . '/inc/seo.php';
 //require_once CCT_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
 
+// Inclui o customizer da página 404
+if (file_exists(CCT_THEME_DIR . '/inc/customizer/class-404-customizer.php')) {
+    require_once CCT_THEME_DIR . '/inc/customizer/class-404-customizer.php';
+}
+
 // Verificar se as funções de template estão disponíveis
 if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !function_exists('cct_post_thumbnail')) {
     // Definir funções de fallback se não estiverem disponíveis
@@ -1757,7 +1784,7 @@ function cct_scripts() {
     
     // 3. Estilo principal (compilado com todos os estilos em um único arquivo)
     wp_enqueue_style('cct-style', 
-        CCT_THEME_URI . '/css/style.min.css', 
+        CCT_THEME_URI . '/css/style.min.css',
         array(
             'cct-fonts',
             'cct-fontawesome',
@@ -1767,7 +1794,17 @@ function cct_scripts() {
             'cct-hero-header-fix'
         ), 
         $style_version // Usa timestamp do arquivo para versionamento
-     );
+    );
+    
+    // 3.1 Estilo da página 404 (carregado apenas quando necessário)
+    if (is_404()) {
+        wp_enqueue_style(
+            'cct-404-style',
+            get_template_directory_uri() . '/assets/css/404.css',
+            array('cct-style'),
+            filemtime(get_template_directory() . '/assets/css/404.css')
+        );
+    }
     
     // 3.1 Estilos adicionais (removidos do header.php para melhor performance)
     wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);
@@ -2287,9 +2324,8 @@ function uenf_filter_hidden_pages_from_menu($sorted_menu_items, $args) {
 }
 add_filter('wp_get_nav_menu_items', 'uenf_filter_hidden_pages_from_menu', 999, 2);
 
-/**
- * Página de Reset de Configurações
- */
+
+// Página de Reset de Configurações
 function cct_reset_page_callback() {
     // Verificar se o usuário tem permissão
     if (!current_user_can('manage_options')) {
