@@ -26,16 +26,16 @@
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 999999 !important; // Increased z-index to ensure it stays on top
-  
+
   i {
     color: white !important;
   }
-  
+
   &.visible {
     opacity: 1;
     visibility: visible;
   }
-  
+
   &:hover {
     background-color: #0056b3;
     transform: translateY(-3px);
@@ -50,4 +50,30 @@
     width: 40px;
     height: 40px;
   }
+}
+
+// Contact info adjustments
+.contact-info-container {
+  margin-top: 2px;
+}
+
+.contact-item {
+  margin-bottom: 0.5rem;
+  display: block; // Ensure block behavior
+  color: variables.$text-color; // Fix text color
+
+  strong {
+    margin-right: 5px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Ensure widgets inside don't break layout
+.contact-item .widget {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
