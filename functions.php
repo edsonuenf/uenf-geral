@@ -2098,122 +2098,88 @@ add_action('wp_enqueue_scripts', 'cct_scripts');
 
 /**
  * Personalizado breadcrumb com ícone de casa
- * Links apenas para páginas sem filhos
+ * Refatorado para usar classes CSS e estrutura padrão
  */
 function cct_custom_breadcrumb()
 {
-    echo '<nav aria-label="breadcrumb"><div class="custom-breadcrumb">';
-    // Ícone da casa sempre no início
-    echo '<a href="' . esc_url(home_url('/')) . '" class="cb-home" style="display:inline-flex; align-items:center; vertical-align:middle;">
-        <svg aria-hidden="true" class="e-font-icon-svg e-fas-home" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 2px; display:inline-block; vertical-align:middle;">
-            <path fill="rgb(38,85,125)" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
-        </svg>
-    </a><span style="display:inline-block; width:12px;"></span>';
-
-    $items = array();
-
+    // Não exibir na home
     if (is_front_page()) {
-        // Só a casa, destacada
-        echo '<span style="color: #1a3365; font-weight: bold; margin-left: 4px;">Início</span>';
-    } elseif (is_page()) {
+        return;
+    }
+
+    echo '<nav aria-label="breadcrumb">';
+    echo '<ol class="custom-breadcrumb">';
+
+    // Item Home
+    echo '<li class="breadcrumb-item home">';
+    echo '<a href="' . esc_url(home_url('/')) . '" class="breadcrumb-link" title="Início">';
+    echo '<svg aria-hidden="true" class="e-font-icon-svg e-fas-home" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg"><path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path></svg>';
+    echo '</a>';
+    echo '</li>';
+
+    // Helper para limpar títulos
+    $clean_title = function ($title) {
+        return trim($title);
+    };
+
+    if (is_page()) {
         $ancestors = get_post_ancestors(get_the_ID());
         if ($ancestors) {
             $ancestors = array_reverse($ancestors);
             foreach ($ancestors as $ancestor) {
-                // Verificar se a página ancestral tem filhos usando WP_Query
-                $child_query = new WP_Query(array(
-                    'post_type' => 'page',
-                    'post_parent' => $ancestor,
-                    'post_status' => 'publish',
-                    'posts_per_page' => 1,
-                    'fields' => 'ids'
-                ));
-
-                $has_children = $child_query->have_posts();
-                wp_reset_postdata();
-
-                if (!$has_children) {
-                    // Página sem filhos - criar link
-                    $items[] = '<a href="' . get_permalink($ancestor) . '" style="color: rgb(38,85,125);" title="' . esc_attr(get_the_title($ancestor)) . '">' . get_the_title($ancestor) . '</a>';
-                } else {
-                    // Página com filhos - apenas texto
-                    $items[] = '<span style="color: #666; font-weight: normal;" title="Esta página possui subpáginas">' . get_the_title($ancestor) . '</span>';
-                }
+                echo '<li class="breadcrumb-item">';
+                echo '<a href="' . get_permalink($ancestor) . '" class="breadcrumb-link">' . $clean_title(get_the_title($ancestor)) . '</a>';
+                echo '</li>';
             }
         }
-        // Página atual sempre como texto (sem link)
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_title() . '</span>';
     } elseif (is_single()) {
         $post = get_post();
         $parent = $post->post_parent;
         if ($parent) {
-            // Verificar se a página pai tem filhos usando WP_Query
-            $child_query = new WP_Query(array(
-                'post_type' => 'page',
-                'post_parent' => $parent,
-                'post_status' => 'publish',
-                'posts_per_page' => 1,
-                'fields' => 'ids'
-            ));
-
-            $has_children = $child_query->have_posts();
-            wp_reset_postdata();
-
-            if (!$has_children) {
-                // Página pai sem filhos - criar link
-                $items[] = '<a href="' . get_permalink($parent) . '" style="color: rgb(38,85,125);">' . get_the_title($parent) . '</a>';
-            } else {
-                // Página pai com filhos - apenas texto
-                $items[] = '<span style="color: #666; font-weight: normal;">' . get_the_title($parent) . '</span>';
+            echo '<li class="breadcrumb-item">';
+            echo '<a href="' . get_permalink($parent) . '" class="breadcrumb-link">' . $clean_title(get_the_title($parent)) . '</a>';
+            echo '</li>';
+        } else {
+            // Se for post padrão, mostrar categoria
+            $categories = get_the_category();
+            if ($categories) {
+                $category = $categories[0];
+                echo '<li class="breadcrumb-item">';
+                echo '<a href="' . get_category_link($category->term_id) . '" class="breadcrumb-link">' . $clean_title($category->name) . '</a>';
+                echo '</li>';
             }
         }
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_title() . '</span>';
     } elseif (is_category()) {
         $category = get_queried_object();
-        $parent = $category->parent;
-        if ($parent) {
-            $parent_category = get_category($parent);
-            // Para categorias, verificar se tem subcategorias
-            $subcategories = get_categories(array(
-                'parent' => $parent,
-                'hide_empty' => false,
-                'number' => 1
-            ));
-
-            if (empty($subcategories)) {
-                // Categoria pai sem filhos - criar link
-                $items[] = '<a href="' . get_category_link($parent) . '" style="color: rgb(38,85,125);">' . $parent_category->name . '</a>';
-            } else {
-                // Categoria pai com filhos - apenas texto
-                $items[] = '<span style="color: #666; font-weight: normal;">' . $parent_category->name . '</span>';
-            }
+        if ($category->parent) {
+            $parent_category = get_category($category->parent);
+            echo '<li class="breadcrumb-item">';
+            echo '<a href="' . get_category_link($category->parent) . '" class="breadcrumb-link">' . $clean_title($parent_category->name) . '</a>';
+            echo '</li>';
         }
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $category->name . '</span>';
-    } elseif (is_tag()) {
-        $tag = get_queried_object();
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $tag->name . '</span>';
-    } elseif (is_author()) {
-        $author = get_queried_object();
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . $author->display_name . '</span>';
-    } elseif (is_date()) {
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">' . get_the_date() . '</span>';
     } elseif (is_search()) {
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">Resultados da busca</span>';
+        echo '<li class="breadcrumb-item active" aria-current="page">Resultados da busca</li>';
+        echo '</ol></nav>';
+        return; // Retorna cedo para search
     } elseif (is_404()) {
-        $items[] = '<span style="color: #1a3365; font-weight: bold;">Página não encontrada</span>';
+        echo '<li class="breadcrumb-item active" aria-current="page">Página não encontrada</li>';
+        echo '</ol></nav>';
+        return;
     }
 
-    // Renderiza os itens com separador apenas entre eles
-    if (!is_front_page() && count($items)) {
-        foreach ($items as $i => $item) {
-            if ($i > 0) {
-                echo '<span class="cb-sep" style="color: #888; margin: 0 8px;">»</span>';
-            }
-            echo $item;
-        }
+    // Item atual (Título da página/post/categoria atual)
+    if (is_home()) {
+        echo '<li class="breadcrumb-item active" aria-current="page">Blog</li>';
+    } elseif (is_category()) {
+        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(single_cat_title('', false)) . '</li>';
+    } elseif (is_archive()) {
+        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(get_the_archive_title()) . '</li>';
+    } else {
+        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(get_the_title()) . '</li>';
     }
 
-    echo '</div></nav>';
+    echo '</ol>';
+    echo '</nav>';
 }
 
 // Menu personalizado - usando o walker padrão do WordPress

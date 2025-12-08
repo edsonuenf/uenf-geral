@@ -6,26 +6,27 @@ img.alignleft {
   max-width: 50%;
 }
 
-img.alignleft + ul,
-img.alignleft + ol,
-img.alignleft ~ ul,
-img.alignleft ~ ol {
+img.alignleft+ul,
+img.alignleft+ol,
+img.alignleft~ul,
+img.alignleft~ol {
   margin-left: 20px;
 }
 
-figure.alignleft + ul,
-figure.alignleft + ol,
-figure.alignleft ~ ul,
-figure.alignleft ~ ol {
+figure.alignleft+ul,
+figure.alignleft+ol,
+figure.alignleft~ul,
+figure.alignleft~ol {
   margin-left: 20px;
 }
 
-div.alignleft + ul,
-div.alignleft + ol,
-div.alignleft ~ ul,
-div.alignleft ~ ol {
+div.alignleft+ul,
+div.alignleft+ol,
+div.alignleft~ul,
+div.alignleft~ol {
   margin-left: 20px;
 }
+
 .alignleft,
 .alignleft img {
   float: left;
@@ -33,21 +34,23 @@ div.alignleft ~ ol {
   max-width: 50%;
 }
 
-.alignleft ~ ul,
-.alignleft ~ ol,
-img.alignleft ~ ul,
-img.alignleft ~ ol {
-  margin-left: 20px;
-}
-.alignleft + ul,
-.alignleft + ol {
+.alignleft~ul,
+.alignleft~ol,
+img.alignleft~ul,
+img.alignleft~ol {
   margin-left: 20px;
 }
 
-.alignright + ul,
-.alignright + ol {
+.alignleft+ul,
+.alignleft+ol {
+  margin-left: 20px;
+}
+
+.alignright+ul,
+.alignright+ol {
   margin-right: 20px;
 }
+
 // Layout base do tema UENF Geral
 
 body {
@@ -76,11 +79,13 @@ body {
   margin: 0 20px 20px 0;
   max-width: 50%;
 }
+
 .alignright {
   float: right;
   margin: 0 0 20px 20px;
   max-width: 50%;
 }
+
 .aligncenter {
   display: block;
   margin-left: auto;
@@ -111,9 +116,69 @@ body {
 
   .content-text {
     flex: 1;
-    ul, ol {
+
+    ul,
+    ol {
       margin-top: 0.5em;
       margin-bottom: 0.5em;
     }
+  }
+}
+
+// Breadcrumbs
+.custom-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0 0 12px 0 !important;
+  margin: 0;
+  list-style: none;
+  font-size: 0.9rem;
+
+  .breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+
+    // Reset Bootstrap default separator
+    &::before {
+      content: none !important;
+      padding: 0; // Bootstrap adds something here too usually
+      margin: 0;
+    }
+
+    &:not(:last-child)::after {
+      content: "»";
+      margin: 0 0.5rem;
+      color: #888;
+    }
+
+    &.active {
+      color: variables.$primary-color;
+      font-weight: 600;
+    }
+
+    &.home {
+      .breadcrumb-link {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .breadcrumb-link {
+    text-decoration: none;
+    color: variables.$link-color;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: variables.$link-hover;
+      text-decoration: underline;
+    }
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
   }
 }
