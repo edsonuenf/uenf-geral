@@ -56,9 +56,6 @@ npm install
 # Instalar dependências PHP
 composer install
 
-# Configurar ambiente de desenvolvimento
-cp .env.example .env
-
 # Build inicial
 npm run build
 ```
@@ -68,14 +65,11 @@ npm run build
 ```json
 {
   "scripts": {
-    "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production",
-    "scss": "sass scss:css --watch",
+    "dev": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "watch": "webpack --mode=development --watch",
     "lint:js": "eslint js/**/*.js",
-    "lint:php": "phpcs --standard=WordPress .",
-    "test": "npm run test:js && npm run test:php",
-    "test:js": "jest",
-    "test:php": "phpunit"
+    "lint:css": "stylelint css/**/*.css"
   }
 }
 ```
@@ -87,25 +81,21 @@ npm run build
 ### 📁 **Estrutura de Diretórios**
 
 ```
-src/
-├── scss/                    # Arquivos SCSS
-│   ├── components/          # Componentes reutilizáveis
-│   ├── layout/             # Layouts e grids
-│   ├── modules/            # Módulos do Design System
-│   └── utilities/          # Utilitários e mixins
-├── js/                     # JavaScript ES6+
-│   ├── modules/            # Módulos do CCT
-│   ├── components/         # Componentes JS
-│   ├── utils/              # Utilitários
-│   └── main.js             # Entry point
-├── php/                    # Classes PHP
-│   ├── Customizer/         # Customizer API
-│   ├── DesignSystem/       # Design System CCT
-│   └── Utils/              # Utilitários PHP
-dist/
-├── css/                    # CSS compilado
-├── js/                     # JavaScript compilado
-└── assets/                 # Assets otimizados
+uenf-geral/
+├── css/                    # Arquivos CSS (raiz)
+│   ├── components/         # CSS de componentes
+│   ├── layout/             # CSS de layout
+│   └── style.css           # CSS principal
+├── js/                     # JavaScript (raiz)
+│   ├── main.js             # Entry point
+│   └── *.js                # Módulos JS compilados/fonte
+├── inc/                    # Include PHP
+│   └── customizer/         # Módulos do Customizer CCT
+│       ├── class-*-manager.php
+│       ├── class-*-controls.php
+│       └── customizer-loader.php
+├── assets/                 # Assets estáticos (imagens, fonts)
+└── style.css               # Metadados do tema
 ```
 
 ### 🎨 **Design System CCT - Arquitetura**
@@ -114,36 +104,21 @@ dist/
 
 ```php
 <?php
-namespace UENF\DesignSystem;
-
 /**
- * Classe principal do Design System CCT
+ * Classe principal do carregador do customizer
  */
-class CCT_Core {
-    private $modules = [];
-    private $tokens = [];
+class CCT_Customizer_Loader {
+    private static $instance = null;
+    private $modules = array();
     
-    public function __construct() {
-        $this->load_modules();
-        $this->init_hooks();
+    public static function get_instance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
-    
-    private function load_modules() {
-        $this->modules = [
-            'colors' => new CCT_Colors(),
-            'typography' => new CCT_Typography(),
-            'layout' => new CCT_Layout(),
-            'icons' => new CCT_Icons(),
-            'animations' => new CCT_Animations(),
-            'gradients' => new CCT_Gradients(),
-            'dark_mode' => new CCT_DarkMode(),
-            'shadows' => new CCT_Shadows(),
-            'breakpoints' => new CCT_Breakpoints(),
-            'tokens' => new CCT_Tokens(),
-            'patterns' => new CCT_Patterns(),
-            'css_editor' => new CCT_CSSEditor()
-        ];
-    }
+
+    // ... init, load_modules ...
 }
 ```
 
@@ -648,77 +623,19 @@ class CCT_Cache {
 // webpack.config.js
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+    mode: 'production',
     entry: {
-        main: './src/js/main.js',
-        customizer: './src/js/customizer.js'
+        main: './js/main.js',
+        // adicione outros entries conforme necessário
     },
-    
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'js/[name].[contenthash].js',
+        path: path.resolve(__dirname, 'dist'), // ou o diretório de saída correto
+        filename: '[name].js',
         clean: true
     },
-    
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all'
-                },
-                common: {
-                    name: 'common',
-                    minChunks: 2,
-                    chunks: 'all',
-                    enforce: true
-                }
-            }
-        },
-        minimizer: [
-            new TerserPlugin({
-                terserOptions: {
-                    compress: {
-                        drop_console: true
-                    }
-                }
-            })
-        ]
-    },
-    
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ]
-            }
-        ]
-    },
-    
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'css/[name].[contenthash].css'
-        })
-    ]
+    // ... restante da configuração
 };
 ```
 

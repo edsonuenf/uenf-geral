@@ -23,9 +23,17 @@ body {
     margin: 0 0 1rem; // separa parágrafos visualmente
   }
 
-  ul,
+  ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 0 0 1rem 0;
+  }
+
   ol {
-    margin: 0 0 1rem 1.25rem; // espaço e indentação para listas
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin: 0 0 1rem 0;
+    color: inherit;
   }
 
   h1,
@@ -38,9 +46,20 @@ body {
   }
 
   // Imagens alinhadas
-  img.alignleft { margin: 0 20px 20px 0; display: block; }
-  img.alignright { margin: 0 0 20px 20px; display: block; }
-  img.aligncenter { display: block; margin: 20px auto; }
+  img.alignleft {
+    margin: 0 20px 20px 0;
+    display: block;
+  }
+
+  img.alignright {
+    margin: 0 0 20px 20px;
+    display: block;
+  }
+
+  img.aligncenter {
+    display: block;
+    margin: 20px auto;
+  }
 
   // Desabilita floats do alinhamento padrão dentro do conteúdo para evitar texto ao lado
   .alignleft,
@@ -50,6 +69,7 @@ body {
     display: block !important;
     margin: 0 0 1rem 0 !important;
   }
+
   .alignright,
   .wp-caption.alignright,
   .wp-block-image.alignright {
@@ -59,22 +79,26 @@ body {
   }
 
   // Clearfix do container para considerar floats (se houver)
-  &::after { content: ""; display: block; clear: both; }
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 
   // Se a imagem alinhada estiver dentro do MESMO <p>, cancela o float para não envolver o texto
-  p > img.alignleft,
-  p > img.alignright {
+  p>img.alignleft,
+  p>img.alignright {
     float: none !important;
     display: block !important;
   }
 
   // Garante que o primeiro parágrafo após uma imagem/caption alinhada quebre abaixo dela
-  .alignleft + p,
-  .alignright + p,
-  .wp-caption.alignleft + p,
-  .wp-caption.alignright + p,
-  .wp-block-image.alignleft + p,
-  .wp-block-image.alignright + p {
+  .alignleft+p,
+  .alignright+p,
+  .wp-caption.alignleft+p,
+  .wp-caption.alignright+p,
+  .wp-block-image.alignleft+p,
+  .wp-block-image.alignright+p {
     clear: both !important;
   }
 
@@ -87,7 +111,9 @@ body {
   h3,
   h4,
   h5,
-  h6 { clear: both; }
+  h6 {
+    clear: both;
+  }
 }
 
 /* ===== Ajuste GLOBAL de alinhamento de imagens ===== */
@@ -102,10 +128,12 @@ figure.alignright {
 }
 
 /* Garante quebra abaixo de imagens/captions alinhadas em qualquer contexto */
-.wp-block-image.alignleft + p,
-.wp-block-image.alignright + p,
-figure.alignleft + p,
-figure.alignright + p { clear: both !important; }
+.wp-block-image.alignleft+p,
+.wp-block-image.alignright+p,
+figure.alignleft+p,
+figure.alignright+p {
+  clear: both !important;
+}
 
 /* Cobrir imagens alinhadas soltas (fora de figure/wp-block-image) */
 img.alignleft,
@@ -115,12 +143,15 @@ img.alignright {
   margin: 0 0 1rem 0 !important;
 }
 
-img.alignleft + p,
-img.alignright + p { clear: both !important; }
+img.alignleft+p,
+img.alignright+p {
+  clear: both !important;
+}
 
 /* ===== Regras específicas para a Home (.page-content) ===== */
 /* Na home queremos que o texto ENROLE ao redor de imagens alinhadas */
 .page-content {
+
   img.alignleft,
   figure.alignleft,
   .wp-block-image.alignleft {
@@ -137,15 +168,18 @@ img.alignright + p { clear: both !important; }
     margin: 0 0 20px 20px !important;
   }
 
-  .aligncenter { display: block !important; margin: 20px auto !important; }
+  .aligncenter {
+    display: block !important;
+    margin: 20px auto !important;
+  }
 
   /* Cancelar o clear do primeiro parágrafo após imagem alinhada na home */
-  .wp-block-image.alignleft + p,
-  .wp-block-image.alignright + p,
-  figure.alignleft + p,
-  figure.alignright + p,
-  img.alignleft + p,
-  img.alignright + p {
+  .wp-block-image.alignleft+p,
+  .wp-block-image.alignright+p,
+  figure.alignleft+p,
+  figure.alignright+p,
+  img.alignleft+p,
+  img.alignright+p {
     clear: none !important;
   }
 }
@@ -159,8 +193,7 @@ h3,
 h4,
 h5,
 h6,
-ul,
-ol {
+h6 {
   display: block !important;
   white-space: normal !important;
   margin: 0 0 1rem 0 !important;
@@ -169,6 +202,7 @@ ol {
 
 /* Escopo principal do conteúdo — caso seja necessário mais especificidade */
 .entry-content {
+
   p,
   h1,
   h2,
@@ -176,8 +210,7 @@ ol {
   h4,
   h5,
   h6,
-  ul,
-  ol {
+  h6 {
     display: block !important;
     white-space: normal !important;
     margin: 0 0 1rem 0 !important;

@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
   return {
     entry: {
       main: './js/main.js',
-      style: './css/style.css'
+      style: './scss/style.scss'
     },
     output: {
       path: path.resolve(__dirname, 'assets/dist'),
@@ -30,7 +30,7 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.css$/,
+          test: /\.(sa|sc|c)ss$/,
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
@@ -43,7 +43,8 @@ module.exports = (env, argv) => {
                   ]
                 }
               }
-            }
+            },
+            'sass-loader'
           ]
         },
         {

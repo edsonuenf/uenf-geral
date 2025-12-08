@@ -368,7 +368,7 @@ define('SCRIPT_DEBUG', true);
 
 ## 📝 Changelog
 
-### 🆕 **Versão 2.0.0 (Atual)**
+### 🆕 **Versão 0.0.1 (Atual)**
 - ✅ Design System CCT completo
 - ✅ 12 módulos funcionais
 - ✅ Preview em tempo real
@@ -399,5 +399,5 @@ O **Tema UENF Geral** com **Design System CCT** representa o estado da arte em t
 
 ---
 
-*Documentação gerada automaticamente - Versão 2.0.0*
-*© 2024 Universidade Estadual do Norte Fluminense - UENF*
+*Documentação gerada automaticamente - Versão 0.0.1*
+*© 2025 Universidade Estadual do Norte Fluminense - UENF*

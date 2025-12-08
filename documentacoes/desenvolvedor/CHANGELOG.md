@@ -13,6 +13,11 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 - Sistema de notificações push
 - Integração com redes sociais
 
+### 🔧 Corrigido
+- **Estilos de Lista**: Restaurados bullets e numeração em listas dentro do conteúdo (`.entry-content`), corrigindo conflito com `reset.css`.
+- **Build Path**: Corrigido caminho do arquivo CSS compilado em `functions.php` para `assets/dist/css/style.min.css`.
+- **Webpack Config**: Adicionado suporte a SCSS e atualizado entry point para `scss/style.scss`.
+
 ---
 
 ## [2.0.0] - 2024-01-15
