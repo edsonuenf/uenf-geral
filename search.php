@@ -124,12 +124,6 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                                 <i class="fas fa-calendar me-1"></i>
                                                                 <?php echo get_the_date(); ?>
                                                             </span>
-                                                            <?php if (get_the_author()) : ?>
-                                                                <span class="text-muted ms-3">
-                                                                    <i class="fas fa-user me-1"></i>
-                                                                    <?php the_author(); ?>
-                                                                </span>
-                                                            <?php endif; ?>
                                                         </div>
                                                     <?php endif; ?>
                                                     

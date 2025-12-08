@@ -7,7 +7,7 @@ get_header();
 ?>
 
 <main id="primary" class="site-main">
-<section class="hero-section">
+    <section class="hero-section">
         <div class="container">
             <div class="row align-items-center mb-3">
                 <!-- Hero -->
@@ -31,22 +31,21 @@ get_header();
         <div class="row">
             <div class="col-lg-12 mx-auto">
                 <?php
-                while ( have_posts() ) :
+                while (have_posts()):
                     the_post();
                     ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                         <header class="entry-header mb-4">
                             <h1 class="entry-title"><?php the_title(); ?></h1>
-                            
-                            <?php if ( 'post' === get_post_type() ) : ?>
-                            <div class="entry-meta mb-3">
-                                <span class="posted-on">Publicado em <?php echo get_the_date(); ?></span>
-                                <span class="byline"> por <?php the_author(); ?></span>
-                            </div>
+
+                            <?php if ('post' === get_post_type()): ?>
+                                <div class="entry-meta mb-3">
+                                    <span class="posted-on">Publicado em <?php echo get_the_date(); ?></span>
+                                </div>
                             <?php endif; ?>
                         </header>
 
-                        <?php if ( has_post_thumbnail() ) : ?>
+                        <?php if (has_post_thumbnail()): ?>
                             <div class="post-thumbnail mb-4">
                                 <?php the_post_thumbnail('uenf-large', ['class' => 'img-fluid']); ?>
                             </div>
@@ -54,12 +53,12 @@ get_header();
 
                         <div class="entry-content">
                             <?php the_content(); ?>
-                            
+
                             <?php
                             wp_link_pages(
                                 array(
-                                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'cct-theme' ),
-                                    'after'  => '</div>',
+                                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'cct-theme'),
+                                    'after' => '</div>',
                                 )
                             );
                             ?>
@@ -72,7 +71,7 @@ get_header();
                             //if ($categories_list) {
                             //    echo '<div class="cat-links mb-2">Categorias: ' . $categories_list . '</div>';
                             //}
-                            
+                        
                             //$tags_list = get_the_tag_list('', ', ');
                             //if ($tags_list) {
                             //    echo '<div class="tags-links">Tags: ' . $tags_list . '</div>';
@@ -85,8 +84,8 @@ get_header();
                         <?php
                         the_post_navigation(
                             array(
-                                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Anterior:', 'cct-theme' ) . '</span> <span class="nav-title">%title</span>',
-                                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Próximo:', 'cct-theme' ) . '</span> <span class="nav-title">%title</span>',
+                                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Anterior:', 'cct-theme') . '</span> <span class="nav-title">%title</span>',
+                                'next_text' => '<span class="nav-subtitle">' . esc_html__('Próximo:', 'cct-theme') . '</span> <span class="nav-title">%title</span>',
                             )
                         );
                         ?>
@@ -97,7 +96,7 @@ get_header();
                     //if ( comments_open() || get_comments_number() ) :
                     //    comments_template();
                     //endif;
-
+                
                 endwhile; // End of the loop.
                 ?>
             </div>

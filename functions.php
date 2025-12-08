@@ -1492,7 +1492,7 @@ if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !f
     if (!function_exists('cct_posted_by')) {
         function cct_posted_by()
         {
-            echo '<span class="byline">por ' . get_the_author() . '</span>';
+            // Author info removed by request
         }
     }
 
