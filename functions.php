@@ -93,212 +93,6 @@ define('CCT_DEFAULT_FONT_PAIRING', 'modern_sans');
 // Google Fonts API (opcional - pode ser configurada via customizer)
 // define('CCT_GOOGLE_FONTS_API_KEY', 'sua_chave_aqui');
 
-/**
- * Registra padrões de blocos para Aparência → Design → Padrões
- * 
- * NOTA: Os patterns FAQ e Pricing agora estão na pasta /patterns como arquivos nativos do WordPress.
- * Esta função mantém apenas os patterns básicos para compatibilidade.
- */
-function cct_registra_padroes_blocos()
-{
-    // Padrão: Seção de Chamada (Hero)
-    register_block_pattern(
-        'cct-tema/secao-chamada',
-        array(
-            'title' => __('Seção de Chamada', 'cct'),
-            'description' => __('Uma seção hero com título, subtítulo e botão de ação', 'cct'),
-            'categories' => array('call-to-action'),
-            'content' => '
-                <!-- wp:cover {"overlayColor":"primaria","minHeight":400,"contentPosition":"center center"} -->
-                <div class="wp-block-cover" style="min-height:400px">
-                    <span aria-hidden="true" class="wp-block-cover__background has-primaria-background-color has-background"></span>
-                    <div class="wp-block-cover__inner-container">
-                        <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"gigante"} -->
-                        <h1 class="has-text-align-center has-gigante-font-size">Bem-vindo ao Nosso Site</h1>
-                        <!-- /wp:heading -->
-                        
-                        <!-- wp:paragraph {"align":"center","fontSize":"medio"} -->
-                        <p class="has-text-align-center has-medio-font-size">Descubra soluções inovadoras para o seu negócio</p>
-                        <!-- /wp:paragraph -->
-                        
-                        <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-                        <div class="wp-block-buttons">
-                            <!-- wp:button {"backgroundColor":"destaque","style":{"spacing":{"padding":{"top":"var:preset|spacing|normal","right":"var:preset|spacing|medio","bottom":"var:preset|spacing|normal","left":"var:preset|spacing|medio"}}}} -->
-                            <div class="wp-block-button">
-                                <a class="wp-block-button__link has-destaque-background-color has-background">Saiba Mais</a>
-                            </div>
-                            <!-- /wp:button -->
-                        </div>
-                        <!-- /wp:buttons -->
-                    </div>
-                </div>
-                <!-- /wp:cover -->'
-        )
-    );
-
-    // Padrão: Seção de Serviços
-    register_block_pattern(
-        'cct-tema/secao-servicos',
-        array(
-            'title' => __('Seção de Serviços', 'cct'),
-            'description' => __('Grid de 3 colunas com ícones e descrições de serviços', 'cct'),
-            'categories' => array('featured'),
-            'content' => '
-                <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|muito-grande","bottom":"var:preset|spacing|muito-grande"}}}} -->
-                <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--muito-grande);padding-bottom:var(--wp--preset--spacing--muito-grande)">
-                    <!-- wp:heading {"textAlign":"center","level":2,"fontSize":"muito-grande"} -->
-                    <h2 class="has-text-align-center has-muito-grande-font-size">Nossos Serviços</h2>
-                    <!-- /wp:heading -->
-                    
-                    <!-- wp:columns {"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
-                    <div class="wp-block-columns" style="margin-top:var(--wp--preset--spacing--grande)">
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
-                            <h3 class="has-text-align-center has-grande-font-size">🚀 Desenvolvimento</h3>
-                            <!-- /wp:heading -->
-                            
-                            <!-- wp:paragraph {"align":"center"} -->
-                            <p class="has-text-align-center">Criamos soluções web modernas e responsivas para o seu negócio.</p>
-                            <!-- /wp:paragraph -->
-                        </div>
-                        <!-- /wp:column -->
-                        
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
-                            <h3 class="has-text-align-center has-grande-font-size">🎨 Design</h3>
-                            <!-- /wp:heading -->
-                            
-                            <!-- wp:paragraph {"align":"center"} -->
-                            <p class="has-text-align-center">Interfaces elegantes e funcionais que encantam seus usuários.</p>
-                            <!-- /wp:paragraph -->
-                        </div>
-                        <!-- /wp:column -->
-                        
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
-                            <h3 class="has-text-align-center has-grande-font-size">⚡ Performance</h3>
-                            <!-- /wp:heading -->
-                            
-                            <!-- wp:paragraph {"align":"center"} -->
-                            <p class="has-text-align-center">Otimização avançada para máxima velocidade e eficiência.</p>
-                            <!-- /wp:paragraph -->
-                        </div>
-                        <!-- /wp:column -->
-                    </div>
-                    <!-- /wp:columns -->
-                </div>
-                <!-- /wp:group -->'
-        )
-    );
-
-    // Padrão: Seção de Depoimentos
-    register_block_pattern(
-        'cct-tema/secao-depoimentos',
-        array(
-            'title' => __('Seção de Depoimentos', 'cct'),
-            'description' => __('Área de depoimentos com citações destacadas', 'cct'),
-            'categories' => array('testimonials'),
-            'content' => '
-                <!-- wp:group {"backgroundColor":"fundo-claro","style":{"spacing":{"padding":{"top":"var:preset|spacing|muito-grande","bottom":"var:preset|spacing|muito-grande","left":"var:preset|spacing|medio","right":"var:preset|spacing|medio"}}}} -->
-                <div class="wp-block-group has-fundo-claro-background-color has-background" style="padding-top:var(--wp--preset--spacing--muito-grande);padding-right:var(--wp--preset--spacing--medio);padding-bottom:var(--wp--preset--spacing--muito-grande);padding-left:var(--wp--preset--spacing--medio)">
-                    <!-- wp:heading {"textAlign":"center","level":2,"fontSize":"muito-grande"} -->
-                    <h2 class="has-text-align-center has-muito-grande-font-size">O que dizem nossos clientes</h2>
-                    <!-- /wp:heading -->
-                    
-                    <!-- wp:columns {"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
-                    <div class="wp-block-columns" style="margin-top:var(--wp--preset--spacing--grande)">
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:quote {"style":{"border":{"left":{"color":"var:preset|color|primaria","width":"4px"}}}} -->
-                            <blockquote class="wp-block-quote" style="border-left-color:var(--wp--preset--color--primaria);border-left-width:4px">
-                                <p>"Excelente trabalho! A equipe superou todas as nossas expectativas."</p>
-                                <cite><strong>Maria Silva</strong><br>CEO, Empresa ABC</cite>
-                            </blockquote>
-                            <!-- /wp:quote -->
-                        </div>
-                        <!-- /wp:column -->
-                        
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:quote {"style":{"border":{"left":{"color":"var:preset|color|primaria","width":"4px"}}}} -->
-                            <blockquote class="wp-block-quote" style="border-left-color:var(--wp--preset--color--primaria);border-left-width:4px">
-                                <p>"Profissionais competentes e resultado final impecável."</p>
-                                <cite><strong>João Santos</strong><br>Diretor, Tech Solutions</cite>
-                            </blockquote>
-                            <!-- /wp:quote -->
-                        </div>
-                        <!-- /wp:column -->
-                    </div>
-                    <!-- /wp:columns -->
-                </div>
-                <!-- /wp:group -->'
-        )
-    );
-
-    // Padrão: Seção de Contato
-    register_block_pattern(
-        'cct-tema/secao-contato',
-        array(
-            'title' => __('Seção de Contato', 'cct'),
-            'description' => __('Área de contato com informações e call-to-action', 'cct'),
-            'categories' => array('call-to-action'),
-            'content' => '
-                <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|muito-grande","bottom":"var:preset|spacing|muito-grande"}}}} -->
-                <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--muito-grande);padding-bottom:var(--wp--preset--spacing--muito-grande)">
-                    <!-- wp:heading {"textAlign":"center","level":2,"fontSize":"muito-grande"} -->
-                    <h2 class="has-text-align-center has-muito-grande-font-size">Entre em Contato</h2>
-                    <!-- /wp:heading -->
-                    
-                    <!-- wp:paragraph {"align":"center","fontSize":"medio"} -->
-                    <p class="has-text-align-center has-medio-font-size">Pronto para começar seu projeto? Vamos conversar!</p>
-                    <!-- /wp:paragraph -->
-                    
-                    <!-- wp:columns {"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
-                    <div class="wp-block-columns" style="margin-top:var(--wp--preset--spacing--grande)">
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
-                            <h3 class="has-text-align-center has-grande-font-size">📧 Email</h3>
-                            <!-- /wp:heading -->
-                            
-                            <!-- wp:paragraph {"align":"center"} -->
-                            <p class="has-text-align-center">contato@seusite.com</p>
-                            <!-- /wp:paragraph -->
-                        </div>
-                        <!-- /wp:column -->
-                        
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <!-- wp:heading {"textAlign":"center","level":3,"fontSize":"grande"} -->
-                            <h3 class="has-text-align-center has-grande-font-size">📱 Telefone</h3>
-                            <!-- /wp:heading -->
-                            
-                            <!-- wp:paragraph {"align":"center"} -->
-                            <p class="has-text-align-center">(11) 99999-9999</p>
-                            <!-- /wp:paragraph -->
-                        </div>
-                        <!-- /wp:column -->
-                    </div>
-                    <!-- /wp:columns -->
-                    
-                    <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|grande"}}}} -->
-                    <div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--grande)">
-                        <!-- wp:button {"backgroundColor":"primaria"} -->
-                        <div class="wp-block-button">
-                            <a class="wp-block-button__link has-primaria-background-color has-background">Solicitar Orçamento</a>
-                        </div>
-                        <!-- /wp:button -->
-                    </div>
-                    <!-- /wp:buttons -->
-                </div>
-                <!-- /wp:group -->'
-        )
-    );
-}
-add_action('init', 'cct_registra_padroes_blocos');
 
 // Cores com transparência
 define('CCT_PRIMARY_RGBA', 'rgba(29, 55, 113, 0.95)');
@@ -1555,7 +1349,7 @@ function cct_theme_setup()
     // Add support for image alignment
     add_theme_support('align-wide');
     add_theme_support('editor-styles');
-    add_editor_style('css/editor-style.css');
+    add_editor_style('assets/dist/css/style.min.css');
 
     // Add support for responsive embeds
     add_theme_support('responsive-embeds');
@@ -1630,23 +1424,8 @@ function cct_theme_setup()
     // Add theme support for selective refresh for widgets
     add_theme_support('customize-selective-refresh-widgets');
 
-    // Add support for block patterns
-    add_theme_support('core-block-patterns');
-
-    // Register block pattern categories
-    if (function_exists('register_block_pattern_category')) {
-        register_block_pattern_category('uenf-patterns', array(
-            'label' => __('UENF Patterns', 'cct-theme'),
-        ));
-
-        register_block_pattern_category('uenf-faq', array(
-            'label' => __('FAQ', 'cct-theme'),
-        ));
-
-        register_block_pattern_category('uenf-pricing', array(
-            'label' => __('Pricing', 'cct-theme'),
-        ));
-    }
+    // Block patterns são responsabilidade do plugin uenf-templates
+    remove_theme_support('core-block-patterns');
 }
 add_action('after_setup_theme', 'cct_theme_setup');
 
@@ -1833,7 +1612,7 @@ function cct_scripts()
 {
     // Versão baseada no timestamp do arquivo para evitar cache
     $theme_version = wp_get_theme()->get('Version');
-    $style_path = get_template_directory() . '/css/style.min.css';
+    $style_path = get_template_directory() . '/assets/dist/css/style.min.css';
     $style_version = file_exists($style_path) ? filemtime($style_path) : $theme_version;
 
     // 1. Fontes externas (carregadas primeiro para evitar FOUT - Flash of Unstyled Text)

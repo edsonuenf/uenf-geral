@@ -140,3 +140,13 @@ if (!function_exists('cct_post_thumbnail')):
         endif;
     }
 endif;
+if ( ! function_exists( 'uenf_get_random_image' ) ) :
+    /**
+     * Helper to get random placeholder images for patterns
+     */
+    function uenf_get_random_image( $width = 1200, $height = 800 ) {
+        $colors = ['1d3771', '2c5aa0', '28a745', 'dc3545', 'e0a800'];
+        $bg = $colors[ array_rand( $colors ) ];
+        return "https://placehold.co/{$width}x{$height}/{$bg}/ffffff?text=UENF+Image";
+    }
+endif;

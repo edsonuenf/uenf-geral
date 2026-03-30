@@ -15,6 +15,15 @@ body {
   color: #333;
 }
 
+// Ensure theme colors are available as utility classes
+.has-primaria-color {
+  color: variables.$primary-color !important;
+}
+
+.has-secundaria-color {
+  color: variables.$secondary-color !important;
+}
+
 a {
   color: variables.$link-color;
   text-decoration: none;
@@ -208,7 +217,7 @@ h6 {
   display: block !important;
   white-space: normal !important;
   margin: 0 0 1rem 0 !important;
-  line-height: 1.6 !important;
+  line-height: 1.6; // Allow overrides
 }
 
 /* Escopo principal do conteúdo — caso seja necessário mais especificidade */
@@ -225,6 +234,71 @@ h6 {
     display: block !important;
     white-space: normal !important;
     margin: 0 0 1rem 0 !important;
-    line-height: 1.7 !important;
+    line-height: 1.7; // Allow overrides
+  }
+}
+
+/* =========================================
+   Button Styles - Custom "Pill Outline"
+   ========================================= */
+
+// Default Buttons (in content)
+.wp-block-button__link {
+  border-radius: 50px !important; // Pill shape
+  border: 1px solid variables.$primary-color !important;
+  background-color: transparent !important;
+  color: variables.$primary-color !important;
+  transition: all 0.3s ease;
+  padding: 10px 24px !important; // Matches visual size
+
+  &:hover,
+  &:focus {
+    background-color: variables.$primary-color !important;
+    color: #fff !important;
+    text-decoration: none;
+  }
+}
+
+// Exception: Buttons inside Cover blocks (on top of photos)
+// Keep them solid/filled for visibility
+.wp-block-cover .wp-block-button__link {
+  border: none !important;
+  background-color: #0693e3 !important;
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    opacity: 0.9;
+    color: #fff !important;
+  }
+}
+
+// Exception: "Próximo Evento" (secondary color) inside Cover blocks
+.wp-block-cover .has-secondary-color {
+  background-color: #0693e3 !important;
+  color: #fff !important;
+  padding: 10px 24px !important; // Matches standard button padding
+  border-radius: 50px; // Pill shape
+  display: inline-block !important; // Force wrap content (overrides global h2 block !important)
+  width: fit-content !important; // Ensure it wraps
+  margin-bottom: 20px; // Spacing
+  font-size: 1rem !important; // Matches standard paragraph/button size
+  font-weight: 700 !important; // Matches button weight
+  line-height: 1.5 !important;
+  letter-spacing: normal !important; // Reset to match button or use specific if needed
+}
+
+/* =========================================
+   Fix for Query Loop Bullets
+   ========================================= */
+.wp-block-post-template {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+
+  li {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
   }
 }
