@@ -609,7 +609,7 @@ add_action('customize_controls_enqueue_scripts', function () {
         [id^="accordion-section-uenf_group_"] .accordion-section-title {
             background: #e8edf4 !important;
             color: #1d3771 !important;
-            font-size: 11px !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             letter-spacing: 1px !important;
             text-transform: uppercase !important;
@@ -629,7 +629,7 @@ add_action('customize_controls_enqueue_scripts', function () {
         /* Seções-filho: indentadas */
         .uenf-child-section .accordion-section-title {
             padding-left: 28px !important;
-            font-size: 12px !important;
+            font-size: 13px !important;
             border-left: 3px solid #c8d3e8 !important;
         }
         .uenf-child-section .accordion-section-title:hover {
@@ -642,7 +642,7 @@ add_action('customize_controls_enqueue_scripts', function () {
         }
         /* Descrição das seções */
         .accordion-section-description {
-            font-size: 11px !important;
+            font-size: 12px !important;
             color: #666 !important;
             padding: 0 14px 6px !important;
             display: block !important;
