@@ -19,6 +19,11 @@
           "name": "Cor do Texto"
         },
         {
+          "slug": "acento",
+          "color": "#0693e3",
+          "name": "Cor de Acento"
+        },
+        {
           "slug": "destaque",
           "color": "#ff6600",
           "name": "Cor de Destaque"

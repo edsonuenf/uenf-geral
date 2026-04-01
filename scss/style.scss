@@ -263,7 +263,7 @@ h6 {
 // Keep them solid/filled for visibility
 .wp-block-cover .wp-block-button__link {
   border: none !important;
-  background-color: #0693e3 !important;
+  background-color: $accent-color !important;
   color: #fff !important;
 
   &:hover,
@@ -275,7 +275,7 @@ h6 {
 
 // Exception: "Próximo Evento" (secondary color) inside Cover blocks
 .wp-block-cover .has-secondary-color {
-  background-color: #0693e3 !important;
+  background-color: $accent-color !important;
   color: #fff !important;
   padding: 10px 24px !important; // Matches standard button padding
   border-radius: 50px; // Pill shape
