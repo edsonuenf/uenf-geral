@@ -31,9 +31,10 @@ class CCT_Search_Customizer_Controls {
     public static function register_controls($wp_customize) {
         // Adicionar seção
         $wp_customize->add_section('cct_search_customizer', array(
-            'title' => '🔍 Sistema de Busca',
+            'title'       => '🔍 Sistema de Busca',
             'description' => 'Personalize a aparência e comportamento do formulário de busca',
-            'priority' => 33
+            'priority'    => 33,
+            'panel'       => 'uenf_panel',
         ));
         
         // === CORES ===

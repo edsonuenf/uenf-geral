@@ -45,7 +45,7 @@ class CCT_Pattern_Library_Manager {
      * 
      * @var string
      */
-    private $panel_id = 'cct_design_panel';
+    private $panel_id = 'uenf_panel';
     
     /**
      * Padrões de FAQ
@@ -502,7 +502,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'main', array(
             'title' => __('Padrões', 'cct'),
             'description' => __('Biblioteca de padrões com seções prontas para FAQ, Pricing, Team e Portfolio.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -510,7 +510,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações globais da biblioteca de padrões.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 31,
         ));
         
@@ -518,7 +518,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'faq', array(
             'title' => __('Padrões FAQ', 'cct'),
             'description' => __('Seções de perguntas frequentes com diferentes layouts.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 32,
         ));
         
@@ -526,7 +526,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'pricing', array(
             'title' => __('Padrões Pricing', 'cct'),
             'description' => __('Tabelas de preços e planos com layouts variados.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 33,
         ));
         
@@ -534,7 +534,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'team', array(
             'title' => __('Padrões Team', 'cct'),
             'description' => __('Seções de equipe com diferentes apresentações.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 34,
         ));
         
@@ -542,7 +542,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'portfolio', array(
             'title' => __('Padrões Portfolio', 'cct'),
             'description' => __('Galerias de projetos com layouts profissionais.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 35,
         ));
         
@@ -550,7 +550,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'styles', array(
             'title' => __('Estilos Globais', 'cct'),
             'description' => __('Configurações de cores, tipografia e espaçamentos.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 36,
         ));
         
@@ -558,7 +558,7 @@ class CCT_Pattern_Library_Manager {
         $this->wp_customize->add_section($this->prefix . 'templates', array(
             'title' => __('Templates Prontos', 'cct'),
             'description' => __('Templates completos para diferentes tipos de site.', 'cct'),
-            'panel' => 'cct_design_panel',
+            'panel' => 'uenf_panel',
             'priority' => 37,
         ));
     }

@@ -231,13 +231,7 @@ class CCT_Color_Manager {
             return; // Sair sem criar o painel
         }
         
-        // Criar painel de cores (só se extensão estiver ativa)
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('🎨 Gerenciador de Cores', 'cct'),
-            'description' => __('Sistema avançado de gerenciamento de cores com paletas e verificador de acessibilidade.', 'cct'),
-            'priority' => 130,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
         
         // Debug log para verificar criação
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -250,7 +244,7 @@ class CCT_Color_Manager {
         $this->wp_customize->add_section($this->prefix . 'color_palettes', array(
             'title' => __('Paletas Predefinidas', 'cct'),
             'description' => __('Escolha entre paletas profissionais ou crie a sua própria.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -258,7 +252,7 @@ class CCT_Color_Manager {
         $this->wp_customize->add_section($this->prefix . 'custom_colors', array(
             'title' => __('Cores Personalizadas', 'cct'),
             'description' => __('Configure cores individuais para elementos específicos.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -268,7 +262,7 @@ class CCT_Color_Manager {
         $this->wp_customize->add_section($this->prefix . 'color_generator', array(
             'title' => __('Gerador de Cores', 'cct'),
             'description' => __('Gere paletas harmoniosas automaticamente.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -276,7 +270,7 @@ class CCT_Color_Manager {
         $this->wp_customize->add_section('color_accessibility', array(
             'title' => __('Verificador de Acessibilidade', 'cct'),
             'description' => __('Analise o contraste e conformidade WCAG das suas cores.', 'cct'),
-            'panel' => 'cct_color_panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
     }

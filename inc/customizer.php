@@ -301,44 +301,8 @@ function cct_customize_register( $wp_customize ) {
     
     // ====================================
     // Seção: Menu de Navegação
+    // Migrada para inc/customizer/class-menu-customizer.php — removida daqui para evitar duplicata
     // ====================================
-    $wp_customize->add_section('cct_menu_settings', array(
-        'title' => __('Menu de Navegação', 'cct'),
-        'priority' => 35,
-        'description' => __('Configure a aparência do menu de navegação.', 'cct'),
-    ));
-    
-    // Estilo do Menu
-    $wp_customize->add_setting('menu_style', array(
-        'default' => CCT_DEFAULT_MENU_STYLE,
-        'sanitize_callback' => 'cct_sanitize_select',
-        'transport' => 'refresh',
-    ));
-    
-    $wp_customize->add_control('menu_style', array(
-        'label' => __('Estilo do Menu', 'cct'),
-        'section' => 'cct_menu_settings',
-        'type' => 'select',
-        'choices' => array(
-            'modern' => __('Moderno (com gradientes)', 'cct'),
-            'classic' => __('Clássico (cores sólidas)', 'cct'),
-            'minimal' => __('Minimalista', 'cct'),
-        ),
-        'description' => __('Escolha o estilo visual do menu.', 'cct'),
-    ));
-    
-    // Mostrar ícones de hierarquia
-    $wp_customize->add_setting('menu_show_hierarchy_icons', array(
-        'default' => CCT_DEFAULT_MENU_HIERARCHY_ICONS,
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
-    
-    $wp_customize->add_control('menu_show_hierarchy_icons', array(
-        'label' => __('Mostrar Ícones de Hierarquia', 'cct'),
-        'section' => 'cct_menu_settings',
-        'type' => 'checkbox',
-        'description' => __('Exibe setas e símbolos para indicar a hierarquia dos submenus.', 'cct'),
-    ));
     
     // ====================================
     // Painel: Painel de Atalhos

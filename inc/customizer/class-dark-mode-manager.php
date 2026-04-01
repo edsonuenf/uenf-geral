@@ -210,12 +210,7 @@ class CCT_Dark_Mode_Manager {
      * Adiciona painel de modo escuro
      */
     private function add_dark_mode_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Modo Escuro/Claro', 'cct'),
-            'description' => __('Configurações completas para modo escuro e claro com toggle automático e preferências do usuário.', 'cct'),
-            'priority' => 200,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
     }
     
     /**
@@ -226,7 +221,7 @@ class CCT_Dark_Mode_Manager {
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações principais do modo escuro/claro.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -234,7 +229,7 @@ class CCT_Dark_Mode_Manager {
         $this->wp_customize->add_section($this->prefix . 'auto_toggle', array(
             'title' => __('Toggle Automático', 'cct'),
             'description' => __('Configurações para alternância automática baseada em horário.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -242,7 +237,7 @@ class CCT_Dark_Mode_Manager {
         $this->wp_customize->add_section($this->prefix . 'light_colors', array(
             'title' => __('Cores Modo Claro', 'cct'),
             'description' => __('Paleta de cores para o modo claro.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -250,7 +245,7 @@ class CCT_Dark_Mode_Manager {
         $this->wp_customize->add_section($this->prefix . 'dark_colors', array(
             'title' => __('Cores Modo Escuro', 'cct'),
             'description' => __('Paleta de cores para o modo escuro.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -258,7 +253,7 @@ class CCT_Dark_Mode_Manager {
         $this->wp_customize->add_section($this->prefix . 'transitions', array(
             'title' => __('Transições', 'cct'),
             'description' => __('Configurações de animações e transições entre modos.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 50,
         ));
         
@@ -266,7 +261,7 @@ class CCT_Dark_Mode_Manager {
         $this->wp_customize->add_section($this->prefix . 'interface', array(
             'title' => __('Interface', 'cct'),
             'description' => __('Configurações de exibição e posicionamento do toggle.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 60,
         ));
     }

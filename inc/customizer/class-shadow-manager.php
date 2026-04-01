@@ -325,12 +325,7 @@ class CCT_Shadow_Manager {
      * Adiciona painel de sombras
      */
     private function add_shadow_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Sistema de Sombras', 'cct'),
-            'description' => __('Configure elevação, profundidade e sombras para criar hierarquia visual moderna.', 'cct'),
-            'priority' => 180,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
     }
     
     /**
@@ -341,7 +336,7 @@ class CCT_Shadow_Manager {
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações globais do sistema de sombras e elevação.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -349,7 +344,7 @@ class CCT_Shadow_Manager {
         $this->wp_customize->add_section($this->prefix . 'elevation', array(
             'title' => __('Níveis de Elevação', 'cct'),
             'description' => __('Configure os 8 níveis de elevação baseados no Material Design.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -357,7 +352,7 @@ class CCT_Shadow_Manager {
         $this->wp_customize->add_section($this->prefix . 'presets', array(
             'title' => __('Presets de Sombras', 'cct'),
             'description' => __('Escolha entre diferentes estilos de sombras predefinidos.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -365,7 +360,7 @@ class CCT_Shadow_Manager {
         $this->wp_customize->add_section($this->prefix . 'animations', array(
             'title' => __('Animações de Elevação', 'cct'),
             'description' => __('Configure animações de hover e transições de elevação.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -373,7 +368,7 @@ class CCT_Shadow_Manager {
         $this->wp_customize->add_section($this->prefix . 'performance', array(
             'title' => __('Performance', 'cct'),
             'description' => __('Otimizações de performance para sombras e animações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 50,
         ));
     }

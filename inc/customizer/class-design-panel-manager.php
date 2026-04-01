@@ -63,12 +63,8 @@ class Design_Panel_Manager {
      * Adiciona o painel principal de Design
      */
     private function add_design_panel() {
-        $this->wp_customize->add_panel('cct_design_panel', array(
-            'title' => __('Design', 'cct'),
-            'description' => __('Configurações de design, padrões e elementos visuais do site.', 'cct'),
-            'priority' => 130,
-            'capability' => 'edit_theme_options',
-        ));
+        // cct_design_panel foi consolidado em uenf_panel — registrado no customizer-loader.php
+        // Mantido para compatibilidade de referências externas
     }
     
     /**
@@ -77,7 +73,7 @@ class Design_Panel_Manager {
      * @return string
      */
     public function get_panel_id() {
-        return 'cct_design_panel';
+        return 'uenf_panel';
     }
     
     /**

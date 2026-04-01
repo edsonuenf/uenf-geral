@@ -148,6 +148,16 @@ require_once CCT_THEME_DIR . '/inc/class-theme-reset-manager.php';
 // Incluir Editor CSS Avançado
 require get_template_directory() . '/inc/design-editor/css-editor-loader.php';
 
+// Registrar painel UENF (pai de todas as seções do tema)
+add_action('customize_register', function ($wp_customize) {
+    $wp_customize->add_panel('uenf_panel', array(
+        'title'       => __('UENF', 'cct'),
+        'description' => __('Configurações e funcionalidades do tema UENF.', 'cct'),
+        'priority'    => 100,
+        'capability'  => 'edit_theme_options',
+    ));
+}, 5); // prioridade 5 — antes dos módulos
+
 // Carregamento direto do Sistema de Tipografia (solução alternativa)
 add_action('customize_register', function ($wp_customize) {
     // Carregar arquivos do sistema de tipografia
@@ -341,6 +351,356 @@ add_action('customize_register', function ($wp_customize) {
         error_log('CCT: Ícones não inicializados (extensão desativada)');
     }
 }, 15); // Prioridade 15 para carregar após outros módulos
+
+// Reorganizar todos os painéis e seções do tema sob uenf_panel (prioridade 999 = após tudo)
+add_action('customize_register', function ($wp_customize) {
+    // Sub-painéis do customizer legado que serão dissolvidos em uenf_panel
+    // cct_colors_panel está comentado no customizer.php — seções orphaned precisam ser movidas
+    $legacy_panels = array('cct_shortcut_panel', 'cct_personalizando_panel', 'cct_forms_panel', 'cct_colors_panel');
+
+    // Mover seções dos sub-painéis legados para uenf_panel e remover os sub-painéis
+    foreach ($legacy_panels as $old_panel_id) {
+        foreach ($wp_customize->sections() as $section) {
+            if ($section->panel === $old_panel_id) {
+                $section->panel = 'uenf_panel';
+            }
+        }
+        $wp_customize->remove_panel($old_panel_id);
+    }
+
+    // Mover seções cct_* sem painel para uenf_panel
+    foreach ($wp_customize->sections() as $section) {
+        if (empty($section->panel) && strpos($section->id, 'cct_') === 0) {
+            $section->panel = 'uenf_panel';
+        }
+    }
+
+    // Mover seções não-cct_ sem painel para uenf_panel (ex: menu_settings, color_accessibility)
+    $known_no_prefix = array('menu_settings', 'color_accessibility', 'typography_section');
+    foreach ($known_no_prefix as $section_id) {
+        $section = $wp_customize->get_section($section_id);
+        if ($section && empty($section->panel)) {
+            $section->panel = 'uenf_panel';
+        }
+    }
+}, 999);
+
+// Estrutura de árvore no uenf_panel — grupos-cabeçalho não-clicáveis + seções-filho indentadas.
+// Cada grupo (uenf_group_*) tem prioridade X00 e seus filhos têm X01, X02... logo abaixo.
+// SEO e Social Media são standalone (sem grupo).
+//
+// Hook 1000: renomeia seções-filho com títulos curtos e define prioridades.
+// Hook 1001: registra as seções uenf_group_* com controle vazio (anonymous class) para
+//            manter a seção "ativa" no JS do Customizer sem renderizar nada visível.
+// customize_controls_enqueue_scripts: CSS (aparência dos grupos) + JS (indentação e visibilidade).
+add_action('customize_register', function ($wp_customize) {
+
+    // typography_section não tem prefixo cct_ — não é capturada pelo hook 999.
+    $typography_section = $wp_customize->get_section('typography_section');
+    if ($typography_section && empty($typography_section->panel)) {
+        $typography_section->panel = 'uenf_panel';
+    }
+
+    // Seções-filho: ID => [ título curto, prioridade ]
+    // Grupos têm prioridade X00; filhos começam em X01 logo abaixo.
+    $sections = array(
+
+        // ── 🎨 Cores (grupo: 100) ────────────────────────────────────────────
+        'cct_text_colors'                  => array('Cores de Texto',            101),
+        'cct_menu_colors'                  => array('Cores do Menu',             102),
+        'cct_main_colors'                  => array('Cores Principais',          103),
+        'cct_colors_color_generator'       => array('Gerador',                   104),
+        'cct_colors_color_palettes'        => array('Paletas Predefinidas',       105),
+        'cct_colors_custom_colors'         => array('Personalizadas',            106),
+        'color_accessibility'              => array('Acessibilidade WCAG',       107),
+
+        // ── 🌙 Modo Escuro (grupo: 200) ──────────────────────────────────────
+        'cct_dark_mode_general'            => array('Geral',                     201),
+        'cct_dark_mode_light_colors'       => array('Cores do Modo Claro',       202),
+        'cct_dark_mode_dark_colors'        => array('Cores do Modo Escuro',      203),
+        'cct_dark_mode_interface'          => array('Interface',                  204),
+        'cct_dark_mode_auto_toggle'        => array('Toggle Automático',         205),
+        'cct_dark_mode_transitions'        => array('Transições',                206),
+
+        // ── 🔤 Tipografia (grupo: 300) ───────────────────────────────────────
+        'typography_section'               => array('Visão Geral',               301),
+        'typography_font_pairing'          => array('Combinações de Fontes',     302),
+        'typography_scale'                 => array('Escala',                     303),
+        'typography_custom_fonts'          => array('Fontes Personalizadas',     304),
+        'typography_google_fonts'          => array('Google Fonts',              305),
+        'typography_reading'               => array('Leitura',                   306),
+
+        // ── 🖥️ Header e Footer (grupo: 400) ──────────────────────────────────
+        'cct_header'                       => array('Header',                    401),
+        'cct_footer'                       => array('Footer',                    402),
+
+        // ── ☰ Navegação (grupo: 500) ─────────────────────────────────────────
+        'cct_search_customizer'            => array('Busca',                     501),
+        'menu_settings'                    => array('Menu',                      502),
+        'cct_404_page'                     => array('Página 404',                503),
+
+        // ── 📋 Padrões (grupo: 600) ──────────────────────────────────────────
+        'cct_patterns_main'                => array('Visão Geral',               601),
+        'cct_patterns_content'             => array('Conteúdo',                  602),
+        'cct_patterns_styles'              => array('Estilos Globais',           603),
+        'cct_patterns_faq'                 => array('FAQ',                       604),
+        'cct_patterns_general'             => array('Geral',                     605),
+        'cct_patterns_portfolio'           => array('Portfólio',                 606),
+        'cct_patterns_pricing'             => array('Pricing',                   607),
+        'cct_patterns_templates'           => array('Templates',                 608),
+        'cct_patterns_team'                => array('Team',                      609),
+
+        // ── ✏️ Formulários (grupo: 700) ───────────────────────────────────────
+        'cct_form_buttons'                 => array('Botões',                    701),
+        'cct_form_fields'                  => array('Campos',                    702),
+
+        // ── ⚡ Atalho Rápido (grupo: 800) ────────────────────────────────────
+        'cct_shortcut_button_open'         => array('Botão Abrir',               801),
+        'cct_shortcut_menu'                => array('Menu',                      802),
+        'cct_shortcut_panel_settings'      => array('Painel',                    803),
+
+        // ── ◇ Ícones (grupo: 900) ────────────────────────────────────────────
+        'cct_icons_icon_library'           => array('Biblioteca',                901),
+        'cct_icons_icon_settings'          => array('Configurações',             902),
+        'cct_icons_icon_optimization'      => array('Otimização SVG',            903),
+        'cct_icons_custom_icons'           => array('Personalizados',            904),
+
+        // ── 📐 Layout (grupo: 1000) ──────────────────────────────────────────
+        'cct_layout_containers'            => array('Containers',               1001),
+        'cct_layout_layout_builder'        => array('Construtor',               1002),
+        'cct_layout_spacing'               => array('Espaçamentos',             1003),
+        'cct_layout_grid_system'           => array('Grid',                     1004),
+        'cct_layout_breakpoints'           => array('Breakpoints',              1005),
+
+        // ── 📱 Responsividade (grupo: 1100) ──────────────────────────────────
+        'cct_breakpoints_management'       => array('Gerenciamento',            1101),
+        'cct_breakpoints_general'          => array('Geral',                    1102),
+        'cct_breakpoints_preview'          => array('Preview',                  1103),
+        'cct_breakpoints_templates'        => array('Templates',                1104),
+
+        // ── ▪ Sombras (grupo: 1200) ──────────────────────────────────────────
+        'cct_shadow_general'               => array('Configurações',            1201),
+        'cct_shadow_elevation'             => array('Níveis de Elevação',       1202),
+        'cct_shadow_animations'            => array('Animações',                1203),
+        'cct_shadow_performance'           => array('Performance',              1204),
+        'cct_shadow_presets'               => array('Presets',                  1205),
+
+        // ── ✨ Animações (grupo: 1300) ────────────────────────────────────────
+        'cct_animation_general'            => array('Geral',                    1301),
+        'cct_animation_micro_interactions' => array('Micro-interações',         1302),
+        'cct_animation_performance'        => array('Performance',              1303),
+        'cct_animation_presets'            => array('Presets',                  1304),
+        'cct_animation_page_transitions'   => array('Transições de Página',    1305),
+
+        // ── ◆ Design System (grupo: 1400) ────────────────────────────────────
+        'cct_design_tokens_general'        => array('Geral',                    1401),
+        'cct_design_tokens_primitive'      => array('Tokens Primitivos',        1402),
+        'cct_design_tokens_semantic'       => array('Tokens Semânticos',        1403),
+        'cct_design_tokens_component'      => array('Componentes',              1404),
+        'cct_design_tokens_management'     => array('Gerenciamento',            1405),
+        'cct_design_tokens_documentation'  => array('Documentação',             1406),
+
+        // ── 🌈 Gradientes (grupo: 1500) ──────────────────────────────────────
+        'cct_gradient_generator'           => array('Gerador',                  1501),
+        'cct_gradient_library'             => array('Biblioteca',               1502),
+        'cct_gradient_settings'            => array('Configurações',            1503),
+        'cct_gradient_application'         => array('Aplicação',                1504),
+
+        // ── ⚙️ Sistema (grupo: 1600) ───────────────────────────────────────────
+        'cct_backup_section'               => array('Backup e Restauração',     1601),
+        'cct_general_settings'             => array('Configurações Gerais',     1602),
+        'cct_performance'                  => array('Performance',              1603),
+        'cct_reset_section'                => array('Redefinir Configurações',  1604),
+
+        // ── Standalone (sem grupo) ────────────────────────────────────────────
+        'cct_seo'                          => array('SEO',                      1700),
+        'cct_social_media'                 => array('Social Media',             1710),
+    );
+
+    foreach ($sections as $id => list($title, $priority)) {
+        $section = $wp_customize->get_section($id);
+        if ($section) {
+            $section->title    = $title;
+            $section->priority = $priority;
+        }
+    }
+}, 1000);
+
+// Hook 1001: registra seções uenf_group_* como cabeçalhos não-clicáveis de grupo.
+// Cada grupo recebe um controle vazio (anonymous class) para manter a seção "ativa"
+// no isContextuallyActive() do JS do Customizer — sem renderizar nada visível.
+add_action('customize_register', function ($wp_customize) {
+
+    // Grupos: [ título, prioridade, descrição/hint ]
+    $groups = array(
+        'uenf_group_cores'          => array('🎨 Cores',            100, 'Paleta principal, cores de texto, menu e gerador de cores do tema.'),
+        'uenf_group_modo_escuro'    => array('🌙 Modo Escuro',       200, 'Ativa e configura o modo escuro — cores, interface e alternância automática.'),
+        'uenf_group_tipografia'     => array('🔤 Tipografia',        300, 'Fontes, escala tipográfica, combinações e configurações de leitura.'),
+        'uenf_group_header_footer'  => array('🖥️ Header e Footer',   400, 'Layout, logo, menu e rodapé do site.'),
+        'uenf_group_navegacao'      => array('☰ Navegação',          500, 'Busca, menus e página de erro 404.'),
+        'uenf_group_padroes'        => array('📋 Padrões',           600, 'Blocos e modelos reutilizáveis de conteúdo (portfólio, FAQ, equipe etc.).'),
+        'uenf_group_formularios'    => array('✏️ Formulários',       700, 'Estilo de botões e campos de formulário do site.'),
+        'uenf_group_atalho_rapido'  => array('⚡ Atalho Rápido',     800, 'Botão flutuante de atalho: aparência, menu e configurações do painel.'),
+        'uenf_group_icones'         => array('◇ Ícones',             900, 'Biblioteca de ícones SVG, configurações e otimização.'),
+        'uenf_group_layout'         => array('📐 Layout',           1000, 'Largura de containers, espaçamentos, grid e construtor de layout.'),
+        'uenf_group_responsividade' => array('📱 Responsividade',   1100, 'Breakpoints de adaptação para diferentes tamanhos de tela.'),
+        'uenf_group_sombras'        => array('▪ Sombras',           1200, 'Sombras, elevação, presets e animações de profundidade.'),
+        'uenf_group_animacoes'      => array('✨ Animações',         1300, 'Animações de entrada, micro-interações e transições de página.'),
+        'uenf_group_design_system'  => array('◆ Design System',     1400, 'Tokens de design: valores base, semânticos e por componente.'),
+        'uenf_group_gradientes'     => array('🌈 Gradientes',        1500, 'Biblioteca de gradientes, gerador e configurações de aplicação.'),
+        'uenf_group_sistema'        => array('⚙️ Sistema',           1600, 'Backup, configurações gerais, performance e redefinição do tema.'),
+    );
+
+    foreach ($groups as $section_id => list($title, $priority, $description)) {
+        $wp_customize->add_section($section_id, array(
+            'title'       => $title,
+            'description' => $description,
+            'panel'       => 'uenf_panel',
+            'priority'    => $priority,
+        ));
+        $setting_id = '_' . $section_id;
+        $wp_customize->add_setting($setting_id, array(
+            'type'              => 'option',
+            'sanitize_callback' => '__return_empty_string',
+        ));
+        // Controle vazio: renderiza nada mas mantém a seção ativa no Customizer JS.
+        $wp_customize->add_control(new class(
+            $wp_customize,
+            $setting_id,
+            array('section' => $section_id)
+        ) extends WP_Customize_Control {
+            public $type = 'uenf_group';
+            public function render_content() {}
+        });
+    }
+}, 1001);
+
+// CSS e JS para estrutura de árvore: grupos como rótulos fixos + filhos indentados.
+add_action('customize_controls_enqueue_scripts', function () {
+
+    // Mapa grupo → filhos (para visibilidade dinâmica dos cabeçalhos).
+    $group_children_map = array(
+        'uenf_group_cores'          => array('cct_text_colors','cct_menu_colors','cct_main_colors','cct_colors_color_generator','cct_colors_color_palettes','cct_colors_custom_colors','color_accessibility'),
+        'uenf_group_modo_escuro'    => array('cct_dark_mode_general','cct_dark_mode_light_colors','cct_dark_mode_dark_colors','cct_dark_mode_interface','cct_dark_mode_auto_toggle','cct_dark_mode_transitions'),
+        'uenf_group_tipografia'     => array('typography_section','typography_font_pairing','typography_scale','typography_custom_fonts','typography_google_fonts','typography_reading'),
+        'uenf_group_header_footer'  => array('cct_header','cct_footer'),
+        'uenf_group_navegacao'      => array('cct_search_customizer','menu_settings','cct_404_page'),
+        'uenf_group_padroes'        => array('cct_patterns_main','cct_patterns_content','cct_patterns_styles','cct_patterns_faq','cct_patterns_general','cct_patterns_portfolio','cct_patterns_pricing','cct_patterns_templates','cct_patterns_team'),
+        'uenf_group_formularios'    => array('cct_form_buttons','cct_form_fields'),
+        'uenf_group_atalho_rapido'  => array('cct_shortcut_button_open','cct_shortcut_menu','cct_shortcut_panel_settings'),
+        'uenf_group_icones'         => array('cct_icons_icon_library','cct_icons_icon_settings','cct_icons_icon_optimization','cct_icons_custom_icons'),
+        'uenf_group_layout'         => array('cct_layout_containers','cct_layout_layout_builder','cct_layout_spacing','cct_layout_grid_system','cct_layout_breakpoints'),
+        'uenf_group_responsividade' => array('cct_breakpoints_management','cct_breakpoints_general','cct_breakpoints_preview','cct_breakpoints_templates'),
+        'uenf_group_sombras'        => array('cct_shadow_general','cct_shadow_elevation','cct_shadow_animations','cct_shadow_performance','cct_shadow_presets'),
+        'uenf_group_animacoes'      => array('cct_animation_general','cct_animation_micro_interactions','cct_animation_performance','cct_animation_presets','cct_animation_page_transitions'),
+        'uenf_group_design_system'  => array('cct_design_tokens_general','cct_design_tokens_primitive','cct_design_tokens_semantic','cct_design_tokens_component','cct_design_tokens_management','cct_design_tokens_documentation'),
+        'uenf_group_gradientes'     => array('cct_gradient_generator','cct_gradient_library','cct_gradient_settings','cct_gradient_application'),
+        'uenf_group_sistema'        => array('cct_backup_section','cct_general_settings','cct_performance','cct_reset_section'),
+    );
+
+    $child_sections = array_merge(...array_values($group_children_map));
+
+    $css = '
+        /* Grupos-cabeçalho: não-clicáveis, estilo de rótulo */
+        [id^="accordion-section-uenf_group_"] {
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        [id^="accordion-section-uenf_group_"] .accordion-section-title {
+            background: #e8edf4 !important;
+            color: #1d3771 !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            padding: 6px 14px !important;
+            cursor: default !important;
+            border-top: 1px solid #c8d3e8 !important;
+            border-bottom: 1px solid #c8d3e8 !important;
+            margin-top: 6px !important;
+        }
+        [id^="accordion-section-uenf_group_"] .accordion-section-title::after {
+            display: none !important;
+        }
+        /* Controle vazio dos grupos: oculto */
+        .customize-control-uenf_group {
+            display: none !important;
+        }
+        /* Seções-filho: indentadas */
+        .uenf-child-section .accordion-section-title {
+            padding-left: 28px !important;
+            font-size: 12px !important;
+            border-left: 3px solid #c8d3e8 !important;
+        }
+        .uenf-child-section .accordion-section-title:hover {
+            border-left-color: #1d3771 !important;
+        }
+        .uenf-child-section .accordion-section-title:focus {
+            border-left-color: #1d3771 !important;
+            outline: 2px solid #1d3771 !important;
+            outline-offset: -2px !important;
+        }
+        /* Descrição das seções */
+        .accordion-section-description {
+            font-size: 11px !important;
+            color: #666 !important;
+            padding: 0 14px 6px !important;
+            display: block !important;
+            line-height: 1.4 !important;
+        }
+    ';
+
+    $js = '(function($) {
+        wp.customize.bind("ready", function() {
+            var children = ' . wp_json_encode($child_sections) . ';
+            var groupChildren = ' . wp_json_encode($group_children_map) . ';
+
+            // Adiciona classe de filho a cada seção-filho
+            children.forEach(function(id) {
+                $("#accordion-section-" + id).addClass("uenf-child-section");
+            });
+
+            // Remove grupos-cabeçalho da ordem de tabulação e adiciona role semântico (a11y)
+            Object.keys(groupChildren).forEach(function(groupId) {
+                var $group = $("#accordion-section-" + groupId);
+                $group.attr("aria-hidden", "true");
+                $group.find(".accordion-section-title").attr("tabindex", "-1").attr("role", "heading").attr("aria-level", "2");
+            });
+
+            // Atualiza visibilidade dos grupos: oculta grupo se todos os filhos estiverem ocultos.
+            // Intervalo reduzido a 200ms para feedback imediato na busca do Customizer.
+            var _uenfGroupInterval = null;
+            function updateGroupVisibility() {
+                Object.keys(groupChildren).forEach(function(groupId) {
+                    var ids = groupChildren[groupId];
+                    var anyVisible = ids.some(function(id) {
+                        return $("#accordion-section-" + id + ":visible").length > 0;
+                    });
+                    var $group = $("#accordion-section-" + groupId);
+                    if (anyVisible) {
+                        $group.show().removeAttr("aria-hidden");
+                    } else {
+                        $group.hide().attr("aria-hidden", "true");
+                    }
+                });
+            }
+
+            updateGroupVisibility();
+            _uenfGroupInterval = setInterval(updateGroupVisibility, 200);
+
+            // Limpa o intervalo quando o Customizer é destruído
+            wp.customize.bind("change", function() {
+                // mantém o intervalo ativo — necessário durante edição
+            });
+            $(window).on("beforeunload", function() {
+                if (_uenfGroupInterval) { clearInterval(_uenfGroupInterval); }
+            });
+        });
+    }(jQuery));';
+
+    wp_add_inline_style('customize-controls', $css);
+    wp_add_inline_script('customize-controls', $js);
+});
 
 /**
  * Adiciona menu administrativo do Tema UENF
@@ -1354,48 +1714,9 @@ function cct_theme_setup()
     // Add support for responsive embeds
     add_theme_support('responsive-embeds');
 
-    // Add support for editor color palette
-    add_theme_support('editor-color-palette', array(
-        array(
-            'name' => esc_html__('Primary', 'cct-theme'),
-            'slug' => 'primary',
-            'color' => '#1d3771',
-        ),
-        array(
-            'name' => esc_html__('Secondary', 'cct-theme'),
-            'slug' => 'secondary',
-            'color' => '#222a3b',
-        ),
-        array(
-            'name' => esc_html__('Text', 'cct-theme'),
-            'slug' => 'text',
-            'color' => '#333333',
-        ),
-    ));
-
-    // Add support for editor font sizes
-    add_theme_support('editor-font-sizes', array(
-        array(
-            'name' => esc_html__('Small', 'cct-theme'),
-            'size' => 14,
-            'slug' => 'small'
-        ),
-        array(
-            'name' => esc_html__('Medium', 'cct-theme'),
-            'size' => 18,
-            'slug' => 'medium'
-        ),
-        array(
-            'name' => esc_html__('Large', 'cct-theme'),
-            'size' => 32,
-            'slug' => 'large'
-        ),
-        array(
-            'name' => esc_html__('Huge', 'cct-theme'),
-            'size' => 48,
-            'slug' => 'huge'
-        ),
-    ));
+    // Cores e tamanhos de fonte registrados via theme.json (padrão moderno WordPress 5.8+)
+    // Não usar add_theme_support('editor-color-palette') ou add_theme_support('editor-font-sizes')
+    // pois conflita com as definições em theme.json
 
     // Add support for custom logo
     add_theme_support('custom-logo', array(
@@ -1659,12 +1980,13 @@ function cct_scripts()
     );
 
     // 3.1 Estilo da página 404 (carregado apenas quando necessário)
-    if (is_404()) {
+    $css_404_path = get_template_directory() . '/assets/css/404.css';
+    if (is_404() && file_exists($css_404_path)) {
         wp_enqueue_style(
             'cct-404-style',
             get_template_directory_uri() . '/assets/css/404.css',
             array('cct-style'),
-            filemtime(get_template_directory() . '/assets/css/404.css')
+            filemtime($css_404_path)
         );
     }
 

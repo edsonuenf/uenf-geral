@@ -182,12 +182,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
             return; // Sair sem criar o painel
         }
         
-        // Criar painel de tipografia (só se extensão estiver ativa)
-        $this->wp_customize->add_panel('cct_typography_panel', array(
-            'title' => __('📝 Tipografia Avançada', 'cct'),
-            'description' => __('Configure fontes, escalas tipográficas e pairings profissionais. Sistema completo de tipografia com Google Fonts, escalas harmoniosas e combinações profissionais.', 'cct'),
-            'priority' => 160,
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
         
         // Debug log para verificar criação
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -198,7 +193,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_section('typography_google_fonts', array(
             'title' => __('Google Fonts', 'cct'),
             'description' => __('Integração com a biblioteca do Google Fonts.', 'cct'),
-            'panel' => 'cct_typography_panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -206,7 +201,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_section('typography_font_pairing', array(
             'title' => __('Combinações de Fontes', 'cct'),
             'description' => __('Pairings profissionais de fontes.', 'cct'),
-            'panel' => 'cct_typography_panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -214,7 +209,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_section('typography_scale', array(
             'title' => __('Escala Tipográfica', 'cct'),
             'description' => __('Escalas harmoniosas para hierarquia visual.', 'cct'),
-            'panel' => 'cct_typography_panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -222,7 +217,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_section('typography_reading', array(
             'title' => __('Otimização de Leitura', 'cct'),
             'description' => __('Configurações para melhor legibilidade.', 'cct'),
-            'panel' => 'cct_typography_panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -230,7 +225,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->add_section('typography_custom_fonts', array(
             'title' => __('Fontes Personalizadas', 'cct'),
             'description' => __('Upload e gerenciamento de fontes próprias.', 'cct'),
-            'panel' => 'cct_typography_panel',
+            'panel' => 'uenf_panel',
             'priority' => 50,
         ));
     }

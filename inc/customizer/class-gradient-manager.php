@@ -506,12 +506,7 @@ class CCT_Gradient_Manager {
      * Adiciona painel de gradientes
      */
     private function add_gradient_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Biblioteca de Gradientes', 'cct'),
-            'description' => __('Gerencie gradientes predefinidos e crie gradientes personalizados com o editor visual.', 'cct'),
-            'priority' => 170,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
     }
     
     /**
@@ -522,7 +517,7 @@ class CCT_Gradient_Manager {
         $this->wp_customize->add_section($this->prefix . 'library', array(
             'title' => __('Biblioteca de Gradientes', 'cct'),
             'description' => __('Explore e aplique gradientes predefinidos organizados por categoria.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -530,7 +525,7 @@ class CCT_Gradient_Manager {
         $this->wp_customize->add_section($this->prefix . 'generator', array(
             'title' => __('Gerador de Gradientes', 'cct'),
             'description' => __('Crie gradientes personalizados com o editor visual interativo.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -538,7 +533,7 @@ class CCT_Gradient_Manager {
         $this->wp_customize->add_section($this->prefix . 'application', array(
             'title' => __('Aplicação de Gradientes', 'cct'),
             'description' => __('Configure onde e como os gradientes serão aplicados no site.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -546,7 +541,7 @@ class CCT_Gradient_Manager {
         $this->wp_customize->add_section($this->prefix . 'settings', array(
             'title' => __('Configurações', 'cct'),
             'description' => __('Configurações avançadas da biblioteca de gradientes.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
     }
@@ -1066,7 +1061,7 @@ class CCT_Gradient_Manager {
         check_ajax_referer('cct_gradients_nonce', 'nonce');
         
         $format = sanitize_text_field($_POST['format'] ?? 'css');
-        $gradients = $_POST['gradients'] ?? array();
+        $gradients = $this->sanitize_json_array($_POST['gradients'] ?? array());
         
         if (empty($gradients)) {
             wp_die(__('Nenhum gradiente selecionado para exportar.', 'cct'));

@@ -433,12 +433,7 @@ class CCT_Animation_Manager {
      * Adiciona painel de animações
      */
     private function add_animation_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Sistema de Animações', 'cct'),
-            'description' => __('Configure animações, micro-interações e transições para melhorar a experiência do usuário.', 'cct'),
-            'priority' => 160,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
     }
     
     /**
@@ -449,7 +444,7 @@ class CCT_Animation_Manager {
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações globais do sistema de animações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -457,7 +452,7 @@ class CCT_Animation_Manager {
         $this->wp_customize->add_section($this->prefix . 'presets', array(
             'title' => __('Presets de Animações', 'cct'),
             'description' => __('Escolha e configure presets de animações predefinidas.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -465,7 +460,7 @@ class CCT_Animation_Manager {
         $this->wp_customize->add_section($this->prefix . 'micro_interactions', array(
             'title' => __('Micro-interações', 'cct'),
             'description' => __('Configure efeitos de hover, focus e outras micro-interações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -473,7 +468,7 @@ class CCT_Animation_Manager {
         $this->wp_customize->add_section($this->prefix . 'page_transitions', array(
             'title' => __('Transições de Página', 'cct'),
             'description' => __('Configure transições suaves entre páginas.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -481,7 +476,7 @@ class CCT_Animation_Manager {
         $this->wp_customize->add_section($this->prefix . 'performance', array(
             'title' => __('Performance', 'cct'),
             'description' => __('Otimizações de performance para animações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 50,
         ));
     }

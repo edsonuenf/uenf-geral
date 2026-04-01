@@ -263,13 +263,7 @@ class CCT_Icon_Manager {
             return; // Sair sem criar o painel
         }
         
-        // Criar painel de ícones (só se extensão estiver ativa)
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('🎯 Sistema de Ícones', 'cct'),
-            'description' => __('Biblioteca SVG completa com gerenciador avançado de ícones.', 'cct'),
-            'priority' => 140,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
         
         // Debug log para verificar criação
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -280,7 +274,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_section($this->prefix . 'icon_library', array(
             'title' => __('Biblioteca de Ícones', 'cct'),
             'description' => __('Navegue e selecione ícones da biblioteca SVG.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -288,7 +282,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_section($this->prefix . 'custom_icons', array(
             'title' => __('Ícones Personalizados', 'cct'),
             'description' => __('Faça upload e gerencie seus próprios ícones SVG.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -296,7 +290,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_section($this->prefix . 'icon_settings', array(
             'title' => __('Configurações de Ícones', 'cct'),
             'description' => __('Configure tamanhos, cores e otimizações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -304,7 +298,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_section($this->prefix . 'icon_optimization', array(
             'title' => __('Otimização SVG', 'cct'),
             'description' => __('Configurações avançadas de otimização de SVG.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
     }
@@ -718,6 +712,12 @@ class CCT_Icon_Manager {
         }
         
         $svg_content = wp_unslash($_POST['svg_content']);
+
+        // Validar SVG antes de otimizar — previne XSS via atributos de evento e URIs javascript:
+        if (!$this->validate_svg($svg_content)) {
+            wp_send_json_error(__('SVG inválido ou contém elementos inseguros.', 'cct'));
+        }
+
         $optimized = $this->optimize_svg($svg_content);
         
         wp_send_json_success(array(

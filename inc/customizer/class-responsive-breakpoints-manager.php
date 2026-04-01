@@ -274,12 +274,7 @@ class CCT_Responsive_Breakpoints_Manager {
      * Adiciona painel de breakpoints
      */
     private function add_breakpoints_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Responsive Breakpoints', 'cct'),
-            'description' => __('Gerenciador completo de pontos de quebra responsivos com preview multi-dispositivo e configurações avançadas.', 'cct'),
-            'priority' => 210,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
     }
     
     /**
@@ -290,7 +285,7 @@ class CCT_Responsive_Breakpoints_Manager {
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações principais do sistema responsivo.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -298,7 +293,7 @@ class CCT_Responsive_Breakpoints_Manager {
         $this->wp_customize->add_section($this->prefix . 'management', array(
             'title' => __('Gerenciar Breakpoints', 'cct'),
             'description' => __('Adicionar, editar e organizar pontos de quebra.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -306,7 +301,7 @@ class CCT_Responsive_Breakpoints_Manager {
         $this->wp_customize->add_section($this->prefix . 'templates', array(
             'title' => __('Templates de Breakpoints', 'cct'),
             'description' => __('Templates predefinidos de frameworks populares.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -314,7 +309,7 @@ class CCT_Responsive_Breakpoints_Manager {
         $this->wp_customize->add_section($this->prefix . 'preview', array(
             'title' => __('Preview Multi-dispositivo', 'cct'),
             'description' => __('Visualização simultânea em diferentes dispositivos.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -327,7 +322,7 @@ class CCT_Responsive_Breakpoints_Manager {
                     $breakpoint['min_width'],
                     $breakpoint['max_width'] ? $breakpoint['max_width'] . 'px' : '∞'
                 ),
-                'panel' => $this->prefix . 'panel',
+                'panel' => 'uenf_panel',
                 'priority' => 50 + array_search($bp_key, array_keys($this->get_active_breakpoints())),
             ));
         }

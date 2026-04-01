@@ -91,6 +91,7 @@ class CCT_404_Customizer {
                 'title'       => 'Página 404',
                 'description' => 'Configure o conteúdo exibido na página de erro 404.',
                 'priority'    => 35,
+                'panel'       => 'uenf_panel',
             ));
 
             // Título da Página 404

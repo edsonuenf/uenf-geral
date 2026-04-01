@@ -297,19 +297,13 @@ class CCT_Layout_Manager {
      * Adiciona seções de layout
      */
     private function add_layout_sections() {
-        // Painel principal de layout
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Componentes de Layout', 'cct'),
-            'description' => __('Sistema avançado de grid e containers responsivos.', 'cct'),
-            'priority' => 150,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
         
         // Seção de configurações de grid
         $this->wp_customize->add_section($this->prefix . 'grid_system', array(
             'title' => __('Sistema de Grid', 'cct'),
             'description' => __('Configure o grid responsivo e suas propriedades.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -317,7 +311,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_section($this->prefix . 'containers', array(
             'title' => __('Containers', 'cct'),
             'description' => __('Gerencie containers e suas configurações.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -325,7 +319,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_section($this->prefix . 'breakpoints', array(
             'title' => __('Breakpoints Responsivos', 'cct'),
             'description' => __('Configure pontos de quebra para responsividade.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -333,7 +327,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_section($this->prefix . 'spacing', array(
             'title' => __('Sistema de Espaçamentos', 'cct'),
             'description' => __('Configure margens, paddings e espaçamentos.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -341,7 +335,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_section($this->prefix . 'layout_builder', array(
             'title' => __('Construtor de Layout', 'cct'),
             'description' => __('Ferramenta visual para criar layouts personalizados.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 50,
         ));
     }

@@ -940,12 +940,7 @@ class CCT_Design_Tokens_Manager {
      * Adiciona painel de design tokens
      */
     private function add_design_tokens_panel() {
-        $this->wp_customize->add_panel($this->prefix . 'panel', array(
-            'title' => __('Design Tokens', 'cct'),
-            'description' => __('Sistema centralizado de tokens de design para consistência e manutenibilidade do sistema.', 'cct'),
-            'priority' => 220,
-            'capability' => 'edit_theme_options',
-        ));
+        // Painel movido para uenf_panel — registrado no customizer-loader.php
     }
     
     /**
@@ -956,7 +951,7 @@ class CCT_Design_Tokens_Manager {
         $this->wp_customize->add_section($this->prefix . 'general', array(
             'title' => __('Configurações Gerais', 'cct'),
             'description' => __('Configurações principais do sistema de design tokens.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 10,
         ));
         
@@ -964,7 +959,7 @@ class CCT_Design_Tokens_Manager {
         $this->wp_customize->add_section($this->prefix . 'primitive', array(
             'title' => __('Tokens Primitivos', 'cct'),
             'description' => __('Valores fundamentais do design system (cores base, tipografia, espaçamentos).', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 20,
         ));
         
@@ -972,7 +967,7 @@ class CCT_Design_Tokens_Manager {
         $this->wp_customize->add_section($this->prefix . 'semantic', array(
             'title' => __('Tokens Semânticos', 'cct'),
             'description' => __('Tokens com significado específico (cores de texto, feedback, marca).', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 30,
         ));
         
@@ -980,7 +975,7 @@ class CCT_Design_Tokens_Manager {
         $this->wp_customize->add_section($this->prefix . 'component', array(
             'title' => __('Tokens de Componente', 'cct'),
             'description' => __('Tokens específicos para componentes (botões, cards, inputs).', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 40,
         ));
         
@@ -988,7 +983,7 @@ class CCT_Design_Tokens_Manager {
         $this->wp_customize->add_section($this->prefix . 'management', array(
             'title' => __('Gerenciamento', 'cct'),
             'description' => __('Ferramentas para gerenciar, exportar e sincronizar tokens.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 50,
         ));
         
@@ -996,7 +991,7 @@ class CCT_Design_Tokens_Manager {
         $this->wp_customize->add_section($this->prefix . 'documentation', array(
             'title' => __('Documentação', 'cct'),
             'description' => __('Visualização e geração de documentação dos tokens.', 'cct'),
-            'panel' => $this->prefix . 'panel',
+            'panel' => 'uenf_panel',
             'priority' => 60,
         ));
     }

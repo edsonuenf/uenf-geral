@@ -33,9 +33,10 @@ class CCT_Menu_Customizer extends CCT_Customizer_Base {
      */
     private function add_menu_section() {
         $this->add_section('menu_settings', array(
-            'title' => __('Menu de Navegação', 'cct'),
-            'priority' => 35,
+            'title'       => __('Menu de Navegação', 'cct'),
+            'priority'    => 35,
             'description' => __('Configure a aparência do menu de navegação.', 'cct'),
+            'panel'       => 'uenf_panel',
         ));
     }
     

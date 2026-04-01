@@ -65,7 +65,9 @@ class CCT_Customizer_Loader {
      * Inicializa o carregador
      */
     private function init() {
-        error_log('CCT Customizer Loader inicializado: ' . date('Y-m-d H:i:s'));
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT Customizer Loader inicializado: ' . date('Y-m-d H:i:s'));
+        }
         add_action('customize_register', array($this, 'load_modules'));
         add_action('wp_head', array($this, 'output_css'), 999);
     }
@@ -76,16 +78,22 @@ class CCT_Customizer_Loader {
      * @param WP_Customize_Manager $wp_customize
      */
     public function load_modules($wp_customize) {
-        error_log('CCT: Iniciando carregamento de módulos do customizer');
-        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Iniciando carregamento de módulos do customizer');
+        }
+
         // Carregar classe base primeiro
         $this->load_file('class-customizer-base.php');
         
         // Verificar se a classe base foi carregada corretamente
         if (!class_exists('CCT_Customizer_Base')) {
-            error_log('CCT: Classe base CCT_Customizer_Base não encontrada. Alguns módulos podem não funcionar corretamente.');
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT: Classe base CCT_Customizer_Base não encontrada. Alguns módulos podem não funcionar corretamente.');
+            }
         } else {
-            error_log('CCT: Classe base CCT_Customizer_Base carregada com sucesso');
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT: Classe base CCT_Customizer_Base carregada com sucesso');
+            }
         }
         
         // Verificar gerenciador de extensões
