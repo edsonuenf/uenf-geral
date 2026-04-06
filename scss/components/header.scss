@@ -7,5 +7,153 @@
   padding: 1rem 0;
   .logo {
     max-height: 60px;
+    
+    @media (max-width: 768px) {
+      max-height: 56px; /* Diminuído em 4 pontos conforme solicitado */
+    }
+  }
+}
+
+// Layout para o topo (Mídias e Idiomas)
+.header-media-grid {
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0; /* Espaçamento controlado via margens conforme solicitado */
+  
+  .idiomas-bandeiras,
+  .social-media {
+    display: flex;
+    align-items: center;
+  }
+
+  .idiomas-bandeiras {
+    margin-right: 0 !important; /* Espaço à direita zerado */
+    padding-right: 0 !important;
+    font-size: 18px; /* Aumentado para 18px */
+    img, .wpml-ls-flag {
+      width: 22px !important; /* Forçar largura de 22px */
+      height: auto !important; /* Altura automática */
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  // Redes Sociais (ajuste de tamanho +2px)
+  .social-media {
+    position: relative;
+    padding-left: 20px; /* Espaço interno para a divisória */
+    margin-left: 20px !important; /* Espaço de 20px solicitado pelo usuário */
+    
+    // Divisória vertical (sugestão de design system)
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 18px; /* Altura da divisória */
+      width: 1px;
+      background-color: #e0e6f0; /* Cor padrão do design system */
+    }
+
+    .social-link {
+      i {
+        font-size: 18px; /* Base 16px + 2px = 18px */
+      }
+    }
+  }
+}
+
+// Ajuste responsivo para manter em linha (ou empilhar conforme necessário)
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem 0; /* Cabeçalho normal no mobile */
+  }
+
+  .header-media-grid {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    background-color: variables.$primary-color; /* Fundo sólido igual ao topo */
+    padding: 8px 15px;
+    margin: 0 !important;
+    justify-content: center !important;
+    z-index: 10000; /* Garantir que fique acima de tudo */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil para destaque */
+    
+    .idiomas-bandeiras {
+      margin-right: 0 !important;
+      padding-right: 15px;
+    }
+
+    .social-media {
+      margin-left: 0 !important;
+      padding-left: 15px;
+      
+      &:before {
+        height: 14px;
+        background-color: rgba(255, 255, 255, 0.3); /* Divisória mais clara para fundo escuro */
+      }
+    }
+  }
+
+  .bg-header-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60px !important; /* Altura fixa rigorosa para mobile */
+    display: flex;
+    align-items: center;
+    background-color: variables.$primary-color;
+    z-index: 10001; /* Ficar acima do rodapé de ícones (10000) */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 0; /* Padding controlado pela altura/flex */
+    margin: 0 !important;
+
+    // Suporte ao Admin Bar do WordPress
+    body.admin-bar & {
+      top: 32px; // Posição padrão da barra do WP em mobile
+      
+      @media (max-width: 600px) {
+        top: 0; // WordPress oculta a barra ou muda o comportamento em telas minúsculas
+      }
+    }
+  }
+
+  /* Garantir que o menu lateral apareça ACIMA do cabeçalho fixo */
+  .offcanvas {
+    z-index: 20000 !important;
+  }
+
+  /* Esconder a segunda barra azul (já temos o menu na linha de cima) */
+  .navbar-uenf {
+    display: none !important;
+  }
+
+  .logo {
+    text-align: left; /* Alinhado à esquerda no mobile pois divide a linha com o menu */
+    img {
+      max-width: 180px; /* Ajustado para caber o ícone do menu ao lado */
+    }
+  }
+
+  .navbar-toggler {
+    border: none;
+    padding: 0;
+    &:focus {
+      box-shadow: none;
+    }
+    .navbar-toggler-icon {
+      width: 24px;
+      height: 24px;
+    }
   }
 }

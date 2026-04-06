@@ -55,6 +55,15 @@
 
 <?php wp_footer(); ?>
 
+<style>
+/* Ocultar painel de atalhos no mobile */
+@media (max-width: 768px) {
+    #uenf-shortcut-panel-container {
+        display: none !important;
+    }
+}
+</style>
+
 <?php // Painel de atalhos reativado com container dedicado
 if (!is_admin()): ?>
     <!-- Container dedicado para o painel de atalhos -->

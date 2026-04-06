@@ -13,6 +13,15 @@ body {
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   background: #fff;
   color: #333;
+  
+  @media (max-width: 768px) {
+    padding-top: 60px !important; /* Altura exata da barra azul mobile */
+    padding-bottom: 40px !important; /* Espaço para o rodapé fixo de idiomas/redes sociais */
+
+    body.admin-bar & {
+      padding-top: 92px !important; /* Barra do Admin (32px) + Cabeçalho (60px) */
+    }
+  }
 }
 
 // Ensure theme colors are available as utility classes
@@ -263,7 +272,7 @@ h6 {
 // Keep them solid/filled for visibility
 .wp-block-cover .wp-block-button__link {
   border: none !important;
-  background-color: $accent-color !important;
+  background-color: variables.$accent-color !important;
   color: #fff !important;
 
   &:hover,
@@ -275,7 +284,7 @@ h6 {
 
 // Exception: "Próximo Evento" (secondary color) inside Cover blocks
 .wp-block-cover .has-secondary-color {
-  background-color: $accent-color !important;
+  background-color: variables.$accent-color !important;
   color: #fff !important;
   padding: 10px 24px !important; // Matches standard button padding
   border-radius: 50px; // Pill shape

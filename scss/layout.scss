@@ -101,6 +101,33 @@ body {
   padding-bottom: 12px !important;
 }
 
+//* Garantir que não haja margem superior no conteúdo mobile */
+@media (max-width: 768px) {
+  .hero-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    min-height: 80px; /* Altura mínima para permitir a centralização vertical */
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-title {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important; /* Remove margem que desloca o centro */
+    line-height: 1;
+    font-size: 1.75rem; /* Ajustado para caber bem no centro */
+  }
+
+  #primary,
+  #content, 
+  .site-content,
+  .page-header,
+  .entry-header {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
 // Alinhamento de imagem e lista/texto ao lado
 .content-block {
   display: flex;
@@ -130,55 +157,69 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: 0 0 12px 0 !important;
-  margin: 0;
   list-style: none;
-  font-size: 0.9rem;
+  margin: 0;
+  padding: 12px 15px !important;
+  background-color: transparent;
+  row-gap: 6px; /* Permite múltiplas linhas graciosamente no mobile */
+  column-gap: 2px;
+  
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 10px 15px !important;
+  }
 
   .breadcrumb-item {
     display: inline-flex;
     align-items: center;
+    color: #888;
+    line-height: 1.4;
 
-    // Reset Bootstrap default separator
-    &::before {
-      content: none !important;
-      padding: 0; // Bootstrap adds something here too usually
-      margin: 0;
-    }
-
-    &:not(:last-child)::after {
+    & + .breadcrumb-item::before {
       content: "»";
-      margin: 0 0.5rem;
-      color: #888;
+      display: inline-block;
+      margin: 0 8px;
+      color: #bbb;
+      font-weight: normal;
     }
 
     &.active {
-      color: variables.$primary-color;
+      color: #444;
       font-weight: 600;
+      white-space: normal; /* Permite que o título da página atual quebre sozinho */
     }
 
     &.home {
-      .breadcrumb-link {
-        display: flex;
-        align-items: center;
-      }
+      flex-shrink: 0;
     }
   }
 
   .breadcrumb-link {
     text-decoration: none;
     color: variables.$link-color;
-    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
 
     &:hover {
       color: variables.$link-hover;
       text-decoration: underline;
     }
-  }
 
-  svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
+    svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+  }
+}
+
+// Ocultar painel de atalhos no mobile
+@media (max-width: 768px) {
+  #uenf-shortcut-panel-container,
+  .uenf-shortcut-panel-container {
+    display: none !important;
   }
 }
