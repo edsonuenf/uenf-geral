@@ -16,7 +16,7 @@
 
 // Layout para o topo (Mídias e Idiomas)
 .header-media-grid {
-  display: flex !important;
+  display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 0; /* Espaçamento controlado via margens conforme solicitado */

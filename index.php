@@ -24,7 +24,7 @@ $exibir_filtro = count($cats_reais) >= 1;
             <div class="row align-items-center mb-3">
                 <div class="col-lg-12">
                     <div class="display-5 fw-bold text-uenf-blue mb-3 hero-title">
-                        <?php echo get_bloginfo('name'); ?>
+                        <?php echo esc_html(get_bloginfo('name')); ?>
                     </div>
                 </div>
             </div>
@@ -52,6 +52,14 @@ $exibir_filtro = count($cats_reais) >= 1;
         <?php endif; ?>
 
         <?php if ( have_posts() ) : ?>
+
+            <?php
+            // Pre-warm object cache para evitar N+1 queries de categorias
+            if ( ! empty( $GLOBALS['wp_query']->posts ) ) {
+                $post_ids = wp_list_pluck( $GLOBALS['wp_query']->posts, 'ID' );
+                update_object_term_cache( $post_ids, 'post' );
+            }
+            ?>
 
             <div id="uenf-posts-list">
             <?php while ( have_posts() ) : the_post();
@@ -141,7 +149,11 @@ $exibir_filtro = count($cats_reais) >= 1;
         });
     }
     applyExcerpts();
-    window.addEventListener('resize', applyExcerpts);
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(applyExcerpts, 100);
+    });
 
     var select = document.getElementById('uenf-cat-filter');
     if (!select) return;

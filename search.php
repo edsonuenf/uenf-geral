@@ -22,7 +22,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
             <div class="row align-items-center mb-3">
                 <div class="col-lg-12">
                     <h1 class="display-5 fw-bold text-uenf-blue mb-3 hero-title">
-                        <?php echo get_bloginfo('name'); ?>
+                        <?php echo esc_html(get_bloginfo('name')); ?>
                     </h1>
                 </div>
             </div>
@@ -131,11 +131,12 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                         <a href="<?php the_permalink(); ?>" class="text-decoration-none">
                                             <?php 
                                             $highlight = get_theme_mod('cct_search_results_highlight_terms', true);
+                                            $allowed_tags = array('mark' => array('class' => array()));
                                             $title = get_the_title();
                                             if ($highlight && $search_query) {
                                                 $title = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="cct-highlight">$1</mark>', $title);
                                             }
-                                            echo $title;
+                                            echo wp_kses($title, $allowed_tags);
                                             ?>
                                         </a>
                                     </h2>
@@ -166,7 +167,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                         if (get_theme_mod('cct_search_results_highlight_terms', true) && $search_query) {
                                                             $excerpt = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="cct-highlight">$1</mark>', $excerpt);
                                                         }
-                                                        echo $excerpt;
+                                                        echo wp_kses($excerpt, $allowed_tags);
                                                         ?>
                                                     </div>
                                                     
@@ -176,7 +177,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                             Ler Mais
                                         </a>
                                         <?php if (get_permalink()) : ?>
-                                            <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" aria-label="Copiar link do artigo">
+                                            <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo esc_js(get_permalink()); ?>')" aria-label="Copiar link do artigo">
                                                 <i class="fas fa-link" aria-hidden="true"></i>
                                             </button>
                                         <?php endif; ?>

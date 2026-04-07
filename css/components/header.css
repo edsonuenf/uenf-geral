@@ -146,21 +146,18 @@
 
 /* Grid para idiomas e social media no topo do header */
 .header-media-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: end;
-  justify-items: end;
-  gap: 12px;
+  gap: 0;
 }
 .bg-header-logo .header-media-grid {
   padding-right: 0 !important; /* remove gutter da coluna à direita */
 }
 .header-media-grid .idiomas-bandeiras,
 .header-media-grid .social-media {
-  display: grid;
+  display: flex;
   align-items: center;
-  justify-items: end;
   text-align: right;
 }
 

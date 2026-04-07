@@ -14,7 +14,7 @@ get_header();
                 <!-- Hero -->
                 <div class="col-lg-12">
                     <div class="display-5 fw-bold text-uenf-blue mb-3 hero-title">
-                        <?php echo get_bloginfo('name'); ?>
+                        <?php echo esc_html(get_bloginfo('name')); ?>
                     </div>
                 </div>
             </div>

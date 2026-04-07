@@ -206,13 +206,21 @@ class CCT_Customizer_Loader {
          }
         
         // Carregar cada módulo
-        error_log('CCT: Carregando ' . count($module_files) . ' módulos');
-        foreach ($module_files as $file) {
-            error_log('CCT: Tentando carregar módulo: ' . $file);
-            $result = $this->load_module($file, $wp_customize);
-            error_log('CCT: Módulo ' . $file . ' - Resultado: ' . ($result ? 'SUCESSO' : 'FALHA'));
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Carregando ' . count($module_files) . ' módulos');
         }
-        error_log('CCT: Carregamento de módulos concluído. Total de módulos carregados: ' . count($this->modules));
+        foreach ($module_files as $file) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT: Tentando carregar módulo: ' . $file);
+            }
+            $result = $this->load_module($file, $wp_customize);
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT: Módulo ' . $file . ' - Resultado: ' . ($result ? 'SUCESSO' : 'FALHA'));
+            }
+        }
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Carregamento de módulos concluído. Total de módulos carregados: ' . count($this->modules));
+        }
         
         // Manter funcionalidades existentes do customizer original
         $this->load_legacy_customizer($wp_customize);

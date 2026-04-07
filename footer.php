@@ -30,7 +30,7 @@
                         <?php
                     endif ?>
 
-                    <h4><?php echo get_bloginfo('name'); ?></h4>
+                    <h4><?php echo esc_html(get_bloginfo('name')); ?></h4>
                     <div class="contact-info-container">
                         <div class="contact-item"><strong>Email:</strong>
                             <?php dynamic_sidebar('endereco-email-setor'); ?></div>
