@@ -1,6 +1,6 @@
 {
   "name": "uenf-geral",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tema WordPress para UENF",
   "main": "index.js",
   "scripts": {
