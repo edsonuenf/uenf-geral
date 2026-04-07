@@ -79,13 +79,18 @@ if ( function_exists( 'wp_body_open' ) ) {
     <header id="masthead" class="site-header">
       <div class="bg-header-logo">
         <div class="container">
-          <div class="row">
-            <div class="col-md-4">
+          <div class="row align-items-center">
+            <div class="col-10 col-md-4">
               <div class="logo">
                 <a href="https://uenf.br" target="_blank">
                   <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/logo-uenf-transparente.png" alt="UENF">
                 </a>
               </div>
+            </div>
+            <div class="col-2 d-md-none d-flex justify-content-end">
+              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral" aria-controls="menuLateral" aria-label="Toggle navigation" style="border: none; background: transparent; padding: 0;">
+                <span class="navbar-toggler-icon"></span>
+              </button>
             </div>
             <div class="col-md-8 header-media-grid">
                 <div class="idiomas-bandeiras">
@@ -102,7 +107,7 @@ if ( function_exists( 'wp_body_open' ) ) {
       <!-- Navbar Superior com Logo -->
       <nav class="navbar navbar-dark navbar-uenf">
         <div class="container header-grid-container">
-          <div class="header-grid-col1">
+          <div class="header-grid-col1 d-none d-md-block">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral" aria-controls="menuLateral" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -119,47 +124,47 @@ if ( function_exists( 'wp_body_open' ) ) {
               ?>
             </div>
 
-            <div class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1" aria-labelledby="menuLateralLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="menuLateralLabel">&nbsp;</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
-                <?php
-                  // Carrega o novo menu
-                  if (function_exists('UENF_Menu_Component::display_menu')) {
-                      UENF_Menu_Component::display_menu([
-                          'theme_location' => 'primary',
-                          'menu_id'        => 'primary-menu',
-                          'menu_class'     => 'new-menu',
-                          'container'      => false,
-                          'fallback_cb'    => function() {
-                              // Fallback para o menu padrão do WordPress
-                              wp_nav_menu([
-                                  'theme_location' => 'primary',
-                                  'menu_id'        => 'primary-menu',
-                                  'container'      => false,
-                                  'menu_class'     => 'new-menu',
-                                  'fallback_cb'    => 'wp_page_menu',
-                              ]);
-                          }
-                      ]);
-                  } else {
-                      // Fallback direto para o menu padrão do WordPress
-                      wp_nav_menu([
-                          'theme_location' => 'primary',
-                          'menu_id'        => 'primary-menu',
-                          'container'      => false,
-                          'menu_class'     => 'new-menu',
-                          'fallback_cb'    => 'wp_page_menu',
-                      ]);
-                  }
-                ?>
-              </div>
-            </div>
           </div>
         </div>
       </nav>
+      <div class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1" aria-labelledby="menuLateralLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="menuLateralLabel">&nbsp;</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <?php
+            // Carrega o novo menu
+            if (function_exists('UENF_Menu_Component::display_menu')) {
+                UENF_Menu_Component::display_menu([
+                    'theme_location' => 'primary',
+                    'menu_id'        => 'primary-menu',
+                    'menu_class'     => 'new-menu',
+                    'container'      => false,
+                    'fallback_cb'    => function() {
+                        // Fallback para o menu padrão do WordPress
+                        wp_nav_menu([
+                            'theme_location' => 'primary',
+                            'menu_id'        => 'primary-menu',
+                            'container'      => false,
+                            'menu_class'     => 'new-menu',
+                            'fallback_cb'    => 'wp_page_menu',
+                        ]);
+                    }
+                ]);
+            } else {
+                // Fallback direto para o menu padrão do WordPress
+                wp_nav_menu([
+                    'theme_location' => 'primary',
+                    'menu_id'        => 'primary-menu',
+                    'container'      => false,
+                    'menu_class'     => 'new-menu',
+                    'fallback_cb'    => 'wp_page_menu',
+                ]);
+            }
+          ?>
+        </div>
+      </div>
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">

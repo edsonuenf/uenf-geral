@@ -1,0 +1,94 @@
+name: theme-review
+description: >
+  Squad de revisão do tema WordPress da UENF (uenf-geral).
+  Analisa qualidade de código PHP/CSS/JS, testa acessibilidade e performance,
+  e gera documentação e changelog das alterações.
+
+version: "1.0.0"
+language: pt-BR
+frequency: on-demand
+
+agents:
+  - id: code-reviewer
+    name: Code Reviewer
+    role: Analista de código PHP/CSS/JS
+    best_practices:
+      - review
+      - technical-writing
+
+  - id: accessibility-tester
+    name: Accessibility & Performance Tester
+    role: Especialista em acessibilidade WCAG e performance web
+    best_practices:
+      - review
+
+  - id: doc-writer
+    name: Documentation Writer
+    role: Redator técnico para changelog e documentação do tema
+    best_practices:
+      - technical-writing
+
+pipeline:
+  - step: 1
+    name: scan-codebase
+    agent: code-reviewer
+    description: >
+      Escanear os arquivos modificados do tema (PHP, CSS/SCSS, JS).
+      Identificar issues de qualidade, padrões WordPress, segurança e boas práticas.
+    inputs:
+      - git diff ou lista de arquivos modificados
+    outputs:
+      - code-review-report.md
+
+  - step: 2
+    name: accessibility-performance-check
+    agent: accessibility-tester
+    description: >
+      Verificar conformidade WCAG 2.1 AA nos templates e componentes.
+      Analisar performance: carregamento de assets, imagens, scripts.
+      Checar boas práticas de SEO on-page.
+    inputs:
+      - arquivos de template PHP e CSS modificados
+    outputs:
+      - accessibility-report.md
+
+  - step: 3
+    name: checkpoint-review
+    type: checkpoint
+    description: >
+      Apresentar os relatórios de revisão de código e acessibilidade ao usuário.
+      Perguntar se há itens a priorizar ou ajustes antes da documentação.
+    questions:
+      - question: Os relatórios de revisão estão completos? Há algum ponto crítico a destacar?
+        options:
+          - Sim, continuar para documentação
+          - Ajustar algum ponto antes
+
+  - step: 4
+    name: generate-documentation
+    agent: doc-writer
+    description: >
+      Com base nos relatórios anteriores, gerar:
+      1. Entrada no CHANGELOG.md com as alterações da sessão
+      2. Atualização do README se necessário
+      3. Resumo executivo das alterações para o time
+    inputs:
+      - code-review-report.md
+      - accessibility-report.md
+    outputs:
+      - CHANGELOG-entry.md
+      - session-summary.md
+
+  - step: 5
+    name: final-checkpoint
+    type: checkpoint
+    description: >
+      Apresentar a documentação gerada e confirmar com o usuário.
+    questions:
+      - question: A documentação gerada está correta e pode ser salva?
+        options:
+          - Confirmar e salvar
+          - Revisar antes de salvar
+
+output_dir: squads/theme-review/output
+memory_file: squads/theme-review/_memory/memories.md

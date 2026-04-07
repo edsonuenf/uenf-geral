@@ -15,7 +15,7 @@ body {
   color: #333;
   
   @media (max-width: 768px) {
-    padding-top: 60px !important; /* Altura exata da barra azul mobile */
+    padding-top: var(--cct-header-height-mobile, 60px) !important; /* Altura controlada pelo Customizer */
     padding-bottom: 40px !important; /* Espaço para o rodapé fixo de idiomas/redes sociais */
 
     body.admin-bar & {

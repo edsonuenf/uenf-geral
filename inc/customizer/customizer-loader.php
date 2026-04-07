@@ -99,11 +99,15 @@ class CCT_Customizer_Loader {
         // Verificar gerenciador de extensões
         $extension_manager = function_exists('cct_extension_manager') ? cct_extension_manager() : null;
         
+        // Carregar controles personalizados compartilhados
+        $this->load_file('class-cct-custom-controls.php');
+        
         // Lista de módulos básicos (sempre carregados)
         $basic_modules = array(
             'class-menu-customizer.php',
             'class-design-panel-manager.php',
             'class-404-customizer.php',
+            'class-header-manager.php',
         );
         
         // Lista de módulos condicionais (baseados em extensões)
@@ -307,6 +311,7 @@ class CCT_Customizer_Loader {
             'class-design-tokens-manager.php' => 'CCT_Design_Tokens_Manager',
             'class-design-tokens-control.php' => 'CCT_Design_Tokens_Control',
             'class-design-panel-manager.php' => 'UENF\CCT\Customizer\Design_Panel_Manager',
+            'class-header-manager.php' => 'CCT_Header_Manager',
         );
         
         // Verificar se existe mapeamento específico

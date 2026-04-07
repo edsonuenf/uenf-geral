@@ -150,7 +150,7 @@ abstract class CCT_Customizer_Base {
      * @param string $suffix Sufixo para o valor (ex: 'px', '%')
      * @return string CSS gerado
      */
-    protected function generate_css($selector, $property, $setting_id, $default = '', $suffix = '') {
+    protected function get_css_line($selector, $property, $setting_id, $default = '', $suffix = '') {
         $value = $this->get_theme_mod($setting_id, $default);
         
         if (empty($value) || $value === $default) {
