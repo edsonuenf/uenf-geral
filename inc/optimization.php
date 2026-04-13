@@ -73,8 +73,11 @@ function cct_add_browser_caching() {
 }
 add_action( 'send_headers', 'cct_add_browser_caching' );
 
-// Remove query strings from static resources
+// Remove query strings from static resources (desativado em dev para permitir cache-bust)
 function cct_remove_script_version( $src ) {
+    if ( defined('WP_DEBUG') && WP_DEBUG ) {
+        return $src; // Em dev, manter ?ver= para cache-bust
+    }
     if ( strpos( $src, '?ver=' ) ) {
         $src = remove_query_arg( 'ver', $src );
     }

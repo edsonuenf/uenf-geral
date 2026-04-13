@@ -2,6 +2,7 @@
 .custom-breadcrumb {
     padding-bottom: 1.25rem;
 }
+
 /* Correções de espaçamento no header */
 body {
     margin: 0;
@@ -28,27 +29,22 @@ body {
     padding: 0;
 }
 
-/* Remover margens e paddings padrão do Bootstrap */
-.container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-.row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
 /* Ajustar o container do header */
 .header-grid-container {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Garantir que não haja espaços extras */
-* {
-    margin: 0;
-    padding: 0;
+/* Evitar que Bootstrap .row cause overflow horizontal no header fixo */
+.bg-header-logo .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* box-sizing global (margin/padding já definidos no reset.css) */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -58,12 +54,14 @@ body {
 }
 
 .entry-content p {
-    margin: 0 0 1rem; /* separa parágrafos visualmente */
+    margin: 0 0 1rem;
+    /* separa parágrafos visualmente */
 }
 
 .entry-content ul,
 .entry-content ol {
-    margin: 0 0 1rem 1.25rem; /* espaço e indentação para listas */
+    margin: 0 0 1rem 1.25rem;
+    /* espaço e indentação para listas */
 }
 
 .entry-content h1,
@@ -72,7 +70,8 @@ body {
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-    margin: 1.25rem 0 0.75rem; /* restaura espaçamento de títulos */
+    margin: 1.25rem 0 0.75rem;
+    /* restaura espaçamento de títulos */
 }
 
 /* ===== Alinhamento correto de imagens ===== */
@@ -101,10 +100,10 @@ body {
 }
 
 /* Clearfix para garantir altura correta do container */
-.entry-content::after { 
-    content: ""; 
-    display: block; 
-    clear: both; 
+.entry-content::after {
+    content: "";
+    display: block;
+    clear: both;
 }
 
 /* Este arquivo contém apenas correções específicas e sobrescritas necessárias */
@@ -150,12 +149,12 @@ body .entry-content .wp-block-image.aligncenter img {
 }
 
 /* Permitir que o texto flua ao lado das imagens alinhadas */
-body .entry-content .alignleft + p,
-body .entry-content .alignright + p,
-body .entry-content .wp-caption.alignleft + p,
-body .entry-content .wp-caption.alignright + p,
-body .entry-content .wp-block-image.alignleft + p,
-body .entry-content .wp-block-image.alignright + p {
+body .entry-content .alignleft+p,
+body .entry-content .alignright+p,
+body .entry-content .wp-caption.alignleft+p,
+body .entry-content .wp-caption.alignright+p,
+body .entry-content .wp-block-image.alignleft+p,
+body .entry-content .wp-block-image.alignright+p {
     clear: none !important;
     margin-top: 0 !important;
 }
@@ -168,8 +167,8 @@ body .entry-content p:has(img.alignright) {
 }
 
 /* Evitar que imagens dentro de parágrafos flutuem (comportamento específico) */
-.entry-content p > img.alignleft,
-.entry-content p > img.alignright {
+.entry-content p>img.alignleft,
+.entry-content p>img.alignright {
     float: none !important;
     display: block !important;
     margin: 0 0 1rem 0 !important;
@@ -205,15 +204,306 @@ body .entry-content p:has(img.alignright) {
 }
 
 /* Permitir que texto flua ao lado das imagens no front-page */
-.page-content .entry-content .alignleft + p,
-.page-content .entry-content .alignright + p,
-.page-content .entry-content img.alignleft + p,
-.page-content .entry-content img.alignright + p,
-.page-content .entry-content figure.alignleft + p,
-.page-content .entry-content figure.alignright + p,
-.page-content .entry-content .wp-block-image.alignleft + p,
-.page-content .entry-content .wp-block-image.alignright + p {
+.page-content .entry-content .alignleft+p,
+.page-content .entry-content .alignright+p,
+.page-content .entry-content img.alignleft+p,
+.page-content .entry-content img.alignright+p,
+.page-content .entry-content figure.alignleft+p,
+.page-content .entry-content figure.alignright+p,
+.page-content .entry-content .wp-block-image.alignleft+p,
+.page-content .entry-content .wp-block-image.alignright+p {
     clear: none !important;
     margin-top: 0 !important;
 }
 
+/* ===== Rodapé: reduz distância logo → texto à metade ===== */
+.footer-widgets {
+    gap: 15px !important;
+}
+
+@media (max-width: 576px) {
+    .footer-widgets {
+        gap: 8px !important;
+    }
+
+    .footer-logo img {
+        margin-bottom: 0.5rem !important;
+    }
+}
+
+/* ===== Back-to-top: fica atrás da barra inferior em mobile ===== */
+@media (max-width: 767.98px) {
+    .back-to-top {
+        z-index: 9999 !important; /* abaixo da .header-media-grid (z-index: 10000) */
+        bottom: 56px !important;  /* um pouco mais alto para respirar acima da barra */
+    }
+}
+
+/* ===== Painel de atalhos: mantém posicionamento original do shortcuts.css ===== */
+/* O shortcuts.css controla: position:fixed; top:0; right:0; height:100vh; width:0; overflow:hidden */
+/* Quando expandido (.expanded), width:300px; overflow:visible */
+/* NÃO sobrescrever top/right/height/width — isso quebraria o slide-in do painel */
+@media (max-width: 767.98px) {
+    /* Oculta o ícone flutuante original — usamos #header-shortcut-btn no lugar */
+    #uenf-shortcut-panel-container .shortcut-icon {
+        opacity: 0 !important;
+        pointer-events: none !important; /* não intercepta cliques do usuário */
+        /* programmatic .click() ainda funciona — dispara o jQuery handler */
+    }
+
+    /* FIX: shortcuts.css define right:-100% em mobile mas nunca reseta para 0 ao expandir.
+       O painel ficava fora da tela mesmo com .expanded/.active. */
+    #uenf-shortcut-panel-container.expanded .shortcut-panel {
+        right: 0 !important;
+    }
+}
+
+/* ===== Ícone Home e botão Atalhos — barra inferior mobile ===== */
+.header-home-link,
+.header-shortcut-btn {
+    display: none; /* ocultos no desktop */
+}
+
+@media (max-width: 767.98px) {
+    .header-home-link {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        color: #fff !important;
+        font-size: 18px;
+        text-decoration: none;
+        margin-right: auto; /* empurra idiomas+social para a direita */
+        min-width: 44px;    /* largura mínima de toque — altura vem da barra */
+        padding: 0 8px;
+    }
+
+    .header-home-link:hover {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    /* Botão atalhos — centro da barra */
+    .header-shortcut-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: #fff !important;
+        font-size: 24px;
+        cursor: pointer;
+        min-width: 44px;    /* largura mínima de toque */
+        padding: 0 8px;
+    }
+
+    /* Ajusta barra para space-between com o home à esquerda */
+    .header-media-grid {
+        justify-content: flex-start !important;
+        /* Reduz padding da barra para altura mais compacta (~34px) */
+        padding-top: 8px !important;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+}
+
+/* ===== Espaço inferior do conteúdo: acomoda barra + back-to-top ===== */
+/* back-to-top: bottom:56px, altura~40px → topo em ~96px do fundo */
+/* barra inferior: ~34px */
+@media (max-width: 767.98px) {
+    body {
+        padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+}
+
+/* ===== Dropdown de idiomas — somente mobile (barra rodapé) ===== */
+@media (max-width: 767.98px) {
+    .header-media-grid .idiomas-bandeiras {
+        position: relative;
+    }
+
+    /* Botão trigger: mostra a flag atual */
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger {
+        display: flex !important;
+        align-items: center;
+        gap: 4px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: #fff;
+    }
+
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger img {
+        width: 22px;
+        height: auto;
+    }
+
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger::after {
+        content: '▲';
+        font-size: 0.6rem;
+        color: rgba(255,255,255,0.7);
+        transition: transform 0.2s;
+    }
+
+    .header-media-grid .idiomas-bandeiras.open .lang-dropdown-trigger::after {
+        content: '▼';
+    }
+
+    /* Painel com todos os idiomas — abre para cima */
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-panel {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 8px);
+        right: 0;
+        background: #1d3771;
+        border-radius: 6px;
+        box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
+        padding: 6px 0;
+        min-width: 120px;
+        z-index: 10002;
+    }
+
+    .header-media-grid .idiomas-bandeiras.open .lang-dropdown-panel {
+        display: block;
+    }
+
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-panel a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        color: #fff !important;
+        text-decoration: none;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        transition: background 0.15s;
+    }
+
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-panel a:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    .header-media-grid .idiomas-bandeiras .lang-dropdown-panel img {
+        width: 20px;
+        height: auto;
+    }
+
+    /* Oculta a lista original */
+    .header-media-grid .idiomas-bandeiras > ul,
+    .header-media-grid .idiomas-bandeiras > .widget {
+        display: none !important;
+    }
+}
+
+/* ===== Mobile search bar: sobrepõe search.css ===== */
+#mobile-search-bar {
+    background-color: #566694 !important; /* hex sólido equivalente a #1D3770BF sobre branco — igual ao navbar desktop */
+}
+
+#mobile-search-bar .mobile-search-inner form {
+    width: 80% !important;   /* 20% menor na largura */
+    margin: 0 auto !important;
+}
+
+#mobile-search-bar input[type="search"] {
+    border-radius: 20px 0 0 20px !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    font-size: 0.76rem !important; /* ~20% menor */
+    outline: none !important;
+    height: auto !important;
+}
+
+#mobile-search-bar button[type="submit"] {
+    border-radius: 0 20px 20px 0 !important;
+    background: var(--bs-uenf-blue, #1d3771) !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 8px 12px !important;
+    min-width: 36px !important;
+}
+
+#mobile-search-bar button[type="submit"] .search-text {
+    display: none !important;
+}
+
+/* ===== Cor de todos os títulos h1-h6 ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #1d3770bf !important;
+}
+
+/* ===== Post meta: ícone + cor muted, colado ao título ===== */
+.entry-header .entry-title {
+    margin-bottom: -2px !important;
+}
+
+.entry-header .entry-meta {
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+}
+
+.entry-header {
+    margin-bottom: calc(1.5rem - 2px) !important;
+    /* mb-4 padrão menos 2px */
+}
+
+.entry-header .entry-meta .posted-on {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+    color: #6c757d !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    font-style: normal !important;
+}
+
+.entry-header .entry-meta .posted-on i {
+    font-size: 0.75rem !important;
+    color: #6c757d !important;
+}
+
+/* Título do single post */
+.single .entry-title {
+    color: #1d3770bf !important;
+}
+
+/* Hero image: borda arredondada e sombra suave */
+.post-hero-image {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: cover;
+}
+
+/* ===== Tipografia mobile: H1/H2/H3 -2px + entrelinhamento compacto ===== */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.615rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* ~25.8px — era ~27.85px */
+    h2 {
+        font-size: 1.875rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* 30px — era 32px */
+    h3 {
+        font-size: 1.075rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* ~17.2px — era 19.2px */
+}

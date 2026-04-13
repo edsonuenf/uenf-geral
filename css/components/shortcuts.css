@@ -176,6 +176,10 @@
         width: 100%;
         right: -100%;
     }
+
+    #uenf-shortcut-panel-container.expanded .shortcut-panel {
+        right: 0;
+    }
     
     #uenf-shortcut-panel-container .shortcut-icon {
         bottom: 80px;

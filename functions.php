@@ -1994,6 +1994,14 @@ function cct_scripts()
     wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);
     wp_enqueue_style('cct-custom-fixes', CCT_THEME_URI . '/css/custom-fixes.css', array('cct-styles-additional'), $style_version);
 
+    // 3.2 Estilos da listagem de posts (somente em páginas de blog/arquivo)
+    if (is_home() || is_archive()) {
+        $posts_list_path = get_template_directory() . '/css/components/posts-list.css';
+        if (file_exists($posts_list_path)) {
+            wp_enqueue_style('cct-posts-list', CCT_THEME_URI . '/css/components/posts-list.css', array('cct-custom-fixes'), filemtime($posts_list_path));
+        }
+    }
+
     // 3.1.1 Estilos dos Block Patterns
     $patterns_css_path = get_template_directory() . '/css/patterns.css';
     if (file_exists($patterns_css_path)) {

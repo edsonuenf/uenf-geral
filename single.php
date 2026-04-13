@@ -35,21 +35,25 @@ get_header();
                     the_post();
                     ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                        <header class="entry-header mb-4">
-                            <h1 class="entry-title"><?php echo esc_html(get_the_title()); ?></h1>
-
-                            <?php if ('post' === get_post_type()): ?>
-                                <div class="entry-meta mb-3">
-                                    <span class="posted-on">Publicado em <?php echo get_the_date(); ?></span>
-                                </div>
-                            <?php endif; ?>
-                        </header>
 
                         <?php if (has_post_thumbnail()): ?>
-                            <div class="post-thumbnail mb-4">
-                                <?php the_post_thumbnail('uenf-large', ['class' => 'img-fluid']); ?>
+                            <div class="post-hero-image mb-4">
+                                <?php the_post_thumbnail('uenf-large', ['class' => 'img-fluid w-100']); ?>
                             </div>
                         <?php endif; ?>
+
+                        <header class="entry-header mb-4">
+                            <?php if ('post' === get_post_type()): ?>
+                                <div class="entry-meta">
+                                    <span class="posted-on">
+                                        <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
+                                        <?php echo esc_html( get_the_date() ); ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+
+                            <h1 class="entry-title"><?php echo esc_html(get_the_title()); ?></h1>
+                        </header>
 
                         <div class="entry-content">
                             <?php the_content(); ?>

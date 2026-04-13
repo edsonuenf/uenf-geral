@@ -216,10 +216,5 @@ body {
   }
 }
 
-// Ocultar painel de atalhos no mobile
-@media (max-width: 768px) {
-  #uenf-shortcut-panel-container,
-  .uenf-shortcut-panel-container {
-    display: none !important;
-  }
-}
+// Painel de atalhos: visível no mobile (ícone integrado à barra inferior)
+// A visibilidade é controlada via css/custom-fixes.css

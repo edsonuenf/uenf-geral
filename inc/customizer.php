@@ -2130,6 +2130,7 @@ function cct_customize_css() {
         /* Cores principais */
         --primary-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('primary_color', '#1d3771'))) . ';
         --secondary-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('secondary_color', '#4b6397'))) . ';
+        --heading-color: #26557d;
         --text-color: ' . esc_attr(maybe_convert_to_rgba(get_theme_mod('text_color', '#333333'))) . ';
         
         /* Botões */
@@ -2203,12 +2204,12 @@ function cct_customize_css() {
     /* Estilos para títulos */
     h1, h2, h3 {
         font-weight: 700;
-        color: var(--primary-color);
+        color: var(--heading-color);
     }
-    
+
     h4, h5, h6 {
         font-weight: 500;
-        color: var(--secondary-color);
+        color: var(--heading-color);
     }
     
     /* Estilos para botões */
@@ -2296,7 +2297,7 @@ function cct_customize_css() {
     echo '.footer-widgets {';
     echo 'display: grid;';
     echo 'grid-template-columns: repeat(' . esc_attr($footer_columns) . ', 1fr);';
-    echo 'gap: 30px;';
+    echo 'gap: 15px;';
     echo '}';
     
     // Estilos para Campos de Formulário Contact Form 7 (excluindo botões)
