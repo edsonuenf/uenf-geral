@@ -775,6 +775,7 @@ function cct_admin_page_callback()
                     Gerenciar Extensões</a></p>
             <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-secondary">🎨 Personalizar Tema</a>
             </p>
+            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf-docs-design'); ?>" class="button button-secondary">📖 Documentação</a></p>
         </div>
 
         <div class="card" style="max-width: 800px; margin-top: 20px;">
@@ -824,15 +825,29 @@ function cct_docs_design_page_callback()
     if (file_exists($docs_file)) {
         $docs_content = file_get_contents($docs_file);
         // Converte Markdown avançado para HTML
-        $docs_content = preg_replace('/^# (.+)$/m', '<h1 class="docs-h1">$1</h1>', $docs_content);
-        $docs_content = preg_replace('/^## (.+)$/m', '<h2 class="docs-h2">$1</h2>', $docs_content);
-        $docs_content = preg_replace('/^### (.+)$/m', '<h3 class="docs-h3">$1</h3>', $docs_content);
-        $docs_content = preg_replace('/^#### (.+)$/m', '<h4 class="docs-h4">$1</h4>', $docs_content);
+        // Headings com IDs automáticos para navegação interna (smooth scroll)
+        $docs_content = preg_replace_callback('/^# (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h1 id="' . esc_attr($id) . '" class="docs-h1">' . $m[1] . '</h1>';
+        }, $docs_content);
+        $docs_content = preg_replace_callback('/^## (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h2 id="' . esc_attr($id) . '" class="docs-h2">' . $m[1] . '</h2>';
+        }, $docs_content);
+        $docs_content = preg_replace_callback('/^### (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h3 id="' . esc_attr($id) . '" class="docs-h3">' . $m[1] . '</h3>';
+        }, $docs_content);
+        $docs_content = preg_replace_callback('/^#### (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h4 id="' . esc_attr($id) . '" class="docs-h4">' . $m[1] . '</h4>';
+        }, $docs_content);
         $docs_content = preg_replace('/\*\*(.+?)\*\*/', '<strong class="docs-bold">$1</strong>', $docs_content);
         $docs_content = preg_replace('/\*(.+?)\*/', '<em class="docs-italic">$1</em>', $docs_content);
         $docs_content = preg_replace('/`(.+?)`/', '<code class="docs-code">$1</code>', $docs_content);
         $docs_content = preg_replace('/^- (.+)$/m', '<li class="docs-li">$1</li>', $docs_content);
-        $docs_content = preg_replace('/(<li class="docs-li">.*<\/li>)/s', '<ul class="docs-ul">$1</ul>', $docs_content);
+        // Agrupa <li> consecutivos em <ul> sem flag /s para evitar listas aninhadas incorretas
+        $docs_content = preg_replace('/(<li class="docs-li">[^\n]*<\/li>\s*)+/', '<ul class="docs-ul">$0</ul>', $docs_content);
         $docs_content = preg_replace('/^> (.+)$/m', '<blockquote class="docs-quote">$1</blockquote>', $docs_content);
         $docs_content = nl2br($docs_content);
     } else {
@@ -1091,7 +1106,26 @@ function cct_docs_design_page_callback()
         </div>
 
         <div class="docs-content">
-            <?php echo $docs_content; ?>
+            <?php
+            // SECURITY FIX (SEC-PHP-002): wp_kses() filtra o HTML gerado pelo Markdown para prevenir XSS
+            // Tags permitidas: apenas as geradas pelo preg_replace acima
+            $allowed_docs_tags = array(
+                'h1'         => array('class' => array()),
+                'h2'         => array('class' => array()),
+                'h3'         => array('class' => array()),
+                'h4'         => array('class' => array()),
+                'strong'     => array('class' => array()),
+                'em'         => array('class' => array()),
+                'code'       => array('class' => array()),
+                'ul'         => array('class' => array()),
+                'li'         => array('class' => array()),
+                'blockquote' => array('class' => array()),
+                'br'         => array(),
+                'div'        => array('class' => array()),
+                'p'          => array(),
+            );
+            echo wp_kses($docs_content, $allowed_docs_tags);
+            ?>
         </div>
 
         <div class="docs-footer">
@@ -1395,11 +1429,9 @@ function cct_extensions_page_callback()
 
         <div class="cct-card">
             <h2>⚡ Acesso Rápido</h2>
-            <p style="margin-bottom: 20px; color: #6c757d;">Configure as extensões ativas diretamente no Customizer do
-                WordPress:</p>
+            <p style="margin-bottom: 20px; color: #6c757d;">Personalize cores, tipografia e layout diretamente no Customizer:</p>
             <a href="<?php echo admin_url('customize.php'); ?>" class="cct-btn cct-btn-primary">🎨 Abrir Customizer</a>
-            <p style="margin-top: 15px; font-size: 13px; color: #6c757d;">💡 <strong>Dica:</strong> No Customizer, procure
-                por: <strong>🎓 Tema UENF → 🔧 Gerenciador de Extensões</strong></p>
+            <p style="margin-top: 15px; font-size: 13px; color: #6c757d;">💡 <strong>Dica:</strong> Ative apenas as extensões que você realmente usa para manter o site rápido.</p>
         </div>
 
         <div class="cct-card">
@@ -1428,19 +1460,46 @@ function cct_extensions_page_callback()
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($extensions as $id => $extension) {
-                                $is_active = $extension_manager->is_extension_active($id);
-                                $status_class = $is_active ? 'cct-status-active' : 'cct-status-inactive';
-                                $status_text = $is_active ? '✅ Ativa' : '❌ Inativa';
-                                $title = isset($extension['title']) ? $extension['title'] : ucfirst($id);
-                                $description = isset($extension['description']) ? $extension['description'] : 'Sem descrição disponível';
+                            // Rótulos de categoria em português
+                            $category_labels = array(
+                                'design'     => '🎨 Design',
+                                'layout'     => '📐 Layout',
+                                'typography' => '✏️ Tipografia',
+                                'effects'    => '✨ Efeitos',
+                                'interface'  => '🖥️ Interface',
+                                'content'    => '📄 Conteúdo',
+                            );
 
-                                echo '<tr>';
-                                echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox cct-checkbox" ' . checked($is_active, true, false) . '></td>';
-                                echo '<td><span class="cct-extension-title">' . esc_html($title) . '</span></td>';
-                                echo '<td style="text-align: center;"><span class="' . $status_class . '">' . $status_text . '</span></td>';
-                                echo '<td><span class="cct-description">' . esc_html($description) . '</span></td>';
-                                echo '</tr>';
+                            // Agrupar extensões por categoria
+                            $grouped = array();
+                            foreach ($extensions as $id => $extension) {
+                                $cat = isset($extension['category']) ? $extension['category'] : 'outros';
+                                $grouped[$cat][$id] = $extension;
+                            }
+
+                            // Renderizar por categoria na ordem definida
+                            $order = array_keys($category_labels);
+                            foreach ($order as $cat) {
+                                if (empty($grouped[$cat])) {
+                                    continue;
+                                }
+                                $cat_label = isset($category_labels[$cat]) ? $category_labels[$cat] : ucfirst($cat);
+                                echo '<tr><td colspan="4" style="background:#f8f9fa;padding:8px 12px;font-weight:600;font-size:0.85rem;color:#495057;border-top:2px solid #dee2e6;">' . esc_html($cat_label) . '</td></tr>';
+
+                                foreach ($grouped[$cat] as $id => $extension) {
+                                    $is_active = $extension_manager->is_extension_active($id);
+                                    $status_class = $is_active ? 'cct-status-active' : 'cct-status-inactive';
+                                    $status_text = $is_active ? '✅ Ativa' : '❌ Inativa';
+                                    $title = isset($extension['name']) ? $extension['name'] : ucfirst($id);
+                                    $description = isset($extension['description']) ? $extension['description'] : 'Sem descrição disponível';
+
+                                    echo '<tr>';
+                                    echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox cct-checkbox" ' . checked($is_active, true, false) . '></td>';
+                                    echo '<td><span class="cct-extension-title">' . esc_html($title) . '</span></td>';
+                                    echo '<td style="text-align: center;"><span class="' . $status_class . '">' . $status_text . '</span></td>';
+                                    echo '<td><span class="cct-description">' . esc_html($description) . '</span></td>';
+                                    echo '</tr>';
+                                }
                             }
                             ?>
                         </tbody>
@@ -1994,6 +2053,40 @@ function cct_scripts()
     wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);
     wp_enqueue_style('cct-custom-fixes', CCT_THEME_URI . '/css/custom-fixes.css', array('cct-styles-additional'), $style_version);
 
+    // 3.1.5 CSS Responsivo Condicional — carregado com media attribute (non-render-blocking)
+    // mobile.css: só bloqueia render em dispositivos ≤767.98px; para desktop é non-blocking
+    $responsive_base = get_template_directory() . '/css/responsive/';
+    $mobile_css_path = $responsive_base . 'mobile.css';
+    if (file_exists($mobile_css_path)) {
+        wp_enqueue_style(
+            'cct-responsive-mobile',
+            CCT_THEME_URI . '/css/responsive/mobile.css',
+            array('cct-custom-fixes'),
+            filemtime($mobile_css_path)
+        );
+        wp_style_add_data('cct-responsive-mobile', 'media', '(max-width:767.98px)');
+    }
+    $tablet_css_path = $responsive_base . 'tablet.css';
+    if (file_exists($tablet_css_path)) {
+        wp_enqueue_style(
+            'cct-responsive-tablet',
+            CCT_THEME_URI . '/css/responsive/tablet.css',
+            array('cct-custom-fixes'),
+            filemtime($tablet_css_path)
+        );
+        wp_style_add_data('cct-responsive-tablet', 'media', '(min-width:768px) and (max-width:991.98px)');
+    }
+    $desktop_css_path = $responsive_base . 'desktop.css';
+    if (file_exists($desktop_css_path)) {
+        wp_enqueue_style(
+            'cct-responsive-desktop',
+            CCT_THEME_URI . '/css/responsive/desktop.css',
+            array('cct-custom-fixes'),
+            filemtime($desktop_css_path)
+        );
+        wp_style_add_data('cct-responsive-desktop', 'media', '(min-width:992px)');
+    }
+
     // 3.2 Estilos da listagem de posts (somente em páginas de blog/arquivo)
     if (is_home() || is_archive()) {
         $posts_list_path = get_template_directory() . '/css/components/posts-list.css';
@@ -2231,13 +2324,15 @@ function cct_custom_breadcrumb()
         return trim($title);
     };
 
+    // SECURITY FIX (SEC-PHP-003): adicionados esc_url() e esc_html() em todos os pontos do breadcrumb
+    // Sem escape, títulos/categorias com HTML podem causar XSS Stored visível para todos os visitantes
     if (is_page()) {
         $ancestors = get_post_ancestors(get_the_ID());
         if ($ancestors) {
             $ancestors = array_reverse($ancestors);
             foreach ($ancestors as $ancestor) {
                 echo '<li class="breadcrumb-item">';
-                echo '<a href="' . get_permalink($ancestor) . '" class="breadcrumb-link">' . $clean_title(get_the_title($ancestor)) . '</a>';
+                echo '<a href="' . esc_url(get_permalink($ancestor)) . '" class="breadcrumb-link">' . esc_html($clean_title(get_the_title($ancestor))) . '</a>';
                 echo '</li>';
             }
         }
@@ -2246,7 +2341,7 @@ function cct_custom_breadcrumb()
         $parent = $post->post_parent;
         if ($parent) {
             echo '<li class="breadcrumb-item">';
-            echo '<a href="' . get_permalink($parent) . '" class="breadcrumb-link">' . $clean_title(get_the_title($parent)) . '</a>';
+            echo '<a href="' . esc_url(get_permalink($parent)) . '" class="breadcrumb-link">' . esc_html($clean_title(get_the_title($parent))) . '</a>';
             echo '</li>';
         } else {
             // Se for post padrão, mostrar categoria
@@ -2254,7 +2349,7 @@ function cct_custom_breadcrumb()
             if ($categories) {
                 $category = $categories[0];
                 echo '<li class="breadcrumb-item">';
-                echo '<a href="' . get_category_link($category->term_id) . '" class="breadcrumb-link">' . $clean_title($category->name) . '</a>';
+                echo '<a href="' . esc_url(get_category_link($category->term_id)) . '" class="breadcrumb-link">' . esc_html($clean_title($category->name)) . '</a>';
                 echo '</li>';
             }
         }
@@ -2263,7 +2358,7 @@ function cct_custom_breadcrumb()
         if ($category->parent) {
             $parent_category = get_category($category->parent);
             echo '<li class="breadcrumb-item">';
-            echo '<a href="' . get_category_link($category->parent) . '" class="breadcrumb-link">' . $clean_title($parent_category->name) . '</a>';
+            echo '<a href="' . esc_url(get_category_link($category->parent)) . '" class="breadcrumb-link">' . esc_html($clean_title($parent_category->name)) . '</a>';
             echo '</li>';
         }
     } elseif (is_search()) {
@@ -2280,11 +2375,11 @@ function cct_custom_breadcrumb()
     if (is_home()) {
         echo '<li class="breadcrumb-item active" aria-current="page">Blog</li>';
     } elseif (is_category()) {
-        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(single_cat_title('', false)) . '</li>';
+        echo '<li class="breadcrumb-item active" aria-current="page">' . esc_html($clean_title(single_cat_title('', false))) . '</li>';
     } elseif (is_archive()) {
-        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(get_the_archive_title()) . '</li>';
+        echo '<li class="breadcrumb-item active" aria-current="page">' . esc_html($clean_title(get_the_archive_title())) . '</li>';
     } else {
-        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(get_the_title()) . '</li>';
+        echo '<li class="breadcrumb-item active" aria-current="page">' . esc_html($clean_title(get_the_title())) . '</li>';
     }
 
     echo '</ol>';
@@ -2515,7 +2610,7 @@ function cct_reset_page_callback()
             case 'reset_extensions':
                 $extension_manager = cct_extension_manager();
                 if ($extension_manager) {
-                    $result = $extension_manager->reset_all_extensions();
+                    $result = $extension_manager->reset_all_settings();
                     $message = $result ? 'Configurações de extensões resetadas com sucesso!' : 'Erro ao resetar configurações de extensões.';
                     $message_type = $result ? 'success' : 'error';
                 }
@@ -2532,58 +2627,143 @@ function cct_reset_page_callback()
             echo '<div class="notice notice-' . $message_type . ' is-dismissible"><p>' . esc_html($message) . '</p></div>';
         }
     }
+    echo '<style>
+    .cct-reset-page {
+        background: #f1f1f1;
+        margin: -20px -20px 0 -10px;
+        padding: 20px;
+        min-height: calc(100vh - 32px);
+    }
+    .cct-reset-page .cct-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .cct-reset-page .cct-header h1 { margin: 0 0 10px 0; font-size: 2.2em; font-weight: 600; }
+    .cct-reset-page .cct-header p  { margin: 0; opacity: 0.9; font-size: 1.1em; }
+    .cct-reset-page .cct-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border: 1px solid #e1e5e9;
+        max-width: 800px;
+    }
+    .cct-reset-page .cct-card h2 { margin-top: 0; font-size: 1.3em; color: #2c3e50; }
+    .cct-reset-page .cct-reset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        max-width: 800px;
+        margin-bottom: 25px;
+    }
+    .cct-reset-page .cct-reset-item {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border: 1px solid #e1e5e9;
+        border-top: 4px solid #dee2e6;
+    }
+    .cct-reset-page .cct-reset-item.danger  { border-top-color: #dc3545; }
+    .cct-reset-page .cct-reset-item.warning { border-top-color: #ffc107; }
+    .cct-reset-page .cct-reset-item.critical { border-top-color: #dc3545; background: #fff5f5; }
+    .cct-reset-page .cct-reset-item h3 { margin: 0 0 8px 0; font-size: 1.05em; color: #2c3e50; }
+    .cct-reset-page .cct-reset-item p  { color: #6c757d; font-size: 0.9em; margin: 0 0 16px 0; line-height: 1.5; }
+    .cct-reset-page .cct-btn-reset {
+        display: inline-block;
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    .cct-reset-page .cct-btn-reset.secondary { background: #6c757d; color: white; }
+    .cct-reset-page .cct-btn-reset.secondary:hover { background: #5a6268; }
+    .cct-reset-page .cct-btn-reset.danger  { background: #dc3545; color: white; }
+    .cct-reset-page .cct-btn-reset.danger:hover  { background: #c82333; }
+    .cct-reset-page .cct-warning-banner {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-left: 4px solid #ffc107;
+        border-radius: 8px;
+        padding: 14px 18px;
+        margin-bottom: 25px;
+        max-width: 800px;
+        font-size: 0.95em;
+        color: #856404;
+    }
+    .cct-reset-page .cct-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    </style>';
     ?>
-    <div class="wrap">
-        <h1>🔄 Reset de Configurações</h1>
-        <p>Use esta página para resetar configurações do tema e extensões para os valores padrão.</p>
+    <div class="cct-reset-page">
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>⚠️ Atenção</h2>
-            <p><strong>Esta ação não pode ser desfeita!</strong> Certifique-se de fazer um backup das suas configurações
-                antes de prosseguir.</p>
+        <div class="cct-header">
+            <h1>🔄 Reset de Configurações</h1>
+            <p>Restaure as configurações do tema e extensões para os valores padrão.</p>
         </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>🔄 Opções de Reset</h2>
-
-            <form method="post" style="margin-bottom: 20px;">
-                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
-                <input type="hidden" name="action" value="reset_theme">
-                <h3>Reset do Tema</h3>
-                <p>Reseta apenas as configurações do tema (cores, tipografia, layout, etc.)</p>
-                <button type="submit" class="button button-secondary"
-                    onclick="return confirm('Tem certeza que deseja resetar as configurações do tema? Esta ação não pode ser desfeita.');">🎨
-                    Resetar Tema</button>
-            </form>
-
-            <form method="post" style="margin-bottom: 20px;">
-                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
-                <input type="hidden" name="action" value="reset_extensions">
-                <h3>Reset de Extensões</h3>
-                <p>Reseta apenas as configurações das extensões ativas</p>
-                <button type="submit" class="button button-secondary"
-                    onclick="return confirm('Tem certeza que deseja resetar as configurações das extensões? Esta ação não pode ser desfeita.');">🔧
-                    Resetar Extensões</button>
-            </form>
-
-            <form method="post">
-                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
-                <input type="hidden" name="action" value="reset_all">
-                <h3>Reset Completo</h3>
-                <p><strong>Reseta TODAS as configurações</strong> (tema + extensões)</p>
-                <button type="submit" class="button button-primary"
-                    style="background-color: #dc3545; border-color: #dc3545;"
-                    onclick="return confirm('ATENÇÃO: Esta ação irá resetar TODAS as configurações do tema e extensões. Esta ação não pode ser desfeita. Tem certeza que deseja continuar?');">🗑️
-                    Reset Completo</button>
-            </form>
+        <div class="cct-warning-banner">
+            ⚠️ <strong>Atenção:</strong> As ações abaixo <strong>não podem ser desfeitas</strong>.
+            Recomendamos <a href="<?php echo admin_url('customize.php?autofocus[section]=cct_backup_section'); ?>" style="color:#856404;font-weight:600;">fazer um backup</a> antes de prosseguir.
         </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>📋 Acesso Rápido</h2>
-            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Voltar ao
-                    Tema UENF</a></p>
-            <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Abrir Customizer</a></p>
+        <div class="cct-reset-grid">
+            <div class="cct-reset-item warning">
+                <h3>🎨 Reset do Tema</h3>
+                <p>Reverte cores, tipografia e layout para os valores padrão. Não afeta as extensões.</p>
+                <form method="post">
+                    <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
+                    <input type="hidden" name="action" value="reset_theme">
+                    <button type="submit" class="cct-btn-reset secondary"
+                        onclick="return confirm('Tem certeza que deseja resetar as configurações do tema? Esta ação não pode ser desfeita.');">
+                        Resetar Tema
+                    </button>
+                </form>
+            </div>
+
+            <div class="cct-reset-item danger">
+                <h3>🔧 Reset de Extensões</h3>
+                <p>Desativa todas as extensões e reverte suas configurações para os padrões.</p>
+                <form method="post">
+                    <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
+                    <input type="hidden" name="action" value="reset_extensions">
+                    <button type="submit" class="cct-btn-reset secondary"
+                        onclick="return confirm('Tem certeza que deseja resetar as configurações das extensões? Esta ação não pode ser desfeita.');">
+                        Resetar Extensões
+                    </button>
+                </form>
+            </div>
+
+            <div class="cct-reset-item critical">
+                <h3>🗑️ Reset Completo</h3>
+                <p><strong>Reseta tudo</strong>: tema + extensões. Use apenas como último recurso.</p>
+                <form method="post">
+                    <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
+                    <input type="hidden" name="action" value="reset_all">
+                    <button type="submit" class="cct-btn-reset danger"
+                        onclick="return confirm('ATENÇÃO: Esta ação irá resetar TODAS as configurações. Esta ação não pode ser desfeita. Tem certeza?');">
+                        Reset Completo
+                    </button>
+                </form>
+            </div>
         </div>
+
+        <div class="cct-card">
+            <h2>🔗 Navegação</h2>
+            <div class="cct-nav">
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Painel Principal</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-secondary">🔧 Extensões</a>
+                <a href="<?php echo admin_url('customize.php?autofocus[section]=cct_backup_section'); ?>" class="button button-primary">💾 Fazer Backup</a>
+            </div>
+        </div>
+
     </div>
     <?php
 }

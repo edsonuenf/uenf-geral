@@ -288,34 +288,9 @@ class CCT_Extension_Manager {
             error_log('CCT Extension Manager: Adicionando controles do customizer');
         }
         
-        // Painel principal do Tema UENF
-        $wp_customize->add_panel('cct_theme_uenf', array(
-            'title' => '🎓 Tema UENF',
-            'description' => 'Configurações e funcionalidades específicas do Tema UENF. Gerencie extensões, personalizações e recursos avançados.',
-            'priority' => 25,
-        ));
-        
-        // Painel do Gerenciador de Extensões (sub-painel) - REMOVIDO
-        // Não é mais necessário pois já existe no menu Tema UENF
-        /*
-        $wp_customize->add_panel('cct_extensions', array(
-            'title' => '🔧 Gerenciador de Extensões',
-            'description' => 'Controle todas as funcionalidades avançadas do tema. Desative extensões não utilizadas para melhorar a performance.',
-            'panel' => 'cct_theme_uenf', // Painel pai
-            'priority' => 10,
-        ));
-        */
-        
-        // Painel para extensões ativas (sub-painel do Tema UENF)
-        $active_count = $this->get_active_extensions_count();
-        if ($active_count > 0) {
-            $wp_customize->add_panel('cct_active_extensions', array(
-                'title' => sprintf('✨ Extensões (%d ativas)', $active_count),
-                'description' => 'Todas as extensões ativas e suas configurações. Organize e configure suas funcionalidades aqui.',
-                'panel' => 'cct_theme_uenf', // Painel pai
-                'priority' => 5, // Prioridade maior para aparecer antes do gerenciador
-            ));
-        }
+        // Painéis cct_theme_uenf e cct_active_extensions removidos do Customizer:
+        // não possuem controles ativos (código comentado) e exibiam painéis vazios.
+        // Gerenciamento de extensões disponível em: Tema UENF → Extensões (wp-admin).
         
         // Debug log
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -575,11 +550,7 @@ class CCT_Extension_Manager {
      * Reset todas as configurações de extensões
      */
     public function reset_all_settings() {
-        // Verificar nonce de segurança
-        if (!wp_verify_nonce($_POST['nonce'], 'cct_extensions_nonce')) {
-            return false;
-        }
-        
+        // Nonce verificado pelo callback da página chamante (cct_reset_page_callback)
         // Resetar configuração global
         remove_theme_mod('cct_extensions_global_enabled');
         
