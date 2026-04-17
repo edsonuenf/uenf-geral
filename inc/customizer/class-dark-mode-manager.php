@@ -307,19 +307,24 @@ class CCT_Dark_Mode_Manager {
             'sanitize_callback' => array($this, 'sanitize_time'),
         ));
         
+        // Cores que aceitam valores rgba (não podem usar sanitize_hex_color)
+        $rgba_keys = array('shadow', 'overlay');
+
         // Cores modo claro
         foreach ($this->color_palettes['light'] as $color_key => $color_value) {
+            $sanitize = in_array($color_key, $rgba_keys, true) ? 'sanitize_text_field' : 'sanitize_hex_color';
             $this->add_setting('light_' . $color_key, array(
-                'default' => $color_value,
-                'sanitize_callback' => 'sanitize_hex_color',
+                'default'           => $color_value,
+                'sanitize_callback' => $sanitize,
             ));
         }
-        
+
         // Cores modo escuro
         foreach ($this->color_palettes['dark'] as $color_key => $color_value) {
+            $sanitize = in_array($color_key, $rgba_keys, true) ? 'sanitize_text_field' : 'sanitize_hex_color';
             $this->add_setting('dark_' . $color_key, array(
-                'default' => $color_value,
-                'sanitize_callback' => 'sanitize_hex_color',
+                'default'           => $color_value,
+                'sanitize_callback' => $sanitize,
             ));
         }
         
@@ -670,17 +675,19 @@ class CCT_Dark_Mode_Manager {
         
         echo "<style id='cct-dark-mode-custom-css'>\n";
         
-        // Variáveis CSS para modo claro
+        // Variáveis CSS para modo claro — sobrescreve o CSS estático com valores customizados
         echo ":root {\n";
         foreach ($settings['lightColors'] as $color_key => $color_value) {
-            echo "  --cct-light-{$color_key}: {$color_value};\n";
+            $css_key = str_replace('_', '-', $color_key);
+            echo "  --cct-color-{$css_key}: {$color_value};\n";
         }
         echo "}\n";
-        
+
         // Variáveis CSS para modo escuro
         echo "[data-theme='dark'] {\n";
         foreach ($settings['darkColors'] as $color_key => $color_value) {
-            echo "  --cct-color-{$color_key}: {$color_value};\n";
+            $css_key = str_replace('_', '-', $color_key);
+            echo "  --cct-color-{$css_key}: {$color_value};\n";
         }
         echo "}\n";
         

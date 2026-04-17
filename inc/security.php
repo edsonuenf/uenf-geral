@@ -194,17 +194,17 @@ if (!function_exists('cct_additional_security_headers')) {
         // Configurações de segurança para iframes
         header('X-Frame-Options: SAMEORIGIN');
         
-        // Política de segurança de conteúdo (CSP) - Desativada por padrão
-        // Descomente e ajuste conforme necessário
-        /*
+        // SECURITY FIX (CONFIG-002): CSP ativada — calibrada para Bootstrap CDN, FontAwesome e Google Fonts
+        // Usar Report-Only primeiro em staging: Content-Security-Policy-Report-Only
         header("Content-Security-Policy: " . implode("; ", [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;",
-            "style-src 'self' 'unsafe-inline' https:;",
-            "img-src 'self' data: https:;",
-            "font-src 'self' https: data:;"
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com",
+            "img-src 'self' data: https:",
+            "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:",
+            "connect-src 'self'",
+            "frame-ancestors 'self'"
         ]));
-        */
     }
 }
 

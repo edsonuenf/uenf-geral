@@ -257,7 +257,8 @@ class CCT_CSS_Editor_Base {
             'content' => $content
         );
         
-        return file_put_contents($backup_path, serialize($backup_data)) !== false ? $backup_filename : false;
+        // SECURITY FIX (SEC-PHP-001): substituído serialize() por wp_json_encode() para prevenir PHP Object Injection
+        return file_put_contents($backup_path, wp_json_encode($backup_data)) !== false ? $backup_filename : false;
     }
     
     /**
@@ -272,7 +273,11 @@ class CCT_CSS_Editor_Base {
         $files = glob($this->backup_dir . sanitize_file_name($file_key) . '_*.css');
         
         foreach ($files as $file) {
-            $data = unserialize(file_get_contents($file));
+            // SECURITY FIX (SEC-PHP-001): substituído unserialize() por json_decode() para prevenir PHP Object Injection
+            $data = json_decode(file_get_contents($file), true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                continue; // falha segura — ignora backup corrompido/inválido
+            }
             if ($data && isset($data['timestamp'])) {
                 $backups[] = array(
                     'filename' => basename($file),
@@ -340,13 +345,23 @@ class CCT_CSS_Editor_Base {
         
         $file_key = sanitize_text_field($_POST['file']);
         $content = wp_unslash($_POST['content']);
-        
+
+        // SECURITY FIX (SEC-PHP-011): rejeitar conteúdo PHP em arquivos CSS para prevenir Arbitrary File Write → RCE
+        if (preg_match('/<\?(?:php)?/i', $content)) {
+            wp_send_json_error('Conteúdo PHP não é permitido em arquivos CSS');
+        }
+
         if (!isset($this->editable_files[$file_key])) {
             wp_send_json_error('Arquivo inválido');
         }
-        
+
         $file_info = $this->editable_files[$file_key];
-        
+
+        // SECURITY FIX (SEC-PHP-011): verificar que o destino é realmente um arquivo .css
+        if (pathinfo($file_info['path'], PATHINFO_EXTENSION) !== 'css') {
+            wp_send_json_error('Tipo de arquivo não permitido');
+        }
+
         // Validar CSS
         $validation = $this->validate_css($content);
         if (!$validation['valid']) {
@@ -413,9 +428,10 @@ class CCT_CSS_Editor_Base {
             wp_send_json_error('Backup não encontrado');
         }
         
-        $backup_data = unserialize(file_get_contents($backup_path));
-        
-        if (!$backup_data || !isset($backup_data['content'])) {
+        // SECURITY FIX (SEC-PHP-001): substituído unserialize() por json_decode() para prevenir PHP Object Injection
+        $backup_data = json_decode(file_get_contents($backup_path), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || !$backup_data || !isset($backup_data['content'])) {
             wp_send_json_error('Backup corrompido');
         }
         

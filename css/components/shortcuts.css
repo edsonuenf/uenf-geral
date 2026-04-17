@@ -50,9 +50,10 @@
     transform: translateY(-50%);
     width: 50px;
     height: 50px;
-    background-color: #1D3771;
+    background-color: rgba(29, 55, 113, 0.7);
     color: white;
-    border-radius: 50%;
+    border-radius: 8px;
+    border: 1px solid rgba(29, 55, 113, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,7 +62,8 @@
     z-index: 100000; /* Maior que o container */
     transition: all 0.3s ease;
     pointer-events: auto;
-    border: none;
+    appearance: none;
+    -webkit-appearance: none;
     outline: none;
 }
 
@@ -69,7 +71,12 @@
 #uenf-shortcut-panel-container .shortcut-icon:hover {
     background-color: #142a55;
     transform: translateY(-50%) scale(1.1);
-    border: none;
+}
+
+/* Foco visível para navegação por teclado */
+#uenf-shortcut-panel-container .shortcut-icon:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
 }
 
 /* Posicionamento do ícone quando o container está expandido */
@@ -170,30 +177,7 @@
     font-weight: 400;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-    #uenf-shortcut-panel-container .shortcut-panel {
-        width: 100%;
-        right: -100%;
-    }
-
-    #uenf-shortcut-panel-container.expanded .shortcut-panel {
-        right: 0;
-    }
-    
-    #uenf-shortcut-panel-container .shortcut-icon {
-        bottom: 80px;
-        right: 15px;
-        top: auto;
-        transform: none;
-    }
-    
-    #uenf-shortcut-panel-container .shortcut-icon.active {
-        right: 15px;
-        bottom: 80px;
-        transform: none;
-    }
-}
+/* Responsivo mobile: movido para css/responsive/mobile.css */
 
 /* Painel de atalhos */
 .shortcut-panel {
@@ -298,22 +282,4 @@
   line-height: 1;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  #uenf-shortcut-panel-container.expanded {
-    width: 100vw;
-  }
-  
-  #uenf-shortcut-panel-container .shortcut-panel {
-    width: 100%;
-  }
-  
-  #uenf-shortcut-panel-container .shortcut-icon {
-    bottom: 80px;
-    right: 15px;
-  }
-  
-  #uenf-shortcut-panel-container.expanded .shortcut-icon {
-    right: 15px; /* Mantém na mesma posição em mobile */
-  }
-}
+/* Responsividade mobile: movido para css/responsive/mobile.css */

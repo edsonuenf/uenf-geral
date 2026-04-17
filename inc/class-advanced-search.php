@@ -141,14 +141,17 @@ class CCT_Advanced_Search {
                 return $search;
             }
             
-            // Busca mais inteligente
-            $search_term = $wpdb->esc_like($search_term);
-            
-            $search = " AND (";
-            $search .= "({$wpdb->posts}.post_title LIKE '%{$search_term}%') OR ";
-            $search .= "({$wpdb->posts}.post_content LIKE '%{$search_term}%') OR ";
-            $search .= "({$wpdb->posts}.post_excerpt LIKE '%{$search_term}%')";
-            $search .= ")";
+            // SECURITY FIX (SEC-PHP-004): usar $wpdb->prepare() para prevenir SQL Injection
+            // esc_like() escapa apenas metacaracteres LIKE (% e _), não aspas SQL — prepare() é obrigatório
+            $like = '%' . $wpdb->esc_like($search_term) . '%';
+            $search = $wpdb->prepare(
+                " AND ({$wpdb->posts}.post_title LIKE %s
+                  OR {$wpdb->posts}.post_content LIKE %s
+                  OR {$wpdb->posts}.post_excerpt LIKE %s)",
+                $like,
+                $like,
+                $like
+            );
         }
         
         return $search;

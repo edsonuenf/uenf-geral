@@ -539,24 +539,7 @@ body #menuLateral .new-menu > li > a:hover {
   position: relative;
 }
 
-/* Melhorias de responsividade */
-@media (max-width: 768px) {
-  .new-menu a {
-    padding: 14px 20px;
-    font-size: 0.95em;
-  }
-  
-  .new-menu .submenu-toggle {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .new-menu .sub-menu a,
-  .new-menu .children a {
-    padding: 10px 16px 10px 28px;
-    font-size: 0.85em;
-  }
-}
+/* Melhorias de responsividade (≤768px): movido para css/responsive/mobile.css */
 
 /* Efeito de carregamento suave */
 .new-menu {
@@ -581,85 +564,9 @@ body #menuLateral .new-menu > li > a:hover {
   }
 }
 
-/* ===== DESKTOP (acima de 1200px) ===== */
-@media (min-width: 1201px) {
-  /* Ajusta o painel do menu para resoluções acima de 1200px */
-  .offcanvas.offcanvas-start {
-    width: 360px; /* Largura de 360px para resoluções acima de 1200px */
-    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
-  }
-}
+/* ===== DESKTOP (acima de 1200px): movido para css/responsive/desktop.css ===== */
 
-/* ===== DESKTOP (acima de 1920px) ===== */
-@media (min-width: 1921px) {
-  /* Ajusta o painel do menu para ser mais largo no desktop */
-  .offcanvas.offcanvas-start {
-    width: 400px; /* Largura maior para o painel no desktop */
-    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
-  }
-  
-  .new-menu {
-    display: block; /* Mantém o menu em bloco para o estilo de lista */
-    width: 100%;
-  }
-  
-  .new-menu > li {
-    width: auto;
-    position: relative;
-  }
-  
-  .new-menu > li > a {
-    padding: 15px 20px;
-    white-space: nowrap;
-  }
-  
-  /* Submenus no desktop */
-  .new-menu .sub-menu,
-  .new-menu .children {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 220px;
-    z-index: 1000;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-    /* Subníveis aninhados no desktop */
-  .new-menu .sub-menu .sub-menu,
-  .new-menu .children .children {
-    display: block !important;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    min-width: 220px;
-    z-index: 1001;
-    margin-top: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    max-height: none !important;
-  }
-  
-  /* Mostrar subníveis apenas quando ativo (clicado) */
-.new-menu .sub-menu > li.menu-item-has-children.menu-item-active > .sub-menu,
-.new-menu .children > li.page_item_has_children.menu-item-active > .children,
-.new-menu .sub-menu > li.menu-item-has-children > .sub-menu.show,
-.new-menu .children > li.page_item_has_children > .children.show {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  max-height: none !important;
-}
-  
-  /* Ajuste para subníveis aninhados */
-  .new-menu .sub-menu .menu-item-has-children,
-  .new-menu .children .page_item_has_children {
-    position: relative;
-  }
-  
-  /* Removido hover para abrir submenus */
-  /* Apenas o clique abre os submenus */
-}
+/* ===== DESKTOP (acima de 1920px): movido para css/responsive/desktop.css ===== */
 
 /* ===== MOBILE (abaixo de 992px) ===== */
 @media (max-width: 991.98px) {

@@ -140,7 +140,11 @@
          * Mostra notificação
          */
         showNotification: function(message, type) {
-            const notification = $('<div class="cct-notification cct-notification-' + type + '">' + message + '</div>');
+            // SECURITY FIX (SEC-JS-005): .text() previne XSS se message vier de dados externos futuramente
+            var safeType = String(type || 'info').replace(/[^a-z0-9-]/gi, '');
+            const notification = $('<div></div>')
+                .addClass('cct-notification cct-notification-' + safeType)
+                .text(message);
             $('body').append(notification);
             
             notification.fadeIn(300).delay(3000).fadeOut(300, function() {
@@ -534,7 +538,8 @@
          * Mostra mensagem de sucesso
          */
         showSuccessMessage: function(message, duration = 3000) {
-            const $message = $(`<div class="cct-success-message">${message}</div>`);
+            // SECURITY FIX (SEC-JS-005): .text() previne XSS via template literal com interpolação direta
+            const $message = $('<div class="cct-success-message"></div>').text(message);
             $('body').append($message);
             
             $message.hide().slideDown(300);

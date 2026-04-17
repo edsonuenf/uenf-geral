@@ -63,3 +63,27 @@ my.cnf.old
 # Arquivos de configuração do tema
 theme-config.php
 theme-settings.php
+
+# Docker (contém credenciais de banco de dados)
+docker-compose.yml
+docker-compose.*.yml
+
+# Ferramentas de IA (configurações locais)
+.claude/
+.agent/
+.opencode/
+.playwright-mcp/
+
+# Browser sessions (cookies e dados de sessão — sensíveis)
+_opensquad/_browser_profile/
+_opensquad/logs/
+
+# Screenshots de debug no diretório raiz
+/*.png
+!/screenshot.png
+
+# Build artifacts
+css/style.min.css.map
+
+# Dashboard (aplicação separada com node_modules próprio)
+dashboard/node_modules/

@@ -756,8 +756,23 @@ function cct_add_admin_menu()
         'manage_options',               // Capacidade necessária
         'customize.php'                 // Link direto para o customizer
     );
+
+    // Remove o sub-item duplicado "Tema UENF" criado automaticamente pelo WordPress
+    remove_submenu_page('tema-uenf', 'tema-uenf');
 }
 add_action('admin_menu', 'cct_add_admin_menu', 5);
+
+// Carrega o design system do admin apenas nas páginas do Tema UENF
+add_action('admin_enqueue_scripts', function ($hook) {
+    if (strpos($hook, 'tema-uenf') !== false) {
+        wp_enqueue_style(
+            'uenf-admin-theme',
+            get_template_directory_uri() . '/css/admin/admin-theme.css',
+            array(),
+            '1.0.0'
+        );
+    }
+});
 
 /**
  * Página principal do Tema UENF
@@ -765,29 +780,31 @@ add_action('admin_menu', 'cct_add_admin_menu', 5);
 function cct_admin_page_callback()
 {
     ?>
-    <div class="wrap">
-        <h1>🎓 Tema UENF</h1>
-        <p>Bem-vindo ao painel de controle do Tema UENF. Gerencie todas as funcionalidades e configurações do seu tema.</p>
-
-        <div class="card" style="max-width: 800px;">
-            <h2>🚀 Acesso Rápido</h2>
-            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-primary">🔧
-                    Gerenciar Extensões</a></p>
-            <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-secondary">🎨 Personalizar Tema</a>
-            </p>
-            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf-docs-design'); ?>" class="button button-secondary">📖 Documentação</a></p>
+    <div class="ua-page">
+        <div class="ua-header">
+            <h1>Tema UENF</h1>
+            <p>Painel de controle do tema institucional.</p>
         </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>📊 Status do Sistema</h2>
+        <div class="ua-card">
+            <p class="ua-card-title">Acesso Rápido</p>
+            <div class="ua-nav">
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="ua-btn ua-btn-default">🔧 Extensões</a>
+                <a href="<?php echo admin_url('customize.php'); ?>" class="ua-btn ua-btn-outline">🎨 Personalizar</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-docs-design'); ?>" class="ua-btn ua-btn-outline">📖 Documentação</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-reset'); ?>" class="ua-btn ua-btn-ghost">🔄 Reset</a>
+            </div>
+        </div>
+
+        <div class="ua-card">
+            <p class="ua-card-title">Status do Sistema</p>
             <?php
             $extension_manager = cct_extension_manager();
             if ($extension_manager) {
                 $active_count = 0;
-                $total_count = 0;
-
-                $extensions = $extension_manager->get_all_extensions();
-                $total_count = count($extensions);
+                $total_count  = 0;
+                $extensions   = $extension_manager->get_all_extensions();
+                $total_count  = count($extensions);
 
                 foreach ($extensions as $id => $extension) {
                     if ($extension_manager->is_extension_active($id)) {
@@ -795,18 +812,23 @@ function cct_admin_page_callback()
                     }
                 }
 
-                echo '<p><strong>Extensões Ativas:</strong> ' . $active_count . ' de ' . $total_count . '</p>';
-
-                $percentage = $total_count > 0 ? ($active_count / $total_count) * 100 : 0;
-                if ($percentage <= 30) {
-                    echo '<p><strong>Performance:</strong> 🟢 Excelente</p>';
-                } elseif ($percentage <= 60) {
-                    echo '<p><strong>Performance:</strong> 🟡 Boa</p>';
-                } elseif ($percentage <= 80) {
-                    echo '<p><strong>Performance:</strong> 🟠 Moderada</p>';
-                } else {
-                    echo '<p><strong>Performance:</strong> 🔴 Pesada</p>';
-                }
+                $inactive_count = $total_count - $active_count;
+                ?>
+                <div class="ua-stats">
+                    <div class="ua-stat">
+                        <div class="ua-stat-value" style="color:var(--ua-primary)"><?php echo $total_count; ?></div>
+                        <div class="ua-stat-label">Total</div>
+                    </div>
+                    <div class="ua-stat">
+                        <div class="ua-stat-value" style="color:#16a34a"><?php echo $active_count; ?></div>
+                        <div class="ua-stat-label">Ativas</div>
+                    </div>
+                    <div class="ua-stat">
+                        <div class="ua-stat-value" style="color:var(--ua-foreground-muted)"><?php echo $inactive_count; ?></div>
+                        <div class="ua-stat-label">Inativas</div>
+                    </div>
+                </div>
+                <?php
             }
             ?>
         </div>
@@ -1187,213 +1209,19 @@ function cct_extensions_page_callback()
         }
     }
 
-    // CSS personalizado para melhor UX/UI
-    echo '<style>
-    .cct-extensions-page {
-        background: #f1f1f1;
-        margin: -20px -20px 0 -10px;
-        padding: 20px;
-        min-height: calc(100vh - 32px);
-    }
-    .cct-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 30px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .cct-header h1 {
-        margin: 0 0 10px 0;
-        font-size: 2.2em;
-        font-weight: 600;
-    }
-    .cct-header p {
-        margin: 0;
-        opacity: 0.9;
-        font-size: 1.1em;
-    }
-    .cct-card {
-        background: white;
-        border-radius: 12px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        border: 1px solid #e1e5e9;
-        transition: all 0.3s ease;
-    }
-    .cct-card:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-        transform: translateY(-2px);
-    }
-    .cct-card h2 {
-        margin: 0 0 15px 0;
-        color: #2c3e50;
-        font-size: 1.4em;
-        font-weight: 600;
-        border-bottom: 2px solid #f8f9fa;
-        padding-bottom: 10px;
-    }
-    .cct-controls {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-    }
-    .cct-btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-    }
-    .cct-btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-    }
-    .cct-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        color: white;
-    }
-    .cct-btn-success {
-        background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
-        color: white;
-        box-shadow: 0 2px 8px rgba(86, 171, 47, 0.3);
-    }
-    .cct-btn-success:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(86, 171, 47, 0.4);
-        color: white;
-    }
-    .cct-btn-danger {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
-        color: white;
-        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
-    }
-    .cct-btn-danger:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        color: white;
-    }
-    .cct-btn-save {
-        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-        color: white;
-        padding: 12px 30px;
-        font-size: 16px;
-        font-weight: 600;
-        box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
-    }
-    .cct-btn-save:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
-        color: white;
-    }
-    .cct-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .cct-table th {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 15px;
-        text-align: left;
-        font-weight: 600;
-        color: #495057;
-        border-bottom: 2px solid #dee2e6;
-    }
-    .cct-table td {
-        padding: 15px;
-        border-bottom: 1px solid #f1f3f4;
-        vertical-align: middle;
-    }
-    .cct-table tr:hover {
-        background: #f8f9fa;
-    }
-    .cct-checkbox {
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        accent-color: #667eea;
-    }
-    .cct-status-active {
-        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-        color: #155724;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-    }
-    .cct-status-inactive {
-        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-        color: #721c24;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-    }
-    .cct-extension-title {
-        font-weight: 600;
-        color: #2c3e50;
-        font-size: 15px;
-    }
-    .cct-description {
-        color: #6c757d;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    .cct-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-    .cct-stat-card {
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        border: 1px solid #e1e5e9;
-    }
-    .cct-stat-number {
-        font-size: 2.5em;
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-    .cct-stat-label {
-        color: #6c757d;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    </style>';
-
     ?>
-    <div class="cct-extensions-page">
-        <div class="cct-header">
-            <h1>🔧 Gerenciador de Extensões</h1>
-            <p>Controle todas as funcionalidades avançadas do tema. Desative extensões não utilizadas para melhorar a
-                performance.</p>
+    <div class="ua-page">
+        <div class="ua-header">
+            <h1>Extensões</h1>
+            <p>Ative apenas o que o site precisa para manter o carregamento rápido.</p>
         </div>
 
         <?php
         // Estatísticas das extensões
         $extension_manager = cct_extension_manager();
         if ($extension_manager) {
-            $extensions = $extension_manager->get_all_extensions();
-            $total_count = count($extensions);
+            $extensions   = $extension_manager->get_all_extensions();
+            $total_count  = count($extensions);
             $active_count = 0;
 
             foreach ($extensions as $id => $extension) {
@@ -1403,58 +1231,59 @@ function cct_extensions_page_callback()
             }
 
             $inactive_count = $total_count - $active_count;
-            $percentage = $total_count > 0 ? round(($active_count / $total_count) * 100) : 0;
+            $percentage     = $total_count > 0 ? round(($active_count / $total_count) * 100) : 0;
             ?>
-            <div class="cct-stats">
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #667eea;"><?php echo $total_count; ?></div>
-                    <div class="cct-stat-label">Total de Extensões</div>
+            <div class="ua-stats">
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:var(--ua-primary)"><?php echo $total_count; ?></div>
+                    <div class="ua-stat-label">Total</div>
                 </div>
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #4CAF50;"><?php echo $active_count; ?></div>
-                    <div class="cct-stat-label">Extensões Ativas</div>
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:#16a34a"><?php echo $active_count; ?></div>
+                    <div class="ua-stat-label">Ativas</div>
                 </div>
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #ff6b6b;"><?php echo $inactive_count; ?></div>
-                    <div class="cct-stat-label">Extensões Inativas</div>
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:var(--ua-foreground-muted)"><?php echo $inactive_count; ?></div>
+                    <div class="ua-stat-label">Inativas</div>
                 </div>
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #ffa726;"><?php echo $percentage; ?>%</div>
-                    <div class="cct-stat-label">Taxa de Utilização</div>
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:#d97706"><?php echo $percentage; ?>%</div>
+                    <div class="ua-stat-label">Utilização</div>
                 </div>
             </div>
             <?php
         }
         ?>
 
-        <div class="cct-card">
-            <h2>⚡ Acesso Rápido</h2>
-            <p style="margin-bottom: 20px; color: #6c757d;">Personalize cores, tipografia e layout diretamente no Customizer:</p>
-            <a href="<?php echo admin_url('customize.php'); ?>" class="cct-btn cct-btn-primary">🎨 Abrir Customizer</a>
-            <p style="margin-top: 15px; font-size: 13px; color: #6c757d;">💡 <strong>Dica:</strong> Ative apenas as extensões que você realmente usa para manter o site rápido.</p>
+        <div class="ua-card">
+            <p class="ua-card-title">Acesso Rápido</p>
+            <p style="margin-bottom: 14px; color: var(--ua-foreground-muted); font-size: 0.875rem;">Personalize cores, tipografia e layout no Customizer:</p>
+            <div class="ua-nav">
+                <a href="<?php echo admin_url('customize.php'); ?>" class="ua-btn ua-btn-default">🎨 Abrir Customizer</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="ua-btn ua-btn-ghost">← Painel Principal</a>
+            </div>
         </div>
 
-        <div class="cct-card">
-            <h2>📋 Gerenciar Extensões</h2>
+        <div class="ua-card">
+            <p class="ua-card-title">Gerenciar Extensões</p>
             <?php
             if ($extension_manager && !empty($extensions)) {
                 ?>
                 <form method="post" action="">
                     <?php wp_nonce_field('cct_extensions_action', 'cct_extensions_nonce'); ?>
 
-                    <div class="cct-controls">
-                        <button type="button" id="select-all-extensions" class="cct-btn cct-btn-success">✅ Selecionar
-                            Todas</button>
-                        <button type="button" id="deselect-all-extensions" class="cct-btn cct-btn-danger">❌ Desmarcar
-                            Todas</button>
+                    <div class="ua-controls">
+                        <button type="button" id="select-all-extensions" class="ua-btn ua-btn-secondary">Selecionar Todas</button>
+                        <button type="button" id="deselect-all-extensions" class="ua-btn ua-btn-outline">Desmarcar Todas</button>
                     </div>
 
-                    <table class="cct-table">
+                    <div class="ua-table-wrap">
+                    <table class="ua-table">
                         <thead>
                             <tr>
-                                <th style="width: 60px; text-align: center;">Ativar</th>
+                                <th style="width: 48px; text-align: center;">Ativar</th>
                                 <th>Extensão</th>
-                                <th style="width: 120px; text-align: center;">Status</th>
+                                <th style="width: 100px; text-align: center;">Status</th>
                                 <th>Descrição</th>
                             </tr>
                         </thead>
@@ -1488,25 +1317,26 @@ function cct_extensions_page_callback()
 
                                 foreach ($grouped[$cat] as $id => $extension) {
                                     $is_active = $extension_manager->is_extension_active($id);
-                                    $status_class = $is_active ? 'cct-status-active' : 'cct-status-inactive';
-                                    $status_text = $is_active ? '✅ Ativa' : '❌ Inativa';
+                                    $status_class = $is_active ? 'ua-badge ua-badge-success' : 'ua-badge ua-badge-muted';
+                                    $status_text  = $is_active ? '● Ativa' : '○ Inativa';
                                     $title = isset($extension['name']) ? $extension['name'] : ucfirst($id);
                                     $description = isset($extension['description']) ? $extension['description'] : 'Sem descrição disponível';
 
                                     echo '<tr>';
-                                    echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox cct-checkbox" ' . checked($is_active, true, false) . '></td>';
-                                    echo '<td><span class="cct-extension-title">' . esc_html($title) . '</span></td>';
+                                    echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox ua-checkbox" ' . checked($is_active, true, false) . '></td>';
+                                    echo '<td><span class="ua-ext-title">' . esc_html($title) . '</span></td>';
                                     echo '<td style="text-align: center;"><span class="' . $status_class . '">' . $status_text . '</span></td>';
-                                    echo '<td><span class="cct-description">' . esc_html($description) . '</span></td>';
+                                    echo '<td><span class="ua-ext-desc">' . esc_html($description) . '</span></td>';
                                     echo '</tr>';
                                 }
                             }
                             ?>
                         </tbody>
                     </table>
+                    </div><!-- /.ua-table-wrap -->
 
-                    <div style="margin-top: 25px; text-align: center;">
-                        <input type="submit" name="cct_update_extensions" class="cct-btn cct-btn-save"
+                    <div class="ua-save-row">
+                        <input type="submit" name="cct_update_extensions" class="ua-btn ua-btn-default ua-btn-lg"
                             value="💾 Salvar Configurações">
                     </div>
                 </form>
@@ -1541,15 +1371,11 @@ function cct_extensions_page_callback()
                             }, 150);
                         });
 
-                        // Animação nos checkboxes
+                        // Feedback visual nos checkboxes
                         document.querySelectorAll('.extension-checkbox').forEach(function (checkbox) {
                             checkbox.addEventListener('change', function () {
                                 var row = this.closest('tr');
-                                if (this.checked) {
-                                    row.style.background = 'linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%)';
-                                } else {
-                                    row.style.background = '';
-                                }
+                                row.style.background = this.checked ? '#f0fdf4' : '';
                             });
                         });
                     });
@@ -2627,127 +2453,53 @@ function cct_reset_page_callback()
             echo '<div class="notice notice-' . $message_type . ' is-dismissible"><p>' . esc_html($message) . '</p></div>';
         }
     }
-    echo '<style>
-    .cct-reset-page {
-        background: #f1f1f1;
-        margin: -20px -20px 0 -10px;
-        padding: 20px;
-        min-height: calc(100vh - 32px);
-    }
-    .cct-reset-page .cct-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 30px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .cct-reset-page .cct-header h1 { margin: 0 0 10px 0; font-size: 2.2em; font-weight: 600; }
-    .cct-reset-page .cct-header p  { margin: 0; opacity: 0.9; font-size: 1.1em; }
-    .cct-reset-page .cct-card {
-        background: white;
-        border-radius: 12px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        border: 1px solid #e1e5e9;
-        max-width: 800px;
-    }
-    .cct-reset-page .cct-card h2 { margin-top: 0; font-size: 1.3em; color: #2c3e50; }
-    .cct-reset-page .cct-reset-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 20px;
-        max-width: 800px;
-        margin-bottom: 25px;
-    }
-    .cct-reset-page .cct-reset-item {
-        background: white;
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        border: 1px solid #e1e5e9;
-        border-top: 4px solid #dee2e6;
-    }
-    .cct-reset-page .cct-reset-item.danger  { border-top-color: #dc3545; }
-    .cct-reset-page .cct-reset-item.warning { border-top-color: #ffc107; }
-    .cct-reset-page .cct-reset-item.critical { border-top-color: #dc3545; background: #fff5f5; }
-    .cct-reset-page .cct-reset-item h3 { margin: 0 0 8px 0; font-size: 1.05em; color: #2c3e50; }
-    .cct-reset-page .cct-reset-item p  { color: #6c757d; font-size: 0.9em; margin: 0 0 16px 0; line-height: 1.5; }
-    .cct-reset-page .cct-btn-reset {
-        display: inline-block;
-        padding: 8px 18px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.9em;
-        font-weight: 500;
-        transition: all 0.2s ease;
-    }
-    .cct-reset-page .cct-btn-reset.secondary { background: #6c757d; color: white; }
-    .cct-reset-page .cct-btn-reset.secondary:hover { background: #5a6268; }
-    .cct-reset-page .cct-btn-reset.danger  { background: #dc3545; color: white; }
-    .cct-reset-page .cct-btn-reset.danger:hover  { background: #c82333; }
-    .cct-reset-page .cct-warning-banner {
-        background: #fff3cd;
-        border: 1px solid #ffc107;
-        border-left: 4px solid #ffc107;
-        border-radius: 8px;
-        padding: 14px 18px;
-        margin-bottom: 25px;
-        max-width: 800px;
-        font-size: 0.95em;
-        color: #856404;
-    }
-    .cct-reset-page .cct-nav { display: flex; gap: 10px; flex-wrap: wrap; }
-    </style>';
     ?>
-    <div class="cct-reset-page">
+    <div class="ua-page">
 
-        <div class="cct-header">
-            <h1>🔄 Reset de Configurações</h1>
+        <div class="ua-header">
+            <h1>Reset de Configurações</h1>
             <p>Restaure as configurações do tema e extensões para os valores padrão.</p>
         </div>
 
-        <div class="cct-warning-banner">
+        <div class="ua-alert ua-alert-warning">
             ⚠️ <strong>Atenção:</strong> As ações abaixo <strong>não podem ser desfeitas</strong>.
-            Recomendamos <a href="<?php echo admin_url('customize.php?autofocus[section]=cct_backup_section'); ?>" style="color:#856404;font-weight:600;">fazer um backup</a> antes de prosseguir.
+            Recomendamos <a href="<?php echo admin_url('customize.php?autofocus[section]=cct_backup_section'); ?>">fazer um backup</a> antes de prosseguir.
         </div>
 
-        <div class="cct-reset-grid">
-            <div class="cct-reset-item warning">
+        <div class="ua-reset-grid">
+            <div class="ua-reset-item ua-reset-item-warning">
                 <h3>🎨 Reset do Tema</h3>
                 <p>Reverte cores, tipografia e layout para os valores padrão. Não afeta as extensões.</p>
                 <form method="post">
                     <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
                     <input type="hidden" name="action" value="reset_theme">
-                    <button type="submit" class="cct-btn-reset secondary"
+                    <button type="submit" class="ua-btn ua-btn-outline"
                         onclick="return confirm('Tem certeza que deseja resetar as configurações do tema? Esta ação não pode ser desfeita.');">
                         Resetar Tema
                     </button>
                 </form>
             </div>
 
-            <div class="cct-reset-item danger">
+            <div class="ua-reset-item ua-reset-item-danger">
                 <h3>🔧 Reset de Extensões</h3>
                 <p>Desativa todas as extensões e reverte suas configurações para os padrões.</p>
                 <form method="post">
                     <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
                     <input type="hidden" name="action" value="reset_extensions">
-                    <button type="submit" class="cct-btn-reset secondary"
+                    <button type="submit" class="ua-btn ua-btn-outline"
                         onclick="return confirm('Tem certeza que deseja resetar as configurações das extensões? Esta ação não pode ser desfeita.');">
                         Resetar Extensões
                     </button>
                 </form>
             </div>
 
-            <div class="cct-reset-item critical">
+            <div class="ua-reset-item ua-reset-item-critical">
                 <h3>🗑️ Reset Completo</h3>
                 <p><strong>Reseta tudo</strong>: tema + extensões. Use apenas como último recurso.</p>
                 <form method="post">
                     <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
                     <input type="hidden" name="action" value="reset_all">
-                    <button type="submit" class="cct-btn-reset danger"
+                    <button type="submit" class="ua-btn ua-btn-destructive"
                         onclick="return confirm('ATENÇÃO: Esta ação irá resetar TODAS as configurações. Esta ação não pode ser desfeita. Tem certeza?');">
                         Reset Completo
                     </button>
@@ -2755,12 +2507,12 @@ function cct_reset_page_callback()
             </div>
         </div>
 
-        <div class="cct-card">
-            <h2>🔗 Navegação</h2>
-            <div class="cct-nav">
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Painel Principal</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-secondary">🔧 Extensões</a>
-                <a href="<?php echo admin_url('customize.php?autofocus[section]=cct_backup_section'); ?>" class="button button-primary">💾 Fazer Backup</a>
+        <div class="ua-card">
+            <p class="ua-card-title">Navegação</p>
+            <div class="ua-nav">
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="ua-btn ua-btn-outline">← Painel Principal</a>
+                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="ua-btn ua-btn-outline">🔧 Extensões</a>
+                <a href="<?php echo admin_url('customize.php?autofocus[section]=cct_backup_section'); ?>" class="ua-btn ua-btn-default">💾 Fazer Backup</a>
             </div>
         </div>
 

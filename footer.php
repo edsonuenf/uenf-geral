@@ -49,9 +49,9 @@
 </footer>
 </div><!-- #page -->
 
-<a href="#" class="back-to-top">
-    <i class="fas fa-arrow-up"></i>
-</a>
+<button type="button" class="back-to-top" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</button>
 
 <?php wp_footer(); ?>
 
@@ -60,9 +60,10 @@
 if (!is_admin()): ?>
     <!-- Container dedicado para o painel de atalhos -->
     <div id="uenf-shortcut-panel-container">
-        <div class="shortcut-icon" data-start-y="50%" title="Atalhos Rápidos">
-            <i class="fas fa-cog"></i>
-        </div>
+        <button class="shortcut-icon" type="button" data-start-y="50%"
+                aria-label="Atalhos Rápidos" aria-expanded="false" aria-controls="uenf-shortcut-panel">
+            <i class="fas fa-bolt" aria-hidden="true"></i>
+        </button>
 
         <div class="shortcut-panel">
             <div class="shortcut-panel-header">
@@ -110,14 +111,14 @@ if (!is_admin()): ?>
                 // Função para abrir o painel
                 function openPanel() {
                     $panel.addClass('active');
-                    $icon.addClass('active');
+                    $icon.addClass('active').attr('aria-expanded', 'true');
                     $('body').css('overflow', 'hidden');
                 }
 
                 // Função para fechar o painel
                 function closePanel() {
                     $panel.removeClass('active');
-                    $icon.removeClass('active');
+                    $icon.removeClass('active').attr('aria-expanded', 'false');
                     $('body').css('overflow', '');
                 }
 

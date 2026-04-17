@@ -1,0 +1,14 @@
+{
+  "squad": "uenf-admin-ux-impl",
+  "status": "completed",
+  "step": { "current": 5, "total": 5, "label": "checkpoint-final" },
+  "agents": [
+    { "id": "bug-fixer", "name": "Felipe Falha", "icon": "🔧", "status": "done", "desk": { "col": 1, "row": 1 } },
+    { "id": "ux-developer", "name": "Diana Design", "icon": "🎨", "status": "done", "desk": { "col": 2, "row": 1 } },
+    { "id": "code-reviewer", "name": "Rodrigo Revisão", "icon": "✅", "status": "done", "desk": { "col": 3, "row": 1 } }
+  ],
+  "commit": "2c76a0c",
+  "runId": "2026-04-15-103000",
+  "startedAt": "2026-04-15T10:30:00Z",
+  "updatedAt": "2026-04-15T11:00:00Z"
+}

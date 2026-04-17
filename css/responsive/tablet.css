@@ -1,0 +1,47 @@
+/*
+ * UENF Theme — Tablet Responsive CSS
+ * Gerado por: uenf-css-performance squad (Step 5)
+ * Media: (min-width:768px) and (max-width:991.98px)
+ *
+ * v1: contém regras para breakpoints intermediários (768px-1024px)
+ * v2: expandir com split granular de new-menu.css e cct-responsive-breakpoints.css
+ *
+ * Extraído de:
+ *   - css/components/header.css
+ */
+
+/*
+ * NOTA v1:
+ * Este arquivo contém apenas os blocos genuinamente tablet-only encontrados
+ * na varredura inicial do projeto. A maioria dos blocos "tablet" nos demais
+ * arquivos (new-menu.css, cct-responsive-breakpoints.css) usa max-width:991.98px
+ * ou max-width:992px — breakpoints que incluem mobile — e por isso não foram
+ * duplicados aqui.
+ *
+ * v2 deverá refatorar esses arquivos com range queries explícitos:
+ *   @media (min-width: 768px) and (max-width: 991.98px) { ... }
+ * permitindo separação limpa entre mobile.css e tablet.css.
+ */
+
+/* =============================================================================
+   Fonte: css/components/header.css
+   Bloco: @media (max-width: 1024px) — .hero-section
+   Aplica até 1024px (complementa o bloco 768px de mobile)
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  .hero-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  .hero-section .container {
+    padding: 0 15px;
+  }
+
+  .hero-title {
+    padding: 30px 0 20px 0;
+    font-size: 2.2rem;
+  }
+}

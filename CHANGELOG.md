@@ -1,5 +1,31 @@
 # Changelog
 
+## [Unreleased] — Security Patch
+
+### Segurança
+- Corrigido: PHP Object Injection via `unserialize()` no editor CSS — substituído por `json_decode/wp_json_encode`
+- Corrigido: Arbitrary File Write no editor CSS — rejeita conteúdo PHP e valida extensão do arquivo destino
+- Corrigido: SQL Injection na busca avançada — queries agora usam `$wpdb->prepare()`
+- Corrigido: XSS Stored no breadcrumb — adicionados `esc_url()` e `esc_html()` em todos os pontos de output
+- Corrigido: XSS na documentação admin — output do Markdown filtrado com `wp_kses()`
+- Corrigido: DOM XSS nos resultados de busca avançada — `createResultHTML` reescrito com API DOM segura
+- Corrigido: DOM XSS via parâmetro `?s=` no destaque de termos de busca
+- Corrigido: XSS em mensagens de erro da busca, notificações do reset-manager e extensions-manager
+- Corrigido: CSS Injection no preview do Customizer — `textContent` em lugar de `.append('<style>')`
+- Melhorado: Content-Security-Policy ativada e calibrada para Bootstrap CDN, FontAwesome e Google Fonts
+
+### Arquivos Modificados
+- `inc/design-editor/class-css-editor-base.php`
+- `inc/class-advanced-search.php`
+- `functions.php`
+- `inc/security.php`
+- `js/advanced-search.js`
+- `js/admin/reset-manager.js`
+- `js/extensions-manager.js`
+- `js/customizer-search-preview.js`
+
+---
+
 ## [0.2.0] - 2026-04-13 — branch `aparencia`
 
 ### Adicionado

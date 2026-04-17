@@ -112,13 +112,19 @@ if ( function_exists( 'wp_body_open' ) ) {
                     <i class="fas fa-home" aria-hidden="true"></i>
                 </a>
                 <button id="header-shortcut-btn" class="header-shortcut-btn" aria-label="Atalhos rápidos" title="Atalhos Rápidos">
-                    <i class="fas fa-cog" aria-hidden="true"></i>
+                    <i class="fas fa-bolt" aria-hidden="true"></i>
                 </button>
                 <div class="idiomas-bandeiras">
                     <?php dynamic_sidebar('idiomas-uenf'); ?>
                 </div>
                 <div class="social-media">
                     <?php cct_display_social_media(); ?>
+                </div>
+                <!-- Botão de redes sociais — visível apenas em mobile (substitui os ícones individuais) -->
+                <div class="social-share-wrapper">
+                    <button id="header-social-btn" class="header-social-btn" aria-label="Redes sociais" aria-expanded="false" title="Redes Sociais">
+                        <i class="fas fa-share-alt" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
           </div>
@@ -324,6 +330,66 @@ if ( function_exists( 'wp_body_open' ) ) {
             if (e.key === 'Escape' && container.classList.contains('expanded')) {
                 closeShortcutPanel();
             }
+        });
+    });
+
+    // Dropdown de redes sociais — barra inferior mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth > 767.98) return;
+
+        var btn     = document.getElementById('header-social-btn');
+        var wrapper = btn ? btn.closest('.social-share-wrapper') : null;
+        if (!btn || !wrapper) return;
+
+        // Coleta links do .social-media (ocultado via CSS no mobile, mas permanece no DOM)
+        var socialLinks = Array.from(document.querySelectorAll(
+            '.header-media-grid .social-media .social-link'
+        ));
+        if (socialLinks.length === 0) {
+            btn.style.display = 'none';
+            return;
+        }
+
+        // Constrói o painel dropdown
+        var panel = document.createElement('div');
+        panel.className = 'social-dropdown-panel';
+        panel.setAttribute('role', 'menu');
+
+        socialLinks.forEach(function(link) {
+            var item = document.createElement('a');
+            item.href = link.href;
+            item.target = '_blank';
+            item.rel = 'noopener noreferrer';
+            item.setAttribute('role', 'menuitem');
+
+            var icon = link.querySelector('i');
+            if (icon) { item.appendChild(icon.cloneNode(true)); }
+
+            var name = link.title ||
+                (link.querySelector('.screen-reader-text')
+                    ? link.querySelector('.screen-reader-text').textContent.trim()
+                    : '');
+            if (name) {
+                var span = document.createElement('span');
+                span.textContent = name;
+                item.appendChild(span);
+            }
+            panel.appendChild(item);
+        });
+
+        wrapper.appendChild(panel);
+
+        // Toggle ao clicar
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = wrapper.classList.toggle('open');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Fecha ao clicar fora
+        document.addEventListener('click', function() {
+            wrapper.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
         });
     });
 

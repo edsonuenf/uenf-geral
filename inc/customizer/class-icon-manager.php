@@ -20,6 +20,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Garante que WP_Customize_Range_Value_Control está disponível independente da ordem dos hooks
+if (!class_exists('WP_Customize_Range_Value_Control')) {
+    require_once get_template_directory() . '/inc/customizer/class-cct-custom-controls.php';
+}
+
 /**
  * Classe para gerenciamento de ícones
  */

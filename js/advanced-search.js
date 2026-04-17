@@ -224,21 +224,35 @@
         },
         
         /**
+         * Escapar HTML para prevenir XSS
+         * SECURITY FIX (SEC-JS-001, SEC-JS-002): utilitário para sanitizar strings antes de inserir no DOM
+         */
+        escapeHtml: function(str) {
+            var div = document.createElement('div');
+            div.textContent = String(str);
+            return div.innerHTML;
+        },
+
+        /**
          * Destacar termos de busca
          */
         highlightSearchTerms: function() {
             const searchTerm = this.getSearchTerm();
-            
+
             if (!searchTerm) {
                 return;
             }
-            
-            // Destacar no título e conteúdo
+
+            // SECURITY FIX (SEC-JS-002): escapar o termo de busca antes de usar em regex/HTML
+            // O filtro de metacaracteres regex não escapa HTML — um ?s=<script> passaria direto
+            const self = this;
             $('.search-results .entry-title, .search-results .entry-summary').each(function() {
                 const $element = $(this);
-                const content = $element.html();
-                const highlighted = content.replace(
-                    new RegExp('(' + searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
+                // Escapa o conteúdo existente do elemento e o termo de busca
+                const safeContent = self.escapeHtml($element.text());
+                const safeTerm = self.escapeHtml(searchTerm);
+                const highlighted = safeContent.replace(
+                    new RegExp('(' + safeTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
                     '<mark class="search-highlight">$1</mark>'
                 );
                 $element.html(highlighted);
@@ -288,28 +302,33 @@
         
         /**
          * Criar HTML do resultado
+         * SECURITY FIX (SEC-JS-001): substituído template literal com interpolação direta por criação segura de DOM
+         * result.excerpt e outros campos podem conter HTML malicioso injetado em posts — usar .text() previne XSS
          */
         createResultHTML: function(result) {
-            const siteInfo = result.site_name ? 
-                `<span class="result-site">${result.site_name}</span>` : '';
-            
-            return `
-                <article class="search-result">
-                    <header class="entry-header">
-                        <h2 class="entry-title">
-                            <a href="${result.permalink}">${result.title}</a>
-                            ${siteInfo}
-                        </h2>
-                        <div class="entry-meta">
-                            <span class="post-type">${result.post_type}</span>
-                            <span class="post-date">${result.date}</span>
-                        </div>
-                    </header>
-                    <div class="entry-summary">
-                        ${result.excerpt}
-                    </div>
-                </article>
-            `;
+            const e = this.escapeHtml.bind(this);
+
+            const $article = $('<article class="search-result"></article>');
+            const $header  = $('<header class="entry-header"></header>');
+            const $h2      = $('<h2 class="entry-title"></h2>');
+            const $link    = $('<a></a>').attr('href', e(result.permalink)).text(result.title);
+
+            $h2.append($link);
+
+            if (result.site_name) {
+                $h2.append($('<span class="result-site"></span>').text(result.site_name));
+            }
+
+            const $meta = $('<div class="entry-meta"></div>');
+            $meta.append($('<span class="post-type"></span>').text(result.post_type));
+            $meta.append($('<span class="post-date"></span>').text(result.date));
+
+            $header.append($h2).append($meta);
+
+            const $summary = $('<div class="entry-summary"></div>').text(result.excerpt);
+
+            $article.append($header).append($summary);
+            return $article;
         },
         
         /**
@@ -394,9 +413,11 @@
         
         /**
          * Mostrar erro
+         * SECURITY FIX (SEC-JS-003): .text() em lugar de template literal no .html() previne XSS via response.data.message
          */
         showError: function(message) {
-            $('.search-results').html(`<div class="search-error">${message}</div>`);
+            var $error = $('<div class="search-error"></div>').text(message);
+            $('.search-results').empty().append($error);
         },
         
         /**

@@ -626,9 +626,13 @@
             // Remover CSS personalizado anterior
             $('#cct-search-custom-css').remove();
             
-            // Adicionar novo CSS personalizado
+            // SECURITY FIX (SEC-JS-006): textContent previne CSS Injection via </style><script>
+            // $('head').append() com string HTML permitia injetar tags fora do <style>
             if (newval) {
-                $('head').append('<style id="cct-search-custom-css">' + newval + '</style>');
+                var styleEl = document.createElement('style');
+                styleEl.id = 'cct-search-custom-css';
+                styleEl.textContent = newval;
+                document.head.appendChild(styleEl);
             }
         });
     });
