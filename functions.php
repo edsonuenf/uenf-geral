@@ -1739,6 +1739,19 @@ function uenf_get_social_media_css()
 }
 
 /**
+ * Retorna true se ao menos uma rede social estiver configurada no customizer
+ */
+function uenf_has_social_media(): bool {
+    $networks = [ 'facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'telegram', 'whatsapp' ];
+    foreach ( $networks as $network ) {
+        if ( ! empty( get_theme_mod( $network . '_link', '' ) ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * Exibe as redes sociais configuradas no customizer
  */
 function uenf_display_social_media()

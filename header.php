@@ -117,9 +117,11 @@ if ( function_exists( 'wp_body_open' ) ) {
                 <div class="idiomas-bandeiras">
                     <?php dynamic_sidebar('idiomas-uenf'); ?>
                 </div>
+                <?php if ( uenf_has_social_media() ) : ?>
                 <div class="social-media">
                     <?php uenf_display_social_media(); ?>
                 </div>
+                <?php endif; ?>
                 <!-- Botão de redes sociais — visível apenas em mobile (substitui os ícones individuais) -->
                 <div class="social-share-wrapper">
                     <button id="header-social-btn" class="header-social-btn" aria-label="Redes sociais" aria-expanded="false" title="Redes Sociais">
@@ -156,7 +158,16 @@ if ( function_exists( 'wp_body_open' ) ) {
       </nav>
       <div class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1" aria-labelledby="menuLateralLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="menuLateralLabel">&nbsp;</h5>
+          <div class="offcanvas-logo" id="menuLateralLabel">
+            <?php if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) : ?>
+              <?php the_custom_logo(); ?>
+            <?php else : ?>
+              <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+                <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo-uenf-transparente.png"
+                     alt="<?php bloginfo( 'name' ); ?>">
+              </a>
+            <?php endif; ?>
+          </div>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
