@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.3.1] — 2026-05-05
+
+### Security
+- Removidos scripts de teste públicos sem autenticação do diretório `testes/`
+- Reativadas proteções de segurança em `inc/security.php` (CSP, HSTS, proteção xmlrpc, headers de segurança)
+- Corrigido hook de headers HTTP de segurança (`after_setup_theme` → `send_headers`)
+- Corrigidas 2 vulnerabilidades DOM XSS críticas em editor CSS e gerenciador de extensões
+- Corrigidas 8 instâncias de DOM XSS em customizer-preview e dark mode via injeção de style/meta
+- Adicionado `esc_url()` em 8 chamadas `admin_url()` sem escape
+- Adicionado `esc_html()` em parser Markdown de documentação
+- Adicionado `$wpdb->prepare()` em query SQL sem sanitização
+- Cache-Control restrito — não mais aplicado a páginas HTML dinâmicas
+- Endpoint REST `/wp/v2/users` desabilitado para usuários não autenticados
+- `FORCE_SSL_ADMIN` ativado em `inc/security.php`
+- Removido header `X-XSS-Protection` deprecated
+
+---
+
 ## [Unreleased] — Security Patch
 
 ### Segurança

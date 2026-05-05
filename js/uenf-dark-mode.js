@@ -402,11 +402,16 @@
             const colors = mode === 'dark' ? this.settings.darkColors : this.settings.lightColors;
             const backgroundColor = colors.background || (mode === 'dark' ? '#1a1a1a' : '#ffffff');
             
-            // Remover meta tags existentes
-            $('meta[name="theme-color"]').remove();
-            
-            // Adicionar nova meta tag
-            $('head').append(`<meta name="theme-color" content="${backgroundColor}">`);
+            // SECURITY FIX: JS-A04 — Substituído template literal em $('head').append() por
+            // manipulação DOM segura via setAttribute(). backgroundColor interpolado diretamente
+            // em string HTML permitia DOM XSS se o valor de cctDarkMode.settings fosse manipulado.
+            var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+            if (!metaThemeColor) {
+                metaThemeColor = document.createElement('meta');
+                metaThemeColor.setAttribute('name', 'theme-color');
+                document.head.appendChild(metaThemeColor);
+            }
+            metaThemeColor.setAttribute('content', backgroundColor);
         },
         
         /**

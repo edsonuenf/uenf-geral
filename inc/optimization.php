@@ -65,8 +65,11 @@ function uenf_enable_gzip() {
 add_action( 'init', 'uenf_enable_gzip' );
 
 // Add browser caching headers
+// SECURITY FIX: WP-C03 — Cache-Control de 1 ano restrito apenas a feeds e attachments.
+// Aplicar em páginas HTML dinâmicas (singular, archive, home) causaria cache de conteúdo privado
+// em navegadores e CDNs, com risco de servir conteúdo desatualizado ou privado a outros usuários.
 function uenf_add_browser_caching() {
-    if ( !is_admin() ) {
+    if ( !is_admin() && ( is_feed() || is_attachment() ) ) {
         header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', time() + 31536000 ) . ' GMT' );
         header( 'Cache-Control: public, max-age=31536000' );
     }

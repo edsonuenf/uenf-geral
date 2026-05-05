@@ -50,11 +50,23 @@
                         break;
                 }
                 
-                // Aplica as mudanças no preview
+                // SECURITY FIX: JS-A03 — Substituído append() com string HTML por criação DOM segura.
+                // fontLink como string HTML e css concatenado em <style> permitiam CSS/HTML injection.
+                // Agora: <link> criado via $('<link>').attr() e CSS injetado via textContent.
                 if (fontLink) {
-                    $("head").append(fontLink);
+                    // Extrair href da string fontLink (valor estático do switch-case)
+                    var hrefMatch = fontLink.match(/href='([^']+)'/);
+                    if (hrefMatch && hrefMatch[1]) {
+                        $('<link>').attr({ rel: 'stylesheet', href: hrefMatch[1] }).appendTo('head');
+                    }
                 }
-                $("head").append("<style id='uenf-preview-typography'>" + css + "</style>");
+                var styleEl = document.getElementById('uenf-preview-typography');
+                if (!styleEl) {
+                    styleEl = document.createElement('style');
+                    styleEl.id = 'uenf-preview-typography';
+                    document.head.appendChild(styleEl);
+                }
+                styleEl.textContent = css;
                 
                 // Força re-render
                 $("body").addClass("uenf-typography-updated").removeClass("uenf-typography-updated");

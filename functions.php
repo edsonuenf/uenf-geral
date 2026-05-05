@@ -845,21 +845,24 @@ function uenf_docs_design_page_callback()
         $docs_content = file_get_contents($docs_file);
         // Converte Markdown avançado para HTML
         // Headings com IDs automáticos para navegação interna (smooth scroll)
+        // SECURITY FIX: PHP-A01 — Adicionado esc_html() em todos os callbacks de heading do parser
+        // Markdown. Sem escape, conteúdo do arquivo .md com caracteres HTML especiais ou editado
+        // por ator malicioso resultaria em XSS Stored na área administrativa.
         $docs_content = preg_replace_callback('/^# (.+)$/m', function ($m) {
             $id = sanitize_title(strip_tags($m[1]));
-            return '<h1 id="' . esc_attr($id) . '" class="docs-h1">' . $m[1] . '</h1>';
+            return '<h1 id="' . esc_attr($id) . '" class="docs-h1">' . esc_html($m[1]) . '</h1>';
         }, $docs_content);
         $docs_content = preg_replace_callback('/^## (.+)$/m', function ($m) {
             $id = sanitize_title(strip_tags($m[1]));
-            return '<h2 id="' . esc_attr($id) . '" class="docs-h2">' . $m[1] . '</h2>';
+            return '<h2 id="' . esc_attr($id) . '" class="docs-h2">' . esc_html($m[1]) . '</h2>';
         }, $docs_content);
         $docs_content = preg_replace_callback('/^### (.+)$/m', function ($m) {
             $id = sanitize_title(strip_tags($m[1]));
-            return '<h3 id="' . esc_attr($id) . '" class="docs-h3">' . $m[1] . '</h3>';
+            return '<h3 id="' . esc_attr($id) . '" class="docs-h3">' . esc_html($m[1]) . '</h3>';
         }, $docs_content);
         $docs_content = preg_replace_callback('/^#### (.+)$/m', function ($m) {
             $id = sanitize_title(strip_tags($m[1]));
-            return '<h4 id="' . esc_attr($id) . '" class="docs-h4">' . $m[1] . '</h4>';
+            return '<h4 id="' . esc_attr($id) . '" class="docs-h4">' . esc_html($m[1]) . '</h4>';
         }, $docs_content);
         $docs_content = preg_replace('/\*\*(.+?)\*\*/', '<strong class="docs-bold">$1</strong>', $docs_content);
         $docs_content = preg_replace('/\*(.+?)\*/', '<em class="docs-italic">$1</em>', $docs_content);
@@ -1116,10 +1119,12 @@ function uenf_docs_design_page_callback()
         <div class="docs-nav">
             <h3>🚀 Acesso Rápido</h3>
             <div class="docs-nav-buttons">
-                <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Abrir Customizer</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-secondary">🔧
+                <?php // SECURITY FIX: PHP-A02 — Adicionado esc_url() em todos os echo admin_url().
+                // Sem esc_url(), hooks maliciosos em admin_url filter poderiam injetar código. ?>
+                <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="button button-primary">🎨 Abrir Customizer</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-extensoes')); ?>" class="button button-secondary">🔧
                     Gerenciar Extensões</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf-reset'); ?>" class="button button-secondary">🔄
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-reset')); ?>" class="button button-secondary">🔄
                     Reset Configurações</a>
             </div>
         </div>
@@ -1151,8 +1156,8 @@ function uenf_docs_design_page_callback()
             <h3>🎯 Próximos Passos</h3>
             <p style="margin-bottom: 20px;">Agora que você conhece as opções de personalização, comece a criar seu design
                 único!</p>
-            <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Começar Personalização</a>
-            <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Voltar ao
+            <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="button button-primary">🎨 Começar Personalização</a>
+            <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf')); ?>" class="button button-secondary">← Voltar ao
                 Painel</a>
         </div>
     </div>
@@ -1256,8 +1261,8 @@ function uenf_extensions_page_callback()
             <p class="ua-card-title">Acesso Rápido</p>
             <p style="margin-bottom: 14px; color: var(--ua-foreground-muted); font-size: 0.875rem;">Personalize cores, tipografia e layout no Customizer:</p>
             <div class="ua-nav">
-                <a href="<?php echo admin_url('customize.php'); ?>" class="ua-btn ua-btn-default">🎨 Abrir Customizer</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="ua-btn ua-btn-ghost">← Painel Principal</a>
+                <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="ua-btn ua-btn-default">🎨 Abrir Customizer</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf')); ?>" class="ua-btn ua-btn-ghost">← Painel Principal</a>
             </div>
         </div>
 
@@ -1508,7 +1513,9 @@ require_once UENF_THEME_DIR . '/inc/template-tags.php';
 require_once UENF_THEME_DIR . '/inc/template-functions.php';
 require_once UENF_THEME_DIR . '/inc/optimization.php';
 require_once UENF_THEME_DIR . '/inc/seo.php';
-//require_once UENF_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
+// SECURITY FIX: WP-C01 — Reativado security.php que estava comentado. Contém CSP, HSTS, bloqueio XML-RPC,
+// remoção de versão WP, prevenção de enumeração de usuários e restrição de MIME types.
+require_once UENF_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
 
 // Inclui o customizer da página 404
 if (file_exists(UENF_THEME_DIR . '/inc/customizer/class-404-customizer.php')) {
@@ -1552,7 +1559,10 @@ if (!function_exists('uenf_customize_register')) {
 /**
  * Configurações de segurança adicionais
  */
-add_action('after_setup_theme', 'uenf_security_headers');
+// SECURITY FIX: WP-C02 — Trocado hook after_setup_theme (dispara antes do envio HTTP) por send_headers
+// (hook correto para definir headers HTTP). WP-A04 — Removido header X-XSS-Protection deprecated
+// (obsoleto em browsers modernos; pode criar vulnerabilidade em IE antigo).
+add_action('send_headers', 'uenf_security_headers');
 if (!function_exists('uenf_security_headers')) {
     function uenf_security_headers()
     {
@@ -1560,9 +1570,6 @@ if (!function_exists('uenf_security_headers')) {
         if (!is_admin()) {
             // X-Content-Type-Options: previne que navegadores façam MIME-type sniffing
             header('X-Content-Type-Options: nosniff');
-
-            // X-XSS-Protection: ativa o filtro XSS do navegador
-            header('X-XSS-Protection: 1; mode=block');
 
             // X-Frame-Options: previne clickjacking
             header('X-Frame-Options: SAMEORIGIN');
@@ -1695,7 +1702,7 @@ function uenf_widgets_init()
     // Widget de redes sociais removido - usando configurações do customizer
     // Área de idiomas
     register_sidebar(array(
-        'name' => 'idiomas UENF',
+        'name' => 'Idiomas UENF',
         'id' => 'idiomas-uenf',
         'description' => esc_html__('Add header widgets here.', 'uenf-theme'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
@@ -2463,7 +2470,7 @@ function uenf_reset_page_callback()
 
         <div class="ua-alert ua-alert-warning">
             ⚠️ <strong>Atenção:</strong> As ações abaixo <strong>não podem ser desfeitas</strong>.
-            Recomendamos <a href="<?php echo admin_url('customize.php?autofocus[section]=uenf_backup_section'); ?>">fazer um backup</a> antes de prosseguir.
+            Recomendamos <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=uenf_backup_section')); ?>">fazer um backup</a> antes de prosseguir.
         </div>
 
         <div class="ua-reset-grid">
@@ -2510,9 +2517,9 @@ function uenf_reset_page_callback()
         <div class="ua-card">
             <p class="ua-card-title">Navegação</p>
             <div class="ua-nav">
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="ua-btn ua-btn-outline">← Painel Principal</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="ua-btn ua-btn-outline">🔧 Extensões</a>
-                <a href="<?php echo admin_url('customize.php?autofocus[section]=uenf_backup_section'); ?>" class="ua-btn ua-btn-default">💾 Fazer Backup</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf')); ?>" class="ua-btn ua-btn-outline">← Painel Principal</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-extensoes')); ?>" class="ua-btn ua-btn-outline">🔧 Extensões</a>
+                <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=uenf_backup_section')); ?>" class="ua-btn ua-btn-default">💾 Fazer Backup</a>
             </div>
         </div>
 

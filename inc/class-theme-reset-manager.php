@@ -325,10 +325,16 @@ class UENF_Theme_Reset_Manager {
     private function cleanup_old_backups() {
         global $wpdb;
         
+        // SECURITY FIX: PHP-A05 — Adicionado $wpdb->prepare() conforme WordPress Coding Standards.
+        // O LIKE era hardcoded (sem variável de usuário), mas o padrão sem prepare() em código de
+        // componente crítico (reset manager) é perigoso e viola as boas práticas do WordPress.
         $backups = $wpdb->get_results(
-            "SELECT option_name FROM {$wpdb->options} 
-             WHERE option_name LIKE 'uenf_theme_backup_%' 
-             ORDER BY option_name DESC"
+            $wpdb->prepare(
+                "SELECT option_name FROM {$wpdb->options}
+                 WHERE option_name LIKE %s
+                 ORDER BY option_name DESC",
+                'uenf_theme_backup_%'
+            )
         );
         
         if (count($backups) > 5) {

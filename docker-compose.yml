@@ -6,6 +6,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
+      # SECURITY FIX: WP-A01 — AVISO: trocar estas credenciais antes de usar em produção.
+      # Usar arquivo .env (já no .gitignore) com senhas fortes:
+      #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress

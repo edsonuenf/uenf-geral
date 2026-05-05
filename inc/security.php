@@ -231,6 +231,13 @@ if (!defined('DISALLOW_FILE_EDIT')) {
     define('DISALLOW_FILE_EDIT', true);
 }
 
+// SECURITY FIX: WP-A02 — FORCE_SSL_ADMIN ausente em qualquer arquivo de configuração.
+// Força o painel administrativo e login a usar HTTPS, evitando exposição de cookies de sessão em HTTP.
+// Recomendação: mover esta definição para wp-config.php em ambientes de produção.
+if (!defined('FORCE_SSL_ADMIN')) {
+    define('FORCE_SSL_ADMIN', true);
+}
+
 /**
  * Desativa atualizações automáticas de plugins e temas
  */
@@ -242,4 +249,17 @@ add_filter('auto_update_theme', '__return_false');
  */
 add_filter('login_errors', function() {
     return 'Credenciais inválidas. Tente novamente.';
+});
+
+// SECURITY FIX: WP-A03 — Remove endpoint REST /wp/v2/users que expõe lista de usernames
+// publicamente sem autenticação. Qualquer visitante poderia enumerar usuários do site via
+// https://site/wp-json/wp/v2/users e usar os logins em ataques de força bruta.
+add_filter('rest_endpoints', function($endpoints) {
+    if (isset($endpoints['/wp/v2/users'])) {
+        unset($endpoints['/wp/v2/users']);
+    }
+    if (isset($endpoints['/wp/v2/users/(?P<id>[\d]+)'])) {
+        unset($endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+    }
+    return $endpoints;
 });

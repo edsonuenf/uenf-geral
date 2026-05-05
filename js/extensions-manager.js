@@ -275,10 +275,15 @@
                 // Atualizar display
                 const $infoControl = $('#customize-control-uenf_extensions_info');
                 if ($infoControl.length) {
-                    $infoControl.find('.customize-control-description').html(
-                        `Extensões ativas: <strong>${activeExtensions}</strong> de ${totalExtensions}<br>` +
-                        `Performance: <span style="color: ${color}">${icon} ${status}</span>`
-                    );
+                    // SECURITY FIX: JS-C02 — Substituído .html() com template literal interpolado
+                    // por criação DOM segura. .text() escapa conteúdo; .css() aplica cor sem injeção HTML.
+                    const $desc = $infoControl.find('.customize-control-description');
+                    $desc.empty();
+                    $('<span></span>').text('Extensões ativas: ').appendTo($desc);
+                    $('<strong></strong>').text(activeExtensions + ' de ' + totalExtensions).appendTo($desc);
+                    $('<br>').appendTo($desc);
+                    $('<span></span>').text('Performance: ' + icon + ' ' + status)
+                        .css('color', color).appendTo($desc);
                 }
             } catch (error) {
                 console.error('ExtensionsManager: Erro ao atualizar indicador de performance:', error);

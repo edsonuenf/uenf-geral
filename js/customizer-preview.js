@@ -34,16 +34,28 @@
     /**
      * Preview em tempo real para CSS customizado
      */
+    // SECURITY FIX: JS-A01 — Substituído $('head').append('<style>'+css+'</style>') por criação
+    // DOM segura com textContent. Concatenar CSS em string HTML permite CSS injection:
+    // um valor como </style><script>alert(1)</script> escaparia do bloco style e executaria JS.
+    function setStyleContent(id, cssText) {
+        var el = document.getElementById(id);
+        if (!el) {
+            el = document.createElement('style');
+            el.id = id;
+            document.head.appendChild(el);
+        }
+        el.textContent = cssText;
+    }
+
     function bindCSSPreview(setting, cssFunction) {
         wp.customize(setting, function(value) {
             value.bind(function(newval) {
-                // Remove CSS anterior
-                $('#uenf-dynamic-css').remove();
-                
-                // Adiciona novo CSS
                 var css = cssFunction(newval);
                 if (css) {
-                    $('head').append('<style id="uenf-dynamic-css">' + css + '</style>');
+                    setStyleContent('uenf-dynamic-css', css);
+                } else {
+                    var el = document.getElementById('uenf-dynamic-css');
+                    if (el) { el.parentNode.removeChild(el); }
                 }
             });
         });
@@ -97,10 +109,12 @@
                         break;
                 }
                 
-                // Remove CSS anterior e adiciona novo
-                $('#uenf-menu-style-css').remove();
+                // SECURITY FIX: JS-A01 — Usando setStyleContent() seguro em vez de append() com string HTML.
                 if (css) {
-                    $('head').append('<style id="uenf-menu-style-css">' + css + '</style>');
+                    setStyleContent('uenf-menu-style-css', css);
+                } else {
+                    var el = document.getElementById('uenf-menu-style-css');
+                    if (el) { el.parentNode.removeChild(el); }
                 }
             });
         });
@@ -139,63 +153,57 @@
      * Preview para botões de formulário
      */
     function bindFormButtonPreviews() {
+        // SECURITY FIX: JS-A02 — Substituídas 5 instâncias de $('head').append('<style>'+newval+'</style>')
+        // por setStyleContent() seguro. newval do Customizer concatenado em string HTML permite
+        // CSS injection: valor como </style><img src=x onerror=alert(1)> injetaria HTML no <head>.
+
         // Cor de fundo do botão
         wp.customize('form_button_bg_color', function(value) {
             value.bind(function(newval) {
-                $('head').find('#uenf-form-button-bg-color').remove();
-                $('head').append('<style id="uenf-form-button-bg-color">' +
+                setStyleContent('uenf-form-button-bg-color',
                     '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
                     '.wp-block-button__link, .wpcf7-submit { ' +
-                    'background-color: ' + newval + ' !important; }' +
-                    '</style>');
+                    'background-color: ' + newval + ' !important; }');
             });
         });
 
         // Cor do texto do botão
         wp.customize('form_button_text_color', function(value) {
             value.bind(function(newval) {
-                $('head').find('#uenf-form-button-text-color').remove();
-                $('head').append('<style id="uenf-form-button-text-color">' +
+                setStyleContent('uenf-form-button-text-color',
                     '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
                     '.wp-block-button__link, .wpcf7-submit { ' +
-                    'color: ' + newval + ' !important; }' +
-                    '</style>');
+                    'color: ' + newval + ' !important; }');
             });
         });
 
         // Cor de fundo hover do botão
         wp.customize('form_button_bg_hover_color', function(value) {
             value.bind(function(newval) {
-                $('head').find('#uenf-form-button-bg-hover-color').remove();
-                $('head').append('<style id="uenf-form-button-bg-hover-color">' +
+                setStyleContent('uenf-form-button-bg-hover-color',
                     '.btn-submit-uenf:hover, .btn-form-uenf:hover, button[type="submit"].btn-uenf:hover, ' +
                     '.wp-block-button__link:hover, .wpcf7-submit:hover { ' +
-                    'background-color: ' + newval + ' !important; }' +
-                    '</style>');
+                    'background-color: ' + newval + ' !important; }');
             });
         });
 
         // Raio da borda do botão
         wp.customize('form_button_border_radius', function(value) {
             value.bind(function(newval) {
-                $('head').find('#uenf-form-button-border-radius').remove();
-                $('head').append('<style id="uenf-form-button-border-radius">' +
+                setStyleContent('uenf-form-button-border-radius',
                     '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
                     '.wp-block-button__link, .wpcf7-submit { ' +
-                    'border-radius: ' + newval + ' !important; }' +
-                    '</style>');
+                    'border-radius: ' + newval + ' !important; }');
             });
         });
 
         // Padding do botão
         wp.customize('form_button_padding', function(value) {
             value.bind(function(newval) {
-                $('head').find('#uenf-form-button-padding').remove();
-                $('head').append('<style id="uenf-form-button-padding">' +
+                setStyleContent('uenf-form-button-padding',
                     '.btn-submit-uenf, .btn-form-uenf, button[type="submit"].btn-uenf, ' +
                     '.wp-block-button__link, .wpcf7-submit { ' +
-                    'padding: ' + newval + ' !important; }' +
-                    '</style>');
+                    'padding: ' + newval + ' !important; }');
             });
         });
     }

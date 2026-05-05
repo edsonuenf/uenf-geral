@@ -560,12 +560,18 @@
          * Mostra notificação
          */
         showNotification(type, message) {
-            const $notification = $(`
-                <div class="uenf-notification uenf-notification-${type}">
-                    <span class="uenf-notification-message">${message}</span>
-                    <button type="button" class="uenf-notification-close">&times;</button>
-                </div>
-            `);
+            // SECURITY FIX: JS-C01 — Substituído template literal passado ao construtor jQuery $()
+            // (que interpreta HTML e permite DOM XSS) por criação segura de elementos DOM.
+            // .text() escapa automaticamente o conteúdo, prevenindo execução de payloads HTML.
+            const safeType = String(type).replace(/[^a-z0-9-]/gi, '');
+            const $notification = $('<div></div>')
+                .addClass('uenf-notification uenf-notification-' + safeType)
+                .append(
+                    $('<span class="uenf-notification-message"></span>').text(message)
+                )
+                .append(
+                    $('<button type="button" class="uenf-notification-close"></button>').text('×')
+                );
             
             $('#uenf-notifications').append($notification);
             
