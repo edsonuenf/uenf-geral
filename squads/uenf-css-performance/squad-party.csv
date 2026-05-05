@@ -1,9 +1,0 @@
-path,displayName,icon,role
-./agents/auditor.agent.md,Ana (CSS Auditor),🔍,Analisa e classifica todas as regras CSS por device
-./agents/architect.agent.md,Rafael (Frontend Architect),🏗️,Projeta a arquitetura de split e o enqueue condicional
-./agents/mobile-dev.agent.md,Thiago (Mobile Dev),📱,Extrai e otimiza CSS específico de mobile
-./agents/tablet-dev.agent.md,Camila (Tablet Dev),📟,Extrai e otimiza CSS específico de tablet
-./agents/desktop-dev.agent.md,Pedro (Desktop Dev),🖥️,Extrai e otimiza CSS específico de desktop
-./agents/build-eng.agent.md,Carlos (Build Engineer),⚙️,Webpack build e testes de regressão visual
-./agents/seo-eng.agent.md,Lucia (SEO Engineer),📊,Audita Core Web Vitals e performance de SEO
-./agents/release-mgr.agent.md,Beatriz (Release Manager),📋,CHANGELOG e commit e resumo final

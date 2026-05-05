@@ -1,4 +1,0 @@
-id,name,icon,role,execution
-bug-fixer,Felipe Falha,🔧,P0 Bug Fixer — corrige bugs críticos no código PHP,inline
-ux-developer,Diana Design,🎨,P1 UX Developer — implementa melhorias visuais nas páginas admin,inline
-code-reviewer,Rodrigo Revisão,✅,Code Reviewer — valida segurança e corretude das mudanças,inline

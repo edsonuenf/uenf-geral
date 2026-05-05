@@ -76,14 +76,16 @@ docker-compose.*.yml
 
 # Ferramentas de squad/agentes (uso local apenas — não enviar ao GitHub)
 _opensquad/
-squads/*/output/
-squads/uenf-security-audit/output/
-
-# Dashboard (aplicação separada)
+squads/
 dashboard/
 
-# Cache de testes
+# Testes unitários (desenvolvimento)
+tests/
+phpunit.xml
 .phpunit.result.cache
+
+# Configuração MCP (ferramentas de IA locais)
+.mcp.json
 
 # Screenshots de debug no diretório raiz
 /*.png
