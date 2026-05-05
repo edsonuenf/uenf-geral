@@ -11,7 +11,7 @@
  * - Media queries dinâmicas
  * - Integração com todos os módulos
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do gerenciador de breakpoints responsivos
  */
-class CCT_Responsive_Breakpoints_Manager {
+class UENF_Responsive_Breakpoints_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -38,7 +38,7 @@ class CCT_Responsive_Breakpoints_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_breakpoints_';
+    private $prefix = 'uenf_breakpoints_';
     
     /**
      * Breakpoints padrão
@@ -90,17 +90,17 @@ class CCT_Responsive_Breakpoints_Manager {
         add_action('wp_footer', array($this, 'output_custom_js'));
         
         // AJAX handlers
-        add_action('wp_ajax_cct_save_breakpoint', array($this, 'ajax_save_breakpoint'));
-        add_action('wp_ajax_cct_delete_breakpoint', array($this, 'ajax_delete_breakpoint'));
-        add_action('wp_ajax_cct_reorder_breakpoints', array($this, 'ajax_reorder_breakpoints'));
-        add_action('wp_ajax_cct_preview_breakpoint', array($this, 'ajax_preview_breakpoint'));
-        add_action('wp_ajax_cct_export_breakpoints', array($this, 'ajax_export_breakpoints'));
-        add_action('wp_ajax_cct_import_breakpoints', array($this, 'ajax_import_breakpoints'));
+        add_action('wp_ajax_uenf_save_breakpoint', array($this, 'ajax_save_breakpoint'));
+        add_action('wp_ajax_uenf_delete_breakpoint', array($this, 'ajax_delete_breakpoint'));
+        add_action('wp_ajax_uenf_reorder_breakpoints', array($this, 'ajax_reorder_breakpoints'));
+        add_action('wp_ajax_uenf_preview_breakpoint', array($this, 'ajax_preview_breakpoint'));
+        add_action('wp_ajax_uenf_export_breakpoints', array($this, 'ajax_export_breakpoints'));
+        add_action('wp_ajax_uenf_import_breakpoints', array($this, 'ajax_import_breakpoints'));
         
         // Shortcodes
-        add_shortcode('cct_breakpoint_info', array($this, 'breakpoint_info_shortcode'));
-        add_shortcode('cct_device_detector', array($this, 'device_detector_shortcode'));
-        add_shortcode('cct_responsive_content', array($this, 'responsive_content_shortcode'));
+        add_shortcode('uenf_breakpoint_info', array($this, 'breakpoint_info_shortcode'));
+        add_shortcode('uenf_device_detector', array($this, 'device_detector_shortcode'));
+        add_shortcode('uenf_responsive_content', array($this, 'responsive_content_shortcode'));
         
         // Body class
         add_filter('body_class', array($this, 'add_body_classes'));
@@ -598,25 +598,25 @@ class CCT_Responsive_Breakpoints_Manager {
     public function enqueue_scripts() {
         // CSS dos breakpoints
         wp_enqueue_style(
-            'cct-responsive-breakpoints',
-            get_template_directory_uri() . '/css/cct-responsive-breakpoints.css',
+            'uenf-responsive-breakpoints',
+            get_template_directory_uri() . '/css/uenf-responsive-breakpoints.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript dos breakpoints
         wp_enqueue_script(
-            'cct-responsive-breakpoints',
-            get_template_directory_uri() . '/js/cct-responsive-breakpoints.js',
+            'uenf-responsive-breakpoints',
+            get_template_directory_uri() . '/js/uenf-responsive-breakpoints.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-responsive-breakpoints', 'cctBreakpoints', array(
+        wp_localize_script('uenf-responsive-breakpoints', 'cctBreakpoints', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_breakpoints_nonce'),
+            'nonce' => wp_create_nonce('uenf_breakpoints_nonce'),
             'settings' => $this->get_frontend_settings(),
             'breakpoints' => $this->get_active_breakpoints(),
             'strings' => array(
@@ -653,20 +653,20 @@ class CCT_Responsive_Breakpoints_Manager {
             return;
         }
         
-        echo "<style id='cct-responsive-breakpoints-custom-css'>\n";
+        echo "<style id='uenf-responsive-breakpoints-custom-css'>\n";
         
         // Variáveis CSS dos breakpoints
         echo ":root {\n";
         foreach ($breakpoints as $bp_key => $breakpoint) {
             if (!$breakpoint['enabled']) continue;
             
-            echo "  --cct-bp-{$bp_key}-min: {$breakpoint['min_width']}px;\n";
+            echo "  --uenf-bp-{$bp_key}-min: {$breakpoint['min_width']}px;\n";
             if ($breakpoint['max_width']) {
-                echo "  --cct-bp-{$bp_key}-max: {$breakpoint['max_width']}px;\n";
+                echo "  --uenf-bp-{$bp_key}-max: {$breakpoint['max_width']}px;\n";
             }
-            echo "  --cct-bp-{$bp_key}-container: {$breakpoint['container_width']};\n";
-            echo "  --cct-bp-{$bp_key}-gutter: {$breakpoint['gutter']}px;\n";
-            echo "  --cct-bp-{$bp_key}-columns: {$breakpoint['columns']};\n";
+            echo "  --uenf-bp-{$bp_key}-container: {$breakpoint['container_width']};\n";
+            echo "  --uenf-bp-{$bp_key}-gutter: {$breakpoint['gutter']}px;\n";
+            echo "  --uenf-bp-{$bp_key}-columns: {$breakpoint['columns']};\n";
         }
         echo "}\n";
         
@@ -683,26 +683,26 @@ class CCT_Responsive_Breakpoints_Manager {
                 echo "@media (min-width: {$min}px) {\n";
             }
             
-            echo "  .cct-container {\n";
-            echo "    max-width: var(--cct-bp-{$bp_key}-container);\n";
-            echo "    padding-left: calc(var(--cct-bp-{$bp_key}-gutter) / 2);\n";
-            echo "    padding-right: calc(var(--cct-bp-{$bp_key}-gutter) / 2);\n";
+            echo "  .uenf-container {\n";
+            echo "    max-width: var(--uenf-bp-{$bp_key}-container);\n";
+            echo "    padding-left: calc(var(--uenf-bp-{$bp_key}-gutter) / 2);\n";
+            echo "    padding-right: calc(var(--uenf-bp-{$bp_key}-gutter) / 2);\n";
             echo "  }\n";
             
-            echo "  .cct-row {\n";
-            echo "    margin-left: calc(var(--cct-bp-{$bp_key}-gutter) / -2);\n";
-            echo "    margin-right: calc(var(--cct-bp-{$bp_key}-gutter) / -2);\n";
+            echo "  .uenf-row {\n";
+            echo "    margin-left: calc(var(--uenf-bp-{$bp_key}-gutter) / -2);\n";
+            echo "    margin-right: calc(var(--uenf-bp-{$bp_key}-gutter) / -2);\n";
             echo "  }\n";
             
-            echo "  .cct-col {\n";
-            echo "    padding-left: calc(var(--cct-bp-{$bp_key}-gutter) / 2);\n";
-            echo "    padding-right: calc(var(--cct-bp-{$bp_key}-gutter) / 2);\n";
+            echo "  .uenf-col {\n";
+            echo "    padding-left: calc(var(--uenf-bp-{$bp_key}-gutter) / 2);\n";
+            echo "    padding-right: calc(var(--uenf-bp-{$bp_key}-gutter) / 2);\n";
             echo "  }\n";
             
             // Classes de colunas específicas do breakpoint
             for ($i = 1; $i <= $breakpoint['columns']; $i++) {
                 $width = ($i / $breakpoint['columns']) * 100;
-                echo "  .cct-col-{$bp_key}-{$i} {\n";
+                echo "  .uenf-col-{$bp_key}-{$i} {\n";
                 echo "    flex: 0 0 {$width}%;\n";
                 echo "    max-width: {$width}%;\n";
                 echo "  }\n";
@@ -724,7 +724,7 @@ class CCT_Responsive_Breakpoints_Manager {
             return;
         }
         
-        echo "<script id='cct-responsive-breakpoints-custom-js'>\n";
+        echo "<script id='uenf-responsive-breakpoints-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTBreakpoints !== 'undefined') {\n";
         echo "    CCTBreakpoints.init(" . wp_json_encode($settings) . ");\n";
@@ -741,26 +741,26 @@ class CCT_Responsive_Breakpoints_Manager {
             'show' => 'all', // all, name, size, device
             'style' => 'inline', // inline, badge, card
             'class' => ''
-        ), $atts, 'cct_breakpoint_info');
+        ), $atts, 'uenf_breakpoint_info');
         
-        $classes = array('cct-breakpoint-info', 'cct-info-' . $atts['style']);
+        $classes = array('uenf-breakpoint-info', 'uenf-info-' . $atts['style']);
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
         
-        $output = '<div class="' . implode(' ', $classes) . '" data-cct-breakpoint-info>';
+        $output = '<div class="' . implode(' ', $classes) . '" data-uenf-breakpoint-info>';
         
         if ($atts['show'] === 'all' || $atts['show'] === 'name') {
-            $output .= '<span class="cct-bp-name" data-info="name"></span>';
+            $output .= '<span class="uenf-bp-name" data-info="name"></span>';
         }
         
         if ($atts['show'] === 'all' || $atts['show'] === 'size') {
-            $output .= '<span class="cct-bp-size" data-info="size"></span>';
+            $output .= '<span class="uenf-bp-size" data-info="size"></span>';
         }
         
         if ($atts['show'] === 'all' || $atts['show'] === 'device') {
-            $output .= '<span class="cct-bp-device" data-info="device"></span>';
+            $output .= '<span class="uenf-bp-device" data-info="device"></span>';
         }
         
         $output .= '</div>';
@@ -776,22 +776,22 @@ class CCT_Responsive_Breakpoints_Manager {
             'show_icon' => 'true',
             'show_name' => 'true',
             'class' => ''
-        ), $atts, 'cct_device_detector');
+        ), $atts, 'uenf_device_detector');
         
-        $classes = array('cct-device-detector');
+        $classes = array('uenf-device-detector');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
         
-        $output = '<div class="' . implode(' ', $classes) . '" data-cct-device-detector>';
+        $output = '<div class="' . implode(' ', $classes) . '" data-uenf-device-detector>';
         
         if ($atts['show_icon'] === 'true') {
-            $output .= '<span class="cct-device-icon" data-device-icon></span>';
+            $output .= '<span class="uenf-device-icon" data-device-icon></span>';
         }
         
         if ($atts['show_name'] === 'true') {
-            $output .= '<span class="cct-device-name" data-device-name></span>';
+            $output .= '<span class="uenf-device-name" data-device-name></span>';
         }
         
         $output .= '</div>';
@@ -809,9 +809,9 @@ class CCT_Responsive_Breakpoints_Manager {
             'max_width' => '',
             'device' => '', // mobile, tablet, desktop
             'class' => ''
-        ), $atts, 'cct_responsive_content');
+        ), $atts, 'uenf_responsive_content');
         
-        $classes = array('cct-responsive-content');
+        $classes = array('uenf-responsive-content');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -819,11 +819,11 @@ class CCT_Responsive_Breakpoints_Manager {
         
         // Adicionar classes baseadas nos atributos
         if (!empty($atts['breakpoint'])) {
-            $classes[] = 'cct-show-' . sanitize_html_class($atts['breakpoint']);
+            $classes[] = 'uenf-show-' . sanitize_html_class($atts['breakpoint']);
         }
         
         if (!empty($atts['device'])) {
-            $classes[] = 'cct-show-' . sanitize_html_class($atts['device']);
+            $classes[] = 'uenf-show-' . sanitize_html_class($atts['device']);
         }
         
         $output = '<div class="' . implode(' ', $classes) . '"';
@@ -854,12 +854,12 @@ class CCT_Responsive_Breakpoints_Manager {
             return $classes;
         }
         
-        $classes[] = 'cct-responsive-enabled';
-        $classes[] = 'cct-grid-' . $settings['gridSystem'];
-        $classes[] = 'cct-container-' . $settings['containerBehavior'];
+        $classes[] = 'uenf-responsive-enabled';
+        $classes[] = 'uenf-grid-' . $settings['gridSystem'];
+        $classes[] = 'uenf-container-' . $settings['containerBehavior'];
         
         if ($settings['debugMode']) {
-            $classes[] = 'cct-breakpoints-debug';
+            $classes[] = 'uenf-breakpoints-debug';
         }
         
         return $classes;
@@ -870,8 +870,8 @@ class CCT_Responsive_Breakpoints_Manager {
      */
     public function customize_preview_init() {
         wp_enqueue_script(
-            'cct-breakpoints-preview',
-            get_template_directory_uri() . '/js/cct-breakpoints-preview.js',
+            'uenf-breakpoints-preview',
+            get_template_directory_uri() . '/js/uenf-breakpoints-preview.js',
             array('jquery', 'customize-preview'),
             '1.0.0',
             true
@@ -882,7 +882,7 @@ class CCT_Responsive_Breakpoints_Manager {
      * AJAX handlers
      */
     public function ajax_save_breakpoint() {
-        check_ajax_referer('cct_breakpoints_nonce', 'nonce');
+        check_ajax_referer('uenf_breakpoints_nonce', 'nonce');
         
         $breakpoint_data = $this->sanitize_breakpoint_data($_POST['breakpoint'] ?? array());
         
@@ -903,7 +903,7 @@ class CCT_Responsive_Breakpoints_Manager {
     }
     
     public function ajax_delete_breakpoint() {
-        check_ajax_referer('cct_breakpoints_nonce', 'nonce');
+        check_ajax_referer('uenf_breakpoints_nonce', 'nonce');
         
         $breakpoint_key = sanitize_text_field($_POST['breakpoint_key'] ?? '');
         

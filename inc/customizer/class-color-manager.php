@@ -9,7 +9,7 @@
  * - Análise de contraste
  * - Exportação de paletas
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe para gerenciamento avançado de cores
  */
-class CCT_Color_Manager {
+class UENF_Color_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -36,7 +36,7 @@ class CCT_Color_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_colors_';
+    private $prefix = 'uenf_colors_';
     
     /**
      * Paletas de cores predefinidas
@@ -223,7 +223,7 @@ class CCT_Color_Manager {
      */
     private function add_color_sections() {
         // Verificar se a extensão está ativa antes de criar o painel
-        $extension_manager = cct_extension_manager();
+        $extension_manager = uenf_extension_manager();
         if (!$extension_manager || !$extension_manager->is_extension_active('colors')) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CCT Colors: Extensão desativada - painel não criado');
@@ -356,7 +356,7 @@ class CCT_Color_Manager {
         
         // Preview da paleta
         $this->wp_customize->add_control(
-            'cct_palette_preview',
+            'uenf_palette_preview',
             array(
                 'label' => __('Preview das Paletas', 'cct'),
                 'section' => $this->prefix . 'color_palettes',
@@ -384,7 +384,7 @@ class CCT_Color_Manager {
             $this->wp_customize->add_control(
                 new WP_Customize_Color_Control(
                     $this->wp_customize,
-                    "cct_palette_{$role}",
+                    "uenf_palette_{$role}",
                     array(
                         'label' => $label,
                         'section' => $this->prefix . 'custom_colors',
@@ -400,7 +400,7 @@ class CCT_Color_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $this->wp_customize,
-                'cct_generator_base_color',
+                'uenf_generator_base_color',
                 array(
                     'label' => __('Cor Base', 'cct'),
                     'description' => __('Escolha uma cor base para gerar a paleta.', 'cct'),
@@ -426,7 +426,7 @@ class CCT_Color_Manager {
         
         // Gerador de paleta
         $this->wp_customize->add_control(
-            'cct_color_generator',
+            'uenf_color_generator',
             array(
                 'label' => __('Gerar Paleta', 'cct'),
                 'section' => $this->prefix . 'color_generator',
@@ -459,7 +459,7 @@ class CCT_Color_Manager {
         
         // Analisador de contraste
         $this->wp_customize->add_control(
-            'cct_contrast_analyzer',
+            'uenf_contrast_analyzer',
             array(
                 'label' => __('Análise de Contraste', 'cct'),
                 'section' => $this->prefix . 'color_accessibility',
@@ -485,18 +485,18 @@ class CCT_Color_Manager {
      */
     public function enqueue_controls_scripts() {
         wp_enqueue_script(
-            'cct-color-manager',
+            'uenf-color-manager',
             get_template_directory_uri() . '/js/customizer-color-manager.js',
             array('jquery', 'customize-controls'),
             '1.0.0',
             true
         );
         
-        wp_localize_script('cct-color-manager', 'cctColorManager', array(
+        wp_localize_script('uenf-color-manager', 'cctColorManager', array(
             'palettes' => $this->color_palettes,
             'accessibilityRules' => $this->accessibility_rules,
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_color_manager'),
+            'nonce' => wp_create_nonce('uenf_color_manager'),
         ));
     }
     
@@ -505,7 +505,7 @@ class CCT_Color_Manager {
      */
     public function enqueue_preview_scripts() {
         wp_enqueue_script(
-            'cct-color-preview',
+            'uenf-color-preview',
             get_template_directory_uri() . '/js/customizer-color-preview.js',
             array('jquery', 'customize-preview'),
             '1.0.0',

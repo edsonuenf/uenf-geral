@@ -14,12 +14,15 @@ body {
   background: #fff;
   color: #333;
   
-  @media (max-width: 768px) {
+  @media (max-width: 767.98px) {
     padding-top: var(--cct-header-height-mobile, 60px) !important; /* Altura controlada pelo Customizer */
-    padding-bottom: 40px !important; /* Espaço para o rodapé fixo de idiomas/redes sociais */
+    padding-bottom: 50px !important; /* Fallback: altura da barra inferior (~38px) + margem de segurança */
+    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px)) !important; /* iOS: desconta home indicator */
+  }
 
-    body.admin-bar & {
-      padding-top: 92px !important; /* Barra do Admin (32px) + Cabeçalho (60px) */
+  &.admin-bar {
+    @media (max-width: 767.98px) {
+      padding-top: calc(var(--cct-header-height-mobile, 60px) + 32px) !important; /* Admin Bar (32px) + Cabeçalho */
     }
   }
 }

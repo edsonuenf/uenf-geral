@@ -5,7 +5,7 @@
  * Permite habilitar/desabilitar o sistema de busca personalizado
  * que substitui o Ivory Search por uma solução nativa.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Extensions
  * @since 1.0.0
  */
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CCT_Search_Customizer {
+class UENF_Search_Customizer {
     
     /**
      * Instância única da classe
@@ -65,13 +65,13 @@ class CCT_Search_Customizer {
      */
     private function is_extension_active() {
         // Verificar configuração global
-        $global_enabled = get_theme_mod('cct_extensions_global_enabled', true);
+        $global_enabled = get_theme_mod('uenf_extensions_global_enabled', true);
         if (!$global_enabled) {
             return false;
         }
         
         // Verificar configuração individual
-        return get_theme_mod('cct_extension_' . self::EXTENSION_ID . '_enabled', true);
+        return get_theme_mod('uenf_extension_' . self::EXTENSION_ID . '_enabled', true);
     }
     
     /**
@@ -85,7 +85,7 @@ class CCT_Search_Customizer {
         
         // CSS da busca personalizada
         wp_enqueue_style(
-            'cct-search-customizer',
+            'uenf-search-customizer',
             get_template_directory_uri() . '/css/components/search.css',
             array(),
             filemtime(get_template_directory() . '/css/components/search.css')
@@ -93,7 +93,7 @@ class CCT_Search_Customizer {
         
         // JavaScript da busca personalizada
         wp_enqueue_script(
-            'cct-search-customizer-js',
+            'uenf-search-customizer-js',
             get_template_directory_uri() . '/js/custom-search.js',
             array(),
             filemtime(get_template_directory() . '/js/custom-search.js'),
@@ -141,10 +141,10 @@ class CCT_Search_Customizer {
      */
     public static function activate() {
         // Adicionar à lista de extensões ativas
-        $active_extensions = get_option('cct_active_extensions', array());
+        $active_extensions = get_option('uenf_active_extensions', array());
         if (!in_array(self::EXTENSION_ID, $active_extensions)) {
             $active_extensions[] = self::EXTENSION_ID;
-            update_option('cct_active_extensions', $active_extensions);
+            update_option('uenf_active_extensions', $active_extensions);
         }
         
         // Log de ativação
@@ -156,11 +156,11 @@ class CCT_Search_Customizer {
      */
     public static function deactivate() {
         // Remover da lista de extensões ativas
-        $active_extensions = get_option('cct_active_extensions', array());
+        $active_extensions = get_option('uenf_active_extensions', array());
         $key = array_search(self::EXTENSION_ID, $active_extensions);
         if ($key !== false) {
             unset($active_extensions[$key]);
-            update_option('cct_active_extensions', array_values($active_extensions));
+            update_option('uenf_active_extensions', array_values($active_extensions));
         }
         
         // Log de desativação
@@ -171,10 +171,10 @@ class CCT_Search_Customizer {
      * Verificar se deve mostrar o componente de busca
      */
     public static function should_show_search() {
-        $active_extensions = get_option('cct_active_extensions', array());
+        $active_extensions = get_option('uenf_active_extensions', array());
         return in_array(self::EXTENSION_ID, $active_extensions);
     }
 }
 
 // Inicializar a extensão
-CCT_Search_Customizer::get_instance();
+UENF_Search_Customizer::get_instance();

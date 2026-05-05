@@ -4,7 +4,7 @@
  * Fornece feedback visual em tempo real durante alterações no customizer,
  * incluindo validação de valores, indicadores de status e mensagens de erro.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -36,23 +36,23 @@
          */
         setupValidationStyles() {
             const styles = `
-                <style id="cct-validation-styles">
-                    .cct-validation-success {
+                <style id="uenf-validation-styles">
+                    .uenf-validation-success {
                         border-left: 4px solid #46b450 !important;
                         background-color: rgba(70, 180, 80, 0.1) !important;
                     }
                     
-                    .cct-validation-warning {
+                    .uenf-validation-warning {
                         border-left: 4px solid #ffb900 !important;
                         background-color: rgba(255, 185, 0, 0.1) !important;
                     }
                     
-                    .cct-validation-error {
+                    .uenf-validation-error {
                         border-left: 4px solid #dc3232 !important;
                         background-color: rgba(220, 50, 50, 0.1) !important;
                     }
                     
-                    .cct-validation-message {
+                    .uenf-validation-message {
                         font-size: 12px;
                         margin-top: 5px;
                         padding: 5px 8px;
@@ -60,25 +60,25 @@
                         display: none;
                     }
                     
-                    .cct-validation-message.success {
+                    .uenf-validation-message.success {
                         background-color: #d4edda;
                         color: #155724;
                         border: 1px solid #c3e6cb;
                     }
                     
-                    .cct-validation-message.warning {
+                    .uenf-validation-message.warning {
                         background-color: #fff3cd;
                         color: #856404;
                         border: 1px solid #ffeaa7;
                     }
                     
-                    .cct-validation-message.error {
+                    .uenf-validation-message.error {
                         background-color: #f8d7da;
                         color: #721c24;
                         border: 1px solid #f5c6cb;
                     }
                     
-                    .cct-notification {
+                    .uenf-notification {
                         position: fixed;
                         top: 32px;
                         right: 20px;
@@ -94,34 +94,34 @@
                         transition: all 0.3s ease;
                     }
                     
-                    .cct-notification.show {
+                    .uenf-notification.show {
                         opacity: 1;
                         transform: translateX(0);
                     }
                     
-                    .cct-notification.success {
+                    .uenf-notification.success {
                         border-left-color: #46b450;
                     }
                     
-                    .cct-notification.warning {
+                    .uenf-notification.warning {
                         border-left-color: #ffb900;
                     }
                     
-                    .cct-notification.error {
+                    .uenf-notification.error {
                         border-left-color: #dc3232;
                     }
                     
-                    .cct-notification-title {
+                    .uenf-notification-title {
                         font-weight: bold;
                         margin-bottom: 4px;
                     }
                     
-                    .cct-notification-message {
+                    .uenf-notification-message {
                         font-size: 13px;
                         color: #666;
                     }
                     
-                    .cct-validation-indicator {
+                    .uenf-validation-indicator {
                         display: inline-block;
                         width: 12px;
                         height: 12px;
@@ -130,15 +130,15 @@
                         vertical-align: middle;
                     }
                     
-                    .cct-validation-indicator.success {
+                    .uenf-validation-indicator.success {
                         background-color: #46b450;
                     }
                     
-                    .cct-validation-indicator.warning {
+                    .uenf-validation-indicator.warning {
                         background-color: #ffb900;
                     }
                     
-                    .cct-validation-indicator.error {
+                    .uenf-validation-indicator.error {
                         background-color: #dc3232;
                     }
                 </style>
@@ -202,7 +202,7 @@
          * Validação de seletores dropdown
          */
         bindSelectValidation() {
-            $(document).on('change', 'select[id*="cct_"]', (e) => {
+            $(document).on('change', 'select[id*="uenf_"]', (e) => {
                 const $select = $(e.target);
                 const value = $select.val();
                 const $control = $select.closest('.customize-control');
@@ -218,7 +218,7 @@
          * Validação de campos de texto
          */
         bindTextValidation() {
-            $(document).on('input', 'input[type="text"][id*="cct_"], textarea[id*="cct_"]', (e) => {
+            $(document).on('input', 'input[type="text"][id*="uenf_"], textarea[id*="uenf_"]', (e) => {
                 const $input = $(e.target);
                 const value = $input.val();
                 const $control = $input.closest('.customize-control');
@@ -262,10 +262,10 @@
          */
         showValidation($control, type, message) {
             // Remove classes anteriores
-            $control.removeClass('cct-validation-success cct-validation-warning cct-validation-error');
+            $control.removeClass('uenf-validation-success uenf-validation-warning uenf-validation-error');
             
             // Adiciona nova classe
-            $control.addClass(`cct-validation-${type}`);
+            $control.addClass(`uenf-validation-${type}`);
             
             // Adiciona indicador visual no label
             this.addValidationIndicator($control, type);
@@ -277,7 +277,7 @@
             
             // Remove validação após 3 segundos
             setTimeout(() => {
-                $control.removeClass(`cct-validation-${type}`);
+                $control.removeClass(`uenf-validation-${type}`);
                 this.removeValidationIndicator($control);
                 this.hideValidationMessage($control);
             }, 3000);
@@ -288,25 +288,25 @@
          */
         addValidationIndicator($control, type) {
             const $label = $control.find('.customize-control-title');
-            $label.find('.cct-validation-indicator').remove();
-            $label.append(`<span class="cct-validation-indicator ${type}"></span>`);
+            $label.find('.uenf-validation-indicator').remove();
+            $label.append(`<span class="uenf-validation-indicator ${type}"></span>`);
         }
         
         /**
          * Remove indicador visual
          */
         removeValidationIndicator($control) {
-            $control.find('.cct-validation-indicator').remove();
+            $control.find('.uenf-validation-indicator').remove();
         }
         
         /**
          * Mostra mensagem de validação
          */
         showValidationMessage($control, type, message) {
-            let $message = $control.find('.cct-validation-message');
+            let $message = $control.find('.uenf-validation-message');
             
             if ($message.length === 0) {
-                $message = $('<div class="cct-validation-message"></div>');
+                $message = $('<div class="uenf-validation-message"></div>');
                 $control.append($message);
             }
             
@@ -321,15 +321,15 @@
          * Esconde mensagem de validação
          */
         hideValidationMessage($control) {
-            $control.find('.cct-validation-message').fadeOut();
+            $control.find('.uenf-validation-message').fadeOut();
         }
         
         /**
          * Cria sistema de notificações
          */
         createNotificationSystem() {
-            if ($('#cct-notification-container').length === 0) {
-                $('body').append('<div id="cct-notification-container"></div>');
+            if ($('#uenf-notification-container').length === 0) {
+                $('body').append('<div id="uenf-notification-container"></div>');
             }
         }
         
@@ -338,13 +338,13 @@
          */
         showNotification(type, title, message, duration = 4000) {
             const $notification = $(`
-                <div class="cct-notification ${type}">
-                    <div class="cct-notification-title">${title}</div>
-                    <div class="cct-notification-message">${message}</div>
+                <div class="uenf-notification ${type}">
+                    <div class="uenf-notification-title">${title}</div>
+                    <div class="uenf-notification-message">${message}</div>
                 </div>
             `);
             
-            $('#cct-notification-container').append($notification);
+            $('#uenf-notification-container').append($notification);
             
             // Animar entrada
             setTimeout(() => {

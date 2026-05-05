@@ -141,8 +141,8 @@ class UENF_Reset_Extensions_Control extends WP_Customize_Control {
     }
     
     private function get_extensions() {
-        if (function_exists('cct_extension_manager')) {
-            $manager = cct_extension_manager();
+        if (function_exists('uenf_extension_manager')) {
+            $manager = uenf_extension_manager();
             return $manager->get_all_extensions();
         }
         return array();

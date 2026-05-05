@@ -1,0 +1,49 @@
+name: "UENF Security Audit — PHP, JS e WordPress"
+code: uenf-security-audit
+description: >
+  Audita o tema WordPress UENF em busca de vulnerabilidades de segurança
+  em código PHP (XSS, SQL injection, nonces, capabilities), JavaScript
+  (eval, innerHTML, CSRF, dados expostos) e configuração WordPress
+  (wp-config, debug mode, permissões, headers HTTP).
+  Gera relatório priorizado por severidade e implementa correções críticas.
+
+skills:
+  - file_system
+
+pipeline:
+  max_review_cycles: 2
+  steps:
+    - id: audit-php
+      agent: php-auditor
+      description: "Auditar todo o PHP do tema: XSS, SQL injection, sanitização, nonces, capabilities, file inclusion"
+      parallel_group: security-audit
+
+    - id: audit-js
+      agent: js-auditor
+      description: "Auditar todo o JavaScript do tema: eval, innerHTML inseguro, CSRF, dados sensíveis expostos"
+      parallel_group: security-audit
+
+    - id: audit-wp-config
+      agent: wp-config-auditor
+      description: "Auditar configuração WP: wp-config, debug mode, permissões de arquivos, headers HTTP de segurança"
+      parallel_group: security-audit
+
+    - id: checkpoint-audit
+      type: checkpoint
+      description: "Revisar os 3 relatórios de auditoria com o Edson antes de prosseguir"
+
+    - id: security-report
+      agent: security-reporter
+      description: "Consolidar relatórios, classificar por severidade CVSS, gerar plano de remediação"
+
+    - id: fix-critical
+      agent: security-fixer
+      description: "Implementar correções para issues Críticas e Altas identificadas no relatório consolidado"
+
+    - id: checkpoint-fixes
+      type: checkpoint
+      description: "Revisar as correções implementadas antes do commit"
+
+    - id: commit-release
+      agent: release-mgr
+      description: "Atualizar CHANGELOG com patches de segurança, preparar commit message (sem commitar)"

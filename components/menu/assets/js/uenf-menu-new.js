@@ -164,7 +164,6 @@ UENFMenu.prototype.setupEventListeners = function() {
     console.group('[Menu] Registrando menu no roteador de eventos');
     try {
       if (typeof window.uenfEventRouter === 'undefined') {
-        console.warn('[Menu] Roteador de eventos não encontrado. O menu funcionará, mas sem integração com o roteador.');
         console.groupEnd();
         return false;
       }
@@ -220,7 +219,7 @@ UENFMenu.prototype.setupEventListeners = function() {
     
     // Verifica se o roteador de eventos está disponível
     if (typeof window.uenfEventRouter === 'undefined') {
-      console.warn('[Menu] Roteador de eventos não encontrado. O menu funcionará, mas sem integração com o roteador.');
+      // sem roteador
     } else {
   // log removido
     }
@@ -248,8 +247,6 @@ UENFMenu.prototype.setupEventListeners = function() {
 
       if (menuComponent) {
         // Menu registrado corretamente
-      } else {
-        console.warn('[Menu] O componente de menu não foi registrado corretamente no roteador de eventos');
       }
     }
   });

@@ -5,7 +5,7 @@
  * Inicializa e gerencia o sistema de edição CSS avançado,
  * seguindo o padrão modular estabelecido no customizer.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Design_Editor
  * @since 1.0.0
  */
@@ -18,19 +18,19 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do carregador do Editor CSS
  */
-class CCT_CSS_Editor_Loader {
+class UENF_CSS_Editor_Loader {
     
     /**
      * Instância única da classe (Singleton)
      * 
-     * @var CCT_CSS_Editor_Loader
+     * @var UENF_CSS_Editor_Loader
      */
     private static $instance = null;
     
     /**
      * Instância do editor CSS
      * 
-     * @var CCT_CSS_Editor_Base
+     * @var UENF_CSS_Editor_Base
      */
     private $css_editor;
     
@@ -52,7 +52,7 @@ class CCT_CSS_Editor_Loader {
     /**
      * Obtém a instância única da classe
      * 
-     * @return CCT_CSS_Editor_Loader
+     * @return UENF_CSS_Editor_Loader
      */
     public static function get_instance() {
         if (self::$instance === null) {
@@ -100,8 +100,8 @@ class CCT_CSS_Editor_Loader {
      * Inicializa o editor CSS
      */
     private function init_css_editor() {
-        if (class_exists('CCT_CSS_Editor_Base')) {
-            $this->css_editor = new CCT_CSS_Editor_Base();
+        if (class_exists('UENF_CSS_Editor_Base')) {
+            $this->css_editor = new UENF_CSS_Editor_Base();
         }
     }
     
@@ -116,11 +116,11 @@ class CCT_CSS_Editor_Loader {
         add_action('admin_init', array($this, 'add_capabilities'));
         
         // Hook para limpeza de backups antigos
-        add_action('cct_cleanup_css_backups', array($this, 'cleanup_old_backups'));
+        add_action('uenf_cleanup_css_backups', array($this, 'cleanup_old_backups'));
         
         // Agendar limpeza de backups (diário)
-        if (!wp_next_scheduled('cct_cleanup_css_backups')) {
-            wp_schedule_event(time(), 'daily', 'cct_cleanup_css_backups');
+        if (!wp_next_scheduled('uenf_cleanup_css_backups')) {
+            wp_schedule_event(time(), 'daily', 'uenf_cleanup_css_backups');
         }
     }
     
@@ -193,7 +193,7 @@ class CCT_CSS_Editor_Loader {
             'Configurações do Editor CSS',
             'Config. Editor CSS',
             'manage_options',
-            'cct-css-editor-settings',
+            'uenf-css-editor-settings',
             array($this, 'render_settings_page')
         );
     }
@@ -204,14 +204,14 @@ class CCT_CSS_Editor_Loader {
     public function add_capabilities() {
         $role = get_role('administrator');
         if ($role) {
-            $role->add_cap('cct_edit_css');
-            $role->add_cap('cct_manage_css_backups');
+            $role->add_cap('uenf_edit_css');
+            $role->add_cap('uenf_manage_css_backups');
         }
         
         // Adicionar para editores também
         $editor_role = get_role('editor');
         if ($editor_role) {
-            $editor_role->add_cap('cct_edit_css');
+            $editor_role->add_cap('uenf_edit_css');
         }
     }
     
@@ -224,7 +224,7 @@ class CCT_CSS_Editor_Loader {
         }
         
         // Processar formulário se enviado
-        if (isset($_POST['submit']) && wp_verify_nonce($_POST['_wpnonce'], 'cct_css_editor_settings')) {
+        if (isset($_POST['submit']) && wp_verify_nonce($_POST['_wpnonce'], 'uenf_css_editor_settings')) {
             $this->save_settings();
         }
         
@@ -237,7 +237,7 @@ class CCT_CSS_Editor_Loader {
      * Obtém configurações do editor
      */
     public function get_settings() {
-        return wp_parse_args(get_option('cct_css_editor_settings', array()), array(
+        return wp_parse_args(get_option('uenf_css_editor_settings', array()), array(
             'auto_backup' => true,
             'backup_retention_days' => 30,
             'enable_validation' => true,
@@ -268,7 +268,7 @@ class CCT_CSS_Editor_Loader {
             'enable_autocomplete' => isset($_POST['enable_autocomplete'])
         );
         
-        update_option('cct_css_editor_settings', $settings);
+        update_option('uenf_css_editor_settings', $settings);
         
         add_action('admin_notices', function() {
             echo '<div class="notice notice-success is-dismissible"><p>Configurações salvas com sucesso!</p></div>';
@@ -382,15 +382,15 @@ class CCT_CSS_Editor_Loader {
 }
 
 // Inicializar o carregador
-CCT_CSS_Editor_Loader::get_instance();
+UENF_CSS_Editor_Loader::get_instance();
 
 /**
  * Função helper para obter instância do editor
  * 
- * @return CCT_CSS_Editor_Loader
+ * @return UENF_CSS_Editor_Loader
  */
-function cct_get_css_editor_loader() {
-    return CCT_CSS_Editor_Loader::get_instance();
+function uenf_get_css_editor_loader() {
+    return UENF_CSS_Editor_Loader::get_instance();
 }
 
 /**
@@ -398,7 +398,7 @@ function cct_get_css_editor_loader() {
  * 
  * @return bool
  */
-function cct_is_css_editor_available() {
-    $loader = CCT_CSS_Editor_Loader::get_instance();
+function uenf_is_css_editor_available() {
+    $loader = UENF_CSS_Editor_Loader::get_instance();
     return $loader->is_editor_active() && current_user_can('edit_theme_options');
 }

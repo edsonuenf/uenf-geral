@@ -31,7 +31,7 @@ class Design_Panel_Manager {
      *
      * @var string
      */
-    private $prefix = 'cct_design_';
+    private $prefix = 'uenf_design_';
     
     /**
      * Construtor
@@ -63,7 +63,7 @@ class Design_Panel_Manager {
      * Adiciona o painel principal de Design
      */
     private function add_design_panel() {
-        // cct_design_panel foi consolidado em uenf_panel — registrado no customizer-loader.php
+        // uenf_design_panel foi consolidado em uenf_panel — registrado no customizer-loader.php
         // Mantido para compatibilidade de referências externas
     }
     

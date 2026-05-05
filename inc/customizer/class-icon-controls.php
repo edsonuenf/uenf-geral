@@ -9,7 +9,7 @@
  * - Gerenciador de ícones favoritos
  * - Preview e otimização em tempo real
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Navegador de Categorias de Ícones
  */
-class CCT_Icon_Category_Browser_Control extends WP_Customize_Control {
+class UENF_Icon_Category_Browser_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_icon_category_browser';
+    public $type = 'uenf_icon_category_browser';
     
     /**
      * Categorias de ícones
@@ -53,20 +53,20 @@ class CCT_Icon_Category_Browser_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-category-browser">
+        <div class="uenf-category-browser">
             <?php foreach ($this->categories as $category_id => $category): ?>
-                <div class="cct-category-item" data-category="<?php echo esc_attr($category_id); ?>">
-                    <div class="cct-category-icon" style="background-color: <?php echo esc_attr($category['color']); ?>">
-                        <span class="cct-category-icon-symbol"><?php echo esc_html(substr($category['name'], 0, 2)); ?></span>
+                <div class="uenf-category-item" data-category="<?php echo esc_attr($category_id); ?>">
+                    <div class="uenf-category-icon" style="background-color: <?php echo esc_attr($category['color']); ?>">
+                        <span class="uenf-category-icon-symbol"><?php echo esc_html(substr($category['name'], 0, 2)); ?></span>
                     </div>
                     
-                    <div class="cct-category-info">
+                    <div class="uenf-category-info">
                         <h4><?php echo esc_html($category['name']); ?></h4>
                         <p><?php echo esc_html($category['description']); ?></p>
                     </div>
                     
-                    <div class="cct-category-stats">
-                        <span class="cct-icon-count" data-category="<?php echo esc_attr($category_id); ?>">-</span>
+                    <div class="uenf-category-stats">
+                        <span class="uenf-icon-count" data-category="<?php echo esc_attr($category_id); ?>">-</span>
                         <small><?php _e('ícones', 'cct'); ?></small>
                     </div>
                 </div>
@@ -74,14 +74,14 @@ class CCT_Icon_Category_Browser_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-category-browser {
+        .uenf-category-browser {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
             margin-top: 10px;
         }
         
-        .cct-category-item {
+        .uenf-category-item {
             display: flex;
             align-items: center;
             padding: 15px;
@@ -92,18 +92,18 @@ class CCT_Icon_Category_Browser_Control extends WP_Customize_Control {
             background: #fff;
         }
         
-        .cct-category-item:hover {
+        .uenf-category-item:hover {
             border-color: #0073aa;
             box-shadow: 0 2px 8px rgba(0,115,170,0.1);
             transform: translateY(-1px);
         }
         
-        .cct-category-item.active {
+        .uenf-category-item.active {
             border-color: #0073aa;
             background-color: #f0f8ff;
         }
         
-        .cct-category-icon {
+        .uenf-category-icon {
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -114,44 +114,44 @@ class CCT_Icon_Category_Browser_Control extends WP_Customize_Control {
             flex-shrink: 0;
         }
         
-        .cct-category-icon-symbol {
+        .uenf-category-icon-symbol {
             color: white;
             font-weight: 600;
             font-size: 16px;
             text-transform: uppercase;
         }
         
-        .cct-category-info {
+        .uenf-category-info {
             flex: 1;
         }
         
-        .cct-category-info h4 {
+        .uenf-category-info h4 {
             margin: 0 0 4px 0;
             font-size: 14px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-category-info p {
+        .uenf-category-info p {
             margin: 0;
             font-size: 12px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-category-stats {
+        .uenf-category-stats {
             text-align: center;
             min-width: 50px;
         }
         
-        .cct-icon-count {
+        .uenf-icon-count {
             display: block;
             font-size: 18px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-category-stats small {
+        .uenf-category-stats small {
             color: #666;
             font-size: 10px;
         }
@@ -163,14 +163,14 @@ class CCT_Icon_Category_Browser_Control extends WP_Customize_Control {
 /**
  * Controle Biblioteca de Ícones
  */
-class CCT_Icon_Library_Control extends WP_Customize_Control {
+class UENF_Icon_Library_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_icon_library';
+    public $type = 'uenf_icon_library';
     
     /**
      * Biblioteca de ícones
@@ -201,23 +201,23 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-icon-library">
+        <div class="uenf-icon-library">
             <!-- Barra de busca -->
-            <div class="cct-icon-search">
+            <div class="uenf-icon-search">
                 <input type="text" 
-                       class="cct-icon-search-input" 
+                       class="uenf-icon-search-input" 
                        placeholder="<?php esc_attr_e('Buscar ícones...', 'cct'); ?>"
                        autocomplete="off">
-                <button type="button" class="cct-search-clear" style="display: none;">
+                <button type="button" class="uenf-search-clear" style="display: none;">
                     <span class="dashicons dashicons-no-alt"></span>
                 </button>
             </div>
             
             <!-- Filtros -->
-            <div class="cct-icon-filters">
-                <div class="cct-filter-group">
+            <div class="uenf-icon-filters">
+                <div class="uenf-filter-group">
                     <label><?php _e('Categoria:', 'cct'); ?></label>
-                    <select class="cct-category-filter">
+                    <select class="uenf-category-filter">
                         <option value="all"><?php _e('Todas', 'cct'); ?></option>
                         <?php foreach ($this->categories as $cat_id => $category): ?>
                             <option value="<?php echo esc_attr($cat_id); ?>">
@@ -227,9 +227,9 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
                     </select>
                 </div>
                 
-                <div class="cct-filter-group">
+                <div class="uenf-filter-group">
                     <label><?php _e('Exibir:', 'cct'); ?></label>
-                    <select class="cct-view-filter">
+                    <select class="uenf-view-filter">
                         <option value="all"><?php _e('Todos', 'cct'); ?></option>
                         <option value="favorites"><?php _e('Favoritos', 'cct'); ?></option>
                         <option value="recent"><?php _e('Recentes', 'cct'); ?></option>
@@ -238,103 +238,103 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             </div>
             
             <!-- Estatísticas -->
-            <div class="cct-library-stats">
-                <span class="cct-stats-item">
-                    <strong class="cct-total-icons">0</strong> ícones
+            <div class="uenf-library-stats">
+                <span class="uenf-stats-item">
+                    <strong class="uenf-total-icons">0</strong> ícones
                 </span>
-                <span class="cct-stats-item">
-                    <strong class="cct-filtered-icons">0</strong> exibidos
+                <span class="uenf-stats-item">
+                    <strong class="uenf-filtered-icons">0</strong> exibidos
                 </span>
-                <span class="cct-stats-item">
-                    <strong class="cct-favorite-count">0</strong> favoritos
+                <span class="uenf-stats-item">
+                    <strong class="uenf-favorite-count">0</strong> favoritos
                 </span>
             </div>
             
             <!-- Grid de ícones -->
-            <div class="cct-icon-grid" id="cct-icon-grid">
+            <div class="uenf-icon-grid" id="uenf-icon-grid">
                 <!-- Ícones serão carregados via JavaScript -->
             </div>
             
             <!-- Loading -->
-            <div class="cct-loading" style="display: none;">
+            <div class="uenf-loading" style="display: none;">
                 <span class="spinner is-active"></span>
                 <p><?php _e('Carregando ícones...', 'cct'); ?></p>
             </div>
             
             <!-- Mensagem vazia -->
-            <div class="cct-empty-message" style="display: none;">
+            <div class="uenf-empty-message" style="display: none;">
                 <p><?php _e('Nenhum ícone encontrado.', 'cct'); ?></p>
-                <button type="button" class="button cct-clear-filters">
+                <button type="button" class="button uenf-clear-filters">
                     <?php _e('Limpar Filtros', 'cct'); ?>
                 </button>
             </div>
         </div>
         
         <!-- Modal de detalhes do ícone -->
-        <div class="cct-icon-modal" id="cct-icon-modal" style="display: none;">
-            <div class="cct-modal-content">
-                <div class="cct-modal-header">
-                    <h3 class="cct-modal-title"></h3>
-                    <button type="button" class="cct-modal-close">
+        <div class="uenf-icon-modal" id="uenf-icon-modal" style="display: none;">
+            <div class="uenf-modal-content">
+                <div class="uenf-modal-header">
+                    <h3 class="uenf-modal-title"></h3>
+                    <button type="button" class="uenf-modal-close">
                         <span class="dashicons dashicons-no-alt"></span>
                     </button>
                 </div>
                 
-                <div class="cct-modal-body">
-                    <div class="cct-icon-preview">
-                        <div class="cct-icon-display"></div>
-                        <div class="cct-icon-info">
-                            <p class="cct-icon-category"></p>
-                            <p class="cct-icon-size"></p>
+                <div class="uenf-modal-body">
+                    <div class="uenf-icon-preview">
+                        <div class="uenf-icon-display"></div>
+                        <div class="uenf-icon-info">
+                            <p class="uenf-icon-category"></p>
+                            <p class="uenf-icon-size"></p>
                         </div>
                     </div>
                     
-                    <div class="cct-icon-actions">
-                        <button type="button" class="button button-primary cct-copy-shortcode">
+                    <div class="uenf-icon-actions">
+                        <button type="button" class="button button-primary uenf-copy-shortcode">
                             <?php _e('Copiar Shortcode', 'cct'); ?>
                         </button>
-                        <button type="button" class="button cct-copy-svg">
+                        <button type="button" class="button uenf-copy-svg">
                             <?php _e('Copiar SVG', 'cct'); ?>
                         </button>
-                        <button type="button" class="button cct-toggle-favorite">
+                        <button type="button" class="button uenf-toggle-favorite">
                             <?php _e('Favoritar', 'cct'); ?>
                         </button>
                     </div>
                     
-                    <div class="cct-code-examples">
+                    <div class="uenf-code-examples">
                         <h4><?php _e('Exemplos de Uso:', 'cct'); ?></h4>
                         
-                        <div class="cct-code-example">
+                        <div class="uenf-code-example">
                             <label><?php _e('Shortcode:', 'cct'); ?></label>
-                            <code class="cct-shortcode-example"></code>
+                            <code class="uenf-shortcode-example"></code>
                         </div>
                         
-                        <div class="cct-code-example">
+                        <div class="uenf-code-example">
                             <label><?php _e('PHP:', 'cct'); ?></label>
-                            <code class="cct-php-example"></code>
+                            <code class="uenf-php-example"></code>
                         </div>
                         
-                        <div class="cct-code-example">
+                        <div class="uenf-code-example">
                             <label><?php _e('SVG Direto:', 'cct'); ?></label>
-                            <textarea class="cct-svg-code" readonly></textarea>
+                            <textarea class="uenf-svg-code" readonly></textarea>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="cct-modal-backdrop"></div>
+            <div class="uenf-modal-backdrop"></div>
         </div>
         
         <style>
-        .cct-icon-library {
+        .uenf-icon-library {
             margin-top: 10px;
         }
         
-        .cct-icon-search {
+        .uenf-icon-search {
             position: relative;
             margin-bottom: 15px;
         }
         
-        .cct-icon-search-input {
+        .uenf-icon-search-input {
             width: 100%;
             padding: 8px 35px 8px 12px;
             border: 1px solid #ddd;
@@ -342,7 +342,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             font-size: 14px;
         }
         
-        .cct-search-clear {
+        .uenf-search-clear {
             position: absolute;
             right: 8px;
             top: 50%;
@@ -353,33 +353,33 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-icon-filters {
+        .uenf-icon-filters {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
         
-        .cct-filter-group {
+        .uenf-filter-group {
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
         
-        .cct-filter-group label {
+        .uenf-filter-group label {
             font-size: 12px;
             font-weight: 500;
             color: #666;
         }
         
-        .cct-filter-group select {
+        .uenf-filter-group select {
             padding: 4px 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 12px;
         }
         
-        .cct-library-stats {
+        .uenf-library-stats {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
@@ -389,11 +389,11 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-stats-item strong {
+        .uenf-stats-item strong {
             color: #0073aa;
         }
         
-        .cct-icon-grid {
+        .uenf-icon-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
             gap: 8px;
@@ -404,7 +404,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             padding: 15px;
         }
         
-        .cct-icon-item {
+        .uenf-icon-item {
             position: relative;
             width: 60px;
             height: 60px;
@@ -418,17 +418,17 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             background: #fff;
         }
         
-        .cct-icon-item:hover {
+        .uenf-icon-item:hover {
             border-color: #0073aa;
             background: #f0f8ff;
             transform: scale(1.05);
         }
         
-        .cct-icon-item.favorite {
+        .uenf-icon-item.favorite {
             border-color: #f39c12;
         }
         
-        .cct-icon-item.favorite::after {
+        .uenf-icon-item.favorite::after {
             content: "★";
             position: absolute;
             top: -2px;
@@ -444,24 +444,24 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             justify-content: center;
         }
         
-        .cct-icon-item svg {
+        .uenf-icon-item svg {
             width: 24px;
             height: 24px;
             color: #333;
         }
         
-        .cct-loading {
+        .uenf-loading {
             text-align: center;
             padding: 40px;
         }
         
-        .cct-empty-message {
+        .uenf-empty-message {
             text-align: center;
             padding: 40px;
             color: #666;
         }
         
-        .cct-icon-modal {
+        .uenf-icon-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -470,7 +470,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             z-index: 999999;
         }
         
-        .cct-modal-backdrop {
+        .uenf-modal-backdrop {
             position: absolute;
             top: 0;
             left: 0;
@@ -479,7 +479,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             background: rgba(0,0,0,0.5);
         }
         
-        .cct-modal-content {
+        .uenf-modal-content {
             position: relative;
             max-width: 600px;
             margin: 50px auto;
@@ -490,7 +490,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             overflow-y: auto;
         }
         
-        .cct-modal-header {
+        .uenf-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -498,12 +498,12 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-modal-title {
+        .uenf-modal-title {
             margin: 0;
             font-size: 18px;
         }
         
-        .cct-modal-close {
+        .uenf-modal-close {
             background: none;
             border: none;
             cursor: pointer;
@@ -511,18 +511,18 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-modal-body {
+        .uenf-modal-body {
             padding: 20px;
         }
         
-        .cct-icon-preview {
+        .uenf-icon-preview {
             display: flex;
             gap: 20px;
             margin-bottom: 20px;
             align-items: center;
         }
         
-        .cct-icon-display {
+        .uenf-icon-display {
             width: 80px;
             height: 80px;
             border: 2px solid #ddd;
@@ -533,34 +533,34 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-icon-display svg {
+        .uenf-icon-display svg {
             width: 48px;
             height: 48px;
             color: #333;
         }
         
-        .cct-icon-actions {
+        .uenf-icon-actions {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
         
-        .cct-code-examples {
+        .uenf-code-examples {
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
         
-        .cct-code-examples h4 {
+        .uenf-code-examples h4 {
             margin: 0 0 15px 0;
             font-size: 14px;
         }
         
-        .cct-code-example {
+        .uenf-code-example {
             margin-bottom: 15px;
         }
         
-        .cct-code-example label {
+        .uenf-code-example label {
             display: block;
             font-size: 12px;
             font-weight: 500;
@@ -568,7 +568,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-code-example code {
+        .uenf-code-example code {
             display: block;
             padding: 8px;
             background: #f1f1f1;
@@ -577,7 +577,7 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
             word-break: break-all;
         }
         
-        .cct-svg-code {
+        .uenf-svg-code {
             width: 100%;
             height: 100px;
             padding: 8px;
@@ -595,14 +595,14 @@ class CCT_Icon_Library_Control extends WP_Customize_Control {
 /**
  * Controle Upload de Ícones
  */
-class CCT_Icon_Upload_Control extends WP_Customize_Control {
+class UENF_Icon_Upload_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_icon_upload';
+    public $type = 'uenf_icon_upload';
     
     /**
      * Renderiza o controle
@@ -619,21 +619,21 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-icon-upload">
+        <div class="uenf-icon-upload">
             <!-- Área de upload -->
-            <div class="cct-upload-area" id="cct-upload-area">
-                <div class="cct-upload-content">
+            <div class="uenf-upload-area" id="uenf-upload-area">
+                <div class="uenf-upload-content">
                     <span class="dashicons dashicons-upload"></span>
                     <h4><?php _e('Arraste arquivos SVG aqui', 'cct'); ?></h4>
                     <p><?php _e('ou clique para selecionar', 'cct'); ?></p>
                     <input type="file" 
-                           class="cct-file-input" 
-                           id="cct-file-input"
+                           class="uenf-file-input" 
+                           id="uenf-file-input"
                            accept=".svg,image/svg+xml"
                            multiple>
                 </div>
                 
-                <div class="cct-upload-info">
+                <div class="uenf-upload-info">
                     <ul>
                         <li><?php _e('Apenas arquivos SVG são aceitos', 'cct'); ?></li>
                         <li><?php _e('Tamanho máximo: 1MB por arquivo', 'cct'); ?></li>
@@ -644,48 +644,48 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             </div>
             
             <!-- Progresso do upload -->
-            <div class="cct-upload-progress" style="display: none;">
-                <div class="cct-progress-bar">
-                    <div class="cct-progress-fill"></div>
+            <div class="uenf-upload-progress" style="display: none;">
+                <div class="uenf-progress-bar">
+                    <div class="uenf-progress-fill"></div>
                 </div>
-                <p class="cct-progress-text">0%</p>
+                <p class="uenf-progress-text">0%</p>
             </div>
             
             <!-- Lista de arquivos -->
-            <div class="cct-file-list" id="cct-file-list"></div>
+            <div class="uenf-file-list" id="uenf-file-list"></div>
             
             <!-- Configurações de otimização -->
-            <div class="cct-optimization-settings">
+            <div class="uenf-optimization-settings">
                 <h4><?php _e('Configurações de Otimização', 'cct'); ?></h4>
                 
-                <label class="cct-checkbox-label">
-                    <input type="checkbox" class="cct-optimize-remove-comments" checked>
+                <label class="uenf-checkbox-label">
+                    <input type="checkbox" class="uenf-optimize-remove-comments" checked>
                     <?php _e('Remover comentários', 'cct'); ?>
                 </label>
                 
-                <label class="cct-checkbox-label">
-                    <input type="checkbox" class="cct-optimize-remove-metadata" checked>
+                <label class="uenf-checkbox-label">
+                    <input type="checkbox" class="uenf-optimize-remove-metadata" checked>
                     <?php _e('Remover metadados', 'cct'); ?>
                 </label>
                 
-                <label class="cct-checkbox-label">
-                    <input type="checkbox" class="cct-optimize-minify" checked>
+                <label class="uenf-checkbox-label">
+                    <input type="checkbox" class="uenf-optimize-minify" checked>
                     <?php _e('Minificar SVG', 'cct'); ?>
                 </label>
                 
-                <label class="cct-checkbox-label">
-                    <input type="checkbox" class="cct-add-aria-labels" checked>
+                <label class="uenf-checkbox-label">
+                    <input type="checkbox" class="uenf-add-aria-labels" checked>
                     <?php _e('Adicionar ARIA labels', 'cct'); ?>
                 </label>
             </div>
         </div>
         
         <style>
-        .cct-icon-upload {
+        .uenf-icon-upload {
             margin-top: 10px;
         }
         
-        .cct-upload-area {
+        .uenf-upload-area {
             border: 2px dashed #ddd;
             border-radius: 8px;
             padding: 30px 20px;
@@ -695,31 +695,31 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             position: relative;
         }
         
-        .cct-upload-area:hover,
-        .cct-upload-area.dragover {
+        .uenf-upload-area:hover,
+        .uenf-upload-area.dragover {
             border-color: #0073aa;
             background-color: #f0f8ff;
         }
         
-        .cct-upload-content .dashicons {
+        .uenf-upload-content .dashicons {
             font-size: 48px;
             color: #0073aa;
             margin-bottom: 10px;
         }
         
-        .cct-upload-content h4 {
+        .uenf-upload-content h4 {
             margin: 0 0 5px 0;
             font-size: 16px;
             color: #333;
         }
         
-        .cct-upload-content p {
+        .uenf-upload-content p {
             margin: 0;
             color: #666;
             font-size: 14px;
         }
         
-        .cct-file-input {
+        .uenf-file-input {
             position: absolute;
             top: 0;
             left: 0;
@@ -729,13 +729,13 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-upload-info {
+        .uenf-upload-info {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid #eee;
         }
         
-        .cct-upload-info ul {
+        .uenf-upload-info ul {
             margin: 0;
             padding: 0;
             list-style: none;
@@ -743,24 +743,24 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-upload-info li {
+        .uenf-upload-info li {
             margin-bottom: 4px;
             position: relative;
             padding-left: 15px;
         }
         
-        .cct-upload-info li::before {
+        .uenf-upload-info li::before {
             content: "•";
             position: absolute;
             left: 0;
             color: #0073aa;
         }
         
-        .cct-upload-progress {
+        .uenf-upload-progress {
             margin: 15px 0;
         }
         
-        .cct-progress-bar {
+        .uenf-progress-bar {
             width: 100%;
             height: 8px;
             background: #f1f1f1;
@@ -768,25 +768,25 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-progress-fill {
+        .uenf-progress-fill {
             height: 100%;
             background: #0073aa;
             width: 0%;
             transition: width 0.3s ease;
         }
         
-        .cct-progress-text {
+        .uenf-progress-text {
             text-align: center;
             margin: 5px 0 0 0;
             font-size: 12px;
             color: #666;
         }
         
-        .cct-file-list {
+        .uenf-file-list {
             margin-top: 15px;
         }
         
-        .cct-file-item {
+        .uenf-file-item {
             display: flex;
             align-items: center;
             padding: 10px;
@@ -796,7 +796,7 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             background: #fff;
         }
         
-        .cct-file-icon {
+        .uenf-file-icon {
             width: 32px;
             height: 32px;
             margin-right: 10px;
@@ -807,63 +807,63 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
             border-radius: 4px;
         }
         
-        .cct-file-info {
+        .uenf-file-info {
             flex: 1;
         }
         
-        .cct-file-name {
+        .uenf-file-name {
             font-weight: 500;
             font-size: 13px;
             margin-bottom: 2px;
         }
         
-        .cct-file-size {
+        .uenf-file-size {
             font-size: 11px;
             color: #666;
         }
         
-        .cct-file-status {
+        .uenf-file-status {
             font-size: 12px;
             padding: 2px 8px;
             border-radius: 12px;
             margin-left: 10px;
         }
         
-        .cct-file-status.uploading {
+        .uenf-file-status.uploading {
             background: #fff3cd;
             color: #856404;
         }
         
-        .cct-file-status.success {
+        .uenf-file-status.success {
             background: #d4edda;
             color: #155724;
         }
         
-        .cct-file-status.error {
+        .uenf-file-status.error {
             background: #f8d7da;
             color: #721c24;
         }
         
-        .cct-optimization-settings {
+        .uenf-optimization-settings {
             margin-top: 20px;
             padding-top: 15px;
             border-top: 1px solid #ddd;
         }
         
-        .cct-optimization-settings h4 {
+        .uenf-optimization-settings h4 {
             margin: 0 0 10px 0;
             font-size: 13px;
             font-weight: 600;
         }
         
-        .cct-checkbox-label {
+        .uenf-checkbox-label {
             display: block;
             margin-bottom: 8px;
             font-size: 12px;
             cursor: pointer;
         }
         
-        .cct-checkbox-label input {
+        .uenf-checkbox-label input {
             margin-right: 8px;
         }
         </style>
@@ -874,14 +874,14 @@ class CCT_Icon_Upload_Control extends WP_Customize_Control {
 /**
  * Controle Gerenciador de Ícones Personalizados
  */
-class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
+class UENF_Custom_Icon_Manager_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_custom_icon_manager';
+    public $type = 'uenf_custom_icon_manager';
     
     /**
      * Renderiza o controle
@@ -898,50 +898,50 @@ class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-custom-icon-manager">
+        <div class="uenf-custom-icon-manager">
             <!-- Estatísticas -->
-            <div class="cct-manager-stats">
-                <div class="cct-stat-item">
-                    <strong class="cct-custom-count">0</strong>
+            <div class="uenf-manager-stats">
+                <div class="uenf-stat-item">
+                    <strong class="uenf-custom-count">0</strong>
                     <span><?php _e('Ícones Personalizados', 'cct'); ?></span>
                 </div>
-                <div class="cct-stat-item">
-                    <strong class="cct-total-size">0 KB</strong>
+                <div class="uenf-stat-item">
+                    <strong class="uenf-total-size">0 KB</strong>
                     <span><?php _e('Tamanho Total', 'cct'); ?></span>
                 </div>
             </div>
             
             <!-- Ações em lote -->
-            <div class="cct-bulk-actions">
-                <select class="cct-bulk-select">
+            <div class="uenf-bulk-actions">
+                <select class="uenf-bulk-select">
                     <option value=""><?php _e('Ações em lote', 'cct'); ?></option>
                     <option value="optimize"><?php _e('Otimizar selecionados', 'cct'); ?></option>
                     <option value="export"><?php _e('Exportar selecionados', 'cct'); ?></option>
                     <option value="delete"><?php _e('Excluir selecionados', 'cct'); ?></option>
                 </select>
-                <button type="button" class="button cct-apply-bulk" disabled>
+                <button type="button" class="button uenf-apply-bulk" disabled>
                     <?php _e('Aplicar', 'cct'); ?>
                 </button>
             </div>
             
             <!-- Lista de ícones personalizados -->
-            <div class="cct-custom-icons-list" id="cct-custom-icons-list">
+            <div class="uenf-custom-icons-list" id="uenf-custom-icons-list">
                 <!-- Ícones serão carregados via JavaScript -->
             </div>
             
             <!-- Mensagem vazia -->
-            <div class="cct-empty-custom-icons" style="display: none;">
+            <div class="uenf-empty-custom-icons" style="display: none;">
                 <p><?php _e('Nenhum ícone personalizado encontrado.', 'cct'); ?></p>
                 <p><?php _e('Use a seção de upload para adicionar seus próprios ícones SVG.', 'cct'); ?></p>
             </div>
         </div>
         
         <style>
-        .cct-custom-icon-manager {
+        .uenf-custom-icon-manager {
             margin-top: 10px;
         }
         
-        .cct-manager-stats {
+        .uenf-manager-stats {
             display: flex;
             gap: 20px;
             margin-bottom: 15px;
@@ -950,30 +950,30 @@ class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
             border-radius: 6px;
         }
         
-        .cct-stat-item {
+        .uenf-stat-item {
             text-align: center;
         }
         
-        .cct-stat-item strong {
+        .uenf-stat-item strong {
             display: block;
             font-size: 18px;
             color: #0073aa;
             margin-bottom: 2px;
         }
         
-        .cct-stat-item span {
+        .uenf-stat-item span {
             font-size: 11px;
             color: #666;
         }
         
-        .cct-bulk-actions {
+        .uenf-bulk-actions {
             display: flex;
             gap: 8px;
             margin-bottom: 15px;
             align-items: center;
         }
         
-        .cct-bulk-select {
+        .uenf-bulk-select {
             flex: 1;
             padding: 4px 8px;
             border: 1px solid #ddd;
@@ -981,18 +981,18 @@ class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-apply-bulk {
+        .uenf-apply-bulk {
             font-size: 12px;
         }
         
-        .cct-custom-icons-list {
+        .uenf-custom-icons-list {
             max-height: 400px;
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
         
-        .cct-custom-icon-item {
+        .uenf-custom-icon-item {
             display: flex;
             align-items: center;
             padding: 12px;
@@ -1000,23 +1000,23 @@ class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
             transition: background-color 0.2s ease;
         }
         
-        .cct-custom-icon-item:last-child {
+        .uenf-custom-icon-item:last-child {
             border-bottom: none;
         }
         
-        .cct-custom-icon-item:hover {
+        .uenf-custom-icon-item:hover {
             background-color: #f9f9f9;
         }
         
-        .cct-custom-icon-item.selected {
+        .uenf-custom-icon-item.selected {
             background-color: #e3f2fd;
         }
         
-        .cct-icon-checkbox {
+        .uenf-icon-checkbox {
             margin-right: 10px;
         }
         
-        .cct-custom-icon-preview {
+        .uenf-custom-icon-preview {
             width: 40px;
             height: 40px;
             margin-right: 12px;
@@ -1029,36 +1029,36 @@ class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
             flex-shrink: 0;
         }
         
-        .cct-custom-icon-preview svg {
+        .uenf-custom-icon-preview svg {
             width: 24px;
             height: 24px;
             color: #333;
         }
         
-        .cct-custom-icon-details {
+        .uenf-custom-icon-details {
             flex: 1;
             min-width: 0;
         }
         
-        .cct-icon-name {
+        .uenf-icon-name {
             font-weight: 500;
             font-size: 13px;
             margin-bottom: 2px;
             word-break: break-word;
         }
         
-        .cct-icon-meta {
+        .uenf-icon-meta {
             font-size: 11px;
             color: #666;
         }
         
-        .cct-custom-icon-actions {
+        .uenf-custom-icon-actions {
             display: flex;
             gap: 4px;
             flex-shrink: 0;
         }
         
-        .cct-icon-action {
+        .uenf-icon-action {
             padding: 4px 8px;
             border: 1px solid #ddd;
             background: #fff;
@@ -1068,24 +1068,24 @@ class CCT_Custom_Icon_Manager_Control extends WP_Customize_Control {
             transition: all 0.2s ease;
         }
         
-        .cct-icon-action:hover {
+        .uenf-icon-action:hover {
             background: #f0f0f0;
             border-color: #999;
         }
         
-        .cct-icon-action.danger:hover {
+        .uenf-icon-action.danger:hover {
             background: #f8d7da;
             border-color: #f5c6cb;
             color: #721c24;
         }
         
-        .cct-empty-custom-icons {
+        .uenf-empty-custom-icons {
             text-align: center;
             padding: 40px 20px;
             color: #666;
         }
         
-        .cct-empty-custom-icons p {
+        .uenf-empty-custom-icons p {
             margin-bottom: 8px;
         }
         </style>

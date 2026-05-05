@@ -8,7 +8,7 @@
  * - Preview em tempo real
  * - Interações dos controles
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -47,15 +47,15 @@
             var self = this;
             
             // Aplicação de paletas
-            $(document).on('click', '.cct-apply-palette', function(e) {
+            $(document).on('click', '.uenf-apply-palette', function(e) {
                 e.preventDefault();
                 var paletteId = $(this).data('palette');
                 self.applyPalette(paletteId);
             });
             
             // Seleção de paleta no preview
-            $(document).on('click', '.cct-palette-option', function() {
-                $('.cct-palette-option').removeClass('selected');
+            $(document).on('click', '.uenf-palette-option', function() {
+                $('.uenf-palette-option').removeClass('selected');
                 $(this).addClass('selected');
                 
                 var paletteId = $(this).data('palette');
@@ -63,46 +63,46 @@
             });
             
             // Geração de cores
-            $(document).on('click', '.cct-generate-colors', function(e) {
+            $(document).on('click', '.uenf-generate-colors', function(e) {
                 e.preventDefault();
                 self.generateColors();
             });
             
             // Aplicação de cores geradas
-            $(document).on('click', '.cct-apply-generated', function(e) {
+            $(document).on('click', '.uenf-apply-generated', function(e) {
                 e.preventDefault();
                 self.applyGeneratedColors();
             });
             
             // Randomização da cor base
-            $(document).on('click', '.cct-randomize-base', function(e) {
+            $(document).on('click', '.uenf-randomize-base', function(e) {
                 e.preventDefault();
                 self.randomizeBaseColor();
             });
             
             // Análise de contraste
-            $(document).on('input', '.cct-text-color, .cct-bg-color', function() {
+            $(document).on('input', '.uenf-text-color, .uenf-bg-color', function() {
                 self.updateContrastAnalysis();
             });
             
             // Testes rápidos de contraste
-            $(document).on('click', '.cct-test-primary', function(e) {
+            $(document).on('click', '.uenf-test-primary', function(e) {
                 e.preventDefault();
                 self.testColorContrast('primary');
             });
             
-            $(document).on('click', '.cct-test-secondary', function(e) {
+            $(document).on('click', '.uenf-test-secondary', function(e) {
                 e.preventDefault();
                 self.testColorContrast('secondary');
             });
             
-            $(document).on('click', '.cct-test-all', function(e) {
+            $(document).on('click', '.uenf-test-all', function(e) {
                 e.preventDefault();
                 self.testAllColors();
             });
             
             // Sugestões de cores
-            $(document).on('click', '.cct-suggestion-swatch', function() {
+            $(document).on('click', '.uenf-suggestion-swatch', function() {
                 var color = $(this).data('color');
                 var $control = $(this).closest('.customize-control').find('input[type="color"]');
                 $control.val(color).trigger('change');
@@ -114,8 +114,8 @@
          */
         initPalettePreview: function() {
             // Marca a paleta atual como selecionada
-            var currentPalette = wp.customize('cct_selected_palette')();
-            $('.cct-palette-option[data-palette="' + currentPalette + '"]').addClass('selected');
+            var currentPalette = wp.customize('uenf_selected_palette')();
+            $('.uenf-palette-option[data-palette="' + currentPalette + '"]').addClass('selected');
             this.settings.currentPalette = currentPalette;
         },
         
@@ -132,14 +132,14 @@
             
             // Aplica cada cor da paleta
             Object.keys(colors).forEach(function(role) {
-                var settingId = 'cct_palette_' + role;
+                var settingId = 'uenf_palette_' + role;
                 if (wp.customize(settingId)) {
                     wp.customize(settingId).set(colors[role]);
                 }
             });
             
             // Atualiza o seletor de paleta
-            wp.customize('cct_selected_palette').set(paletteId);
+            wp.customize('uenf_selected_palette').set(paletteId);
             
             // Feedback visual
             this.showNotification('Paleta "' + palette.name + '" aplicada com sucesso!', 'success');
@@ -150,7 +150,7 @@
          */
         initColorGenerator: function() {
             // Gera cores iniciais se não houver
-            if ($('#cct-generated-colors').children().length === 0) {
+            if ($('#uenf-generated-colors').children().length === 0) {
                 this.generateColors();
             }
         },
@@ -159,8 +159,8 @@
          * Gera cores harmoniosas
          */
         generateColors: function() {
-            var baseColor = wp.customize('cct_generator_base_color')();
-            var harmonyType = wp.customize('cct_generator_harmony_type')();
+            var baseColor = wp.customize('uenf_generator_base_color')();
+            var harmonyType = wp.customize('uenf_generator_harmony_type')();
             
             if (!baseColor) {
                 baseColor = '#1d3771';
@@ -170,18 +170,18 @@
             this.settings.generatedColors = colors;
             
             this.displayGeneratedColors(colors);
-            $('.cct-apply-generated').show();
+            $('.uenf-apply-generated').show();
         },
         
         /**
          * Exibe cores geradas
          */
         displayGeneratedColors: function(colors) {
-            var $container = $('#cct-generated-colors');
+            var $container = $('#uenf-generated-colors');
             $container.empty();
             
             colors.forEach(function(color, index) {
-                var $swatch = $('<div class="cct-generated-color">');
+                var $swatch = $('<div class="uenf-generated-color">');
                 $swatch.css('background-color', color);
                 $swatch.attr('data-hex', color);
                 $swatch.attr('title', 'Cor ' + (index + 1) + ': ' + color);
@@ -204,7 +204,7 @@
             // Mapeia cores geradas para roles
             roles.forEach(function(role, index) {
                 if (colors[index]) {
-                    var settingId = 'cct_palette_' + role;
+                    var settingId = 'uenf_palette_' + role;
                     if (wp.customize(settingId)) {
                         wp.customize(settingId).set(colors[index]);
                     }
@@ -219,7 +219,7 @@
          */
         randomizeBaseColor: function() {
             var randomColor = this.generateRandomColor();
-            wp.customize('cct_generator_base_color').set(randomColor);
+            wp.customize('uenf_generator_base_color').set(randomColor);
             
             // Gera nova paleta automaticamente
             setTimeout(() => {
@@ -295,9 +295,9 @@
             
             // Atualiza cores do preview quando as cores da paleta mudam
             var self = this;
-            wp.customize('cct_palette_primary', function(value) {
+            wp.customize('uenf_palette_primary', function(value) {
                 value.bind(function(newval) {
-                    $('.cct-text-color').val(newval);
+                    $('.uenf-text-color').val(newval);
                     self.updateContrastAnalysis();
                 });
             });
@@ -307,26 +307,26 @@
          * Atualiza análise de contraste
          */
         updateContrastAnalysis: function() {
-            var textColor = $('.cct-text-color').val();
-            var bgColor = $('.cct-bg-color').val();
+            var textColor = $('.uenf-text-color').val();
+            var bgColor = $('.uenf-bg-color').val();
             
             if (!textColor || !bgColor) {
                 return;
             }
             
             // Atualiza preview
-            $('.cct-preview-sample').css({
+            $('.uenf-preview-sample').css({
                 'color': textColor,
                 'background-color': bgColor
             });
             
             // Atualiza valores exibidos
-            $('.cct-text-color').siblings('.cct-color-value').text(textColor);
-            $('.cct-bg-color').siblings('.cct-color-value').text(bgColor);
+            $('.uenf-text-color').siblings('.uenf-color-value').text(textColor);
+            $('.uenf-bg-color').siblings('.uenf-color-value').text(bgColor);
             
             // Calcula contraste
             var contrast = this.calculateContrast(textColor, bgColor);
-            $('.cct-ratio-value').text(contrast.toFixed(2) + ':1');
+            $('.uenf-ratio-value').text(contrast.toFixed(2) + ':1');
             
             // Verifica conformidade WCAG
             this.updateWCAGCompliance(contrast);
@@ -350,10 +350,10 @@
             var aaaPassLarge = contrast >= (rules.wcag_aaa ? rules.wcag_aaa.large_text : 4.5);
             
             // Atualiza status visual
-            this.updateComplianceStatus('.cct-aa-normal', aaPassNormal);
-            this.updateComplianceStatus('.cct-aa-large', aaPassLarge);
-            this.updateComplianceStatus('.cct-aaa-normal', aaaPassNormal);
-            this.updateComplianceStatus('.cct-aaa-large', aaaPassLarge);
+            this.updateComplianceStatus('.uenf-aa-normal', aaPassNormal);
+            this.updateComplianceStatus('.uenf-aa-large', aaPassLarge);
+            this.updateComplianceStatus('.uenf-aaa-normal', aaaPassNormal);
+            this.updateComplianceStatus('.uenf-aaa-large', aaaPassLarge);
         },
         
         /**
@@ -390,16 +390,16 @@
                 recommendations.push('Excelente! O contraste atende todos os padrões WCAG.');
             }
             
-            $('.cct-recommendation-text').html(recommendations.join('<br>'));
+            $('.uenf-recommendation-text').html(recommendations.join('<br>'));
         },
         
         /**
          * Testa contraste de uma cor específica
          */
         testColorContrast: function(colorRole) {
-            var color = wp.customize('cct_palette_' + colorRole)();
+            var color = wp.customize('uenf_palette_' + colorRole)();
             if (color) {
-                $('.cct-text-color').val(color);
+                $('.uenf-text-color').val(color);
                 this.updateContrastAnalysis();
             }
         },
@@ -413,7 +413,7 @@
             var results = [];
             
             roles.forEach(function(role) {
-                var color = wp.customize('cct_palette_' + role)();
+                var color = wp.customize('uenf_palette_' + role)();
                 if (color) {
                     var contrast = self.calculateContrast(color, '#ffffff');
                     var contrastDark = self.calculateContrast(color, '#000000');
@@ -442,14 +442,14 @@
                 var status = bestContrast >= 4.5 ? 'Aprovado' : 'Reprovado';
                 var statusClass = bestContrast >= 4.5 ? 'pass' : 'fail';
                 
-                html += '<div class="cct-test-result">';
+                html += '<div class="uenf-test-result">';
                 html += '<strong>' + result.role.charAt(0).toUpperCase() + result.role.slice(1) + ':</strong> ';
-                html += '<span class="cct-compliance-status ' + statusClass + '">' + status + '</span> ';
+                html += '<span class="uenf-compliance-status ' + statusClass + '">' + status + '</span> ';
                 html += '(Melhor contraste: ' + bestContrast.toFixed(2) + ':1)';
                 html += '</div>';
             });
             
-            $('.cct-recommendation-text').html(html);
+            $('.uenf-recommendation-text').html(html);
         },
         
         /**
@@ -461,7 +461,7 @@
             
             // Atualiza sugestões quando a paleta muda
             var self = this;
-            wp.customize('cct_selected_palette', function(value) {
+            wp.customize('uenf_selected_palette', function(value) {
                 value.bind(function() {
                     self.updateColorSuggestions();
                 });
@@ -472,7 +472,7 @@
          * Atualiza sugestões de cores
          */
         updateColorSuggestions: function() {
-            var currentPalette = wp.customize('cct_selected_palette')();
+            var currentPalette = wp.customize('uenf_selected_palette')();
             if (!this.settings.palettes[currentPalette]) {
                 return;
             }
@@ -482,15 +482,15 @@
             // Adiciona sugestões a todos os controles de cor
             $('.wp-color-picker').each(function() {
                 var $control = $(this).closest('.customize-control');
-                var $suggestions = $control.find('.cct-color-suggestions');
+                var $suggestions = $control.find('.uenf-color-suggestions');
                 
                 if ($suggestions.length === 0) {
-                    var html = '<div class="cct-color-suggestions">';
+                    var html = '<div class="uenf-color-suggestions">';
                     html += '<h5>Cores da Paleta:</h5>';
-                    html += '<div class="cct-suggestion-swatches">';
+                    html += '<div class="uenf-suggestion-swatches">';
                     
                     colors.forEach(function(color) {
-                        html += '<div class="cct-suggestion-swatch" style="background-color: ' + color + '" data-color="' + color + '" title="' + color + '"></div>';
+                        html += '<div class="uenf-suggestion-swatch" style="background-color: ' + color + '" data-color="' + color + '" title="' + color + '"></div>';
                     });
                     
                     html += '</div></div>';
@@ -613,7 +613,7 @@
         showNotification: function(message, type) {
             type = type || 'info';
             
-            var $notification = $('<div class="cct-notification cct-notification-' + type + '">');
+            var $notification = $('<div class="uenf-notification uenf-notification-' + type + '">');
             $notification.text(message);
             
             $('body').append($notification);
@@ -633,7 +633,7 @@
     
     // CSS para notificações
     $('<style>').text(`
-        .cct-notification {
+        .uenf-notification {
             position: fixed;
             top: 32px;
             right: 20px;
@@ -646,19 +646,19 @@
             transition: transform 0.3s ease;
         }
         
-        .cct-notification.show {
+        .uenf-notification.show {
             transform: translateX(0);
         }
         
-        .cct-notification-success {
+        .uenf-notification-success {
             background: #46b450;
         }
         
-        .cct-notification-error {
+        .uenf-notification-error {
             background: #dc3232;
         }
         
-        .cct-notification-info {
+        .uenf-notification-info {
             background: #0073aa;
         }
     `).appendTo('head');

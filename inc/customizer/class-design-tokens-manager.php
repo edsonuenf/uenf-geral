@@ -10,7 +10,7 @@
  * - Sincronização com todos os módulos
  * - Documentação automática
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do gerenciador de design tokens
  */
-class CCT_Design_Tokens_Manager {
+class UENF_Design_Tokens_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -37,7 +37,7 @@ class CCT_Design_Tokens_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_design_tokens_';
+    private $prefix = 'uenf_design_tokens_';
     
     /**
      * Tokens primitivos
@@ -105,22 +105,22 @@ class CCT_Design_Tokens_Manager {
         add_action('wp_footer', array($this, 'output_custom_js'));
         
         // AJAX handlers
-        add_action('wp_ajax_cct_save_token', array($this, 'ajax_save_token'));
-        add_action('wp_ajax_cct_delete_token', array($this, 'ajax_delete_token'));
-        add_action('wp_ajax_cct_export_tokens', array($this, 'ajax_export_tokens'));
-        add_action('wp_ajax_cct_import_tokens', array($this, 'ajax_import_tokens'));
-        add_action('wp_ajax_cct_sync_tokens', array($this, 'ajax_sync_tokens'));
-        add_action('wp_ajax_cct_validate_tokens', array($this, 'ajax_validate_tokens'));
-        add_action('wp_ajax_cct_generate_documentation', array($this, 'ajax_generate_documentation'));
+        add_action('wp_ajax_uenf_save_token', array($this, 'ajax_save_token'));
+        add_action('wp_ajax_uenf_delete_token', array($this, 'ajax_delete_token'));
+        add_action('wp_ajax_uenf_export_tokens', array($this, 'ajax_export_tokens'));
+        add_action('wp_ajax_uenf_import_tokens', array($this, 'ajax_import_tokens'));
+        add_action('wp_ajax_uenf_sync_tokens', array($this, 'ajax_sync_tokens'));
+        add_action('wp_ajax_uenf_validate_tokens', array($this, 'ajax_validate_tokens'));
+        add_action('wp_ajax_uenf_generate_documentation', array($this, 'ajax_generate_documentation'));
         
         // Shortcodes
-        add_shortcode('cct_design_token', array($this, 'design_token_shortcode'));
-        add_shortcode('cct_token_preview', array($this, 'token_preview_shortcode'));
-        add_shortcode('cct_token_documentation', array($this, 'token_documentation_shortcode'));
+        add_shortcode('uenf_design_token', array($this, 'design_token_shortcode'));
+        add_shortcode('uenf_token_preview', array($this, 'token_preview_shortcode'));
+        add_shortcode('uenf_token_documentation', array($this, 'token_documentation_shortcode'));
         
         // Hooks para sincronização
         add_action('customize_save_after', array($this, 'sync_tokens_after_save'));
-        add_filter('cct_get_design_token', array($this, 'get_design_token'), 10, 2);
+        add_filter('uenf_get_design_token', array($this, 'get_design_token'), 10, 2);
     }
     
     /**
@@ -881,7 +881,7 @@ class CCT_Design_Tokens_Manager {
             'validation_enabled' => true,
             'export_formats' => array('css', 'scss', 'json', 'js'),
             'naming_convention' => 'kebab-case', // kebab-case, camelCase, snake_case
-            'css_prefix' => '--cct-',
+            'css_prefix' => '--uenf-',
             'js_namespace' => 'CCTTokens',
             'backup_enabled' => true,
             'backup_retention' => 30 // dias
@@ -1022,7 +1022,7 @@ class CCT_Design_Tokens_Manager {
         ));
         
         $this->add_setting('css_prefix', array(
-            'default' => '--cct-',
+            'default' => '--uenf-',
             'sanitize_callback' => 'sanitize_text_field',
         ));
         
@@ -1169,25 +1169,25 @@ class CCT_Design_Tokens_Manager {
     public function enqueue_scripts() {
         // CSS dos design tokens
         wp_enqueue_style(
-            'cct-design-tokens',
-            get_template_directory_uri() . '/css/cct-design-tokens.css',
+            'uenf-design-tokens',
+            get_template_directory_uri() . '/css/uenf-design-tokens.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript dos design tokens
         wp_enqueue_script(
-            'cct-design-tokens',
-            get_template_directory_uri() . '/js/cct-design-tokens.js',
+            'uenf-design-tokens',
+            get_template_directory_uri() . '/js/uenf-design-tokens.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-design-tokens', 'cctDesignTokens', array(
+        wp_localize_script('uenf-design-tokens', 'cctDesignTokens', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_design_tokens_nonce'),
+            'nonce' => wp_create_nonce('uenf_design_tokens_nonce'),
             'settings' => $this->get_frontend_settings(),
             'tokens' => $this->get_all_tokens(),
             'strings' => array(
@@ -1209,7 +1209,7 @@ class CCT_Design_Tokens_Manager {
             'autoSync' => get_theme_mod($this->prefix . 'auto_sync', true),
             'versionControl' => get_theme_mod($this->prefix . 'version_control', true),
             'namingConvention' => get_theme_mod($this->prefix . 'naming_convention', 'kebab-case'),
-            'cssPrefix' => get_theme_mod($this->prefix . 'css_prefix', '--cct-')
+            'cssPrefix' => get_theme_mod($this->prefix . 'css_prefix', '--uenf-')
         );
     }
     
@@ -1241,7 +1241,7 @@ class CCT_Design_Tokens_Manager {
         $tokens = $this->get_all_tokens();
         $resolved_tokens = $this->resolve_token_references($tokens);
         
-        echo "<style id='cct-design-tokens-custom-css'>\n";
+        echo "<style id='uenf-design-tokens-custom-css'>\n";
         echo ":root {\n";
         
         // Gerar variáveis CSS para todos os tokens
@@ -1318,7 +1318,7 @@ class CCT_Design_Tokens_Manager {
      * Gera nome de variável CSS
      */
     private function generate_css_variable_name($category, $subcategory, $token_key) {
-        $prefix = get_theme_mod($this->prefix . 'css_prefix', '--cct-');
+        $prefix = get_theme_mod($this->prefix . 'css_prefix', '--uenf-');
         $naming = get_theme_mod($this->prefix . 'naming_convention', 'kebab-case');
         
         $parts = array($category, $subcategory, $token_key);
@@ -1349,7 +1349,7 @@ class CCT_Design_Tokens_Manager {
             return;
         }
         
-        echo "<script id='cct-design-tokens-custom-js'>\n";
+        echo "<script id='uenf-design-tokens-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTDesignTokens !== 'undefined') {\n";
         echo "    CCTDesignTokens.init(" . wp_json_encode($settings) . ");\n";
@@ -1366,7 +1366,7 @@ class CCT_Design_Tokens_Manager {
             'token' => '',
             'format' => 'value', // value, css-var, preview
             'class' => ''
-        ), $atts, 'cct_design_token');
+        ), $atts, 'uenf_design_token');
         
         if (empty($atts['token'])) {
             return '';
@@ -1378,7 +1378,7 @@ class CCT_Design_Tokens_Manager {
             return '';
         }
         
-        $classes = array('cct-design-token');
+        $classes = array('uenf-design-token');
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
@@ -1389,7 +1389,7 @@ class CCT_Design_Tokens_Manager {
                 return '<code class="' . implode(' ', $classes) . '">var(' . esc_html($css_var) . ')</code>';
                 
             case 'preview':
-                return '<span class="' . implode(' ', $classes) . ' cct-token-preview" data-token="' . esc_attr($atts['token']) . '" style="background: ' . esc_attr($token_value) . ';"></span>';
+                return '<span class="' . implode(' ', $classes) . ' uenf-token-preview" data-token="' . esc_attr($atts['token']) . '" style="background: ' . esc_attr($token_value) . ';"></span>';
                 
             case 'value':
             default:
@@ -1405,7 +1405,7 @@ class CCT_Design_Tokens_Manager {
             'category' => '',
             'type' => 'grid', // grid, list
             'class' => ''
-        ), $atts, 'cct_token_preview');
+        ), $atts, 'uenf_token_preview');
         
         $tokens = $this->get_all_tokens();
         
@@ -1413,7 +1413,7 @@ class CCT_Design_Tokens_Manager {
             $tokens = isset($tokens[$atts['category']]) ? array($atts['category'] => $tokens[$atts['category']]) : array();
         }
         
-        $classes = array('cct-token-preview-container', 'cct-preview-' . $atts['type']);
+        $classes = array('uenf-token-preview-container', 'uenf-preview-' . $atts['type']);
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
@@ -1421,19 +1421,19 @@ class CCT_Design_Tokens_Manager {
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         foreach ($tokens as $category => $category_tokens) {
-            $output .= '<div class="cct-token-category">';
+            $output .= '<div class="uenf-token-category">';
             $output .= '<h3>' . esc_html(ucfirst($category)) . '</h3>';
             
             foreach ($category_tokens as $subcategory => $subcategory_tokens) {
-                $output .= '<div class="cct-token-subcategory">';
+                $output .= '<div class="uenf-token-subcategory">';
                 $output .= '<h4>' . esc_html(ucfirst($subcategory)) . '</h4>';
                 
                 foreach ($subcategory_tokens as $token_key => $token_data) {
-                    $output .= '<div class="cct-token-item">';
-                    $output .= '<div class="cct-token-name">' . esc_html($token_key) . '</div>';
-                    $output .= '<div class="cct-token-value">' . esc_html($token_data['value']) . '</div>';
+                    $output .= '<div class="uenf-token-item">';
+                    $output .= '<div class="uenf-token-name">' . esc_html($token_key) . '</div>';
+                    $output .= '<div class="uenf-token-value">' . esc_html($token_data['value']) . '</div>';
                     if (!empty($token_data['description'])) {
-                        $output .= '<div class="cct-token-description">' . esc_html($token_data['description']) . '</div>';
+                        $output .= '<div class="uenf-token-description">' . esc_html($token_data['description']) . '</div>';
                     }
                     $output .= '</div>';
                 }
@@ -1457,12 +1457,12 @@ class CCT_Design_Tokens_Manager {
             'format' => 'html', // html, table
             'include_css' => 'true',
             'class' => ''
-        ), $atts, 'cct_token_documentation');
+        ), $atts, 'uenf_token_documentation');
         
         $tokens = $this->get_all_tokens();
         $resolved_tokens = $this->resolve_token_references($tokens);
         
-        $classes = array('cct-token-documentation');
+        $classes = array('uenf-token-documentation');
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
@@ -1514,7 +1514,7 @@ class CCT_Design_Tokens_Manager {
      */
     private function generate_token_table($tokens, $classes) {
         $output = '<div class="' . implode(' ', $classes) . '">';
-        $output .= '<table class="cct-tokens-table">';
+        $output .= '<table class="uenf-tokens-table">';
         $output .= '<thead><tr><th>Token</th><th>Valor</th><th>Variável CSS</th><th>Descrição</th></tr></thead>';
         $output .= '<tbody>';
         
@@ -1547,7 +1547,7 @@ class CCT_Design_Tokens_Manager {
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         if ($include_css) {
-            $output .= '<div class="cct-tokens-css">';
+            $output .= '<div class="uenf-tokens-css">';
             $output .= '<h3>Variáveis CSS</h3>';
             $output .= '<pre><code>:root {\n';
             
@@ -1565,27 +1565,27 @@ class CCT_Design_Tokens_Manager {
         }
         
         foreach ($tokens as $category => $category_tokens) {
-            $output .= '<div class="cct-token-category">';
+            $output .= '<div class="uenf-token-category">';
             $output .= '<h3>' . esc_html(ucfirst($category)) . '</h3>';
             
             foreach ($category_tokens as $subcategory => $subcategory_tokens) {
-                $output .= '<div class="cct-token-subcategory">';
+                $output .= '<div class="uenf-token-subcategory">';
                 $output .= '<h4>' . esc_html(ucfirst($subcategory)) . '</h4>';
-                $output .= '<div class="cct-tokens-grid">';
+                $output .= '<div class="uenf-tokens-grid">';
                 
                 foreach ($subcategory_tokens as $token_key => $token_data) {
                     $token_path = "{$category}.{$subcategory}.{$token_key}";
                     $css_var = $this->generate_css_variable_name($category, $subcategory, $token_key);
                     
-                    $output .= '<div class="cct-token-card">';
-                    $output .= '<div class="cct-token-header">';
+                    $output .= '<div class="uenf-token-card">';
+                    $output .= '<div class="uenf-token-header">';
                     $output .= '<h5>' . esc_html($token_key) . '</h5>';
                     $output .= '</div>';
-                    $output .= '<div class="cct-token-content">';
-                    $output .= '<div class="cct-token-value">' . esc_html($token_data['value']) . '</div>';
-                    $output .= '<div class="cct-token-css"><code>var(' . esc_html($css_var) . ')</code></div>';
+                    $output .= '<div class="uenf-token-content">';
+                    $output .= '<div class="uenf-token-value">' . esc_html($token_data['value']) . '</div>';
+                    $output .= '<div class="uenf-token-css"><code>var(' . esc_html($css_var) . ')</code></div>';
                     if (!empty($token_data['description'])) {
-                        $output .= '<div class="cct-token-description">' . esc_html($token_data['description']) . '</div>';
+                        $output .= '<div class="uenf-token-description">' . esc_html($token_data['description']) . '</div>';
                     }
                     $output .= '</div>';
                     $output .= '</div>';
@@ -1620,22 +1620,22 @@ class CCT_Design_Tokens_Manager {
         $resolved_tokens = $this->resolve_token_references($tokens);
         
         // Sincronizar com módulo de cores
-        if (class_exists('CCT_Color_Manager')) {
+        if (class_exists('UENF_Color_Manager')) {
             $this->sync_with_color_manager($resolved_tokens);
         }
         
         // Sincronizar com módulo de tipografia
-        if (class_exists('CCT_Typography_Manager')) {
+        if (class_exists('UENF_Typography_Manager')) {
             $this->sync_with_typography_manager($resolved_tokens);
         }
         
         // Sincronizar com módulo de sombras
-        if (class_exists('CCT_Shadow_Manager')) {
+        if (class_exists('UENF_Shadow_Manager')) {
             $this->sync_with_shadow_manager($resolved_tokens);
         }
         
         // Sincronizar com módulo de breakpoints
-        if (class_exists('CCT_Responsive_Breakpoints_Manager')) {
+        if (class_exists('UENF_Responsive_Breakpoints_Manager')) {
             $this->sync_with_breakpoints_manager($resolved_tokens);
         }
     }
@@ -1652,7 +1652,7 @@ class CCT_Design_Tokens_Manager {
      * AJAX handlers
      */
     public function ajax_save_token() {
-        check_ajax_referer('cct_design_tokens_nonce', 'nonce');
+        check_ajax_referer('uenf_design_tokens_nonce', 'nonce');
         
         $token_data = $this->sanitize_token_data($_POST['token'] ?? array());
         
@@ -1670,7 +1670,7 @@ class CCT_Design_Tokens_Manager {
     }
     
     public function ajax_export_tokens() {
-        check_ajax_referer('cct_design_tokens_nonce', 'nonce');
+        check_ajax_referer('uenf_design_tokens_nonce', 'nonce');
         
         $format = sanitize_text_field($_POST['format'] ?? 'json');
         $tokens = $this->get_all_tokens();
@@ -1686,7 +1686,7 @@ class CCT_Design_Tokens_Manager {
     }
     
     public function ajax_sync_tokens() {
-        check_ajax_referer('cct_design_tokens_nonce', 'nonce');
+        check_ajax_referer('uenf_design_tokens_nonce', 'nonce');
         
         $this->sync_with_modules();
         
@@ -1797,7 +1797,7 @@ class CCT_Design_Tokens_Manager {
             $scss .= "// {$category} tokens\n";
             foreach ($category_tokens as $subcategory => $subcategory_tokens) {
                 foreach ($subcategory_tokens as $token_key => $token_data) {
-                    $var_name = '$' . str_replace('--cct-', '', $this->generate_css_variable_name($category, $subcategory, $token_key));
+                    $var_name = '$' . str_replace('--uenf-', '', $this->generate_css_variable_name($category, $subcategory, $token_key));
                     $scss .= "{$var_name}: {$token_data['value']};\n";
                 }
             }

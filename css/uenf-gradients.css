@@ -1,0 +1,837 @@
+/**
+ * Sistema de Gradientes CCT - Estilos Frontend
+ * 
+ * Estilos completos para biblioteca de gradientes incluindo:
+ * - Classes utilitárias para gradientes
+ * - Efeitos visuais e animações
+ * - Responsividade e acessibilidade
+ * - Otimizações de performance
+ * - Fallbacks para navegadores antigos
+ * 
+ * @package UENF_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS para Gradientes
+   ========================================================================== */
+
+:root {
+    /* Gradientes Predefinidos */
+    --uenf-gradient-sunset: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%);
+    --uenf-gradient-ocean: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --uenf-gradient-forest: linear-gradient(90deg, #134e5e 0%, #71b280 100%);
+    --uenf-gradient-aurora: linear-gradient(180deg, #00c6ff 0%, #0072ff 100%);
+    --uenf-gradient-fire: linear-gradient(45deg, #f12711 0%, #f5af19 100%);
+    --uenf-gradient-cosmic: radial-gradient(circle at center, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    --uenf-gradient-bubble: radial-gradient(ellipse at center, #ffecd2 0%, #fcb69f 100%);
+    --uenf-gradient-rainbow: conic-gradient(from 0deg at center, #ff0000 0deg, #ff8000 60deg, #ffff00 120deg, #80ff00 180deg, #00ff80 240deg, #0080ff 300deg, #ff0000 360deg);
+    --uenf-gradient-neon: linear-gradient(45deg, #12c2e9 0%, #c471ed 50%, #f64f59 100%);
+    --uenf-gradient-cyberpunk: linear-gradient(135deg, #0f0f23 0%, #ff006e 50%, #8338ec 100%);
+    --uenf-gradient-cotton-candy: linear-gradient(45deg, #ffeef8 0%, #f0e6ff 100%);
+    --uenf-gradient-mint: linear-gradient(90deg, #e8f5e8 0%, #b8e6b8 100%);
+    --uenf-gradient-gold: linear-gradient(45deg, #ffd700 0%, #ffed4e 50%, #ff9500 100%);
+    --uenf-gradient-silver: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #a8a8a8 100%);
+    
+    /* Cores de Fallback */
+    --uenf-gradient-sunset-fallback: #ff7e5f;
+    --uenf-gradient-ocean-fallback: #667eea;
+    --uenf-gradient-forest-fallback: #134e5e;
+    --uenf-gradient-aurora-fallback: #00c6ff;
+    --uenf-gradient-fire-fallback: #f12711;
+    --uenf-gradient-cosmic-fallback: #667eea;
+    --uenf-gradient-bubble-fallback: #ffecd2;
+    --uenf-gradient-rainbow-fallback: #ff0000;
+    --uenf-gradient-neon-fallback: #12c2e9;
+    --uenf-gradient-cyberpunk-fallback: #0f0f23;
+    --uenf-gradient-cotton-candy-fallback: #ffeef8;
+    --uenf-gradient-mint-fallback: #e8f5e8;
+    --uenf-gradient-gold-fallback: #ffd700;
+    --uenf-gradient-silver-fallback: #c0c0c0;
+    
+    /* Configurações de Performance */
+    --uenf-gradient-transition: all 0.3s ease;
+    --uenf-gradient-hover-scale: 1.02;
+    --uenf-gradient-animation-duration: 0.6s;
+}
+
+/* ==========================================================================
+   Classes Base para Gradientes
+   ========================================================================== */
+
+/* Classe base para elementos com gradiente */
+.uenf-gradient {
+    position: relative;
+    transition: var(--uenf-gradient-transition);
+}
+
+/* Otimização de performance */
+.uenf-gradient-optimized {
+    will-change: background;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Gradiente animado */
+.uenf-gradient-animated {
+    background-size: 200% 200%;
+    animation: uenf-gradient-shift var(--uenf-gradient-animation-duration) ease infinite;
+}
+
+@keyframes uenf-gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ==========================================================================
+   Classes de Background com Gradientes
+   ========================================================================== */
+
+/* Sunset */
+.uenf-bg-gradient-sunset {
+    background-color: var(--uenf-gradient-sunset-fallback);
+    background: var(--uenf-gradient-sunset);
+}
+
+/* Ocean */
+.uenf-bg-gradient-ocean {
+    background-color: var(--uenf-gradient-ocean-fallback);
+    background: var(--uenf-gradient-ocean);
+}
+
+/* Forest */
+.uenf-bg-gradient-forest {
+    background-color: var(--uenf-gradient-forest-fallback);
+    background: var(--uenf-gradient-forest);
+}
+
+/* Aurora */
+.uenf-bg-gradient-aurora {
+    background-color: var(--uenf-gradient-aurora-fallback);
+    background: var(--uenf-gradient-aurora);
+}
+
+/* Fire */
+.uenf-bg-gradient-fire {
+    background-color: var(--uenf-gradient-fire-fallback);
+    background: var(--uenf-gradient-fire);
+}
+
+/* Cosmic */
+.uenf-bg-gradient-cosmic {
+    background-color: var(--uenf-gradient-cosmic-fallback);
+    background: var(--uenf-gradient-cosmic);
+}
+
+/* Bubble */
+.uenf-bg-gradient-bubble {
+    background-color: var(--uenf-gradient-bubble-fallback);
+    background: var(--uenf-gradient-bubble);
+}
+
+/* Rainbow */
+.uenf-bg-gradient-rainbow {
+    background-color: var(--uenf-gradient-rainbow-fallback);
+    background: var(--uenf-gradient-rainbow);
+}
+
+/* Neon */
+.uenf-bg-gradient-neon {
+    background-color: var(--uenf-gradient-neon-fallback);
+    background: var(--uenf-gradient-neon);
+}
+
+/* Cyberpunk */
+.uenf-bg-gradient-cyberpunk {
+    background-color: var(--uenf-gradient-cyberpunk-fallback);
+    background: var(--uenf-gradient-cyberpunk);
+}
+
+/* Cotton Candy */
+.uenf-bg-gradient-cotton-candy {
+    background-color: var(--uenf-gradient-cotton-candy-fallback);
+    background: var(--uenf-gradient-cotton-candy);
+}
+
+/* Mint */
+.uenf-bg-gradient-mint {
+    background-color: var(--uenf-gradient-mint-fallback);
+    background: var(--uenf-gradient-mint);
+}
+
+/* Gold */
+.uenf-bg-gradient-gold {
+    background-color: var(--uenf-gradient-gold-fallback);
+    background: var(--uenf-gradient-gold);
+}
+
+/* Silver */
+.uenf-bg-gradient-silver {
+    background-color: var(--uenf-gradient-silver-fallback);
+    background: var(--uenf-gradient-silver);
+}
+
+/* ==========================================================================
+   Classes de Texto com Gradientes
+   ========================================================================== */
+
+/* Base para texto com gradiente */
+.uenf-text-gradient {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+/* Fallback para navegadores sem suporte */
+.no-webkit-background-clip .uenf-text-gradient {
+    -webkit-text-fill-color: initial;
+    color: initial;
+    background: none;
+}
+
+/* Sunset Text */
+.uenf-text-gradient-sunset {
+    color: var(--uenf-gradient-sunset-fallback);
+    background: var(--uenf-gradient-sunset);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Ocean Text */
+.uenf-text-gradient-ocean {
+    color: var(--uenf-gradient-ocean-fallback);
+    background: var(--uenf-gradient-ocean);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Forest Text */
+.uenf-text-gradient-forest {
+    color: var(--uenf-gradient-forest-fallback);
+    background: var(--uenf-gradient-forest);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Fire Text */
+.uenf-text-gradient-fire {
+    color: var(--uenf-gradient-fire-fallback);
+    background: var(--uenf-gradient-fire);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Neon Text */
+.uenf-text-gradient-neon {
+    color: var(--uenf-gradient-neon-fallback);
+    background: var(--uenf-gradient-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Gold Text */
+.uenf-text-gradient-gold {
+    color: var(--uenf-gradient-gold-fallback);
+    background: var(--uenf-gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ==========================================================================
+   Classes de Borda com Gradientes
+   ========================================================================== */
+
+/* Base para bordas com gradiente */
+.uenf-border-gradient {
+    border: 2px solid;
+    border-image-slice: 1;
+}
+
+/* Sunset Border */
+.uenf-border-gradient-sunset {
+    border-color: var(--uenf-gradient-sunset-fallback);
+    border-image: var(--uenf-gradient-sunset) 1;
+}
+
+/* Ocean Border */
+.uenf-border-gradient-ocean {
+    border-color: var(--uenf-gradient-ocean-fallback);
+    border-image: var(--uenf-gradient-ocean) 1;
+}
+
+/* Forest Border */
+.uenf-border-gradient-forest {
+    border-color: var(--uenf-gradient-forest-fallback);
+    border-image: var(--uenf-gradient-forest) 1;
+}
+
+/* Fire Border */
+.uenf-border-gradient-fire {
+    border-color: var(--uenf-gradient-fire-fallback);
+    border-image: var(--uenf-gradient-fire) 1;
+}
+
+/* Neon Border */
+.uenf-border-gradient-neon {
+    border-color: var(--uenf-gradient-neon-fallback);
+    border-image: var(--uenf-gradient-neon) 1;
+}
+
+/* Gold Border */
+.uenf-border-gradient-gold {
+    border-color: var(--uenf-gradient-gold-fallback);
+    border-image: var(--uenf-gradient-gold) 1;
+}
+
+/* ==========================================================================
+   Componentes Especiais com Gradientes
+   ========================================================================== */
+
+/* Botões com gradiente */
+.uenf-gradient-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--uenf-gradient-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.uenf-gradient-button:hover {
+    transform: translateY(-2px) scale(var(--uenf-gradient-hover-scale));
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.uenf-gradient-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Cards com gradiente */
+.uenf-gradient-card {
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: var(--uenf-gradient-transition);
+}
+
+.uenf-gradient-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.uenf-gradient-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.uenf-gradient-card:hover::before {
+    opacity: 1;
+}
+
+/* Headers com gradiente */
+.uenf-gradient-header {
+    padding: 60px 0;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.uenf-gradient-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.uenf-gradient-header > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Overlays com gradiente */
+.uenf-gradient-overlay {
+    position: relative;
+    overflow: hidden;
+}
+
+.uenf-gradient-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.uenf-gradient-overlay > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   Efeitos e Animações
+   ========================================================================== */
+
+/* Gradiente com movimento */
+.uenf-gradient-moving {
+    background-size: 400% 400%;
+    animation: uenf-gradient-move 4s ease infinite;
+}
+
+@keyframes uenf-gradient-move {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Gradiente pulsante */
+.uenf-gradient-pulse {
+    animation: uenf-gradient-pulse 2s ease-in-out infinite;
+}
+
+@keyframes uenf-gradient-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Gradiente rotativo */
+.uenf-gradient-rotate {
+    animation: uenf-gradient-rotate 3s linear infinite;
+}
+
+@keyframes uenf-gradient-rotate {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Gradiente com brilho */
+.uenf-gradient-glow {
+    position: relative;
+}
+
+.uenf-gradient-glow::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: inherit;
+    border-radius: inherit;
+    filter: blur(10px);
+    opacity: 0.7;
+    z-index: -1;
+}
+
+/* Gradiente com reflexo */
+.uenf-gradient-reflection {
+    position: relative;
+}
+
+.uenf-gradient-reflection::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: inherit;
+    transform: scaleY(-1);
+    opacity: 0.3;
+    mask: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    -webkit-mask: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+
+/* ==========================================================================
+   Utilitários de Gradiente
+   ========================================================================== */
+
+/* Direções de gradiente linear */
+.uenf-gradient-to-top {
+    background-image: linear-gradient(to top, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-bottom {
+    background-image: linear-gradient(to bottom, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-left {
+    background-image: linear-gradient(to left, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-right {
+    background-image: linear-gradient(to right, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-top-right {
+    background-image: linear-gradient(to top right, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-bottom-right {
+    background-image: linear-gradient(to bottom right, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-bottom-left {
+    background-image: linear-gradient(to bottom left, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-to-top-left {
+    background-image: linear-gradient(to top left, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+/* Gradientes radiais */
+.uenf-gradient-radial-center {
+    background-image: radial-gradient(circle at center, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-radial-top {
+    background-image: radial-gradient(circle at top, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+.uenf-gradient-radial-bottom {
+    background-image: radial-gradient(circle at bottom, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+/* Gradientes cônicos */
+.uenf-gradient-conic {
+    background-image: conic-gradient(from 0deg, var(--start-color, #ff7e5f), var(--end-color, #feb47b));
+}
+
+/* Opacidades */
+.uenf-gradient-opacity-10 { opacity: 0.1; }
+.uenf-gradient-opacity-20 { opacity: 0.2; }
+.uenf-gradient-opacity-30 { opacity: 0.3; }
+.uenf-gradient-opacity-40 { opacity: 0.4; }
+.uenf-gradient-opacity-50 { opacity: 0.5; }
+.uenf-gradient-opacity-60 { opacity: 0.6; }
+.uenf-gradient-opacity-70 { opacity: 0.7; }
+.uenf-gradient-opacity-80 { opacity: 0.8; }
+.uenf-gradient-opacity-90 { opacity: 0.9; }
+
+/* Intensidades */
+.uenf-gradient-light {
+    filter: brightness(1.2) saturate(0.8);
+}
+
+.uenf-gradient-normal {
+    filter: brightness(1) saturate(1);
+}
+
+.uenf-gradient-dark {
+    filter: brightness(0.8) saturate(1.2);
+}
+
+.uenf-gradient-vibrant {
+    filter: brightness(1.1) saturate(1.5);
+}
+
+.uenf-gradient-muted {
+    filter: brightness(0.9) saturate(0.6);
+}
+
+/* ==========================================================================
+   Estados e Interações
+   ========================================================================== */
+
+/* Hover effects */
+.uenf-gradient-hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.uenf-gradient-hover-scale:hover {
+    transform: scale(var(--uenf-gradient-hover-scale));
+}
+
+.uenf-gradient-hover-rotate:hover {
+    transform: rotate(2deg);
+}
+
+.uenf-gradient-hover-glow:hover {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+/* Focus effects */
+.uenf-gradient-focusable:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Active effects */
+.uenf-gradient-active:active {
+    transform: scale(0.95);
+}
+
+/* Disabled state */
+.uenf-gradient-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(50%);
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .uenf-gradient-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .uenf-gradient-card {
+        padding: 15px;
+    }
+    
+    .uenf-gradient-header {
+        padding: 40px 0;
+    }
+    
+    /* Reduzir animações em mobile */
+    .uenf-gradient-moving,
+    .uenf-gradient-pulse,
+    .uenf-gradient-rotate {
+        animation-duration: 6s;
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .uenf-gradient-card {
+        padding: 18px;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .uenf-gradient-header {
+        padding: 80px 0;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .uenf-gradient-animated,
+    .uenf-gradient-moving,
+    .uenf-gradient-pulse,
+    .uenf-gradient-rotate {
+        animation: none;
+    }
+    
+    .uenf-gradient:hover,
+    .uenf-gradient-button:hover,
+    .uenf-gradient-card:hover {
+        transform: none;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .uenf-gradient-text {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+    
+    .uenf-gradient-button {
+        border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uenf-gradient-overlay-opacity: 0.6;
+    }
+    
+    .uenf-gradient-card {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* ==========================================================================
+   Fallbacks para Navegadores Antigos
+   ========================================================================== */
+
+/* IE11 fallbacks */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .uenf-text-gradient {
+        background: none;
+        color: var(--uenf-gradient-sunset-fallback);
+    }
+    
+    .uenf-border-gradient {
+        border-image: none;
+        border-color: var(--uenf-gradient-sunset-fallback);
+    }
+}
+
+/* Safari fallbacks */
+@supports not (background-clip: text) {
+    .uenf-text-gradient {
+        background: none;
+        color: var(--uenf-gradient-sunset-fallback);
+    }
+}
+
+/* Firefox fallbacks */
+@-moz-document url-prefix() {
+    .uenf-border-gradient {
+        border-image: none;
+        border: 2px solid var(--uenf-gradient-sunset-fallback);
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .uenf-gradient,
+    .uenf-bg-gradient-sunset,
+    .uenf-bg-gradient-ocean,
+    .uenf-bg-gradient-forest,
+    .uenf-bg-gradient-fire,
+    .uenf-bg-gradient-neon,
+    .uenf-bg-gradient-gold {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .uenf-text-gradient {
+        -webkit-text-fill-color: black !important;
+        color: black !important;
+        background: none !important;
+    }
+    
+    .uenf-gradient-button {
+        border: 2px solid black !important;
+        background: white !important;
+        color: black !important;
+    }
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug */
+.uenf-gradients-debug .uenf-gradient {
+    outline: 2px dashed #ff6b6b;
+    position: relative;
+}
+
+.uenf-gradients-debug .uenf-gradient::before {
+    content: 'GRADIENT';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 107, 107, 0.8);
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+/* Informações de performance */
+.uenf-gradients-debug::after {
+    content: 'CCT Gradients Debug Mode';
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    z-index: 10000;
+}
+
+/* ==========================================================================
+   Customizações Específicas do Tema
+   ========================================================================== */
+
+/* Integração com componentes do tema */
+.site-header.uenf-gradient-header {
+    margin-bottom: 0;
+}
+
+.entry-content .uenf-gradient-button {
+    margin: 10px 5px;
+}
+
+.widget .uenf-gradient-card {
+    margin-bottom: 20px;
+}
+
+/* Compatibilidade com plugins */
+.woocommerce .uenf-gradient-button {
+    display: inline-block;
+    text-align: center;
+}
+
+.contact-form-7 .uenf-gradient-button {
+    border: none;
+    cursor: pointer;
+}
+
+/* Ajustes para editor de blocos */
+.wp-block .uenf-gradient {
+    margin: 0;
+}
+
+.editor-styles-wrapper .uenf-gradient-button {
+    pointer-events: none;
+}

@@ -304,7 +304,11 @@
             // Remover mensagens anteriores
             $('.uenf-reset-message').remove();
             
-            var $message = $('<div class="uenf-reset-message uenf-message-' + type + '">' + message + '</div>');
+            // SECURITY FIX (SEC-JS-004): .text() previne XSS via concatenação direta de message em HTML
+            var safeType = String(type).replace(/[^a-z0-9-]/gi, '');
+            var $message = $('<div></div>')
+                .addClass('uenf-reset-message uenf-message-' + safeType)
+                .text(message);
             
             // Adicionar estilos
             $message.css({

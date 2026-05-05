@@ -1,0 +1,1086 @@
+/**
+ * Sistema de Animações CCT - Estilos Frontend
+ * 
+ * Estilos completos para animações e micro-interações incluindo:
+ * - Animações de entrada e saída
+ * - Efeitos de hover e focus
+ * - Micro-interações
+ * - Transições de página
+ * - Otimizações de performance
+ * - Acessibilidade
+ * 
+ * @package UENF_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS Customizáveis
+   ========================================================================== */
+
+:root {
+    /* Timing */
+    --uenf-animation-duration: 0.3s;
+    --uenf-animation-easing: ease-in-out;
+    --uenf-animation-delay: 0s;
+    
+    /* Micro-interações */
+    --uenf-hover-duration: 0.3s;
+    --uenf-focus-duration: 0.2s;
+    --uenf-ripple-duration: 0.6s;
+    
+    /* Transições de página */
+    --uenf-page-transition-duration: 0.5s;
+    --uenf-page-transition-easing: ease-in-out;
+    
+    /* Cores para efeitos */
+    --uenf-focus-color: #0073aa;
+    --uenf-focus-shadow: rgba(0, 115, 170, 0.25);
+    --uenf-ripple-color: rgba(255, 255, 255, 0.5);
+    --uenf-glow-color: rgba(0, 123, 255, 0.3);
+    
+    /* Transformações */
+    --uenf-lift-distance: -4px;
+    --uenf-scale-factor: 1.05;
+    --uenf-tilt-angle: 2deg;
+    --uenf-slide-distance: -8px;
+}
+
+/* ==========================================================================
+   Base e Performance
+   ========================================================================== */
+
+/* Otimizações de performance */
+.uenf-animate,
+.uenf-hover-effect,
+.uenf-focus-effect,
+.uenf-page-transition {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Remover will-change após animação */
+.uenf-animated {
+    will-change: auto;
+}
+
+/* ==========================================================================
+   Keyframes - Animações de Entrada
+   ========================================================================== */
+
+@keyframes uenf-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes uenf-slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-scaleOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes uenf-rotateIn {
+    from {
+        transform: rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-rotateOut {
+    from {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: rotate(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes uenf-bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes uenf-bounceOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: scale(0.95);
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+}
+
+@keyframes uenf-flipInX {
+    0% {
+        transform: perspective(400px) rotateX(90deg);
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotateX(-20deg);
+    }
+    60% {
+        transform: perspective(400px) rotateX(10deg);
+        opacity: 1;
+    }
+    80% {
+        transform: perspective(400px) rotateX(-5deg);
+    }
+    100% {
+        transform: perspective(400px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes uenf-flipInY {
+    0% {
+        transform: perspective(400px) rotateY(90deg);
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotateY(-20deg);
+    }
+    60% {
+        transform: perspective(400px) rotateY(10deg);
+        opacity: 1;
+    }
+    80% {
+        transform: perspective(400px) rotateY(-5deg);
+    }
+    100% {
+        transform: perspective(400px) rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   Keyframes - Micro-interações
+   ========================================================================== */
+
+@keyframes uenf-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(var(--uenf-scale-factor, 1.05));
+    }
+}
+
+@keyframes uenf-heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.1);
+    }
+    28% {
+        transform: scale(1);
+    }
+    42% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(1);
+    }
+}
+
+@keyframes uenf-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-2px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(2px);
+    }
+}
+
+@keyframes uenf-wobble {
+    0%, 100% {
+        transform: translateX(0%) rotate(0deg);
+    }
+    15% {
+        transform: translateX(-25%) rotate(-5deg);
+    }
+    30% {
+        transform: translateX(20%) rotate(3deg);
+    }
+    45% {
+        transform: translateX(-15%) rotate(-3deg);
+    }
+    60% {
+        transform: translateX(10%) rotate(2deg);
+    }
+    75% {
+        transform: translateX(-5%) rotate(-1deg);
+    }
+}
+
+@keyframes uenf-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes uenf-ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes uenf-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--uenf-glow-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--uenf-glow-color), 0 0 30px var(--uenf-glow-color);
+    }
+}
+
+/* ==========================================================================
+   Classes de Animação
+   ========================================================================== */
+
+/* Animações de entrada */
+.uenf-fadeIn {
+    animation: uenf-fadeIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-fadeOut {
+    animation: uenf-fadeOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-slideInUp {
+    animation: uenf-slideInUp var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-slideInDown {
+    animation: uenf-slideInDown var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-slideInLeft {
+    animation: uenf-slideInLeft var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-slideInRight {
+    animation: uenf-slideInRight var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-scaleIn {
+    animation: uenf-scaleIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-scaleOut {
+    animation: uenf-scaleOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-rotateIn {
+    animation: uenf-rotateIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-rotateOut {
+    animation: uenf-rotateOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-bounceIn {
+    animation: uenf-bounceIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-bounceOut {
+    animation: uenf-bounceOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-flipInX {
+    animation: uenf-flipInX var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+.uenf-flipInY {
+    animation: uenf-flipInY var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
+}
+
+/* ==========================================================================
+   Efeitos de Hover
+   ========================================================================== */
+
+/* Base para efeitos de hover */
+.uenf-hover-effect {
+    transition: all var(--uenf-hover-duration) var(--uenf-animation-easing);
+    cursor: pointer;
+}
+
+/* Efeito Lift */
+.uenf-hover-lift:hover,
+.uenf-hover-lift.uenf-hover-active {
+    transform: translateY(var(--uenf-lift-distance));
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Efeito Glow */
+.uenf-hover-glow:hover,
+.uenf-hover-glow.uenf-hover-active {
+    box-shadow: 0 0 20px var(--uenf-glow-color);
+    transform: scale(var(--uenf-scale-factor));
+}
+
+/* Efeito Tilt */
+.uenf-hover-tilt:hover,
+.uenf-hover-tilt.uenf-hover-active {
+    transform: rotate(var(--uenf-tilt-angle)) scale(var(--uenf-scale-factor));
+}
+
+/* Efeito Zoom */
+.uenf-hover-zoom:hover,
+.uenf-hover-zoom.uenf-hover-active {
+    transform: scale(var(--uenf-scale-factor));
+}
+
+/* Efeito Slide Up */
+.uenf-hover-slide_up:hover,
+.uenf-hover-slide_up.uenf-hover-active {
+    transform: translateY(var(--uenf-slide-distance));
+}
+
+/* Efeito Bounce */
+.uenf-hover-bounce:hover,
+.uenf-hover-bounce.uenf-hover-active {
+    animation: uenf-pulse 0.6s ease-in-out;
+}
+
+/* Efeito Shake */
+.uenf-hover-shake:hover,
+.uenf-hover-shake.uenf-hover-active {
+    animation: uenf-shake 0.5s ease-in-out;
+}
+
+/* Efeito Wobble */
+.uenf-hover-wobble:hover,
+.uenf-hover-wobble.uenf-hover-active {
+    animation: uenf-wobble 0.6s ease-in-out;
+}
+
+/* Efeito Heartbeat */
+.uenf-hover-heartbeat:hover,
+.uenf-hover-heartbeat.uenf-hover-active {
+    animation: uenf-heartbeat 1.2s ease-in-out;
+}
+
+/* ==========================================================================
+   Efeitos de Focus
+   ========================================================================== */
+
+/* Base para efeitos de focus */
+.uenf-focus-effect {
+    transition: all var(--uenf-focus-duration) var(--uenf-animation-easing);
+}
+
+/* Focus padrão */
+.uenf-focus-active,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus {
+    outline: 2px solid var(--uenf-focus-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--uenf-focus-shadow);
+}
+
+/* Focus com glow */
+.uenf-focus-glow:focus,
+.uenf-focus-glow.uenf-focus-active {
+    box-shadow: 0 0 0 3px var(--uenf-focus-shadow), 0 0 20px var(--uenf-glow-color);
+    transform: scale(1.02);
+}
+
+/* Focus com scale */
+.uenf-focus-scale:focus,
+.uenf-focus-scale.uenf-focus-active {
+    transform: scale(1.02);
+    outline: 1px solid var(--uenf-focus-color);
+}
+
+/* ==========================================================================
+   Micro-interações para Botões
+   ========================================================================== */
+
+/* Botão com ripple */
+.uenf-button-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.uenf-button-ripple .uenf-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--uenf-ripple-color);
+    transform: scale(0);
+    animation: uenf-ripple var(--uenf-ripple-duration) ease-out;
+    pointer-events: none;
+}
+
+/* Botão com pulse */
+.uenf-button-pulse.uenf-pulse-active {
+    animation: uenf-pulse 1s ease-in-out infinite;
+}
+
+/* Botão com glow */
+.uenf-button-glow:hover {
+    animation: uenf-glow 2s ease-in-out infinite;
+}
+
+/* Botão com loading */
+.uenf-button-loading {
+    position: relative;
+    color: transparent;
+}
+
+.uenf-button-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: uenf-spin 1s linear infinite;
+}
+
+/* ==========================================================================
+   Micro-interações para Formulários
+   ========================================================================== */
+
+/* Input com foco animado */
+.uenf-input-animated {
+    position: relative;
+    transition: all var(--uenf-focus-duration) var(--uenf-animation-easing);
+}
+
+.uenf-input-animated:focus,
+.uenf-input-animated.uenf-input-focused {
+    transform: scale(1.02);
+    border-color: var(--uenf-focus-color);
+    box-shadow: 0 0 0 3px var(--uenf-focus-shadow);
+}
+
+/* Label flutuante */
+.uenf-input-float {
+    position: relative;
+}
+
+.uenf-input-float label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    color: #666;
+}
+
+.uenf-input-float input:focus + label,
+.uenf-input-float input:not(:placeholder-shown) + label,
+.uenf-input-float.uenf-input-focused label {
+    top: 0;
+    left: 8px;
+    transform: translateY(-50%) scale(0.85);
+    color: var(--uenf-focus-color);
+    background: white;
+    padding: 0 4px;
+}
+
+/* Checkbox animado */
+.uenf-checkbox-animated {
+    position: relative;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.uenf-checkbox-animated:checked,
+.uenf-checkbox-animated.uenf-checkbox-checked {
+    background: var(--uenf-focus-color);
+    border-color: var(--uenf-focus-color);
+    transform: scale(1.1);
+}
+
+.uenf-checkbox-animated:checked::after,
+.uenf-checkbox-animated.uenf-checkbox-checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   Micro-interações para Navegação
+   ========================================================================== */
+
+/* Link com sublinhado animado */
+.uenf-link-underline {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.uenf-link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+.uenf-link-underline:hover::after,
+.uenf-link-underline:focus::after {
+    width: 100%;
+}
+
+/* Link com background animado */
+.uenf-link-background {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    z-index: 1;
+}
+
+.uenf-link-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--uenf-focus-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.uenf-link-background:hover::before,
+.uenf-link-background:focus::before {
+    transform: scaleX(1);
+}
+
+.uenf-link-background:hover,
+.uenf-link-background:focus {
+    color: white;
+}
+
+/* ==========================================================================
+   Micro-interações para Conteúdo
+   ========================================================================== */
+
+/* Card com revelação */
+.uenf-card-reveal {
+    position: relative;
+    overflow: hidden;
+}
+
+.uenf-card-reveal .uenf-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
+}
+
+.uenf-card-reveal:hover .uenf-card-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Imagem com zoom */
+.uenf-image-zoom {
+    overflow: hidden;
+}
+
+.uenf-image-zoom img {
+    transition: transform 0.3s ease;
+}
+
+.uenf-image-zoom:hover img {
+    transform: scale(1.1);
+}
+
+/* Texto com typewriter */
+.uenf-typewriter {
+    overflow: hidden;
+    border-right: 2px solid;
+    white-space: nowrap;
+    animation: uenf-typewriter 3s steps(40, end), uenf-blink-caret 0.75s step-end infinite;
+}
+
+@keyframes uenf-typewriter {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes uenf-blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: currentColor;
+    }
+}
+
+/* ==========================================================================
+   Efeitos de Loading
+   ========================================================================== */
+
+/* Spinner */
+.uenf-loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--uenf-focus-color);
+    border-radius: 50%;
+    animation: uenf-spin 1s linear infinite;
+}
+
+/* Dots */
+.uenf-loading-dots {
+    display: inline-block;
+}
+
+.uenf-loading-dots::after {
+    content: '.';
+    animation: uenf-dots 1.4s ease-in-out infinite;
+}
+
+@keyframes uenf-dots {
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60%, 100% {
+        content: '...';
+    }
+}
+
+/* Pulse loading */
+.uenf-loading-pulse {
+    animation: uenf-pulse 2s ease-in-out infinite;
+}
+
+/* Skeleton loading */
+.uenf-loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: uenf-skeleton 1.5s ease-in-out infinite;
+}
+
+@keyframes uenf-skeleton {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ==========================================================================
+   Transições de Página
+   ========================================================================== */
+
+/* Base para transições */
+.uenf-page-transition {
+    transition: all var(--uenf-page-transition-duration) var(--uenf-page-transition-easing);
+}
+
+/* Fade transition */
+.uenf-transition-fade-out {
+    opacity: 0;
+}
+
+.uenf-transition-fade-in {
+    opacity: 0;
+    animation: uenf-fadeIn var(--uenf-page-transition-duration) var(--uenf-page-transition-easing) forwards;
+}
+
+/* Slide transition */
+.uenf-transition-slide-out {
+    transform: translateX(-100%);
+}
+
+.uenf-transition-slide-in {
+    transform: translateX(100%);
+    animation: uenf-slideInRight var(--uenf-page-transition-duration) var(--uenf-page-transition-easing) forwards;
+}
+
+/* Scale transition */
+.uenf-transition-scale-out {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+.uenf-transition-scale-in {
+    transform: scale(1.2);
+    opacity: 0;
+    animation: uenf-scaleIn var(--uenf-page-transition-duration) var(--uenf-page-transition-easing) forwards;
+}
+
+/* ==========================================================================
+   Estados e Controles
+   ========================================================================== */
+
+/* Pausar animações */
+.uenf-animations-paused,
+.uenf-animations-paused * {
+    animation-play-state: paused !important;
+}
+
+/* Desabilitar animações */
+.uenf-animations-disabled,
+.uenf-animations-disabled * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Estado de carregamento da página */
+.uenf-page-loading {
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Indicador de progresso */
+.uenf-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--uenf-focus-color);
+    transition: width 0.3s ease;
+    z-index: 9999;
+}
+
+/* ==========================================================================
+   Parallax e Scroll Effects
+   ========================================================================== */
+
+/* Parallax container */
+.uenf-parallax {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Scroll reveal */
+.uenf-scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease;
+}
+
+.uenf-scroll-reveal.uenf-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Sticky reveal */
+.uenf-sticky-reveal {
+    position: sticky;
+    top: 20px;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.uenf-sticky-reveal.uenf-revealed {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Utilitários de Animação
+   ========================================================================== */
+
+/* Delays */
+.uenf-delay-1 { animation-delay: 0.1s; }
+.uenf-delay-2 { animation-delay: 0.2s; }
+.uenf-delay-3 { animation-delay: 0.3s; }
+.uenf-delay-4 { animation-delay: 0.4s; }
+.uenf-delay-5 { animation-delay: 0.5s; }
+
+/* Durações */
+.uenf-duration-fast { animation-duration: 0.2s; }
+.uenf-duration-normal { animation-duration: 0.3s; }
+.uenf-duration-slow { animation-duration: 0.6s; }
+.uenf-duration-slower { animation-duration: 1s; }
+
+/* Repetições */
+.uenf-repeat-1 { animation-iteration-count: 1; }
+.uenf-repeat-2 { animation-iteration-count: 2; }
+.uenf-repeat-3 { animation-iteration-count: 3; }
+.uenf-repeat-infinite { animation-iteration-count: infinite; }
+
+/* Direções */
+.uenf-direction-normal { animation-direction: normal; }
+.uenf-direction-reverse { animation-direction: reverse; }
+.uenf-direction-alternate { animation-direction: alternate; }
+.uenf-direction-alternate-reverse { animation-direction: alternate-reverse; }
+
+/* Fill modes */
+.uenf-fill-none { animation-fill-mode: none; }
+.uenf-fill-forwards { animation-fill-mode: forwards; }
+.uenf-fill-backwards { animation-fill-mode: backwards; }
+.uenf-fill-both { animation-fill-mode: both; }
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Reduzir animações em telas pequenas */
+@media (max-width: 768px) {
+    :root {
+        --uenf-animation-duration: 0.2s;
+        --uenf-hover-duration: 0.2s;
+        --uenf-page-transition-duration: 0.3s;
+    }
+    
+    .uenf-hover-effect {
+        /* Desabilitar alguns efeitos em mobile */
+    }
+}
+
+/* Reduzir animações em conexões lentas */
+@media (prefers-reduced-data) {
+    .uenf-animate,
+    .uenf-hover-effect,
+    .uenf-page-transition {
+        animation-duration: 0.1s;
+        transition-duration: 0.1s;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .uenf-animate,
+    .uenf-hover-effect,
+    .uenf-focus-effect,
+    .uenf-page-transition,
+    .uenf-parallax {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    :root {
+        --uenf-focus-color: #000;
+        --uenf-focus-shadow: rgba(0, 0, 0, 0.5);
+        --uenf-glow-color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uenf-focus-color: #4a9eff;
+        --uenf-focus-shadow: rgba(74, 158, 255, 0.25);
+        --uenf-glow-color: rgba(74, 158, 255, 0.3);
+        --uenf-ripple-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .uenf-animate,
+    .uenf-hover-effect,
+    .uenf-focus-effect,
+    .uenf-page-transition,
+    .uenf-loading-spinner,
+    .uenf-loading-dots,
+    .uenf-loading-pulse {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+    
+    .uenf-card-overlay {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug - mostrar elementos animados */
+.uenf-debug .uenf-animate {
+    outline: 2px dashed #ff6b6b;
+}
+
+.uenf-debug .uenf-hover-effect {
+    outline: 2px dashed #4ecdc4;
+}
+
+.uenf-debug .uenf-focus-effect {
+    outline: 2px dashed #45b7d1;
+}
+
+/* Informações de performance */
+.uenf-debug::after {
+    content: 'CCT Animations Debug Mode';
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    z-index: 10000;
+}

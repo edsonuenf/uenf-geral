@@ -3,7 +3,7 @@
  * 
  * Atualiza cores em tempo real no preview do customizer
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -15,7 +15,7 @@
         
         // Mapeamento de cores para seletores CSS
         colorMap: {
-            'cct_palette_primary': {
+            'uenf_palette_primary': {
                 selectors: [
                     'h1, h2, h3, h4, h5, h6',
                     '.btn-primary',
@@ -26,7 +26,7 @@
                 ],
                 property: 'color'
             },
-            'cct_palette_secondary': {
+            'uenf_palette_secondary': {
                 selectors: [
                     '.btn-secondary',
                     '.text-secondary',
@@ -34,7 +34,7 @@
                 ],
                 property: 'color'
             },
-            'cct_palette_accent': {
+            'uenf_palette_accent': {
                 selectors: [
                     '.btn-accent',
                     '.text-accent',
@@ -43,7 +43,7 @@
                 ],
                 property: 'color'
             },
-            'cct_palette_success': {
+            'uenf_palette_success': {
                 selectors: [
                     '.btn-success',
                     '.text-success',
@@ -52,7 +52,7 @@
                 ],
                 property: 'color'
             },
-            'cct_palette_warning': {
+            'uenf_palette_warning': {
                 selectors: [
                     '.btn-warning',
                     '.text-warning',
@@ -61,7 +61,7 @@
                 ],
                 property: 'color'
             },
-            'cct_palette_danger': {
+            'uenf_palette_danger': {
                 selectors: [
                     '.btn-danger',
                     '.text-danger',
@@ -70,7 +70,7 @@
                 ],
                 property: 'color'
             },
-            'cct_palette_light': {
+            'uenf_palette_light': {
                 selectors: [
                     'body',
                     '.bg-light',
@@ -79,7 +79,7 @@
                 ],
                 property: 'background-color'
             },
-            'cct_palette_dark': {
+            'uenf_palette_dark': {
                 selectors: [
                     '.bg-dark',
                     '.navbar-dark',
@@ -92,47 +92,47 @@
         
         // Mapeamento de cores para backgrounds
         backgroundMap: {
-            'cct_palette_primary': [
+            'uenf_palette_primary': [
                 '.bg-primary',
                 '.btn-primary',
                 '.badge-primary',
                 '.progress-bar'
             ],
-            'cct_palette_secondary': [
+            'uenf_palette_secondary': [
                 '.bg-secondary',
                 '.btn-secondary',
                 '.badge-secondary'
             ],
-            'cct_palette_accent': [
+            'uenf_palette_accent': [
                 '.bg-accent',
                 '.btn-accent',
                 '.badge-accent'
             ],
-            'cct_palette_success': [
+            'uenf_palette_success': [
                 '.bg-success',
                 '.btn-success',
                 '.badge-success',
                 '.alert-success'
             ],
-            'cct_palette_warning': [
+            'uenf_palette_warning': [
                 '.bg-warning',
                 '.btn-warning',
                 '.badge-warning',
                 '.alert-warning'
             ],
-            'cct_palette_danger': [
+            'uenf_palette_danger': [
                 '.bg-danger',
                 '.btn-danger',
                 '.badge-danger',
                 '.alert-danger'
             ],
-            'cct_palette_light': [
+            'uenf_palette_light': [
                 '.bg-light',
                 '.card',
                 '.modal-content',
                 '.dropdown-menu'
             ],
-            'cct_palette_dark': [
+            'uenf_palette_dark': [
                 '.bg-dark',
                 '.navbar-dark',
                 '.footer'
@@ -141,27 +141,27 @@
         
         // Mapeamento de cores para bordas
         borderMap: {
-            'cct_palette_primary': [
+            'uenf_palette_primary': [
                 '.border-primary',
                 '.btn-outline-primary'
             ],
-            'cct_palette_secondary': [
+            'uenf_palette_secondary': [
                 '.border-secondary',
                 '.btn-outline-secondary'
             ],
-            'cct_palette_accent': [
+            'uenf_palette_accent': [
                 '.border-accent',
                 '.btn-outline-accent'
             ],
-            'cct_palette_success': [
+            'uenf_palette_success': [
                 '.border-success',
                 '.btn-outline-success'
             ],
-            'cct_palette_warning': [
+            'uenf_palette_warning': [
                 '.border-warning',
                 '.btn-outline-warning'
             ],
-            'cct_palette_danger': [
+            'uenf_palette_danger': [
                 '.border-danger',
                 '.btn-outline-danger'
             ]
@@ -191,7 +191,7 @@
             });
             
             // Monitora mudanças na paleta selecionada
-            wp.customize('cct_selected_palette', function(value) {
+            wp.customize('uenf_selected_palette', function(value) {
                 value.bind(function(newPalette) {
                     self.updatePalette(newPalette);
                 });
@@ -202,8 +202,8 @@
          * Cria folha de estilos dinâmica
          */
         createDynamicStyles: function() {
-            if ($('#cct-dynamic-colors').length === 0) {
-                $('<style id="cct-dynamic-colors"></style>').appendTo('head');
+            if ($('#uenf-dynamic-colors').length === 0) {
+                $('<style id="uenf-dynamic-colors"></style>').appendTo('head');
             }
         },
         
@@ -250,7 +250,7 @@
          */
         generateColorVariations: function(settingId, color) {
             var css = '';
-            var colorName = settingId.replace('cct_palette_', '');
+            var colorName = settingId.replace('uenf_palette_', '');
             
             // Gera tons mais claros e escuros
             var lightColor = this.lightenColor(color, 20);
@@ -280,11 +280,11 @@
          * Atualiza CSS dinâmico
          */
         updateDynamicCSS: function(settingId, css) {
-            var $style = $('#cct-dynamic-colors');
+            var $style = $('#uenf-dynamic-colors');
             var currentCSS = $style.html();
             
             // Remove CSS anterior desta cor
-            var colorName = settingId.replace('cct_palette_', '');
+            var colorName = settingId.replace('uenf_palette_', '');
             var regex = new RegExp('/\\* ' + colorName + ' \\*/[\\s\\S]*?/\\* end ' + colorName + ' \\*/', 'g');
             currentCSS = currentCSS.replace(regex, '');
             
@@ -298,7 +298,7 @@
          * Atualiza variáveis CSS customizadas
          */
         updateCSSVariables: function(settingId, color) {
-            var colorName = settingId.replace('cct_palette_', '');
+            var colorName = settingId.replace('uenf_palette_', '');
             var root = document.documentElement;
             
             // Define variável CSS principal
@@ -423,7 +423,7 @@
         }
         
         /* Destaque para elementos sendo modificados */
-        .cct-color-highlight {
+        .uenf-color-highlight {
             outline: 2px dashed #0073aa !important;
             outline-offset: 2px !important;
         }

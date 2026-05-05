@@ -1,3 +1,14 @@
+// Migração one-shot: renomeia chave cct_ → uenf_ no localStorage
+(function () {
+    var oldKey = 'cct_extensions_welcome_shown';
+    var newKey = 'uenf_extensions_welcome_shown';
+    var val = localStorage.getItem(oldKey);
+    if (val !== null) {
+        localStorage.setItem(newKey, val);
+        localStorage.removeItem(oldKey);
+    }
+})();
+
 /**
  * Gerenciador de Extensões - Interface JavaScript
  * Controla a interface do customizer para o sistema de extensões
@@ -40,14 +51,14 @@
          */
         bindEvents: function() {
             // Toggle global
-            $('#customize-control-cct_extensions_global_enabled input').on('change', function() {
+            $('#customize-control-uenf_extensions_global_enabled input').on('change', function() {
                 const enabled = $(this).is(':checked');
                 ExtensionsManager.toggleGlobalExtensions(enabled);
                 ExtensionsManager.updatePerformanceIndicator();
             });
             
             // Toggle individual
-            $('[id^="customize-control-cct_extension_"][id$="_enabled"] input').on('change', function() {
+            $('[id^="customize-control-uenf_extension_"][id$="_enabled"] input').on('change', function() {
                 ExtensionsManager.updateUI();
                 ExtensionsManager.updatePerformanceIndicator();
                 ExtensionsManager.checkDependencies();
@@ -65,23 +76,23 @@
          */
         enableAllExtensions: function() {
             // Ativar controle global
-            if (wp.customize.control('cct_extensions_global_enabled')) {
-                wp.customize.control('cct_extensions_global_enabled').setting.set(true);
+            if (wp.customize.control('uenf_extensions_global_enabled')) {
+                wp.customize.control('uenf_extensions_global_enabled').setting.set(true);
             }
             
             // Ativar todas as extensões individuais
             const extensionControls = [
-                'cct_extension_dark_mode_enabled',
-                'cct_extension_shadows_enabled',
-                'cct_extension_breakpoints_enabled',
-                'cct_extension_design_tokens_enabled',
-                'cct_extension_patterns_enabled',
-                'cct_extension_font_combinations_enabled',
-                'cct_extension_typography_enabled',
-                'cct_extension_gradients_enabled',
-                'cct_extension_animations_enabled',
-                'cct_extension_icons_enabled',
-                'cct_extension_colors_enabled'
+                'uenf_extension_dark_mode_enabled',
+                'uenf_extension_shadows_enabled',
+                'uenf_extension_breakpoints_enabled',
+                'uenf_extension_design_tokens_enabled',
+                'uenf_extension_patterns_enabled',
+                'uenf_extension_font_combinations_enabled',
+                'uenf_extension_typography_enabled',
+                'uenf_extension_gradients_enabled',
+                'uenf_extension_animations_enabled',
+                'uenf_extension_icons_enabled',
+                'uenf_extension_colors_enabled'
             ];
             
             extensionControls.forEach(function(controlId) {
@@ -104,17 +115,17 @@
             if (confirm('⚠️ Tem certeza que deseja desativar todas as extensões?\n\nIsso pode afetar a aparência do seu site.')) {
                 // Desativar todas as extensões individuais
                 const extensionControls = [
-                    'cct_extension_dark_mode_enabled',
-                    'cct_extension_shadows_enabled',
-                    'cct_extension_breakpoints_enabled',
-                    'cct_extension_design_tokens_enabled',
-                    'cct_extension_patterns_enabled',
-                    'cct_extension_font_combinations_enabled',
-                    'cct_extension_typography_enabled',
-                    'cct_extension_gradients_enabled',
-                    'cct_extension_animations_enabled',
-                    'cct_extension_icons_enabled',
-                    'cct_extension_colors_enabled'
+                    'uenf_extension_dark_mode_enabled',
+                    'uenf_extension_shadows_enabled',
+                    'uenf_extension_breakpoints_enabled',
+                    'uenf_extension_design_tokens_enabled',
+                    'uenf_extension_patterns_enabled',
+                    'uenf_extension_font_combinations_enabled',
+                    'uenf_extension_typography_enabled',
+                    'uenf_extension_gradients_enabled',
+                    'uenf_extension_animations_enabled',
+                    'uenf_extension_icons_enabled',
+                    'uenf_extension_colors_enabled'
                 ];
                 
                 extensionControls.forEach(function(controlId) {
@@ -124,8 +135,8 @@
                 });
                 
                 // Opcionalmente desativar o controle global também
-                if (wp.customize.control('cct_extensions_global_enabled')) {
-                    wp.customize.control('cct_extensions_global_enabled').setting.set(false);
+                if (wp.customize.control('uenf_extensions_global_enabled')) {
+                    wp.customize.control('uenf_extensions_global_enabled').setting.set(false);
                 }
                 
                 this.updateUI();
@@ -140,7 +151,11 @@
          * Mostra notificação
          */
         showNotification: function(message, type) {
-            const notification = $('<div class="cct-notification cct-notification-' + type + '">' + message + '</div>');
+            // SECURITY FIX (SEC-JS-005): .text() previne XSS se message vier de dados externos futuramente
+            var safeType = String(type || 'info').replace(/[^a-z0-9-]/gi, '');
+            const notification = $('<div></div>')
+                .addClass('uenf-notification uenf-notification-' + safeType)
+                .text(message);
             $('body').append(notification);
             
             notification.fadeIn(300).delay(3000).fadeOut(300, function() {
@@ -152,7 +167,7 @@
          * Toggle global de extensões
          */
         toggleGlobalExtensions: function(enabled) {
-            const $extensionControls = $('[id^="customize-control-cct_extension_"][id$="_enabled"]');
+            const $extensionControls = $('[id^="customize-control-uenf_extension_"][id$="_enabled"]');
             
             if (enabled) {
                 $extensionControls.show().removeClass('disabled');
@@ -172,7 +187,7 @@
          * Atualiza a interface
          */
         updateUI: function() {
-            const globalEnabled = $('#customize-control-cct_extensions_global_enabled input').is(':checked');
+            const globalEnabled = $('#customize-control-uenf_extensions_global_enabled input').is(':checked');
             
             if (!globalEnabled) {
                 this.toggleGlobalExtensions(false);
@@ -188,9 +203,9 @@
          * Mostra aviso de extensões desabilitadas
          */
         showGlobalDisabledNotice: function() {
-            if (!$('#cct-extensions-disabled-notice').length) {
+            if (!$('#uenf-extensions-disabled-notice').length) {
                 const notice = $(
-                    '<div id="cct-extensions-disabled-notice" class="cct-notice cct-notice-warning">' +
+                    '<div id="uenf-extensions-disabled-notice" class="uenf-notice uenf-notice-warning">' +
                     '<div class="notice-content">' +
                     '<span class="dashicons dashicons-warning"></span>' +
                     '<div class="notice-text">' +
@@ -201,7 +216,7 @@
                     '</div>'
                 );
                 
-                $('#customize-control-cct_extensions_global_enabled').after(notice);
+                $('#customize-control-uenf_extensions_global_enabled').after(notice);
                 notice.hide().slideDown(300);
             }
         },
@@ -210,7 +225,7 @@
          * Esconde aviso de extensões desabilitadas
          */
         hideGlobalDisabledNotice: function() {
-            $('#cct-extensions-disabled-notice').slideUp(300, function() {
+            $('#uenf-extensions-disabled-notice').slideUp(300, function() {
                 $(this).remove();
             });
         },
@@ -230,8 +245,8 @@
                 let activeExtensions = 0;
             
             // Contar extensões ativas
-            $('[id^="customize-control-cct_extension_"][id$="_enabled"] input:checked').each(function() {
-                if ($('#customize-control-cct_extensions_global_enabled input').is(':checked')) {
+            $('[id^="customize-control-uenf_extension_"][id$="_enabled"] input:checked').each(function() {
+                if ($('#customize-control-uenf_extensions_global_enabled input').is(':checked')) {
                     activeExtensions++;
                 }
             });
@@ -258,12 +273,17 @@
             }
             
                 // Atualizar display
-                const $infoControl = $('#customize-control-cct_extensions_info');
+                const $infoControl = $('#customize-control-uenf_extensions_info');
                 if ($infoControl.length) {
-                    $infoControl.find('.customize-control-description').html(
-                        `Extensões ativas: <strong>${activeExtensions}</strong> de ${totalExtensions}<br>` +
-                        `Performance: <span style="color: ${color}">${icon} ${status}</span>`
-                    );
+                    // SECURITY FIX: JS-C02 — Substituído .html() com template literal interpolado
+                    // por criação DOM segura. .text() escapa conteúdo; .css() aplica cor sem injeção HTML.
+                    const $desc = $infoControl.find('.customize-control-description');
+                    $desc.empty();
+                    $('<span></span>').text('Extensões ativas: ').appendTo($desc);
+                    $('<strong></strong>').text(activeExtensions + ' de ' + totalExtensions).appendTo($desc);
+                    $('<br>').appendTo($desc);
+                    $('<span></span>').text('Performance: ' + icon + ' ' + status)
+                        .css('color', color).appendTo($desc);
                 }
             } catch (error) {
                 console.error('ExtensionsManager: Erro ao atualizar indicador de performance:', error);
@@ -277,16 +297,16 @@
             const categories = ['design', 'layout', 'typography', 'content', 'effects'];
             
             categories.forEach(category => {
-                const $section = $(`#accordion-section-cct_extensions_${category}`);
+                const $section = $(`#accordion-section-uenf_extensions_${category}`);
                 if ($section.length) {
-                    const $controls = $section.find('[id^="customize-control-cct_extension_"][id$="_enabled"]');
+                    const $controls = $section.find('[id^="customize-control-uenf_extension_"][id$="_enabled"]');
                     const total = $controls.length;
                     const active = $controls.find('input:checked').length;
                     
                     // Adicionar badge com contador
-                    let $badge = $section.find('.cct-category-badge');
+                    let $badge = $section.find('.uenf-category-badge');
                     if (!$badge.length) {
-                        $badge = $('<span class="cct-category-badge"></span>');
+                        $badge = $('<span class="uenf-category-badge"></span>');
                         $section.find('.accordion-section-title').append($badge);
                     }
                     
@@ -308,7 +328,7 @@
          * Destaca extensões ativas
          */
         highlightActiveExtensions: function() {
-            $('[id^="customize-control-cct_extension_"][id$="_enabled"]').each(function() {
+            $('[id^="customize-control-uenf_extension_"][id$="_enabled"]').each(function() {
                 const $control = $(this);
                 const $input = $control.find('input');
                 
@@ -333,20 +353,20 @@
          * Adiciona botão de reset
          */
         addResetButton: function() {
-            if (!$('#cct-extensions-reset-button').length) {
+            if (!$('#uenf-extensions-reset-button').length) {
                 const resetButton = $(
-                    '<div class="cct-reset-container">' +
-                    '<button type="button" id="cct-extensions-reset-button" class="button button-secondary">' +
+                    '<div class="uenf-reset-container">' +
+                    '<button type="button" id="uenf-extensions-reset-button" class="button button-secondary">' +
                     '<span class="dashicons dashicons-update"></span> Restaurar Padrões' +
                     '</button>' +
                     '<p class="description">Restaura todas as extensões para as configurações padrão.</p>' +
                     '</div>'
                 );
                 
-                $('#customize-control-cct_extensions_info').after(resetButton);
+                $('#customize-control-uenf_extensions_info').after(resetButton);
                 
                 // Evento do botão
-                $('#cct-extensions-reset-button').on('click', function() {
+                $('#uenf-extensions-reset-button').on('click', function() {
                     ExtensionsManager.resetAllSettings();
                 });
             }
@@ -361,23 +381,23 @@
                     // Verificar se wp.customize está disponível
                     if (typeof wp !== 'undefined' && wp.customize) {
                         // Ativar configuração global usando wp.customize
-                        if (wp.customize.control('cct_extensions_global_enabled')) {
-                            wp.customize.control('cct_extensions_global_enabled').setting.set(true);
+                        if (wp.customize.control('uenf_extensions_global_enabled')) {
+                            wp.customize.control('uenf_extensions_global_enabled').setting.set(true);
                         }
                         
                         // Ativar todas as extensões individuais
                         const extensionControls = [
-                            'cct_extension_dark_mode_enabled',
-                            'cct_extension_shadows_enabled',
-                            'cct_extension_breakpoints_enabled',
-                            'cct_extension_design_tokens_enabled',
-                            'cct_extension_patterns_enabled',
-                            'cct_extension_font_combinations_enabled',
-                            'cct_extension_typography_enabled',
-                            'cct_extension_gradients_enabled',
-                            'cct_extension_animations_enabled',
-                            'cct_extension_icons_enabled',
-                            'cct_extension_colors_enabled'
+                            'uenf_extension_dark_mode_enabled',
+                            'uenf_extension_shadows_enabled',
+                            'uenf_extension_breakpoints_enabled',
+                            'uenf_extension_design_tokens_enabled',
+                            'uenf_extension_patterns_enabled',
+                            'uenf_extension_font_combinations_enabled',
+                            'uenf_extension_typography_enabled',
+                            'uenf_extension_gradients_enabled',
+                            'uenf_extension_animations_enabled',
+                            'uenf_extension_icons_enabled',
+                            'uenf_extension_colors_enabled'
                         ];
                         
                         extensionControls.forEach(function(controlId) {
@@ -387,8 +407,8 @@
                         });
                     } else {
                         // Fallback para jQuery se wp.customize não estiver disponível
-                        $('#customize-control-cct_extensions_global_enabled input').prop('checked', true).trigger('change');
-                        $('[id^="customize-control-cct_extension_"][id$="_enabled"] input').prop('checked', true).trigger('change');
+                        $('#customize-control-uenf_extensions_global_enabled input').prop('checked', true).trigger('change');
+                        $('[id^="customize-control-uenf_extension_"][id$="_enabled"] input').prop('checked', true).trigger('change');
                     }
                     
                     // Mostrar feedback
@@ -404,7 +424,7 @@
          * Adiciona tooltips
          */
         addTooltips: function() {
-            $('[id^="customize-control-cct_extension_"][id$="_enabled"] .customize-control-title').each(function() {
+            $('[id^="customize-control-uenf_extension_"][id$="_enabled"] .customize-control-title').each(function() {
                 const $title = $(this);
                 const $control = $title.closest('.customize-control');
                 const description = $control.find('.customize-control-description').text();
@@ -419,17 +439,17 @@
          * Adiciona estilos CSS
          */
         addStyles: function() {
-            if (!$('#cct-extensions-styles').length) {
+            if (!$('#uenf-extensions-styles').length) {
                 const styles = `
-                    <style id="cct-extensions-styles">
-                        .cct-notice {
+                    <style id="uenf-extensions-styles">
+                        .uenf-notice {
                             margin: 10px 0;
                             padding: 12px;
                             border-radius: 4px;
                             border-left: 4px solid;
                         }
                         
-                        .cct-notice-warning {
+                        .uenf-notice-warning {
                             background: #fff3cd;
                             border-left-color: #ffc107;
                             color: #856404;
@@ -446,7 +466,7 @@
                             color: #ffc107;
                         }
                         
-                        .cct-category-badge {
+                        .uenf-category-badge {
                             background: #0073aa;
                             color: white;
                             padding: 2px 6px;
@@ -456,15 +476,15 @@
                             font-weight: bold;
                         }
                         
-                        .cct-category-badge.badge-full {
+                        .uenf-category-badge.badge-full {
                             background: #4CAF50;
                         }
                         
-                        .cct-category-badge.badge-partial {
+                        .uenf-category-badge.badge-partial {
                             background: #FF9800;
                         }
                         
-                        .cct-category-badge.badge-empty {
+                        .uenf-category-badge.badge-empty {
                             background: #9E9E9E;
                         }
                         
@@ -474,7 +494,7 @@
                             padding-left: 9px;
                         }
                         
-                        .cct-reset-container {
+                        .uenf-reset-container {
                             margin: 15px 0;
                             padding: 15px;
                             background: #f9f9f9;
@@ -482,13 +502,13 @@
                             border-radius: 4px;
                         }
                         
-                        #cct-extensions-reset-button {
+                        #uenf-extensions-reset-button {
                             display: flex;
                             align-items: center;
                             gap: 5px;
                         }
                         
-                        .cct-success-message {
+                        .uenf-success-message {
                             position: fixed;
                             top: 32px;
                             right: 20px;
@@ -500,7 +520,7 @@
                             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
                         }
                         
-                        #accordion-panel-cct_extensions .panel-meta {
+                        #accordion-panel-uenf_extensions .panel-meta {
                             border-top: 1px solid #ddd;
                             padding: 10px 14px;
                             background: #f9f9f9;
@@ -522,10 +542,10 @@
          */
         showWelcomeMessage: function() {
             // Verificar se é a primeira vez
-            if (!localStorage.getItem('cct_extensions_welcome_shown')) {
+            if (!localStorage.getItem('uenf_extensions_welcome_shown')) {
                 setTimeout(() => {
                     this.showSuccessMessage('🎉 Gerenciador de Extensões ativado! Controle todas as funcionalidades avançadas aqui.', 5000);
-                    localStorage.setItem('cct_extensions_welcome_shown', 'true');
+                    localStorage.setItem('uenf_extensions_welcome_shown', 'true');
                 }, 1000);
             }
         },
@@ -534,7 +554,8 @@
          * Mostra mensagem de sucesso
          */
         showSuccessMessage: function(message, duration = 3000) {
-            const $message = $(`<div class="cct-success-message">${message}</div>`);
+            // SECURITY FIX (SEC-JS-005): .text() previne XSS via template literal com interpolação direta
+            const $message = $('<div class="uenf-success-message"></div>').text(message);
             $('body').append($message);
             
             $message.hide().slideDown(300);

@@ -21,7 +21,7 @@ get_header();
     </section>
 
     <div class="container">
-        <?php cct_custom_breadcrumb(); ?>
+        <?php uenf_custom_breadcrumb(); ?>
     </div>
 
     <section class="line-breadcrumb"></section>
@@ -49,7 +49,7 @@ get_header();
 
                             wp_link_pages(
                                 array(
-                                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'cct-theme' ),
+                                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'uenf-theme' ),
                                     'after'  => '</div>',
                                 )
                             );
@@ -63,7 +63,7 @@ get_header();
                                     sprintf(
                                         wp_kses(
                                             /* translators: %s: Name of current post. Only visible to screen readers */
-                                            __( 'Edit <span class="screen-reader-text">%s</span>', 'cct-theme' ),
+                                            __( 'Edit <span class="screen-reader-text">%s</span>', 'uenf-theme' ),
                                             array(
                                                 'span' => array(
                                                     'class' => array(),

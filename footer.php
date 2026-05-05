@@ -31,12 +31,29 @@
                     endif ?>
 
                     <h4><?php echo esc_html(get_bloginfo('name')); ?></h4>
+                    <?php
+                    $uenf_contact_emails = uenf_get_contact_emails();
+                    $uenf_contact_phones = uenf_get_contact_phones();
+                    if ( $uenf_contact_emails || $uenf_contact_phones ) : ?>
                     <div class="contact-info-container">
+                        <?php if ( $uenf_contact_emails ) : ?>
                         <div class="contact-item"><strong>Email:</strong>
-                            <?php dynamic_sidebar('endereco-email-setor'); ?></div>
-                        <div class="contact-item"><strong>Telefone:</strong> <?php dynamic_sidebar('telefone-setor'); ?>
+                            <?php echo implode( ' | ', array_map(
+                                fn( $e ) => '<a href="mailto:' . esc_attr( $e ) . '">' . esc_html( $e ) . '</a>',
+                                $uenf_contact_emails
+                            ) ); ?>
                         </div>
+                        <?php endif; ?>
+                        <?php if ( $uenf_contact_phones ) : ?>
+                        <div class="contact-item"><strong>Telefone:</strong>
+                            <?php echo implode( ' | ', array_map(
+                                fn( $p ) => '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $p ) ) . '">' . esc_html( $p ) . '</a>',
+                                $uenf_contact_phones
+                            ) ); ?>
+                        </div>
+                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php if (get_theme_mod('disable_footer_sidebar', false)): ?>
@@ -49,28 +66,21 @@
 </footer>
 </div><!-- #page -->
 
-<a href="#" class="back-to-top">
-    <i class="fas fa-arrow-up"></i>
-</a>
+<button type="button" class="back-to-top" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</button>
 
 <?php wp_footer(); ?>
 
-<style>
-/* Ocultar painel de atalhos no mobile */
-@media (max-width: 768px) {
-    #uenf-shortcut-panel-container {
-        display: none !important;
-    }
-}
-</style>
 
 <?php // Painel de atalhos reativado com container dedicado
 if (!is_admin()): ?>
     <!-- Container dedicado para o painel de atalhos -->
     <div id="uenf-shortcut-panel-container">
-        <div class="shortcut-icon" data-start-y="50%" title="Atalhos Rápidos">
-            <i class="fas fa-cog"></i>
-        </div>
+        <button class="shortcut-icon" type="button" data-start-y="50%"
+                aria-label="Atalhos Rápidos" aria-expanded="false" aria-controls="uenf-shortcut-panel">
+            <i class="fas fa-bolt" aria-hidden="true"></i>
+        </button>
 
         <div class="shortcut-panel">
             <div class="shortcut-panel-header">
@@ -118,14 +128,14 @@ if (!is_admin()): ?>
                 // Função para abrir o painel
                 function openPanel() {
                     $panel.addClass('active');
-                    $icon.addClass('active');
+                    $icon.addClass('active').attr('aria-expanded', 'true');
                     $('body').css('overflow', 'hidden');
                 }
 
                 // Função para fechar o painel
                 function closePanel() {
                     $panel.removeClass('active');
-                    $icon.removeClass('active');
+                    $icon.removeClass('active').attr('aria-expanded', 'false');
                     $('body').css('overflow', '');
                 }
 

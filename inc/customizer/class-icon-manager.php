@@ -10,7 +10,7 @@
  * - Otimização automática de SVG
  * - Integração com theme.json
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -20,10 +20,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Garante que WP_Customize_Range_Value_Control está disponível independente da ordem dos hooks
+if (!class_exists('WP_Customize_Range_Value_Control')) {
+    require_once get_template_directory() . '/inc/customizer/class-uenf-custom-controls.php';
+}
+
 /**
  * Classe para gerenciamento de ícones
  */
-class CCT_Icon_Manager {
+class UENF_Icon_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -37,7 +42,7 @@ class CCT_Icon_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_icons_';
+    private $prefix = 'uenf_icons_';
     
     /**
      * Biblioteca de ícones SVG
@@ -255,7 +260,7 @@ class CCT_Icon_Manager {
      */
     private function add_icon_sections() {
         // Verificar se a extensão está ativa antes de criar o painel
-        $extension_manager = cct_extension_manager();
+        $extension_manager = uenf_extension_manager();
         if (!$extension_manager || !$extension_manager->is_extension_active('icons')) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CCT Icons: Extensão desativada - painel não criado');
@@ -380,7 +385,7 @@ class CCT_Icon_Manager {
     private function add_icon_controls() {
         // Navegador de categorias (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_icon_category_browser',
+            'uenf_icon_category_browser',
             array(
                 'label' => __('Categorias de Ícones', 'cct'),
                 'section' => $this->prefix . 'icon_library',
@@ -394,7 +399,7 @@ class CCT_Icon_Manager {
         
         // Biblioteca de ícones (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_icon_library',
+            'uenf_icon_library',
             array(
                 'label' => __('Biblioteca de Ícones', 'cct'),
                 'section' => $this->prefix . 'icon_library',
@@ -408,7 +413,7 @@ class CCT_Icon_Manager {
         
         // Upload de ícones personalizados (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_icon_upload',
+            'uenf_icon_upload',
             array(
                 'label' => __('Upload de Ícones SVG', 'cct'),
                 'description' => __('Faça upload de arquivos SVG personalizados.', 'cct'),
@@ -423,7 +428,7 @@ class CCT_Icon_Manager {
         
         // Gerenciador de ícones personalizados (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_custom_icon_manager',
+            'uenf_custom_icon_manager',
             array(
                 'label' => __('Gerenciar Ícones Personalizados', 'cct'),
                 'section' => $this->prefix . 'custom_icons',
@@ -439,7 +444,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_default_icon_size',
+                'uenf_default_icon_size',
                 array(
                     'label' => __('Tamanho Padrão (px)', 'cct'),
                     'section' => $this->prefix . 'icon_settings',
@@ -457,7 +462,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $this->wp_customize,
-                'cct_default_icon_color',
+                'uenf_default_icon_color',
                 array(
                     'label' => __('Cor Padrão dos Ícones', 'cct'),
                     'section' => $this->prefix . 'icon_settings',
@@ -469,7 +474,7 @@ class CCT_Icon_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $this->wp_customize,
-                'cct_icon_hover_color',
+                'uenf_icon_hover_color',
                 array(
                     'label' => __('Cor no Hover', 'cct'),
                     'section' => $this->prefix . 'icon_settings',
@@ -525,10 +530,10 @@ class CCT_Icon_Manager {
      * Registra hooks do sistema
      */
     private function register_icon_hooks() {
-        add_action('wp_ajax_cct_upload_icon', array($this, 'handle_icon_upload'));
-        add_action('wp_ajax_cct_optimize_svg', array($this, 'handle_svg_optimization'));
-        add_action('wp_ajax_cct_delete_custom_icon', array($this, 'handle_icon_deletion'));
-        add_shortcode('cct_icon', array($this, 'icon_shortcode'));
+        add_action('wp_ajax_uenf_upload_icon', array($this, 'handle_icon_upload'));
+        add_action('wp_ajax_uenf_optimize_svg', array($this, 'handle_svg_optimization'));
+        add_action('wp_ajax_uenf_delete_custom_icon', array($this, 'handle_icon_deletion'));
+        add_shortcode('uenf_icon', array($this, 'icon_shortcode'));
         add_filter('wp_kses_allowed_html', array($this, 'allow_svg_in_kses'));
     }
     
@@ -537,7 +542,7 @@ class CCT_Icon_Manager {
      */
     public function enqueue_controls_scripts() {
         wp_enqueue_script(
-            'cct-icon-manager',
+            'uenf-icon-manager',
             get_template_directory_uri() . '/js/customizer-icon-manager.js',
             array('jquery', 'customize-controls'),
             '1.0.0',
@@ -545,17 +550,17 @@ class CCT_Icon_Manager {
         );
         
         wp_enqueue_style(
-            'cct-icon-manager',
+            'uenf-icon-manager',
             get_template_directory_uri() . '/css/customizer-icon-manager.css',
             array(),
             '1.0.0'
         );
         
-        wp_localize_script('cct-icon-manager', 'cctIconManager', array(
+        wp_localize_script('uenf-icon-manager', 'cctIconManager', array(
             'iconLibrary' => $this->icon_library,
             'categories' => $this->icon_categories,
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_icon_manager'),
+            'nonce' => wp_create_nonce('uenf_icon_manager'),
             'strings' => array(
                 'uploadSuccess' => __('Ícone carregado com sucesso!', 'cct'),
                 'uploadError' => __('Erro ao carregar ícone.', 'cct'),
@@ -574,7 +579,7 @@ class CCT_Icon_Manager {
      */
     public function enqueue_preview_scripts() {
         wp_enqueue_script(
-            'cct-icon-preview',
+            'uenf-icon-preview',
             get_template_directory_uri() . '/js/customizer-icon-preview.js',
             array('jquery', 'customize-preview'),
             '1.0.0',
@@ -587,8 +592,8 @@ class CCT_Icon_Manager {
      */
     public function enqueue_frontend_scripts() {
         wp_enqueue_style(
-            'cct-icons',
-            get_template_directory_uri() . '/css/cct-icons.css',
+            'uenf-icons',
+            get_template_directory_uri() . '/css/uenf-icons.css',
             array(),
             '1.0.0'
         );
@@ -598,7 +603,7 @@ class CCT_Icon_Manager {
      * Manipula upload de ícones
      */
     public function handle_icon_upload() {
-        check_ajax_referer('cct_icon_manager', 'nonce');
+        check_ajax_referer('uenf_icon_manager', 'nonce');
         
         if (!current_user_can('customize')) {
             wp_die(__('Permissão negada.', 'cct'));
@@ -638,10 +643,10 @@ class CCT_Icon_Manager {
             'uploaded' => current_time('mysql')
         );
         
-        $custom_icons = json_decode(get_theme_mod('cct_custom_icons_data', '[]'), true);
+        $custom_icons = json_decode(get_theme_mod('uenf_custom_icons_data', '[]'), true);
         $custom_icons[] = $icon_data;
         
-        set_theme_mod('cct_custom_icons_data', json_encode($custom_icons));
+        set_theme_mod('uenf_custom_icons_data', json_encode($custom_icons));
         
         wp_send_json_success(array(
             'message' => __('Ícone carregado com sucesso!', 'cct'),
@@ -683,17 +688,17 @@ class CCT_Icon_Manager {
     private function optimize_svg($svg_content) {
         $optimized = $svg_content;
         
-        if (get_theme_mod('cct_optimization_remove_comments', true)) {
+        if (get_theme_mod('uenf_optimization_remove_comments', true)) {
             $optimized = preg_replace('/<!--.*?-->/s', '', $optimized);
         }
         
-        if (get_theme_mod('cct_optimization_remove_metadata', true)) {
+        if (get_theme_mod('uenf_optimization_remove_metadata', true)) {
             $optimized = preg_replace('/<metadata[^>]*>.*?<\/metadata>/s', '', $optimized);
             $optimized = preg_replace('/<title[^>]*>.*?<\/title>/s', '', $optimized);
             $optimized = preg_replace('/<desc[^>]*>.*?<\/desc>/s', '', $optimized);
         }
         
-        if (get_theme_mod('cct_optimization_minify_svg', true)) {
+        if (get_theme_mod('uenf_optimization_minify_svg', true)) {
             $optimized = preg_replace('/\s+/', ' ', $optimized);
             $optimized = trim($optimized);
         }
@@ -705,7 +710,7 @@ class CCT_Icon_Manager {
      * Manipula otimização de SVG
      */
     public function handle_svg_optimization() {
-        check_ajax_referer('cct_icon_manager', 'nonce');
+        check_ajax_referer('uenf_icon_manager', 'nonce');
         
         if (!current_user_can('customize')) {
             wp_die(__('Permissão negada.', 'cct'));
@@ -732,20 +737,20 @@ class CCT_Icon_Manager {
      * Manipula exclusão de ícones
      */
     public function handle_icon_deletion() {
-        check_ajax_referer('cct_icon_manager', 'nonce');
+        check_ajax_referer('uenf_icon_manager', 'nonce');
         
         if (!current_user_can('customize')) {
             wp_die(__('Permissão negada.', 'cct'));
         }
         
         $icon_index = intval($_POST['icon_index']);
-        $custom_icons = json_decode(get_theme_mod('cct_custom_icons_data', '[]'), true);
+        $custom_icons = json_decode(get_theme_mod('uenf_custom_icons_data', '[]'), true);
         
         if (isset($custom_icons[$icon_index])) {
             unset($custom_icons[$icon_index]);
             $custom_icons = array_values($custom_icons); // Reindexar
             
-            set_theme_mod('cct_custom_icons_data', json_encode($custom_icons));
+            set_theme_mod('uenf_custom_icons_data', json_encode($custom_icons));
             
             wp_send_json_success(__('Ícone excluído com sucesso!', 'cct'));
         } else {
@@ -760,12 +765,12 @@ class CCT_Icon_Manager {
         $atts = shortcode_atts(array(
             'name' => '',
             'category' => 'ui',
-            'size' => get_theme_mod('cct_default_icon_size', '24'),
-            'color' => get_theme_mod('cct_default_icon_color', '#333333'),
+            'size' => get_theme_mod('uenf_default_icon_size', '24'),
+            'color' => get_theme_mod('uenf_default_icon_color', '#333333'),
             'class' => '',
             'alt' => '',
             'custom' => false
-        ), $atts, 'cct_icon');
+        ), $atts, 'uenf_icon');
         
         if (empty($atts['name'])) {
             return '';
@@ -808,7 +813,7 @@ class CCT_Icon_Manager {
      * Obtém ícone personalizado
      */
     private function get_custom_icon($name) {
-        $custom_icons = json_decode(get_theme_mod('cct_custom_icons_data', '[]'), true);
+        $custom_icons = json_decode(get_theme_mod('uenf_custom_icons_data', '[]'), true);
         
         foreach ($custom_icons as $icon) {
             if ($icon['name'] === $name) {
@@ -823,7 +828,7 @@ class CCT_Icon_Manager {
      * Renderiza ícone
      */
     private function render_icon($svg_content, $atts) {
-        $classes = array('cct-icon');
+        $classes = array('uenf-icon');
         if (!empty($atts['class'])) {
             $classes[] = $atts['class'];
         }
@@ -842,9 +847,9 @@ class CCT_Icon_Manager {
             'style="' . esc_attr(implode('; ', $style_attrs)) . '"'
         );
         
-        if (get_theme_mod('cct_enable_aria_labels', true)) {
+        if (get_theme_mod('uenf_enable_aria_labels', true)) {
             $alt_text = !empty($atts['alt']) ? $atts['alt'] : 
-                str_replace('{name}', $atts['name'], get_theme_mod('cct_icon_alt_text_template', __('Ícone {name}', 'cct')));
+                str_replace('{name}', $atts['name'], get_theme_mod('uenf_icon_alt_text_template', __('Ícone {name}', 'cct')));
             $attributes[] = 'aria-label="' . esc_attr($alt_text) . '"';
             $attributes[] = 'role="img"';
         }
@@ -930,7 +935,7 @@ class CCT_Icon_Manager {
             $stats['total_icons'] += count($icons);
         }
         
-        $custom_icons = json_decode(get_theme_mod('cct_custom_icons_data', '[]'), true);
+        $custom_icons = json_decode(get_theme_mod('uenf_custom_icons_data', '[]'), true);
         $stats['custom_icons'] = count($custom_icons);
         
         return $stats;
@@ -942,18 +947,18 @@ class CCT_Icon_Manager {
     public function export_icon_settings() {
         $settings = array(
             'categories' => $this->icon_categories,
-            'custom_icons' => json_decode(get_theme_mod('cct_custom_icons_data', '[]'), true),
-            'favorite_icons' => json_decode(get_theme_mod('cct_favorite_icons', '[]'), true),
+            'custom_icons' => json_decode(get_theme_mod('uenf_custom_icons_data', '[]'), true),
+            'favorite_icons' => json_decode(get_theme_mod('uenf_favorite_icons', '[]'), true),
             'settings' => array(
-                'default_size' => get_theme_mod('cct_default_icon_size', '24'),
-                'default_color' => get_theme_mod('cct_default_icon_color', '#333333'),
-                'hover_color' => get_theme_mod('cct_icon_hover_color', '#0073aa'),
+                'default_size' => get_theme_mod('uenf_default_icon_size', '24'),
+                'default_color' => get_theme_mod('uenf_default_icon_color', '#333333'),
+                'hover_color' => get_theme_mod('uenf_icon_hover_color', '#0073aa'),
                 'optimization' => array()
             )
         );
         
         foreach ($this->optimization_settings as $setting => $default) {
-            $settings['settings']['optimization'][$setting] = get_theme_mod("cct_optimization_{$setting}", $default);
+            $settings['settings']['optimization'][$setting] = get_theme_mod("uenf_optimization_{$setting}", $default);
         }
         
         return $settings;

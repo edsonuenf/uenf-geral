@@ -1,0 +1,225 @@
+name: uenf-aparencia-release
+description: >
+  Squad de validação e entrega da branch `aparencia` do tema WordPress uenf-geral.
+  Cobre todo o ciclo da branch atual: revisão de código (PHP/CSS/SCSS/JS),
+  validação de UX/mobile, build Webpack, sincronização com a instalação
+  WordPress local, e geração de CHANGELOG + Pull Request para main.
+  Criado com base na análise da branch aparencia em 2026-04-10.
+
+version: "1.0.0"
+language: pt-BR
+frequency: on-demand
+
+context:
+  branch: aparencia
+  target_branch: main
+  wp_path: "/media/edson/2661367b-c6e1-4bd6-948a-b4fbb0dfa90b2/edson2/8 - Desenvolvimento/Local/site-uenf/app/public/wp-content/themes/uenf-geral"
+  project_path: "/media/edson/2661367b-c6e1-4bd6-948a-b4fbb0dfa90b2/edson2/1 - Projetos/01 - UENF/007 - TemaUENF/uenf-geral-claude"
+
+agents:
+  - id: lucas
+    name: Lucas
+    role: WordPress Code Reviewer
+    best_practices:
+      - review
+      - technical-writing
+
+  - id: marina
+    name: Marina
+    role: UX/Mobile Reviewer
+    best_practices:
+      - review
+
+  - id: carlos
+    name: Carlos
+    role: Build & Sync Engineer
+    best_practices:
+      - technical-writing
+
+  - id: beatriz
+    name: Beatriz
+    role: Release Manager & Documentation
+    best_practices:
+      - technical-writing
+
+pipeline:
+  # ── FASE 1: Revisão das mudanças ─────────────────────────────────────────
+
+  - step: 1
+    name: code-review
+    agent: lucas
+    description: >
+      Revisar os arquivos modificados na branch aparencia.
+      1. Executar `git diff main` para listar e analisar todas as mudanças
+      2. Verificar PHP (functions.php, header.php, single.php, index.php,
+         template-parts/content-search.php) quanto a:
+         - WordPress Coding Standards (escape, sanitização, nonces)
+         - Sintaxe PHP correta (sem blocos <?php abertos sem fechar)
+         - Lógica de enqueue de CSS/JS
+      3. Verificar CSS/SCSS modificados (custom-fixes.css, variables.css,
+         style.css, footer.css, header.scss, style.scss, layout.scss) quanto a:
+         - Duplicações desnecessárias
+         - Regras !important excessivas
+         - Consistência com variáveis CSS (--heading-color, --cct-header-height-mobile)
+         - Breakpoints corretos (767.98px vs 768px)
+      4. Verificar se posts-list.css é enfileirado corretamente no functions.php
+      5. Produzir relatório com: o que está OK, o que tem problema, sugestões
+    inputs:
+      - git diff main
+      - arquivos modificados listados no git status
+    outputs:
+      - code-review-report.md
+
+  - step: 2
+    name: ux-mobile-review
+    agent: marina
+    description: >
+      Validar as mudanças de UX e responsividade mobile da branch aparencia.
+      Foco nas features implementadas nesta branch:
+      1. Header mobile — barra inferior com: ícone home (esq), engrenagem (centro),
+         idiomas + redes sociais (dir)
+      2. Dropdown de idiomas — abre para cima, alinhado à direita, não corta na tela
+      3. Back-to-top — z-index 9999 (atrás da barra), bottom 48px no mobile
+      4. Mobile search bar — lupa ao lado do hamburguer, barra expansível abaixo do header
+      5. Single post — data antes do título, hero image antes do header
+      6. Posts list — data + título + excerpt sem CSS da página de busca
+      7. Footer — container 80%, centralizado
+      Verificar: consistência visual, acessibilidade básica (aria-labels, contraste),
+      comportamento em telas pequenas (360px, 375px, 414px).
+    inputs:
+      - code-review-report.md
+      - arquivos CSS e PHP modificados
+    outputs:
+      - ux-mobile-report.md
+
+  - step: 3
+    name: checkpoint-review
+    type: checkpoint
+    description: >
+      Apresentar ao usuário os resultados das revisões de código e UX.
+      Perguntar: as issues identificadas precisam ser corrigidas antes do build,
+      ou pode prosseguir para o build mesmo assim?
+    questions:
+      - Existem issues críticas que precisam ser corrigidas antes de continuar?
+      - Qual a decisão: corrigir agora, registrar como pendência, ou ignorar?
+
+  # ── FASE 2: Build e Sync ──────────────────────────────────────────────────
+
+  - step: 4
+    name: lint-and-build
+    agent: carlos
+    description: >
+      Executar validação e build do projeto.
+      1. `npm run lint:css` — verificar erros de CSS/SCSS
+      2. `npm run lint:js` — verificar erros de JavaScript
+      3. `npm run build` — compilar SCSS para assets/dist/css/style.min.css
+      4. Registrar resultado de cada etapa (passou/falhou + detalhes)
+      5. Verificar se style.min.css foi gerado corretamente
+    inputs:
+      - projeto completo
+    outputs:
+      - build-report.md
+
+  - step: 5
+    name: sync-wp
+    agent: carlos
+    description: >
+      Sincronizar todos os arquivos modificados para a instalação WordPress local.
+      Arquivos a sincronizar (src → wp):
+      - css/custom-fixes.css
+      - css/variables.css
+      - css/style.css
+      - css/style.min.css
+      - css/components/footer.css
+      - css/components/posts-list.css (novo arquivo)
+      - assets/dist/css/style.min.css
+      - header.php
+      - single.php
+      - index.php
+      - template-parts/content-search.php
+      - template-parts/content.php
+      Usar cp para cada arquivo. Confirmar que todos os arquivos existem no destino.
+    inputs:
+      - build-report.md
+    outputs:
+      - sync-report.md
+
+  - step: 6
+    name: checkpoint-build
+    type: checkpoint
+    description: >
+      Apresentar resultado do build e sync ao usuário.
+      Solicitar que o usuário acesse localhost:8000 e valide visualmente:
+      - Barra inferior mobile com home + engrenagem + idiomas + redes sociais
+      - Search mobile funcionando
+      - Single post com hero + data + título
+      - Posts list sem CSS da busca
+      Perguntar: o visual está correto? Pode prosseguir para o commit?
+    questions:
+      - O visual no browser está correto?
+      - Pode prosseguir para gerar o CHANGELOG e o commit?
+
+  # ── FASE 3: Documentação e Release ───────────────────────────────────────
+
+  - step: 7
+    name: changelog
+    agent: beatriz
+    description: >
+      Gerar o CHANGELOG entry para as mudanças da branch aparencia.
+      1. Ler git log --oneline para listar commits da branch
+      2. Ler git diff main --stat para listar arquivos mudados
+      3. Categorizar as mudanças em: Added, Changed, Fixed, Security
+      4. Gerar entry no formato Keep a Changelog (https://keepachangelog.com)
+      5. Sugerir bump de versão: 0.1.0 → 0.2.0 (MINOR — novas features mobile)
+      Mudanças a documentar:
+      - [Added] Ícone home com link na barra inferior mobile
+      - [Added] Botão de atalhos (engrenagem) integrado à barra inferior mobile
+      - [Added] Dropdown de idiomas em mobile (abre para cima, alinhado à direita)
+      - [Added] Mobile search bar expansível abaixo do header fixo
+      - [Added] posts-list.css — estilos dedicados para página de posts
+      - [Changed] Single post — hero image e data antes do título
+      - [Changed] Posts list — removida dependência do CSS da busca
+      - [Changed] Back-to-top mobile — z-index ajustado para ficar atrás da barra
+      - [Changed] Footer container — 80% de largura, centralizado
+      - [Changed] Logo mobile — reduzida 10%
+      - [Fixed] Breakpoint tablet 768px — alinhado com Bootstrap (767.98px)
+      - [Fixed] Dropdown idiomas — panel não corta na borda direita da tela
+      - [Fixed] content-search.php e content.php — sintaxe PHP corrigida
+    inputs:
+      - git log --oneline
+      - git diff main --stat
+    outputs:
+      - CHANGELOG-entry.md
+
+  - step: 8
+    name: commit-pr
+    agent: beatriz
+    description: >
+      Preparar commit semântico e Pull Request para main.
+      1. Verificar git status — confirmar arquivos a commitar
+      2. Gerar mensagem de commit no formato Conventional Commits:
+         feat(mobile): integra home, atalhos e busca na barra inferior; corrige breakpoints
+      3. Listar os comandos git para o usuário executar:
+         - git add [arquivos modificados]
+         - git commit -m "[mensagem]"
+         - git push origin aparencia
+         - gh pr create --title "..." --body "..."
+      4. Gerar o corpo do PR com: resumo das mudanças, screenshots esperados,
+         test plan, e referência ao CHANGELOG entry
+      OBS: Não executar os comandos git diretamente — apenas preparar
+      e apresentar ao usuário para aprovação e execução manual.
+    inputs:
+      - CHANGELOG-entry.md
+      - git status
+    outputs:
+      - pr-summary.md
+
+  - step: 9
+    name: checkpoint-final
+    type: checkpoint
+    description: >
+      Apresentar ao usuário o commit, PR body e CHANGELOG prontos.
+      Perguntar se deseja executar o commit e PR agora, ou revisar antes.
+    questions:
+      - O commit e o PR estão prontos para execução?
+      - Deseja executar agora ou revisar primeiro?

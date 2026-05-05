@@ -9,7 +9,7 @@
  * - Reading optimization
  * - Custom font upload
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe para configurações de tipografia no customizer
  */
-class CCT_Typography_Customizer extends CCT_Customizer_Base {
+class UENF_Typography_Customizer extends UENF_Customizer_Base {
     
     /**
      * Google Fonts API Key
@@ -69,12 +69,12 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     private function init_google_fonts_api() {
         // API Key pode ser configurada via constante ou opção
-        $this->google_fonts_api_key = defined('CCT_GOOGLE_FONTS_API_KEY') 
-            ? CCT_GOOGLE_FONTS_API_KEY 
-            : get_option('cct_google_fonts_api_key', '');
+        $this->google_fonts_api_key = defined('UENF_GOOGLE_FONTS_API_KEY') 
+            ? UENF_GOOGLE_FONTS_API_KEY 
+            : get_option('uenf_google_fonts_api_key', '');
         
         // Cache de fontes (válido por 24 horas)
-        $this->google_fonts_cache = get_transient('cct_google_fonts_cache');
+        $this->google_fonts_cache = get_transient('uenf_google_fonts_cache');
         
         if (false === $this->google_fonts_cache) {
             $this->refresh_google_fonts_cache();
@@ -174,7 +174,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     private function add_typography_sections() {
         // Verificar se a extensão está ativa antes de criar o painel
-        $extension_manager = cct_extension_manager();
+        $extension_manager = uenf_extension_manager();
         if (!$extension_manager || !$extension_manager->is_extension_active('typography')) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CCT Typography: Extensão desativada - painel não criado');
@@ -261,12 +261,12 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         
         // Fonte para títulos
         $this->add_setting('heading_font_family', array(
-            'default' => defined('CCT_DEFAULT_HEADING_FONT') ? CCT_DEFAULT_HEADING_FONT : 'Roboto',
+            'default' => defined('UENF_DEFAULT_HEADING_FONT') ? UENF_DEFAULT_HEADING_FONT : 'Roboto',
             'sanitize_callback' => 'sanitize_text_field',
             'transport' => 'postMessage',
         ));
         
-        $this->wp_customize->add_control('cct_heading_font_family', array(
+        $this->wp_customize->add_control('uenf_heading_font_family', array(
             'label' => __('Fonte dos Títulos', 'cct'),
             'section' => $this->prefix . 'typography_google_fonts',
             'settings' => $this->prefix . 'heading_font_family',
@@ -276,12 +276,12 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         
         // Fonte para corpo do texto
         $this->add_setting('body_font_family', array(
-            'default' => defined('CCT_DEFAULT_BODY_FONT') ? CCT_DEFAULT_BODY_FONT : 'Open Sans',
+            'default' => defined('UENF_DEFAULT_BODY_FONT') ? UENF_DEFAULT_BODY_FONT : 'Open Sans',
             'sanitize_callback' => 'sanitize_text_field',
             'transport' => 'postMessage',
         ));
         
-        $this->wp_customize->add_control('cct_body_font_family', array(
+        $this->wp_customize->add_control('uenf_body_font_family', array(
             'label' => __('Fonte do Corpo', 'cct'),
             'section' => $this->prefix . 'typography_google_fonts',
             'settings' => $this->prefix . 'body_font_family',
@@ -336,13 +336,13 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     private function add_font_pairing_settings() {
         // Seletor de pairing predefinido
-        $this->add_setting('cct_font_pairing_preset', array(
+        $this->add_setting('uenf_font_pairing_preset', array(
             'default' => 'theme_default',
             'sanitize_callback' => array($this, 'sanitize_font_pairing'),
             'transport' => 'refresh',
         ));
         
-        $this->add_control('cct_font_pairing_preset', array(
+        $this->add_control('uenf_font_pairing_preset', array(
             'label' => __('Combinação Predefinida', 'cct'),
             'description' => __('Escolha uma combinação profissional de fontes.', 'cct'),
             'section' => $this->prefix . 'typography_font_pairing',
@@ -351,13 +351,13 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         ));
         
         // Aplicar pairing automaticamente
-        $this->add_setting('cct_apply_font_pairing', array(
+        $this->add_setting('uenf_apply_font_pairing', array(
             'default' => true,
             'sanitize_callback' => 'wp_validate_boolean',
             'transport' => 'refresh',
         ));
         
-        $this->add_control('cct_apply_font_pairing', array(
+        $this->add_control('uenf_apply_font_pairing', array(
             'label' => __('Aplicar Combinação Automaticamente', 'cct'),
             'description' => __('Aplica automaticamente as fontes da combinação selecionada.', 'cct'),
             'section' => $this->prefix . 'typography_font_pairing',
@@ -366,13 +366,13 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         
         // Preview do pairing
         $this->wp_customize->add_control(
-            new CCT_Typography_Preview_Control(
+            new UENF_Typography_Preview_Control(
                 $this->wp_customize,
-                'cct_font_pairing_preview',
+                'uenf_font_pairing_preview',
                 array(
                     'label' => __('Preview da Combinação', 'cct'),
                     'section' => $this->prefix . 'typography_font_pairing',
-                    'settings' => 'cct_font_pairing_preset',
+                    'settings' => 'uenf_font_pairing_preset',
                     'font_pairings' => $this->font_pairings,
                 )
             )
@@ -408,7 +408,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_base_font_size',
+                'uenf_base_font_size',
                 array(
                     'label' => __('Tamanho Base (px)', 'cct'),
                     'section' => $this->prefix . 'typography_scale',
@@ -424,9 +424,9 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         
         // Preview da escala
         $this->wp_customize->add_control(
-            new CCT_Typography_Scale_Preview_Control(
+            new UENF_Typography_Scale_Preview_Control(
                 $this->wp_customize,
-                'cct_typography_scale_preview',
+                'uenf_typography_scale_preview',
                 array(
                     'label' => __('Preview da Escala', 'cct'),
                     'section' => $this->prefix . 'typography_scale',
@@ -454,7 +454,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_line_height',
+                'uenf_line_height',
                 array(
                     'label' => __('Altura da Linha', 'cct'),
                     'description' => __('Espaçamento entre linhas para melhor legibilidade.', 'cct'),
@@ -479,7 +479,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_letter_spacing',
+                'uenf_letter_spacing',
                 array(
                     'label' => __('Espaçamento entre Letras (px)', 'cct'),
                     'section' => $this->prefix . 'typography_reading',
@@ -503,7 +503,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_text_max_width',
+                'uenf_text_max_width',
                 array(
                     'label' => __('Largura Máxima do Texto (ch)', 'cct'),
                     'description' => __('Número ideal de caracteres por linha (45-75).', 'cct'),
@@ -533,7 +533,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $this->wp_customize->add_control(
             new WP_Customize_Upload_Control(
                 $this->wp_customize,
-                'cct_custom_font_upload',
+                'uenf_custom_font_upload',
                 array(
                     'label' => __('Upload de Fonte Personalizada', 'cct'),
                     'description' => __('Faça upload de arquivos .woff2, .woff, .ttf ou .otf', 'cct'),
@@ -565,8 +565,8 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_google_fonts'));
         add_action('wp_head', array($this, 'output_typography_css'), 999);
         add_action('customize_preview_init', array($this, 'enqueue_preview_scripts'));
-        add_action('wp_ajax_cct_refresh_google_fonts', array($this, 'ajax_refresh_google_fonts'));
-        add_action('wp_ajax_cct_get_font_variants', array($this, 'ajax_get_font_variants'));
+        add_action('wp_ajax_uenf_refresh_google_fonts', array($this, 'ajax_refresh_google_fonts'));
+        add_action('wp_ajax_uenf_get_font_variants', array($this, 'ajax_get_font_variants'));
     }
     
     /**
@@ -574,8 +574,8 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     public function enqueue_google_fonts() {
         // Verificar se há font pairing selecionado
-        $font_pairing = $this->get_theme_mod('cct_font_pairing_preset', 'theme_default');
-        $apply_pairing = $this->get_theme_mod('cct_apply_font_pairing', true);
+        $font_pairing = $this->get_theme_mod('uenf_font_pairing_preset', 'theme_default');
+        $apply_pairing = $this->get_theme_mod('uenf_apply_font_pairing', true);
         
         if (!empty($font_pairing) && $apply_pairing && isset($this->font_pairings[$font_pairing])) {
             // Usar fontes do pairing
@@ -610,7 +610,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         
         if (!empty($fonts)) {
             $fonts_url = 'https://fonts.googleapis.com/css2?family=' . implode('&family=', $fonts) . '&display=swap';
-            wp_enqueue_style('cct-google-fonts', $fonts_url, array(), null);
+            wp_enqueue_style('uenf-google-fonts', $fonts_url, array(), null);
         }
     }
     
@@ -621,7 +621,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $css = $this->generate_typography_css();
         
         if (!empty($css)) {
-            echo '<style type="text/css" id="cct-typography-css">';
+            echo '<style type="text/css" id="uenf-typography-css">';
             echo $this->minify_css($css);
             echo '</style>';
         }
@@ -632,7 +632,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      */
     public function enqueue_preview_scripts() {
         wp_enqueue_script(
-            'cct-typography-preview',
+            'uenf-typography-preview',
             get_template_directory_uri() . '/js/customizer-typography-preview.js',
             array('jquery', 'customize-preview'),
             filemtime(get_template_directory() . '/js/customizer-typography-preview.js'),
@@ -647,8 +647,8 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         $css = '';
         
         // Verificar se há font pairing selecionado
-        $font_pairing = $this->get_theme_mod('cct_font_pairing_preset', 'theme_default');
-        $apply_pairing = $this->get_theme_mod('cct_apply_font_pairing', true);
+        $font_pairing = $this->get_theme_mod('uenf_font_pairing_preset', 'theme_default');
+        $apply_pairing = $this->get_theme_mod('uenf_apply_font_pairing', true);
         
         if (!empty($font_pairing) && $apply_pairing && isset($this->font_pairings[$font_pairing])) {
             // Usar fontes do pairing
@@ -795,7 +795,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
         
         if (isset($data['items'])) {
             $fonts = array_slice($data['items'], 0, 100); // Top 100 fontes
-            set_transient('cct_google_fonts_cache', $fonts, DAY_IN_SECONDS);
+            set_transient('uenf_google_fonts_cache', $fonts, DAY_IN_SECONDS);
             $this->google_fonts_cache = $fonts;
             return true;
         }
@@ -846,7 +846,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      * AJAX: Atualizar cache do Google Fonts
      */
     public function ajax_refresh_google_fonts() {
-        check_ajax_referer('cct_typography_nonce', 'nonce');
+        check_ajax_referer('uenf_typography_nonce', 'nonce');
         
         if (!current_user_can('edit_theme_options')) {
             wp_die('Permissão negada');
@@ -868,7 +868,7 @@ class CCT_Typography_Customizer extends CCT_Customizer_Base {
      * AJAX: Obter variantes de uma fonte
      */
     public function ajax_get_font_variants() {
-        check_ajax_referer('cct_typography_nonce', 'nonce');
+        check_ajax_referer('uenf_typography_nonce', 'nonce');
         
         if (!current_user_can('edit_theme_options')) {
             wp_die('Permissão negada');

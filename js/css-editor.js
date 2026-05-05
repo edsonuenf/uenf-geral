@@ -8,7 +8,7 @@
  * - Atalhos de teclado
  * - Ferramentas de formatação
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Design_Editor
  * @since 1.0.0
  */
@@ -48,7 +48,7 @@
          * Inicializa o CodeMirror
          */
         initCodeMirror() {
-            const textarea = document.getElementById('cct-css-editor');
+            const textarea = document.getElementById('uenf-css-editor');
             
             if (!textarea) {
                 console.error('CCT CSS Editor: Textarea not found');
@@ -102,32 +102,32 @@
          */
         bindEvents() {
             // Seletor de arquivo
-            $('#cct-file-select').on('change', (e) => {
+            $('#uenf-file-select').on('change', (e) => {
                 this.changeFile(e.target.value);
             });
             
             // Botões da toolbar
-            $('#cct-save-css').on('click', () => this.saveCSS());
-            $('#cct-backup-css').on('click', () => this.createBackup());
-            $('#cct-validate-css').on('click', () => this.validateCSS());
+            $('#uenf-save-css').on('click', () => this.saveCSS());
+            $('#uenf-backup-css').on('click', () => this.createBackup());
+            $('#uenf-validate-css').on('click', () => this.validateCSS());
             
             // Ferramentas
-            $('#cct-format-css').on('click', () => this.formatCSS());
-            $('#cct-minify-css').on('click', () => this.minifyCSS());
-            $('#cct-add-prefixes').on('click', () => this.addPrefixes());
+            $('#uenf-format-css').on('click', () => this.formatCSS());
+            $('#uenf-minify-css').on('click', () => this.minifyCSS());
+            $('#uenf-add-prefixes').on('click', () => this.addPrefixes());
             
             // Restaurar backup
-            $(document).on('click', '.cct-restore-backup', (e) => {
-                const backup = $(e.target).closest('.cct-restore-backup').data('backup');
+            $(document).on('click', '.uenf-restore-backup', (e) => {
+                const backup = $(e.target).closest('.uenf-restore-backup').data('backup');
                 this.confirmRestore(backup);
             });
             
             // Modal
-            $('.cct-modal-close, #cct-confirm-cancel').on('click', () => {
+            $('.uenf-modal-close, #uenf-confirm-cancel').on('click', () => {
                 this.hideModal();
             });
             
-            $('#cct-confirm-ok').on('click', () => {
+            $('#uenf-confirm-ok').on('click', () => {
                 this.executeConfirmedAction();
             });
             
@@ -200,8 +200,8 @@
             if (!this.editor) return;
             
             const cursor = this.editor.getCursor();
-            $('#cct-line-number').text(cursor.line + 1);
-            $('#cct-column-number').text(cursor.ch + 1);
+            $('#uenf-line-number').text(cursor.line + 1);
+            $('#uenf-column-number').text(cursor.ch + 1);
         }
         
         /**
@@ -216,10 +216,10 @@
             const selectors = (content.match(/{/g) || []).length;
             const comments = (content.match(/\/\*/g) || []).length;
             
-            $('#cct-lines-count').text(lines);
-            $('#cct-chars-count').text(chars);
-            $('#cct-selectors-count').text(selectors);
-            $('#cct-comments-count').text(comments);
+            $('#uenf-lines-count').text(lines);
+            $('#uenf-chars-count').text(chars);
+            $('#uenf-selectors-count').text(selectors);
+            $('#uenf-comments-count').text(comments);
         }
         
         /**
@@ -228,12 +228,12 @@
         changeFile(fileKey) {
             if (this.unsavedChanges) {
                 if (!confirm('Você tem alterações não salvas. Deseja continuar?')) {
-                    $('#cct-file-select').val(this.currentFile);
+                    $('#uenf-file-select').val(this.currentFile);
                     return;
                 }
             }
             
-            window.location.href = `?page=cct-css-editor&file=${encodeURIComponent(fileKey)}`;
+            window.location.href = `?page=uenf-css-editor&file=${encodeURIComponent(fileKey)}`;
         }
         
         /**
@@ -245,7 +245,7 @@
             this.updateSaveStatus('saving');
             
             const data = {
-                action: 'cct_save_css',
+                action: 'uenf_save_css',
                 nonce: cctCssEditor.nonce,
                 file: this.currentFile,
                 content: this.editor.getValue()
@@ -280,7 +280,7 @@
             if (!this.editor || !this.unsavedChanges) return;
             
             const data = {
-                action: 'cct_save_css',
+                action: 'uenf_save_css',
                 nonce: cctCssEditor.nonce,
                 file: this.currentFile,
                 content: this.editor.getValue()
@@ -300,7 +300,7 @@
          */
         createBackup() {
             const data = {
-                action: 'cct_backup_css',
+                action: 'uenf_backup_css',
                 nonce: cctCssEditor.nonce,
                 file: this.currentFile
             };
@@ -326,7 +326,7 @@
             if (!this.editor) return;
             
             const data = {
-                action: 'cct_validate_css',
+                action: 'uenf_validate_css',
                 nonce: cctCssEditor.nonce,
                 content: this.editor.getValue()
             };
@@ -448,7 +448,7 @@
          */
         restoreBackup(backup) {
             const data = {
-                action: 'cct_restore_css',
+                action: 'uenf_restore_css',
                 nonce: cctCssEditor.nonce,
                 backup: backup
             };
@@ -474,7 +474,7 @@
          * Atualiza status de salvamento
          */
         updateSaveStatus(status) {
-            const $indicator = $('#cct-save-status');
+            const $indicator = $('#uenf-save-status');
             $indicator.removeClass('saved unsaved saving error auto-saved');
             $indicator.addClass(status);
             
@@ -493,7 +493,7 @@
          * Atualiza status de validação
          */
         updateValidationStatus(status) {
-            const $indicator = $('#cct-validation-status');
+            const $indicator = $('#uenf-validation-status');
             $indicator.removeClass('valid invalid error');
             $indicator.addClass(status);
             
@@ -530,15 +530,15 @@
          * Mostra modal de confirmação
          */
         showModal(message) {
-            $('#cct-confirm-message').text(message);
-            $('#cct-confirm-modal').show();
+            $('#uenf-confirm-message').text(message);
+            $('#uenf-confirm-modal').show();
         }
         
         /**
          * Esconde modal
          */
         hideModal() {
-            $('#cct-confirm-modal').hide();
+            $('#uenf-confirm-modal').hide();
             this.pendingAction = null;
         }
         
@@ -560,14 +560,20 @@
          * Mostra notificação
          */
         showNotification(type, message) {
-            const $notification = $(`
-                <div class="cct-notification cct-notification-${type}">
-                    <span class="cct-notification-message">${message}</span>
-                    <button type="button" class="cct-notification-close">&times;</button>
-                </div>
-            `);
+            // SECURITY FIX: JS-C01 — Substituído template literal passado ao construtor jQuery $()
+            // (que interpreta HTML e permite DOM XSS) por criação segura de elementos DOM.
+            // .text() escapa automaticamente o conteúdo, prevenindo execução de payloads HTML.
+            const safeType = String(type).replace(/[^a-z0-9-]/gi, '');
+            const $notification = $('<div></div>')
+                .addClass('uenf-notification uenf-notification-' + safeType)
+                .append(
+                    $('<span class="uenf-notification-message"></span>').text(message)
+                )
+                .append(
+                    $('<button type="button" class="uenf-notification-close"></button>').text('×')
+                );
             
-            $('#cct-notifications').append($notification);
+            $('#uenf-notifications').append($notification);
             
             // Auto-remover após 5 segundos
             setTimeout(() => {
@@ -577,7 +583,7 @@
             }, 5000);
             
             // Remover ao clicar no X
-            $notification.find('.cct-notification-close').on('click', () => {
+            $notification.find('.uenf-notification-close').on('click', () => {
                 $notification.fadeOut(() => {
                     $notification.remove();
                 });

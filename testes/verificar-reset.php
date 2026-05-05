@@ -13,9 +13,9 @@ if (!function_exists('get_theme_mods')) {
     function get_theme_mods() {
         // Simular algumas configurações que poderiam existir
         return array(
-            'cct_patterns_enabled' => true,
-            'cct_font_pairing_preset' => 'theme_default',
-            'cct_shadows_active_preset' => 'material'
+            'uenf_patterns_enabled' => true,
+            'uenf_font_pairing_preset' => 'theme_default',
+            'uenf_shadows_active_preset' => 'material'
         );
     }
 }
@@ -52,27 +52,27 @@ echo "2. VERIFICANDO CONFIGURAÇÕES ESPECÍFICAS:\n";
 echo "------------------------------------------\n";
 
 $configuracoes_importantes = array(
-    'cct_patterns_enabled' => array(
+    'uenf_patterns_enabled' => array(
         'nome' => 'Padrões Habilitados',
         'padrao' => true
     ),
-    'cct_font_pairing_preset' => array(
+    'uenf_font_pairing_preset' => array(
         'nome' => 'Preset de Fontes',
         'padrao' => 'theme_default'
     ),
-    'cct_shadows_active_preset' => array(
+    'uenf_shadows_active_preset' => array(
         'nome' => 'Preset de Sombras',
         'padrao' => 'material'
     ),
-    'cct_gradients_enabled' => array(
+    'uenf_gradients_enabled' => array(
         'nome' => 'Gradientes Habilitados',
         'padrao' => true
     ),
-    'cct_animations_enabled' => array(
+    'uenf_animations_enabled' => array(
         'nome' => 'Animações Habilitadas',
         'padrao' => true
     ),
-    'cct_dark_mode_enabled' => array(
+    'uenf_dark_mode_enabled' => array(
         'nome' => 'Modo Escuro',
         'padrao' => false
     )

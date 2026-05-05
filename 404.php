@@ -16,7 +16,7 @@ $css_404_path = get_template_directory() . '/assets/css/404.css';
 if (file_exists($css_404_path)) {
     $css_404_url = get_template_directory_uri() . '/assets/css/404.css';
     $css_404_version = filemtime($css_404_path);
-    wp_enqueue_style('cct-404-style', $css_404_url, array('cct-style'), $css_404_version);
+    wp_enqueue_style('uenf-404-style', $css_404_url, array('uenf-style'), $css_404_version);
 }
 ?>
 
@@ -413,7 +413,7 @@ if (file_exists($css_404_path)) {
     </section>
 
     <div class="container py-1">
-        <?php cct_custom_breadcrumb(); ?>
+        <?php uenf_custom_breadcrumb(); ?>
     </div>
 
     <section class="line-breadcrumb"></section>
@@ -423,8 +423,8 @@ if (file_exists($css_404_path)) {
             <!-- Cabeçalho do Erro -->
             <header class="error-header">
                 <div class="error-number" aria-hidden="true">404</div>
-                <h1 class="error-title"><?php echo esc_html(get_theme_mod('cct_404_title', 'Oops! Página não encontrada')); ?></h1>
-                <p class="error-subtitle"><?php echo wp_kses_post(get_theme_mod('cct_404_subtitle', 'A página que você está procurando pode ter sido removida, ter mudado de nome ou está temporariamente indisponível.')); ?></p>
+                <h1 class="error-title"><?php echo esc_html(get_theme_mod('uenf_404_title', 'Oops! Página não encontrada')); ?></h1>
+                <p class="error-subtitle"><?php echo wp_kses_post(get_theme_mod('uenf_404_subtitle', 'A página que você está procurando pode ter sido removida, ter mudado de nome ou está temporariamente indisponível.')); ?></p>
             </header>
 
             <!-- Ações Principais -->
@@ -466,27 +466,17 @@ if (file_exists($css_404_path)) {
 
             <!-- Conteúdo que pode interessar -->
             <?php  
-            // Verifica se a classe CCT_404_Customizer existe
-            if (class_exists('CCT_404_Customizer')) {
-                error_log('Classe CCT_404_Customizer encontrada');
-
+            // Verifica se a classe UENF_404_Customizer existe
+            if (class_exists('UENF_404_Customizer')) {
                 // Verifica se a função get_related_content existe na classe
-                if (method_exists('CCT_404_Customizer', 'get_related_content')) {
-                    error_log('Método get_related_content encontrado');
-                    
+                if (method_exists('UENF_404_Customizer', 'get_related_content')) {
                     // Obtém a consulta de posts relacionados
-                    $related_query = CCT_404_Customizer::get_related_content();
-                    
-                    // Log da consulta
-                    error_log('Tipo de retorno: ' . get_class($related_query));
-                    error_log('Número de posts encontrados: ' . $related_query->found_posts);
-                    error_log('Número de posts na consulta: ' . $related_query->post_count);
-                    
+                    $related_query = UENF_404_Customizer::get_related_content();
+
                     // Verifica se a consulta retornou resultados
                     if ($related_query->have_posts()) {
-                        error_log('A consulta retornou posts');
                         // Obtém o título da seção
-                        $related_title = get_theme_mod('cct_404_related_title', 'Conteúdo que pode interessar');
+                        $related_title = get_theme_mod('uenf_404_related_title', 'Conteúdo que pode interessar');
                         ?>
                         <section class="related-content-section py-5">
                             <div class="container">
@@ -525,14 +515,8 @@ if (file_exists($css_404_path)) {
                             </div>
                         </section>
                         <?php
-                    } else {
-                        error_log('Nenhum post relacionado encontrado.');
                     }
-                } else {
-                    error_log('O método get_related_content não existe na classe CCT_404_Customizer');
                 }
-            } else {
-                error_log('A classe CCT_404_Customizer não foi encontrada');
             }
             ?>
 

@@ -13,8 +13,8 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/build-error.log');
 
 // Define constantes
-define('CCT_THEME_DIR', dirname(dirname(__DIR__)));
-define('CCT_CSS_DIR', CCT_THEME_DIR . '/css');
+define('UENF_THEME_DIR', dirname(dirname(__DIR__)));
+define('UENF_CSS_DIR', UENF_THEME_DIR . '/css');
 
 // Carrega configurações
 $config = load_config();
@@ -119,7 +119,7 @@ function process_css_files($config) {
     
     // Processa cada arquivo
     foreach ($config['files'] as $file) {
-        $file_path = CCT_CSS_DIR . '/' . ltrim($file, '/');
+        $file_path = UENF_CSS_DIR . '/' . ltrim($file, '/');
         
         if (!file_exists($file_path)) {
             echo "\e[33m⚠️  Arquivo não encontrado: $file_path\e[0m\n";
@@ -162,7 +162,7 @@ function process_css_files($config) {
     }
     
     // Salva o arquivo
-    $output_file = CCT_CSS_DIR . '/' . ltrim($config['output_file'], '/');
+    $output_file = UENF_CSS_DIR . '/' . ltrim($config['output_file'], '/');
     $saved = file_put_contents($output_file, $output);
     
     if ($saved === false) {

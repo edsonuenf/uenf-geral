@@ -10,7 +10,7 @@
  * - Ferramentas de espaçamento
  * - Layout builder visual
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe para gerenciamento de layout
  */
-class CCT_Layout_Manager {
+class UENF_Layout_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -37,7 +37,7 @@ class CCT_Layout_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_layout_';
+    private $prefix = 'uenf_layout_';
     
     /**
      * Configurações de grid
@@ -453,7 +453,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_grid_columns',
+                'uenf_grid_columns',
                 array(
                     'label' => __('Número de Colunas', 'cct'),
                     'description' => __('Define quantas colunas o grid terá.', 'cct'),
@@ -471,7 +471,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_grid_gutter',
+                'uenf_grid_gutter',
                 array(
                     'label' => __('Espaçamento entre Colunas (px)', 'cct'),
                     'description' => __('Espaço entre as colunas do grid.', 'cct'),
@@ -489,7 +489,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_grid_max_width',
+                'uenf_grid_max_width',
                 array(
                     'label' => __('Largura Máxima (px)', 'cct'),
                     'description' => __('Largura máxima do container principal.', 'cct'),
@@ -518,7 +518,7 @@ class CCT_Layout_Manager {
         
         // Preview do grid (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_grid_preview',
+            'uenf_grid_preview',
             array(
                 'label' => __('Preview do Grid', 'cct'),
                 'section' => $this->prefix . 'grid_system',
@@ -542,7 +542,7 @@ class CCT_Layout_Manager {
         $this->wp_customize->add_control(
             new WP_Customize_Range_Value_Control(
                 $this->wp_customize,
-                'cct_container_padding',
+                'uenf_container_padding',
                 array(
                     'label' => __('Padding dos Containers (px)', 'cct'),
                     'description' => __('Espaçamento interno dos containers.', 'cct'),
@@ -559,7 +559,7 @@ class CCT_Layout_Manager {
         
         // Gerenciador de containers (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_container_manager',
+            'uenf_container_manager',
             array(
                 'label' => __('Gerenciador de Containers', 'cct'),
                 'section' => $this->prefix . 'containers',
@@ -572,7 +572,7 @@ class CCT_Layout_Manager {
         
         // Controles de breakpoints (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_breakpoint_manager',
+            'uenf_breakpoint_manager',
             array(
                 'label' => __('Gerenciador de Breakpoints', 'cct'),
                 'section' => $this->prefix . 'breakpoints',
@@ -585,7 +585,7 @@ class CCT_Layout_Manager {
         
         // Controles de espaçamentos (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_spacing_scale',
+            'uenf_spacing_scale',
             array(
                 'label' => __('Escala de Espaçamentos', 'cct'),
                 'description' => __('Configure os valores da escala de espaçamentos.', 'cct'),
@@ -599,7 +599,7 @@ class CCT_Layout_Manager {
         
         // Layout builder (usando controle padrão temporariamente)
         $this->wp_customize->add_control(
-            'cct_layout_builder',
+            'uenf_layout_builder',
             array(
                 'label' => __('Construtor Visual de Layout', 'cct'),
                 'section' => $this->prefix . 'layout_builder',
@@ -625,12 +625,12 @@ class CCT_Layout_Manager {
      * Registra hooks do sistema
      */
     private function register_layout_hooks() {
-        add_action('wp_ajax_cct_save_layout', array($this, 'handle_layout_save'));
-        add_action('wp_ajax_cct_load_layout', array($this, 'handle_layout_load'));
-        add_action('wp_ajax_cct_delete_layout', array($this, 'handle_layout_delete'));
-        add_shortcode('cct_container', array($this, 'container_shortcode'));
-        add_shortcode('cct_row', array($this, 'row_shortcode'));
-        add_shortcode('cct_col', array($this, 'column_shortcode'));
+        add_action('wp_ajax_uenf_save_layout', array($this, 'handle_layout_save'));
+        add_action('wp_ajax_uenf_load_layout', array($this, 'handle_layout_load'));
+        add_action('wp_ajax_uenf_delete_layout', array($this, 'handle_layout_delete'));
+        add_shortcode('uenf_container', array($this, 'container_shortcode'));
+        add_shortcode('uenf_row', array($this, 'row_shortcode'));
+        add_shortcode('uenf_col', array($this, 'column_shortcode'));
     }
     
     /**
@@ -638,7 +638,7 @@ class CCT_Layout_Manager {
      */
     public function enqueue_controls_scripts() {
         wp_enqueue_script(
-            'cct-layout-manager',
+            'uenf-layout-manager',
             get_template_directory_uri() . '/js/customizer-layout-manager.js',
             array('jquery', 'customize-controls'),
             '1.0.0',
@@ -646,19 +646,19 @@ class CCT_Layout_Manager {
         );
         
         wp_enqueue_style(
-            'cct-layout-manager',
+            'uenf-layout-manager',
             get_template_directory_uri() . '/css/customizer-layout-manager.css',
             array(),
             '1.0.0'
         );
         
-        wp_localize_script('cct-layout-manager', 'cctLayoutManager', array(
+        wp_localize_script('uenf-layout-manager', 'cctLayoutManager', array(
             'gridSettings' => $this->grid_settings,
             'breakpoints' => $this->breakpoints,
             'containerPresets' => $this->container_presets,
             'layoutSections' => $this->layout_sections,
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_layout_manager'),
+            'nonce' => wp_create_nonce('uenf_layout_manager'),
             'strings' => array(
                 'saveSuccess' => __('Layout salvo com sucesso!', 'cct'),
                 'saveError' => __('Erro ao salvar layout.', 'cct'),
@@ -674,7 +674,7 @@ class CCT_Layout_Manager {
      */
     public function enqueue_preview_scripts() {
         wp_enqueue_script(
-            'cct-layout-preview',
+            'uenf-layout-preview',
             get_template_directory_uri() . '/js/customizer-layout-preview.js',
             array('jquery', 'customize-preview'),
             '1.0.0',
@@ -687,8 +687,8 @@ class CCT_Layout_Manager {
      */
     public function enqueue_frontend_scripts() {
         wp_enqueue_style(
-            'cct-layout-system',
-            get_template_directory_uri() . '/css/cct-layout-system.css',
+            'uenf-layout-system',
+            get_template_directory_uri() . '/css/uenf-layout-system.css',
             array(),
             '1.0.0'
         );
@@ -725,17 +725,17 @@ class CCT_Layout_Manager {
      */
     public function container_shortcode($atts, $content = '') {
         $atts = shortcode_atts(array(
-            'type' => get_theme_mod('cct_default_container', 'fixed'),
+            'type' => get_theme_mod('uenf_default_container', 'fixed'),
             'class' => '',
             'fluid' => false
-        ), $atts, 'cct_container');
+        ), $atts, 'uenf_container');
         
-        $classes = array('cct-container');
+        $classes = array('uenf-container');
         
         if ($atts['fluid'] || $atts['type'] === 'fluid') {
-            $classes[] = 'cct-container-fluid';
+            $classes[] = 'uenf-container-fluid';
         } else {
-            $classes[] = 'cct-container-' . $atts['type'];
+            $classes[] = 'uenf-container-' . $atts['type'];
         }
         
         if (!empty($atts['class'])) {
@@ -753,9 +753,9 @@ class CCT_Layout_Manager {
             'class' => '',
             'align' => '',
             'justify' => ''
-        ), $atts, 'cct_row');
+        ), $atts, 'uenf_row');
         
-        $classes = array('cct-row');
+        $classes = array('uenf-row');
         
         if (!empty($atts['align'])) {
             $classes[] = 'align-items-' . $atts['align'];
@@ -783,16 +783,16 @@ class CCT_Layout_Manager {
             'lg' => '',
             'xl' => '',
             'class' => ''
-        ), $atts, 'cct_col');
+        ), $atts, 'uenf_col');
         
-        $classes = array('cct-col');
+        $classes = array('uenf-col');
         
         foreach (array('xs', 'sm', 'md', 'lg', 'xl') as $breakpoint) {
             if (!empty($atts[$breakpoint])) {
                 if ($breakpoint === 'xs') {
-                    $classes[] = 'cct-col-' . $atts[$breakpoint];
+                    $classes[] = 'uenf-col-' . $atts[$breakpoint];
                 } else {
-                    $classes[] = 'cct-col-' . $breakpoint . '-' . $atts[$breakpoint];
+                    $classes[] = 'uenf-col-' . $breakpoint . '-' . $atts[$breakpoint];
                 }
             }
         }
@@ -808,7 +808,7 @@ class CCT_Layout_Manager {
      * Manipula salvamento de layout
      */
     public function handle_layout_save() {
-        check_ajax_referer('cct_layout_manager', 'nonce');
+        check_ajax_referer('uenf_layout_manager', 'nonce');
         
         if (!current_user_can('customize')) {
             wp_die(__('Permissão negada.', 'cct'));
@@ -824,10 +824,10 @@ class CCT_Layout_Manager {
         }
         
         // Salva layout
-        $custom_layouts = json_decode(get_theme_mod('cct_custom_layouts', '[]'), true);
+        $custom_layouts = json_decode(get_theme_mod('uenf_custom_layouts', '[]'), true);
         $custom_layouts[$layout_name] = $decoded_data;
         
-        set_theme_mod('cct_custom_layouts', json_encode($custom_layouts));
+        set_theme_mod('uenf_custom_layouts', json_encode($custom_layouts));
         
         wp_send_json_success(array(
             'message' => __('Layout salvo com sucesso!', 'cct'),
@@ -847,41 +847,41 @@ class CCT_Layout_Manager {
      * Gera CSS do grid system
      */
     public function generate_grid_css() {
-        $columns = get_theme_mod('cct_grid_columns', 12);
-        $gutter = get_theme_mod('cct_grid_gutter', 30);
-        $max_width = get_theme_mod('cct_grid_max_width', 1200);
-        $alignment = get_theme_mod('cct_grid_alignment', 'center');
+        $columns = get_theme_mod('uenf_grid_columns', 12);
+        $gutter = get_theme_mod('uenf_grid_gutter', 30);
+        $max_width = get_theme_mod('uenf_grid_max_width', 1200);
+        $alignment = get_theme_mod('uenf_grid_alignment', 'center');
         
         $css = "";
         
         // Container base
-        $css .= ".cct-container { max-width: {$max_width}px; margin: 0 ";
+        $css .= ".uenf-container { max-width: {$max_width}px; margin: 0 ";
         $css .= ($alignment === 'center') ? 'auto' : (($alignment === 'left') ? '0 auto 0 0' : '0 0 0 auto');
         $css .= "; padding: 0 " . ($gutter / 2) . "px; }\n";
         
         // Row
-        $css .= ".cct-row { display: flex; flex-wrap: wrap; margin: 0 -" . ($gutter / 2) . "px; }\n";
+        $css .= ".uenf-row { display: flex; flex-wrap: wrap; margin: 0 -" . ($gutter / 2) . "px; }\n";
         
         // Colunas
         for ($i = 1; $i <= $columns; $i++) {
             $width = ($i / $columns) * 100;
-            $css .= ".cct-col-{$i} { flex: 0 0 {$width}%; max-width: {$width}%; padding: 0 " . ($gutter / 2) . "px; }\n";
+            $css .= ".uenf-col-{$i} { flex: 0 0 {$width}%; max-width: {$width}%; padding: 0 " . ($gutter / 2) . "px; }\n";
         }
         
         // Breakpoints responsivos
         foreach ($this->breakpoints as $bp_key => $breakpoint) {
-            if (!get_theme_mod("cct_breakpoint_{$bp_key}_enabled", $breakpoint['default'])) {
+            if (!get_theme_mod("uenf_breakpoint_{$bp_key}_enabled", $breakpoint['default'])) {
                 continue;
             }
             
-            $min_width = get_theme_mod("cct_breakpoint_{$bp_key}_width", $breakpoint['min_width']);
+            $min_width = get_theme_mod("uenf_breakpoint_{$bp_key}_width", $breakpoint['min_width']);
             
             if ($min_width > 0) {
                 $css .= "@media (min-width: {$min_width}px) {\n";
                 
                 for ($i = 1; $i <= $columns; $i++) {
                     $width = ($i / $columns) * 100;
-                    $css .= "  .cct-col-{$bp_key}-{$i} { flex: 0 0 {$width}%; max-width: {$width}%; }\n";
+                    $css .= "  .uenf-col-{$bp_key}-{$i} { flex: 0 0 {$width}%; max-width: {$width}%; }\n";
                 }
                 
                 $css .= "}\n";

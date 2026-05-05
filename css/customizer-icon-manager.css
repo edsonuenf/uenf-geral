@@ -4,7 +4,7 @@
  */
 
 /* Container principal do gerenciador de ícones */
-.cct-icon-manager {
+.uenf-icon-manager {
     padding: 15px;
     background: #fff;
     border: 1px solid #ddd;
@@ -12,11 +12,11 @@
 }
 
 /* Navegador de categorias */
-.cct-icon-category-browser {
+.uenf-icon-category-browser {
     margin-bottom: 20px;
 }
 
-.cct-icon-category-browser select {
+.uenf-icon-category-browser select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
@@ -24,7 +24,7 @@
 }
 
 /* Biblioteca de ícones */
-.cct-icon-library {
+.uenf-icon-library {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
     gap: 10px;
@@ -35,7 +35,7 @@
     border-radius: 3px;
 }
 
-.cct-icon-item {
+.uenf-icon-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,30 +46,30 @@
     transition: all 0.2s ease;
 }
 
-.cct-icon-item:hover {
+.uenf-icon-item:hover {
     border-color: #0073aa;
     background-color: #f0f8ff;
 }
 
-.cct-icon-item.selected {
+.uenf-icon-item.selected {
     border-color: #0073aa;
     background-color: #e6f3ff;
 }
 
-.cct-icon-item i {
+.uenf-icon-item i {
     font-size: 24px;
     margin-bottom: 5px;
     color: #666;
 }
 
-.cct-icon-item span {
+.uenf-icon-item span {
     font-size: 10px;
     text-align: center;
     color: #666;
 }
 
 /* Upload de ícones */
-.cct-icon-upload {
+.uenf-icon-upload {
     margin-top: 20px;
     padding: 20px;
     border: 2px dashed #ddd;
@@ -78,28 +78,28 @@
     background: #fafafa;
 }
 
-.cct-icon-upload.dragover {
+.uenf-icon-upload.dragover {
     border-color: #0073aa;
     background-color: #f0f8ff;
 }
 
-.cct-icon-upload input[type="file"] {
+.uenf-icon-upload input[type="file"] {
     margin: 10px 0;
 }
 
 /* Gerenciador de ícones personalizados */
-.cct-custom-icon-manager {
+.uenf-custom-icon-manager {
     margin-top: 20px;
 }
 
-.cct-custom-icon-list {
+.uenf-custom-icon-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 10px;
     margin-top: 15px;
 }
 
-.cct-custom-icon {
+.uenf-custom-icon {
     position: relative;
     padding: 10px;
     border: 1px solid #ddd;
@@ -108,12 +108,12 @@
     background: #fff;
 }
 
-.cct-custom-icon img {
+.uenf-custom-icon img {
     max-width: 40px;
     max-height: 40px;
 }
 
-.cct-custom-icon .delete-icon {
+.uenf-custom-icon .delete-icon {
     position: absolute;
     top: -5px;
     right: -5px;
@@ -128,26 +128,26 @@
     line-height: 1;
 }
 
-.cct-custom-icon .delete-icon:hover {
+.uenf-custom-icon .delete-icon:hover {
     background: #a00;
 }
 
 /* Configurações de ícones */
-.cct-icon-settings {
+.uenf-icon-settings {
     margin-top: 20px;
     padding: 15px;
     background: #f9f9f9;
     border-radius: 4px;
 }
 
-.cct-icon-settings label {
+.uenf-icon-settings label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
 }
 
-.cct-icon-settings input,
-.cct-icon-settings select {
+.uenf-icon-settings input,
+.uenf-icon-settings select {
     width: 100%;
     padding: 6px;
     border: 1px solid #ddd;
@@ -157,12 +157,12 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-    .cct-icon-library {
+    .uenf-icon-library {
         grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
         gap: 8px;
     }
     
-    .cct-custom-icon-list {
+    .uenf-custom-icon-list {
         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
     }
 }

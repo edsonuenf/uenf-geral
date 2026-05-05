@@ -1,17 +1,17 @@
 <?php
 // Obter configurações do Customizer
-$placeholder = get_theme_mod('cct_search_placeholder', 'Buscar...');
-$button_text = get_theme_mod('cct_search_button_text', 'Buscar');
+$placeholder = get_theme_mod('uenf_search_placeholder', 'Buscar...');
+$button_text = get_theme_mod('uenf_search_button_text', 'Buscar');
 // Verificar se pelo menos um dispositivo tem texto ativado
-$show_text_desktop = get_theme_mod('cct_search_show_button_text_desktop', true);
-$show_text_tablet = get_theme_mod('cct_search_show_button_text_tablet', true);
-$show_text_mobile = get_theme_mod('cct_search_show_button_text_mobile', false);
+$show_text_desktop = get_theme_mod('uenf_search_show_button_text_desktop', true);
+$show_text_tablet = get_theme_mod('uenf_search_show_button_text_tablet', true);
+$show_text_mobile = get_theme_mod('uenf_search_show_button_text_mobile', false);
 $show_button_text = $show_text_desktop || $show_text_tablet || $show_text_mobile;
 
 // Configurações da busca retrátil
-$is_retractable = get_theme_mod('cct_search_retractable', false);
-$retractable_icon = get_theme_mod('cct_search_retractable_icon', 'fas fa-search');
-$retractable_position = get_theme_mod('cct_search_retractable_position', 'top-right');
+$is_retractable = get_theme_mod('uenf_search_retractable', false);
+$retractable_icon = get_theme_mod('uenf_search_retractable_icon', 'fas fa-search');
+$retractable_position = get_theme_mod('uenf_search_retractable_position', 'top-right');
 ?>
 
 <?php if ($is_retractable) : ?>

@@ -24,11 +24,11 @@ require_once 'inc/customizer/class-pattern-library-manager.php';
 // Testar a classe
 try {
     $wp_customize = new WP_Customize_Manager();
-    $pattern_manager = new CCT_Pattern_Library_Manager();
+    $pattern_manager = new UENF_Pattern_Library_Manager();
     $pattern_manager->register($wp_customize);
     
     echo "✅ Sucesso! A propriedade \$panel_id foi corrigida e a classe funciona corretamente.\n";
-    echo "A propriedade \$panel_id agora está definida como 'cct_design_panel'.\n";
+    echo "A propriedade \$panel_id agora está definida como 'uenf_design_panel'.\n";
     
 } catch (Error $e) {
     echo "❌ Erro: " . $e->getMessage() . "\n";

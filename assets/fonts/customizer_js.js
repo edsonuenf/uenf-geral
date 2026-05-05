@@ -33,12 +33,12 @@
         
         if (googleFonts[fontFamily]) {
             // Remove fonte anterior se existir
-            $('#cct-preview-google-font').remove();
+            $('#uenf-preview-google-font').remove();
             
             // Adiciona nova fonte
             var fontUrl = 'https://fonts.googleapis.com/css2?family=' + googleFonts[fontFamily] + '&display=swap';
             $('<link>', {
-                id: 'cct-preview-google-font',
+                id: 'uenf-preview-google-font',
                 rel: 'stylesheet',
                 href: fontUrl
             }).appendTo('head');
@@ -48,7 +48,7 @@
     // Função para atualizar CSS Variables
     function updateCSSVariable(property, value, unit) {
         unit = unit || '';
-        document.documentElement.style.setProperty('--cct-' + property, value + unit);
+        document.documentElement.style.setProperty('--uenf-' + property, value + unit);
     }
     
     // Família de fonte

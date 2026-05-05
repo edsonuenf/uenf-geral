@@ -38,9 +38,9 @@ $exibir_filtro = count($cats_reais) >= 1;
         <?php endif; ?>
 
         <?php if ( $exibir_filtro ) : ?>
-        <div class="uenf-posts-filter mb-4">
-            <label for="uenf-cat-filter" class="uenf-filter-label me-2">Filtrar:</label>
-            <select id="uenf-cat-filter" class="uenf-cat-select">
+        <div class="posts-list-filter mb-4">
+            <label for="posts-cat-filter" class="posts-list-filter-label">Filtrar:</label>
+            <select id="posts-cat-filter" class="posts-list-cat-select">
                 <option value="all">Todos</option>
                 <?php foreach ( $cats_reais as $cat ) : ?>
                     <option value="cat-<?php echo esc_attr($cat->term_id); ?>">
@@ -61,7 +61,7 @@ $exibir_filtro = count($cats_reais) >= 1;
             }
             ?>
 
-            <div id="uenf-posts-list">
+            <div id="posts-list-container">
             <?php while ( have_posts() ) : the_post();
                 $post_cats     = wp_get_post_categories(get_the_ID(), ['fields' => 'ids']);
                 $data_cats_str = implode(' ', array_map(fn($id) => 'cat-' . $id, $post_cats));
@@ -70,16 +70,18 @@ $exibir_filtro = count($cats_reais) >= 1;
                     ? mb_substr($excerpt_raw, 0, 500)
                     : $excerpt_raw;
             ?>
-                <article class="uenf-post-item" data-cats="<?php echo esc_attr($data_cats_str); ?>">
-                    <span class="uenf-post-date"><i class="fas fa-calendar me-1" aria-hidden="true"></i><?php echo get_the_date('d \d\e F \d\e Y'); ?></span>
-                    <h2 class="uenf-post-title">
-                        <a href="<?php echo esc_url(get_permalink()); ?>"><?php the_title(); ?></a>
+                <article class="posts-list-item" data-cats="<?php echo esc_attr($data_cats_str); ?>">
+                    <span class="posts-list-date">
+                        <i class="fas fa-calendar me-1" aria-hidden="true"></i><?php echo get_the_date('d \d\e F \d\e Y'); ?>
+                    </span>
+                    <h2 class="posts-list-title">
+                        <a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html( get_the_title() ); ?></a>
                     </h2>
                     <?php if ($excerpt_short) : ?>
-                        <p class="uenf-post-excerpt" data-excerpt="<?php echo esc_attr($excerpt_short); ?>"></p>
+                        <p class="posts-list-excerpt" data-excerpt="<?php echo esc_attr($excerpt_short); ?>"></p>
                     <?php endif; ?>
-                    <div class="result-actions">
-                        <a href="<?php echo esc_url(get_permalink()); ?>" class="btn btn-outline-primary btn-sm read-more-btn">
+                    <div class="posts-list-actions">
+                        <a href="<?php echo esc_url(get_permalink()); ?>" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>Ler Mais
                         </a>
                     </div>
@@ -87,7 +89,7 @@ $exibir_filtro = count($cats_reais) >= 1;
             <?php endwhile; ?>
             </div>
 
-            <p id="uenf-no-results" class="uenf-no-results" hidden>
+            <p id="posts-list-empty" class="posts-list-empty" hidden>
                 Nenhum post encontrado nesta categoria.
             </p>
 
@@ -100,35 +102,6 @@ $exibir_filtro = count($cats_reais) >= 1;
     </div>
 </main>
 
-<style>
-.uenf-posts-filter { display:flex; align-items:center; }
-.uenf-filter-label { font-weight:600; font-size:.9rem; color:var(--bs-uenf-blue,#1d3771); }
-.uenf-cat-select {
-    font-size:.9rem;
-    border:2px solid var(--bs-uenf-blue,#1d3771);
-    border-radius:4px;
-    padding:.3rem 2rem .3rem .6rem;
-    color:var(--bs-uenf-blue,#1d3771);
-    background:#fff;
-    cursor:pointer;
-}
-.uenf-cat-select:focus { outline:none; box-shadow:0 0 0 3px rgba(29,55,113,.2); }
-
-.uenf-post-item {
-    background: #fff;
-    border: 1px solid #e0e6f0;
-    border-radius: 6px;
-    padding: 1.5rem;
-    margin-bottom: 1.25rem;
-}
-.uenf-post-date { font-size:.78rem; color:#6c757d; text-transform:uppercase; letter-spacing:.04em; display:block; margin-bottom:.35rem; }
-.uenf-post-title { font-size:32px; font-weight:700; line-height:51px; margin:0 0 .5rem; }
-.uenf-post-title a { color:#26557d; text-decoration:none; }
-.uenf-post-title a:hover { text-decoration:underline; }
-.uenf-post-excerpt { font-size:.9rem; color:#495057; margin:0 0 1rem; line-height:1.6; }
-.uenf-no-results { color:#6c757d; font-style:italic; }
-</style>
-
 <script>
 (function () {
     // Excerpt responsivo: desktop 500 / tablet 400 / mobile 80
@@ -137,14 +110,14 @@ $exibir_filtro = count($cats_reais) >= 1;
     }
     function getLimit() {
         var w = window.innerWidth;
-        if (w <= 576)  return 80;   // celular
-        if (w <= 992)  return 180;  // tablet
-        if (w <= 1200) return 310;  // notebook
-        return 500;                  // desktop
+        if (w <= 576)  return 80;
+        if (w <= 992)  return 180;
+        if (w <= 1200) return 310;
+        return 500;
     }
     function applyExcerpts() {
         var limit = getLimit();
-        document.querySelectorAll('.uenf-post-excerpt[data-excerpt]').forEach(function (p) {
+        document.querySelectorAll('.posts-list-excerpt[data-excerpt]').forEach(function (p) {
             p.textContent = truncate(p.dataset.excerpt, limit);
         });
     }
@@ -155,10 +128,10 @@ $exibir_filtro = count($cats_reais) >= 1;
         resizeTimer = setTimeout(applyExcerpts, 100);
     });
 
-    var select = document.getElementById('uenf-cat-filter');
+    var select = document.getElementById('posts-cat-filter');
     if (!select) return;
-    var items     = Array.from(document.querySelectorAll('.uenf-post-item'));
-    var noResults = document.getElementById('uenf-no-results');
+    var items     = Array.from(document.querySelectorAll('.posts-list-item'));
+    var noResults = document.getElementById('posts-list-empty');
     select.addEventListener('change', function () {
         var val = this.value;
         var visiveis = 0;

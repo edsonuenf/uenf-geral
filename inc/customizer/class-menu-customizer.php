@@ -5,7 +5,7 @@
  * Gerencia todas as configurações relacionadas ao menu de navegação,
  * incluindo estilo, ícones, cores e comportamento.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe para configurações do menu no customizer
  */
-class CCT_Menu_Customizer extends CCT_Customizer_Base {
+class UENF_Menu_Customizer extends UENF_Customizer_Base {
     
     /**
      * Inicializa as configurações do menu
@@ -54,7 +54,7 @@ class CCT_Menu_Customizer extends CCT_Customizer_Base {
     private function add_menu_style_setting() {
         // Setting
         $this->add_setting('menu_style', array(
-            'default' => defined('CCT_DEFAULT_MENU_STYLE') ? CCT_DEFAULT_MENU_STYLE : 'modern',
+            'default' => defined('UENF_DEFAULT_MENU_STYLE') ? UENF_DEFAULT_MENU_STYLE : 'modern',
             'sanitize_callback' => array($this, 'sanitize_menu_style'),
             'transport' => 'refresh',
         ));
@@ -79,7 +79,7 @@ class CCT_Menu_Customizer extends CCT_Customizer_Base {
     private function add_hierarchy_icons_setting() {
         // Setting
         $this->add_setting('menu_show_hierarchy_icons', array(
-            'default' => defined('CCT_DEFAULT_MENU_HIERARCHY_ICONS') ? CCT_DEFAULT_MENU_HIERARCHY_ICONS : true,
+            'default' => defined('UENF_DEFAULT_MENU_HIERARCHY_ICONS') ? UENF_DEFAULT_MENU_HIERARCHY_ICONS : true,
             'sanitize_callback' => 'wp_validate_boolean',
             'transport' => 'postMessage',
         ));
@@ -106,7 +106,7 @@ class CCT_Menu_Customizer extends CCT_Customizer_Base {
             return $input;
         }
         
-        return defined('CCT_DEFAULT_MENU_STYLE') ? CCT_DEFAULT_MENU_STYLE : 'modern';
+        return defined('UENF_DEFAULT_MENU_STYLE') ? UENF_DEFAULT_MENU_STYLE : 'modern';
     }
     
     /**

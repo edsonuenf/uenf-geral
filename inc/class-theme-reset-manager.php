@@ -57,7 +57,7 @@ class UENF_Theme_Reset_Manager {
         $wp_customize->add_section('uenf_reset_section', array(
             'title' => '🔄 Reset de Configurações',
             'description' => 'Restaure configurações para valores padrão. <strong>Atenção:</strong> Esta ação não pode ser desfeita.',
-            'panel' => 'cct_theme_uenf',
+            'panel' => 'uenf_theme_uenf',
             'priority' => 999,
         ));
         
@@ -128,8 +128,8 @@ class UENF_Theme_Reset_Manager {
      * Obtém extensões disponíveis
      */
     public function get_available_extensions() {
-        if (function_exists('cct_extension_manager')) {
-            return cct_extension_manager()->get_all_extensions();
+        if (function_exists('uenf_extension_manager')) {
+            return uenf_extension_manager()->get_all_extensions();
         }
         return array();
     }
@@ -213,8 +213,8 @@ class UENF_Theme_Reset_Manager {
             }
 
             // Reaplicar padrões de ativação das extensões
-            if (function_exists('cct_extension_manager')) {
-                cct_extension_manager()->enforce_default_activation();
+            if (function_exists('uenf_extension_manager')) {
+                uenf_extension_manager()->enforce_default_activation();
             }
             
             // Log da ação
@@ -237,8 +237,8 @@ class UENF_Theme_Reset_Manager {
      */
     public function reset_extension_settings($extension_id) {
         try {
-            if (function_exists('cct_extension_manager')) {
-                return cct_extension_manager()->reset_extension_settings($extension_id);
+            if (function_exists('uenf_extension_manager')) {
+                return uenf_extension_manager()->reset_extension_settings($extension_id);
             }
             return false;
             
@@ -265,8 +265,8 @@ class UENF_Theme_Reset_Manager {
             delete_option('uenf_extensions_config');
 
             // Reaplicar padrões de ativação das extensões
-            if (function_exists('cct_extension_manager')) {
-                cct_extension_manager()->enforce_default_activation();
+            if (function_exists('uenf_extension_manager')) {
+                uenf_extension_manager()->enforce_default_activation();
             }
             
             // Log da ação
@@ -325,10 +325,16 @@ class UENF_Theme_Reset_Manager {
     private function cleanup_old_backups() {
         global $wpdb;
         
+        // SECURITY FIX: PHP-A05 — Adicionado $wpdb->prepare() conforme WordPress Coding Standards.
+        // O LIKE era hardcoded (sem variável de usuário), mas o padrão sem prepare() em código de
+        // componente crítico (reset manager) é perigoso e viola as boas práticas do WordPress.
         $backups = $wpdb->get_results(
-            "SELECT option_name FROM {$wpdb->options} 
-             WHERE option_name LIKE 'uenf_theme_backup_%' 
-             ORDER BY option_name DESC"
+            $wpdb->prepare(
+                "SELECT option_name FROM {$wpdb->options}
+                 WHERE option_name LIKE %s
+                 ORDER BY option_name DESC",
+                'uenf_theme_backup_%'
+            )
         );
         
         if (count($backups) > 5) {

@@ -11,7 +11,7 @@
  * - Configurações avançadas
  * - Integração com todos os módulos
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do gerenciador de modo escuro/claro
  */
-class CCT_Dark_Mode_Manager {
+class UENF_Dark_Mode_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -38,7 +38,7 @@ class CCT_Dark_Mode_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_dark_mode_';
+    private $prefix = 'uenf_dark_mode_';
     
     /**
      * Configurações de modo escuro
@@ -91,14 +91,14 @@ class CCT_Dark_Mode_Manager {
         add_action('wp_head', array($this, 'output_theme_color_meta'), 1);
         
         // AJAX handlers
-        add_action('wp_ajax_cct_toggle_dark_mode', array($this, 'ajax_toggle_dark_mode'));
-        add_action('wp_ajax_nopriv_cct_toggle_dark_mode', array($this, 'ajax_toggle_dark_mode'));
-        add_action('wp_ajax_cct_save_dark_mode_preference', array($this, 'ajax_save_preference'));
-        add_action('wp_ajax_nopriv_cct_save_dark_mode_preference', array($this, 'ajax_save_preference'));
+        add_action('wp_ajax_uenf_toggle_dark_mode', array($this, 'ajax_toggle_dark_mode'));
+        add_action('wp_ajax_nopriv_uenf_toggle_dark_mode', array($this, 'ajax_toggle_dark_mode'));
+        add_action('wp_ajax_uenf_save_dark_mode_preference', array($this, 'ajax_save_preference'));
+        add_action('wp_ajax_nopriv_uenf_save_dark_mode_preference', array($this, 'ajax_save_preference'));
         
         // Shortcodes
-        add_shortcode('cct_dark_mode_toggle', array($this, 'dark_mode_toggle_shortcode'));
-        add_shortcode('cct_theme_indicator', array($this, 'theme_indicator_shortcode'));
+        add_shortcode('uenf_dark_mode_toggle', array($this, 'dark_mode_toggle_shortcode'));
+        add_shortcode('uenf_theme_indicator', array($this, 'theme_indicator_shortcode'));
         
         // Body class
         add_filter('body_class', array($this, 'add_body_classes'));
@@ -307,19 +307,28 @@ class CCT_Dark_Mode_Manager {
             'sanitize_callback' => array($this, 'sanitize_time'),
         ));
         
+        // Cores que aceitam valores rgba (não podem usar sanitize_hex_color)
+        $rgba_keys = array('shadow', 'overlay');
+
         // Cores modo claro
         foreach ($this->color_palettes['light'] as $color_key => $color_value) {
+            $sanitize = in_array($color_key, $rgba_keys, true)
+                ? array( $this, 'sanitize_rgba_color' )
+                : 'sanitize_hex_color';
             $this->add_setting('light_' . $color_key, array(
-                'default' => $color_value,
-                'sanitize_callback' => 'sanitize_hex_color',
+                'default'           => $color_value,
+                'sanitize_callback' => $sanitize,
             ));
         }
-        
+
         // Cores modo escuro
         foreach ($this->color_palettes['dark'] as $color_key => $color_value) {
+            $sanitize = in_array($color_key, $rgba_keys, true)
+                ? array( $this, 'sanitize_rgba_color' )
+                : 'sanitize_hex_color';
             $this->add_setting('dark_' . $color_key, array(
-                'default' => $color_value,
-                'sanitize_callback' => 'sanitize_hex_color',
+                'default'           => $color_value,
+                'sanitize_callback' => $sanitize,
             ));
         }
         
@@ -588,6 +597,22 @@ class CCT_Dark_Mode_Manager {
         $value = floatval($value);
         return max(0.1, min(2.0, $value));
     }
+
+    /**
+     * Sanitiza valores rgba — aceita rgba(r,g,b,a) e rgb(r,g,b) apenas
+     */
+    public function sanitize_rgba_color($value) {
+        $value = trim($value);
+        // Valida rgb/rgba com canais RGB restritos a 0-255 e alpha a 0-1
+        $channel = '(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)';
+        $alpha   = '(?:1(?:\.0+)?|0?\.\d+|0)';
+        $pattern = '/^rgba?\(\s*' . $channel . '\s*,\s*' . $channel . '\s*,\s*' . $channel
+                 . '(?:\s*,\s*' . $alpha . ')?\s*\)$/i';
+        if ( preg_match( $pattern, $value ) ) {
+            return $value;
+        }
+        return '';
+    }
     
     /**
      * Enfileira scripts e estilos
@@ -595,25 +620,25 @@ class CCT_Dark_Mode_Manager {
     public function enqueue_scripts() {
         // CSS do modo escuro
         wp_enqueue_style(
-            'cct-dark-mode',
-            get_template_directory_uri() . '/css/cct-dark-mode.css',
+            'uenf-dark-mode',
+            get_template_directory_uri() . '/css/uenf-dark-mode.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript do modo escuro
         wp_enqueue_script(
-            'cct-dark-mode',
-            get_template_directory_uri() . '/js/cct-dark-mode.js',
+            'uenf-dark-mode',
+            get_template_directory_uri() . '/js/uenf-dark-mode.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-dark-mode', 'cctDarkMode', array(
+        wp_localize_script('uenf-dark-mode', 'cctDarkMode', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_dark_mode_nonce'),
+            'nonce' => wp_create_nonce('uenf_dark_mode_nonce'),
             'settings' => $this->get_frontend_settings(),
             'strings' => array(
                 'lightMode' => __('Modo Claro', 'cct'),
@@ -668,19 +693,21 @@ class CCT_Dark_Mode_Manager {
             return;
         }
         
-        echo "<style id='cct-dark-mode-custom-css'>\n";
+        echo "<style id='uenf-dark-mode-custom-css'>\n";
         
-        // Variáveis CSS para modo claro
+        // Variáveis CSS para modo claro — sobrescreve o CSS estático com valores customizados
         echo ":root {\n";
         foreach ($settings['lightColors'] as $color_key => $color_value) {
-            echo "  --cct-light-{$color_key}: {$color_value};\n";
+            $css_key = str_replace('_', '-', $color_key);
+            echo "  --uenf-color-{$css_key}: {$color_value};\n";
         }
         echo "}\n";
-        
+
         // Variáveis CSS para modo escuro
         echo "[data-theme='dark'] {\n";
         foreach ($settings['darkColors'] as $color_key => $color_value) {
-            echo "  --cct-color-{$color_key}: {$color_value};\n";
+            $css_key = str_replace('_', '-', $color_key);
+            echo "  --uenf-color-{$css_key}: {$color_value};\n";
         }
         echo "}\n";
         
@@ -707,7 +734,7 @@ class CCT_Dark_Mode_Manager {
             return;
         }
         
-        echo "<script id='cct-dark-mode-custom-js'>\n";
+        echo "<script id='uenf-dark-mode-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTDarkMode !== 'undefined') {\n";
         echo "    CCTDarkMode.init(" . wp_json_encode($settings) . ");\n";
@@ -743,38 +770,38 @@ class CCT_Dark_Mode_Manager {
             'position' => 'inline', // inline, fixed
             'show_text' => 'true',
             'class' => ''
-        ), $atts, 'cct_dark_mode_toggle');
+        ), $atts, 'uenf_dark_mode_toggle');
         
-        $classes = array('cct-dark-mode-toggle', 'cct-toggle-' . $atts['style'], 'cct-size-' . $atts['size']);
+        $classes = array('uenf-dark-mode-toggle', 'uenf-toggle-' . $atts['style'], 'uenf-size-' . $atts['size']);
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
         
         if ($atts['position'] === 'fixed') {
-            $classes[] = 'cct-toggle-fixed';
+            $classes[] = 'uenf-toggle-fixed';
         }
         
-        $output = '<div class="' . implode(' ', $classes) . '" data-cct-dark-mode-toggle>';
+        $output = '<div class="' . implode(' ', $classes) . '" data-uenf-dark-mode-toggle>';
         
         if ($atts['style'] === 'button') {
-            $output .= '<button type="button" class="cct-toggle-btn" aria-label="' . esc_attr__('Alternar modo escuro/claro', 'cct') . '">';
-            $output .= '<span class="cct-toggle-icon"></span>';
+            $output .= '<button type="button" class="uenf-toggle-btn" aria-label="' . esc_attr__('Alternar modo escuro/claro', 'cct') . '">';
+            $output .= '<span class="uenf-toggle-icon"></span>';
             if ($atts['show_text'] === 'true') {
-                $output .= '<span class="cct-toggle-text">' . __('Modo Escuro', 'cct') . '</span>';
+                $output .= '<span class="uenf-toggle-text">' . __('Modo Escuro', 'cct') . '</span>';
             }
             $output .= '</button>';
         } elseif ($atts['style'] === 'switch') {
-            $output .= '<label class="cct-toggle-switch">';
-            $output .= '<input type="checkbox" class="cct-toggle-input" aria-label="' . esc_attr__('Alternar modo escuro/claro', 'cct') . '">';
-            $output .= '<span class="cct-toggle-slider"></span>';
+            $output .= '<label class="uenf-toggle-switch">';
+            $output .= '<input type="checkbox" class="uenf-toggle-input" aria-label="' . esc_attr__('Alternar modo escuro/claro', 'cct') . '">';
+            $output .= '<span class="uenf-toggle-slider"></span>';
             if ($atts['show_text'] === 'true') {
-                $output .= '<span class="cct-toggle-text">' . __('Modo Escuro', 'cct') . '</span>';
+                $output .= '<span class="uenf-toggle-text">' . __('Modo Escuro', 'cct') . '</span>';
             }
             $output .= '</label>';
         } else {
-            $output .= '<button type="button" class="cct-toggle-icon-btn" aria-label="' . esc_attr__('Alternar modo escuro/claro', 'cct') . '">';
-            $output .= '<span class="cct-toggle-icon"></span>';
+            $output .= '<button type="button" class="uenf-toggle-icon-btn" aria-label="' . esc_attr__('Alternar modo escuro/claro', 'cct') . '">';
+            $output .= '<span class="uenf-toggle-icon"></span>';
             $output .= '</button>';
         }
         
@@ -791,22 +818,22 @@ class CCT_Dark_Mode_Manager {
             'show_icon' => 'true',
             'show_text' => 'true',
             'class' => ''
-        ), $atts, 'cct_theme_indicator');
+        ), $atts, 'uenf_theme_indicator');
         
-        $classes = array('cct-theme-indicator');
+        $classes = array('uenf-theme-indicator');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
         }
         
-        $output = '<div class="' . implode(' ', $classes) . '" data-cct-theme-indicator>';
+        $output = '<div class="' . implode(' ', $classes) . '" data-uenf-theme-indicator>';
         
         if ($atts['show_icon'] === 'true') {
-            $output .= '<span class="cct-theme-icon"></span>';
+            $output .= '<span class="uenf-theme-icon"></span>';
         }
         
         if ($atts['show_text'] === 'true') {
-            $output .= '<span class="cct-theme-text">' . __('Modo Claro', 'cct') . '</span>';
+            $output .= '<span class="uenf-theme-text">' . __('Modo Claro', 'cct') . '</span>';
         }
         
         $output .= '</div>';
@@ -824,10 +851,10 @@ class CCT_Dark_Mode_Manager {
             return $classes;
         }
         
-        $classes[] = 'cct-dark-mode-enabled';
+        $classes[] = 'uenf-dark-mode-enabled';
         
         if ($settings['smoothTransitions']) {
-            $classes[] = 'cct-smooth-transitions';
+            $classes[] = 'uenf-smooth-transitions';
         }
         
         return $classes;
@@ -844,11 +871,11 @@ class CCT_Dark_Mode_Manager {
         }
         
         $wp_admin_bar->add_node(array(
-            'id' => 'cct-dark-mode-toggle',
-            'title' => '<span class="cct-admin-bar-toggle" data-cct-dark-mode-toggle>' . __('🌙 Modo Escuro', 'cct') . '</span>',
+            'id' => 'uenf-dark-mode-toggle',
+            'title' => '<span class="uenf-admin-bar-toggle" data-uenf-dark-mode-toggle>' . __('🌙 Modo Escuro', 'cct') . '</span>',
             'href' => '#',
             'meta' => array(
-                'class' => 'cct-admin-bar-dark-mode'
+                'class' => 'uenf-admin-bar-dark-mode'
             )
         ));
     }
@@ -857,13 +884,13 @@ class CCT_Dark_Mode_Manager {
      * AJAX handler para toggle de modo escuro
      */
     public function ajax_toggle_dark_mode() {
-        check_ajax_referer('cct_dark_mode_nonce', 'nonce');
+        check_ajax_referer('uenf_dark_mode_nonce', 'nonce');
         
         $mode = sanitize_text_field($_POST['mode'] ?? 'auto');
         
         // Salvar preferência se habilitado
         if (get_theme_mod($this->prefix . 'remember_user_choice', true)) {
-            setcookie('cct_dark_mode_preference', $mode, time() + (365 * 24 * 60 * 60), '/');
+            setcookie('uenf_dark_mode_preference', $mode, time() + (365 * 24 * 60 * 60), '/');
         }
         
         wp_send_json_success(array(
@@ -876,11 +903,11 @@ class CCT_Dark_Mode_Manager {
      * AJAX handler para salvar preferência
      */
     public function ajax_save_preference() {
-        check_ajax_referer('cct_dark_mode_nonce', 'nonce');
+        check_ajax_referer('uenf_dark_mode_nonce', 'nonce');
         
         $preference = sanitize_text_field($_POST['preference'] ?? 'auto');
         
-        setcookie('cct_dark_mode_preference', $preference, time() + (365 * 24 * 60 * 60), '/');
+        setcookie('uenf_dark_mode_preference', $preference, time() + (365 * 24 * 60 * 60), '/');
         
         wp_send_json_success(array(
             'preference' => $preference,

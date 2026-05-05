@@ -9,7 +9,7 @@
  * - Templates prontos
  * - Export/Import de configurações
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Browser de Padrões
  */
-class CCT_Pattern_Browser_Control extends WP_Customize_Control {
+class UENF_Pattern_Browser_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_pattern_browser';
+    public $type = 'uenf_pattern_browser';
     
     /**
      * Padrões disponíveis
@@ -60,55 +60,55 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-pattern-browser" data-pattern-type="<?php echo esc_attr($this->pattern_type); ?>">
+        <div class="uenf-pattern-browser" data-pattern-type="<?php echo esc_attr($this->pattern_type); ?>">
             <!-- Filtros e busca -->
-            <div class="cct-pattern-filters">
-                <div class="cct-pattern-search">
-                    <input type="text" class="cct-search-input" placeholder="<?php _e('Buscar padrões...', 'cct'); ?>">
-                    <span class="cct-search-icon">🔍</span>
+            <div class="uenf-pattern-filters">
+                <div class="uenf-pattern-search">
+                    <input type="text" class="uenf-search-input" placeholder="<?php _e('Buscar padrões...', 'cct'); ?>">
+                    <span class="uenf-search-icon">🔍</span>
                 </div>
                 
-                <div class="cct-pattern-view-toggle">
-                    <button type="button" class="cct-view-btn active" data-view="grid" title="<?php _e('Visualização em Grid', 'cct'); ?>">⊞</button>
-                    <button type="button" class="cct-view-btn" data-view="list" title="<?php _e('Visualização em Lista', 'cct'); ?>">☰</button>
+                <div class="uenf-pattern-view-toggle">
+                    <button type="button" class="uenf-view-btn active" data-view="grid" title="<?php _e('Visualização em Grid', 'cct'); ?>">⊞</button>
+                    <button type="button" class="uenf-view-btn" data-view="list" title="<?php _e('Visualização em Lista', 'cct'); ?>">☰</button>
                 </div>
             </div>
             
             <!-- Grid de padrões -->
-            <div class="cct-pattern-grid" id="cct-pattern-grid">
+            <div class="uenf-pattern-grid" id="uenf-pattern-grid">
                 <?php foreach ($this->patterns as $pattern_key => $pattern): ?>
-                    <div class="cct-pattern-item" data-pattern="<?php echo esc_attr($pattern_key); ?>">
-                        <div class="cct-pattern-preview">
-                            <div class="cct-pattern-image">
+                    <div class="uenf-pattern-item" data-pattern="<?php echo esc_attr($pattern_key); ?>">
+                        <div class="uenf-pattern-preview">
+                            <div class="uenf-pattern-image">
                                 <?php if (!empty($pattern['preview_image'])): ?>
                                     <img src="<?php echo esc_url(get_template_directory_uri() . '/images/patterns/' . $pattern['preview_image']); ?>" alt="<?php echo esc_attr($pattern['name']); ?>">
                                 <?php else: ?>
-                                    <div class="cct-pattern-placeholder">
-                                        <span class="cct-pattern-icon">📄</span>
+                                    <div class="uenf-pattern-placeholder">
+                                        <span class="uenf-pattern-icon">📄</span>
                                     </div>
                                 <?php endif; ?>
                             </div>
                             
-                            <div class="cct-pattern-overlay">
-                                <div class="cct-pattern-actions">
-                                    <button type="button" class="cct-action-btn cct-preview-btn" data-pattern="<?php echo esc_attr($pattern_key); ?>" title="<?php _e('Preview', 'cct'); ?>">
+                            <div class="uenf-pattern-overlay">
+                                <div class="uenf-pattern-actions">
+                                    <button type="button" class="uenf-action-btn uenf-preview-btn" data-pattern="<?php echo esc_attr($pattern_key); ?>" title="<?php _e('Preview', 'cct'); ?>">
                                         👁️
                                     </button>
-                                    <button type="button" class="cct-action-btn cct-apply-btn" data-pattern="<?php echo esc_attr($pattern_key); ?>" title="<?php _e('Aplicar', 'cct'); ?>">
+                                    <button type="button" class="uenf-action-btn uenf-apply-btn" data-pattern="<?php echo esc_attr($pattern_key); ?>" title="<?php _e('Aplicar', 'cct'); ?>">
                                         ✓
                                     </button>
-                                    <button type="button" class="cct-action-btn cct-copy-btn" data-pattern="<?php echo esc_attr($pattern_key); ?>" title="<?php _e('Copiar Código', 'cct'); ?>">
+                                    <button type="button" class="uenf-action-btn uenf-copy-btn" data-pattern="<?php echo esc_attr($pattern_key); ?>" title="<?php _e('Copiar Código', 'cct'); ?>">
                                         📋
                                     </button>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="cct-pattern-info">
-                            <h4 class="cct-pattern-name"><?php echo esc_html($pattern['name']); ?></h4>
-                            <p class="cct-pattern-description"><?php echo esc_html($pattern['description']); ?></p>
+                        <div class="uenf-pattern-info">
+                            <h4 class="uenf-pattern-name"><?php echo esc_html($pattern['name']); ?></h4>
+                            <p class="uenf-pattern-description"><?php echo esc_html($pattern['description']); ?></p>
                             
-                            <div class="cct-pattern-features">
+                            <div class="uenf-pattern-features">
                                 <strong><?php _e('Recursos:', 'cct'); ?></strong>
                                 <ul>
                                     <?php foreach ($pattern['features'] as $feature): ?>
@@ -117,8 +117,8 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
                                 </ul>
                             </div>
                             
-                            <div class="cct-pattern-meta">
-                                <span class="cct-pattern-template">
+                            <div class="uenf-pattern-meta">
+                                <span class="uenf-pattern-template">
                                     <strong><?php _e('Template:', 'cct'); ?></strong> 
                                     <?php echo esc_html(ucfirst($pattern['template'])); ?>
                                 </span>
@@ -129,43 +129,43 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             </div>
             
             <!-- Preview modal -->
-            <div class="cct-pattern-modal" id="cct-pattern-modal" style="display: none;">
-                <div class="cct-modal-backdrop"></div>
-                <div class="cct-modal-content">
-                    <div class="cct-modal-header">
-                        <h3 class="cct-modal-title"><?php _e('Preview do Padrão', 'cct'); ?></h3>
-                        <button type="button" class="cct-modal-close">×</button>
+            <div class="uenf-pattern-modal" id="uenf-pattern-modal" style="display: none;">
+                <div class="uenf-modal-backdrop"></div>
+                <div class="uenf-modal-content">
+                    <div class="uenf-modal-header">
+                        <h3 class="uenf-modal-title"><?php _e('Preview do Padrão', 'cct'); ?></h3>
+                        <button type="button" class="uenf-modal-close">×</button>
                     </div>
                     
-                    <div class="cct-modal-body">
-                        <div class="cct-preview-area" id="cct-preview-area">
+                    <div class="uenf-modal-body">
+                        <div class="uenf-preview-area" id="uenf-preview-area">
                             <!-- Preview será carregado aqui -->
                         </div>
                         
-                        <div class="cct-preview-code">
+                        <div class="uenf-preview-code">
                             <h4><?php _e('Código do Shortcode:', 'cct'); ?></h4>
-                            <textarea class="cct-code-output" id="cct-code-output" readonly></textarea>
-                            <button type="button" class="button cct-copy-code"><?php _e('📋 Copiar Código', 'cct'); ?></button>
+                            <textarea class="uenf-code-output" id="uenf-code-output" readonly></textarea>
+                            <button type="button" class="button uenf-copy-code"><?php _e('📋 Copiar Código', 'cct'); ?></button>
                         </div>
                     </div>
                     
-                    <div class="cct-modal-footer">
-                        <button type="button" class="button button-primary cct-apply-pattern"><?php _e('Aplicar Padrão', 'cct'); ?></button>
-                        <button type="button" class="button cct-close-modal"><?php _e('Fechar', 'cct'); ?></button>
+                    <div class="uenf-modal-footer">
+                        <button type="button" class="button button-primary uenf-apply-pattern"><?php _e('Aplicar Padrão', 'cct'); ?></button>
+                        <button type="button" class="button uenf-close-modal"><?php _e('Fechar', 'cct'); ?></button>
                     </div>
                 </div>
             </div>
         </div>
         
         <style>
-        .cct-pattern-browser {
+        .uenf-pattern-browser {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-pattern-filters {
+        .uenf-pattern-filters {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -174,13 +174,13 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-pattern-search {
+        .uenf-pattern-search {
             position: relative;
             flex: 1;
             max-width: 300px;
         }
         
-        .cct-search-input {
+        .uenf-search-input {
             width: 100%;
             padding: 8px 35px 8px 12px;
             border: 1px solid #ddd;
@@ -188,7 +188,7 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             font-size: 13px;
         }
         
-        .cct-search-icon {
+        .uenf-search-icon {
             position: absolute;
             right: 10px;
             top: 50%;
@@ -197,12 +197,12 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             pointer-events: none;
         }
         
-        .cct-pattern-view-toggle {
+        .uenf-pattern-view-toggle {
             display: flex;
             gap: 5px;
         }
         
-        .cct-view-btn {
+        .uenf-view-btn {
             width: 30px;
             height: 30px;
             border: 1px solid #ddd;
@@ -215,13 +215,13 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             font-size: 14px;
         }
         
-        .cct-view-btn.active {
+        .uenf-view-btn.active {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
-        .cct-pattern-grid {
+        .uenf-pattern-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
@@ -230,11 +230,11 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             overflow-y: auto;
         }
         
-        .cct-pattern-grid.list-view {
+        .uenf-pattern-grid.list-view {
             grid-template-columns: 1fr;
         }
         
-        .cct-pattern-item {
+        .uenf-pattern-item {
             background: white;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -242,18 +242,18 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-pattern-item:hover {
+        .uenf-pattern-item:hover {
             border-color: #0073aa;
             box-shadow: 0 4px 12px rgba(0, 115, 170, 0.1);
         }
         
-        .cct-pattern-preview {
+        .uenf-pattern-preview {
             position: relative;
             height: 150px;
             overflow: hidden;
         }
         
-        .cct-pattern-image {
+        .uenf-pattern-image {
             width: 100%;
             height: 100%;
             display: flex;
@@ -262,13 +262,13 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             background: #f8f9fa;
         }
         
-        .cct-pattern-image img {
+        .uenf-pattern-image img {
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
         }
         
-        .cct-pattern-placeholder {
+        .uenf-pattern-placeholder {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -277,11 +277,11 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             color: #999;
         }
         
-        .cct-pattern-icon {
+        .uenf-pattern-icon {
             font-size: 48px;
         }
         
-        .cct-pattern-overlay {
+        .uenf-pattern-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -295,16 +295,16 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             transition: opacity 0.3s ease;
         }
         
-        .cct-pattern-item:hover .cct-pattern-overlay {
+        .uenf-pattern-item:hover .uenf-pattern-overlay {
             opacity: 1;
         }
         
-        .cct-pattern-actions {
+        .uenf-pattern-actions {
             display: flex;
             gap: 10px;
         }
         
-        .cct-action-btn {
+        .uenf-action-btn {
             width: 40px;
             height: 40px;
             border: none;
@@ -318,56 +318,56 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-action-btn:hover {
+        .uenf-action-btn:hover {
             background: white;
             transform: scale(1.1);
         }
         
-        .cct-pattern-info {
+        .uenf-pattern-info {
             padding: 15px;
         }
         
-        .cct-pattern-name {
+        .uenf-pattern-name {
             margin: 0 0 8px 0;
             font-size: 14px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-pattern-description {
+        .uenf-pattern-description {
             margin: 0 0 12px 0;
             font-size: 12px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-pattern-features {
+        .uenf-pattern-features {
             margin-bottom: 12px;
             font-size: 11px;
         }
         
-        .cct-pattern-features strong {
+        .uenf-pattern-features strong {
             display: block;
             margin-bottom: 5px;
             color: #333;
         }
         
-        .cct-pattern-features ul {
+        .uenf-pattern-features ul {
             margin: 0;
             padding-left: 15px;
             color: #666;
         }
         
-        .cct-pattern-features li {
+        .uenf-pattern-features li {
             margin-bottom: 2px;
         }
         
-        .cct-pattern-meta {
+        .uenf-pattern-meta {
             font-size: 10px;
             color: #888;
         }
         
-        .cct-pattern-modal {
+        .uenf-pattern-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -376,7 +376,7 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             z-index: 999999;
         }
         
-        .cct-modal-backdrop {
+        .uenf-modal-backdrop {
             position: absolute;
             top: 0;
             left: 0;
@@ -385,7 +385,7 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             background: rgba(0, 0, 0, 0.7);
         }
         
-        .cct-modal-content {
+        .uenf-modal-content {
             position: relative;
             max-width: 800px;
             width: 90%;
@@ -398,7 +398,7 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             flex-direction: column;
         }
         
-        .cct-modal-header {
+        .uenf-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -407,13 +407,13 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-modal-title {
+        .uenf-modal-title {
             margin: 0;
             font-size: 16px;
             color: #333;
         }
         
-        .cct-modal-close {
+        .uenf-modal-close {
             width: 30px;
             height: 30px;
             border: none;
@@ -423,13 +423,13 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-modal-body {
+        .uenf-modal-body {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
         }
         
-        .cct-preview-area {
+        .uenf-preview-area {
             min-height: 200px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -438,13 +438,13 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             background: #f8f9fa;
         }
         
-        .cct-preview-code h4 {
+        .uenf-preview-code h4 {
             margin: 0 0 10px 0;
             font-size: 13px;
             color: #333;
         }
         
-        .cct-code-output {
+        .uenf-code-output {
             width: 100%;
             height: 100px;
             padding: 10px;
@@ -456,12 +456,12 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             margin-bottom: 10px;
         }
         
-        .cct-copy-code {
+        .uenf-copy-code {
             font-size: 11px;
             padding: 6px 12px;
         }
         
-        .cct-modal-footer {
+        .uenf-modal-footer {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
@@ -470,7 +470,7 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-modal-footer .button {
+        .uenf-modal-footer .button {
             font-size: 12px;
             padding: 8px 16px;
         }
@@ -482,14 +482,14 @@ class CCT_Pattern_Browser_Control extends WP_Customize_Control {
 /**
  * Controle Configurador de Padrões
  */
-class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
+class UENF_Pattern_Configurator_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_pattern_configurator';
+    public $type = 'uenf_pattern_configurator';
     
     /**
      * Configurações do padrão
@@ -513,42 +513,42 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-pattern-configurator">
+        <div class="uenf-pattern-configurator">
             <!-- Configurações de cores -->
-            <div class="cct-config-section">
+            <div class="uenf-config-section">
                 <h4><?php _e('Cores', 'cct'); ?></h4>
                 
-                <div class="cct-color-grid">
-                    <div class="cct-color-item">
+                <div class="uenf-color-grid">
+                    <div class="uenf-color-item">
                         <label><?php _e('Primária:', 'cct'); ?></label>
-                        <input type="color" class="cct-color-input" data-setting="primary" value="#0073aa">
+                        <input type="color" class="uenf-color-input" data-setting="primary" value="#0073aa">
                     </div>
                     
-                    <div class="cct-color-item">
+                    <div class="uenf-color-item">
                         <label><?php _e('Secundária:', 'cct'); ?></label>
-                        <input type="color" class="cct-color-input" data-setting="secondary" value="#666666">
+                        <input type="color" class="uenf-color-input" data-setting="secondary" value="#666666">
                     </div>
                     
-                    <div class="cct-color-item">
+                    <div class="uenf-color-item">
                         <label><?php _e('Destaque:', 'cct'); ?></label>
-                        <input type="color" class="cct-color-input" data-setting="accent" value="#ff6b6b">
+                        <input type="color" class="uenf-color-input" data-setting="accent" value="#ff6b6b">
                     </div>
                     
-                    <div class="cct-color-item">
+                    <div class="uenf-color-item">
                         <label><?php _e('Fundo:', 'cct'); ?></label>
-                        <input type="color" class="cct-color-input" data-setting="background" value="#ffffff">
+                        <input type="color" class="uenf-color-input" data-setting="background" value="#ffffff">
                     </div>
                 </div>
             </div>
             
             <!-- Configurações de tipografia -->
-            <div class="cct-config-section">
+            <div class="uenf-config-section">
                 <h4><?php _e('Tipografia', 'cct'); ?></h4>
                 
-                <div class="cct-typography-controls">
-                    <div class="cct-control-row">
+                <div class="uenf-typography-controls">
+                    <div class="uenf-control-row">
                         <label><?php _e('Fonte dos Títulos:', 'cct'); ?></label>
-                        <select class="cct-font-select" data-setting="heading_font">
+                        <select class="uenf-font-select" data-setting="heading_font">
                             <option value="Roboto">Roboto</option>
                             <option value="Open Sans">Open Sans</option>
                             <option value="Montserrat">Montserrat</option>
@@ -556,9 +556,9 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
                         </select>
                     </div>
                     
-                    <div class="cct-control-row">
+                    <div class="uenf-control-row">
                         <label><?php _e('Fonte do Corpo:', 'cct'); ?></label>
-                        <select class="cct-font-select" data-setting="body_font">
+                        <select class="uenf-font-select" data-setting="body_font">
                             <option value="Open Sans">Open Sans</option>
                             <option value="Roboto">Roboto</option>
                             <option value="Source Sans Pro">Source Sans Pro</option>
@@ -566,70 +566,70 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
                         </select>
                     </div>
                     
-                    <div class="cct-control-row">
+                    <div class="uenf-control-row">
                         <label><?php _e('Tamanho Base:', 'cct'); ?></label>
-                        <div class="cct-range-control">
-                            <input type="range" class="cct-range-input" data-setting="base_size" min="12" max="20" value="16">
-                            <span class="cct-range-value">16px</span>
+                        <div class="uenf-range-control">
+                            <input type="range" class="uenf-range-input" data-setting="base_size" min="12" max="20" value="16">
+                            <span class="uenf-range-value">16px</span>
                         </div>
                     </div>
                 </div>
             </div>
             
             <!-- Configurações de espaçamento -->
-            <div class="cct-config-section">
+            <div class="uenf-config-section">
                 <h4><?php _e('Espaçamento', 'cct'); ?></h4>
                 
-                <div class="cct-spacing-controls">
-                    <div class="cct-control-row">
+                <div class="uenf-spacing-controls">
+                    <div class="uenf-control-row">
                         <label><?php _e('Padding da Seção:', 'cct'); ?></label>
-                        <div class="cct-range-control">
-                            <input type="range" class="cct-range-input" data-setting="section_padding" min="20" max="100" value="60">
-                            <span class="cct-range-value">60px</span>
+                        <div class="uenf-range-control">
+                            <input type="range" class="uenf-range-input" data-setting="section_padding" min="20" max="100" value="60">
+                            <span class="uenf-range-value">60px</span>
                         </div>
                     </div>
                     
-                    <div class="cct-control-row">
+                    <div class="uenf-control-row">
                         <label><?php _e('Margem dos Elementos:', 'cct'); ?></label>
-                        <div class="cct-range-control">
-                            <input type="range" class="cct-range-input" data-setting="element_margin" min="10" max="40" value="20">
-                            <span class="cct-range-value">20px</span>
+                        <div class="uenf-range-control">
+                            <input type="range" class="uenf-range-input" data-setting="element_margin" min="10" max="40" value="20">
+                            <span class="uenf-range-value">20px</span>
                         </div>
                     </div>
                     
-                    <div class="cct-control-row">
+                    <div class="uenf-control-row">
                         <label><?php _e('Border Radius:', 'cct'); ?></label>
-                        <div class="cct-range-control">
-                            <input type="range" class="cct-range-input" data-setting="border_radius" min="0" max="20" value="8">
-                            <span class="cct-range-value">8px</span>
+                        <div class="uenf-range-control">
+                            <input type="range" class="uenf-range-input" data-setting="border_radius" min="0" max="20" value="8">
+                            <span class="uenf-range-value">8px</span>
                         </div>
                     </div>
                 </div>
             </div>
             
             <!-- Configurações de animação -->
-            <div class="cct-config-section">
+            <div class="uenf-config-section">
                 <h4><?php _e('Animações', 'cct'); ?></h4>
                 
-                <div class="cct-animation-controls">
-                    <div class="cct-control-row">
-                        <label class="cct-checkbox-label">
-                            <input type="checkbox" class="cct-checkbox-input" data-setting="animations_enabled" checked>
+                <div class="uenf-animation-controls">
+                    <div class="uenf-control-row">
+                        <label class="uenf-checkbox-label">
+                            <input type="checkbox" class="uenf-checkbox-input" data-setting="animations_enabled" checked>
                             <?php _e('Ativar Animações', 'cct'); ?>
                         </label>
                     </div>
                     
-                    <div class="cct-control-row">
+                    <div class="uenf-control-row">
                         <label><?php _e('Duração:', 'cct'); ?></label>
-                        <div class="cct-range-control">
-                            <input type="range" class="cct-range-input" data-setting="animation_duration" min="0.1" max="1" step="0.1" value="0.3">
-                            <span class="cct-range-value">0.3s</span>
+                        <div class="uenf-range-control">
+                            <input type="range" class="uenf-range-input" data-setting="animation_duration" min="0.1" max="1" step="0.1" value="0.3">
+                            <span class="uenf-range-value">0.3s</span>
                         </div>
                     </div>
                     
-                    <div class="cct-control-row">
+                    <div class="uenf-control-row">
                         <label><?php _e('Easing:', 'cct'); ?></label>
-                        <select class="cct-easing-select" data-setting="animation_easing">
+                        <select class="uenf-easing-select" data-setting="animation_easing">
                             <option value="ease">Ease</option>
                             <option value="ease-in">Ease In</option>
                             <option value="ease-out">Ease Out</option>
@@ -641,44 +641,44 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             </div>
             
             <!-- Preview em tempo real -->
-            <div class="cct-config-section">
+            <div class="uenf-config-section">
                 <h4><?php _e('Preview', 'cct'); ?></h4>
                 
-                <div class="cct-live-preview" id="cct-live-preview">
-                    <div class="cct-preview-element">
+                <div class="uenf-live-preview" id="uenf-live-preview">
+                    <div class="uenf-preview-element">
                         <h3><?php _e('Título de Exemplo', 'cct'); ?></h3>
                         <p><?php _e('Este é um exemplo de como o padrão ficará com as configurações atuais.', 'cct'); ?></p>
-                        <button class="cct-preview-button"><?php _e('Botão de Exemplo', 'cct'); ?></button>
+                        <button class="uenf-preview-button"><?php _e('Botão de Exemplo', 'cct'); ?></button>
                     </div>
                 </div>
             </div>
             
             <!-- Ações -->
-            <div class="cct-config-actions">
-                <button type="button" class="button button-primary cct-apply-config"><?php _e('Aplicar Configurações', 'cct'); ?></button>
-                <button type="button" class="button cct-reset-config"><?php _e('🔄 Reset', 'cct'); ?></button>
-                <button type="button" class="button cct-export-config"><?php _e('📤 Exportar', 'cct'); ?></button>
+            <div class="uenf-config-actions">
+                <button type="button" class="button button-primary uenf-apply-config"><?php _e('Aplicar Configurações', 'cct'); ?></button>
+                <button type="button" class="button uenf-reset-config"><?php _e('🔄 Reset', 'cct'); ?></button>
+                <button type="button" class="button uenf-export-config"><?php _e('📤 Exportar', 'cct'); ?></button>
             </div>
         </div>
         
         <style>
-        .cct-pattern-configurator {
+        .uenf-pattern-configurator {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-config-section {
+        .uenf-config-section {
             padding: 20px;
             border-bottom: 1px solid #eee;
         }
         
-        .cct-config-section:last-child {
+        .uenf-config-section:last-child {
             border-bottom: none;
         }
         
-        .cct-config-section h4 {
+        .uenf-config-section h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
@@ -687,25 +687,25 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             padding-bottom: 5px;
         }
         
-        .cct-color-grid {
+        .uenf-color-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
         
-        .cct-color-item {
+        .uenf-color-item {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-color-item label {
+        .uenf-color-item label {
             font-size: 12px;
             color: #333;
             min-width: 70px;
         }
         
-        .cct-color-input {
+        .uenf-color-input {
             width: 50px;
             height: 30px;
             border: none;
@@ -713,25 +713,25 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-control-row {
+        .uenf-control-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 15px;
         }
         
-        .cct-control-row:last-child {
+        .uenf-control-row:last-child {
             margin-bottom: 0;
         }
         
-        .cct-control-row label {
+        .uenf-control-row label {
             font-size: 12px;
             color: #333;
             min-width: 120px;
         }
         
-        .cct-font-select,
-        .cct-easing-select {
+        .uenf-font-select,
+        .uenf-easing-select {
             padding: 6px 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -739,18 +739,18 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             min-width: 120px;
         }
         
-        .cct-range-control {
+        .uenf-range-control {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-range-input {
+        .uenf-range-input {
             flex: 1;
             min-width: 80px;
         }
         
-        .cct-range-value {
+        .uenf-range-value {
             min-width: 40px;
             font-size: 11px;
             font-weight: 600;
@@ -758,7 +758,7 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             text-align: right;
         }
         
-        .cct-checkbox-label {
+        .uenf-checkbox-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -766,11 +766,11 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-checkbox-input {
+        .uenf-checkbox-input {
             margin: 0;
         }
         
-        .cct-live-preview {
+        .uenf-live-preview {
             background: #f8f9fa;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -778,24 +778,24 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             min-height: 120px;
         }
         
-        .cct-preview-element {
+        .uenf-preview-element {
             text-align: center;
         }
         
-        .cct-preview-element h3 {
+        .uenf-preview-element h3 {
             margin: 0 0 10px 0;
             color: var(--preview-primary, #0073aa);
             font-family: var(--preview-heading-font, 'Roboto');
         }
         
-        .cct-preview-element p {
+        .uenf-preview-element p {
             margin: 0 0 15px 0;
             color: var(--preview-text, #333);
             font-family: var(--preview-body-font, 'Open Sans');
             font-size: var(--preview-base-size, 16px);
         }
         
-        .cct-preview-button {
+        .uenf-preview-button {
             padding: 10px 20px;
             background: var(--preview-accent, #ff6b6b);
             color: white;
@@ -806,12 +806,12 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             transition: all var(--preview-duration, 0.3s) var(--preview-easing, ease-in-out);
         }
         
-        .cct-preview-button:hover {
+        .uenf-preview-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
-        .cct-config-actions {
+        .uenf-config-actions {
             display: flex;
             gap: 10px;
             padding: 20px;
@@ -819,7 +819,7 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
             border-top: 1px solid #ddd;
         }
         
-        .cct-config-actions .button {
+        .uenf-config-actions .button {
             font-size: 11px;
             padding: 8px 16px;
         }
@@ -831,14 +831,14 @@ class CCT_Pattern_Configurator_Control extends WP_Customize_Control {
 /**
  * Controle Template Selector
  */
-class CCT_Template_Selector_Control extends WP_Customize_Control {
+class UENF_Template_Selector_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_template_selector';
+    public $type = 'uenf_template_selector';
     
     /**
      * Templates disponíveis
@@ -862,33 +862,33 @@ class CCT_Template_Selector_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-template-selector">
-            <div class="cct-template-grid">
+        <div class="uenf-template-selector">
+            <div class="uenf-template-grid">
                 <?php foreach ($this->templates as $template_key => $template): ?>
-                    <div class="cct-template-item" data-template="<?php echo esc_attr($template_key); ?>">
-                        <div class="cct-template-preview">
-                            <div class="cct-template-colors">
+                    <div class="uenf-template-item" data-template="<?php echo esc_attr($template_key); ?>">
+                        <div class="uenf-template-preview">
+                            <div class="uenf-template-colors">
                                 <?php foreach ($template['colors'] as $color): ?>
-                                    <span class="cct-color-dot" style="background-color: <?php echo esc_attr($color); ?>"></span>
+                                    <span class="uenf-color-dot" style="background-color: <?php echo esc_attr($color); ?>"></span>
                                 <?php endforeach; ?>
                             </div>
                             
-                            <div class="cct-template-sections">
+                            <div class="uenf-template-sections">
                                 <?php foreach ($template['sections'] as $section): ?>
-                                    <span class="cct-section-tag"><?php echo esc_html($section); ?></span>
+                                    <span class="uenf-section-tag"><?php echo esc_html($section); ?></span>
                                 <?php endforeach; ?>
                             </div>
                         </div>
                         
-                        <div class="cct-template-info">
+                        <div class="uenf-template-info">
                             <h4><?php echo esc_html($template['name']); ?></h4>
                             <p><?php echo esc_html($template['description']); ?></p>
                             
-                            <div class="cct-template-actions">
-                                <button type="button" class="button cct-preview-template" data-template="<?php echo esc_attr($template_key); ?>">
+                            <div class="uenf-template-actions">
+                                <button type="button" class="button uenf-preview-template" data-template="<?php echo esc_attr($template_key); ?>">
                                     <?php _e('👁️ Preview', 'cct'); ?>
                                 </button>
-                                <button type="button" class="button button-primary cct-apply-template" data-template="<?php echo esc_attr($template_key); ?>">
+                                <button type="button" class="button button-primary uenf-apply-template" data-template="<?php echo esc_attr($template_key); ?>">
                                     <?php _e('Aplicar', 'cct'); ?>
                                 </button>
                             </div>
@@ -899,41 +899,41 @@ class CCT_Template_Selector_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-template-selector {
+        .uenf-template-selector {
             margin-top: 10px;
         }
         
-        .cct-template-grid {
+        .uenf-template-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
         
-        .cct-template-item {
+        .uenf-template-item {
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
         
-        .cct-template-item:hover {
+        .uenf-template-item:hover {
             border-color: #0073aa;
             box-shadow: 0 4px 12px rgba(0, 115, 170, 0.1);
         }
         
-        .cct-template-preview {
+        .uenf-template-preview {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-template-colors {
+        .uenf-template-colors {
             display: flex;
             gap: 8px;
             margin-bottom: 15px;
         }
         
-        .cct-color-dot {
+        .uenf-color-dot {
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -941,13 +941,13 @@ class CCT_Template_Selector_Control extends WP_Customize_Control {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
-        .cct-template-sections {
+        .uenf-template-sections {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
         }
         
-        .cct-section-tag {
+        .uenf-section-tag {
             padding: 4px 8px;
             background: #e0e0e0;
             border-radius: 12px;
@@ -955,29 +955,29 @@ class CCT_Template_Selector_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-template-info {
+        .uenf-template-info {
             padding: 15px;
         }
         
-        .cct-template-info h4 {
+        .uenf-template-info h4 {
             margin: 0 0 8px 0;
             font-size: 14px;
             color: #333;
         }
         
-        .cct-template-info p {
+        .uenf-template-info p {
             margin: 0 0 15px 0;
             font-size: 12px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-template-actions {
+        .uenf-template-actions {
             display: flex;
             gap: 8px;
         }
         
-        .cct-template-actions .button {
+        .uenf-template-actions .button {
             font-size: 11px;
             padding: 6px 12px;
             flex: 1;

@@ -4,7 +4,7 @@
  * Fornece documentação contextual e hints informativos
  * para melhorar a experiência do usuário no customizer.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -170,15 +170,15 @@
         
         createTooltipStyles() {
             const styles = `
-                <style id="cct-tooltip-styles">
-                    .cct-tooltip {
+                <style id="uenf-tooltip-styles">
+                    .uenf-tooltip {
                         position: relative;
                         display: inline-block;
                         margin-left: 5px;
                         cursor: help;
                     }
                     
-                    .cct-tooltip-icon {
+                    .uenf-tooltip-icon {
                         width: 16px;
                         height: 16px;
                         background: #0073aa;
@@ -192,12 +192,12 @@
                         transition: all 0.3s ease;
                     }
                     
-                    .cct-tooltip-icon:hover {
+                    .uenf-tooltip-icon:hover {
                         background: #005a87;
                         transform: scale(1.1);
                     }
                     
-                    .cct-tooltip-content {
+                    .uenf-tooltip-content {
                         position: absolute;
                         bottom: 100%;
                         left: 50%;
@@ -215,12 +215,12 @@
                         margin-bottom: 10px;
                     }
                     
-                    .cct-tooltip:hover .cct-tooltip-content {
+                    .uenf-tooltip:hover .uenf-tooltip-content {
                         opacity: 1;
                         visibility: visible;
                     }
                     
-                    .cct-tooltip-content::after {
+                    .uenf-tooltip-content::after {
                         content: '';
                         position: absolute;
                         top: 100%;
@@ -230,25 +230,25 @@
                         border-top-color: #2c3338;
                     }
                     
-                    .cct-tooltip-title {
+                    .uenf-tooltip-title {
                         font-weight: bold;
                         margin-bottom: 8px;
                         font-size: 13px;
                         color: #00a0d2;
                     }
                     
-                    .cct-tooltip-text {
+                    .uenf-tooltip-text {
                         font-size: 12px;
                         line-height: 1.5;
                         margin-bottom: 10px;
                     }
                     
-                    .cct-tooltip-tips {
+                    .uenf-tooltip-tips {
                         border-top: 1px solid #444;
                         padding-top: 10px;
                     }
                     
-                    .cct-tooltip-tip {
+                    .uenf-tooltip-tip {
                         font-size: 11px;
                         margin-bottom: 5px;
                         opacity: 0.9;
@@ -256,14 +256,14 @@
                         position: relative;
                     }
                     
-                    .cct-tooltip-tip::before {
+                    .uenf-tooltip-tip::before {
                         content: '💡';
                         position: absolute;
                         left: -5px;
                         font-size: 10px;
                     }
                     
-                    .cct-help-button {
+                    .uenf-help-button {
                         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                         color: white;
                         border: none;
@@ -277,12 +277,12 @@
                         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
                     }
                     
-                    .cct-help-button:hover {
+                    .uenf-help-button:hover {
                         transform: translateY(-2px);
                         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
                     }
                     
-                    .cct-popup-overlay {
+                    .uenf-popup-overlay {
                         position: fixed;
                         top: 0;
                         left: 0;
@@ -298,12 +298,12 @@
                         transition: all 0.3s ease;
                     }
                     
-                    .cct-popup-overlay.active {
+                    .uenf-popup-overlay.active {
                         opacity: 1;
                         visibility: visible;
                     }
                     
-                    .cct-popup {
+                    .uenf-popup {
                         background: white;
                         border-radius: 12px;
                         padding: 30px;
@@ -315,11 +315,11 @@
                         transition: all 0.3s ease;
                     }
                     
-                    .cct-popup-overlay.active .cct-popup {
+                    .uenf-popup-overlay.active .uenf-popup {
                         transform: scale(1);
                     }
                     
-                    .cct-popup-header {
+                    .uenf-popup-header {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
@@ -328,14 +328,14 @@
                         border-bottom: 2px solid #f0f0f0;
                     }
                     
-                    .cct-popup-title {
+                    .uenf-popup-title {
                         font-size: 20px;
                         font-weight: bold;
                         color: #2c3338;
                         margin: 0;
                     }
                     
-                    .cct-popup-close {
+                    .uenf-popup-close {
                         background: #ff4757;
                         color: white;
                         border: none;
@@ -350,16 +350,16 @@
                         transition: all 0.3s ease;
                     }
                     
-                    .cct-popup-close:hover {
+                    .uenf-popup-close:hover {
                         background: #ff3742;
                         transform: scale(1.1);
                     }
                     
-                    .cct-popup-section {
+                    .uenf-popup-section {
                         margin-bottom: 25px;
                     }
                     
-                    .cct-popup-section-title {
+                    .uenf-popup-section-title {
                         font-size: 16px;
                         font-weight: 600;
                         color: #0073aa;
@@ -370,22 +370,22 @@
                         border-left: 4px solid #0073aa;
                     }
                     
-                    .cct-popup-content {
+                    .uenf-popup-content {
                         line-height: 1.6;
                         color: #555;
                     }
                     
-                    .cct-popup-content ul {
+                    .uenf-popup-content ul {
                         margin: 10px 0;
                         padding-left: 20px;
                     }
                     
-                    .cct-popup-content li {
+                    .uenf-popup-content li {
                         margin-bottom: 8px;
                         position: relative;
                     }
                     
-                    .cct-popup-content li::before {
+                    .uenf-popup-content li::before {
                         content: '✨';
                         position: absolute;
                         left: -20px;
@@ -399,7 +399,7 @@
         
         bindEvents() {
             // Fechar popup ao clicar no overlay
-            $(document).on('click', '.cct-popup-overlay', (e) => {
+            $(document).on('click', '.uenf-popup-overlay', (e) => {
                 if (e.target === e.currentTarget) {
                     this.closePopup();
                 }
@@ -441,18 +441,18 @@
             let tipsHtml = '';
             if (config.tips && config.tips.length > 0) {
                 tipsHtml = `
-                    <div class="cct-tooltip-tips">
-                        ${config.tips.map(tip => `<div class="cct-tooltip-tip">${tip}</div>`).join('')}
+                    <div class="uenf-tooltip-tips">
+                        ${config.tips.map(tip => `<div class="uenf-tooltip-tip">${tip}</div>`).join('')}
                     </div>
                 `;
             }
             
             return $(`
-                <span class="cct-tooltip">
-                    <span class="cct-tooltip-icon">?</span>
-                    <div class="cct-tooltip-content">
-                        <div class="cct-tooltip-title">${config.title}</div>
-                        <div class="cct-tooltip-text">${config.content}</div>
+                <span class="uenf-tooltip">
+                    <span class="uenf-tooltip-icon">?</span>
+                    <div class="uenf-tooltip-content">
+                        <div class="uenf-tooltip-title">${config.title}</div>
+                        <div class="uenf-tooltip-text">${config.content}</div>
                         ${tipsHtml}
                     </div>
                 </span>
@@ -474,7 +474,7 @@
             const section = $(`#accordion-section-${sectionId}`);
             if (section.length && advancedDocs[sectionId]) {
                 const button = $(`
-                    <button class="cct-help-button" data-section="${sectionId}">
+                    <button class="uenf-help-button" data-section="${sectionId}">
                         📚 Guia Completo
                     </button>
                 `);
@@ -493,9 +493,9 @@
             if (!doc) return;
             
             const sectionsHtml = doc.sections.map(section => `
-                <div class="cct-popup-section">
-                    <h3 class="cct-popup-section-title">${section.title}</h3>
-                    <div class="cct-popup-content">
+                <div class="uenf-popup-section">
+                    <h3 class="uenf-popup-section-title">${section.title}</h3>
+                    <div class="uenf-popup-content">
                         <ul>
                             ${section.content.map(item => `<li>${item}</li>`).join('')}
                         </ul>
@@ -504,20 +504,20 @@
             `).join('');
             
             const popup = $(`
-                <div class="cct-popup-overlay">
-                    <div class="cct-popup">
-                        <div class="cct-popup-header">
-                            <h2 class="cct-popup-title">${doc.title}</h2>
-                            <button class="cct-popup-close">×</button>
+                <div class="uenf-popup-overlay">
+                    <div class="uenf-popup">
+                        <div class="uenf-popup-header">
+                            <h2 class="uenf-popup-title">${doc.title}</h2>
+                            <button class="uenf-popup-close">×</button>
                         </div>
-                        <div class="cct-popup-body">
+                        <div class="uenf-popup-body">
                             ${sectionsHtml}
                         </div>
                     </div>
                 </div>
             `);
             
-            popup.find('.cct-popup-close').on('click', () => {
+            popup.find('.uenf-popup-close').on('click', () => {
                 this.closePopup();
             });
             
@@ -529,9 +529,9 @@
         }
         
         closePopup() {
-            $('.cct-popup-overlay').removeClass('active');
+            $('.uenf-popup-overlay').removeClass('active');
             setTimeout(() => {
-                $('.cct-popup-overlay').remove();
+                $('.uenf-popup-overlay').remove();
             }, 300);
         }
     }

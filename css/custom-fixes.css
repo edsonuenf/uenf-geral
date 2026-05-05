@@ -2,6 +2,7 @@
 .custom-breadcrumb {
     padding-bottom: 1.25rem;
 }
+
 /* Correções de espaçamento no header */
 body {
     margin: 0;
@@ -28,27 +29,22 @@ body {
     padding: 0;
 }
 
-/* Remover margens e paddings padrão do Bootstrap */
-.container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-.row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
 /* Ajustar o container do header */
 .header-grid-container {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Garantir que não haja espaços extras */
-* {
-    margin: 0;
-    padding: 0;
+/* Evitar que Bootstrap .row cause overflow horizontal no header fixo */
+.bg-header-logo .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* box-sizing global (margin/padding já definidos no reset.css) */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -58,12 +54,14 @@ body {
 }
 
 .entry-content p {
-    margin: 0 0 1rem; /* separa parágrafos visualmente */
+    margin: 0 0 1rem;
+    /* separa parágrafos visualmente */
 }
 
 .entry-content ul,
 .entry-content ol {
-    margin: 0 0 1rem 1.25rem; /* espaço e indentação para listas */
+    margin: 0 0 1rem 1.25rem;
+    /* espaço e indentação para listas */
 }
 
 .entry-content h1,
@@ -72,7 +70,8 @@ body {
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-    margin: 1.25rem 0 0.75rem; /* restaura espaçamento de títulos */
+    margin: 1.25rem 0 0.75rem;
+    /* restaura espaçamento de títulos */
 }
 
 /* ===== Alinhamento correto de imagens ===== */
@@ -101,10 +100,10 @@ body {
 }
 
 /* Clearfix para garantir altura correta do container */
-.entry-content::after { 
-    content: ""; 
-    display: block; 
-    clear: both; 
+.entry-content::after {
+    content: "";
+    display: block;
+    clear: both;
 }
 
 /* Este arquivo contém apenas correções específicas e sobrescritas necessárias */
@@ -150,12 +149,12 @@ body .entry-content .wp-block-image.aligncenter img {
 }
 
 /* Permitir que o texto flua ao lado das imagens alinhadas */
-body .entry-content .alignleft + p,
-body .entry-content .alignright + p,
-body .entry-content .wp-caption.alignleft + p,
-body .entry-content .wp-caption.alignright + p,
-body .entry-content .wp-block-image.alignleft + p,
-body .entry-content .wp-block-image.alignright + p {
+body .entry-content .alignleft+p,
+body .entry-content .alignright+p,
+body .entry-content .wp-caption.alignleft+p,
+body .entry-content .wp-caption.alignright+p,
+body .entry-content .wp-block-image.alignleft+p,
+body .entry-content .wp-block-image.alignright+p {
     clear: none !important;
     margin-top: 0 !important;
 }
@@ -168,8 +167,8 @@ body .entry-content p:has(img.alignright) {
 }
 
 /* Evitar que imagens dentro de parágrafos flutuem (comportamento específico) */
-.entry-content p > img.alignleft,
-.entry-content p > img.alignright {
+.entry-content p>img.alignleft,
+.entry-content p>img.alignright {
     float: none !important;
     display: block !important;
     margin: 0 0 1rem 0 !important;
@@ -205,15 +204,122 @@ body .entry-content p:has(img.alignright) {
 }
 
 /* Permitir que texto flua ao lado das imagens no front-page */
-.page-content .entry-content .alignleft + p,
-.page-content .entry-content .alignright + p,
-.page-content .entry-content img.alignleft + p,
-.page-content .entry-content img.alignright + p,
-.page-content .entry-content figure.alignleft + p,
-.page-content .entry-content figure.alignright + p,
-.page-content .entry-content .wp-block-image.alignleft + p,
-.page-content .entry-content .wp-block-image.alignright + p {
+.page-content .entry-content .alignleft+p,
+.page-content .entry-content .alignright+p,
+.page-content .entry-content img.alignleft+p,
+.page-content .entry-content img.alignright+p,
+.page-content .entry-content figure.alignleft+p,
+.page-content .entry-content figure.alignright+p,
+.page-content .entry-content .wp-block-image.alignleft+p,
+.page-content .entry-content .wp-block-image.alignright+p {
     clear: none !important;
     margin-top: 0 !important;
 }
 
+/* ===== Rodapé: reduz distância logo → texto à metade ===== */
+.footer-widgets {
+    gap: 15px !important;
+}
+
+/* ===== Ícone Home, botão Atalhos e botão Redes Sociais — ocultos no desktop ===== */
+/* Regras mobile movidas para css/responsive/mobile.css */
+.header-home-link,
+.header-shortcut-btn,
+.social-share-wrapper {
+    display: none; /* ocultos no desktop */
+}
+
+/* ===== Mobile search bar: sobrepõe search.css ===== */
+#mobile-search-bar {
+    background-color: #566694 !important; /* hex sólido equivalente a #1D3770BF sobre branco — igual ao navbar desktop */
+}
+
+#mobile-search-bar .mobile-search-inner form {
+    width: 80% !important;   /* 20% menor na largura */
+    margin: 0 auto !important;
+}
+
+#mobile-search-bar input[type="search"] {
+    border-radius: 20px 0 0 20px !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    font-size: 0.76rem !important; /* ~20% menor */
+    outline: none !important;
+    height: auto !important;
+}
+
+#mobile-search-bar button[type="submit"] {
+    border-radius: 0 20px 20px 0 !important;
+    background: var(--bs-uenf-blue, #1d3771) !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 8px 12px !important;
+    min-width: 36px !important;
+}
+
+#mobile-search-bar button[type="submit"] .search-text {
+    display: none !important;
+}
+
+/* ===== Cor de todos os títulos h1-h6 ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #1d3770bf !important;
+}
+
+/* ===== Post meta: ícone + cor muted, colado ao título ===== */
+.entry-header .entry-title {
+    margin-bottom: -2px !important;
+}
+
+.entry-header .entry-meta {
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+}
+
+.entry-header {
+    margin-bottom: calc(1.5rem - 2px) !important;
+    /* mb-4 padrão menos 2px */
+}
+
+.entry-header .entry-meta .posted-on {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+    color: #6c757d !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    font-style: normal !important;
+}
+
+.entry-header .entry-meta .posted-on i {
+    font-size: 0.75rem !important;
+    color: #6c757d !important;
+}
+
+/* Título do single post */
+.single .entry-title {
+    color: #1d3770bf !important;
+}
+
+/* Hero image: borda arredondada e sombra suave */
+.post-hero-image {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: cover;
+}
+
+/* ===== Tipografia mobile: movida para css/responsive/mobile.css ===== */

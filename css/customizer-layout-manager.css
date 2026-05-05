@@ -4,7 +4,7 @@
  */
 
 /* Container principal do gerenciador de layout */
-.cct-layout-manager {
+.uenf-layout-manager {
     padding: 15px;
     background: #fff;
     border: 1px solid #ddd;
@@ -12,7 +12,7 @@
 }
 
 /* Preview do Grid */
-.cct-grid-preview {
+.uenf-grid-preview {
     margin-bottom: 20px;
     padding: 20px;
     background: #f9f9f9;
@@ -20,7 +20,7 @@
     border-radius: 4px;
 }
 
-.cct-grid-preview-container {
+.uenf-grid-preview-container {
     display: grid;
     gap: 10px;
     min-height: 100px;
@@ -29,7 +29,7 @@
     padding: 15px;
 }
 
-.cct-grid-column {
+.uenf-grid-column {
     background: #e6f3ff;
     border: 1px solid #0073aa;
     padding: 10px;
@@ -40,18 +40,18 @@
 }
 
 /* Gerenciador de Containers */
-.cct-container-manager {
+.uenf-container-manager {
     margin-bottom: 20px;
 }
 
-.cct-container-presets {
+.uenf-container-presets {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 10px;
     margin-top: 15px;
 }
 
-.cct-container-preset {
+.uenf-container-preset {
     padding: 15px;
     border: 2px solid #ddd;
     border-radius: 4px;
@@ -61,38 +61,38 @@
     background: #fff;
 }
 
-.cct-container-preset:hover {
+.uenf-container-preset:hover {
     border-color: #0073aa;
     background-color: #f0f8ff;
 }
 
-.cct-container-preset.active {
+.uenf-container-preset.active {
     border-color: #0073aa;
     background-color: #e6f3ff;
 }
 
-.cct-container-preset h4 {
+.uenf-container-preset h4 {
     margin: 0 0 5px 0;
     font-size: 14px;
     color: #333;
 }
 
-.cct-container-preset p {
+.uenf-container-preset p {
     margin: 0;
     font-size: 11px;
     color: #666;
 }
 
 /* Gerenciador de Breakpoints */
-.cct-breakpoint-manager {
+.uenf-breakpoint-manager {
     margin-bottom: 20px;
 }
 
-.cct-breakpoint-list {
+.uenf-breakpoint-list {
     margin-top: 15px;
 }
 
-.cct-breakpoint-item {
+.uenf-breakpoint-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -103,26 +103,26 @@
     background: #fff;
 }
 
-.cct-breakpoint-info {
+.uenf-breakpoint-info {
     flex: 1;
 }
 
-.cct-breakpoint-name {
+.uenf-breakpoint-name {
     font-weight: 600;
     color: #333;
 }
 
-.cct-breakpoint-value {
+.uenf-breakpoint-value {
     font-size: 12px;
     color: #666;
 }
 
-.cct-breakpoint-actions {
+.uenf-breakpoint-actions {
     display: flex;
     gap: 5px;
 }
 
-.cct-breakpoint-actions button {
+.uenf-breakpoint-actions button {
     padding: 4px 8px;
     border: 1px solid #ddd;
     background: #fff;
@@ -131,26 +131,26 @@
     font-size: 11px;
 }
 
-.cct-breakpoint-actions button:hover {
+.uenf-breakpoint-actions button:hover {
     background: #f0f0f0;
 }
 
-.cct-breakpoint-actions .delete {
+.uenf-breakpoint-actions .delete {
     color: #dc3232;
     border-color: #dc3232;
 }
 
-.cct-breakpoint-actions .delete:hover {
+.uenf-breakpoint-actions .delete:hover {
     background: #dc3232;
     color: white;
 }
 
 /* Escala de Espaçamentos */
-.cct-spacing-scale {
+.uenf-spacing-scale {
     margin-bottom: 20px;
 }
 
-.cct-spacing-preview {
+.uenf-spacing-preview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
     gap: 10px;
@@ -161,7 +161,7 @@
     border-radius: 4px;
 }
 
-.cct-spacing-item {
+.uenf-spacing-item {
     text-align: center;
     padding: 10px;
     background: #0073aa;
@@ -171,11 +171,11 @@
 }
 
 /* Layout Builder */
-.cct-layout-builder {
+.uenf-layout-builder {
     margin-bottom: 20px;
 }
 
-.cct-layout-canvas {
+.uenf-layout-canvas {
     min-height: 200px;
     border: 2px dashed #ddd;
     border-radius: 4px;
@@ -185,12 +185,12 @@
     position: relative;
 }
 
-.cct-layout-canvas.dragover {
+.uenf-layout-canvas.dragover {
     border-color: #0073aa;
     background-color: #f0f8ff;
 }
 
-.cct-layout-section {
+.uenf-layout-section {
     margin-bottom: 15px;
     padding: 15px;
     border: 1px solid #ddd;
@@ -199,7 +199,7 @@
     position: relative;
 }
 
-.cct-layout-section-header {
+.uenf-layout-section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -208,17 +208,17 @@
     border-bottom: 1px solid #eee;
 }
 
-.cct-layout-section-title {
+.uenf-layout-section-title {
     font-weight: 600;
     color: #333;
 }
 
-.cct-layout-section-controls {
+.uenf-layout-section-controls {
     display: flex;
     gap: 5px;
 }
 
-.cct-layout-section-controls button {
+.uenf-layout-section-controls button {
     padding: 4px 8px;
     border: 1px solid #ddd;
     background: #fff;
@@ -227,26 +227,26 @@
     font-size: 11px;
 }
 
-.cct-layout-section-controls button:hover {
+.uenf-layout-section-controls button:hover {
     background: #f0f0f0;
 }
 
 /* Configurações de Layout */
-.cct-layout-settings {
+.uenf-layout-settings {
     margin-top: 20px;
     padding: 15px;
     background: #f9f9f9;
     border-radius: 4px;
 }
 
-.cct-layout-settings label {
+.uenf-layout-settings label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
 }
 
-.cct-layout-settings input,
-.cct-layout-settings select {
+.uenf-layout-settings input,
+.uenf-layout-settings select {
     width: 100%;
     padding: 6px;
     border: 1px solid #ddd;
@@ -254,17 +254,17 @@
     margin-bottom: 10px;
 }
 
-.cct-layout-settings .range-input {
+.uenf-layout-settings .range-input {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.cct-layout-settings .range-input input[type="range"] {
+.uenf-layout-settings .range-input input[type="range"] {
     flex: 1;
 }
 
-.cct-layout-settings .range-input .range-value {
+.uenf-layout-settings .range-input .range-value {
     min-width: 40px;
     text-align: center;
     font-weight: 600;
@@ -273,21 +273,21 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-    .cct-container-presets {
+    .uenf-container-presets {
         grid-template-columns: 1fr;
     }
     
-    .cct-spacing-preview {
+    .uenf-spacing-preview {
         grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     }
     
-    .cct-breakpoint-item {
+    .uenf-breakpoint-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
     
-    .cct-breakpoint-actions {
+    .uenf-breakpoint-actions {
         width: 100%;
         justify-content: flex-end;
     }
@@ -305,17 +305,17 @@
     }
 }
 
-.cct-layout-section {
+.uenf-layout-section {
     animation: fadeIn 0.3s ease;
 }
 
 /* Estados de loading */
-.cct-layout-manager.loading {
+.uenf-layout-manager.loading {
     opacity: 0.6;
     pointer-events: none;
 }
 
-.cct-layout-manager.loading::after {
+.uenf-layout-manager.loading::after {
     content: "";
     position: absolute;
     top: 50%;
