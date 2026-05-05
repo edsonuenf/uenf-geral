@@ -8,7 +8,7 @@
  * - Configurações por breakpoint
  * - Integração com todos os módulos
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -119,7 +119,7 @@
         cacheElements: function() {
             this.cache.window = $(window);
             this.cache.body = $('body');
-            this.cache.containers = $('.cct-container, .container, .container-fluid');
+            this.cache.containers = $('.uenf-container, .container, .container-fluid');
         },
         
         /**
@@ -238,23 +238,23 @@
         updateBodyClasses: function() {
             // Remover classes antigas
             this.cache.body.removeClass((index, className) => {
-                return (className.match(/\bcct-bp-\S+/g) || []).join(' ');
+                return (className.match(/\buenf-bp-\S+/g) || []).join(' ');
             });
             
             // Adicionar novas classes
             if (this.state.currentBreakpoint) {
-                this.cache.body.addClass(`cct-bp-${this.state.currentBreakpoint}`);
+                this.cache.body.addClass(`uenf-bp-${this.state.currentBreakpoint}`);
             }
             
-            this.cache.body.addClass(`cct-device-${this.state.deviceType}`);
-            this.cache.body.addClass(`cct-orientation-${this.state.orientation}`);
+            this.cache.body.addClass(`uenf-device-${this.state.deviceType}`);
+            this.cache.body.addClass(`uenf-orientation-${this.state.orientation}`);
             
             if (this.state.isTouch) {
-                this.cache.body.addClass('cct-touch');
+                this.cache.body.addClass('uenf-touch');
             }
             
             if (this.state.isRetina) {
-                this.cache.body.addClass('cct-retina');
+                this.cache.body.addClass('uenf-retina');
             }
         },
         
@@ -293,11 +293,11 @@
             const root = document.documentElement;
             
             if (breakpoint.columns) {
-                root.style.setProperty('--cct-grid-columns', breakpoint.columns);
+                root.style.setProperty('--uenf-grid-columns', breakpoint.columns);
             }
             
             if (breakpoint.gutter) {
-                root.style.setProperty('--cct-grid-gutter', `${breakpoint.gutter}px`);
+                root.style.setProperty('--uenf-grid-gutter', `${breakpoint.gutter}px`);
             }
         },
         
@@ -309,22 +309,22 @@
             const bpKey = this.state.currentBreakpoint;
             
             // Variáveis do breakpoint atual
-            root.style.setProperty('--cct-current-bp', `'${bpKey}'`);
-            root.style.setProperty('--cct-current-min-width', `${breakpoint.min_width}px`);
+            root.style.setProperty('--uenf-current-bp', `'${bpKey}'`);
+            root.style.setProperty('--uenf-current-min-width', `${breakpoint.min_width}px`);
             
             if (breakpoint.max_width) {
-                root.style.setProperty('--cct-current-max-width', `${breakpoint.max_width}px`);
+                root.style.setProperty('--uenf-current-max-width', `${breakpoint.max_width}px`);
             }
             
-            root.style.setProperty('--cct-current-container', breakpoint.container_width || '100%');
-            root.style.setProperty('--cct-current-gutter', `${breakpoint.gutter || 16}px`);
-            root.style.setProperty('--cct-current-columns', breakpoint.columns || 12);
+            root.style.setProperty('--uenf-current-container', breakpoint.container_width || '100%');
+            root.style.setProperty('--uenf-current-gutter', `${breakpoint.gutter || 16}px`);
+            root.style.setProperty('--uenf-current-columns', breakpoint.columns || 12);
             
             // Variáveis de dispositivo
-            root.style.setProperty('--cct-screen-width', `${this.state.screenWidth}px`);
-            root.style.setProperty('--cct-screen-height', `${this.state.screenHeight}px`);
-            root.style.setProperty('--cct-device-type', `'${this.state.deviceType}'`);
-            root.style.setProperty('--cct-orientation', `'${this.state.orientation}'`);
+            root.style.setProperty('--uenf-screen-width', `${this.state.screenWidth}px`);
+            root.style.setProperty('--uenf-screen-height', `${this.state.screenHeight}px`);
+            root.style.setProperty('--uenf-device-type', `'${this.state.deviceType}'`);
+            root.style.setProperty('--uenf-orientation', `'${this.state.orientation}'`);
         },
         
         /**
@@ -364,8 +364,8 @@
             }
             
             // Aplicar classes de grid system
-            this.cache.body.addClass(`cct-grid-${this.settings.gridSystem}`);
-            this.cache.body.addClass(`cct-container-${this.settings.containerBehavior}`);
+            this.cache.body.addClass(`uenf-grid-${this.settings.gridSystem}`);
+            this.cache.body.addClass(`uenf-container-${this.settings.containerBehavior}`);
         },
         
         /**
@@ -384,23 +384,23 @@
          * Cria elemento de debug
          */
         createDebugInfo: function() {
-            if ($('.cct-breakpoint-debug').length) {
+            if ($('.uenf-breakpoint-debug').length) {
                 return;
             }
             
             const $debug = $(`
-                <div class="cct-breakpoint-debug">
-                    <div class="cct-debug-item">
+                <div class="uenf-breakpoint-debug">
+                    <div class="uenf-debug-item">
                         <strong>Breakpoint:</strong>
-                        <span class="cct-debug-bp">-</span>
+                        <span class="uenf-debug-bp">-</span>
                     </div>
-                    <div class="cct-debug-item">
+                    <div class="uenf-debug-item">
                         <strong>Tela:</strong>
-                        <span class="cct-debug-screen">-</span>
+                        <span class="uenf-debug-screen">-</span>
                     </div>
-                    <div class="cct-debug-item">
+                    <div class="uenf-debug-item">
                         <strong>Dispositivo:</strong>
-                        <span class="cct-debug-device">-</span>
+                        <span class="uenf-debug-device">-</span>
                     </div>
                 </div>
             `);
@@ -419,17 +419,17 @@
             
             const breakpoint = this.breakpoints[this.state.currentBreakpoint];
             
-            this.cache.debugInfo.find('.cct-debug-bp').text(
+            this.cache.debugInfo.find('.uenf-debug-bp').text(
                 this.state.currentBreakpoint ? 
                 `${this.state.currentBreakpoint} (${breakpoint?.name || 'N/A'})` : 
                 'N/A'
             );
             
-            this.cache.debugInfo.find('.cct-debug-screen').text(
+            this.cache.debugInfo.find('.uenf-debug-screen').text(
                 `${this.state.screenWidth}x${this.state.screenHeight} (${this.state.orientation})`
             );
             
-            this.cache.debugInfo.find('.cct-debug-device').text(
+            this.cache.debugInfo.find('.uenf-debug-device').text(
                 `${this.state.deviceType}${this.state.isTouch ? ' + Touch' : ''}${this.state.isRetina ? ' + Retina' : ''}`
             );
         },
@@ -835,9 +835,9 @@
             // Ajustar posição do toggle baseado no breakpoint
             const isMobile = data.deviceType === 'mobile';
             if (isMobile) {
-                $('.cct-fixed-dark-mode-toggle').addClass('cct-mobile-position');
+                $('.uenf-fixed-dark-mode-toggle').addClass('uenf-mobile-position');
             } else {
-                $('.cct-fixed-dark-mode-toggle').removeClass('cct-mobile-position');
+                $('.uenf-fixed-dark-mode-toggle').removeClass('uenf-mobile-position');
             }
         }
     });
@@ -861,20 +861,20 @@
         if (typeof CCTPatterns !== 'undefined') {
             // Ajustar layout dos padrões
             const columns = data.breakpoint ? data.breakpoint.columns : 12;
-            document.documentElement.style.setProperty('--cct-pattern-columns', columns);
+            document.documentElement.style.setProperty('--uenf-pattern-columns', columns);
         }
     });
     
     // Integração com sistema de layout
     $(document).on('cct:breakpointChanged', function(e, data) {
         // Atualizar classes de layout responsivo
-        $('[class*="cct-col-"]').each(function() {
+        $('[class*="uenf-col-"]').each(function() {
             const $col = $(this);
             const classes = $col.attr('class').split(' ');
             
             // Encontrar classe de coluna para o breakpoint atual
             const currentBpClass = classes.find(cls => 
-                cls.startsWith(`cct-col-${data.current}-`)
+                cls.startsWith(`uenf-col-${data.current}-`)
             );
             
             if (currentBpClass) {
@@ -894,7 +894,7 @@
  */
 (function() {
     const breakpointDebugCSS = `
-        .cct-breakpoint-debug {
+        .uenf-breakpoint-debug {
             position: fixed;
             top: 10px;
             right: 10px;
@@ -909,22 +909,22 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         
-        .cct-debug-item {
+        .uenf-debug-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 4px;
         }
         
-        .cct-debug-item:last-child {
+        .uenf-debug-item:last-child {
             margin-bottom: 0;
         }
         
-        .cct-debug-item strong {
+        .uenf-debug-item strong {
             color: #4a9eff;
         }
         
         @media (max-width: 768px) {
-            .cct-breakpoint-debug {
+            .uenf-breakpoint-debug {
                 top: 5px;
                 right: 5px;
                 font-size: 10px;
@@ -933,7 +933,7 @@
             }
         }
         
-        .cct-mobile-position {
+        .uenf-mobile-position {
             bottom: 20px !important;
             top: auto !important;
         }

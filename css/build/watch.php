@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 // Definir diretório do tema
-define('CCT_THEME_DIR', '/var/www/html/wp-content/themes/uenf-geral');
+define('UENF_THEME_DIR', '/var/www/html/wp-content/themes/uenf-geral');
 
 // Mensagem de inicialização
 echo "\e[32m=== Watch CSS iniciado ===\e[0m\n";
@@ -10,7 +10,7 @@ echo "\e[32mMonitorando arquivos CSS para mudanças...\e[0m\n\n";
 // Função para minificar e salvar
 function buildCss() {
     echo "\e[34m⚙️ Iniciando minificação...\e[0m\n";
-    require_once CCT_THEME_DIR . '/css/build/build.php';
+    require_once UENF_THEME_DIR . '/css/build/build.php';
     echo "\e[32m✅ Minificação e combinação de CSS concluída\e[0m\n"; // Verde
 }
 
@@ -23,17 +23,17 @@ function clearTerminal() {
 
 // Lista de arquivos CSS a monitorar
 $cssFiles = [
-    CCT_THEME_DIR . '/css/variables.css',
-    CCT_THEME_DIR . '/css/layout/main.css',
-    CCT_THEME_DIR . '/css/components/header.css',
-    CCT_THEME_DIR . '/css/components/menu.css',
-    CCT_THEME_DIR . '/css/components/search.css',
-    CCT_THEME_DIR . '/css/components/footer.css',
-    CCT_THEME_DIR . '/css/custom-fontawesome.css',
-    CCT_THEME_DIR . '/css/fonts_css.css',
-    CCT_THEME_DIR . '/css/404.css',
-    CCT_THEME_DIR . '/css/search.css',
-    CCT_THEME_DIR . '/css/styles.css'
+    UENF_THEME_DIR . '/css/variables.css',
+    UENF_THEME_DIR . '/css/layout/main.css',
+    UENF_THEME_DIR . '/css/components/header.css',
+    UENF_THEME_DIR . '/css/components/menu.css',
+    UENF_THEME_DIR . '/css/components/search.css',
+    UENF_THEME_DIR . '/css/components/footer.css',
+    UENF_THEME_DIR . '/css/custom-fontawesome.css',
+    UENF_THEME_DIR . '/css/fonts_css.css',
+    UENF_THEME_DIR . '/css/404.css',
+    UENF_THEME_DIR . '/css/search.css',
+    UENF_THEME_DIR . '/css/styles.css'
 ];
 
 // Verifica se todos os arquivos existem

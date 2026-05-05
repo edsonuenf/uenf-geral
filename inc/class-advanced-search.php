@@ -4,7 +4,7 @@
  * 
  * Implementa funcionalidades avançadas de busca baseadas nas configurações do customizer
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Search
  * @since 1.0.0
  */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CCT_Advanced_Search {
+class UENF_Advanced_Search {
     
     /**
      * Inicializar sistema de busca avançada
@@ -26,15 +26,15 @@ class CCT_Advanced_Search {
         add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_search_scripts'));
         
         // Hooks para multisite
-        if (is_multisite() && get_theme_mod('cct_search_multisite', false)) {
+        if (is_multisite() && get_theme_mod('uenf_search_multisite', false)) {
             add_action('init', array(__CLASS__, 'setup_multisite_search'));
         }
         
         // Hooks AJAX para busca avançada
-        add_action('wp_ajax_cct_advanced_search', array(__CLASS__, 'ajax_search'));
-        add_action('wp_ajax_nopriv_cct_advanced_search', array(__CLASS__, 'ajax_search'));
-        add_action('wp_ajax_cct_load_more_search', array(__CLASS__, 'ajax_load_more'));
-        add_action('wp_ajax_nopriv_cct_load_more_search', array(__CLASS__, 'ajax_load_more'));
+        add_action('wp_ajax_uenf_advanced_search', array(__CLASS__, 'ajax_search'));
+        add_action('wp_ajax_nopriv_uenf_advanced_search', array(__CLASS__, 'ajax_search'));
+        add_action('wp_ajax_uenf_load_more_search', array(__CLASS__, 'ajax_load_more'));
+        add_action('wp_ajax_nopriv_uenf_load_more_search', array(__CLASS__, 'ajax_load_more'));
     }
     
     /**
@@ -46,7 +46,7 @@ class CCT_Advanced_Search {
             self::set_post_types($query);
             
             // Configurar número de resultados
-            $results_per_page = get_theme_mod('cct_search_results_per_page', 10);
+            $results_per_page = get_theme_mod('uenf_search_results_per_page', 10);
             $query->set('posts_per_page', $results_per_page);
             
             // Configurar ordenação
@@ -58,7 +58,7 @@ class CCT_Advanced_Search {
      * Configurar tipos de post para busca
      */
     private static function set_post_types($query) {
-        $scope = get_theme_mod('cct_search_scope', 'all');
+        $scope = get_theme_mod('uenf_search_scope', 'all');
         
         switch ($scope) {
             case 'posts':
@@ -74,7 +74,7 @@ class CCT_Advanced_Search {
                 break;
                 
             case 'custom':
-                $custom_types = get_theme_mod('cct_search_post_types', '');
+                $custom_types = get_theme_mod('uenf_search_post_types', '');
                 if (!empty($custom_types)) {
                     $types = array_map('trim', explode(',', $custom_types));
                     $query->set('post_type', $types);
@@ -94,7 +94,7 @@ class CCT_Advanced_Search {
      * Configurar ordenação dos resultados
      */
     private static function set_orderby($query) {
-        $orderby = get_theme_mod('cct_search_orderby', 'relevance');
+        $orderby = get_theme_mod('uenf_search_orderby', 'relevance');
         
         switch ($orderby) {
             case 'date':
@@ -183,7 +183,7 @@ class CCT_Advanced_Search {
         }
         
         $multisite_results = array();
-        $sites_config = get_theme_mod('cct_search_sites', '');
+        $sites_config = get_theme_mod('uenf_search_sites', '');
         
         if (!empty($sites_config)) {
             // Buscar em sites específicos
@@ -224,7 +224,7 @@ class CCT_Advanced_Search {
         $combined_results = array_merge($posts, $multisite_results);
         
         // Limitar total de resultados
-        $max_results = get_theme_mod('cct_search_results_per_page', 10);
+        $max_results = get_theme_mod('uenf_search_results_per_page', 10);
         return array_slice($combined_results, 0, $max_results);
     }
     
@@ -234,7 +234,7 @@ class CCT_Advanced_Search {
     public static function enqueue_search_scripts() {
         if (is_search()) {
             wp_enqueue_script(
-                'cct-advanced-search',
+                'uenf-advanced-search',
                 get_template_directory_uri() . '/js/advanced-search.js',
                 array('jquery'),
                 filemtime(get_template_directory() . '/js/advanced-search.js'),
@@ -242,12 +242,12 @@ class CCT_Advanced_Search {
             );
             
             // Passar configurações para JavaScript
-            wp_localize_script('cct-advanced-search', 'cctSearch', array(
+            wp_localize_script('uenf-advanced-search', 'cctSearch', array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('cct_search_nonce'),
-                'multisite' => is_multisite() && get_theme_mod('cct_search_multisite', false),
-                'scope' => get_theme_mod('cct_search_scope', 'all'),
-                'orderby' => get_theme_mod('cct_search_orderby', 'relevance')
+                'nonce' => wp_create_nonce('uenf_search_nonce'),
+                'multisite' => is_multisite() && get_theme_mod('uenf_search_multisite', false),
+                'scope' => get_theme_mod('uenf_search_scope', 'all'),
+                'orderby' => get_theme_mod('uenf_search_orderby', 'relevance')
             ));
         }
     }
@@ -258,7 +258,7 @@ class CCT_Advanced_Search {
     public static function get_search_stats($search_term) {
         global $wpdb;
         
-        $scope = get_theme_mod('cct_search_scope', 'all');
+        $scope = get_theme_mod('uenf_search_scope', 'all');
         $post_types = self::get_search_post_types();
         
         $stats = array();
@@ -284,7 +284,7 @@ class CCT_Advanced_Search {
      * Obter tipos de post para busca
      */
     private static function get_search_post_types() {
-        $scope = get_theme_mod('cct_search_scope', 'all');
+        $scope = get_theme_mod('uenf_search_scope', 'all');
         
         switch ($scope) {
             case 'posts':
@@ -297,7 +297,7 @@ class CCT_Advanced_Search {
                 return array('post', 'page');
                 
             case 'custom':
-                $custom_types = get_theme_mod('cct_search_post_types', '');
+                $custom_types = get_theme_mod('uenf_search_post_types', '');
                 if (!empty($custom_types)) {
                     return array_map('trim', explode(',', $custom_types));
                 }
@@ -331,7 +331,7 @@ class CCT_Advanced_Search {
      */
     public static function ajax_search() {
         // Verificar nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'cct_search_nonce')) {
+        if (!wp_verify_nonce($_POST['nonce'], 'uenf_search_nonce')) {
             wp_die('Erro de segurança');
         }
         
@@ -342,7 +342,7 @@ class CCT_Advanced_Search {
         // Configurar argumentos da query
         $args = array(
             's' => $search_term,
-            'posts_per_page' => get_theme_mod('cct_search_results_per_page', 10),
+            'posts_per_page' => get_theme_mod('uenf_search_results_per_page', 10),
             'post_status' => 'publish'
         );
         
@@ -407,7 +407,7 @@ class CCT_Advanced_Search {
      */
     public static function ajax_load_more() {
         // Verificar nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'cct_search_nonce')) {
+        if (!wp_verify_nonce($_POST['nonce'], 'uenf_search_nonce')) {
             wp_die('Erro de segurança');
         }
         
@@ -418,7 +418,7 @@ class CCT_Advanced_Search {
         
         $args = array(
             's' => $search_term,
-            'posts_per_page' => get_theme_mod('cct_search_results_per_page', 10),
+            'posts_per_page' => get_theme_mod('uenf_search_results_per_page', 10),
             'paged' => $page,
             'post_status' => 'publish'
         );
@@ -453,4 +453,4 @@ class CCT_Advanced_Search {
 }
 
 // Inicializar
-CCT_Advanced_Search::init();
+UENF_Advanced_Search::init();

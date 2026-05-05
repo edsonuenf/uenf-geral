@@ -17,14 +17,14 @@
             ?>
             <div class="entry-meta">
                 <?php
-                cct_posted_on();
-                cct_posted_by();
+                uenf_posted_on();
+                uenf_posted_by();
                 ?>
             </div>
         <?php endif; ?>
     </header>
 
-    <?php cct_post_thumbnail(); ?>
+    <?php uenf_post_thumbnail(); ?>
 
     <div class="entry-content">
         <?php
@@ -33,7 +33,7 @@
                 sprintf(
                     wp_kses(
                         /* translators: %s: Name of current post. Only visible to screen readers */
-                        __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'cct-theme' ),
+                        __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'uenf-theme' ),
                         array(
                             'span' => array(
                                 'class' => array(),
@@ -46,7 +46,7 @@
 
             wp_link_pages(
                 array(
-                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'cct-theme' ),
+                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'uenf-theme' ),
                     'after'  => '</div>',
                 )
             );
@@ -54,12 +54,12 @@
             the_excerpt();
             ?>
             <a href="<?php echo esc_url( get_permalink() ); ?>" class="read-more">
-                <?php esc_html_e( 'Read More', 'cct-theme' ); ?>
+                <?php esc_html_e( 'Read More', 'uenf-theme' ); ?>
             </a>
         <?php endif; ?>
     </div>
 
     <footer class="entry-footer">
-        <?php cct_entry_footer(); ?>
+        <?php uenf_entry_footer(); ?>
     </footer>
 </article> 

@@ -3,8 +3,6 @@
  * Corrige problemas específicos do Chrome com eventos de clique em 1920px
  */
 
-console.log('[UENF Menu] Carregando menu com correções para Chrome...');
-
 (function($) {
     'use strict';
 
@@ -295,8 +293,6 @@ console.log('[UENF Menu] Carregando menu com correções para Chrome...');
     
     // Inicializa o menu quando o DOM estiver pronto
     $(document).ready(function() {
-        console.log('[UENF Menu] Inicializando menu com correções para Chrome...');
-        
         // Inicializa cada menu encontrado
         $('.new-menu').each(function() {
             try {

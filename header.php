@@ -82,14 +82,14 @@ if ( function_exists( 'wp_body_open' ) ) {
           <div class="row align-items-center">
             <div class="col-9 col-md-4">
               <div class="logo">
-                <a href="https://uenf.br" target="_blank">
-                  <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/logo-uenf-transparente.png" alt="UENF">
+                <a href="https://uenf.br" target="_blank" rel="noopener noreferrer">
+                  <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/logo-uenf-transparente.png" alt="Logo da Universidade Estadual do Norte Fluminense Darcy Ribeiro">
                 </a>
               </div>
             </div>
             <div class="col-3 d-md-none d-flex justify-content-end align-items-center gap-1">
               <?php
-              $search_extension_active = get_theme_mod('cct_extension_search_customizer_enabled', false);
+              $search_extension_active = get_theme_mod('uenf_extension_search_customizer_enabled', false);
               if ($search_extension_active) : ?>
               <button class="mobile-search-toggle" type="button" aria-label="Abrir busca" aria-expanded="false" aria-controls="mobile-search-bar">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -118,7 +118,7 @@ if ( function_exists( 'wp_body_open' ) ) {
                     <?php dynamic_sidebar('idiomas-uenf'); ?>
                 </div>
                 <div class="social-media">
-                    <?php cct_display_social_media(); ?>
+                    <?php uenf_display_social_media(); ?>
                 </div>
                 <!-- Botão de redes sociais — visível apenas em mobile (substitui os ícones individuais) -->
                 <div class="social-share-wrapper">
@@ -144,7 +144,7 @@ if ( function_exists( 'wp_body_open' ) ) {
             <div class="search-container search-custom-uenf">
               <?php 
               // Verificar se a extensão de busca personalizada está ativa
-              $search_extension_active = get_theme_mod('cct_extension_search_customizer_enabled', false);
+              $search_extension_active = get_theme_mod('uenf_extension_search_customizer_enabled', false);
               if ($search_extension_active) {
                   get_search_form();
               }
@@ -230,6 +230,7 @@ if ( function_exists( 'wp_body_open' ) ) {
         var panel = document.createElement('div');
         panel.className = 'lang-dropdown-panel';
         panel.setAttribute('role', 'menu');
+        panel.setAttribute('aria-hidden', 'true');
         links.forEach(function(a) {
             var item = a.cloneNode(true);
             item.setAttribute('role', 'menuitem');
@@ -243,18 +244,33 @@ if ( function_exists( 'wp_body_open' ) ) {
         wrapper.appendChild(trigger);
         wrapper.appendChild(panel);
 
+        function openLangPanel() {
+            wrapper.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+            panel.setAttribute('aria-hidden', 'false');
+            var first = panel.querySelector('a, button');
+            if (first) { first.focus(); }
+        }
+
+        function closeLangPanel() {
+            wrapper.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+            panel.setAttribute('aria-hidden', 'true');
+        }
+
         // Toggle
         trigger.addEventListener('click', function(e) {
             e.stopPropagation();
-            var isOpen = wrapper.classList.toggle('open');
-            trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            wrapper.classList.contains('open') ? closeLangPanel() : openLangPanel();
+        });
+
+        // Fechar com Escape
+        panel.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeLangPanel(); trigger.focus(); }
         });
 
         // Fecha ao clicar fora
-        document.addEventListener('click', function() {
-            wrapper.classList.remove('open');
-            trigger.setAttribute('aria-expanded', 'false');
-        });
+        document.addEventListener('click', function() { closeLangPanel(); });
     });
 
     // Botão atalhos na barra inferior mobile
@@ -377,20 +393,36 @@ if ( function_exists( 'wp_body_open' ) ) {
             panel.appendChild(item);
         });
 
+        panel.setAttribute('aria-hidden', 'true');
         wrapper.appendChild(panel);
+
+        function openSocialPanel() {
+            wrapper.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+            panel.setAttribute('aria-hidden', 'false');
+            var first = panel.querySelector('a, button');
+            if (first) { first.focus(); }
+        }
+
+        function closeSocialPanel() {
+            wrapper.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            panel.setAttribute('aria-hidden', 'true');
+        }
 
         // Toggle ao clicar
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
-            var isOpen = wrapper.classList.toggle('open');
-            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            wrapper.classList.contains('open') ? closeSocialPanel() : openSocialPanel();
+        });
+
+        // Fechar com Escape
+        panel.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeSocialPanel(); btn.focus(); }
         });
 
         // Fecha ao clicar fora
-        document.addEventListener('click', function() {
-            wrapper.classList.remove('open');
-            btn.setAttribute('aria-expanded', 'false');
-        });
+        document.addEventListener('click', function() { closeSocialPanel(); });
     });
 
     document.addEventListener('DOMContentLoaded', function() {

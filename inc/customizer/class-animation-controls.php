@@ -9,7 +9,7 @@
  * - Gerenciador de micro-interações
  * - Configurador de transições
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Preview de Animações
  */
-class CCT_Animation_Preview_Control extends WP_Customize_Control {
+class UENF_Animation_Preview_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_animation_preview';
+    public $type = 'uenf_animation_preview';
     
     /**
      * Presets de animações
@@ -53,45 +53,45 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-animation-preview">
-            <div class="cct-preview-stage">
-                <div class="cct-preview-element" id="cct-preview-element">
-                    <div class="cct-preview-content">
-                        <span class="cct-preview-icon">✨</span>
-                        <span class="cct-preview-text"><?php _e('Elemento de Teste', 'cct'); ?></span>
+        <div class="uenf-animation-preview">
+            <div class="uenf-preview-stage">
+                <div class="uenf-preview-element" id="uenf-preview-element">
+                    <div class="uenf-preview-content">
+                        <span class="uenf-preview-icon">✨</span>
+                        <span class="uenf-preview-text"><?php _e('Elemento de Teste', 'cct'); ?></span>
                     </div>
                 </div>
             </div>
             
-            <div class="cct-animation-selector">
+            <div class="uenf-animation-selector">
                 <h4><?php _e('Escolha uma Animação', 'cct'); ?></h4>
                 
-                <div class="cct-animation-grid">
+                <div class="uenf-animation-grid">
                     <?php foreach ($this->animation_presets as $preset_id => $preset): ?>
-                        <div class="cct-animation-option" data-animation="<?php echo esc_attr($preset_id); ?>">
-                            <div class="cct-animation-thumbnail">
-                                <div class="cct-thumbnail-element cct-<?php echo esc_attr($preset_id); ?>">
-                                    <span class="cct-thumbnail-icon">⚡</span>
+                        <div class="uenf-animation-option" data-animation="<?php echo esc_attr($preset_id); ?>">
+                            <div class="uenf-animation-thumbnail">
+                                <div class="uenf-thumbnail-element uenf-<?php echo esc_attr($preset_id); ?>">
+                                    <span class="uenf-thumbnail-icon">⚡</span>
                                 </div>
                             </div>
                             
-                            <div class="cct-animation-info">
+                            <div class="uenf-animation-info">
                                 <h5><?php echo esc_html($preset['name']); ?></h5>
                                 <p><?php echo esc_html($preset['description']); ?></p>
                                 
-                                <div class="cct-animation-meta">
-                                    <span class="cct-duration">
+                                <div class="uenf-animation-meta">
+                                    <span class="uenf-duration">
                                         <strong><?php _e('Duração:', 'cct'); ?></strong> 
                                         <?php echo esc_html($preset['duration']); ?>
                                     </span>
-                                    <span class="cct-easing">
+                                    <span class="uenf-easing">
                                         <strong><?php _e('Easing:', 'cct'); ?></strong> 
                                         <?php echo esc_html($preset['easing']); ?>
                                     </span>
                                 </div>
                             </div>
                             
-                            <button type="button" class="button cct-preview-btn" data-animation="<?php echo esc_attr($preset_id); ?>">
+                            <button type="button" class="button uenf-preview-btn" data-animation="<?php echo esc_attr($preset_id); ?>">
                                 <?php _e('Preview', 'cct'); ?>
                             </button>
                         </div>
@@ -99,22 +99,22 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
                 </div>
             </div>
             
-            <div class="cct-animation-controls">
-                <div class="cct-control-group">
+            <div class="uenf-animation-controls">
+                <div class="uenf-control-group">
                     <label><?php _e('Duração (s):', 'cct'); ?></label>
-                    <input type="range" class="cct-duration-slider" min="0.1" max="3" step="0.1" value="0.3">
-                    <span class="cct-duration-value">0.3s</span>
+                    <input type="range" class="uenf-duration-slider" min="0.1" max="3" step="0.1" value="0.3">
+                    <span class="uenf-duration-value">0.3s</span>
                 </div>
                 
-                <div class="cct-control-group">
+                <div class="uenf-control-group">
                     <label><?php _e('Delay (s):', 'cct'); ?></label>
-                    <input type="range" class="cct-delay-slider" min="0" max="2" step="0.1" value="0">
-                    <span class="cct-delay-value">0s</span>
+                    <input type="range" class="uenf-delay-slider" min="0" max="2" step="0.1" value="0">
+                    <span class="uenf-delay-value">0s</span>
                 </div>
                 
-                <div class="cct-control-group">
+                <div class="uenf-control-group">
                     <label><?php _e('Easing:', 'cct'); ?></label>
-                    <select class="cct-easing-selector">
+                    <select class="uenf-easing-selector">
                         <option value="linear"><?php _e('Linear', 'cct'); ?></option>
                         <option value="ease"><?php _e('Ease', 'cct'); ?></option>
                         <option value="ease-in"><?php _e('Ease In', 'cct'); ?></option>
@@ -124,11 +124,11 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
                     </select>
                 </div>
                 
-                <div class="cct-control-actions">
-                    <button type="button" class="button button-primary cct-play-animation">
+                <div class="uenf-control-actions">
+                    <button type="button" class="button button-primary uenf-play-animation">
                         <?php _e('▶ Reproduzir', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-reset-animation">
+                    <button type="button" class="button uenf-reset-animation">
                         <?php _e('🔄 Reset', 'cct'); ?>
                     </button>
                 </div>
@@ -136,7 +136,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-animation-preview {
+        .uenf-animation-preview {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -144,7 +144,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-preview-stage {
+        .uenf-preview-stage {
             padding: 30px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
@@ -155,7 +155,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-preview-element {
+        .uenf-preview-element {
             background: white;
             border-radius: 8px;
             padding: 20px;
@@ -164,7 +164,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-preview-content {
+        .uenf-preview-content {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -172,24 +172,24 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-preview-icon {
+        .uenf-preview-icon {
             font-size: 20px;
         }
         
-        .cct-animation-selector {
+        .uenf-animation-selector {
             padding: 20px;
             background: white;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-animation-selector h4 {
+        .uenf-animation-selector h4 {
             margin: 0 0 15px 0;
             font-size: 14px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-animation-grid {
+        .uenf-animation-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
@@ -197,7 +197,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             overflow-y: auto;
         }
         
-        .cct-animation-option {
+        .uenf-animation-option {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -209,19 +209,19 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-animation-option:hover {
+        .uenf-animation-option:hover {
             border-color: #0073aa;
             background: #f0f8ff;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,115,170,0.1);
         }
         
-        .cct-animation-option.selected {
+        .uenf-animation-option.selected {
             border-color: #0073aa;
             background: #e3f2fd;
         }
         
-        .cct-animation-thumbnail {
+        .uenf-animation-thumbnail {
             width: 50px;
             height: 50px;
             background: linear-gradient(45deg, #667eea, #764ba2);
@@ -232,7 +232,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-thumbnail-element {
+        .uenf-thumbnail-element {
             width: 30px;
             height: 30px;
             background: white;
@@ -244,79 +244,79 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-animation-option:hover .cct-thumbnail-element {
+        .uenf-animation-option:hover .uenf-thumbnail-element {
             animation: pulse 1s ease-in-out;
         }
         
-        .cct-animation-info {
+        .uenf-animation-info {
             flex: 1;
         }
         
-        .cct-animation-info h5 {
+        .uenf-animation-info h5 {
             margin: 0 0 5px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-animation-info p {
+        .uenf-animation-info p {
             margin: 0 0 8px 0;
             font-size: 11px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-animation-meta {
+        .uenf-animation-meta {
             display: flex;
             gap: 15px;
         }
         
-        .cct-animation-meta span {
+        .uenf-animation-meta span {
             font-size: 10px;
             color: #888;
         }
         
-        .cct-preview-btn {
+        .uenf-preview-btn {
             font-size: 11px;
             padding: 6px 12px;
             white-space: nowrap;
         }
         
-        .cct-animation-controls {
+        .uenf-animation-controls {
             padding: 20px;
             background: white;
             border-top: 1px solid #ddd;
         }
         
-        .cct-control-group {
+        .uenf-control-group {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
         }
         
-        .cct-control-group label {
+        .uenf-control-group label {
             min-width: 80px;
             font-size: 12px;
             font-weight: 500;
             color: #333;
         }
         
-        .cct-duration-slider,
-        .cct-delay-slider {
+        .uenf-duration-slider,
+        .uenf-delay-slider {
             flex: 1;
             margin: 0;
         }
         
-        .cct-duration-value,
-        .cct-delay-value {
+        .uenf-duration-value,
+        .uenf-delay-value {
             min-width: 40px;
             font-size: 11px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-easing-selector {
+        .uenf-easing-selector {
             flex: 1;
             padding: 4px 8px;
             border: 1px solid #ddd;
@@ -324,7 +324,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-control-actions {
+        .uenf-control-actions {
             display: flex;
             gap: 10px;
             justify-content: center;
@@ -333,7 +333,7 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
             border-top: 1px solid #eee;
         }
         
-        .cct-control-actions .button {
+        .uenf-control-actions .button {
             font-size: 12px;
             padding: 8px 16px;
         }
@@ -344,12 +344,12 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
         }
         
         /* Animações de preview */
-        .cct-fade { animation: fadeIn 0.3s ease-in-out; }
-        .cct-slide { animation: slideInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .cct-scale { animation: scaleIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        .cct-rotate { animation: rotateIn 0.6s ease-in-out; }
-        .cct-bounce { animation: bounceIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000); }
-        .cct-flip { animation: flipInX 0.7s ease-in-out; }
+        .uenf-fade { animation: fadeIn 0.3s ease-in-out; }
+        .uenf-slide { animation: slideInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .uenf-scale { animation: scaleIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .uenf-rotate { animation: rotateIn 0.6s ease-in-out; }
+        .uenf-bounce { animation: bounceIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000); }
+        .uenf-flip { animation: flipInX 0.7s ease-in-out; }
         
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -393,14 +393,14 @@ class CCT_Animation_Preview_Control extends WP_Customize_Control {
 /**
  * Controle Configurador de Timing
  */
-class CCT_Timing_Configurator_Control extends WP_Customize_Control {
+class UENF_Timing_Configurator_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_timing_configurator';
+    public $type = 'uenf_timing_configurator';
     
     /**
      * Renderiza o controle
@@ -417,48 +417,48 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-timing-configurator">
-            <div class="cct-timing-presets">
+        <div class="uenf-timing-configurator">
+            <div class="uenf-timing-presets">
                 <h4><?php _e('Presets de Timing', 'cct'); ?></h4>
                 
-                <div class="cct-preset-buttons">
-                    <button type="button" class="button cct-timing-preset" data-preset="fast">
+                <div class="uenf-preset-buttons">
+                    <button type="button" class="button uenf-timing-preset" data-preset="fast">
                         <?php _e('Rápido', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-timing-preset" data-preset="normal">
+                    <button type="button" class="button uenf-timing-preset" data-preset="normal">
                         <?php _e('Normal', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-timing-preset" data-preset="slow">
+                    <button type="button" class="button uenf-timing-preset" data-preset="slow">
                         <?php _e('Lento', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-timing-preset" data-preset="custom">
+                    <button type="button" class="button uenf-timing-preset" data-preset="custom">
                         <?php _e('Personalizado', 'cct'); ?>
                     </button>
                 </div>
             </div>
             
-            <div class="cct-timing-controls">
-                <div class="cct-timing-group">
+            <div class="uenf-timing-controls">
+                <div class="uenf-timing-group">
                     <label><?php _e('Duração:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" class="cct-duration-range" min="0.1" max="3" step="0.1" value="0.3">
-                        <input type="number" class="cct-duration-input" min="0.1" max="3" step="0.1" value="0.3">
-                        <span class="cct-unit">s</span>
+                    <div class="uenf-range-control">
+                        <input type="range" class="uenf-duration-range" min="0.1" max="3" step="0.1" value="0.3">
+                        <input type="number" class="uenf-duration-input" min="0.1" max="3" step="0.1" value="0.3">
+                        <span class="uenf-unit">s</span>
                     </div>
                 </div>
                 
-                <div class="cct-timing-group">
+                <div class="uenf-timing-group">
                     <label><?php _e('Delay:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" class="cct-delay-range" min="0" max="2" step="0.1" value="0">
-                        <input type="number" class="cct-delay-input" min="0" max="2" step="0.1" value="0">
-                        <span class="cct-unit">s</span>
+                    <div class="uenf-range-control">
+                        <input type="range" class="uenf-delay-range" min="0" max="2" step="0.1" value="0">
+                        <input type="number" class="uenf-delay-input" min="0" max="2" step="0.1" value="0">
+                        <span class="uenf-unit">s</span>
                     </div>
                 </div>
                 
-                <div class="cct-timing-group">
+                <div class="uenf-timing-group">
                     <label><?php _e('Easing:', 'cct'); ?></label>
-                    <select class="cct-easing-select">
+                    <select class="uenf-easing-select">
                         <option value="linear"><?php _e('Linear', 'cct'); ?></option>
                         <option value="ease"><?php _e('Ease', 'cct'); ?></option>
                         <option value="ease-in"><?php _e('Ease In', 'cct'); ?></option>
@@ -471,11 +471,11 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
                 </div>
             </div>
             
-            <div class="cct-timing-visualizer">
+            <div class="uenf-timing-visualizer">
                 <h4><?php _e('Visualizador de Curva', 'cct'); ?></h4>
                 
-                <div class="cct-curve-container">
-                    <svg class="cct-curve-svg" viewBox="0 0 200 100">
+                <div class="uenf-curve-container">
+                    <svg class="uenf-curve-svg" viewBox="0 0 200 100">
                         <defs>
                             <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
@@ -484,7 +484,7 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
                         </defs>
                         
                         <!-- Grid -->
-                        <g class="cct-grid">
+                        <g class="uenf-grid">
                             <line x1="0" y1="0" x2="200" y2="0" stroke="#e1e1e1" stroke-width="1"/>
                             <line x1="0" y1="25" x2="200" y2="25" stroke="#f1f1f1" stroke-width="1"/>
                             <line x1="0" y1="50" x2="200" y2="50" stroke="#e1e1e1" stroke-width="1"/>
@@ -499,91 +499,91 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
                         </g>
                         
                         <!-- Curve -->
-                        <path class="cct-timing-curve" d="M0,100 Q50,50 200,0" stroke="url(#curveGradient)" stroke-width="3" fill="none"/>
+                        <path class="uenf-timing-curve" d="M0,100 Q50,50 200,0" stroke="url(#curveGradient)" stroke-width="3" fill="none"/>
                         
                         <!-- Points -->
                         <circle cx="0" cy="100" r="4" fill="#667eea"/>
                         <circle cx="200" cy="0" r="4" fill="#764ba2"/>
                     </svg>
                     
-                    <div class="cct-curve-labels">
-                        <span class="cct-start-label"><?php _e('Início', 'cct'); ?></span>
-                        <span class="cct-end-label"><?php _e('Fim', 'cct'); ?></span>
+                    <div class="uenf-curve-labels">
+                        <span class="uenf-start-label"><?php _e('Início', 'cct'); ?></span>
+                        <span class="uenf-end-label"><?php _e('Fim', 'cct'); ?></span>
                     </div>
                 </div>
                 
-                <div class="cct-timing-info">
-                    <div class="cct-info-item">
-                        <span class="cct-info-label"><?php _e('Função:', 'cct'); ?></span>
-                        <span class="cct-info-value" id="cct-easing-function">ease-in-out</span>
+                <div class="uenf-timing-info">
+                    <div class="uenf-info-item">
+                        <span class="uenf-info-label"><?php _e('Função:', 'cct'); ?></span>
+                        <span class="uenf-info-value" id="uenf-easing-function">ease-in-out</span>
                     </div>
-                    <div class="cct-info-item">
-                        <span class="cct-info-label"><?php _e('Duração Total:', 'cct'); ?></span>
-                        <span class="cct-info-value" id="cct-total-duration">0.3s</span>
+                    <div class="uenf-info-item">
+                        <span class="uenf-info-label"><?php _e('Duração Total:', 'cct'); ?></span>
+                        <span class="uenf-info-value" id="uenf-total-duration">0.3s</span>
                     </div>
                 </div>
             </div>
             
-            <div class="cct-timing-test">
-                <button type="button" class="button button-primary cct-test-timing">
+            <div class="uenf-timing-test">
+                <button type="button" class="button button-primary uenf-test-timing">
                     <?php _e('🎬 Testar Timing', 'cct'); ?>
                 </button>
                 
-                <div class="cct-test-element">
-                    <div class="cct-test-ball"></div>
+                <div class="uenf-test-element">
+                    <div class="uenf-test-ball"></div>
                 </div>
             </div>
         </div>
         
         <style>
-        .cct-timing-configurator {
+        .uenf-timing-configurator {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-timing-presets {
+        .uenf-timing-presets {
             padding: 15px;
             background: #f9f9f9;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-timing-presets h4 {
+        .uenf-timing-presets h4 {
             margin: 0 0 10px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-preset-buttons {
+        .uenf-preset-buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
         }
         
-        .cct-timing-preset {
+        .uenf-timing-preset {
             font-size: 11px;
             padding: 6px 8px;
             text-align: center;
         }
         
-        .cct-timing-preset.active {
+        .uenf-timing-preset.active {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
-        .cct-timing-controls {
+        .uenf-timing-controls {
             padding: 15px;
             background: white;
         }
         
-        .cct-timing-group {
+        .uenf-timing-group {
             margin-bottom: 15px;
         }
         
-        .cct-timing-group label {
+        .uenf-timing-group label {
             display: block;
             font-size: 12px;
             font-weight: 500;
@@ -591,19 +591,19 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-range-control {
+        .uenf-range-control {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .cct-duration-range,
-        .cct-delay-range {
+        .uenf-duration-range,
+        .uenf-delay-range {
             flex: 1;
         }
         
-        .cct-duration-input,
-        .cct-delay-input {
+        .uenf-duration-input,
+        .uenf-delay-input {
             width: 60px;
             padding: 4px 6px;
             border: 1px solid #ddd;
@@ -612,13 +612,13 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             text-align: center;
         }
         
-        .cct-unit {
+        .uenf-unit {
             font-size: 11px;
             color: #666;
             min-width: 15px;
         }
         
-        .cct-easing-select {
+        .uenf-easing-select {
             width: 100%;
             padding: 6px 8px;
             border: 1px solid #ddd;
@@ -626,26 +626,26 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-timing-visualizer {
+        .uenf-timing-visualizer {
             padding: 15px;
             background: #f8f9fa;
             border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-timing-visualizer h4 {
+        .uenf-timing-visualizer h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-curve-container {
+        .uenf-curve-container {
             position: relative;
             margin-bottom: 15px;
         }
         
-        .cct-curve-svg {
+        .uenf-curve-svg {
             width: 100%;
             height: 100px;
             border: 1px solid #ddd;
@@ -653,7 +653,7 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             background: white;
         }
         
-        .cct-curve-labels {
+        .uenf-curve-labels {
             display: flex;
             justify-content: space-between;
             margin-top: 5px;
@@ -661,41 +661,41 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-timing-info {
+        .uenf-timing-info {
             display: flex;
             gap: 20px;
         }
         
-        .cct-info-item {
+        .uenf-info-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
         
-        .cct-info-label {
+        .uenf-info-label {
             font-size: 10px;
             color: #666;
             margin-bottom: 2px;
         }
         
-        .cct-info-value {
+        .uenf-info-value {
             font-size: 12px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-timing-test {
+        .uenf-timing-test {
             padding: 15px;
             background: white;
             text-align: center;
         }
         
-        .cct-test-timing {
+        .uenf-test-timing {
             margin-bottom: 15px;
         }
         
-        .cct-test-element {
+        .uenf-test-element {
             height: 60px;
             background: linear-gradient(90deg, #f1f1f1 0%, #e1e1e1 100%);
             border-radius: 4px;
@@ -703,7 +703,7 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-test-ball {
+        .uenf-test-ball {
             width: 20px;
             height: 20px;
             background: linear-gradient(45deg, #667eea, #764ba2);
@@ -715,7 +715,7 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
             transition: all 0.3s ease-in-out;
         }
         
-        .cct-test-ball.animate {
+        .uenf-test-ball.animate {
             left: calc(100% - 30px);
         }
         </style>
@@ -726,14 +726,14 @@ class CCT_Timing_Configurator_Control extends WP_Customize_Control {
 /**
  * Controle Seletor de Efeitos de Hover
  */
-class CCT_Hover_Effects_Control extends WP_Customize_Control {
+class UENF_Hover_Effects_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_hover_effects';
+    public $type = 'uenf_hover_effects';
     
     /**
      * Efeitos de hover disponíveis
@@ -757,57 +757,57 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-hover-effects">
-            <div class="cct-effects-grid">
+        <div class="uenf-hover-effects">
+            <div class="uenf-effects-grid">
                 <?php foreach ($this->hover_effects as $effect_id => $effect): ?>
-                    <div class="cct-effect-item" data-effect="<?php echo esc_attr($effect_id); ?>">
-                        <div class="cct-effect-preview">
-                            <div class="cct-preview-card cct-hover-<?php echo esc_attr($effect_id); ?>">
-                                <div class="cct-card-content">
-                                    <span class="cct-card-icon">🎯</span>
-                                    <span class="cct-card-text"><?php echo esc_html($effect['name']); ?></span>
+                    <div class="uenf-effect-item" data-effect="<?php echo esc_attr($effect_id); ?>">
+                        <div class="uenf-effect-preview">
+                            <div class="uenf-preview-card uenf-hover-<?php echo esc_attr($effect_id); ?>">
+                                <div class="uenf-card-content">
+                                    <span class="uenf-card-icon">🎯</span>
+                                    <span class="uenf-card-text"><?php echo esc_html($effect['name']); ?></span>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="cct-effect-info">
+                        <div class="uenf-effect-info">
                             <h5><?php echo esc_html($effect['name']); ?></h5>
                             <p><?php echo esc_html($effect['description']); ?></p>
                             
-                            <div class="cct-effect-toggle">
-                                <label class="cct-toggle-switch">
-                                    <input type="checkbox" class="cct-effect-enabled" data-effect="<?php echo esc_attr($effect_id); ?>">
-                                    <span class="cct-toggle-slider"></span>
+                            <div class="uenf-effect-toggle">
+                                <label class="uenf-toggle-switch">
+                                    <input type="checkbox" class="uenf-effect-enabled" data-effect="<?php echo esc_attr($effect_id); ?>">
+                                    <span class="uenf-toggle-slider"></span>
                                 </label>
-                                <span class="cct-toggle-label"><?php _e('Ativar', 'cct'); ?></span>
+                                <span class="uenf-toggle-label"><?php _e('Ativar', 'cct'); ?></span>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
             
-            <div class="cct-global-hover-settings">
+            <div class="uenf-global-hover-settings">
                 <h4><?php _e('Configurações Globais', 'cct'); ?></h4>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Duração dos Efeitos:', 'cct'); ?></label>
-                    <div class="cct-duration-control">
-                        <input type="range" class="cct-hover-duration" min="0.1" max="1" step="0.1" value="0.3">
-                        <span class="cct-duration-display">0.3s</span>
+                    <div class="uenf-duration-control">
+                        <input type="range" class="uenf-hover-duration" min="0.1" max="1" step="0.1" value="0.3">
+                        <span class="uenf-duration-display">0.3s</span>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Intensidade:', 'cct'); ?></label>
-                    <div class="cct-intensity-control">
-                        <input type="range" class="cct-hover-intensity" min="0.5" max="2" step="0.1" value="1">
-                        <span class="cct-intensity-display">1x</span>
+                    <div class="uenf-intensity-control">
+                        <input type="range" class="uenf-hover-intensity" min="0.5" max="2" step="0.1" value="1">
+                        <span class="uenf-intensity-display">1x</span>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group">
-                    <label class="cct-checkbox-label">
-                        <input type="checkbox" class="cct-hover-mobile" checked>
+                <div class="uenf-setting-group">
+                    <label class="uenf-checkbox-label">
+                        <input type="checkbox" class="uenf-hover-mobile" checked>
                         <?php _e('Ativar em dispositivos móveis', 'cct'); ?>
                     </label>
                 </div>
@@ -815,25 +815,25 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-hover-effects {
+        .uenf-hover-effects {
             margin-top: 10px;
         }
         
-        .cct-effects-grid {
+        .uenf-effects-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
             margin-bottom: 20px;
         }
         
-        .cct-effect-item {
+        .uenf-effect-item {
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
             background: white;
         }
         
-        .cct-effect-preview {
+        .uenf-effect-preview {
             padding: 20px;
             background: #f8f9fa;
             display: flex;
@@ -841,7 +841,7 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             align-items: center;
         }
         
-        .cct-preview-card {
+        .uenf-preview-card {
             background: white;
             border-radius: 6px;
             padding: 15px;
@@ -851,7 +851,7 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             transform-origin: center;
         }
         
-        .cct-card-content {
+        .uenf-card-content {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -860,71 +860,71 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-card-icon {
+        .uenf-card-icon {
             font-size: 16px;
         }
         
         /* Efeitos de hover */
-        .cct-hover-lift:hover {
+        .uenf-hover-lift:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
-        .cct-hover-glow:hover {
+        .uenf-hover-glow:hover {
             box-shadow: 0 0 20px rgba(0,123,255,0.4);
             transform: scale(1.02);
         }
         
-        .cct-hover-tilt:hover {
+        .uenf-hover-tilt:hover {
             transform: rotate(2deg) scale(1.02);
         }
         
-        .cct-hover-zoom:hover {
+        .uenf-hover-zoom:hover {
             transform: scale(1.1);
         }
         
-        .cct-hover-slide_up:hover {
+        .uenf-hover-slide_up:hover {
             transform: translateY(-8px);
         }
         
-        .cct-effect-info {
+        .uenf-effect-info {
             padding: 15px;
         }
         
-        .cct-effect-info h5 {
+        .uenf-effect-info h5 {
             margin: 0 0 5px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-effect-info p {
+        .uenf-effect-info p {
             margin: 0 0 10px 0;
             font-size: 11px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-effect-toggle {
+        .uenf-effect-toggle {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .cct-toggle-switch {
+        .uenf-toggle-switch {
             position: relative;
             display: inline-block;
             width: 40px;
             height: 20px;
         }
         
-        .cct-toggle-switch input {
+        .uenf-toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
         
-        .cct-toggle-slider {
+        .uenf-toggle-slider {
             position: absolute;
             cursor: pointer;
             top: 0;
@@ -936,7 +936,7 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             border-radius: 20px;
         }
         
-        .cct-toggle-slider:before {
+        .uenf-toggle-slider:before {
             position: absolute;
             content: "";
             height: 16px;
@@ -948,36 +948,36 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             border-radius: 50%;
         }
         
-        input:checked + .cct-toggle-slider {
+        input:checked + .uenf-toggle-slider {
             background-color: #0073aa;
         }
         
-        input:checked + .cct-toggle-slider:before {
+        input:checked + .uenf-toggle-slider:before {
             transform: translateX(20px);
         }
         
-        .cct-toggle-label {
+        .uenf-toggle-label {
             font-size: 11px;
             color: #666;
         }
         
-        .cct-global-hover-settings {
+        .uenf-global-hover-settings {
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
         
-        .cct-global-hover-settings h4 {
+        .uenf-global-hover-settings h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-setting-group {
+        .uenf-setting-group {
             margin-bottom: 15px;
         }
         
-        .cct-setting-group label {
+        .uenf-setting-group label {
             display: block;
             font-size: 12px;
             font-weight: 500;
@@ -985,27 +985,27 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-duration-control,
-        .cct-intensity-control {
+        .uenf-duration-control,
+        .uenf-intensity-control {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-hover-duration,
-        .cct-hover-intensity {
+        .uenf-hover-duration,
+        .uenf-hover-intensity {
             flex: 1;
         }
         
-        .cct-duration-display,
-        .cct-intensity-display {
+        .uenf-duration-display,
+        .uenf-intensity-display {
             min-width: 40px;
             font-size: 11px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-checkbox-label {
+        .uenf-checkbox-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1020,14 +1020,14 @@ class CCT_Hover_Effects_Control extends WP_Customize_Control {
 /**
  * Controle Gerenciador de Micro-interações
  */
-class CCT_Micro_Interactions_Control extends WP_Customize_Control {
+class UENF_Micro_Interactions_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_micro_interactions';
+    public $type = 'uenf_micro_interactions';
     
     /**
      * Renderiza o controle
@@ -1044,49 +1044,49 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-micro-interactions">
-            <div class="cct-interaction-categories">
-                <div class="cct-category-tabs">
-                    <button type="button" class="cct-tab-btn active" data-category="buttons">
+        <div class="uenf-micro-interactions">
+            <div class="uenf-interaction-categories">
+                <div class="uenf-category-tabs">
+                    <button type="button" class="uenf-tab-btn active" data-category="buttons">
                         <?php _e('Botões', 'cct'); ?>
                     </button>
-                    <button type="button" class="cct-tab-btn" data-category="forms">
+                    <button type="button" class="uenf-tab-btn" data-category="forms">
                         <?php _e('Formulários', 'cct'); ?>
                     </button>
-                    <button type="button" class="cct-tab-btn" data-category="navigation">
+                    <button type="button" class="uenf-tab-btn" data-category="navigation">
                         <?php _e('Navegação', 'cct'); ?>
                     </button>
-                    <button type="button" class="cct-tab-btn" data-category="content">
+                    <button type="button" class="uenf-tab-btn" data-category="content">
                         <?php _e('Conteúdo', 'cct'); ?>
                     </button>
                 </div>
                 
-                <div class="cct-category-content">
+                <div class="uenf-category-content">
                     <!-- Botões -->
-                    <div class="cct-category-panel active" data-category="buttons">
-                        <div class="cct-interaction-item">
-                            <div class="cct-interaction-demo">
-                                <button class="cct-demo-button cct-button-ripple">
+                    <div class="uenf-category-panel active" data-category="buttons">
+                        <div class="uenf-interaction-item">
+                            <div class="uenf-interaction-demo">
+                                <button class="uenf-demo-button uenf-button-ripple">
                                     <?php _e('Efeito Ripple', 'cct'); ?>
                                 </button>
                             </div>
-                            <div class="cct-interaction-controls">
-                                <label class="cct-control-label">
-                                    <input type="checkbox" class="cct-interaction-toggle" data-interaction="button-ripple">
+                            <div class="uenf-interaction-controls">
+                                <label class="uenf-control-label">
+                                    <input type="checkbox" class="uenf-interaction-toggle" data-interaction="button-ripple">
                                     <?php _e('Ativar Efeito Ripple', 'cct'); ?>
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="cct-interaction-item">
-                            <div class="cct-interaction-demo">
-                                <button class="cct-demo-button cct-button-pulse">
+                        <div class="uenf-interaction-item">
+                            <div class="uenf-interaction-demo">
+                                <button class="uenf-demo-button uenf-button-pulse">
                                     <?php _e('Pulsação', 'cct'); ?>
                                 </button>
                             </div>
-                            <div class="cct-interaction-controls">
-                                <label class="cct-control-label">
-                                    <input type="checkbox" class="cct-interaction-toggle" data-interaction="button-pulse">
+                            <div class="uenf-interaction-controls">
+                                <label class="uenf-control-label">
+                                    <input type="checkbox" class="uenf-interaction-toggle" data-interaction="button-pulse">
                                     <?php _e('Ativar Pulsação', 'cct'); ?>
                                 </label>
                             </div>
@@ -1094,29 +1094,29 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
                     </div>
                     
                     <!-- Formulários -->
-                    <div class="cct-category-panel" data-category="forms">
-                        <div class="cct-interaction-item">
-                            <div class="cct-interaction-demo">
-                                <input type="text" class="cct-demo-input cct-input-focus" placeholder="<?php _e('Foco animado', 'cct'); ?>">
+                    <div class="uenf-category-panel" data-category="forms">
+                        <div class="uenf-interaction-item">
+                            <div class="uenf-interaction-demo">
+                                <input type="text" class="uenf-demo-input uenf-input-focus" placeholder="<?php _e('Foco animado', 'cct'); ?>">
                             </div>
-                            <div class="cct-interaction-controls">
-                                <label class="cct-control-label">
-                                    <input type="checkbox" class="cct-interaction-toggle" data-interaction="input-focus">
+                            <div class="uenf-interaction-controls">
+                                <label class="uenf-control-label">
+                                    <input type="checkbox" class="uenf-interaction-toggle" data-interaction="input-focus">
                                     <?php _e('Ativar Foco Animado', 'cct'); ?>
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="cct-interaction-item">
-                            <div class="cct-interaction-demo">
-                                <div class="cct-demo-checkbox">
-                                    <input type="checkbox" id="demo-check" class="cct-checkbox-animated">
+                        <div class="uenf-interaction-item">
+                            <div class="uenf-interaction-demo">
+                                <div class="uenf-demo-checkbox">
+                                    <input type="checkbox" id="demo-check" class="uenf-checkbox-animated">
                                     <label for="demo-check"><?php _e('Checkbox Animado', 'cct'); ?></label>
                                 </div>
                             </div>
-                            <div class="cct-interaction-controls">
-                                <label class="cct-control-label">
-                                    <input type="checkbox" class="cct-interaction-toggle" data-interaction="checkbox-animation">
+                            <div class="uenf-interaction-controls">
+                                <label class="uenf-control-label">
+                                    <input type="checkbox" class="uenf-interaction-toggle" data-interaction="checkbox-animation">
                                     <?php _e('Ativar Animação de Checkbox', 'cct'); ?>
                                 </label>
                             </div>
@@ -1124,18 +1124,18 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
                     </div>
                     
                     <!-- Navegação -->
-                    <div class="cct-category-panel" data-category="navigation">
-                        <div class="cct-interaction-item">
-                            <div class="cct-interaction-demo">
-                                <nav class="cct-demo-nav">
-                                    <a href="#" class="cct-nav-link cct-link-underline"><?php _e('Link 1', 'cct'); ?></a>
-                                    <a href="#" class="cct-nav-link cct-link-underline"><?php _e('Link 2', 'cct'); ?></a>
-                                    <a href="#" class="cct-nav-link cct-link-underline"><?php _e('Link 3', 'cct'); ?></a>
+                    <div class="uenf-category-panel" data-category="navigation">
+                        <div class="uenf-interaction-item">
+                            <div class="uenf-interaction-demo">
+                                <nav class="uenf-demo-nav">
+                                    <a href="#" class="uenf-nav-link uenf-link-underline"><?php _e('Link 1', 'cct'); ?></a>
+                                    <a href="#" class="uenf-nav-link uenf-link-underline"><?php _e('Link 2', 'cct'); ?></a>
+                                    <a href="#" class="uenf-nav-link uenf-link-underline"><?php _e('Link 3', 'cct'); ?></a>
                                 </nav>
                             </div>
-                            <div class="cct-interaction-controls">
-                                <label class="cct-control-label">
-                                    <input type="checkbox" class="cct-interaction-toggle" data-interaction="link-underline">
+                            <div class="uenf-interaction-controls">
+                                <label class="uenf-control-label">
+                                    <input type="checkbox" class="uenf-interaction-toggle" data-interaction="link-underline">
                                     <?php _e('Ativar Sublinhado Animado', 'cct'); ?>
                                 </label>
                             </div>
@@ -1143,19 +1143,19 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
                     </div>
                     
                     <!-- Conteúdo -->
-                    <div class="cct-category-panel" data-category="content">
-                        <div class="cct-interaction-item">
-                            <div class="cct-interaction-demo">
-                                <div class="cct-demo-card cct-card-reveal">
-                                    <div class="cct-card-image">🖼️</div>
-                                    <div class="cct-card-overlay">
+                    <div class="uenf-category-panel" data-category="content">
+                        <div class="uenf-interaction-item">
+                            <div class="uenf-interaction-demo">
+                                <div class="uenf-demo-card uenf-card-reveal">
+                                    <div class="uenf-card-image">🖼️</div>
+                                    <div class="uenf-card-overlay">
                                         <span><?php _e('Revelação no Hover', 'cct'); ?></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="cct-interaction-controls">
-                                <label class="cct-control-label">
-                                    <input type="checkbox" class="cct-interaction-toggle" data-interaction="card-reveal">
+                            <div class="uenf-interaction-controls">
+                                <label class="uenf-control-label">
+                                    <input type="checkbox" class="uenf-interaction-toggle" data-interaction="card-reveal">
                                     <?php _e('Ativar Revelação de Card', 'cct'); ?>
                                 </label>
                             </div>
@@ -1164,24 +1164,24 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
                 </div>
             </div>
             
-            <div class="cct-global-micro-settings">
+            <div class="uenf-global-micro-settings">
                 <h4><?php _e('Configurações Globais', 'cct'); ?></h4>
                 
-                <div class="cct-micro-setting">
+                <div class="uenf-micro-setting">
                     <label><?php _e('Sensibilidade:', 'cct'); ?></label>
-                    <input type="range" class="cct-micro-sensitivity" min="0.5" max="2" step="0.1" value="1">
-                    <span class="cct-sensitivity-value">1x</span>
+                    <input type="range" class="uenf-micro-sensitivity" min="0.5" max="2" step="0.1" value="1">
+                    <span class="uenf-sensitivity-value">1x</span>
                 </div>
                 
-                <div class="cct-micro-setting">
+                <div class="uenf-micro-setting">
                     <label><?php _e('Velocidade:', 'cct'); ?></label>
-                    <input type="range" class="cct-micro-speed" min="0.5" max="2" step="0.1" value="1">
-                    <span class="cct-speed-value">1x</span>
+                    <input type="range" class="uenf-micro-speed" min="0.5" max="2" step="0.1" value="1">
+                    <span class="uenf-speed-value">1x</span>
                 </div>
                 
-                <div class="cct-micro-setting">
-                    <label class="cct-checkbox-label">
-                        <input type="checkbox" class="cct-micro-accessibility">
+                <div class="uenf-micro-setting">
+                    <label class="uenf-checkbox-label">
+                        <input type="checkbox" class="uenf-micro-accessibility">
                         <?php _e('Modo Acessibilidade (reduz movimento)', 'cct'); ?>
                     </label>
                 </div>
@@ -1189,20 +1189,20 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-micro-interactions {
+        .uenf-micro-interactions {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-category-tabs {
+        .uenf-category-tabs {
             display: flex;
             background: #f1f1f1;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-tab-btn {
+        .uenf-tab-btn {
             flex: 1;
             padding: 10px 8px;
             border: none;
@@ -1212,30 +1212,30 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-tab-btn:hover {
+        .uenf-tab-btn:hover {
             background: #e1e1e1;
         }
         
-        .cct-tab-btn.active {
+        .uenf-tab-btn.active {
             background: white;
             border-bottom: 2px solid #0073aa;
             font-weight: 600;
         }
         
-        .cct-category-content {
+        .uenf-category-content {
             background: white;
         }
         
-        .cct-category-panel {
+        .uenf-category-panel {
             display: none;
             padding: 15px;
         }
         
-        .cct-category-panel.active {
+        .uenf-category-panel.active {
             display: block;
         }
         
-        .cct-interaction-item {
+        .uenf-interaction-item {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -1245,7 +1245,7 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             margin-bottom: 10px;
         }
         
-        .cct-interaction-demo {
+        .uenf-interaction-demo {
             flex: 1;
             display: flex;
             justify-content: center;
@@ -1255,11 +1255,11 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             border-radius: 4px;
         }
         
-        .cct-interaction-controls {
+        .uenf-interaction-controls {
             min-width: 150px;
         }
         
-        .cct-control-label {
+        .uenf-control-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1268,7 +1268,7 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
         }
         
         /* Demos de interações */
-        .cct-demo-button {
+        .uenf-demo-button {
             padding: 8px 16px;
             border: 1px solid #0073aa;
             background: #0073aa;
@@ -1281,7 +1281,7 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-button-ripple:active::after {
+        .uenf-button-ripple:active::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -1294,11 +1294,11 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             animation: ripple 0.6s ease-out;
         }
         
-        .cct-button-pulse:hover {
+        .uenf-button-pulse:hover {
             animation: pulse 1s ease-in-out infinite;
         }
         
-        .cct-demo-input {
+        .uenf-demo-input {
             padding: 8px 12px;
             border: 2px solid #ddd;
             border-radius: 4px;
@@ -1306,18 +1306,18 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-input-focus:focus {
+        .uenf-input-focus:focus {
             border-color: #0073aa;
             box-shadow: 0 0 0 3px rgba(0,115,170,0.1);
             transform: scale(1.02);
         }
         
-        .cct-demo-nav {
+        .uenf-demo-nav {
             display: flex;
             gap: 15px;
         }
         
-        .cct-nav-link {
+        .uenf-nav-link {
             text-decoration: none;
             color: #333;
             font-size: 12px;
@@ -1325,7 +1325,7 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             transition: color 0.3s ease;
         }
         
-        .cct-link-underline::after {
+        .uenf-link-underline::after {
             content: '';
             position: absolute;
             bottom: -2px;
@@ -1336,11 +1336,11 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             transition: width 0.3s ease;
         }
         
-        .cct-link-underline:hover::after {
+        .uenf-link-underline:hover::after {
             width: 100%;
         }
         
-        .cct-demo-card {
+        .uenf-demo-card {
             width: 80px;
             height: 60px;
             background: #f1f1f1;
@@ -1350,7 +1350,7 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-card-image {
+        .uenf-card-image {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1358,7 +1358,7 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             font-size: 20px;
         }
         
-        .cct-card-overlay {
+        .uenf-card-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -1374,43 +1374,43 @@ class CCT_Micro_Interactions_Control extends WP_Customize_Control {
             transition: opacity 0.3s ease;
         }
         
-        .cct-card-reveal:hover .cct-card-overlay {
+        .uenf-card-reveal:hover .uenf-card-overlay {
             opacity: 1;
         }
         
-        .cct-global-micro-settings {
+        .uenf-global-micro-settings {
             padding: 15px;
             background: #f8f9fa;
             border-top: 1px solid #ddd;
         }
         
-        .cct-global-micro-settings h4 {
+        .uenf-global-micro-settings h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-micro-setting {
+        .uenf-micro-setting {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
         }
         
-        .cct-micro-setting label {
+        .uenf-micro-setting label {
             min-width: 80px;
             font-size: 12px;
             color: #333;
         }
         
-        .cct-micro-sensitivity,
-        .cct-micro-speed {
+        .uenf-micro-sensitivity,
+        .uenf-micro-speed {
             flex: 1;
         }
         
-        .cct-sensitivity-value,
-        .cct-speed-value {
+        .uenf-sensitivity-value,
+        .uenf-speed-value {
             min-width: 30px;
             font-size: 11px;
             font-weight: 600;

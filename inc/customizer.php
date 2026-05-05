@@ -15,7 +15,7 @@
  * - Backup e restauração de configurações
  * - Preview em tempo real com postMessage
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  * @author Equipe de Desenvolvimento CCT
@@ -289,12 +289,12 @@ if ( ! function_exists( 'esc_url' ) ) {
  * @since 1.0.0
  * @param WP_Customize_Manager $wp_customize Instância do gerenciador do customizer
  * 
- * @see add_action('customize_register', 'cct_customize_register')
+ * @see add_action('customize_register', 'uenf_customize_register')
  * @see https://developer.wordpress.org/themes/customize-api/customizer-objects/
  */
-function cct_customize_register( $wp_customize ) {
+function uenf_customize_register( $wp_customize ) {
     // Painel de Cores - Comentado temporariamente para teste
-    // $wp_customize->add_panel('cct_colors_panel', array(
+    // $wp_customize->add_panel('uenf_colors_panel', array(
     //     'title' => __('Cores do Tema', 'cct'),
     //     'priority' => 30,
     // ));
@@ -307,7 +307,7 @@ function cct_customize_register( $wp_customize ) {
     // ====================================
     // Painel: Painel de Atalhos
     // ====================================
-    $wp_customize->add_panel('cct_shortcut_panel', array(
+    $wp_customize->add_panel('uenf_shortcut_panel', array(
         'title' => __('Painel de Atalhos', 'cct'),
         'priority' => 40,
         'capability' => 'edit_theme_options',
@@ -316,68 +316,68 @@ function cct_customize_register( $wp_customize ) {
     // ====================================
     // Seção: Botão Abrir
     // ====================================
-    $wp_customize->add_section('cct_shortcut_button_open', array(
+    $wp_customize->add_section('uenf_shortcut_button_open', array(
         'title' => __('Botão Abrir', 'cct'),
-        'panel' => 'cct_shortcut_panel',
+        'panel' => 'uenf_shortcut_panel',
         'priority' => 10,
     ));
     
     // Cor de Fundo do Botão
     $wp_customize->add_setting('shortcut_button_bg', array(
-        'default' => CCT_PRIMARY_COLOR,
+        'default' => UENF_PRIMARY_COLOR,
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_button_bg', array(
         'label' => __('Cor de Fundo do Botão', 'cct'),
-        'section' => 'cct_shortcut_button_open',
+        'section' => 'uenf_shortcut_button_open',
         'settings' => 'shortcut_button_bg',
     )));
     
     // Cor do Ícone do Botão
     $wp_customize->add_setting('shortcut_button_icon_color', array(
-        'default' => defined('CCT_WHITE') ? CCT_WHITE : '#ffffff',
+        'default' => defined('UENF_WHITE') ? UENF_WHITE : '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_button_icon_color', array(
         'label' => __('Cor do Ícone do Botão', 'cct'),
-        'section' => 'cct_shortcut_button_open',
+        'section' => 'uenf_shortcut_button_open',
         'settings' => 'shortcut_button_icon_color',
     )));
     
     // ====================================
     // Seção: Painel
     // ====================================
-    $wp_customize->add_section('cct_shortcut_panel_settings', array(
+    $wp_customize->add_section('uenf_shortcut_panel_settings', array(
         'title' => __('Painel', 'cct'),
-        'panel' => 'cct_shortcut_panel',
+        'panel' => 'uenf_shortcut_panel',
         'priority' => 20,
     ));
     
     // Cor de Fundo do Painel com suporte a RGBA
     $wp_customize->add_setting('shortcut_panel_bg', array(
-        'default' => CCT_PRIMARY_COLOR,
+        'default' => UENF_PRIMARY_COLOR,
         'sanitize_callback' => 'sanitize_hex_color_rgba',
     ));
     
     $wp_customize->add_control(new Customize_Alpha_Color_Control($wp_customize, 'shortcut_panel_bg', array(
         'label' => __('Cor de Fundo do Painel', 'cct'),
-        'section' => 'cct_shortcut_panel_settings',
+        'section' => 'uenf_shortcut_panel_settings',
         'settings' => 'shortcut_panel_bg',
         'description' => __('Use o controle deslizante para ajustar a opacidade', 'cct'),
     )));
     
     // Largura do Painel (aceita px, vw, %)
     $wp_customize->add_setting('shortcut_panel_width', array(
-        'default' => CCT_DEFAULT_PANEL_WIDTH,
-        'sanitize_callback' => 'cct_sanitize_css_unit',
+        'default' => UENF_DEFAULT_PANEL_WIDTH,
+        'sanitize_callback' => 'uenf_sanitize_css_unit',
     ));
     
     $wp_customize->add_control('shortcut_panel_width', array(
         'label' => __('Largura do Painel', 'cct'),
         'description' => __('Use px, % ou vw como unidade de medida (ex: 300px, 80%, 50vw)', 'cct'),
-        'section' => 'cct_shortcut_panel_settings',
+        'section' => 'uenf_shortcut_panel_settings',
         'type' => 'text',
         'input_attrs' => array(
             'placeholder' => '300px',
@@ -386,64 +386,64 @@ function cct_customize_register( $wp_customize ) {
     
     // Cor de Fundo do Cabeçalho
     $wp_customize->add_setting('shortcut_header_bg', array(
-        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'default' => defined('UENF_PRIMARY_COLOR') ? UENF_PRIMARY_COLOR : '#1D3771',
         'sanitize_callback' => 'sanitize_hex_color',
         'transport' => 'postMessage',
     ));
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_header_bg', array(
         'label' => __('Cor de Fundo do Cabeçalho', 'cct'),
-        'section' => 'cct_shortcut_panel_settings',
+        'section' => 'uenf_shortcut_panel_settings',
         'settings' => 'shortcut_header_bg',
     )));
     
     // Cor do Texto do Cabeçalho
     $wp_customize->add_setting('shortcut_header_text_color', array(
-        'default' => defined('CCT_WHITE') ? CCT_WHITE : '#ffffff',
+        'default' => defined('UENF_WHITE') ? UENF_WHITE : '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_header_text_color', array(
         'label' => __('Cor do Texto do Cabeçalho', 'cct'),
-        'section' => 'cct_shortcut_panel_settings',
+        'section' => 'uenf_shortcut_panel_settings',
         'settings' => 'shortcut_header_text_color',
     )));
     
     // Cor de Fundo do Botão Fechar
     $wp_customize->add_setting('shortcut_close_button_bg', array(
-        'default' => CCT_DEFAULT_TRANSPARENT,
+        'default' => UENF_DEFAULT_TRANSPARENT,
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_close_button_bg', array(
         'label' => __('Cor de Fundo do Botão Fechar', 'cct'),
-        'section' => 'cct_shortcut_panel_settings',
+        'section' => 'uenf_shortcut_panel_settings',
         'settings' => 'shortcut_close_button_bg',
     )));
     
     // Cor do Texto do Botão Fechar
     $wp_customize->add_setting('shortcut_close_button_color', array(
-        'default' => defined('CCT_WHITE') ? CCT_WHITE : '#ffffff',
+        'default' => defined('UENF_WHITE') ? UENF_WHITE : '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_close_button_color', array(
         'label' => __('Cor do Texto do Botão Fechar', 'cct'),
-        'section' => 'cct_shortcut_panel_settings',
+        'section' => 'uenf_shortcut_panel_settings',
         'settings' => 'shortcut_close_button_color',
     )));
     
     // ====================================
     // Seção: Menu
     // ====================================
-    $wp_customize->add_section('cct_shortcut_menu', array(
+    $wp_customize->add_section('uenf_shortcut_menu', array(
         'title' => __('Menu', 'cct'),
-        'panel' => 'cct_shortcut_panel',
+        'panel' => 'uenf_shortcut_panel',
         'priority' => 30,
     ));
 
     // Seção: Configurações Gerais
-    $wp_customize->add_section('cct_general_settings', array(
+    $wp_customize->add_section('uenf_general_settings', array(
         'title' => __('Configurações Gerais', 'cct'),
         'priority' => 5,
     ));
@@ -457,14 +457,14 @@ function cct_customize_register( $wp_customize ) {
 
     $wp_customize->add_control('disable_footer_sidebar', array(
         'label' => __('Desativar Sidebar do Footer', 'cct'),
-        'section' => 'cct_general_settings',
+        'section' => 'uenf_general_settings',
         'type' => 'checkbox',
         'description' => __('Marque esta opção para desativar a sidebar do rodapé', 'cct'),
     ));
 
     $wp_customize->add_control('disable_sidebar', array(
         'label' => __('Desativar Sidebar', 'cct'),
-        'section' => 'cct_general_settings',
+        'section' => 'uenf_general_settings',
         'type' => 'checkbox',
         'description' => __('Marque esta opção para desativar a sidebar por padrão', 'cct'),
     ));
@@ -478,7 +478,7 @@ function cct_customize_register( $wp_customize ) {
     $wp_customize->add_control('shortcut_menu_font_size', array(
         'label' => __('Tamanho da Fonte dos Itens de Menu', 'cct'),
         'description' => __('Ex: 16px, 1rem, 1.2em', 'cct'),
-        'section' => 'cct_shortcut_menu',
+        'section' => 'uenf_shortcut_menu',
         'type' => 'text',
     ));
     
@@ -510,7 +510,7 @@ function cct_customize_register( $wp_customize ) {
     // Cor de Fundo dos Itens de Menu
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_item_bg', array(
         'label' => __('Cor de Fundo dos Itens de Menu', 'cct'),
-        'section' => 'cct_shortcut_menu',
+        'section' => 'uenf_shortcut_menu',
         'settings' => 'shortcut_item_bg',
     )));
     
@@ -522,7 +522,7 @@ function cct_customize_register( $wp_customize ) {
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_item_hover_bg', array(
         'label' => __('Cor de Fundo ao Passar o Mouse', 'cct'),
-        'section' => 'cct_shortcut_menu',
+        'section' => 'uenf_shortcut_menu',
         'settings' => 'shortcut_item_hover_bg',
     )));
     
@@ -534,7 +534,7 @@ function cct_customize_register( $wp_customize ) {
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_item_hover_border_color', array(
         'label' => __('Cor da Borda ao Passar o Mouse', 'cct'),
-        'section' => 'cct_shortcut_menu',
+        'section' => 'uenf_shortcut_menu',
         'settings' => 'shortcut_item_hover_border_color',
         'description' => __('Define a cor da borda que aparece ao passar o mouse sobre os itens do menu', 'cct'),
     )));
@@ -547,15 +547,15 @@ function cct_customize_register( $wp_customize ) {
     
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'shortcut_item_hover_text_color', array(
         'label' => __('Cor do Texto ao Passar o Mouse', 'cct'),
-        'section' => 'cct_shortcut_menu',
+        'section' => 'uenf_shortcut_menu',
         'settings' => 'shortcut_item_hover_text_color',
         'description' => __('Define a cor do texto que aparece ao passar o mouse sobre os itens do menu', 'cct'),
     )));
 
     // Seção de Cores Principais
-    $wp_customize->add_section('cct_main_colors', array(
+    $wp_customize->add_section('uenf_main_colors', array(
         'title' => __('Cores Principais', 'cct'),
-        'panel' => 'cct_colors_panel',
+        'panel' => 'uenf_colors_panel',
         'priority' => 10,
     ));
 
@@ -563,50 +563,50 @@ function cct_customize_register( $wp_customize ) {
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'text_color', array(
         'label' => __('Cor do Texto', 'cct'),
-        'section' => 'cct_text_colors',
+        'section' => 'uenf_text_colors',
         'settings' => 'text_color',
     )));
 
     // Cor dos Links
     $wp_customize->add_setting('link_color', array(
-        'default' => CCT_LINK_COLOR,
+        'default' => UENF_LINK_COLOR,
         'sanitize_callback' => 'sanitize_hex_color',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_color', array(
         'label' => __('Cor dos Links', 'cct'),
-        'section' => 'cct_text_colors',
+        'section' => 'uenf_text_colors',
         'settings' => 'link_color',
     )));
 
 // Cor dos Links (Hover)
 $wp_customize->add_setting('link_hover_color', array(
-    'default' => CCT_LINK_HOVER_COLOR,
+    'default' => UENF_LINK_HOVER_COLOR,
     'sanitize_callback' => 'sanitize_hex_color',
 ));
 
 $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_hover_color', array(
     'label' => __('Cor dos Links (Hover)', 'cct'),
-    'section' => 'cct_text_colors',
+    'section' => 'uenf_text_colors',
     'settings' => 'link_hover_color',
 )));
 
     // Seção de Cores de Texto
-    $wp_customize->add_section('cct_text_colors', array(
+    $wp_customize->add_section('uenf_text_colors', array(
         'title' => __('Cores de Texto', 'cct'),
-        'panel' => 'cct_colors_panel',
+        'panel' => 'uenf_colors_panel',
         'priority' => 20,
     ));
 
     // Cor do Texto
     $wp_customize->add_setting('text_color', array(
-        'default' => CCT_TEXT_COLOR,
+        'default' => UENF_TEXT_COLOR,
         'sanitize_callback' => 'sanitize_hex_color',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'text_color', array(
         'label' => __('Cor do Texto', 'cct'),
-        'section' => 'cct_text_colors',
+        'section' => 'uenf_text_colors',
         'settings' => 'text_color',
     )));
 
@@ -615,29 +615,29 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     // ====================================
     // Painel: Personalizando
     // ====================================
-    $wp_customize->add_panel('cct_personalizando_panel', array(
+    $wp_customize->add_panel('uenf_personalizando_panel', array(
         'title' => __('Personalizando', 'cct'),
         'priority' => 34, // Posicionado antes de Formulários
         'capability' => 'edit_theme_options',
     ));
 
     // Seção de Formulários (nível superior, mesmo nível de Cores do Tema)
-    $wp_customize->add_panel('cct_forms_panel', array(
+    $wp_customize->add_panel('uenf_forms_panel', array(
         'title' => __('Formulários', 'cct'),
         'priority' => 35, // Posicionado após Cores do Tema
     ));
 
     // Subseção para Estilos de Campos
-    $wp_customize->add_section('cct_form_fields', array(
+    $wp_customize->add_section('uenf_form_fields', array(
         'title' => __('Campos de Formulário', 'cct'),
-        'panel' => 'cct_forms_panel',
+        'panel' => 'uenf_forms_panel',
         'priority' => 10,
     ));
 
     // Subseção para Botões
-    $wp_customize->add_section('cct_form_buttons', array(
+    $wp_customize->add_section('uenf_form_buttons', array(
         'title' => __('Botões de Formulário', 'cct'),
-        'panel' => 'cct_forms_panel',
+        'panel' => 'uenf_forms_panel',
         'priority' => 20,
     ));
 
@@ -652,7 +652,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_text_color', array(
         'label' => __('Cor do Texto dos Campos', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'settings' => 'form_input_text_color',
     )));
 
@@ -663,7 +663,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_bg_color', array(
         'label' => __('Cor de Fundo dos Campos', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'settings' => 'form_input_bg_color',
     )));
 
@@ -674,7 +674,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_border_color', array(
         'label' => __('Cor da Borda dos Campos', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'settings' => 'form_input_border_color',
     )));
 
@@ -685,7 +685,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_border_hover_color', array(
         'label' => __('Cor da Borda ao Passar o Mouse', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'settings' => 'form_input_border_hover_color',
     )));
 
@@ -696,7 +696,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_input_bg_hover_color', array(
         'label' => __('Cor de Fundo ao Passar o Mouse', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'settings' => 'form_input_bg_hover_color',
     )));
 
@@ -708,7 +708,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_input_width', array(
         'label' => __('Largura dos Campos Input', 'cct'),
         'description' => __('Ex: 100%, 300px, 50em', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -720,7 +720,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_textarea_width', array(
         'label' => __('Largura dos Textarea', 'cct'),
         'description' => __('Ex: 100%, 300px, 50em', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -732,7 +732,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_select_width', array(
         'label' => __('Largura dos Select', 'cct'),
         'description' => __('Ex: 100%, 300px, 50em', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -744,7 +744,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_input_border_width', array(
         'label' => __('Espessura da Borda dos Campos', 'cct'),
         'description' => __('Ex: 1px, 2px, 0.5em', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -756,7 +756,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_input_padding_vertical', array(
         'label' => __('Padding Vertical dos Campos (topo e base)', 'cct'),
         'description' => __('Ex: 6px, 8px, 0.5em', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -768,7 +768,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_input_padding_horizontal', array(
         'label' => __('Padding Horizontal dos Campos (laterais)', 'cct'),
         'description' => __('Ex: 12px, 15px, 1em', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -780,7 +780,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_input_border_radius', array(
         'label' => __('Border Radius dos Campos Input', 'cct'),
         'description' => __('Ex: 25px 25px 25px 25px (superior-esquerdo, superior-direito, inferior-direito, inferior-esquerdo)', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -792,7 +792,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_textarea_border_radius', array(
         'label' => __('Border Radius dos Campos Textarea', 'cct'),
         'description' => __('Ex: 25px 25px 25px 25px (superior-esquerdo, superior-direito, inferior-direito, inferior-esquerdo)', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -804,7 +804,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_input_width', array(
         'label' => __('Largura dos Campos Input', 'cct'),
         'description' => __('Ex: 400px, 100%, 300px', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -816,7 +816,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_textarea_width', array(
         'label' => __('Largura dos Campos Textarea', 'cct'),
         'description' => __('Ex: 400px, 100%, 300px', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -828,7 +828,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_select_width', array(
         'label' => __('Largura dos Campos Select', 'cct'),
         'description' => __('Ex: 400px, 100%, 300px', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -840,7 +840,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_fields_padding_vertical', array(
         'label' => __('Padding Vertical dos Campos (topo e base)', 'cct'),
         'description' => __('Ex: 8px, 10px, 12px', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -852,7 +852,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_button_width', array(
         'label' => __('Largura dos Botões', 'cct'),
         'description' => __('Use "auto" para largura automática baseada no texto, ou valores como "200px", "100%"', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -864,7 +864,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_button_padding_horizontal', array(
         'label' => __('Padding Horizontal dos Botões (esquerda e direita)', 'cct'),
         'description' => __('Ex: 20px, 15px, 25px', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -876,7 +876,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_button_padding_vertical', array(
         'label' => __('Padding Vertical dos Botões (topo e base)', 'cct'),
         'description' => __('Ex: 12px, 10px, 15px', 'cct'),
-        'section' => 'cct_form_fields',
+        'section' => 'uenf_form_fields',
         'type' => 'text',
     ));
 
@@ -886,13 +886,13 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     
     // Cor de Fundo do Botão
     $wp_customize->add_setting('form_button_bg_color', array(
-        'default' => CCT_PRIMARY_COLOR,
+        'default' => UENF_PRIMARY_COLOR,
         'sanitize_callback' => 'sanitize_hex_color',
         'transport' => 'postMessage',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_bg_color', array(
         'label' => __('Cor de Fundo do Botão', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'settings' => 'form_button_bg_color',
         'description' => __('Esta cor também será aplicada aos botões do WordPress no editor.', 'cct'),
     )));
@@ -904,7 +904,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_bg_hover_color', array(
         'label' => __('Cor de Fundo ao Passar o Mouse', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'settings' => 'form_button_bg_hover_color',
     )));
 
@@ -916,7 +916,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_text_color', array(
         'label' => __('Cor do Texto do Botão', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'settings' => 'form_button_text_color',
         'description' => __('Esta cor também será aplicada ao texto dos botões do WordPress no editor.', 'cct'),
     )));
@@ -928,7 +928,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_text_hover_color', array(
         'label' => __('Cor do Texto ao Passar o Mouse', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'settings' => 'form_button_text_hover_color',
     )));
 
@@ -940,7 +940,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_button_border_radius', array(
         'label' => __('Raio da Borda do Botão (ex: 4px, 5%, 0.5em)', 'cct'),
         'description' => __('Use valores como 4px, 5%, 0.5em, etc.', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'type' => 'text',
     ));
 
@@ -952,7 +952,7 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     $wp_customize->add_control('form_button_padding', array(
         'label' => __('Espaçamento Interno (top right bottom left)', 'cct'),
         'description' => __('Ex: 10px 20px 10px 20px (top, right, bottom, left)', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'type' => 'text',
     ));
     
@@ -963,34 +963,34 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
     ));
     $wp_customize->add_control('form_button_border_width', array(
         'label' => __('Largura da Borda (ex: 1px, 2px, etc.)', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'type' => 'text',
     ));
     
     $wp_customize->add_setting('form_button_border_color', array(
-        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'default' => defined('UENF_PRIMARY_COLOR') ? UENF_PRIMARY_COLOR : '#1D3771',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_border_color', array(
         'label' => __('Cor da Borda', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'settings' => 'form_button_border_color',
     )));
     
     $wp_customize->add_setting('form_button_border_hover_color', array(
-        'default' => defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771',
+        'default' => defined('UENF_PRIMARY_COLOR') ? UENF_PRIMARY_COLOR : '#1D3771',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'form_button_border_hover_color', array(
         'label' => __('Cor da Borda ao Passar o Mouse', 'cct'),
-        'section' => 'cct_form_buttons',
+        'section' => 'uenf_form_buttons',
         'settings' => 'form_button_border_hover_color',
     )));
 
     // Seção de Cores do Menu
-    $wp_customize->add_section('cct_menu_colors', array(
+    $wp_customize->add_section('uenf_menu_colors', array(
         'title' => __('Cores do Menu', 'cct'),
-        'panel' => 'cct_colors_panel',
+        'panel' => 'uenf_colors_panel',
         'priority' => 40,
     ));
 
@@ -1008,39 +1008,39 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
         ));
      
      // === SEÇÃO DE BACKUP/RESTORE ===
-     $wp_customize->add_section('cct_backup_section', array(
+     $wp_customize->add_section('uenf_backup_section', array(
          'title' => __('Backup e Restauração', 'cct'),
          'priority' => 998,
          'description' => __('Faça backup das suas configurações ou restaure configurações salvas anteriormente.', 'cct'),
      ));
      
      // Exportar configurações
-     $wp_customize->add_setting('cct_export_settings', array(
+     $wp_customize->add_setting('uenf_export_settings', array(
          'default' => '',
          'sanitize_callback' => 'sanitize_text_field',
      ));
      
-     $wp_customize->add_control('cct_export_settings', array(
+     $wp_customize->add_control('uenf_export_settings', array(
          'label' => __('Exportar Configurações', 'cct'),
-         'section' => 'cct_backup_section',
+         'section' => 'uenf_backup_section',
          'type' => 'button',
          'description' => __('Baixe um arquivo com todas as suas configurações atuais.', 'cct'),
          'input_attrs' => array(
              'value' => __('Exportar Agora', 'cct'),
-             'class' => 'button button-primary cct-export-button',
+             'class' => 'button button-primary uenf-export-button',
              'onclick' => 'cctExportSettings()',
          ),
      ));
      
      // Importar configurações
-     $wp_customize->add_setting('cct_import_settings', array(
+     $wp_customize->add_setting('uenf_import_settings', array(
          'default' => '',
          'sanitize_callback' => 'sanitize_text_field',
      ));
      
-     $wp_customize->add_control('cct_import_settings', array(
+     $wp_customize->add_control('uenf_import_settings', array(
          'label' => __('Importar Configurações', 'cct'),
-         'section' => 'cct_backup_section',
+         'section' => 'uenf_backup_section',
          'type' => 'textarea',
          'description' => __('Cole aqui o conteúdo do arquivo de backup e clique em "Restaurar" para aplicar as configurações.', 'cct'),
          'input_attrs' => array(
@@ -1050,26 +1050,26 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_h
      ));
      
      // Botão de restaurar
-     $wp_customize->add_setting('cct_restore_settings', array(
+     $wp_customize->add_setting('uenf_restore_settings', array(
          'default' => '',
          'sanitize_callback' => 'sanitize_text_field',
      ));
      
-     $wp_customize->add_control('cct_restore_settings', array(
+     $wp_customize->add_control('uenf_restore_settings', array(
          'label' => __('Restaurar Configurações', 'cct'),
-         'section' => 'cct_backup_section',
+         'section' => 'uenf_backup_section',
          'type' => 'button',
          'description' => __('⚠️ ATENÇÃO: Isto irá sobrescrever todas as configurações atuais.', 'cct'),
          'input_attrs' => array(
              'value' => __('Restaurar Agora', 'cct'),
-             'class' => 'button button-secondary cct-restore-button',
+             'class' => 'button button-secondary uenf-restore-button',
              'onclick' => 'cctRestoreSettings()',
          ),
      ));
 
         $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, "menu_{$state}_color", array(
             'label' => sprintf(__('Cor do Menu (%s)', 'cct'), $label),
-            'section' => 'cct_menu_colors',
+            'section' => 'uenf_menu_colors',
             'settings' => "menu_{$state}_color",
         )));
     }
@@ -1089,7 +1089,7 @@ function theme_typography_customizer_settings($wp_customize) {
     
     // Adiciona configuração para seleção de fonte principal
     $wp_customize->add_setting('typography_primary_font', array(
-        'default'           => CCT_PRIMARY_FONT,
+        'default'           => UENF_PRIMARY_FONT,
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'postMessage',
     ));
@@ -1103,7 +1103,7 @@ function theme_typography_customizer_settings($wp_customize) {
     
     // Adiciona configuração para tamanho de fonte base
     $wp_customize->add_setting('typography_font_size_base', array(
-        'default'           => CCT_FONT_SIZE_BASE,
+        'default'           => UENF_FONT_SIZE_BASE,
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'postMessage',
     ));
@@ -1117,7 +1117,7 @@ function theme_typography_customizer_settings($wp_customize) {
     
     // Adiciona configuração para tamanho de fonte grande
     $wp_customize->add_setting('typography_font_size_lg', array(
-        'default'           => CCT_FONT_SIZE_LG,
+        'default'           => UENF_FONT_SIZE_LG,
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'postMessage',
     ));
@@ -1131,7 +1131,7 @@ function theme_typography_customizer_settings($wp_customize) {
     
     // Adiciona configuração para tamanho de fonte extra grande
     $wp_customize->add_setting('typography_font_size_xl', array(
-        'default'           => CCT_FONT_SIZE_XL,
+        'default'           => UENF_FONT_SIZE_XL,
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'postMessage',
     ));
@@ -1145,7 +1145,7 @@ function theme_typography_customizer_settings($wp_customize) {
     
     // Adiciona configuração para tamanho de fonte extra extra grande
     $wp_customize->add_setting('typography_font_size_xxl', array(
-        'default'           => CCT_FONT_SIZE_XXL,
+        'default'           => UENF_FONT_SIZE_XXL,
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'postMessage',
     ));
@@ -1421,8 +1421,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
 
 
     // Header Options
-    $wp_customize->add_section( 'cct_header', array(
-        'title'    => __( 'Header Options', 'cct-theme' ),
+    $wp_customize->add_section( 'uenf_header', array(
+        'title'    => __( 'Header Options', 'uenf-theme' ),
         'priority' => 20,
     ) );
 
@@ -1432,13 +1432,13 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'header_layout', array(
-        'label'    => __( 'Header Layout', 'cct-theme' ),
-        'section'  => 'cct_header',
+        'label'    => __( 'Header Layout', 'uenf-theme' ),
+        'section'  => 'uenf_header',
         'type'     => 'radio',
         'choices'  => array(
-            'default' => __( 'Default', 'cct-theme' ),
-            'centered' => __( 'Centered', 'cct-theme' ),
-            'minimal' => __( 'Minimal', 'cct-theme' ),
+            'default' => __( 'Default', 'uenf-theme' ),
+            'centered' => __( 'Centered', 'uenf-theme' ),
+            'minimal' => __( 'Minimal', 'uenf-theme' ),
         ),
     ) );
 
@@ -1449,8 +1449,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_background_color', array(
-        'label'    => __( 'Header Background Color', 'cct-theme' ),
-        'section'  => 'cct_header',
+        'label'    => __( 'Header Background Color', 'uenf-theme' ),
+        'section'  => 'uenf_header',
     ) ) );
 
     // Header Background Image
@@ -1460,8 +1460,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'header_background_image', array(
-        'label'    => __( 'Header Background Image', 'cct-theme' ),
-        'section'  => 'cct_header',
+        'label'    => __( 'Header Background Image', 'uenf-theme' ),
+        'section'  => 'uenf_header',
     ) ) );
 
     // Header Padding
@@ -1471,8 +1471,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'header_padding', array(
-        'label'    => __( 'Header Padding', 'cct-theme' ),
-        'section'  => 'cct_header',
+        'label'    => __( 'Header Padding', 'uenf-theme' ),
+        'section'  => 'uenf_header',
         'type'     => 'text',
     ) );
 
@@ -1483,8 +1483,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'header_margin', array(
-        'label'    => __( 'Header Margin', 'cct-theme' ),
-        'section'  => 'cct_header',
+        'label'    => __( 'Header Margin', 'uenf-theme' ),
+        'section'  => 'uenf_header',
         'type'     => 'text',
     ) );
 
@@ -1495,14 +1495,14 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'header_height', array(
-        'label'    => __( 'Header Height', 'cct-theme' ),
-        'section'  => 'cct_header',
+        'label'    => __( 'Header Height', 'uenf-theme' ),
+        'section'  => 'uenf_header',
         'type'     => 'text',
     ) );
 
     // Footer Options
-    $wp_customize->add_section( 'cct_footer', array(
-        'title'    => __( 'Footer Options', 'cct-theme' ),
+    $wp_customize->add_section( 'uenf_footer', array(
+        'title'    => __( 'Footer Options', 'uenf-theme' ),
         'priority' => 90,
     ) );
 
@@ -1512,8 +1512,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'footer_columns', array(
-        'label'    => __( 'Footer Widget Columns', 'cct-theme' ),
-        'section'  => 'cct_footer',
+        'label'    => __( 'Footer Widget Columns', 'uenf-theme' ),
+        'section'  => 'uenf_footer',
         'type'     => 'select',
         'choices'  => array(
             '1' => '1',
@@ -1524,25 +1524,25 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     // Performance Options
-    $wp_customize->add_section( 'cct_performance', array(
-        'title'    => __( 'Performance Options', 'cct-theme' ),
+    $wp_customize->add_section( 'uenf_performance', array(
+        'title'    => __( 'Performance Options', 'uenf-theme' ),
         'priority' => 100,
     ) );
 
     $wp_customize->add_setting( 'enable_lazy_loading', array(
         'default'           => true,
-        'sanitize_callback' => 'cct_sanitize_checkbox',
+        'sanitize_callback' => 'uenf_sanitize_checkbox',
     ) );
 
     $wp_customize->add_control( 'enable_lazy_loading', array(
-        'label'    => __( 'Enable Lazy Loading', 'cct-theme' ),
-        'section'  => 'cct_performance',
+        'label'    => __( 'Enable Lazy Loading', 'uenf-theme' ),
+        'section'  => 'uenf_performance',
         'type'     => 'checkbox',
     ) );
 
     // SEO Options
-    $wp_customize->add_section( 'cct_seo', array(
-        'title'    => __( 'SEO Options', 'cct-theme' ),
+    $wp_customize->add_section( 'uenf_seo', array(
+        'title'    => __( 'SEO Options', 'uenf-theme' ),
         'priority' => 110,
     ) );
 
@@ -1552,14 +1552,14 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'meta_description', array(
-        'label'    => __( 'Default Meta Description', 'cct-theme' ),
-        'section'  => 'cct_seo',
+        'label'    => __( 'Default Meta Description', 'uenf-theme' ),
+        'section'  => 'uenf_seo',
         'type'     => 'textarea',
     ) );
 
     // Social Media Options
-    $wp_customize->add_section( 'cct_social_media', array(
-        'title'    => __( 'Social Media Options', 'cct-theme' ),
+    $wp_customize->add_section( 'uenf_social_media', array(
+        'title'    => __( 'Social Media Options', 'uenf-theme' ),
         'priority' => 25,
     ) );
 
@@ -1573,8 +1573,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
         ) );
 
         $wp_customize->add_control( "{$network}_link", array(
-            'label'    => sprintf( __( '%s Link', 'cct-theme' ), ucfirst( $network ) ),
-            'section'  => 'cct_social_media',
+            'label'    => sprintf( __( '%s Link', 'uenf-theme' ), ucfirst( $network ) ),
+            'section'  => 'uenf_social_media',
             'type'     => 'url',
         ) );
 
@@ -1585,8 +1585,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
         ) );
 
         $wp_customize->add_control( "{$network}_icon", array(
-            'label'    => sprintf( __( '%s Icon', 'cct-theme' ), ucfirst( $network ) ),
-            'section'  => 'cct_social_media',
+            'label'    => sprintf( __( '%s Icon', 'uenf-theme' ), ucfirst( $network ) ),
+            'section'  => 'uenf_social_media',
             'type'     => 'select',
             'choices'  => array( // Adicione as opções de ícones aqui
                 'fab fa-facebook-f' => 'Facebook',
@@ -1608,13 +1608,13 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'social_media_alignment', array(
-        'label'    => __( 'Social Media Alignment', 'cct-theme' ),
-        'section'  => 'cct_social_media',
+        'label'    => __( 'Social Media Alignment', 'uenf-theme' ),
+        'section'  => 'uenf_social_media',
         'type'     => 'radio',
         'choices'  => array(
-            'left'   => __( 'Left', 'cct-theme' ),
-            'center' => __( 'Center', 'cct-theme' ),
-            'right'  => __( 'Right', 'cct-theme' ),
+            'left'   => __( 'Left', 'uenf-theme' ),
+            'center' => __( 'Center', 'uenf-theme' ),
+            'right'  => __( 'Right', 'uenf-theme' ),
         ),
     ));
 
@@ -1625,8 +1625,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'social_media_icon_size', array(
-        'label'       => __( 'Icon Size (px)', 'cct-theme' ),
-        'section'     => 'cct_social_media',
+        'label'       => __( 'Icon Size (px)', 'uenf-theme' ),
+        'section'     => 'uenf_social_media',
         'type'        => 'range',
         'input_attrs' => array(
             'min'  => 20,
@@ -1638,14 +1638,14 @@ add_action('wp_head', 'theme_typography_customizer_css');
     // Icon Color
     $wp_customize->add_setting( 'social_media_icon_color', array(
         'default'           => 'rgba(255, 255, 255, 0.6)',
-        'sanitize_callback' => 'cct_sanitize_color_with_alpha',
+        'sanitize_callback' => 'uenf_sanitize_color_with_alpha',
     ) );
 
     $wp_customize->add_control( 'social_media_icon_color', array(
-        'label'       => __( 'Icon Color', 'cct-theme' ),
-        'section'     => 'cct_social_media',
+        'label'       => __( 'Icon Color', 'uenf-theme' ),
+        'section'     => 'uenf_social_media',
         'type'        => 'text',
-        'description' => __( 'Use formato: rgba(255, 255, 255, 0.6) ou #ffffff', 'cct-theme' ),
+        'description' => __( 'Use formato: rgba(255, 255, 255, 0.6) ou #ffffff', 'uenf-theme' ),
         'input_attrs' => array(
             'placeholder' => 'rgba(255, 255, 255, 0.6)',
         ),
@@ -1658,8 +1658,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'social_media_bg_color', array(
-        'label'    => __( 'Background Color', 'cct-theme' ),
-        'section'  => 'cct_social_media',
+        'label'    => __( 'Background Color', 'uenf-theme' ),
+        'section'  => 'uenf_social_media',
     ) ) );
 
     // Border Width
@@ -1669,8 +1669,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( 'social_media_border_width', array(
-        'label'       => __( 'Border Width (px)', 'cct-theme' ),
-        'section'     => 'cct_social_media',
+        'label'       => __( 'Border Width (px)', 'uenf-theme' ),
+        'section'     => 'uenf_social_media',
         'type'        => 'range',
         'input_attrs' => array(
             'min'  => 0,
@@ -1686,8 +1686,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
     ) );
 
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'social_media_border_color', array(
-        'label'    => __( 'Border Color', 'cct-theme' ),
-        'section'  => 'cct_social_media',
+        'label'    => __( 'Border Color', 'uenf-theme' ),
+        'section'  => 'uenf_social_media',
     ) ) );
 
     // Border Radius
@@ -1697,8 +1697,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
      ) );
 
      $wp_customize->add_control( 'social_media_border_radius', array(
-         'label'       => __( 'Border Radius (%)', 'cct-theme' ),
-         'section'     => 'cct_social_media',
+         'label'       => __( 'Border Radius (%)', 'uenf-theme' ),
+         'section'     => 'uenf_social_media',
          'type'        => 'range',
          'input_attrs' => array(
              'min'  => 0,
@@ -1714,8 +1714,8 @@ add_action('wp_head', 'theme_typography_customizer_css');
      ) );
 
      $wp_customize->add_control( 'social_media_icon_gap', array(
-         'label'       => __( 'Icon Gap (px)', 'cct-theme' ),
-         'section'     => 'cct_social_media',
+         'label'       => __( 'Icon Gap (px)', 'uenf-theme' ),
+         'section'     => 'uenf_social_media',
          'type'        => 'range',
          'input_attrs' => array(
              'min'  => 0,
@@ -1732,46 +1732,46 @@ add_action('wp_head', 'theme_typography_customizer_css');
      ) );
 
      $wp_customize->add_control( 'social_media_reset', array(
-         'label'       => __( 'Restaurar Padrões', 'cct-theme' ),
-         'section'     => 'cct_social_media',
+         'label'       => __( 'Restaurar Padrões', 'uenf-theme' ),
+         'section'     => 'uenf_social_media',
          'type'        => 'button',
-         'description' => __( 'Clique para restaurar todas as configurações de redes sociais para os valores padrão.', 'cct-theme' ),
+         'description' => __( 'Clique para restaurar todas as configurações de redes sociais para os valores padrão.', 'uenf-theme' ),
          'input_attrs' => array(
-             'value' => __( 'Restaurar Padrões', 'cct-theme' ),
-             'class' => 'button button-secondary cct-social-reset-button',
+             'value' => __( 'Restaurar Padrões', 'uenf-theme' ),
+             'class' => 'button button-secondary uenf-social-reset-button',
              'data-action' => 'reset-social-media',
          ),
      ));
      
      // === SEÇÃO DE RESET ===
-    $wp_customize->add_section('cct_reset_section', array(
+    $wp_customize->add_section('uenf_reset_section', array(
         'title' => __('Redefinir Configurações', 'cct'),
         'priority' => 999,
         'description' => __('Restaure todas as configurações do tema para os valores padrão.', 'cct'),
     ));
     
     // Botão de Reset
-    $wp_customize->add_setting('cct_reset_settings', array(
+    $wp_customize->add_setting('uenf_reset_settings', array(
         'default' => '',
         'sanitize_callback' => 'sanitize_text_field',
         'transport' => 'postMessage',
     ));
     
-    $wp_customize->add_control('cct_reset_settings', array(
+    $wp_customize->add_control('uenf_reset_settings', array(
         'label' => __('Redefinir Todas as Configurações', 'cct'),
-        'section' => 'cct_reset_section',
+        'section' => 'uenf_reset_section',
         'type' => 'button',
         'description' => __('ATENÇÃO: Esta ação irá restaurar todas as configurações do customizer para os valores padrão. Esta ação não pode ser desfeita.', 'cct'),
         'input_attrs' => array(
             'value' => __('Redefinir Agora', 'cct'),
-            'class' => 'button button-secondary cct-reset-button',
+            'class' => 'button button-secondary uenf-reset-button',
             'data-action' => 'reset-customizer',
         ),
     ));
     
     // Seção de gerenciador de extensões removida - usando apenas o gerenciador principal
 }
-add_action( 'customize_register', 'cct_customize_register' );
+add_action( 'customize_register', 'uenf_customize_register' );
 
 /**
  * Sanitize colors that can be either hex or rgba
@@ -1796,7 +1796,7 @@ function sanitize_hex_color_rgba( $color ) {
         }
         
         // Se não for um rgba válido, retorna o valor padrão
-        return CCT_PRIMARY_COLOR;
+        return UENF_PRIMARY_COLOR;
     }
     
     // Se for um hex, usa a função padrão do WordPress
@@ -1804,7 +1804,7 @@ function sanitize_hex_color_rgba( $color ) {
 }
 
 // Sanitize checkbox
-function cct_sanitize_checkbox( $checked ) {
+function uenf_sanitize_checkbox( $checked ) {
     // Boolean check.
     return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
@@ -1812,7 +1812,7 @@ function cct_sanitize_checkbox( $checked ) {
 /**
  * Sanitize select choices
  */
-function cct_sanitize_select( $input, $setting ) {
+function uenf_sanitize_select( $input, $setting ) {
     // Get list of choices from the control associated with the setting.
     $choices = $setting->manager->get_control( $setting->id )->choices;
     
@@ -1823,13 +1823,13 @@ function cct_sanitize_select( $input, $setting ) {
 /**
  * Sanitize CSS units (px, %, vw, vh, em, rem)
  */
-function cct_sanitize_css_unit( $value ) {
+function uenf_sanitize_css_unit( $value ) {
     // Remove espaços
     $value = trim( $value );
     
     // Se estiver vazio, retorna valor padrão
     if ( empty( $value ) ) {
-        return CCT_DEFAULT_PANEL_WIDTH;
+        return UENF_DEFAULT_PANEL_WIDTH;
     }
     
     // Verifica se é apenas número (adiciona px)
@@ -1843,13 +1843,13 @@ function cct_sanitize_css_unit( $value ) {
     }
     
     // Se não for válido, retorna padrão
-    return CCT_DEFAULT_PANEL_WIDTH;
+    return UENF_DEFAULT_PANEL_WIDTH;
 }
 
 /**
  * Sanitize font size
  */
-function cct_sanitize_font_size( $value ) {
+function uenf_sanitize_font_size( $value ) {
     // Lista de tamanhos válidos
     $valid_sizes = array( 'small', 'medium', 'large', 'x-large', 'xx-large' );
     
@@ -1864,13 +1864,13 @@ function cct_sanitize_font_size( $value ) {
     }
     
     // Valor padrão
-    return CCT_FONT_SIZE_BASE;
+    return UENF_FONT_SIZE_BASE;
 }
 
 /**
  * Sanitize number range
  */
-function cct_sanitize_number_range( $value, $min = 0, $max = 100 ) {
+function uenf_sanitize_number_range( $value, $min = 0, $max = 100 ) {
     $value = intval( $value );
     return max( $min, min( $max, $value ) );
 }
@@ -1907,13 +1907,13 @@ function maybe_convert_to_rgba($color) {
 }
 
 // Output Customizer CSS
-function cct_customize_css() {
+function uenf_customize_css() {
     
     // Obter valores dos temas
-    $primary_color = defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1D3771';
+    $primary_color = defined('UENF_PRIMARY_COLOR') ? UENF_PRIMARY_COLOR : '#1D3771';
     
     // Usar output buffering seguro
-    $css_output = '<style type="text/css" id="cct-custom-css">' . "\n";
+    $css_output = '<style type="text/css" id="uenf-custom-css">' . "\n";
     
     // Estilos para campos de formulário Contact Form 7 (excluindo botões)
     $css_output .= '.wpcf7-form-control:not([type="submit"]):not([type="button"]),
@@ -2117,8 +2117,8 @@ function cct_customize_css() {
     </script>';
     
     // Adicionar variáveis CSS
-    $primary_color = defined('CCT_PRIMARY_COLOR') ? CCT_PRIMARY_COLOR : '#1d3771';
-    $white_color = defined('CCT_WHITE') ? CCT_WHITE : '#ffffff';
+    $primary_color = defined('UENF_PRIMARY_COLOR') ? UENF_PRIMARY_COLOR : '#1d3771';
+    $white_color = defined('UENF_WHITE') ? UENF_WHITE : '#ffffff';
     $shortcut_panel_width = get_theme_mod('shortcut_panel_width', '300px');
     if (is_numeric($shortcut_panel_width)) {
         $shortcut_panel_width .= 'px';
@@ -2385,7 +2385,7 @@ function cct_customize_css() {
     
     // Estilos dinâmicos para o menu
     $menu_style = get_theme_mod('menu_style', 'modern');
-    $show_hierarchy_icons = get_theme_mod('menu_show_hierarchy_icons', defined('CCT_DEFAULT_MENU_HIERARCHY_ICONS') ? CCT_DEFAULT_MENU_HIERARCHY_ICONS : false);
+    $show_hierarchy_icons = get_theme_mod('menu_show_hierarchy_icons', defined('UENF_DEFAULT_MENU_HIERARCHY_ICONS') ? UENF_DEFAULT_MENU_HIERARCHY_ICONS : false);
     
     // Aplicar estilos baseados no estilo selecionado
     switch ($menu_style) {
@@ -2563,29 +2563,29 @@ function cct_customize_css() {
     // Output seguro sem interferir com buffer
     echo $css_output;
 }
-add_action('wp_head', 'cct_customize_css', 999);
+add_action('wp_head', 'uenf_customize_css', 999);
 
 /**
  * Reset customizer settings to default values
  */
-function cct_reset_customizer_settings() {
+function uenf_reset_customizer_settings() {
     // Verificar nonce de segurança
-    if (!wp_verify_nonce($_POST['nonce'], 'cct_reset_customizer')) {
+    if (!wp_verify_nonce($_POST['nonce'], 'uenf_reset_customizer')) {
         wp_die('Erro de segurança');
     }
     
     // Lista de todas as configurações do customizer para resetar
     $settings_to_reset = array(
-        'menu_style' => CCT_DEFAULT_MENU_STYLE,
-        'menu_show_hierarchy_icons' => CCT_DEFAULT_MENU_HIERARCHY_ICONS,
-        'shortcut_button_bg' => CCT_PRIMARY_COLOR,
-        'shortcut_button_icon_color' => CCT_WHITE,
-        'shortcut_panel_bg' => CCT_PRIMARY_COLOR,
-        'shortcut_panel_width' => CCT_DEFAULT_PANEL_WIDTH,
-        'shortcut_header_bg' => CCT_PRIMARY_COLOR,
-        'shortcut_header_text_color' => CCT_WHITE,
-        'shortcut_close_button_bg' => CCT_DEFAULT_TRANSPARENT,
-        'shortcut_close_button_color' => CCT_WHITE,
+        'menu_style' => UENF_DEFAULT_MENU_STYLE,
+        'menu_show_hierarchy_icons' => UENF_DEFAULT_MENU_HIERARCHY_ICONS,
+        'shortcut_button_bg' => UENF_PRIMARY_COLOR,
+        'shortcut_button_icon_color' => UENF_WHITE,
+        'shortcut_panel_bg' => UENF_PRIMARY_COLOR,
+        'shortcut_panel_width' => UENF_DEFAULT_PANEL_WIDTH,
+        'shortcut_header_bg' => UENF_PRIMARY_COLOR,
+        'shortcut_header_text_color' => UENF_WHITE,
+        'shortcut_close_button_bg' => UENF_DEFAULT_TRANSPARENT,
+        'shortcut_close_button_color' => UENF_WHITE,
         // Adicione outras configurações conforme necessário
     );
     
@@ -2599,12 +2599,12 @@ function cct_reset_customizer_settings() {
         'message' => __('Configurações redefinidas com sucesso!', 'cct')
     ));
 }
-add_action('wp_ajax_cct_reset_customizer', 'cct_reset_customizer_settings');
+add_action('wp_ajax_uenf_reset_customizer', 'uenf_reset_customizer_settings');
 
 /**
  * Enqueue JavaScript for customizer reset functionality
  */
-function cct_customizer_reset_scripts() {
+function uenf_customizer_reset_scripts() {
     if (is_customize_preview()) {
         return;
     }
@@ -2631,8 +2631,8 @@ function cct_customizer_reset_scripts() {
                 }
                 
                 $.post(ajaxurl, {
-                    action: "cct_reset_customizer",
-                    nonce: "' . wp_create_nonce('cct_reset_customizer') . '"
+                    action: "uenf_reset_customizer",
+                    nonce: "' . wp_create_nonce('uenf_reset_customizer') . '"
                 }, function(response) {
                     if (response.success) {
                         alert("Configurações redefinidas com sucesso!");
@@ -2649,42 +2649,42 @@ function cct_customizer_reset_scripts() {
          });
     ');
 }
-add_action('customize_controls_enqueue_scripts', 'cct_customizer_reset_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_customizer_reset_scripts');
 
 /**
  * Enqueue preview JavaScript for real-time updates
  */
-function cct_customizer_preview_scripts() {
+function uenf_customizer_preview_scripts() {
     wp_enqueue_script(
-        'cct-customizer-preview',
+        'uenf-customizer-preview',
         get_template_directory_uri() . '/js/customizer-preview.js',
         array('jquery', 'customize-preview'),
         wp_get_theme()->get('Version'),
         true
     );
 }
-add_action('customize_preview_init', 'cct_customizer_preview_scripts');
+add_action('customize_preview_init', 'uenf_customizer_preview_scripts');
 
 /**
  * Enfileira scripts de preview para redes sociais
  */
-function cct_social_media_customizer_preview_scripts() {
+function uenf_social_media_customizer_preview_scripts() {
     wp_enqueue_script(
-        'cct-social-media-preview',
+        'uenf-social-media-preview',
         get_template_directory_uri() . '/js/customizer-social-media-preview.js',
         array('jquery', 'customize-preview'),
         '1.0.0',
         true
     );
 }
-add_action('customize_preview_init', 'cct_social_media_customizer_preview_scripts');
+add_action('customize_preview_init', 'uenf_social_media_customizer_preview_scripts');
 
 /**
  * Enfileira scripts de reset para redes sociais no customizer
  */
-function cct_social_media_customizer_reset_scripts() {
+function uenf_social_media_customizer_reset_scripts() {
     wp_enqueue_script(
-        'cct-social-media-reset',
+        'uenf-social-media-reset',
         get_template_directory_uri() . '/js/customizer-social-media-reset.js',
         array('jquery', 'customize-controls'),
         '1.0.0',
@@ -2692,32 +2692,32 @@ function cct_social_media_customizer_reset_scripts() {
     );
     
     wp_enqueue_style(
-        'cct-social-media-reset-css',
+        'uenf-social-media-reset-css',
         get_template_directory_uri() . '/css/customizer-social-reset.css',
         array(),
         '1.0.0'
     );
 }
-add_action('customize_controls_enqueue_scripts', 'cct_social_media_customizer_reset_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_social_media_customizer_reset_scripts');
 
 /**
  * Enfileira scripts para exibição de valores nos controles range
  */
-function cct_customizer_range_display_scripts() {
+function uenf_customizer_range_display_scripts() {
     wp_enqueue_script(
-        'cct-range-display',
+        'uenf-range-display',
         get_template_directory_uri() . '/js/customizer-range-display.js',
         array('jquery', 'customize-controls'),
         '1.0.0',
         true
     );
 }
-add_action('customize_controls_enqueue_scripts', 'cct_customizer_range_display_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_customizer_range_display_scripts');
 
 /**
  * Configure settings for postMessage transport
  */
-function cct_configure_postmessage_settings($wp_customize) {
+function uenf_configure_postmessage_settings($wp_customize) {
     // Lista de settings que devem usar postMessage
     $postmessage_settings = array(
         'shortcut_button_bg',
@@ -2738,14 +2738,14 @@ function cct_configure_postmessage_settings($wp_customize) {
         }
     }
 }
-add_action('customize_register', 'cct_configure_postmessage_settings', 20);
+add_action('customize_register', 'uenf_configure_postmessage_settings', 20);
 
 /**
  * Export customizer settings
  */
-function cct_export_customizer_settings() {
+function uenf_export_customizer_settings() {
     // Verificar nonce de segurança
-    if (!wp_verify_nonce($_POST['nonce'], 'cct_export_customizer')) {
+    if (!wp_verify_nonce($_POST['nonce'], 'uenf_export_customizer')) {
         wp_die('Erro de segurança');
     }
     
@@ -2753,13 +2753,13 @@ function cct_export_customizer_settings() {
     $theme_mods = get_theme_mods();
     
     // Filtrar apenas configurações do nosso customizer
-    $cct_settings = array();
-    $cct_prefixes = array('menu_', 'shortcut_', 'cct_', 'header_', 'footer_', 'form_');
+    $uenf_settings = array();
+    $uenf_prefixes = array('menu_', 'shortcut_', 'uenf_', 'header_', 'footer_', 'form_');
     
     foreach ($theme_mods as $key => $value) {
-        foreach ($cct_prefixes as $prefix) {
+        foreach ($uenf_prefixes as $prefix) {
             if (strpos($key, $prefix) === 0) {
-                $cct_settings[$key] = $value;
+                $uenf_settings[$key] = $value;
                 break;
             }
         }
@@ -2770,23 +2770,23 @@ function cct_export_customizer_settings() {
         'version' => wp_get_theme()->get('Version'),
         'date' => current_time('Y-m-d H:i:s'),
         'site_url' => get_site_url(),
-        'settings' => $cct_settings
+        'settings' => $uenf_settings
     );
     
     // Retornar dados para download
     wp_send_json_success(array(
         'data' => base64_encode(json_encode($backup_data)),
-        'filename' => 'cct-customizer-backup-' . date('Y-m-d-H-i-s') . '.txt'
+        'filename' => 'uenf-customizer-backup-' . date('Y-m-d-H-i-s') . '.txt'
     ));
 }
-add_action('wp_ajax_cct_export_customizer', 'cct_export_customizer_settings');
+add_action('wp_ajax_uenf_export_customizer', 'uenf_export_customizer_settings');
 
 /**
  * Import customizer settings
  */
-function cct_import_customizer_settings() {
+function uenf_import_customizer_settings() {
     // Verificar nonce de segurança
-    if (!wp_verify_nonce($_POST['nonce'], 'cct_import_customizer')) {
+    if (!wp_verify_nonce($_POST['nonce'], 'uenf_import_customizer')) {
         wp_die('Erro de segurança');
     }
     
@@ -2816,26 +2816,26 @@ function cct_import_customizer_settings() {
         'backup_date' => isset($backup_data['date']) ? $backup_data['date'] : 'Desconhecida'
     ));
 }
-add_action('wp_ajax_cct_import_customizer', 'cct_import_customizer_settings');
+add_action('wp_ajax_uenf_import_customizer', 'uenf_import_customizer_settings');
 
 /**
  * Enqueue backup/restore JavaScript
  */
-function cct_backup_restore_scripts() {
+function uenf_backup_restore_scripts() {
     if (is_customize_preview()) {
         return;
     }
     
     wp_add_inline_script('customize-controls', '
         function cctExportSettings() {
-            var button = document.querySelector(".cct-export-button");
+            var button = document.querySelector(".uenf-export-button");
             var originalText = button.value;
             button.value = "Exportando...";
             button.disabled = true;
             
             jQuery.post(ajaxurl, {
-                action: "cct_export_customizer",
-                nonce: "' . wp_create_nonce('cct_export_customizer') . '"
+                action: "uenf_export_customizer",
+                nonce: "' . wp_create_nonce('uenf_export_customizer') . '"
             }, function(response) {
                 if (response.success) {
                     // Criar download do arquivo
@@ -2860,7 +2860,7 @@ function cct_backup_restore_scripts() {
         }
         
         function cctRestoreSettings() {
-            var importData = document.querySelector("#_customize-input-cct_import_settings").value;
+            var importData = document.querySelector("#_customize-input-uenf_import_settings").value;
             
             if (!importData.trim()) {
                 alert("❌ Por favor, cole o conteúdo do backup no campo acima.");
@@ -2871,14 +2871,14 @@ function cct_backup_restore_scripts() {
                 return;
             }
             
-            var button = document.querySelector(".cct-restore-button");
+            var button = document.querySelector(".uenf-restore-button");
             var originalText = button.value;
             button.value = "Restaurando...";
             button.disabled = true;
             
             jQuery.post(ajaxurl, {
-                action: "cct_import_customizer",
-                nonce: "' . wp_create_nonce('cct_import_customizer') . '",
+                action: "uenf_import_customizer",
+                nonce: "' . wp_create_nonce('uenf_import_customizer') . '",
                 import_data: importData
             }, function(response) {
                 if (response.success) {
@@ -2897,12 +2897,12 @@ function cct_backup_restore_scripts() {
         }
     ');
 }
-add_action('customize_controls_enqueue_scripts', 'cct_backup_restore_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_backup_restore_scripts');
 
 /**
  * Enqueue extension manager JavaScript
  */
-function cct_extension_manager_scripts() {
+function uenf_extension_manager_scripts() {
     if (is_customize_preview()) {
         return;
     }
@@ -2910,22 +2910,22 @@ function cct_extension_manager_scripts() {
     wp_add_inline_script('customize-controls', '
         function cctEnableAllExtensions() {
             // Ativar controle global
-            if (wp.customize.control("cct_extensions_global_enabled")) {
-                wp.customize.control("cct_extensions_global_enabled").setting.set(true);
+            if (wp.customize.control("uenf_extensions_global_enabled")) {
+                wp.customize.control("uenf_extensions_global_enabled").setting.set(true);
             }
             
             // Ativar todas as extensões individuais
             var extensionControls = [
-                "cct_extension_dark_mode_enabled",
-                "cct_extension_shadows_enabled",
-                "cct_extension_breakpoints_enabled",
-                "cct_extension_gradients_enabled",
-                "cct_extension_animations_enabled",
-                "cct_extension_patterns_enabled",
-                "cct_extension_design_tokens_enabled",
-                "cct_extension_colors_enabled",
-                "cct_extension_icons_enabled",
-                "cct_extension_typography_enabled"
+                "uenf_extension_dark_mode_enabled",
+                "uenf_extension_shadows_enabled",
+                "uenf_extension_breakpoints_enabled",
+                "uenf_extension_gradients_enabled",
+                "uenf_extension_animations_enabled",
+                "uenf_extension_patterns_enabled",
+                "uenf_extension_design_tokens_enabled",
+                "uenf_extension_colors_enabled",
+                "uenf_extension_icons_enabled",
+                "uenf_extension_typography_enabled"
             ];
             
             extensionControls.forEach(function(controlId) {
@@ -2941,16 +2941,16 @@ function cct_extension_manager_scripts() {
             if (confirm("⚠️ Tem certeza que deseja desativar todas as extensões?\n\nIsso pode afetar a aparência do seu site.")) {
                 // Desativar todas as extensões individuais
                 var extensionControls = [
-                    "cct_extension_dark_mode_enabled",
-                    "cct_extension_shadows_enabled",
-                    "cct_extension_breakpoints_enabled",
-                    "cct_extension_gradients_enabled",
-                    "cct_extension_animations_enabled",
-                    "cct_extension_patterns_enabled",
-                    "cct_extension_design_tokens_enabled",
-                    "cct_extension_colors_enabled",
-                    "cct_extension_icons_enabled",
-                    "cct_extension_typography_enabled"
+                    "uenf_extension_dark_mode_enabled",
+                    "uenf_extension_shadows_enabled",
+                    "uenf_extension_breakpoints_enabled",
+                    "uenf_extension_gradients_enabled",
+                    "uenf_extension_animations_enabled",
+                    "uenf_extension_patterns_enabled",
+                    "uenf_extension_design_tokens_enabled",
+                    "uenf_extension_colors_enabled",
+                    "uenf_extension_icons_enabled",
+                    "uenf_extension_typography_enabled"
                 ];
                 
                 extensionControls.forEach(function(controlId) {
@@ -2960,8 +2960,8 @@ function cct_extension_manager_scripts() {
                 });
                 
                 // Opcionalmente desativar o controle global também
-                if (wp.customize.control("cct_extensions_global_enabled")) {
-                    wp.customize.control("cct_extensions_global_enabled").setting.set(false);
+                if (wp.customize.control("uenf_extensions_global_enabled")) {
+                    wp.customize.control("uenf_extensions_global_enabled").setting.set(false);
                 }
                 
                 alert("❌ Todas as extensões foram desativadas!");
@@ -2969,82 +2969,82 @@ function cct_extension_manager_scripts() {
         }
     ');
 }
-add_action('customize_controls_enqueue_scripts', 'cct_extension_manager_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_extension_manager_scripts');
 
 /**
  * Enqueue validation JavaScript for visual feedback
  */
-function cct_customizer_validation_scripts() {
+function uenf_customizer_validation_scripts() {
     wp_enqueue_script(
-        'cct-customizer-validation',
+        'uenf-customizer-validation',
         get_template_directory_uri() . '/js/customizer-validation.js',
         array('jquery', 'customize-controls'),
         wp_get_theme()->get('Version'),
         true
     );
 }
-add_action('customize_controls_enqueue_scripts', 'cct_customizer_validation_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_customizer_validation_scripts');
 
 /**
  * Enqueue tooltips JavaScript for contextual help
  */
-function cct_customizer_tooltips_scripts() {
+function uenf_customizer_tooltips_scripts() {
     wp_enqueue_script(
-        'cct-customizer-tooltips',
+        'uenf-customizer-tooltips',
         get_template_directory_uri() . '/js/customizer-tooltips.js',
         array('jquery', 'customize-controls'),
         wp_get_theme()->get('Version'),
         true
     );
 }
-add_action('customize_controls_enqueue_scripts', 'cct_customizer_tooltips_scripts');
+add_action('customize_controls_enqueue_scripts', 'uenf_customizer_tooltips_scripts');
 
 /**
  * Adiciona sistema de combinações de fontes predefinidas
  */
-function cct_font_combinations_customizer($wp_customize) {
+function uenf_font_combinations_customizer($wp_customize) {
     // Adicionar painel de Tipografia Avançada - Comentado temporariamente para teste
-    // $wp_customize->add_panel('cct_typography_panel', array(
+    // $wp_customize->add_panel('uenf_typography_panel', array(
     //     'title' => __('Tipografia Avançada', 'cct'),
     //     'description' => __('Configure fontes, escalas tipográficas e combinações profissionais.', 'cct'),
     //     'priority' => 160,
     // ));
     
     // Seção de Combinações de Fontes - Comentado temporariamente para teste
-    // $wp_customize->add_section('cct_font_combinations', array(
+    // $wp_customize->add_section('uenf_font_combinations', array(
     //     'title' => __('Combinações de Fontes', 'cct'),
     //     'description' => __('Pairings profissionais de fontes com preview em tempo real.', 'cct'),
-    //     'panel' => 'cct_typography_panel',
+    //     'panel' => 'uenf_typography_panel',
     //     'priority' => 10,
     // ));
     
     // Adicionar preview control customizado - Comentado temporariamente para teste
-    // $wp_customize->add_setting('cct_font_preview_dummy', array(
+    // $wp_customize->add_setting('uenf_font_preview_dummy', array(
     //     'default' => '',
     //     'sanitize_callback' => 'sanitize_text_field',
     //     'transport' => 'postMessage',
     // ));
     // 
-    // $wp_customize->add_control('cct_font_preview_dummy', array(
+    // $wp_customize->add_control('uenf_font_preview_dummy', array(
     //     'label' => __('Preview da Combinação', 'cct'),
     //     'description' => __('Visualize como ficará a tipografia com a combinação selecionada.', 'cct'),
-    //     'section' => 'cct_font_combinations',
+    //     'section' => 'uenf_font_combinations',
     //     'type' => 'hidden',
     //     'priority' => 15,
     // ));
     // 
     // // Configuração para combinação predefinida
-    // $wp_customize->add_setting('cct_font_pairing_preset', array(
+    // $wp_customize->add_setting('uenf_font_pairing_preset', array(
     //     'default' => 'theme_default',
-    //     'sanitize_callback' => 'cct_sanitize_font_pairing',
+    //     'sanitize_callback' => 'uenf_sanitize_font_pairing',
     //     'transport' => 'refresh',
     // ));
     // 
     // // Controle para seleção de combinação
-    // $wp_customize->add_control('cct_font_pairing_preset', array(
+    // $wp_customize->add_control('uenf_font_pairing_preset', array(
     //     'label' => __('Combinação Predefinida', 'cct'),
     //     'description' => __('Escolha uma combinação profissional de fontes.', 'cct'),
-    //     'section' => 'cct_font_combinations',
+    //     'section' => 'uenf_font_combinations',
     //     'type' => 'select',
     //     'choices' => array(
     //         'theme_default' => 'Padrão do Tema - Usar as fontes padrão do tema atual',
@@ -3058,26 +3058,26 @@ function cct_font_combinations_customizer($wp_customize) {
      // ));
      // 
      // // Configuração para aplicar automaticamente
-     // $wp_customize->add_setting('cct_apply_font_pairing', array(
+     // $wp_customize->add_setting('uenf_apply_font_pairing', array(
      //     'default' => true,
      //     'sanitize_callback' => 'wp_validate_boolean',
      //     'transport' => 'refresh',
      // ));
      // 
      // // Controle para aplicação automática
-     // $wp_customize->add_control('cct_apply_font_pairing', array(
+     // $wp_customize->add_control('uenf_apply_font_pairing', array(
      //     'label' => __('Aplicar Combinação Automaticamente', 'cct'),
      //     'description' => __('Aplica automaticamente as fontes da combinação selecionada.', 'cct'),
-     //     'section' => 'cct_font_combinations',
+     //     'section' => 'uenf_font_combinations',
      //     'type' => 'checkbox',
      // ));
 }
-add_action('customize_register', 'cct_font_combinations_customizer');
+add_action('customize_register', 'uenf_font_combinations_customizer');
 
 /**
  * Sanitiza a seleção de font pairing
  */
-function cct_sanitize_font_pairing($input) {
+function uenf_sanitize_font_pairing($input) {
     $valid_choices = array('theme_default', 'uenf_default', 'corporate', 'editorial', 'creative', 'academic', 'tech');
     return in_array($input, $valid_choices) ? $input : 'theme_default';
 }
@@ -3085,7 +3085,7 @@ function cct_sanitize_font_pairing($input) {
 /**
  * Sanitize color with alpha (rgba or hex)
  */
-function cct_sanitize_color_with_alpha( $color ) {
+function uenf_sanitize_color_with_alpha( $color ) {
     // Se estiver vazio, retorna o padrão
     if ( empty( $color ) ) {
         return 'rgba(255, 255, 255, 0.6)';
@@ -3119,9 +3119,9 @@ function cct_sanitize_color_with_alpha( $color ) {
 /**
  * Carrega Google Fonts baseado na combinação selecionada
  */
-function cct_enqueue_font_combinations() {
-    $font_pairing = get_theme_mod('cct_font_pairing_preset', 'theme_default');
-    $apply_pairing = get_theme_mod('cct_apply_font_pairing', true);
+function uenf_enqueue_font_combinations() {
+    $font_pairing = get_theme_mod('uenf_font_pairing_preset', 'theme_default');
+    $apply_pairing = get_theme_mod('uenf_apply_font_pairing', true);
     
     if (!$apply_pairing || $font_pairing === 'theme_default') {
         return;
@@ -3162,11 +3162,11 @@ function cct_enqueue_font_combinations() {
         $version = $font_pairing . '_v1';
         
         // Remove fontes anteriores para evitar conflitos
-        wp_dequeue_style('cct-font-combinations');
-        wp_deregister_style('cct-font-combinations');
+        wp_dequeue_style('uenf-font-combinations');
+        wp_deregister_style('uenf-font-combinations');
         
         // Carrega nova combinação com prioridade alta
-        wp_enqueue_style('cct-font-combinations', $font_url, array(), $version);
+        wp_enqueue_style('uenf-font-combinations', $font_url, array(), $version);
         
         // Preload para melhor performance
         add_action('wp_head', function() use ($font_url) {
@@ -3175,14 +3175,14 @@ function cct_enqueue_font_combinations() {
         }, 1);
     }
 }
-add_action('wp_enqueue_scripts', 'cct_enqueue_font_combinations');
+add_action('wp_enqueue_scripts', 'uenf_enqueue_font_combinations');
 
 /**
  * Aplica CSS das combinações de fontes
  */
-function cct_font_combinations_css() {
-    $font_pairing = get_theme_mod('cct_font_pairing_preset', 'theme_default');
-    $apply_pairing = get_theme_mod('cct_apply_font_pairing', true);
+function uenf_font_combinations_css() {
+    $font_pairing = get_theme_mod('uenf_font_pairing_preset', 'theme_default');
+    $apply_pairing = get_theme_mod('uenf_apply_font_pairing', true);
     
     if (!$apply_pairing || $font_pairing === 'theme_default') {
         return;
@@ -3219,7 +3219,7 @@ function cct_font_combinations_css() {
         $styles = $font_styles[$font_pairing];
         
         // Usar output buffering seguro para evitar conflitos
-        $css_output = '<style type="text/css" id="cct-font-combinations-css">';
+        $css_output = '<style type="text/css" id="uenf-font-combinations-css">';
         $css_output .= '/* CCT Font Combinations - Priority CSS */';
         $css_output .= 'h1, h2, h3, h4, h5, h6, .entry-title, .site-title, .page-title, .post-title { font-family: ' . $styles['heading'] . ' !important; font-display: swap; }';
         $css_output .= 'body, .entry-content, p, .content-area, .site-description, .widget, .menu { font-family: ' . $styles['body'] . ' !important; font-display: swap; }';
@@ -3247,14 +3247,14 @@ function cct_font_combinations_css() {
         echo $css_output . $js_output;
     }
 }
-add_action('wp_head', 'cct_font_combinations_css', 999);
+add_action('wp_head', 'uenf_font_combinations_css', 999);
 
 /**
  * Adiciona JavaScript para preview em tempo real no customizer
  */
-function cct_font_combinations_preview_js() {
+function uenf_font_combinations_preview_js() {
     wp_enqueue_script(
-        'cct-font-combinations-preview',
+        'uenf-font-combinations-preview',
         get_template_directory_uri() . '/js/customizer-typography.js',
         array('jquery', 'customize-preview'),
         wp_get_theme()->get('Version'),
@@ -3262,7 +3262,7 @@ function cct_font_combinations_preview_js() {
     );
     
     // Adicionar JavaScript inline para preview
-    wp_add_inline_script('cct-font-combinations-preview', '
+    wp_add_inline_script('uenf-font-combinations-preview', '
         (function($) {
             // Aguarda o customizer estar pronto
             $(document).ready(function() {
@@ -3270,10 +3270,8 @@ function cct_font_combinations_preview_js() {
                     
                     // Função para aplicar tipografia no preview
                     function applyTypographyPreview(newval) {
-                        console.log("Aplicando preview:", newval);
-                        
                         // Remove estilos anteriores
-                        $("#cct-preview-typography").remove();
+                        $("#uenf-preview-typography").remove();
                         
                         var css = "";
                         var fontLink = "";
@@ -3329,19 +3327,19 @@ function cct_font_combinations_preview_js() {
                         if (fontLink) {
                             $("head").append(fontLink);
                         }
-                        $("head").append("<style id=\"cct-preview-typography\">" + css + "</style>");
+                        $("head").append("<style id=\"uenf-preview-typography\">" + css + "</style>");
                         
                         // Força re-render
-                        $("body").addClass("cct-typography-updated").removeClass("cct-typography-updated");
+                        $("body").addClass("uenf-typography-updated").removeClass("uenf-typography-updated");
                     }
                     
                     // Bind para mudanças na configuração
-                    wp.customize("cct_font_pairing_preset", function(value) {
+                    wp.customize("uenf_font_pairing_preset", function(value) {
                         value.bind(applyTypographyPreview);
                     });
                     
                     // Aplica configuração inicial
-                    var initialValue = wp.customize("cct_font_pairing_preset").get();
+                    var initialValue = wp.customize("uenf_font_pairing_preset").get();
                     if (initialValue) {
                         applyTypographyPreview(initialValue);
                     }
@@ -3350,7 +3348,7 @@ function cct_font_combinations_preview_js() {
         })(jQuery);
     ');
 }
-add_action('customize_preview_init', 'cct_font_combinations_preview_js');
+add_action('customize_preview_init', 'uenf_font_combinations_preview_js');
 
 // ============================================================================
 // SISTEMA DE BUSCA PERSONALIZADO
@@ -3367,31 +3365,31 @@ require_once get_template_directory() . '/inc/class-advanced-search.php';
 /**
  * Adicionar CSS dinâmico da busca
  */
-function cct_search_customizer_css() {
-    $css = CCT_Search_Customizer_Controls::generate_css();
+function uenf_search_customizer_css() {
+    $css = UENF_Search_Customizer_Controls::generate_css();
     if (!empty($css)) {
-        echo '<style type="text/css" id="cct-search-customizer-css">' . $css . '</style>';
+        echo '<style type="text/css" id="uenf-search-customizer-css">' . $css . '</style>';
     }
 }
-add_action('wp_head', 'cct_search_customizer_css');
+add_action('wp_head', 'uenf_search_customizer_css');
 
 /**
  * Adicionar CSS dinâmico dos resultados de busca (destaque de termos)
  */
-function cct_search_results_customizer_css() {
-    if (class_exists('CCT_Search_Results_Customizer')) {
-        $css = CCT_Search_Results_Customizer::generate_css();
+function uenf_search_results_customizer_css() {
+    if (class_exists('UENF_Search_Results_Customizer')) {
+        $css = UENF_Search_Results_Customizer::generate_css();
         if (!empty($css)) {
-            echo '<style type="text/css" id="cct-search-results-customizer-css">' . $css . '</style>';
+            echo '<style type="text/css" id="uenf-search-results-customizer-css">' . $css . '</style>';
         }
     }
 }
-add_action('wp_head', 'cct_search_results_customizer_css');
+add_action('wp_head', 'uenf_search_results_customizer_css');
 
 /**
  * Filtrar theme.json para sincronizar com configurações do Customizer
  */
-function cct_filter_theme_json_theme($theme_json) {
+function uenf_filter_theme_json_theme($theme_json) {
     $new_data = array(
         'version' => 2,
         'styles' => array(
@@ -3427,18 +3425,18 @@ function cct_filter_theme_json_theme($theme_json) {
     
     return $theme_json->update_with($new_data);
 }
-add_filter('wp_theme_json_data_theme', 'cct_filter_theme_json_theme');
+add_filter('wp_theme_json_data_theme', 'uenf_filter_theme_json_theme');
 
 /**
  * JavaScript para preview do Customizer
  */
-function cct_customize_preview_js() {
+function uenf_customize_preview_js() {
     wp_enqueue_script(
-        'cct-customizer-preview',
+        'uenf-customizer-preview',
         get_template_directory_uri() . '/js/customizer-preview.js',
         array('customize-preview'),
         '1.0.0',
         true
     );
 }
-add_action('customize_preview_init', 'cct_customize_preview_js');
+add_action('customize_preview_init', 'uenf_customize_preview_js');

@@ -9,7 +9,7 @@
  * - Preview em tempo real
  * - Gerenciador de favoritos
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Browser de Gradientes
  */
-class CCT_Gradient_Browser_Control extends WP_Customize_Control {
+class UENF_Gradient_Browser_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_gradient_browser';
+    public $type = 'uenf_gradient_browser';
     
     /**
      * Biblioteca de gradientes
@@ -60,42 +60,42 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-gradient-browser">
+        <div class="uenf-gradient-browser">
             <!-- Filtros de categoria -->
-            <div class="cct-gradient-filters">
+            <div class="uenf-gradient-filters">
                 <h4><?php _e('Categorias', 'cct'); ?></h4>
                 
-                <div class="cct-category-tabs">
+                <div class="uenf-category-tabs">
                     <?php foreach ($this->gradient_categories as $cat_key => $category): ?>
-                        <button type="button" class="cct-category-tab <?php echo $cat_key === 'all' ? 'active' : ''; ?>" 
+                        <button type="button" class="uenf-category-tab <?php echo $cat_key === 'all' ? 'active' : ''; ?>" 
                                 data-category="<?php echo esc_attr($cat_key); ?>">
-                            <span class="cct-category-icon"><?php echo esc_html($category['icon']); ?></span>
-                            <span class="cct-category-name"><?php echo esc_html($category['name']); ?></span>
+                            <span class="uenf-category-icon"><?php echo esc_html($category['icon']); ?></span>
+                            <span class="uenf-category-name"><?php echo esc_html($category['name']); ?></span>
                         </button>
                     <?php endforeach; ?>
                 </div>
             </div>
             
             <!-- Grid de gradientes -->
-            <div class="cct-gradient-grid">
+            <div class="uenf-gradient-grid">
                 <?php foreach ($this->gradient_library as $gradient_key => $gradient): ?>
-                    <div class="cct-gradient-item" 
+                    <div class="uenf-gradient-item" 
                          data-gradient="<?php echo esc_attr($gradient_key); ?>"
                          data-category="<?php echo esc_attr($gradient['category']); ?>">
                         
-                        <div class="cct-gradient-preview" 
+                        <div class="uenf-gradient-preview" 
                              style="background: <?php echo esc_attr($gradient['css']); ?>">
-                            <div class="cct-gradient-overlay">
-                                <div class="cct-gradient-actions">
-                                    <button type="button" class="cct-btn cct-btn-apply" 
+                            <div class="uenf-gradient-overlay">
+                                <div class="uenf-gradient-actions">
+                                    <button type="button" class="uenf-btn uenf-btn-apply" 
                                             data-gradient="<?php echo esc_attr($gradient_key); ?>">
                                         <?php _e('Aplicar', 'cct'); ?>
                                     </button>
-                                    <button type="button" class="cct-btn cct-btn-favorite" 
+                                    <button type="button" class="uenf-btn uenf-btn-favorite" 
                                             data-gradient="<?php echo esc_attr($gradient_key); ?>">
                                         ❤️
                                     </button>
-                                    <button type="button" class="cct-btn cct-btn-copy" 
+                                    <button type="button" class="uenf-btn uenf-btn-copy" 
                                             data-gradient="<?php echo esc_attr($gradient_key); ?>">
                                         📋
                                     </button>
@@ -103,25 +103,25 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
                             </div>
                         </div>
                         
-                        <div class="cct-gradient-info">
-                            <h5 class="cct-gradient-name"><?php echo esc_html($gradient['name']); ?></h5>
-                            <p class="cct-gradient-description"><?php echo esc_html($gradient['description']); ?></p>
+                        <div class="uenf-gradient-info">
+                            <h5 class="uenf-gradient-name"><?php echo esc_html($gradient['name']); ?></h5>
+                            <p class="uenf-gradient-description"><?php echo esc_html($gradient['description']); ?></p>
                             
-                            <div class="cct-gradient-meta">
-                                <span class="cct-gradient-type">
+                            <div class="uenf-gradient-meta">
+                                <span class="uenf-gradient-type">
                                     <strong><?php _e('Tipo:', 'cct'); ?></strong> 
                                     <?php echo esc_html(ucfirst($gradient['type'])); ?>
                                 </span>
                                 
                                 <?php if (isset($gradient['popularity'])): ?>
-                                    <span class="cct-gradient-popularity">
+                                    <span class="uenf-gradient-popularity">
                                         <strong><?php _e('Popular:', 'cct'); ?></strong> 
                                         <?php echo esc_html($gradient['popularity']); ?>%
                                     </span>
                                 <?php endif; ?>
                             </div>
                             
-                            <div class="cct-gradient-css">
+                            <div class="uenf-gradient-css">
                                 <code><?php echo esc_html($gradient['css']); ?></code>
                             </div>
                         </div>
@@ -130,16 +130,16 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             </div>
             
             <!-- Controles de busca e ordenação -->
-            <div class="cct-gradient-controls">
-                <div class="cct-search-box">
-                    <input type="text" class="cct-gradient-search" 
+            <div class="uenf-gradient-controls">
+                <div class="uenf-search-box">
+                    <input type="text" class="uenf-gradient-search" 
                            placeholder="<?php _e('Buscar gradientes...', 'cct'); ?>">
-                    <span class="cct-search-icon">🔍</span>
+                    <span class="uenf-search-icon">🔍</span>
                 </div>
                 
-                <div class="cct-sort-controls">
+                <div class="uenf-sort-controls">
                     <label><?php _e('Ordenar por:', 'cct'); ?></label>
-                    <select class="cct-gradient-sort">
+                    <select class="uenf-gradient-sort">
                         <option value="name"><?php _e('Nome', 'cct'); ?></option>
                         <option value="popularity"><?php _e('Popularidade', 'cct'); ?></option>
                         <option value="type"><?php _e('Tipo', 'cct'); ?></option>
@@ -147,11 +147,11 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
                     </select>
                 </div>
                 
-                <div class="cct-view-controls">
-                    <button type="button" class="cct-view-btn cct-view-grid active" data-view="grid">
+                <div class="uenf-view-controls">
+                    <button type="button" class="uenf-view-btn uenf-view-grid active" data-view="grid">
                         ⊞
                     </button>
-                    <button type="button" class="cct-view-btn cct-view-list" data-view="list">
+                    <button type="button" class="uenf-view-btn uenf-view-list" data-view="list">
                         ☰
                     </button>
                 </div>
@@ -159,7 +159,7 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-gradient-browser {
+        .uenf-gradient-browser {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -167,26 +167,26 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-gradient-filters {
+        .uenf-gradient-filters {
             padding: 15px;
             background: white;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-gradient-filters h4 {
+        .uenf-gradient-filters h4 {
             margin: 0 0 10px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-category-tabs {
+        .uenf-category-tabs {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
         
-        .cct-category-tab {
+        .uenf-category-tab {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -199,22 +199,22 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             font-size: 11px;
         }
         
-        .cct-category-tab:hover {
+        .uenf-category-tab:hover {
             border-color: #0073aa;
             background: #f0f8ff;
         }
         
-        .cct-category-tab.active {
+        .uenf-category-tab.active {
             border-color: #0073aa;
             background: #0073aa;
             color: white;
         }
         
-        .cct-category-icon {
+        .uenf-category-icon {
             font-size: 14px;
         }
         
-        .cct-gradient-grid {
+        .uenf-gradient-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
@@ -224,7 +224,7 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             overflow-y: auto;
         }
         
-        .cct-gradient-item {
+        .uenf-gradient-item {
             background: white;
             border-radius: 8px;
             overflow: hidden;
@@ -232,22 +232,22 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-gradient-item:hover {
+        .uenf-gradient-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
         
-        .cct-gradient-item.hidden {
+        .uenf-gradient-item.hidden {
             display: none;
         }
         
-        .cct-gradient-preview {
+        .uenf-gradient-preview {
             height: 120px;
             position: relative;
             cursor: pointer;
         }
         
-        .cct-gradient-overlay {
+        .uenf-gradient-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -261,16 +261,16 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             transition: opacity 0.3s ease;
         }
         
-        .cct-gradient-preview:hover .cct-gradient-overlay {
+        .uenf-gradient-preview:hover .uenf-gradient-overlay {
             opacity: 1;
         }
         
-        .cct-gradient-actions {
+        .uenf-gradient-actions {
             display: flex;
             gap: 8px;
         }
         
-        .cct-btn {
+        .uenf-btn {
             padding: 6px 12px;
             border: none;
             border-radius: 4px;
@@ -281,35 +281,35 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-btn:hover {
+        .uenf-btn:hover {
             background: #0073aa;
             color: white;
         }
         
-        .cct-btn-apply {
+        .uenf-btn-apply {
             background: #0073aa;
             color: white;
         }
         
-        .cct-gradient-info {
+        .uenf-gradient-info {
             padding: 15px;
         }
         
-        .cct-gradient-name {
+        .uenf-gradient-name {
             margin: 0 0 5px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-gradient-description {
+        .uenf-gradient-description {
             margin: 0 0 10px 0;
             font-size: 11px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-gradient-meta {
+        .uenf-gradient-meta {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
@@ -317,20 +317,20 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             color: #888;
         }
         
-        .cct-gradient-css {
+        .uenf-gradient-css {
             background: #f8f9fa;
             padding: 8px;
             border-radius: 4px;
             border: 1px solid #e1e1e1;
         }
         
-        .cct-gradient-css code {
+        .uenf-gradient-css code {
             font-size: 9px;
             color: #333;
             word-break: break-all;
         }
         
-        .cct-gradient-controls {
+        .uenf-gradient-controls {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -339,12 +339,12 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             border-top: 1px solid #ddd;
         }
         
-        .cct-search-box {
+        .uenf-search-box {
             position: relative;
             flex: 1;
         }
         
-        .cct-gradient-search {
+        .uenf-gradient-search {
             width: 100%;
             padding: 8px 35px 8px 12px;
             border: 1px solid #ddd;
@@ -352,7 +352,7 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-search-icon {
+        .uenf-search-icon {
             position: absolute;
             right: 10px;
             top: 50%;
@@ -360,30 +360,30 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-sort-controls {
+        .uenf-sort-controls {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .cct-sort-controls label {
+        .uenf-sort-controls label {
             font-size: 11px;
             color: #666;
         }
         
-        .cct-gradient-sort {
+        .uenf-gradient-sort {
             padding: 6px 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 11px;
         }
         
-        .cct-view-controls {
+        .uenf-view-controls {
             display: flex;
             gap: 4px;
         }
         
-        .cct-view-btn {
+        .uenf-view-btn {
             padding: 8px;
             border: 1px solid #ddd;
             background: #f8f9fa;
@@ -392,28 +392,28 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
             border-radius: 4px;
         }
         
-        .cct-view-btn.active {
+        .uenf-view-btn.active {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
         /* View List */
-        .cct-gradient-grid.list-view {
+        .uenf-gradient-grid.list-view {
             grid-template-columns: 1fr;
         }
         
-        .cct-gradient-grid.list-view .cct-gradient-item {
+        .uenf-gradient-grid.list-view .uenf-gradient-item {
             display: flex;
         }
         
-        .cct-gradient-grid.list-view .cct-gradient-preview {
+        .uenf-gradient-grid.list-view .uenf-gradient-preview {
             width: 100px;
             height: 60px;
             flex-shrink: 0;
         }
         
-        .cct-gradient-grid.list-view .cct-gradient-info {
+        .uenf-gradient-grid.list-view .uenf-gradient-info {
             flex: 1;
             padding: 10px 15px;
         }
@@ -425,14 +425,14 @@ class CCT_Gradient_Browser_Control extends WP_Customize_Control {
 /**
  * Controle Gerador de Gradientes
  */
-class CCT_Gradient_Generator_Control extends WP_Customize_Control {
+class UENF_Gradient_Generator_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_gradient_generator';
+    public $type = 'uenf_gradient_generator';
     
     /**
      * Renderiza o controle
@@ -449,62 +449,62 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-gradient-generator">
+        <div class="uenf-gradient-generator">
             <!-- Preview do gradiente -->
-            <div class="cct-gradient-preview-area">
-                <div class="cct-gradient-preview-box" id="cct-gradient-preview">
-                    <div class="cct-preview-content">
+            <div class="uenf-gradient-preview-area">
+                <div class="uenf-gradient-preview-box" id="uenf-gradient-preview">
+                    <div class="uenf-preview-content">
                         <h3><?php _e('Preview do Gradiente', 'cct'); ?></h3>
                         <p><?php _e('Seu gradiente personalizado aparecerá aqui', 'cct'); ?></p>
                     </div>
                 </div>
                 
-                <div class="cct-gradient-code">
+                <div class="uenf-gradient-code">
                     <label><?php _e('Código CSS:', 'cct'); ?></label>
-                    <textarea id="cct-gradient-css" readonly></textarea>
-                    <button type="button" class="button cct-copy-css"><?php _e('📋 Copiar CSS', 'cct'); ?></button>
+                    <textarea id="uenf-gradient-css" readonly></textarea>
+                    <button type="button" class="button uenf-copy-css"><?php _e('📋 Copiar CSS', 'cct'); ?></button>
                 </div>
             </div>
             
             <!-- Configurações do gradiente -->
-            <div class="cct-gradient-settings">
-                <div class="cct-setting-group">
+            <div class="uenf-gradient-settings">
+                <div class="uenf-setting-group">
                     <label><?php _e('Tipo de Gradiente:', 'cct'); ?></label>
-                    <select id="cct-gradient-type">
+                    <select id="uenf-gradient-type">
                         <option value="linear"><?php _e('Linear', 'cct'); ?></option>
                         <option value="radial"><?php _e('Radial', 'cct'); ?></option>
                         <option value="conic"><?php _e('Cônico', 'cct'); ?></option>
                     </select>
                 </div>
                 
-                <div class="cct-setting-group cct-linear-settings">
+                <div class="uenf-setting-group uenf-linear-settings">
                     <label><?php _e('Direção:', 'cct'); ?></label>
-                    <div class="cct-direction-control">
-                        <input type="range" id="cct-gradient-angle" min="0" max="360" value="45">
-                        <span id="cct-angle-value">45°</span>
+                    <div class="uenf-direction-control">
+                        <input type="range" id="uenf-gradient-angle" min="0" max="360" value="45">
+                        <span id="uenf-angle-value">45°</span>
                     </div>
                     
-                    <div class="cct-direction-presets">
-                        <button type="button" class="cct-direction-btn" data-angle="0">↑</button>
-                        <button type="button" class="cct-direction-btn" data-angle="45">↗</button>
-                        <button type="button" class="cct-direction-btn" data-angle="90">→</button>
-                        <button type="button" class="cct-direction-btn" data-angle="135">↘</button>
-                        <button type="button" class="cct-direction-btn" data-angle="180">↓</button>
-                        <button type="button" class="cct-direction-btn" data-angle="225">↙</button>
-                        <button type="button" class="cct-direction-btn" data-angle="270">←</button>
-                        <button type="button" class="cct-direction-btn" data-angle="315">↖</button>
+                    <div class="uenf-direction-presets">
+                        <button type="button" class="uenf-direction-btn" data-angle="0">↑</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="45">↗</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="90">→</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="135">↘</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="180">↓</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="225">↙</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="270">←</button>
+                        <button type="button" class="uenf-direction-btn" data-angle="315">↖</button>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group cct-radial-settings" style="display: none;">
+                <div class="uenf-setting-group uenf-radial-settings" style="display: none;">
                     <label><?php _e('Forma:', 'cct'); ?></label>
-                    <select id="cct-radial-shape">
+                    <select id="uenf-radial-shape">
                         <option value="circle"><?php _e('Círculo', 'cct'); ?></option>
                         <option value="ellipse"><?php _e('Elipse', 'cct'); ?></option>
                     </select>
                     
                     <label><?php _e('Posição:', 'cct'); ?></label>
-                    <select id="cct-radial-position">
+                    <select id="uenf-radial-position">
                         <option value="center"><?php _e('Centro', 'cct'); ?></option>
                         <option value="top"><?php _e('Topo', 'cct'); ?></option>
                         <option value="bottom"><?php _e('Base', 'cct'); ?></option>
@@ -513,110 +513,110 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
                     </select>
                 </div>
                 
-                <div class="cct-setting-group cct-conic-settings" style="display: none;">
+                <div class="uenf-setting-group uenf-conic-settings" style="display: none;">
                     <label><?php _e('Ângulo Inicial:', 'cct'); ?></label>
-                    <div class="cct-angle-control">
-                        <input type="range" id="cct-conic-angle" min="0" max="360" value="0">
-                        <span id="cct-conic-value">0°</span>
+                    <div class="uenf-angle-control">
+                        <input type="range" id="uenf-conic-angle" min="0" max="360" value="0">
+                        <span id="uenf-conic-value">0°</span>
                     </div>
                 </div>
             </div>
             
             <!-- Editor de cores -->
-            <div class="cct-color-editor">
+            <div class="uenf-color-editor">
                 <h4><?php _e('Cores do Gradiente', 'cct'); ?></h4>
                 
-                <div class="cct-color-stops" id="cct-color-stops">
-                    <div class="cct-color-stop" data-position="0">
-                        <div class="cct-color-preview" style="background: #ff7e5f;"></div>
-                        <input type="color" class="cct-color-input" value="#ff7e5f">
-                        <input type="range" class="cct-position-input" min="0" max="100" value="0">
-                        <span class="cct-position-value">0%</span>
-                        <button type="button" class="cct-remove-color" disabled>×</button>
+                <div class="uenf-color-stops" id="uenf-color-stops">
+                    <div class="uenf-color-stop" data-position="0">
+                        <div class="uenf-color-preview" style="background: #ff7e5f;"></div>
+                        <input type="color" class="uenf-color-input" value="#ff7e5f">
+                        <input type="range" class="uenf-position-input" min="0" max="100" value="0">
+                        <span class="uenf-position-value">0%</span>
+                        <button type="button" class="uenf-remove-color" disabled>×</button>
                     </div>
                     
-                    <div class="cct-color-stop" data-position="100">
-                        <div class="cct-color-preview" style="background: #feb47b;"></div>
-                        <input type="color" class="cct-color-input" value="#feb47b">
-                        <input type="range" class="cct-position-input" min="0" max="100" value="100">
-                        <span class="cct-position-value">100%</span>
-                        <button type="button" class="cct-remove-color" disabled>×</button>
+                    <div class="uenf-color-stop" data-position="100">
+                        <div class="uenf-color-preview" style="background: #feb47b;"></div>
+                        <input type="color" class="uenf-color-input" value="#feb47b">
+                        <input type="range" class="uenf-position-input" min="0" max="100" value="100">
+                        <span class="uenf-position-value">100%</span>
+                        <button type="button" class="uenf-remove-color" disabled>×</button>
                     </div>
                 </div>
                 
-                <div class="cct-color-actions">
-                    <button type="button" class="button cct-add-color"><?php _e('+ Adicionar Cor', 'cct'); ?></button>
-                    <button type="button" class="button cct-random-colors"><?php _e('🎲 Cores Aleatórias', 'cct'); ?></button>
-                    <button type="button" class="button cct-reverse-colors"><?php _e('🔄 Inverter', 'cct'); ?></button>
+                <div class="uenf-color-actions">
+                    <button type="button" class="button uenf-add-color"><?php _e('+ Adicionar Cor', 'cct'); ?></button>
+                    <button type="button" class="button uenf-random-colors"><?php _e('🎲 Cores Aleatórias', 'cct'); ?></button>
+                    <button type="button" class="button uenf-reverse-colors"><?php _e('🔄 Inverter', 'cct'); ?></button>
                 </div>
             </div>
             
             <!-- Presets rápidos -->
-            <div class="cct-quick-presets">
+            <div class="uenf-quick-presets">
                 <h4><?php _e('Presets Rápidos', 'cct'); ?></h4>
                 
-                <div class="cct-preset-grid">
-                    <button type="button" class="cct-preset-btn" data-preset="sunset">
-                        <div class="cct-preset-preview" style="background: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%);"></div>
+                <div class="uenf-preset-grid">
+                    <button type="button" class="uenf-preset-btn" data-preset="sunset">
+                        <div class="uenf-preset-preview" style="background: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%);"></div>
                         <span><?php _e('Pôr do Sol', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="ocean">
-                        <div class="cct-preset-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="ocean">
+                        <div class="uenf-preset-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
                         <span><?php _e('Oceano', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="forest">
-                        <div class="cct-preset-preview" style="background: linear-gradient(90deg, #134e5e 0%, #71b280 100%);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="forest">
+                        <div class="uenf-preset-preview" style="background: linear-gradient(90deg, #134e5e 0%, #71b280 100%);"></div>
                         <span><?php _e('Floresta', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="fire">
-                        <div class="cct-preset-preview" style="background: linear-gradient(45deg, #f12711 0%, #f5af19 100%);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="fire">
+                        <div class="uenf-preset-preview" style="background: linear-gradient(45deg, #f12711 0%, #f5af19 100%);"></div>
                         <span><?php _e('Fogo', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="neon">
-                        <div class="cct-preset-preview" style="background: linear-gradient(45deg, #12c2e9 0%, #c471ed 50%, #f64f59 100%);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="neon">
+                        <div class="uenf-preset-preview" style="background: linear-gradient(45deg, #12c2e9 0%, #c471ed 50%, #f64f59 100%);"></div>
                         <span><?php _e('Neon', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="gold">
-                        <div class="cct-preset-preview" style="background: linear-gradient(45deg, #ffd700 0%, #ffed4e 50%, #ff9500 100%);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="gold">
+                        <div class="uenf-preset-preview" style="background: linear-gradient(45deg, #ffd700 0%, #ffed4e 50%, #ff9500 100%);"></div>
                         <span><?php _e('Ouro', 'cct'); ?></span>
                     </button>
                 </div>
             </div>
             
             <!-- Ações do gerador -->
-            <div class="cct-generator-actions">
-                <button type="button" class="button button-primary cct-save-gradient">
+            <div class="uenf-generator-actions">
+                <button type="button" class="button button-primary uenf-save-gradient">
                     <?php _e('💾 Salvar Gradiente', 'cct'); ?>
                 </button>
-                <button type="button" class="button cct-export-gradient">
+                <button type="button" class="button uenf-export-gradient">
                     <?php _e('📤 Exportar', 'cct'); ?>
                 </button>
-                <button type="button" class="button cct-reset-generator">
+                <button type="button" class="button uenf-reset-generator">
                     <?php _e('🔄 Reset', 'cct'); ?>
                 </button>
             </div>
         </div>
         
         <style>
-        .cct-gradient-generator {
+        .uenf-gradient-generator {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-gradient-preview-area {
+        .uenf-gradient-preview-area {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-gradient-preview-box {
+        .uenf-gradient-preview-box {
             height: 150px;
             border-radius: 8px;
             background: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%);
@@ -628,36 +628,36 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-preview-content {
+        .uenf-preview-content {
             text-align: center;
             color: white;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
         
-        .cct-preview-content h3 {
+        .uenf-preview-content h3 {
             margin: 0 0 5px 0;
             font-size: 16px;
         }
         
-        .cct-preview-content p {
+        .uenf-preview-content p {
             margin: 0;
             font-size: 12px;
             opacity: 0.9;
         }
         
-        .cct-gradient-code {
+        .uenf-gradient-code {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-gradient-code label {
+        .uenf-gradient-code label {
             font-size: 12px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-gradient-code textarea {
+        .uenf-gradient-code textarea {
             flex: 1;
             padding: 8px;
             border: 1px solid #ddd;
@@ -668,22 +668,22 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             height: 40px;
         }
         
-        .cct-copy-css {
+        .uenf-copy-css {
             font-size: 11px;
             padding: 8px 12px;
         }
         
-        .cct-gradient-settings {
+        .uenf-gradient-settings {
             padding: 20px;
             background: white;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-setting-group {
+        .uenf-setting-group {
             margin-bottom: 20px;
         }
         
-        .cct-setting-group label {
+        .uenf-setting-group label {
             display: block;
             font-size: 12px;
             font-weight: 600;
@@ -691,7 +691,7 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-setting-group select {
+        .uenf-setting-group select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -699,31 +699,31 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-direction-control {
+        .uenf-direction-control {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
         }
         
-        .cct-direction-control input[type="range"] {
+        .uenf-direction-control input[type="range"] {
             flex: 1;
         }
         
-        .cct-direction-control span {
+        .uenf-direction-control span {
             min-width: 40px;
             font-size: 12px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-direction-presets {
+        .uenf-direction-presets {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 5px;
         }
         
-        .cct-direction-btn {
+        .uenf-direction-btn {
             padding: 8px;
             border: 1px solid #ddd;
             background: #f8f9fa;
@@ -733,40 +733,40 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-direction-btn:hover {
+        .uenf-direction-btn:hover {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
-        .cct-angle-control {
+        .uenf-angle-control {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-angle-control input[type="range"] {
+        .uenf-angle-control input[type="range"] {
             flex: 1;
         }
         
-        .cct-color-editor {
+        .uenf-color-editor {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-color-editor h4 {
+        .uenf-color-editor h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-color-stops {
+        .uenf-color-stops {
             margin-bottom: 15px;
         }
         
-        .cct-color-stop {
+        .uenf-color-stop {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -777,7 +777,7 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             border-radius: 6px;
         }
         
-        .cct-color-preview {
+        .uenf-color-preview {
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -785,7 +785,7 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             box-shadow: 0 0 0 1px #ddd;
         }
         
-        .cct-color-input {
+        .uenf-color-input {
             width: 50px;
             height: 30px;
             border: none;
@@ -793,18 +793,18 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-position-input {
+        .uenf-position-input {
             flex: 1;
         }
         
-        .cct-position-value {
+        .uenf-position-value {
             min-width: 35px;
             font-size: 11px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-remove-color {
+        .uenf-remove-color {
             width: 25px;
             height: 25px;
             border: none;
@@ -818,42 +818,42 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             justify-content: center;
         }
         
-        .cct-remove-color:disabled {
+        .uenf-remove-color:disabled {
             background: #ccc;
             cursor: not-allowed;
         }
         
-        .cct-color-actions {
+        .uenf-color-actions {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
         
-        .cct-color-actions .button {
+        .uenf-color-actions .button {
             font-size: 11px;
             padding: 8px 12px;
         }
         
-        .cct-quick-presets {
+        .uenf-quick-presets {
             padding: 20px;
             background: white;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-quick-presets h4 {
+        .uenf-quick-presets h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-preset-grid {
+        .uenf-preset-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
         
-        .cct-preset-btn {
+        .uenf-preset-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -866,25 +866,25 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-preset-btn:hover {
+        .uenf-preset-btn:hover {
             border-color: #0073aa;
             background: #f0f8ff;
         }
         
-        .cct-preset-preview {
+        .uenf-preset-preview {
             width: 40px;
             height: 25px;
             border-radius: 4px;
             border: 1px solid rgba(0,0,0,0.1);
         }
         
-        .cct-preset-btn span {
+        .uenf-preset-btn span {
             font-size: 10px;
             color: #333;
             text-align: center;
         }
         
-        .cct-generator-actions {
+        .uenf-generator-actions {
             display: flex;
             gap: 10px;
             padding: 20px;
@@ -892,7 +892,7 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
             justify-content: center;
         }
         
-        .cct-generator-actions .button {
+        .uenf-generator-actions .button {
             font-size: 12px;
             padding: 10px 16px;
         }
@@ -904,14 +904,14 @@ class CCT_Gradient_Generator_Control extends WP_Customize_Control {
 /**
  * Controle Aplicador de Gradientes
  */
-class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
+class UENF_Gradient_Applicator_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_gradient_applicator';
+    public $type = 'uenf_gradient_applicator';
     
     /**
      * Renderiza o controle
@@ -928,79 +928,79 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-gradient-applicator">
+        <div class="uenf-gradient-applicator">
             <!-- Seletor de elementos -->
-            <div class="cct-element-selector">
+            <div class="uenf-element-selector">
                 <h4><?php _e('Aplicar Gradiente a:', 'cct'); ?></h4>
                 
-                <div class="cct-element-options">
-                    <label class="cct-element-option">
-                        <input type="checkbox" class="cct-apply-to" data-target="backgrounds" checked>
-                        <span class="cct-option-icon">🎨</span>
-                        <span class="cct-option-text"><?php _e('Fundos', 'cct'); ?></span>
+                <div class="uenf-element-options">
+                    <label class="uenf-element-option">
+                        <input type="checkbox" class="uenf-apply-to" data-target="backgrounds" checked>
+                        <span class="uenf-option-icon">🎨</span>
+                        <span class="uenf-option-text"><?php _e('Fundos', 'cct'); ?></span>
                     </label>
                     
-                    <label class="cct-element-option">
-                        <input type="checkbox" class="cct-apply-to" data-target="buttons">
-                        <span class="cct-option-icon">🔘</span>
-                        <span class="cct-option-text"><?php _e('Botões', 'cct'); ?></span>
+                    <label class="uenf-element-option">
+                        <input type="checkbox" class="uenf-apply-to" data-target="buttons">
+                        <span class="uenf-option-icon">🔘</span>
+                        <span class="uenf-option-text"><?php _e('Botões', 'cct'); ?></span>
                     </label>
                     
-                    <label class="cct-element-option">
-                        <input type="checkbox" class="cct-apply-to" data-target="text">
-                        <span class="cct-option-icon">📝</span>
-                        <span class="cct-option-text"><?php _e('Texto', 'cct'); ?></span>
+                    <label class="uenf-element-option">
+                        <input type="checkbox" class="uenf-apply-to" data-target="text">
+                        <span class="uenf-option-icon">📝</span>
+                        <span class="uenf-option-text"><?php _e('Texto', 'cct'); ?></span>
                     </label>
                     
-                    <label class="cct-element-option">
-                        <input type="checkbox" class="cct-apply-to" data-target="borders">
-                        <span class="cct-option-icon">🔲</span>
-                        <span class="cct-option-text"><?php _e('Bordas', 'cct'); ?></span>
+                    <label class="uenf-element-option">
+                        <input type="checkbox" class="uenf-apply-to" data-target="borders">
+                        <span class="uenf-option-icon">🔲</span>
+                        <span class="uenf-option-text"><?php _e('Bordas', 'cct'); ?></span>
                     </label>
                     
-                    <label class="cct-element-option">
-                        <input type="checkbox" class="cct-apply-to" data-target="headers">
-                        <span class="cct-option-icon">📰</span>
-                        <span class="cct-option-text"><?php _e('Cabeçalhos', 'cct'); ?></span>
+                    <label class="uenf-element-option">
+                        <input type="checkbox" class="uenf-apply-to" data-target="headers">
+                        <span class="uenf-option-icon">📰</span>
+                        <span class="uenf-option-text"><?php _e('Cabeçalhos', 'cct'); ?></span>
                     </label>
                     
-                    <label class="cct-element-option">
-                        <input type="checkbox" class="cct-apply-to" data-target="cards">
-                        <span class="cct-option-icon">🃏</span>
-                        <span class="cct-option-text"><?php _e('Cards', 'cct'); ?></span>
+                    <label class="uenf-element-option">
+                        <input type="checkbox" class="uenf-apply-to" data-target="cards">
+                        <span class="uenf-option-icon">🃏</span>
+                        <span class="uenf-option-text"><?php _e('Cards', 'cct'); ?></span>
                     </label>
                 </div>
             </div>
             
             <!-- Preview de aplicação -->
-            <div class="cct-application-preview">
+            <div class="uenf-application-preview">
                 <h4><?php _e('Preview da Aplicação', 'cct'); ?></h4>
                 
-                <div class="cct-preview-samples">
-                    <div class="cct-sample cct-sample-background">
+                <div class="uenf-preview-samples">
+                    <div class="uenf-sample uenf-sample-background">
                         <h5><?php _e('Fundo', 'cct'); ?></h5>
-                        <div class="cct-sample-element cct-bg-sample">
+                        <div class="uenf-sample-element uenf-bg-sample">
                             <p><?php _e('Exemplo de fundo com gradiente', 'cct'); ?></p>
                         </div>
                     </div>
                     
-                    <div class="cct-sample cct-sample-button">
+                    <div class="uenf-sample uenf-sample-button">
                         <h5><?php _e('Botão', 'cct'); ?></h5>
-                        <button class="cct-sample-element cct-btn-sample">
+                        <button class="uenf-sample-element uenf-btn-sample">
                             <?php _e('Botão com Gradiente', 'cct'); ?>
                         </button>
                     </div>
                     
-                    <div class="cct-sample cct-sample-text">
+                    <div class="uenf-sample uenf-sample-text">
                         <h5><?php _e('Texto', 'cct'); ?></h5>
-                        <h3 class="cct-sample-element cct-text-sample">
+                        <h3 class="uenf-sample-element uenf-text-sample">
                             <?php _e('Texto com Gradiente', 'cct'); ?>
                         </h3>
                     </div>
                     
-                    <div class="cct-sample cct-sample-border">
+                    <div class="uenf-sample uenf-sample-border">
                         <h5><?php _e('Borda', 'cct'); ?></h5>
-                        <div class="cct-sample-element cct-border-sample">
+                        <div class="uenf-sample-element uenf-border-sample">
                             <p><?php _e('Elemento com borda gradiente', 'cct'); ?></p>
                         </div>
                     </div>
@@ -1008,78 +1008,78 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             </div>
             
             <!-- Configurações de aplicação -->
-            <div class="cct-application-settings">
+            <div class="uenf-application-settings">
                 <h4><?php _e('Configurações de Aplicação', 'cct'); ?></h4>
                 
-                <div class="cct-setting-row">
+                <div class="uenf-setting-row">
                     <label><?php _e('Intensidade:', 'cct'); ?></label>
-                    <input type="range" class="cct-intensity-slider" min="0.1" max="1" step="0.1" value="1">
-                    <span class="cct-intensity-value">100%</span>
+                    <input type="range" class="uenf-intensity-slider" min="0.1" max="1" step="0.1" value="1">
+                    <span class="uenf-intensity-value">100%</span>
                 </div>
                 
-                <div class="cct-setting-row">
+                <div class="uenf-setting-row">
                     <label><?php _e('Opacidade:', 'cct'); ?></label>
-                    <input type="range" class="cct-opacity-slider" min="0.1" max="1" step="0.1" value="1">
-                    <span class="cct-opacity-value">100%</span>
+                    <input type="range" class="uenf-opacity-slider" min="0.1" max="1" step="0.1" value="1">
+                    <span class="uenf-opacity-value">100%</span>
                 </div>
                 
-                <div class="cct-setting-row">
-                    <label class="cct-checkbox-label">
-                        <input type="checkbox" class="cct-enable-hover" checked>
+                <div class="uenf-setting-row">
+                    <label class="uenf-checkbox-label">
+                        <input type="checkbox" class="uenf-enable-hover" checked>
                         <?php _e('Ativar efeitos de hover', 'cct'); ?>
                     </label>
                 </div>
                 
-                <div class="cct-setting-row">
-                    <label class="cct-checkbox-label">
-                        <input type="checkbox" class="cct-enable-animation" checked>
+                <div class="uenf-setting-row">
+                    <label class="uenf-checkbox-label">
+                        <input type="checkbox" class="uenf-enable-animation" checked>
                         <?php _e('Ativar animações suaves', 'cct'); ?>
                     </label>
                 </div>
             </div>
             
             <!-- Ações de aplicação -->
-            <div class="cct-application-actions">
-                <button type="button" class="button button-primary cct-apply-gradient">
+            <div class="uenf-application-actions">
+                <button type="button" class="button button-primary uenf-apply-gradient">
                     <?php _e('✨ Aplicar Gradiente', 'cct'); ?>
                 </button>
-                <button type="button" class="button cct-preview-live">
+                <button type="button" class="button uenf-preview-live">
                     <?php _e('👁️ Preview ao Vivo', 'cct'); ?>
                 </button>
-                <button type="button" class="button cct-reset-application">
+                <button type="button" class="button uenf-reset-application">
                     <?php _e('🔄 Reset', 'cct'); ?>
                 </button>
             </div>
         </div>
         
         <style>
-        .cct-gradient-applicator {
+        .uenf-gradient-applicator {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-element-selector {
+        .uenf-element-selector {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-element-selector h4 {
+        .uenf-element-selector h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-element-options {
+        .uenf-element-options {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
         
-        .cct-element-option {
+        .uenf-element-option {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1091,58 +1091,58 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-element-option:hover {
+        .uenf-element-option:hover {
             border-color: #0073aa;
             background: #f0f8ff;
         }
         
-        .cct-element-option input[type="checkbox"] {
+        .uenf-element-option input[type="checkbox"] {
             margin: 0;
         }
         
-        .cct-option-icon {
+        .uenf-option-icon {
             font-size: 16px;
         }
         
-        .cct-option-text {
+        .uenf-option-text {
             font-size: 12px;
             color: #333;
         }
         
-        .cct-application-preview {
+        .uenf-application-preview {
             padding: 20px;
             background: white;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-application-preview h4 {
+        .uenf-application-preview h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-preview-samples {
+        .uenf-preview-samples {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
         
-        .cct-sample {
+        .uenf-sample {
             text-align: center;
         }
         
-        .cct-sample h5 {
+        .uenf-sample h5 {
             margin: 0 0 8px 0;
             font-size: 11px;
             color: #666;
         }
         
-        .cct-sample-element {
+        .uenf-sample-element {
             transition: all 0.3s ease;
         }
         
-        .cct-bg-sample {
+        .uenf-bg-sample {
             padding: 15px;
             border-radius: 6px;
             background: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%);
@@ -1150,7 +1150,7 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             font-size: 11px;
         }
         
-        .cct-btn-sample {
+        .uenf-btn-sample {
             padding: 8px 16px;
             border: none;
             border-radius: 4px;
@@ -1160,7 +1160,7 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-text-sample {
+        .uenf-text-sample {
             margin: 0;
             font-size: 14px;
             background: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%);
@@ -1169,7 +1169,7 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             background-clip: text;
         }
         
-        .cct-border-sample {
+        .uenf-border-sample {
             padding: 10px;
             border: 2px solid;
             border-image: linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%) 1;
@@ -1177,45 +1177,45 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             font-size: 11px;
         }
         
-        .cct-application-settings {
+        .uenf-application-settings {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-application-settings h4 {
+        .uenf-application-settings h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-setting-row {
+        .uenf-setting-row {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
         }
         
-        .cct-setting-row label {
+        .uenf-setting-row label {
             min-width: 80px;
             font-size: 12px;
             color: #333;
         }
         
-        .cct-setting-row input[type="range"] {
+        .uenf-setting-row input[type="range"] {
             flex: 1;
         }
         
-        .cct-intensity-value,
-        .cct-opacity-value {
+        .uenf-intensity-value,
+        .uenf-opacity-value {
             min-width: 40px;
             font-size: 11px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-checkbox-label {
+        .uenf-checkbox-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1223,7 +1223,7 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-application-actions {
+        .uenf-application-actions {
             display: flex;
             gap: 10px;
             padding: 20px;
@@ -1231,7 +1231,7 @@ class CCT_Gradient_Applicator_Control extends WP_Customize_Control {
             justify-content: center;
         }
         
-        .cct-application-actions .button {
+        .uenf-application-actions .button {
             font-size: 12px;
             padding: 10px 16px;
         }

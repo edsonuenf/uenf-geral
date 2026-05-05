@@ -8,7 +8,7 @@
  * - Sincronização com módulos
  * - Export/Import de tokens
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -26,7 +26,7 @@
             autoSync: true,
             versionControl: true,
             namingConvention: 'kebab-case',
-            cssPrefix: '--cct-'
+            cssPrefix: '--uenf-'
         },
         
         // Estado interno
@@ -241,7 +241,7 @@
          */
         injectCSSVariables: function() {
             // Remover estilo anterior se existir
-            $('#cct-design-tokens-vars').remove();
+            $('#uenf-design-tokens-vars').remove();
             
             let cssText = ':root {\n';
             
@@ -252,7 +252,7 @@
             cssText += '}';
             
             // Injetar novo estilo
-            $('<style id="cct-design-tokens-vars">' + cssText + '</style>').appendTo('head');
+            $('<style id="uenf-design-tokens-vars">' + cssText + '</style>').appendTo('head');
             
             this.debug('Variáveis CSS injetadas', {
                 totalVariables: Object.keys(this.state.cssVariables).length
@@ -287,7 +287,7 @@
             nodes.forEach((node) => {
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     // Processar elementos com atributos de token
-                    const tokenElements = $(node).find('[data-cct-token]').addBack('[data-cct-token]');
+                    const tokenElements = $(node).find('[data-uenf-token]').addBack('[data-uenf-token]');
                     
                     tokenElements.each((index, element) => {
                         this.applyTokenToElement(element);
@@ -301,8 +301,8 @@
          */
         applyTokenToElement: function(element) {
             const $element = $(element);
-            const tokenPath = $element.data('cct-token');
-            const property = $element.data('cct-property') || 'color';
+            const tokenPath = $element.data('uenf-token');
+            const property = $element.data('uenf-property') || 'color';
             
             if (tokenPath) {
                 const tokenValue = this.getToken(tokenPath);
@@ -797,7 +797,7 @@
          */
         destroy: function() {
             // Remover variáveis CSS injetadas
-            $('#cct-design-tokens-vars').remove();
+            $('#uenf-design-tokens-vars').remove();
             
             // Limpar callbacks
             this.callbacks = {
@@ -884,7 +884,7 @@ window.CCTTokenUtils = {
     /**
      * Converte token path para CSS variable
      */
-    pathToCSSVar: function(path, prefix = '--cct-') {
+    pathToCSSVar: function(path, prefix = '--uenf-') {
         return prefix + path.replace(/\./g, '-');
     },
     

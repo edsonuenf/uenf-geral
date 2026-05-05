@@ -31,12 +31,26 @@
                     endif ?>
 
                     <h4><?php echo esc_html(get_bloginfo('name')); ?></h4>
+                    <?php
+                    $uenf_contact_emails = uenf_get_contact_emails();
+                    $uenf_contact_phones = uenf_get_contact_phones();
+                    if ( $uenf_contact_emails || $uenf_contact_phones ) : ?>
                     <div class="contact-info-container">
+                        <?php if ( $uenf_contact_emails ) : ?>
                         <div class="contact-item"><strong>Email:</strong>
-                            <?php dynamic_sidebar('endereco-email-setor'); ?></div>
-                        <div class="contact-item"><strong>Telefone:</strong> <?php dynamic_sidebar('telefone-setor'); ?>
+                            <?php echo implode( ' | ', array_map(
+                                fn( $e ) => '<a href="mailto:' . esc_attr( $e ) . '">' . esc_html( $e ) . '</a>',
+                                $uenf_contact_emails
+                            ) ); ?>
                         </div>
+                        <?php endif; ?>
+                        <?php if ( $uenf_contact_phones ) : ?>
+                        <div class="contact-item"><strong>Telefone:</strong>
+                            <?php echo esc_html( implode( ' | ', $uenf_contact_phones ) ); ?>
+                        </div>
+                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php if (get_theme_mod('disable_footer_sidebar', false)): ?>

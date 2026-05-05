@@ -124,6 +124,9 @@
   line-height: 1;
   margin-bottom: 4px;
 }
+.ua-color-primary { color: var(--ua-primary); }
+.ua-color-success { color: #16a34a; }
+.ua-color-muted   { color: var(--ua-foreground-muted); }
 .ua-stat-label {
   font-size: 0.8125rem;
   color: var(--ua-foreground-muted);

@@ -14,7 +14,7 @@
                 console.log("Aplicando preview:", newval);
                 
                 // Remove estilos anteriores
-                $("#cct-preview-typography").remove();
+                $("#uenf-preview-typography").remove();
                 
                 var css = "";
                 var fontLink = "";
@@ -54,19 +54,19 @@
                 if (fontLink) {
                     $("head").append(fontLink);
                 }
-                $("head").append("<style id='cct-preview-typography'>" + css + "</style>");
+                $("head").append("<style id='uenf-preview-typography'>" + css + "</style>");
                 
                 // Força re-render
-                $("body").addClass("cct-typography-updated").removeClass("cct-typography-updated");
+                $("body").addClass("uenf-typography-updated").removeClass("uenf-typography-updated");
             }
             
             // Bind para mudanças na configuração
-            wp.customize("cct_font_pairing_preset", function(value) {
+            wp.customize("uenf_font_pairing_preset", function(value) {
                 value.bind(applyTypographyPreview);
             });
             
             // Aplica configuração inicial
-            var initialValue = wp.customize("cct_font_pairing_preset").get();
+            var initialValue = wp.customize("uenf_font_pairing_preset").get();
             if (initialValue) {
                 applyTypographyPreview(initialValue);
             }

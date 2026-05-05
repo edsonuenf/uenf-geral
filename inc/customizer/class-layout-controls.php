@@ -9,7 +9,7 @@
  * - Construtor visual de layout
  * - Escala de espaçamentos
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Preview do Grid System
  */
-class CCT_Grid_Preview_Control extends WP_Customize_Control {
+class UENF_Grid_Preview_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_grid_preview';
+    public $type = 'uenf_grid_preview';
     
     /**
      * Renderiza o controle
@@ -46,37 +46,37 @@ class CCT_Grid_Preview_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-grid-preview">
-            <div class="cct-grid-container" id="cct-grid-container">
-                <div class="cct-grid-row" id="cct-grid-row">
+        <div class="uenf-grid-preview">
+            <div class="uenf-grid-container" id="uenf-grid-container">
+                <div class="uenf-grid-row" id="uenf-grid-row">
                     <!-- Colunas serão geradas via JavaScript -->
                 </div>
             </div>
             
-            <div class="cct-grid-info">
-                <div class="cct-grid-stats">
-                    <div class="cct-stat">
-                        <span class="cct-stat-label"><?php _e('Colunas:', 'cct'); ?></span>
-                        <span class="cct-stat-value" id="cct-columns-count">12</span>
+            <div class="uenf-grid-info">
+                <div class="uenf-grid-stats">
+                    <div class="uenf-stat">
+                        <span class="uenf-stat-label"><?php _e('Colunas:', 'cct'); ?></span>
+                        <span class="uenf-stat-value" id="uenf-columns-count">12</span>
                     </div>
-                    <div class="cct-stat">
-                        <span class="cct-stat-label"><?php _e('Gutter:', 'cct'); ?></span>
-                        <span class="cct-stat-value" id="cct-gutter-size">30px</span>
+                    <div class="uenf-stat">
+                        <span class="uenf-stat-label"><?php _e('Gutter:', 'cct'); ?></span>
+                        <span class="uenf-stat-value" id="uenf-gutter-size">30px</span>
                     </div>
-                    <div class="cct-stat">
-                        <span class="cct-stat-label"><?php _e('Largura:', 'cct'); ?></span>
-                        <span class="cct-stat-value" id="cct-max-width">1200px</span>
+                    <div class="uenf-stat">
+                        <span class="uenf-stat-label"><?php _e('Largura:', 'cct'); ?></span>
+                        <span class="uenf-stat-value" id="uenf-max-width">1200px</span>
                     </div>
                 </div>
                 
-                <div class="cct-grid-actions">
-                    <button type="button" class="button cct-preview-responsive" data-device="desktop">
+                <div class="uenf-grid-actions">
+                    <button type="button" class="button uenf-preview-responsive" data-device="desktop">
                         <?php _e('Desktop', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-preview-responsive" data-device="tablet">
+                    <button type="button" class="button uenf-preview-responsive" data-device="tablet">
                         <?php _e('Tablet', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-preview-responsive" data-device="mobile">
+                    <button type="button" class="button uenf-preview-responsive" data-device="mobile">
                         <?php _e('Mobile', 'cct'); ?>
                     </button>
                 </div>
@@ -84,20 +84,20 @@ class CCT_Grid_Preview_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-grid-preview {
+        .uenf-grid-preview {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
             overflow: hidden;
         }
         
-        .cct-grid-container {
+        .uenf-grid-container {
             padding: 20px;
             background: #f9f9f9;
             overflow-x: auto;
         }
         
-        .cct-grid-row {
+        .uenf-grid-row {
             display: flex;
             flex-wrap: wrap;
             min-height: 60px;
@@ -106,7 +106,7 @@ class CCT_Grid_Preview_Control extends WP_Customize_Control {
             border-radius: 4px;
         }
         
-        .cct-grid-column {
+        .uenf-grid-column {
             background: #e3f2fd;
             border: 1px solid #2196f3;
             border-radius: 2px;
@@ -121,71 +121,71 @@ class CCT_Grid_Preview_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-grid-column:hover {
+        .uenf-grid-column:hover {
             background: #bbdefb;
             transform: scale(1.02);
         }
         
-        .cct-grid-info {
+        .uenf-grid-info {
             padding: 15px;
             background: #fff;
             border-top: 1px solid #ddd;
         }
         
-        .cct-grid-stats {
+        .uenf-grid-stats {
             display: flex;
             gap: 20px;
             margin-bottom: 15px;
         }
         
-        .cct-stat {
+        .uenf-stat {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
         
-        .cct-stat-label {
+        .uenf-stat-label {
             font-size: 11px;
             color: #666;
             margin-bottom: 2px;
         }
         
-        .cct-stat-value {
+        .uenf-stat-value {
             font-size: 14px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-grid-actions {
+        .uenf-grid-actions {
             display: flex;
             gap: 8px;
             justify-content: center;
         }
         
-        .cct-preview-responsive {
+        .uenf-preview-responsive {
             font-size: 11px;
             padding: 4px 12px;
         }
         
-        .cct-preview-responsive.active {
+        .uenf-preview-responsive.active {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
         /* Responsive preview modes */
-        .cct-grid-preview.mobile .cct-grid-container {
+        .uenf-grid-preview.mobile .uenf-grid-container {
             max-width: 375px;
             margin: 0 auto;
         }
         
-        .cct-grid-preview.tablet .cct-grid-container {
+        .uenf-grid-preview.tablet .uenf-grid-container {
             max-width: 768px;
             margin: 0 auto;
         }
         
-        .cct-grid-preview.desktop .cct-grid-container {
+        .uenf-grid-preview.desktop .uenf-grid-container {
             max-width: 100%;
         }
         </style>
@@ -196,14 +196,14 @@ class CCT_Grid_Preview_Control extends WP_Customize_Control {
 /**
  * Controle Gerenciador de Containers
  */
-class CCT_Container_Manager_Control extends WP_Customize_Control {
+class UENF_Container_Manager_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_container_manager';
+    public $type = 'uenf_container_manager';
     
     /**
      * Presets de containers
@@ -227,44 +227,44 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-container-manager">
-            <div class="cct-container-presets">
+        <div class="uenf-container-manager">
+            <div class="uenf-container-presets">
                 <h4><?php _e('Presets de Containers', 'cct'); ?></h4>
                 
-                <div class="cct-preset-grid">
+                <div class="uenf-preset-grid">
                     <?php foreach ($this->container_presets as $preset_id => $preset): ?>
-                        <div class="cct-preset-item" data-preset="<?php echo esc_attr($preset_id); ?>">
-                            <div class="cct-preset-preview">
-                                <div class="cct-preset-container" 
+                        <div class="uenf-preset-item" data-preset="<?php echo esc_attr($preset_id); ?>">
+                            <div class="uenf-preset-preview">
+                                <div class="uenf-preset-container" 
                                      style="max-width: <?php echo esc_attr($preset['max_width']); ?>; 
                                             padding: <?php echo esc_attr($preset['padding']); ?>; 
                                             margin: <?php echo esc_attr($preset['margin']); ?>;">
-                                    <div class="cct-preset-content"></div>
+                                    <div class="uenf-preset-content"></div>
                                 </div>
                             </div>
                             
-                            <div class="cct-preset-info">
+                            <div class="uenf-preset-info">
                                 <h5><?php echo esc_html($preset['name']); ?></h5>
                                 <p><?php echo esc_html($preset['description']); ?></p>
                                 
-                                <div class="cct-preset-specs">
-                                    <span class="cct-spec">
+                                <div class="uenf-preset-specs">
+                                    <span class="uenf-spec">
                                         <strong><?php _e('Largura:', 'cct'); ?></strong> 
                                         <?php echo esc_html($preset['max_width']); ?>
                                     </span>
-                                    <span class="cct-spec">
+                                    <span class="uenf-spec">
                                         <strong><?php _e('Padding:', 'cct'); ?></strong> 
                                         <?php echo esc_html($preset['padding']); ?>
                                     </span>
                                     <?php if ($preset['responsive']): ?>
-                                        <span class="cct-spec cct-responsive">
+                                        <span class="uenf-spec uenf-responsive">
                                             <strong><?php _e('Responsivo', 'cct'); ?></strong>
                                         </span>
                                     <?php endif; ?>
                                 </div>
                             </div>
                             
-                            <button type="button" class="button cct-apply-preset" data-preset="<?php echo esc_attr($preset_id); ?>">
+                            <button type="button" class="button uenf-apply-preset" data-preset="<?php echo esc_attr($preset_id); ?>">
                                 <?php _e('Aplicar', 'cct'); ?>
                             </button>
                         </div>
@@ -272,15 +272,15 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
                 </div>
             </div>
             
-            <div class="cct-custom-container">
+            <div class="uenf-custom-container">
                 <h4><?php _e('Container Personalizado', 'cct'); ?></h4>
                 
-                <div class="cct-container-settings">
-                    <div class="cct-setting-group">
+                <div class="uenf-container-settings">
+                    <div class="uenf-setting-group">
                         <label><?php _e('Largura Máxima:', 'cct'); ?></label>
-                        <div class="cct-input-group">
-                            <input type="number" class="cct-max-width" value="1200" min="320" max="1920" step="20">
-                            <select class="cct-width-unit">
+                        <div class="uenf-input-group">
+                            <input type="number" class="uenf-max-width" value="1200" min="320" max="1920" step="20">
+                            <select class="uenf-width-unit">
                                 <option value="px">px</option>
                                 <option value="%">%</option>
                                 <option value="vw">vw</option>
@@ -289,54 +289,54 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
                         </div>
                     </div>
                     
-                    <div class="cct-setting-group">
+                    <div class="uenf-setting-group">
                         <label><?php _e('Padding:', 'cct'); ?></label>
-                        <div class="cct-padding-controls">
-                            <input type="number" class="cct-padding-top" placeholder="Top" min="0" max="100">
-                            <input type="number" class="cct-padding-right" placeholder="Right" min="0" max="100">
-                            <input type="number" class="cct-padding-bottom" placeholder="Bottom" min="0" max="100">
-                            <input type="number" class="cct-padding-left" placeholder="Left" min="0" max="100">
+                        <div class="uenf-padding-controls">
+                            <input type="number" class="uenf-padding-top" placeholder="Top" min="0" max="100">
+                            <input type="number" class="uenf-padding-right" placeholder="Right" min="0" max="100">
+                            <input type="number" class="uenf-padding-bottom" placeholder="Bottom" min="0" max="100">
+                            <input type="number" class="uenf-padding-left" placeholder="Left" min="0" max="100">
                         </div>
                     </div>
                     
-                    <div class="cct-setting-group">
+                    <div class="uenf-setting-group">
                         <label><?php _e('Alinhamento:', 'cct'); ?></label>
-                        <select class="cct-alignment">
+                        <select class="uenf-alignment">
                             <option value="left"><?php _e('Esquerda', 'cct'); ?></option>
                             <option value="center" selected><?php _e('Centro', 'cct'); ?></option>
                             <option value="right"><?php _e('Direita', 'cct'); ?></option>
                         </select>
                     </div>
                     
-                    <div class="cct-setting-group">
-                        <label class="cct-checkbox-label">
-                            <input type="checkbox" class="cct-responsive-container">
+                    <div class="uenf-setting-group">
+                        <label class="uenf-checkbox-label">
+                            <input type="checkbox" class="uenf-responsive-container">
                             <?php _e('Container Responsivo', 'cct'); ?>
                         </label>
                     </div>
                 </div>
                 
-                <div class="cct-container-preview">
+                <div class="uenf-container-preview">
                     <h5><?php _e('Preview:', 'cct'); ?></h5>
-                    <div class="cct-custom-preview">
-                        <div class="cct-custom-container">
-                            <div class="cct-custom-content"><?php _e('Conteúdo do Container', 'cct'); ?></div>
+                    <div class="uenf-custom-preview">
+                        <div class="uenf-custom-container">
+                            <div class="uenf-custom-content"><?php _e('Conteúdo do Container', 'cct'); ?></div>
                         </div>
                     </div>
                 </div>
                 
-                <button type="button" class="button button-primary cct-save-custom-container">
+                <button type="button" class="button button-primary uenf-save-custom-container">
                     <?php _e('Salvar Container Personalizado', 'cct'); ?>
                 </button>
             </div>
         </div>
         
         <style>
-        .cct-container-manager {
+        .uenf-container-manager {
             margin-top: 10px;
         }
         
-        .cct-container-manager h4 {
+        .uenf-container-manager h4 {
             margin: 0 0 15px 0;
             font-size: 14px;
             font-weight: 600;
@@ -345,14 +345,14 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             padding-bottom: 8px;
         }
         
-        .cct-preset-grid {
+        .uenf-preset-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
             margin-bottom: 25px;
         }
         
-        .cct-preset-item {
+        .uenf-preset-item {
             border: 2px solid #ddd;
             border-radius: 8px;
             padding: 15px;
@@ -360,17 +360,17 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-preset-item:hover {
+        .uenf-preset-item:hover {
             border-color: #0073aa;
             box-shadow: 0 2px 8px rgba(0,115,170,0.1);
         }
         
-        .cct-preset-item.selected {
+        .uenf-preset-item.selected {
             border-color: #0073aa;
             background-color: #f0f8ff;
         }
         
-        .cct-preset-preview {
+        .uenf-preset-preview {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -379,7 +379,7 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-preset-container {
+        .uenf-preset-container {
             background: #e3f2fd;
             border: 1px dashed #2196f3;
             border-radius: 2px;
@@ -387,60 +387,60 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             position: relative;
         }
         
-        .cct-preset-content {
+        .uenf-preset-content {
             background: #bbdefb;
             height: 20px;
             border-radius: 1px;
         }
         
-        .cct-preset-info h5 {
+        .uenf-preset-info h5 {
             margin: 0 0 5px 0;
             font-size: 13px;
             font-weight: 600;
         }
         
-        .cct-preset-info p {
+        .uenf-preset-info p {
             margin: 0 0 8px 0;
             font-size: 11px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-preset-specs {
+        .uenf-preset-specs {
             display: flex;
             flex-direction: column;
             gap: 2px;
             margin-bottom: 10px;
         }
         
-        .cct-spec {
+        .uenf-spec {
             font-size: 10px;
             color: #666;
         }
         
-        .cct-spec.cct-responsive {
+        .uenf-spec.uenf-responsive {
             color: #27ae60;
         }
         
-        .cct-apply-preset {
+        .uenf-apply-preset {
             width: 100%;
             font-size: 11px;
         }
         
-        .cct-custom-container {
+        .uenf-custom-container {
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
         
-        .cct-container-settings {
+        .uenf-container-settings {
             margin-bottom: 20px;
         }
         
-        .cct-setting-group {
+        .uenf-setting-group {
             margin-bottom: 15px;
         }
         
-        .cct-setting-group label {
+        .uenf-setting-group label {
             display: block;
             font-size: 12px;
             font-weight: 500;
@@ -448,12 +448,12 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-input-group {
+        .uenf-input-group {
             display: flex;
             gap: 5px;
         }
         
-        .cct-input-group input {
+        .uenf-input-group input {
             flex: 1;
             padding: 4px 8px;
             border: 1px solid #ddd;
@@ -461,7 +461,7 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-input-group select {
+        .uenf-input-group select {
             width: 60px;
             padding: 4px;
             border: 1px solid #ddd;
@@ -469,20 +469,20 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-padding-controls {
+        .uenf-padding-controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 5px;
         }
         
-        .cct-padding-controls input {
+        .uenf-padding-controls input {
             padding: 4px 8px;
             border: 1px solid #ddd;
             border-radius: 3px;
             font-size: 11px;
         }
         
-        .cct-alignment {
+        .uenf-alignment {
             width: 100%;
             padding: 4px 8px;
             border: 1px solid #ddd;
@@ -490,24 +490,24 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-checkbox-label {
+        .uenf-checkbox-label {
             display: flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
         }
         
-        .cct-container-preview {
+        .uenf-container-preview {
             margin-bottom: 15px;
         }
         
-        .cct-container-preview h5 {
+        .uenf-container-preview h5 {
             margin: 0 0 8px 0;
             font-size: 12px;
             font-weight: 600;
         }
         
-        .cct-custom-preview {
+        .uenf-custom-preview {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -515,7 +515,7 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             overflow: hidden;
         }
         
-        .cct-custom-container {
+        .uenf-custom-container {
             background: #e3f2fd;
             border: 1px dashed #2196f3;
             border-radius: 2px;
@@ -523,7 +523,7 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             text-align: center;
         }
         
-        .cct-custom-content {
+        .uenf-custom-content {
             background: #bbdefb;
             padding: 10px;
             border-radius: 2px;
@@ -531,7 +531,7 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
             color: #1976d2;
         }
         
-        .cct-save-custom-container {
+        .uenf-save-custom-container {
             width: 100%;
         }
         </style>
@@ -544,14 +544,14 @@ class CCT_Container_Manager_Control extends WP_Customize_Control {
 /**
  * Controle Escala de Espaçamentos
  */
-class CCT_Spacing_Scale_Control extends WP_Customize_Control {
+class UENF_Spacing_Scale_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_spacing_scale';
+    public $type = 'uenf_spacing_scale';
     
     /**
      * Renderiza o controle
@@ -568,100 +568,100 @@ class CCT_Spacing_Scale_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-spacing-scale">
-            <div class="cct-scale-presets">
+        <div class="uenf-spacing-scale">
+            <div class="uenf-scale-presets">
                 <h4><?php _e('Escalas Predefinidas', 'cct'); ?></h4>
                 
-                <div class="cct-preset-buttons">
-                    <button type="button" class="button cct-scale-preset" data-scale="linear">
+                <div class="uenf-preset-buttons">
+                    <button type="button" class="button uenf-scale-preset" data-scale="linear">
                         <?php _e('Linear', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-scale-preset" data-scale="fibonacci">
+                    <button type="button" class="button uenf-scale-preset" data-scale="fibonacci">
                         <?php _e('Fibonacci', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-scale-preset" data-scale="golden">
+                    <button type="button" class="button uenf-scale-preset" data-scale="golden">
                         <?php _e('Proporção Áurea', 'cct'); ?>
                     </button>
-                    <button type="button" class="button cct-scale-preset" data-scale="modular">
+                    <button type="button" class="button uenf-scale-preset" data-scale="modular">
                         <?php _e('Escala Modular', 'cct'); ?>
                     </button>
                 </div>
             </div>
             
-            <div class="cct-spacing-values">
+            <div class="uenf-spacing-values">
                 <h4><?php _e('Valores de Espaçamento', 'cct'); ?></h4>
                 
-                <div class="cct-spacing-inputs">
-                    <div class="cct-spacing-item">
+                <div class="uenf-spacing-inputs">
+                    <div class="uenf-spacing-item">
                         <label>XS</label>
-                        <input type="number" class="cct-spacing-input" data-size="xs" value="4" min="0" max="100" step="1">
-                        <span class="cct-spacing-unit">px</span>
+                        <input type="number" class="uenf-spacing-input" data-size="xs" value="4" min="0" max="100" step="1">
+                        <span class="uenf-spacing-unit">px</span>
                     </div>
                     
-                    <div class="cct-spacing-item">
+                    <div class="uenf-spacing-item">
                         <label>SM</label>
-                        <input type="number" class="cct-spacing-input" data-size="sm" value="8" min="0" max="100" step="1">
-                        <span class="cct-spacing-unit">px</span>
+                        <input type="number" class="uenf-spacing-input" data-size="sm" value="8" min="0" max="100" step="1">
+                        <span class="uenf-spacing-unit">px</span>
                     </div>
                     
-                    <div class="cct-spacing-item">
+                    <div class="uenf-spacing-item">
                         <label>MD</label>
-                        <input type="number" class="cct-spacing-input" data-size="md" value="16" min="0" max="100" step="1">
-                        <span class="cct-spacing-unit">px</span>
+                        <input type="number" class="uenf-spacing-input" data-size="md" value="16" min="0" max="100" step="1">
+                        <span class="uenf-spacing-unit">px</span>
                     </div>
                     
-                    <div class="cct-spacing-item">
+                    <div class="uenf-spacing-item">
                         <label>LG</label>
-                        <input type="number" class="cct-spacing-input" data-size="lg" value="24" min="0" max="100" step="1">
-                        <span class="cct-spacing-unit">px</span>
+                        <input type="number" class="uenf-spacing-input" data-size="lg" value="24" min="0" max="100" step="1">
+                        <span class="uenf-spacing-unit">px</span>
                     </div>
                     
-                    <div class="cct-spacing-item">
+                    <div class="uenf-spacing-item">
                         <label>XL</label>
-                        <input type="number" class="cct-spacing-input" data-size="xl" value="32" min="0" max="100" step="1">
-                        <span class="cct-spacing-unit">px</span>
+                        <input type="number" class="uenf-spacing-input" data-size="xl" value="32" min="0" max="100" step="1">
+                        <span class="uenf-spacing-unit">px</span>
                     </div>
                     
-                    <div class="cct-spacing-item">
+                    <div class="uenf-spacing-item">
                         <label>XXL</label>
-                        <input type="number" class="cct-spacing-input" data-size="xxl" value="48" min="0" max="100" step="1">
-                        <span class="cct-spacing-unit">px</span>
+                        <input type="number" class="uenf-spacing-input" data-size="xxl" value="48" min="0" max="100" step="1">
+                        <span class="uenf-spacing-unit">px</span>
                     </div>
                 </div>
             </div>
             
-            <div class="cct-spacing-preview">
+            <div class="uenf-spacing-preview">
                 <h4><?php _e('Preview dos Espaçamentos', 'cct'); ?></h4>
                 
-                <div class="cct-preview-container">
-                    <div class="cct-spacing-demo" data-size="xs">
-                        <div class="cct-demo-box">XS</div>
+                <div class="uenf-preview-container">
+                    <div class="uenf-spacing-demo" data-size="xs">
+                        <div class="uenf-demo-box">XS</div>
                     </div>
-                    <div class="cct-spacing-demo" data-size="sm">
-                        <div class="cct-demo-box">SM</div>
+                    <div class="uenf-spacing-demo" data-size="sm">
+                        <div class="uenf-demo-box">SM</div>
                     </div>
-                    <div class="cct-spacing-demo" data-size="md">
-                        <div class="cct-demo-box">MD</div>
+                    <div class="uenf-spacing-demo" data-size="md">
+                        <div class="uenf-demo-box">MD</div>
                     </div>
-                    <div class="cct-spacing-demo" data-size="lg">
-                        <div class="cct-demo-box">LG</div>
+                    <div class="uenf-spacing-demo" data-size="lg">
+                        <div class="uenf-demo-box">LG</div>
                     </div>
-                    <div class="cct-spacing-demo" data-size="xl">
-                        <div class="cct-demo-box">XL</div>
+                    <div class="uenf-spacing-demo" data-size="xl">
+                        <div class="uenf-demo-box">XL</div>
                     </div>
-                    <div class="cct-spacing-demo" data-size="xxl">
-                        <div class="cct-demo-box">XXL</div>
+                    <div class="uenf-spacing-demo" data-size="xxl">
+                        <div class="uenf-demo-box">XXL</div>
                     </div>
                 </div>
             </div>
         </div>
         
         <style>
-        .cct-spacing-scale {
+        .uenf-spacing-scale {
             margin-top: 10px;
         }
         
-        .cct-spacing-scale h4 {
+        .uenf-spacing-scale h4 {
             margin: 0 0 12px 0;
             font-size: 13px;
             font-weight: 600;
@@ -670,38 +670,38 @@ class CCT_Spacing_Scale_Control extends WP_Customize_Control {
             padding-bottom: 6px;
         }
         
-        .cct-scale-presets {
+        .uenf-scale-presets {
             margin-bottom: 20px;
         }
         
-        .cct-preset-buttons {
+        .uenf-preset-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
         
-        .cct-scale-preset {
+        .uenf-scale-preset {
             font-size: 11px;
             padding: 6px 12px;
         }
         
-        .cct-scale-preset.active {
+        .uenf-scale-preset.active {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
-        .cct-spacing-values {
+        .uenf-spacing-values {
             margin-bottom: 20px;
         }
         
-        .cct-spacing-inputs {
+        .uenf-spacing-inputs {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
         
-        .cct-spacing-item {
+        .uenf-spacing-item {
             display: flex;
             align-items: center;
             gap: 5px;
@@ -711,14 +711,14 @@ class CCT_Spacing_Scale_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-spacing-item label {
+        .uenf-spacing-item label {
             font-size: 11px;
             font-weight: 600;
             color: #333;
             min-width: 25px;
         }
         
-        .cct-spacing-input {
+        .uenf-spacing-input {
             flex: 1;
             padding: 2px 6px;
             border: 1px solid #ccc;
@@ -727,30 +727,30 @@ class CCT_Spacing_Scale_Control extends WP_Customize_Control {
             text-align: center;
         }
         
-        .cct-spacing-unit {
+        .uenf-spacing-unit {
             font-size: 10px;
             color: #666;
         }
         
-        .cct-spacing-preview {
+        .uenf-spacing-preview {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 6px;
             padding: 15px;
         }
         
-        .cct-preview-container {
+        .uenf-preview-container {
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
         
-        .cct-spacing-demo {
+        .uenf-spacing-demo {
             display: flex;
             align-items: center;
         }
         
-        .cct-demo-box {
+        .uenf-demo-box {
             background: #0073aa;
             color: white;
             padding: 4px 8px;
@@ -761,27 +761,27 @@ class CCT_Spacing_Scale_Control extends WP_Customize_Control {
             text-align: center;
         }
         
-        .cct-spacing-demo[data-size="xs"] .cct-demo-box {
+        .uenf-spacing-demo[data-size="xs"] .uenf-demo-box {
             margin-right: 4px;
         }
         
-        .cct-spacing-demo[data-size="sm"] .cct-demo-box {
+        .uenf-spacing-demo[data-size="sm"] .uenf-demo-box {
             margin-right: 8px;
         }
         
-        .cct-spacing-demo[data-size="md"] .cct-demo-box {
+        .uenf-spacing-demo[data-size="md"] .uenf-demo-box {
             margin-right: 16px;
         }
         
-        .cct-spacing-demo[data-size="lg"] .cct-demo-box {
+        .uenf-spacing-demo[data-size="lg"] .uenf-demo-box {
             margin-right: 24px;
         }
         
-        .cct-spacing-demo[data-size="xl"] .cct-demo-box {
+        .uenf-spacing-demo[data-size="xl"] .uenf-demo-box {
             margin-right: 32px;
         }
         
-        .cct-spacing-demo[data-size="xxl"] .cct-demo-box {
+        .uenf-spacing-demo[data-size="xxl"] .uenf-demo-box {
             margin-right: 48px;
         }
         </style>
@@ -792,14 +792,14 @@ class CCT_Spacing_Scale_Control extends WP_Customize_Control {
 /**
  * Controle Layout Builder
  */
-class CCT_Layout_Builder_Control extends WP_Customize_Control {
+class UENF_Layout_Builder_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_layout_builder';
+    public $type = 'uenf_layout_builder';
     
     /**
      * Seções de layout
@@ -823,49 +823,49 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-layout-builder">
-            <div class="cct-builder-toolbar">
-                <div class="cct-toolbar-group">
-                    <button type="button" class="button cct-add-section">
+        <div class="uenf-layout-builder">
+            <div class="uenf-builder-toolbar">
+                <div class="uenf-toolbar-group">
+                    <button type="button" class="button uenf-add-section">
                         <span class="dashicons dashicons-plus"></span>
                         <?php _e('Adicionar Seção', 'cct'); ?>
                     </button>
                     
-                    <button type="button" class="button cct-save-layout">
+                    <button type="button" class="button uenf-save-layout">
                         <span class="dashicons dashicons-saved"></span>
                         <?php _e('Salvar Layout', 'cct'); ?>
                     </button>
                 </div>
                 
-                <div class="cct-toolbar-group">
-                    <select class="cct-layout-selector">
+                <div class="uenf-toolbar-group">
+                    <select class="uenf-layout-selector">
                         <option value="default"><?php _e('Layout Padrão', 'cct'); ?></option>
                     </select>
                     
-                    <button type="button" class="button cct-preview-layout">
+                    <button type="button" class="button uenf-preview-layout">
                         <span class="dashicons dashicons-visibility"></span>
                         <?php _e('Preview', 'cct'); ?>
                     </button>
                 </div>
             </div>
             
-            <div class="cct-builder-canvas">
-                <div class="cct-canvas-container">
-                    <div class="cct-layout-sections" id="cct-layout-sections">
+            <div class="uenf-builder-canvas">
+                <div class="uenf-canvas-container">
+                    <div class="uenf-layout-sections" id="uenf-layout-sections">
                         <!-- Seções serão adicionadas via JavaScript -->
                     </div>
                 </div>
                 
-                <div class="cct-canvas-sidebar">
+                <div class="uenf-canvas-sidebar">
                     <h4><?php _e('Componentes', 'cct'); ?></h4>
                     
-                    <div class="cct-component-list">
+                    <div class="uenf-component-list">
                         <?php foreach ($this->layout_sections as $section_key => $section): ?>
-                            <div class="cct-component-item" data-component="<?php echo esc_attr($section_key); ?>">
-                                <div class="cct-component-icon">
+                            <div class="uenf-component-item" data-component="<?php echo esc_attr($section_key); ?>">
+                                <div class="uenf-component-icon">
                                     <span class="dashicons dashicons-admin-page"></span>
                                 </div>
-                                <div class="cct-component-info">
+                                <div class="uenf-component-info">
                                     <h5><?php echo esc_html($section['name']); ?></h5>
                                     <p><?php echo esc_html($section['description']); ?></p>
                                 </div>
@@ -877,14 +877,14 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-layout-builder {
+        .uenf-layout-builder {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
             overflow: hidden;
         }
         
-        .cct-builder-toolbar {
+        .uenf-builder-toolbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -893,13 +893,13 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-toolbar-group {
+        .uenf-toolbar-group {
             display: flex;
             gap: 8px;
             align-items: center;
         }
         
-        .cct-toolbar-group .button {
+        .uenf-toolbar-group .button {
             font-size: 11px;
             padding: 4px 8px;
             display: flex;
@@ -907,25 +907,25 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             gap: 4px;
         }
         
-        .cct-layout-selector {
+        .uenf-layout-selector {
             padding: 4px 8px;
             border: 1px solid #ddd;
             border-radius: 3px;
             font-size: 11px;
         }
         
-        .cct-builder-canvas {
+        .uenf-builder-canvas {
             display: flex;
             min-height: 400px;
         }
         
-        .cct-canvas-container {
+        .uenf-canvas-container {
             flex: 1;
             padding: 20px;
             background: #fff;
         }
         
-        .cct-layout-sections {
+        .uenf-layout-sections {
             min-height: 300px;
             border: 2px dashed #ddd;
             border-radius: 4px;
@@ -933,7 +933,7 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             position: relative;
         }
         
-        .cct-layout-sections.empty::before {
+        .uenf-layout-sections.empty::before {
             content: "Arraste componentes aqui para construir seu layout";
             position: absolute;
             top: 50%;
@@ -944,27 +944,27 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             text-align: center;
         }
         
-        .cct-canvas-sidebar {
+        .uenf-canvas-sidebar {
             width: 200px;
             background: #f9f9f9;
             border-left: 1px solid #ddd;
             padding: 15px;
         }
         
-        .cct-canvas-sidebar h4 {
+        .uenf-canvas-sidebar h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-component-list {
+        .uenf-component-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
         
-        .cct-component-item {
+        .uenf-component-item {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -976,39 +976,39 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-component-item:hover {
+        .uenf-component-item:hover {
             border-color: #0073aa;
             box-shadow: 0 2px 4px rgba(0,115,170,0.1);
         }
         
-        .cct-component-item:active {
+        .uenf-component-item:active {
             cursor: grabbing;
         }
         
-        .cct-component-icon {
+        .uenf-component-icon {
             color: #0073aa;
         }
         
-        .cct-component-icon .dashicons {
+        .uenf-component-icon .dashicons {
             font-size: 16px;
             width: 16px;
             height: 16px;
         }
         
-        .cct-component-info h5 {
+        .uenf-component-info h5 {
             margin: 0 0 2px 0;
             font-size: 11px;
             font-weight: 600;
         }
         
-        .cct-component-info p {
+        .uenf-component-info p {
             margin: 0;
             font-size: 9px;
             color: #666;
             line-height: 1.3;
         }
         
-        .cct-layout-section {
+        .uenf-layout-section {
             border: 1px solid #ddd;
             border-radius: 4px;
             margin-bottom: 10px;
@@ -1016,7 +1016,7 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             position: relative;
         }
         
-        .cct-section-header {
+        .uenf-section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1025,17 +1025,17 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-section-title {
+        .uenf-section-title {
             font-size: 12px;
             font-weight: 600;
         }
         
-        .cct-section-actions {
+        .uenf-section-actions {
             display: flex;
             gap: 4px;
         }
         
-        .cct-section-action {
+        .uenf-section-action {
             padding: 2px 6px;
             border: 1px solid #ddd;
             background: #fff;
@@ -1044,7 +1044,7 @@ class CCT_Layout_Builder_Control extends WP_Customize_Control {
             font-size: 10px;
         }
         
-        .cct-section-content {
+        .uenf-section-content {
             padding: 15px;
             min-height: 60px;
             display: flex;

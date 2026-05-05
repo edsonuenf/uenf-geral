@@ -21,7 +21,7 @@ get_header();
     </section>
 
     <div class="container py-1">
-        <?php cct_custom_breadcrumb(); ?>
+        <?php uenf_custom_breadcrumb(); ?>
     </div>
 
     <section class="line-breadcrumb"></section>
@@ -61,7 +61,7 @@ get_header();
                             <?php
                             wp_link_pages(
                                 array(
-                                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'cct-theme'),
+                                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'uenf-theme'),
                                     'after' => '</div>',
                                 )
                             );
@@ -88,8 +88,8 @@ get_header();
                         <?php
                         the_post_navigation(
                             array(
-                                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Anterior:', 'cct-theme') . '</span> <span class="nav-title">%title</span>',
-                                'next_text' => '<span class="nav-subtitle">' . esc_html__('Próximo:', 'cct-theme') . '</span> <span class="nav-title">%title</span>',
+                                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Anterior:', 'uenf-theme') . '</span> <span class="nav-title">%title</span>',
+                                'next_text' => '<span class="nav-subtitle">' . esc_html__('Próximo:', 'uenf-theme') . '</span> <span class="nav-title">%title</span>',
                             )
                         );
                         ?>

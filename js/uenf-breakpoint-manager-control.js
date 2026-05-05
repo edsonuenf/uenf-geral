@@ -29,7 +29,7 @@
          */
         setupBreakpointManager: function() {
             // Criar interface do gerenciador se não existir
-            if (!$('.cct-breakpoint-manager-control').length) {
+            if (!$('.uenf-breakpoint-manager-control').length) {
                 this.createManagerInterface();
             }
         },
@@ -39,38 +39,38 @@
          */
         createManagerInterface: function() {
             var managerHTML = `
-                <div class="cct-breakpoint-manager-control">
-                    <div class="cct-breakpoint-header">
+                <div class="uenf-breakpoint-manager-control">
+                    <div class="uenf-breakpoint-header">
                         <h3>Gerenciador de Breakpoints</h3>
-                        <button class="button button-secondary cct-add-breakpoint">Adicionar Breakpoint</button>
+                        <button class="button button-secondary uenf-add-breakpoint">Adicionar Breakpoint</button>
                     </div>
                     
-                    <div class="cct-breakpoint-list">
+                    <div class="uenf-breakpoint-list">
                         <!-- Breakpoints serão adicionados aqui -->
                     </div>
                     
-                    <div class="cct-breakpoint-presets">
+                    <div class="uenf-breakpoint-presets">
                         <h4>Presets Populares</h4>
-                        <div class="cct-preset-buttons">
-                            <button class="button cct-preset" data-preset="bootstrap">Bootstrap</button>
-                            <button class="button cct-preset" data-preset="tailwind">Tailwind</button>
-                            <button class="button cct-preset" data-preset="material">Material Design</button>
+                        <div class="uenf-preset-buttons">
+                            <button class="button uenf-preset" data-preset="bootstrap">Bootstrap</button>
+                            <button class="button uenf-preset" data-preset="tailwind">Tailwind</button>
+                            <button class="button uenf-preset" data-preset="material">Material Design</button>
                         </div>
                     </div>
                     
-                    <div class="cct-breakpoint-preview">
+                    <div class="uenf-breakpoint-preview">
                         <h4>Preview</h4>
-                        <div class="cct-preview-container">
-                            <div class="cct-preview-device mobile">Mobile</div>
-                            <div class="cct-preview-device tablet">Tablet</div>
-                            <div class="cct-preview-device desktop">Desktop</div>
+                        <div class="uenf-preview-container">
+                            <div class="uenf-preview-device mobile">Mobile</div>
+                            <div class="uenf-preview-device tablet">Tablet</div>
+                            <div class="uenf-preview-device desktop">Desktop</div>
                         </div>
                     </div>
                 </div>
             `;
             
             // Adicionar à interface do customizer
-            $('.customize-control-cct_breakpoint_manager').append(managerHTML);
+            $('.customize-control-uenf_breakpoint_manager').append(managerHTML);
         },
 
         /**
@@ -91,33 +91,33 @@
          * Renderizar lista de breakpoints
          */
         renderBreakpoints: function(breakpoints) {
-            var container = $('.cct-breakpoint-list');
+            var container = $('.uenf-breakpoint-list');
             container.empty();
             
             breakpoints.forEach(function(breakpoint, index) {
                 var breakpointHTML = `
-                    <div class="cct-breakpoint-item" data-index="${index}">
-                        <div class="cct-breakpoint-info">
-                            <input type="text" class="cct-breakpoint-name" value="${breakpoint.name}" placeholder="Nome">
-                            <div class="cct-breakpoint-value-group">
-                                <input type="number" class="cct-breakpoint-value" value="${breakpoint.value}" min="0" max="9999">
-                                <select class="cct-breakpoint-unit">
+                    <div class="uenf-breakpoint-item" data-index="${index}">
+                        <div class="uenf-breakpoint-info">
+                            <input type="text" class="uenf-breakpoint-name" value="${breakpoint.name}" placeholder="Nome">
+                            <div class="uenf-breakpoint-value-group">
+                                <input type="number" class="uenf-breakpoint-value" value="${breakpoint.value}" min="0" max="9999">
+                                <select class="uenf-breakpoint-unit">
                                     <option value="px" ${breakpoint.unit === 'px' ? 'selected' : ''}>px</option>
                                     <option value="em" ${breakpoint.unit === 'em' ? 'selected' : ''}>em</option>
                                     <option value="rem" ${breakpoint.unit === 'rem' ? 'selected' : ''}>rem</option>
                                     <option value="%" ${breakpoint.unit === '%' ? 'selected' : ''}>%</option>
                                 </select>
                             </div>
-                            <select class="cct-breakpoint-type">
+                            <select class="uenf-breakpoint-type">
                                 <option value="max-width" ${breakpoint.type === 'max-width' ? 'selected' : ''}>Max Width</option>
                                 <option value="min-width" ${breakpoint.type === 'min-width' ? 'selected' : ''}>Min Width</option>
                             </select>
                         </div>
-                        <div class="cct-breakpoint-actions">
-                            <button class="button button-small cct-move-up" title="Mover para cima">↑</button>
-                            <button class="button button-small cct-move-down" title="Mover para baixo">↓</button>
-                            <button class="button button-small cct-duplicate" title="Duplicar">⧉</button>
-                            <button class="button button-small cct-delete" title="Excluir">×</button>
+                        <div class="uenf-breakpoint-actions">
+                            <button class="button button-small uenf-move-up" title="Mover para cima">↑</button>
+                            <button class="button button-small uenf-move-down" title="Mover para baixo">↓</button>
+                            <button class="button button-small uenf-duplicate" title="Duplicar">⧉</button>
+                            <button class="button button-small uenf-delete" title="Excluir">×</button>
                         </div>
                     </div>
                 `;
@@ -138,33 +138,33 @@
             };
             
             var breakpointHTML = `
-                <div class="cct-breakpoint-item" data-index="new">
-                    <div class="cct-breakpoint-info">
-                        <input type="text" class="cct-breakpoint-name" value="${newBreakpoint.name}" placeholder="Nome">
-                        <div class="cct-breakpoint-value-group">
-                            <input type="number" class="cct-breakpoint-value" value="${newBreakpoint.value}" min="0" max="9999">
-                            <select class="cct-breakpoint-unit">
+                <div class="uenf-breakpoint-item" data-index="new">
+                    <div class="uenf-breakpoint-info">
+                        <input type="text" class="uenf-breakpoint-name" value="${newBreakpoint.name}" placeholder="Nome">
+                        <div class="uenf-breakpoint-value-group">
+                            <input type="number" class="uenf-breakpoint-value" value="${newBreakpoint.value}" min="0" max="9999">
+                            <select class="uenf-breakpoint-unit">
                                 <option value="px" selected>px</option>
                                 <option value="em">em</option>
                                 <option value="rem">rem</option>
                                 <option value="%">%</option>
                             </select>
                         </div>
-                        <select class="cct-breakpoint-type">
+                        <select class="uenf-breakpoint-type">
                             <option value="max-width" selected>Max Width</option>
                             <option value="min-width">Min Width</option>
                         </select>
                     </div>
-                    <div class="cct-breakpoint-actions">
-                        <button class="button button-small cct-move-up" title="Mover para cima">↑</button>
-                        <button class="button button-small cct-move-down" title="Mover para baixo">↓</button>
-                        <button class="button button-small cct-duplicate" title="Duplicar">⧉</button>
-                        <button class="button button-small cct-delete" title="Excluir">×</button>
+                    <div class="uenf-breakpoint-actions">
+                        <button class="button button-small uenf-move-up" title="Mover para cima">↑</button>
+                        <button class="button button-small uenf-move-down" title="Mover para baixo">↓</button>
+                        <button class="button button-small uenf-duplicate" title="Duplicar">⧉</button>
+                        <button class="button button-small uenf-delete" title="Excluir">×</button>
                     </div>
                 </div>
             `;
             
-            $('.cct-breakpoint-list').append(breakpointHTML);
+            $('.uenf-breakpoint-list').append(breakpointHTML);
             this.updateIndices();
         },
 
@@ -206,10 +206,10 @@
          */
         updatePreview: function() {
             var breakpoints = this.getBreakpoints();
-            var previewContainer = $('.cct-preview-container');
+            var previewContainer = $('.uenf-preview-container');
             
             // Atualizar indicadores visuais
-            previewContainer.find('.cct-preview-device').each(function(index) {
+            previewContainer.find('.uenf-preview-device').each(function(index) {
                 var device = $(this);
                 var breakpoint = breakpoints[index];
                 
@@ -228,13 +228,13 @@
         getBreakpoints: function() {
             var breakpoints = [];
             
-            $('.cct-breakpoint-item').each(function() {
+            $('.uenf-breakpoint-item').each(function() {
                 var item = $(this);
                 var breakpoint = {
-                    name: item.find('.cct-breakpoint-name').val(),
-                    value: parseInt(item.find('.cct-breakpoint-value').val()),
-                    unit: item.find('.cct-breakpoint-unit').val(),
-                    type: item.find('.cct-breakpoint-type').val()
+                    name: item.find('.uenf-breakpoint-name').val(),
+                    value: parseInt(item.find('.uenf-breakpoint-value').val()),
+                    unit: item.find('.uenf-breakpoint-unit').val(),
+                    type: item.find('.uenf-breakpoint-type').val()
                 };
                 
                 breakpoints.push(breakpoint);
@@ -247,7 +247,7 @@
          * Atualizar índices dos breakpoints
          */
         updateIndices: function() {
-            $('.cct-breakpoint-item').each(function(index) {
+            $('.uenf-breakpoint-item').each(function(index) {
                 $(this).attr('data-index', index);
             });
         },
@@ -259,38 +259,38 @@
             var self = this;
             
             // Adicionar breakpoint
-            $(document).on('click', '.cct-add-breakpoint', function() {
+            $(document).on('click', '.uenf-add-breakpoint', function() {
                 self.addBreakpoint();
             });
             
             // Aplicar preset
-            $(document).on('click', '.cct-preset', function() {
+            $(document).on('click', '.uenf-preset', function() {
                 var preset = $(this).data('preset');
                 self.applyPreset(preset);
             });
             
             // Excluir breakpoint
-            $(document).on('click', '.cct-delete', function() {
+            $(document).on('click', '.uenf-delete', function() {
                 if (confirm('Tem certeza que deseja excluir este breakpoint?')) {
-                    $(this).closest('.cct-breakpoint-item').remove();
+                    $(this).closest('.uenf-breakpoint-item').remove();
                     self.updateIndices();
                     self.updatePreview();
                 }
             });
             
             // Duplicar breakpoint
-            $(document).on('click', '.cct-duplicate', function() {
-                var item = $(this).closest('.cct-breakpoint-item');
+            $(document).on('click', '.uenf-duplicate', function() {
+                var item = $(this).closest('.uenf-breakpoint-item');
                 var clone = item.clone();
-                clone.find('.cct-breakpoint-name').val(clone.find('.cct-breakpoint-name').val() + ' (Cópia)');
+                clone.find('.uenf-breakpoint-name').val(clone.find('.uenf-breakpoint-name').val() + ' (Cópia)');
                 item.after(clone);
                 self.updateIndices();
             });
             
             // Mover para cima
-            $(document).on('click', '.cct-move-up', function() {
-                var item = $(this).closest('.cct-breakpoint-item');
-                var prev = item.prev('.cct-breakpoint-item');
+            $(document).on('click', '.uenf-move-up', function() {
+                var item = $(this).closest('.uenf-breakpoint-item');
+                var prev = item.prev('.uenf-breakpoint-item');
                 if (prev.length) {
                     item.insertBefore(prev);
                     self.updateIndices();
@@ -298,9 +298,9 @@
             });
             
             // Mover para baixo
-            $(document).on('click', '.cct-move-down', function() {
-                var item = $(this).closest('.cct-breakpoint-item');
-                var next = item.next('.cct-breakpoint-item');
+            $(document).on('click', '.uenf-move-down', function() {
+                var item = $(this).closest('.uenf-breakpoint-item');
+                var next = item.next('.uenf-breakpoint-item');
                 if (next.length) {
                     item.insertAfter(next);
                     self.updateIndices();
@@ -308,7 +308,7 @@
             });
             
             // Atualizar preview quando valores mudarem
-            $(document).on('input change', '.cct-breakpoint-name, .cct-breakpoint-value, .cct-breakpoint-unit, .cct-breakpoint-type', function() {
+            $(document).on('input change', '.uenf-breakpoint-name, .uenf-breakpoint-value, .uenf-breakpoint-unit, .uenf-breakpoint-type', function() {
                 self.updatePreview();
             });
         }

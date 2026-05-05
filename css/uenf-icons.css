@@ -8,7 +8,7 @@
  * - Responsividade
  * - Acessibilidade
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -16,7 +16,7 @@
    Classes Base dos Ícones
    ========================================================================== */
 
-.cct-icon {
+.uenf-icon {
     display: inline-block;
     width: 1em;
     height: 1em;
@@ -26,7 +26,7 @@
     flex-shrink: 0;
 }
 
-.cct-icon svg {
+.uenf-icon svg {
     width: 100%;
     height: 100%;
     display: block;
@@ -37,43 +37,43 @@
    ========================================================================== */
 
 /* Tamanhos predefinidos */
-.cct-icon-xs {
+.uenf-icon-xs {
     width: 12px;
     height: 12px;
 }
 
-.cct-icon-sm {
+.uenf-icon-sm {
     width: 16px;
     height: 16px;
 }
 
-.cct-icon-md {
+.uenf-icon-md {
     width: 20px;
     height: 20px;
 }
 
-.cct-icon-lg {
+.uenf-icon-lg {
     width: 24px;
     height: 24px;
 }
 
-.cct-icon-xl {
+.uenf-icon-xl {
     width: 32px;
     height: 32px;
 }
 
-.cct-icon-2xl {
+.uenf-icon-2xl {
     width: 48px;
     height: 48px;
 }
 
-.cct-icon-3xl {
+.uenf-icon-3xl {
     width: 64px;
     height: 64px;
 }
 
 /* Tamanhos responsivos */
-.cct-icon-responsive {
+.uenf-icon-responsive {
     width: clamp(16px, 4vw, 32px);
     height: clamp(16px, 4vw, 32px);
 }
@@ -83,28 +83,28 @@
    ========================================================================== */
 
 /* Hover padrão */
-.cct-icon:hover {
+.uenf-icon:hover {
     transform: scale(1.1);
     opacity: 0.8;
 }
 
 /* Ícones clicáveis */
-.cct-icon-clickable {
+.uenf-icon-clickable {
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.cct-icon-clickable:hover {
+.uenf-icon-clickable:hover {
     transform: scale(1.15);
     filter: brightness(1.2);
 }
 
-.cct-icon-clickable:active {
+.uenf-icon-clickable:active {
     transform: scale(0.95);
 }
 
 /* Estados de foco para acessibilidade */
-.cct-icon:focus {
+.uenf-icon:focus {
     outline: 2px solid var(--color-primary, #0073aa);
     outline-offset: 2px;
     border-radius: 2px;
@@ -115,48 +115,48 @@
    ========================================================================== */
 
 /* Cores do tema */
-.cct-icon-primary {
+.uenf-icon-primary {
     color: var(--color-primary, #1d3771);
 }
 
-.cct-icon-secondary {
+.uenf-icon-secondary {
     color: var(--color-secondary, #2c5aa0);
 }
 
-.cct-icon-accent {
+.uenf-icon-accent {
     color: var(--color-accent, #3498db);
 }
 
-.cct-icon-success {
+.uenf-icon-success {
     color: var(--color-success, #27ae60);
 }
 
-.cct-icon-warning {
+.uenf-icon-warning {
     color: var(--color-warning, #f39c12);
 }
 
-.cct-icon-danger {
+.uenf-icon-danger {
     color: var(--color-danger, #e74c3c);
 }
 
-.cct-icon-light {
+.uenf-icon-light {
     color: var(--color-light, #ecf0f1);
 }
 
-.cct-icon-dark {
+.uenf-icon-dark {
     color: var(--color-dark, #2c3e50);
 }
 
 /* Cores neutras */
-.cct-icon-muted {
+.uenf-icon-muted {
     color: #6c757d;
 }
 
-.cct-icon-white {
+.uenf-icon-white {
     color: #ffffff;
 }
 
-.cct-icon-black {
+.uenf-icon-black {
     color: #000000;
 }
 
@@ -165,7 +165,7 @@
    ========================================================================== */
 
 /* Ícones com fundo circular */
-.cct-icon-circle {
+.uenf-icon-circle {
     background-color: currentColor;
     color: white;
     border-radius: 50%;
@@ -174,13 +174,13 @@
     height: auto;
 }
 
-.cct-icon-circle svg {
+.uenf-icon-circle svg {
     width: 1em;
     height: 1em;
 }
 
 /* Ícones com fundo quadrado */
-.cct-icon-square {
+.uenf-icon-square {
     background-color: currentColor;
     color: white;
     border-radius: 0.25em;
@@ -189,13 +189,13 @@
     height: auto;
 }
 
-.cct-icon-square svg {
+.uenf-icon-square svg {
     width: 1em;
     height: 1em;
 }
 
 /* Ícones com fundo arredondado */
-.cct-icon-rounded {
+.uenf-icon-rounded {
     background-color: currentColor;
     color: white;
     border-radius: 0.5em;
@@ -204,7 +204,7 @@
     height: auto;
 }
 
-.cct-icon-rounded svg {
+.uenf-icon-rounded svg {
     width: 1em;
     height: 1em;
 }
@@ -214,11 +214,11 @@
    ========================================================================== */
 
 /* Rotação */
-.cct-icon-spin {
-    animation: cct-icon-spin 1s linear infinite;
+.uenf-icon-spin {
+    animation: uenf-icon-spin 1s linear infinite;
 }
 
-@keyframes cct-icon-spin {
+@keyframes uenf-icon-spin {
     from {
         transform: rotate(0deg);
     }
@@ -228,11 +228,11 @@
 }
 
 /* Pulsação */
-.cct-icon-pulse {
-    animation: cct-icon-pulse 2s ease-in-out infinite;
+.uenf-icon-pulse {
+    animation: uenf-icon-pulse 2s ease-in-out infinite;
 }
 
-@keyframes cct-icon-pulse {
+@keyframes uenf-icon-pulse {
     0%, 100% {
         opacity: 1;
         transform: scale(1);
@@ -244,11 +244,11 @@
 }
 
 /* Balanço */
-.cct-icon-bounce {
-    animation: cct-icon-bounce 1s ease-in-out infinite;
+.uenf-icon-bounce {
+    animation: uenf-icon-bounce 1s ease-in-out infinite;
 }
 
-@keyframes cct-icon-bounce {
+@keyframes uenf-icon-bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
     }
@@ -261,11 +261,11 @@
 }
 
 /* Shake */
-.cct-icon-shake {
-    animation: cct-icon-shake 0.5s ease-in-out;
+.uenf-icon-shake {
+    animation: uenf-icon-shake 0.5s ease-in-out;
 }
 
-@keyframes cct-icon-shake {
+@keyframes uenf-icon-shake {
     0%, 100% {
         transform: translateX(0);
     }
@@ -282,34 +282,34 @@
    ========================================================================== */
 
 /* Ícones inline com texto */
-.cct-icon-inline {
+.uenf-icon-inline {
     margin: 0 0.25em;
     vertical-align: baseline;
 }
 
 /* Ícones à esquerda do texto */
-.cct-icon-left {
+.uenf-icon-left {
     margin-right: 0.5em;
 }
 
 /* Ícones à direita do texto */
-.cct-icon-right {
+.uenf-icon-right {
     margin-left: 0.5em;
 }
 
 /* Ícones centralizados */
-.cct-icon-center {
+.uenf-icon-center {
     display: block;
     margin: 0 auto;
 }
 
 /* Ícones flutuantes */
-.cct-icon-float-left {
+.uenf-icon-float-left {
     float: left;
     margin: 0 1em 1em 0;
 }
 
-.cct-icon-float-right {
+.uenf-icon-float-right {
     float: right;
     margin: 0 0 1em 1em;
 }
@@ -319,13 +319,13 @@
    ========================================================================== */
 
 /* Container para grupos de ícones */
-.cct-icon-group {
+.uenf-icon-group {
     display: flex;
     align-items: center;
     gap: 0.5em;
 }
 
-.cct-icon-group-vertical {
+.uenf-icon-group-vertical {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -333,32 +333,32 @@
 }
 
 /* Lista de ícones */
-.cct-icon-list {
+.uenf-icon-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.cct-icon-list li {
+.uenf-icon-list li {
     display: flex;
     align-items: center;
     margin-bottom: 0.5em;
 }
 
-.cct-icon-list .cct-icon {
+.uenf-icon-list .uenf-icon {
     margin-right: 0.75em;
     flex-shrink: 0;
 }
 
 /* Grid de ícones */
-.cct-icon-grid {
+.uenf-icon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
     gap: 1em;
     padding: 1em;
 }
 
-.cct-icon-grid .cct-icon {
+.uenf-icon-grid .uenf-icon {
     width: 100%;
     height: auto;
     aspect-ratio: 1;
@@ -369,41 +369,41 @@
    ========================================================================== */
 
 /* Botões com ícones */
-.btn .cct-icon {
+.btn .uenf-icon {
     vertical-align: middle;
 }
 
-.btn .cct-icon-left {
+.btn .uenf-icon-left {
     margin-right: 0.5em;
     margin-left: 0;
 }
 
-.btn .cct-icon-right {
+.btn .uenf-icon-right {
     margin-left: 0.5em;
     margin-right: 0;
 }
 
 /* Links com ícones */
-a .cct-icon {
+a .uenf-icon {
     transition: all 0.3s ease;
 }
 
-a:hover .cct-icon {
+a:hover .uenf-icon {
     transform: translateX(2px);
 }
 
 /* Cards com ícones */
-.card-header .cct-icon {
+.card-header .uenf-icon {
     margin-right: 0.5em;
 }
 
 /* Navegação com ícones */
-.nav-link .cct-icon {
+.nav-link .uenf-icon {
     margin-right: 0.5em;
 }
 
 /* Breadcrumbs com ícones */
-.breadcrumb-item .cct-icon {
+.breadcrumb-item .uenf-icon {
     margin-right: 0.25em;
 }
 
@@ -412,20 +412,20 @@ a:hover .cct-icon {
    ========================================================================== */
 
 /* Ícone de loading */
-.cct-icon-loading {
+.uenf-icon-loading {
     opacity: 0.6;
-    animation: cct-icon-spin 1s linear infinite;
+    animation: uenf-icon-spin 1s linear infinite;
 }
 
 /* Skeleton loading para ícones */
-.cct-icon-skeleton {
+.uenf-icon-skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
-    animation: cct-skeleton-loading 1.5s infinite;
+    animation: uenf-skeleton-loading 1.5s infinite;
     border-radius: 2px;
 }
 
-@keyframes cct-skeleton-loading {
+@keyframes uenf-skeleton-loading {
     0% {
         background-position: 200% 0;
     }
@@ -440,30 +440,30 @@ a:hover .cct-icon {
 
 /* Mobile First */
 @media (max-width: 576px) {
-    .cct-icon-responsive-sm {
+    .uenf-icon-responsive-sm {
         width: 16px;
         height: 16px;
     }
     
-    .cct-icon-group {
+    .uenf-icon-group {
         gap: 0.25em;
     }
     
-    .cct-icon-grid {
+    .uenf-icon-grid {
         grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
         gap: 0.5em;
     }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
-    .cct-icon-responsive-md {
+    .uenf-icon-responsive-md {
         width: 20px;
         height: 20px;
     }
 }
 
 @media (min-width: 769px) {
-    .cct-icon-responsive-lg {
+    .uenf-icon-responsive-lg {
         width: 24px;
         height: 24px;
     }
@@ -475,38 +475,38 @@ a:hover .cct-icon {
 
 /* Redução de movimento */
 @media (prefers-reduced-motion: reduce) {
-    .cct-icon,
-    .cct-icon-spin,
-    .cct-icon-pulse,
-    .cct-icon-bounce,
-    .cct-icon-shake {
+    .uenf-icon,
+    .uenf-icon-spin,
+    .uenf-icon-pulse,
+    .uenf-icon-bounce,
+    .uenf-icon-shake {
         animation: none;
         transition: none;
     }
     
-    .cct-icon:hover {
+    .uenf-icon:hover {
         transform: none;
     }
 }
 
 /* Alto contraste */
 @media (prefers-contrast: high) {
-    .cct-icon {
+    .uenf-icon {
         filter: contrast(1.5);
     }
     
-    .cct-icon:focus {
+    .uenf-icon:focus {
         outline-width: 3px;
     }
 }
 
 /* Modo escuro */
 @media (prefers-color-scheme: dark) {
-    .cct-icon-auto-dark {
+    .uenf-icon-auto-dark {
         filter: invert(1);
     }
     
-    .cct-icon-skeleton {
+    .uenf-icon-skeleton {
         background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
     }
 }
@@ -516,46 +516,46 @@ a:hover .cct-icon {
    ========================================================================== */
 
 /* Visibilidade */
-.cct-icon-hidden {
+.uenf-icon-hidden {
     display: none;
 }
 
-.cct-icon-invisible {
+.uenf-icon-invisible {
     visibility: hidden;
 }
 
 /* Opacidade */
-.cct-icon-opacity-25 {
+.uenf-icon-opacity-25 {
     opacity: 0.25;
 }
 
-.cct-icon-opacity-50 {
+.uenf-icon-opacity-50 {
     opacity: 0.5;
 }
 
-.cct-icon-opacity-75 {
+.uenf-icon-opacity-75 {
     opacity: 0.75;
 }
 
 /* Rotação */
-.cct-icon-rotate-90 {
+.uenf-icon-rotate-90 {
     transform: rotate(90deg);
 }
 
-.cct-icon-rotate-180 {
+.uenf-icon-rotate-180 {
     transform: rotate(180deg);
 }
 
-.cct-icon-rotate-270 {
+.uenf-icon-rotate-270 {
     transform: rotate(270deg);
 }
 
 /* Espelhamento */
-.cct-icon-flip-horizontal {
+.uenf-icon-flip-horizontal {
     transform: scaleX(-1);
 }
 
-.cct-icon-flip-vertical {
+.uenf-icon-flip-vertical {
     transform: scaleY(-1);
 }
 
@@ -564,16 +564,16 @@ a:hover .cct-icon {
    ========================================================================== */
 
 @media print {
-    .cct-icon {
+    .uenf-icon {
         color: black !important;
         background: transparent !important;
         animation: none !important;
         transition: none !important;
     }
     
-    .cct-icon-circle,
-    .cct-icon-square,
-    .cct-icon-rounded {
+    .uenf-icon-circle,
+    .uenf-icon-square,
+    .uenf-icon-rounded {
         background: transparent !important;
         border: 1px solid black;
     }
@@ -584,47 +584,47 @@ a:hover .cct-icon {
    ========================================================================== */
 
 /* Integração com cores do tema */
-.theme-dark .cct-icon {
+.theme-dark .uenf-icon {
     color: #ffffff;
 }
 
-.theme-light .cct-icon {
+.theme-light .uenf-icon {
     color: #333333;
 }
 
 /* Integração com Bootstrap */
-.text-primary .cct-icon {
+.text-primary .uenf-icon {
     color: inherit;
 }
 
-.text-secondary .cct-icon {
+.text-secondary .uenf-icon {
     color: inherit;
 }
 
-.text-success .cct-icon {
+.text-success .uenf-icon {
     color: inherit;
 }
 
-.text-danger .cct-icon {
+.text-danger .uenf-icon {
     color: inherit;
 }
 
-.text-warning .cct-icon {
+.text-warning .uenf-icon {
     color: inherit;
 }
 
-.text-info .cct-icon {
+.text-info .uenf-icon {
     color: inherit;
 }
 
-.text-light .cct-icon {
+.text-light .uenf-icon {
     color: inherit;
 }
 
-.text-dark .cct-icon {
+.text-dark .uenf-icon {
     color: inherit;
 }
 
-.text-muted .cct-icon {
+.text-muted .uenf-icon {
     color: inherit;
 }

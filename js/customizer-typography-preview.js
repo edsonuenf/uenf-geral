@@ -3,7 +3,7 @@
  * 
  * Handles real-time preview of typography changes in the WordPress Customizer
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -15,7 +15,7 @@
     wp.customize.bind('ready', function() {
         
         // Google Fonts settings
-        wp.customize('cct_heading_font_family', function(value) {
+        wp.customize('uenf_heading_font_family', function(value) {
             value.bind(function(newval) {
                 if (newval && newval !== 'inherit') {
                     loadGoogleFont(newval);
@@ -24,7 +24,7 @@
             });
         });
         
-        wp.customize('cct_body_font_family', function(value) {
+        wp.customize('uenf_body_font_family', function(value) {
             value.bind(function(newval) {
                 if (newval && newval !== 'inherit') {
                     loadGoogleFont(newval);
@@ -34,7 +34,7 @@
         });
         
         // Font pairing preset
-        wp.customize('cct_font_pairing_preset', function(value) {
+        wp.customize('uenf_font_pairing_preset', function(value) {
             value.bind(function(newval) {
                 if (newval && newval !== 'theme_default') {
                     applyFontPairing(newval);
@@ -43,7 +43,7 @@
         });
         
         // Typography scale
-        wp.customize('cct_typography_scale', function(value) {
+        wp.customize('uenf_typography_scale', function(value) {
             value.bind(function(newval) {
                 if (newval) {
                     applyTypographyScale(newval);
@@ -52,7 +52,7 @@
         });
         
         // Base font size
-        wp.customize('cct_base_font_size', function(value) {
+        wp.customize('uenf_base_font_size', function(value) {
             value.bind(function(newval) {
                 if (newval) {
                     $('body').css('font-size', newval + 'px');
@@ -62,7 +62,7 @@
         });
         
         // Line height
-        wp.customize('cct_line_height', function(value) {
+        wp.customize('uenf_line_height', function(value) {
             value.bind(function(newval) {
                 if (newval) {
                     $('body, p').css('line-height', newval);
@@ -71,7 +71,7 @@
         });
         
         // Text max width
-        wp.customize('cct_text_max_width', function(value) {
+        wp.customize('uenf_text_max_width', function(value) {
             value.bind(function(newval) {
                 if (newval) {
                     $('.entry-content, .content-area p, .content-area li').css('max-width', newval + 'ch');
@@ -182,7 +182,7 @@
      * Update typography scale based on current base font size
      */
     function updateTypographyScale() {
-        var currentScale = wp.customize('cct_typography_scale')();
+        var currentScale = wp.customize('uenf_typography_scale')();
         if (currentScale) {
             applyTypographyScale(currentScale);
         }

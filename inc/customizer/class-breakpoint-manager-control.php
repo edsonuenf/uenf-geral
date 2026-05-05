@@ -9,7 +9,7 @@
  * - Templates predefinidos
  * - Validação de dados
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Gerenciador de Breakpoints
  */
-class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
+class UENF_Breakpoint_Manager_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_breakpoint_manager';
+    public $type = 'uenf_breakpoint_manager';
     
     /**
      * Breakpoints disponíveis
@@ -60,145 +60,145 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-breakpoint-manager" data-customize-setting-link="<?php echo esc_attr($this->settings['default']->id); ?>">
+        <div class="uenf-breakpoint-manager" data-customize-setting-link="<?php echo esc_attr($this->settings['default']->id); ?>">
             <!-- Barra de ferramentas -->
-            <div class="cct-bp-toolbar">
-                <div class="cct-bp-actions">
-                    <button type="button" class="button cct-add-breakpoint">
+            <div class="uenf-bp-toolbar">
+                <div class="uenf-bp-actions">
+                    <button type="button" class="button uenf-add-breakpoint">
                         <span class="dashicons dashicons-plus"></span>
                         <?php _e('Adicionar Breakpoint', 'cct'); ?>
                     </button>
                     
-                    <button type="button" class="button cct-import-template">
+                    <button type="button" class="button uenf-import-template">
                         <span class="dashicons dashicons-download"></span>
                         <?php _e('Importar Template', 'cct'); ?>
                     </button>
                     
-                    <button type="button" class="button cct-export-breakpoints">
+                    <button type="button" class="button uenf-export-breakpoints">
                         <span class="dashicons dashicons-upload"></span>
                         <?php _e('Exportar', 'cct'); ?>
                     </button>
                 </div>
                 
-                <div class="cct-bp-info">
-                    <span class="cct-bp-count">
-                        <strong id="cct-bp-total">0</strong> <?php _e('breakpoints', 'cct'); ?>
+                <div class="uenf-bp-info">
+                    <span class="uenf-bp-count">
+                        <strong id="uenf-bp-total">0</strong> <?php _e('breakpoints', 'cct'); ?>
                     </span>
                 </div>
             </div>
             
             <!-- Lista de breakpoints -->
-            <div class="cct-breakpoints-list" id="cct-breakpoints-list">
+            <div class="uenf-breakpoints-list" id="uenf-breakpoints-list">
                 <!-- Breakpoints serão carregados aqui via JavaScript -->
             </div>
             
             <!-- Template para novo breakpoint -->
-            <script type="text/template" id="cct-breakpoint-template">
-                <div class="cct-breakpoint-item" data-bp-key="{{key}}">
-                    <div class="cct-bp-header">
-                        <div class="cct-bp-handle">
+            <script type="text/template" id="uenf-breakpoint-template">
+                <div class="uenf-breakpoint-item" data-bp-key="{{key}}">
+                    <div class="uenf-bp-header">
+                        <div class="uenf-bp-handle">
                             <span class="dashicons dashicons-menu"></span>
                         </div>
                         
-                        <div class="cct-bp-icon">
-                            <span class="cct-bp-emoji">{{icon}}</span>
+                        <div class="uenf-bp-icon">
+                            <span class="uenf-bp-emoji">{{icon}}</span>
                         </div>
                         
-                        <div class="cct-bp-title">
+                        <div class="uenf-bp-title">
                             <h4>{{name}} <small>({{label}})</small></h4>
-                            <p class="cct-bp-range">{{min_width}}px - {{max_width_display}}</p>
+                            <p class="uenf-bp-range">{{min_width}}px - {{max_width_display}}</p>
                         </div>
                         
-                        <div class="cct-bp-status">
-                            <label class="cct-toggle-switch">
-                                <input type="checkbox" class="cct-bp-enabled" {{enabled_checked}}>
-                                <span class="cct-toggle-slider"></span>
+                        <div class="uenf-bp-status">
+                            <label class="uenf-toggle-switch">
+                                <input type="checkbox" class="uenf-bp-enabled" {{enabled_checked}}>
+                                <span class="uenf-toggle-slider"></span>
                             </label>
                         </div>
                         
-                        <div class="cct-bp-actions">
-                            <button type="button" class="button-link cct-edit-bp" title="<?php _e('Editar', 'cct'); ?>">
+                        <div class="uenf-bp-actions">
+                            <button type="button" class="button-link uenf-edit-bp" title="<?php _e('Editar', 'cct'); ?>">
                                 <span class="dashicons dashicons-edit"></span>
                             </button>
-                            <button type="button" class="button-link cct-preview-bp" title="<?php _e('Preview', 'cct'); ?>">
+                            <button type="button" class="button-link uenf-preview-bp" title="<?php _e('Preview', 'cct'); ?>">
                                 <span class="dashicons dashicons-visibility"></span>
                             </button>
-                            <button type="button" class="button-link cct-delete-bp" title="<?php _e('Excluir', 'cct'); ?>">
+                            <button type="button" class="button-link uenf-delete-bp" title="<?php _e('Excluir', 'cct'); ?>">
                                 <span class="dashicons dashicons-trash"></span>
                             </button>
                         </div>
                     </div>
                     
-                    <div class="cct-bp-details" style="display: none;">
-                        <div class="cct-bp-form">
-                            <div class="cct-form-row">
-                                <div class="cct-form-col">
+                    <div class="uenf-bp-details" style="display: none;">
+                        <div class="uenf-bp-form">
+                            <div class="uenf-form-row">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Nome:', 'cct'); ?></label>
-                                    <input type="text" class="cct-bp-name" value="{{name}}" placeholder="<?php _e('Ex: Large', 'cct'); ?>">
+                                    <input type="text" class="uenf-bp-name" value="{{name}}" placeholder="<?php _e('Ex: Large', 'cct'); ?>">
                                 </div>
                                 
-                                <div class="cct-form-col">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Rótulo:', 'cct'); ?></label>
-                                    <input type="text" class="cct-bp-label" value="{{label}}" placeholder="<?php _e('Ex: Desktops', 'cct'); ?>">
+                                    <input type="text" class="uenf-bp-label" value="{{label}}" placeholder="<?php _e('Ex: Desktops', 'cct'); ?>">
                                 </div>
                             </div>
                             
-                            <div class="cct-form-row">
-                                <div class="cct-form-col">
+                            <div class="uenf-form-row">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Largura Mínima (px):', 'cct'); ?></label>
-                                    <input type="number" class="cct-bp-min" value="{{min_width}}" min="0" step="1">
+                                    <input type="number" class="uenf-bp-min" value="{{min_width}}" min="0" step="1">
                                 </div>
                                 
-                                <div class="cct-form-col">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Largura Máxima (px):', 'cct'); ?></label>
-                                    <input type="number" class="cct-bp-max" value="{{max_width}}" min="0" step="1" placeholder="<?php _e('Deixe vazio para ilimitado', 'cct'); ?>">
+                                    <input type="number" class="uenf-bp-max" value="{{max_width}}" min="0" step="1" placeholder="<?php _e('Deixe vazio para ilimitado', 'cct'); ?>">
                                 </div>
                             </div>
                             
-                            <div class="cct-form-row">
-                                <div class="cct-form-col">
+                            <div class="uenf-form-row">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Ícone:', 'cct'); ?></label>
-                                    <div class="cct-icon-picker">
-                                        <input type="text" class="cct-bp-icon" value="{{icon}}" placeholder="📱">
-                                        <div class="cct-icon-options">
-                                            <span class="cct-icon-option" data-icon="📱">📱</span>
-                                            <span class="cct-icon-option" data-icon="📱">📱</span>
-                                            <span class="cct-icon-option" data-icon="💻">💻</span>
-                                            <span class="cct-icon-option" data-icon="🖥️">🖥️</span>
-                                            <span class="cct-icon-option" data-icon="⌚">⌚</span>
-                                            <span class="cct-icon-option" data-icon="📺">📺</span>
+                                    <div class="uenf-icon-picker">
+                                        <input type="text" class="uenf-bp-icon" value="{{icon}}" placeholder="📱">
+                                        <div class="uenf-icon-options">
+                                            <span class="uenf-icon-option" data-icon="📱">📱</span>
+                                            <span class="uenf-icon-option" data-icon="📱">📱</span>
+                                            <span class="uenf-icon-option" data-icon="💻">💻</span>
+                                            <span class="uenf-icon-option" data-icon="🖥️">🖥️</span>
+                                            <span class="uenf-icon-option" data-icon="⌚">⌚</span>
+                                            <span class="uenf-icon-option" data-icon="📺">📺</span>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div class="cct-form-col">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Container (px ou %):', 'cct'); ?></label>
-                                    <input type="text" class="cct-bp-container" value="{{container_width}}" placeholder="1200px">
+                                    <input type="text" class="uenf-bp-container" value="{{container_width}}" placeholder="1200px">
                                 </div>
                             </div>
                             
-                            <div class="cct-form-row">
-                                <div class="cct-form-col">
+                            <div class="uenf-form-row">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Gutter (px):', 'cct'); ?></label>
-                                    <input type="number" class="cct-bp-gutter" value="{{gutter}}" min="0" max="100" step="2">
+                                    <input type="number" class="uenf-bp-gutter" value="{{gutter}}" min="0" max="100" step="2">
                                 </div>
                                 
-                                <div class="cct-form-col">
+                                <div class="uenf-form-col">
                                     <label><?php _e('Colunas:', 'cct'); ?></label>
-                                    <input type="number" class="cct-bp-columns" value="{{columns}}" min="1" max="24" step="1">
+                                    <input type="number" class="uenf-bp-columns" value="{{columns}}" min="1" max="24" step="1">
                                 </div>
                             </div>
                             
-                            <div class="cct-form-row">
-                                <div class="cct-form-col-full">
+                            <div class="uenf-form-row">
+                                <div class="uenf-form-col-full">
                                     <label><?php _e('Descrição:', 'cct'); ?></label>
-                                    <textarea class="cct-bp-description" rows="2" placeholder="<?php _e('Descrição opcional do breakpoint...', 'cct'); ?>">{{description}}</textarea>
+                                    <textarea class="uenf-bp-description" rows="2" placeholder="<?php _e('Descrição opcional do breakpoint...', 'cct'); ?>">{{description}}</textarea>
                                 </div>
                             </div>
                             
-                            <div class="cct-form-actions">
-                                <button type="button" class="button button-primary cct-save-bp"><?php _e('Salvar', 'cct'); ?></button>
-                                <button type="button" class="button cct-cancel-bp"><?php _e('Cancelar', 'cct'); ?></button>
+                            <div class="uenf-form-actions">
+                                <button type="button" class="button button-primary uenf-save-bp"><?php _e('Salvar', 'cct'); ?></button>
+                                <button type="button" class="button uenf-cancel-bp"><?php _e('Cancelar', 'cct'); ?></button>
                             </div>
                         </div>
                     </div>
@@ -206,26 +206,26 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             </script>
             
             <!-- Modal de templates -->
-            <div class="cct-template-modal" id="cct-template-modal" style="display: none;">
-                <div class="cct-modal-backdrop"></div>
-                <div class="cct-modal-content">
-                    <div class="cct-modal-header">
+            <div class="uenf-template-modal" id="uenf-template-modal" style="display: none;">
+                <div class="uenf-modal-backdrop"></div>
+                <div class="uenf-modal-content">
+                    <div class="uenf-modal-header">
                         <h3><?php _e('Importar Template de Breakpoints', 'cct'); ?></h3>
-                        <button type="button" class="cct-modal-close">×</button>
+                        <button type="button" class="uenf-modal-close">×</button>
                     </div>
                     
-                    <div class="cct-modal-body">
-                        <div class="cct-template-grid">
+                    <div class="uenf-modal-body">
+                        <div class="uenf-template-grid">
                             <?php foreach ($this->templates as $template_key => $template): ?>
-                                <div class="cct-template-item" data-template="<?php echo esc_attr($template_key); ?>">
-                                    <div class="cct-template-preview">
+                                <div class="uenf-template-item" data-template="<?php echo esc_attr($template_key); ?>">
+                                    <div class="uenf-template-preview">
                                         <h4><?php echo esc_html($template['name']); ?></h4>
                                         <p><?php echo esc_html($template['description']); ?></p>
                                         
-                                        <div class="cct-template-breakpoints">
+                                        <div class="uenf-template-breakpoints">
                                             <?php if (isset($template['breakpoints'])): ?>
                                                 <?php foreach ($template['breakpoints'] as $bp_key => $bp_data): ?>
-                                                    <span class="cct-bp-tag">
+                                                    <span class="uenf-bp-tag">
                                                         <?php echo esc_html($bp_key); ?>
                                                         <small>(<?php echo esc_html($bp_data['min']); ?>px+)</small>
                                                     </span>
@@ -234,8 +234,8 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
                                         </div>
                                     </div>
                                     
-                                    <div class="cct-template-actions">
-                                        <button type="button" class="button button-primary cct-apply-template" data-template="<?php echo esc_attr($template_key); ?>">
+                                    <div class="uenf-template-actions">
+                                        <button type="button" class="button button-primary uenf-apply-template" data-template="<?php echo esc_attr($template_key); ?>">
                                             <?php _e('Aplicar Template', 'cct'); ?>
                                         </button>
                                     </div>
@@ -244,66 +244,66 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
                         </div>
                     </div>
                     
-                    <div class="cct-modal-footer">
-                        <button type="button" class="button cct-close-modal"><?php _e('Fechar', 'cct'); ?></button>
+                    <div class="uenf-modal-footer">
+                        <button type="button" class="button uenf-close-modal"><?php _e('Fechar', 'cct'); ?></button>
                     </div>
                 </div>
             </div>
             
             <!-- Preview de breakpoint -->
-            <div class="cct-preview-modal" id="cct-preview-modal" style="display: none;">
-                <div class="cct-modal-backdrop"></div>
-                <div class="cct-modal-content cct-preview-content">
-                    <div class="cct-modal-header">
-                        <h3 id="cct-preview-title"><?php _e('Preview do Breakpoint', 'cct'); ?></h3>
-                        <button type="button" class="cct-modal-close">×</button>
+            <div class="uenf-preview-modal" id="uenf-preview-modal" style="display: none;">
+                <div class="uenf-modal-backdrop"></div>
+                <div class="uenf-modal-content uenf-preview-content">
+                    <div class="uenf-modal-header">
+                        <h3 id="uenf-preview-title"><?php _e('Preview do Breakpoint', 'cct'); ?></h3>
+                        <button type="button" class="uenf-modal-close">×</button>
                     </div>
                     
-                    <div class="cct-modal-body">
-                        <div class="cct-preview-controls">
-                            <div class="cct-width-slider">
+                    <div class="uenf-modal-body">
+                        <div class="uenf-preview-controls">
+                            <div class="uenf-width-slider">
                                 <label><?php _e('Largura da Tela:', 'cct'); ?></label>
-                                <input type="range" id="cct-preview-width" min="320" max="1920" step="10" value="1200">
-                                <span id="cct-preview-width-value">1200px</span>
+                                <input type="range" id="uenf-preview-width" min="320" max="1920" step="10" value="1200">
+                                <span id="uenf-preview-width-value">1200px</span>
                             </div>
                         </div>
                         
-                        <div class="cct-preview-frame">
-                            <iframe id="cct-preview-iframe" src="about:blank"></iframe>
+                        <div class="uenf-preview-frame">
+                            <iframe id="uenf-preview-iframe" src="about:blank"></iframe>
                         </div>
                         
-                        <div class="cct-preview-info">
-                            <div class="cct-info-item">
+                        <div class="uenf-preview-info">
+                            <div class="uenf-info-item">
                                 <strong><?php _e('Breakpoint Ativo:', 'cct'); ?></strong>
-                                <span id="cct-active-bp">-</span>
+                                <span id="uenf-active-bp">-</span>
                             </div>
-                            <div class="cct-info-item">
+                            <div class="uenf-info-item">
                                 <strong><?php _e('Container:', 'cct'); ?></strong>
-                                <span id="cct-container-width">-</span>
+                                <span id="uenf-container-width">-</span>
                             </div>
-                            <div class="cct-info-item">
+                            <div class="uenf-info-item">
                                 <strong><?php _e('Colunas:', 'cct'); ?></strong>
-                                <span id="cct-columns-count">-</span>
+                                <span id="uenf-columns-count">-</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="cct-modal-footer">
-                        <button type="button" class="button cct-close-modal"><?php _e('Fechar', 'cct'); ?></button>
+                    <div class="uenf-modal-footer">
+                        <button type="button" class="button uenf-close-modal"><?php _e('Fechar', 'cct'); ?></button>
                     </div>
                 </div>
             </div>
         </div>
         
         <style>
-        .cct-breakpoint-manager {
+        .uenf-breakpoint-manager {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-bp-toolbar {
+        .uenf-bp-toolbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -312,60 +312,60 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-bp-actions {
+        .uenf-bp-actions {
             display: flex;
             gap: 8px;
         }
         
-        .cct-bp-actions .button {
+        .uenf-bp-actions .button {
             font-size: 12px;
             padding: 6px 12px;
             height: auto;
         }
         
-        .cct-bp-info {
+        .uenf-bp-info {
             font-size: 12px;
             color: #666;
         }
         
-        .cct-breakpoints-list {
+        .uenf-breakpoints-list {
             max-height: 500px;
             overflow-y: auto;
         }
         
-        .cct-breakpoint-item {
+        .uenf-breakpoint-item {
             border-bottom: 1px solid #eee;
             background: white;
             transition: all 0.3s ease;
         }
         
-        .cct-breakpoint-item:hover {
+        .uenf-breakpoint-item:hover {
             background: #f8f9fa;
         }
         
-        .cct-breakpoint-item.editing {
+        .uenf-breakpoint-item.editing {
             background: #fff3cd;
             border-color: #ffeaa7;
         }
         
-        .cct-bp-header {
+        .uenf-bp-header {
             display: flex;
             align-items: center;
             padding: 15px;
             gap: 12px;
         }
         
-        .cct-bp-handle {
+        .uenf-bp-handle {
             cursor: move;
             color: #999;
             padding: 4px;
         }
         
-        .cct-bp-handle:hover {
+        .uenf-bp-handle:hover {
             color: #333;
         }
         
-        .cct-bp-icon {
+        .uenf-bp-icon {
             width: 32px;
             height: 32px;
             display: flex;
@@ -375,49 +375,49 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             border-radius: 6px;
         }
         
-        .cct-bp-emoji {
+        .uenf-bp-emoji {
             font-size: 18px;
         }
         
-        .cct-bp-title {
+        .uenf-bp-title {
             flex: 1;
         }
         
-        .cct-bp-title h4 {
+        .uenf-bp-title h4 {
             margin: 0 0 4px 0;
             font-size: 14px;
             font-weight: 600;
         }
         
-        .cct-bp-title small {
+        .uenf-bp-title small {
             color: #666;
             font-weight: normal;
         }
         
-        .cct-bp-range {
+        .uenf-bp-range {
             margin: 0;
             font-size: 11px;
             color: #888;
         }
         
-        .cct-bp-status {
+        .uenf-bp-status {
             margin-right: 8px;
         }
         
-        .cct-toggle-switch {
+        .uenf-toggle-switch {
             position: relative;
             display: inline-block;
             width: 40px;
             height: 20px;
         }
         
-        .cct-toggle-switch input {
+        .uenf-toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
         
-        .cct-toggle-slider {
+        .uenf-toggle-slider {
             position: absolute;
             cursor: pointer;
             top: 0;
@@ -429,7 +429,7 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             border-radius: 10px;
         }
         
-        .cct-toggle-slider:before {
+        .uenf-toggle-slider:before {
             position: absolute;
             content: "";
             height: 16px;
@@ -441,20 +441,20 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             border-radius: 50%;
         }
         
-        input:checked + .cct-toggle-slider {
+        input:checked + .uenf-toggle-slider {
             background-color: #0073aa;
         }
         
-        input:checked + .cct-toggle-slider:before {
+        input:checked + .uenf-toggle-slider:before {
             transform: translateX(20px);
         }
         
-        .cct-bp-actions {
+        .uenf-bp-actions {
             display: flex;
             gap: 4px;
         }
         
-        .cct-bp-actions .button-link {
+        .uenf-bp-actions .button-link {
             padding: 6px;
             color: #666;
             text-decoration: none;
@@ -462,32 +462,32 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             transition: all 0.2s ease;
         }
         
-        .cct-bp-actions .button-link:hover {
+        .uenf-bp-actions .button-link:hover {
             color: #0073aa;
             background: rgba(0, 115, 170, 0.1);
         }
         
-        .cct-bp-details {
+        .uenf-bp-details {
             padding: 20px;
             background: #f8f9fa;
             border-top: 1px solid #eee;
         }
         
-        .cct-form-row {
+        .uenf-form-row {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
         }
         
-        .cct-form-col {
+        .uenf-form-col {
             flex: 1;
         }
         
-        .cct-form-col-full {
+        .uenf-form-col-full {
             width: 100%;
         }
         
-        .cct-form-col label {
+        .uenf-form-col label {
             display: block;
             margin-bottom: 5px;
             font-size: 12px;
@@ -495,8 +495,8 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-form-col input,
-        .cct-form-col textarea {
+        .uenf-form-col input,
+        .uenf-form-col textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -504,17 +504,17 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             font-size: 13px;
         }
         
-        .cct-icon-picker {
+        .uenf-icon-picker {
             position: relative;
         }
         
-        .cct-icon-options {
+        .uenf-icon-options {
             display: flex;
             gap: 5px;
             margin-top: 5px;
         }
         
-        .cct-icon-option {
+        .uenf-icon-option {
             width: 30px;
             height: 30px;
             display: flex;
@@ -527,12 +527,12 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             transition: all 0.2s ease;
         }
         
-        .cct-icon-option:hover {
+        .uenf-icon-option:hover {
             background: #0073aa;
             transform: scale(1.1);
         }
         
-        .cct-form-actions {
+        .uenf-form-actions {
             display: flex;
             gap: 8px;
             margin-top: 20px;
@@ -540,14 +540,14 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             border-top: 1px solid #ddd;
         }
         
-        .cct-form-actions .button {
+        .uenf-form-actions .button {
             font-size: 12px;
             padding: 8px 16px;
         }
         
         /* Modal styles */
-        .cct-template-modal,
-        .cct-preview-modal {
+        .uenf-template-modal,
+        .uenf-preview-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -556,7 +556,7 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             z-index: 999999;
         }
         
-        .cct-modal-backdrop {
+        .uenf-modal-backdrop {
             position: absolute;
             top: 0;
             left: 0;
@@ -565,7 +565,7 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             background: rgba(0, 0, 0, 0.7);
         }
         
-        .cct-modal-content {
+        .uenf-modal-content {
             position: relative;
             max-width: 800px;
             width: 90%;
@@ -578,13 +578,13 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             flex-direction: column;
         }
         
-        .cct-preview-content {
+        .uenf-preview-content {
             max-width: 1200px;
             width: 95%;
             max-height: 90vh;
         }
         
-        .cct-modal-header {
+        .uenf-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -593,12 +593,12 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-modal-header h3 {
+        .uenf-modal-header h3 {
             margin: 0;
             font-size: 16px;
         }
         
-        .cct-modal-close {
+        .uenf-modal-close {
             width: 30px;
             height: 30px;
             border: none;
@@ -608,52 +608,52 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-modal-body {
+        .uenf-modal-body {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
         }
         
-        .cct-template-grid {
+        .uenf-template-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
         
-        .cct-template-item {
+        .uenf-template-item {
             border: 1px solid #ddd;
             border-radius: 6px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
         
-        .cct-template-item:hover {
+        .uenf-template-item:hover {
             border-color: #0073aa;
             box-shadow: 0 4px 12px rgba(0, 115, 170, 0.1);
         }
         
-        .cct-template-preview {
+        .uenf-template-preview {
             padding: 15px;
         }
         
-        .cct-template-preview h4 {
+        .uenf-template-preview h4 {
             margin: 0 0 8px 0;
             font-size: 14px;
         }
         
-        .cct-template-preview p {
+        .uenf-template-preview p {
             margin: 0 0 12px 0;
             font-size: 12px;
             color: #666;
         }
         
-        .cct-template-breakpoints {
+        .uenf-template-breakpoints {
             display: flex;
             flex-wrap: wrap;
             gap: 4px;
         }
         
-        .cct-bp-tag {
+        .uenf-bp-tag {
             padding: 2px 6px;
             background: #e0e0e0;
             border-radius: 10px;
@@ -661,41 +661,41 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             color: #666;
         }
         
-        .cct-template-actions {
+        .uenf-template-actions {
             padding: 15px;
             border-top: 1px solid #eee;
             background: #f8f9fa;
         }
         
-        .cct-template-actions .button {
+        .uenf-template-actions .button {
             width: 100%;
             font-size: 12px;
         }
         
-        .cct-preview-controls {
+        .uenf-preview-controls {
             margin-bottom: 20px;
             padding: 15px;
             background: #f8f9fa;
             border-radius: 6px;
         }
         
-        .cct-width-slider {
+        .uenf-width-slider {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-width-slider label {
+        .uenf-width-slider label {
             font-size: 12px;
             font-weight: 600;
             min-width: 100px;
         }
         
-        .cct-width-slider input[type="range"] {
+        .uenf-width-slider input[type="range"] {
             flex: 1;
         }
         
-        .cct-width-slider span {
+        .uenf-width-slider span {
             font-size: 12px;
             font-weight: 600;
             color: #0073aa;
@@ -703,7 +703,7 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             text-align: right;
         }
         
-        .cct-preview-frame {
+        .uenf-preview-frame {
             border: 1px solid #ddd;
             border-radius: 6px;
             overflow: hidden;
@@ -711,13 +711,13 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             height: 400px;
         }
         
-        .cct-preview-frame iframe {
+        .uenf-preview-frame iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
         
-        .cct-preview-info {
+        .uenf-preview-info {
             display: flex;
             gap: 20px;
             padding: 15px;
@@ -726,11 +726,11 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             font-size: 12px;
         }
         
-        .cct-info-item strong {
+        .uenf-info-item strong {
             color: #333;
         }
         
-        .cct-modal-footer {
+        .uenf-modal-footer {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
@@ -739,22 +739,22 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
             background: #f9f9f9;
         }
         
-        .cct-modal-footer .button {
+        .uenf-modal-footer .button {
             font-size: 12px;
             padding: 8px 16px;
         }
         
         /* Sortable styles */
-        .cct-breakpoints-list.ui-sortable .cct-breakpoint-item {
+        .uenf-breakpoints-list.ui-sortable .uenf-breakpoint-item {
             cursor: move;
         }
         
-        .cct-breakpoints-list .ui-sortable-helper {
+        .uenf-breakpoints-list .ui-sortable-helper {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             transform: rotate(2deg);
         }
         
-        .cct-breakpoints-list .ui-sortable-placeholder {
+        .uenf-breakpoints-list .ui-sortable-placeholder {
             height: 60px;
             background: #f0f8ff;
             border: 2px dashed #0073aa;
@@ -771,16 +771,16 @@ class CCT_Breakpoint_Manager_Control extends WP_Customize_Control {
         wp_enqueue_script('jquery-ui-sortable');
         
         wp_enqueue_script(
-            'cct-breakpoint-manager-control',
-            get_template_directory_uri() . '/js/cct-breakpoint-manager-control.js',
+            'uenf-breakpoint-manager-control',
+            get_template_directory_uri() . '/js/uenf-breakpoint-manager-control.js',
             array('jquery', 'jquery-ui-sortable', 'customize-controls'),
             '1.0.0',
             true
         );
         
-        wp_localize_script('cct-breakpoint-manager-control', 'cctBreakpointManager', array(
+        wp_localize_script('uenf-breakpoint-manager-control', 'cctBreakpointManager', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_breakpoints_nonce'),
+            'nonce' => wp_create_nonce('uenf_breakpoints_nonce'),
             'strings' => array(
                 'confirmDelete' => __('Tem certeza que deseja excluir este breakpoint?', 'cct'),
                 'confirmTemplate' => __('Isso substituirá todos os breakpoints atuais. Continuar?', 'cct'),

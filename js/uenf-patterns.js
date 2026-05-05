@@ -9,7 +9,7 @@
  * - Export/Import de configurações
  * - Lazy loading de conteúdo
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -118,11 +118,11 @@
          */
         initPatternBrowser: function() {
             // Cache de elementos
-            this.cache.patternGrid = $('#cct-pattern-grid');
-            this.cache.searchInput = $('.cct-search-input');
-            this.cache.previewModal = $('#cct-pattern-modal');
-            this.cache.previewArea = $('#cct-preview-area');
-            this.cache.codeOutput = $('#cct-code-output');
+            this.cache.patternGrid = $('#uenf-pattern-grid');
+            this.cache.searchInput = $('.uenf-search-input');
+            this.cache.previewModal = $('#uenf-pattern-modal');
+            this.cache.previewArea = $('#uenf-preview-area');
+            this.cache.codeOutput = $('#uenf-code-output');
             
             // Configurar busca
             this.setupPatternSearch();
@@ -148,11 +148,11 @@
          * Configura toggle de visualização
          */
         setupViewToggle: function() {
-            $('.cct-view-btn').on('click', (e) => {
+            $('.uenf-view-btn').on('click', (e) => {
                 const $btn = $(e.target);
                 const view = $btn.data('view');
                 
-                $('.cct-view-btn').removeClass('active');
+                $('.uenf-view-btn').removeClass('active');
                 $btn.addClass('active');
                 
                 this.switchView(view);
@@ -164,19 +164,19 @@
          */
         setupPatternActions: function() {
             // Preview
-            $(document).on('click', '.cct-preview-btn', (e) => {
+            $(document).on('click', '.uenf-preview-btn', (e) => {
                 const pattern = $(e.target).data('pattern');
                 this.previewPattern(pattern);
             });
             
             // Aplicar
-            $(document).on('click', '.cct-apply-btn', (e) => {
+            $(document).on('click', '.uenf-apply-btn', (e) => {
                 const pattern = $(e.target).data('pattern');
                 this.applyPattern(pattern);
             });
             
             // Copiar código
-            $(document).on('click', '.cct-copy-btn', (e) => {
+            $(document).on('click', '.uenf-copy-btn', (e) => {
                 const pattern = $(e.target).data('pattern');
                 this.copyPatternCode(pattern);
             });
@@ -190,12 +190,12 @@
          */
         setupModalEvents: function() {
             // Fechar modal
-            $('.cct-modal-close, .cct-close-modal, .cct-modal-backdrop').on('click', () => {
+            $('.uenf-modal-close, .uenf-close-modal, .uenf-modal-backdrop').on('click', () => {
                 this.closeModal();
             });
             
             // Aplicar padrão do modal
-            $('.cct-apply-pattern').on('click', () => {
+            $('.uenf-apply-pattern').on('click', () => {
                 if (this.state.currentPattern) {
                     this.applyPattern(this.state.currentPattern);
                     this.closeModal();
@@ -203,7 +203,7 @@
             });
             
             // Copiar código do modal
-            $('.cct-copy-code').on('click', () => {
+            $('.uenf-copy-code').on('click', () => {
                 this.copyToClipboard(this.cache.codeOutput.val());
                 this.showNotification('Código copiado!', 'success');
             });
@@ -214,7 +214,7 @@
          */
         initPatternConfigurator: function() {
             // Cache de elementos
-            this.cache.livePreview = $('#cct-live-preview');
+            this.cache.livePreview = $('#uenf-live-preview');
             
             // Configurar controles de cor
             this.setupColorControls();
@@ -236,7 +236,7 @@
          * Configura controles de cor
          */
         setupColorControls: function() {
-            $('.cct-color-input').on('input', (e) => {
+            $('.uenf-color-input').on('input', (e) => {
                 const $input = $(e.target);
                 const setting = $input.data('setting');
                 const value = $input.val();
@@ -250,7 +250,7 @@
          * Configura controles de tipografia
          */
         setupTypographyControls: function() {
-            $('.cct-font-select').on('change', (e) => {
+            $('.uenf-font-select').on('change', (e) => {
                 const $select = $(e.target);
                 const setting = $select.data('setting');
                 const value = $select.val();
@@ -259,7 +259,7 @@
                 this.updateLivePreview();
             });
             
-            $('.cct-range-input[data-setting="base_size"]').on('input', (e) => {
+            $('.uenf-range-input[data-setting="base_size"]').on('input', (e) => {
                 const value = e.target.value + 'px';
                 this.updateTypographySetting('base_size', value);
                 this.updateRangeValue(e.target, value);
@@ -271,7 +271,7 @@
          * Configura controles de espaçamento
          */
         setupSpacingControls: function() {
-            $('.cct-range-input[data-setting^="section_"], .cct-range-input[data-setting^="element_"], .cct-range-input[data-setting^="border_"]').on('input', (e) => {
+            $('.uenf-range-input[data-setting^="section_"], .uenf-range-input[data-setting^="element_"], .uenf-range-input[data-setting^="border_"]').on('input', (e) => {
                 const $input = $(e.target);
                 const setting = $input.data('setting');
                 const value = e.target.value + 'px';
@@ -286,20 +286,20 @@
          * Configura controles de animação
          */
         setupAnimationControls: function() {
-            $('.cct-checkbox-input[data-setting="animations_enabled"]').on('change', (e) => {
+            $('.uenf-checkbox-input[data-setting="animations_enabled"]').on('change', (e) => {
                 const enabled = e.target.checked;
                 this.updateAnimationSetting('enabled', enabled);
                 this.updateLivePreview();
             });
             
-            $('.cct-range-input[data-setting="animation_duration"]').on('input', (e) => {
+            $('.uenf-range-input[data-setting="animation_duration"]').on('input', (e) => {
                 const value = e.target.value + 's';
                 this.updateAnimationSetting('duration', value);
                 this.updateRangeValue(e.target, value);
                 this.updateLivePreview();
             });
             
-            $('.cct-easing-select').on('change', (e) => {
+            $('.uenf-easing-select').on('change', (e) => {
                 const value = e.target.value;
                 this.updateAnimationSetting('easing', value);
                 this.updateLivePreview();
@@ -311,17 +311,17 @@
          */
         setupConfiguratorActions: function() {
             // Aplicar configurações
-            $('.cct-apply-config').on('click', () => {
+            $('.uenf-apply-config').on('click', () => {
                 this.applyConfiguration();
             });
             
             // Reset configurações
-            $('.cct-reset-config').on('click', () => {
+            $('.uenf-reset-config').on('click', () => {
                 this.resetConfiguration();
             });
             
             // Exportar configurações
-            $('.cct-export-config').on('click', () => {
+            $('.uenf-export-config').on('click', () => {
                 this.exportConfiguration();
             });
         },
@@ -331,13 +331,13 @@
          */
         initTemplateSelector: function() {
             // Preview template
-            $('.cct-preview-template').on('click', (e) => {
+            $('.uenf-preview-template').on('click', (e) => {
                 const template = $(e.target).data('template');
                 this.previewTemplate(template);
             });
             
             // Aplicar template
-            $('.cct-apply-template').on('click', (e) => {
+            $('.uenf-apply-template').on('click', (e) => {
                 const template = $(e.target).data('template');
                 this.applyTemplate(template);
             });
@@ -364,10 +364,10 @@
          * Inicializa FAQ Accordion
          */
         initFAQAccordion: function() {
-            $(document).on('click', '.cct-faq-accordion .cct-faq-question', function() {
-                const $item = $(this).closest('.cct-faq-item');
-                const $answer = $item.find('.cct-faq-answer');
-                const $icon = $(this).find('.cct-faq-icon');
+            $(document).on('click', '.uenf-faq-accordion .uenf-faq-question', function() {
+                const $item = $(this).closest('.uenf-faq-item');
+                const $answer = $item.find('.uenf-faq-answer');
+                const $icon = $(this).find('.uenf-faq-icon');
                 
                 // Toggle accordion
                 if ($item.hasClass('active')) {
@@ -377,9 +377,9 @@
                 } else {
                     // Fechar outros (se não permitir múltiplos)
                     if (!CCTPatterns.settings.faqAllowMultiple) {
-                        $('.cct-faq-accordion .cct-faq-item.active').removeClass('active')
-                            .find('.cct-faq-answer').slideUp(300);
-                        $('.cct-faq-accordion .cct-faq-icon').removeClass('expanded');
+                        $('.uenf-faq-accordion .uenf-faq-item.active').removeClass('active')
+                            .find('.uenf-faq-answer').slideUp(300);
+                        $('.uenf-faq-accordion .uenf-faq-icon').removeClass('expanded');
                     }
                     
                     $item.addClass('active');
@@ -393,21 +393,21 @@
          * Inicializa FAQ Tabs
          */
         initFAQTabs: function() {
-            $(document).on('click', '.cct-faq-tabs .cct-tab-btn', function() {
+            $(document).on('click', '.uenf-faq-tabs .uenf-tab-btn', function() {
                 const $btn = $(this);
                 const category = $btn.data('category');
-                const $container = $btn.closest('.cct-faq-tabs');
+                const $container = $btn.closest('.uenf-faq-tabs');
                 
                 // Ativar tab
-                $container.find('.cct-tab-btn').removeClass('active');
+                $container.find('.uenf-tab-btn').removeClass('active');
                 $btn.addClass('active');
                 
                 // Mostrar conteúdo
-                $container.find('.cct-faq-item').hide();
+                $container.find('.uenf-faq-item').hide();
                 if (category === 'all') {
-                    $container.find('.cct-faq-item').show();
+                    $container.find('.uenf-faq-item').show();
                 } else {
-                    $container.find(`.cct-faq-item[data-category="${category}"]`).show();
+                    $container.find(`.uenf-faq-item[data-category="${category}"]`).show();
                 }
             });
         },
@@ -416,10 +416,10 @@
          * Inicializa FAQ Grid
          */
         initFAQGrid: function() {
-            $(document).on('click', '.cct-faq-grid .cct-faq-item', function() {
+            $(document).on('click', '.uenf-faq-grid .uenf-faq-item', function() {
                 const $item = $(this);
-                const question = $item.find('.cct-faq-question').text();
-                const answer = $item.find('.cct-faq-answer').html();
+                const question = $item.find('.uenf-faq-question').text();
+                const answer = $item.find('.uenf-faq-answer').html();
                 
                 // Abrir modal com resposta completa
                 CCTPatterns.openFAQModal(question, answer);
@@ -430,14 +430,14 @@
          * Inicializa busca FAQ
          */
         initFAQSearch: function() {
-            $(document).on('input', '.cct-faq-search-input', CCTPatterns.debounce(function() {
+            $(document).on('input', '.uenf-faq-search-input', CCTPatterns.debounce(function() {
                 const searchTerm = $(this).val().toLowerCase();
-                const $container = $(this).closest('.cct-faq-section');
+                const $container = $(this).closest('.uenf-faq-section');
                 
-                $container.find('.cct-faq-item').each(function() {
+                $container.find('.uenf-faq-item').each(function() {
                     const $item = $(this);
-                    const question = $item.find('.cct-faq-question').text().toLowerCase();
-                    const answer = $item.find('.cct-faq-answer').text().toLowerCase();
+                    const question = $item.find('.uenf-faq-question').text().toLowerCase();
+                    const answer = $item.find('.uenf-faq-answer').text().toLowerCase();
                     
                     if (question.includes(searchTerm) || answer.includes(searchTerm)) {
                         $item.show();
@@ -463,14 +463,14 @@
          * Inicializa toggle de preços
          */
         initPricingToggle: function() {
-            $(document).on('change', '.cct-billing-toggle', function() {
+            $(document).on('change', '.uenf-billing-toggle', function() {
                 const isAnnual = $(this).is(':checked');
-                const $container = $(this).closest('.cct-pricing-table');
+                const $container = $(this).closest('.uenf-pricing-table');
                 
-                $container.find('.cct-pricing-plan').each(function() {
+                $container.find('.uenf-pricing-plan').each(function() {
                     const $plan = $(this);
-                    const $monthly = $plan.find('.cct-price-monthly');
-                    const $annual = $plan.find('.cct-price-annual');
+                    const $monthly = $plan.find('.uenf-price-monthly');
+                    const $annual = $plan.find('.uenf-price-annual');
                     
                     if (isAnnual && $annual.length) {
                         $monthly.hide();
@@ -487,9 +487,9 @@
          * Inicializa slider de preços
          */
         initPricingSlider: function() {
-            $(document).on('input', '.cct-pricing-slider', function() {
+            $(document).on('input', '.uenf-pricing-slider', function() {
                 const value = parseInt($(this).val());
-                const $container = $(this).closest('.cct-pricing-section');
+                const $container = $(this).closest('.uenf-pricing-section');
                 
                 // Calcular preço baseado no valor
                 CCTPatterns.calculatePricingValue($container, value);
@@ -514,14 +514,14 @@
          * Inicializa modal de equipe
          */
         initTeamModal: function() {
-            $(document).on('click', '.cct-team-member', function() {
+            $(document).on('click', '.uenf-team-member', function() {
                 if (!CCTPatterns.settings.teamBioModal) return;
                 
                 const $member = $(this);
-                const name = $member.find('.cct-team-name').text();
-                const role = $member.find('.cct-team-role').text();
-                const bio = $member.find('.cct-team-bio').html();
-                const image = $member.find('.cct-team-image img').attr('src');
+                const name = $member.find('.uenf-team-name').text();
+                const role = $member.find('.uenf-team-role').text();
+                const bio = $member.find('.uenf-team-bio').html();
+                const image = $member.find('.uenf-team-image img').attr('src');
                 
                 CCTPatterns.openTeamModal(name, role, bio, image);
             });
@@ -532,7 +532,7 @@
          */
         initTeamCarousel: function() {
             // Implementar carousel se necessário
-            $('.cct-team-carousel').each(function() {
+            $('.uenf-team-carousel').each(function() {
                 // Configurar carousel
             });
         },
@@ -541,17 +541,17 @@
          * Inicializa filtros de equipe
          */
         initTeamFilters: function() {
-            $(document).on('click', '.cct-team-filter-btn', function() {
+            $(document).on('click', '.uenf-team-filter-btn', function() {
                 const $btn = $(this);
                 const department = $btn.data('department');
-                const $container = $btn.closest('.cct-team-section');
+                const $container = $btn.closest('.uenf-team-section');
                 
                 // Ativar filtro
-                $container.find('.cct-team-filter-btn').removeClass('active');
+                $container.find('.uenf-team-filter-btn').removeClass('active');
                 $btn.addClass('active');
                 
                 // Filtrar membros
-                $container.find('.cct-team-member').each(function() {
+                $container.find('.uenf-team-member').each(function() {
                     const $member = $(this);
                     const memberDept = $member.data('department');
                     
@@ -584,7 +584,7 @@
         initPortfolioLightbox: function() {
             if (!this.settings.portfolioLightbox) return;
             
-            $(document).on('click', '.cct-lightbox-btn', function(e) {
+            $(document).on('click', '.uenf-lightbox-btn', function(e) {
                 e.preventDefault();
                 const imageUrl = $(this).attr('href');
                 CCTPatterns.openLightbox(imageUrl);
@@ -595,17 +595,17 @@
          * Inicializa filtros de portfolio
          */
         initPortfolioFilters: function() {
-            $(document).on('click', '.cct-filter-btn', function() {
+            $(document).on('click', '.uenf-filter-btn', function() {
                 const $btn = $(this);
                 const filter = $btn.data('filter');
-                const $container = $btn.closest('.cct-portfolio-gallery');
+                const $container = $btn.closest('.uenf-portfolio-gallery');
                 
                 // Ativar filtro
-                $container.find('.cct-filter-btn').removeClass('active');
+                $container.find('.uenf-filter-btn').removeClass('active');
                 $btn.addClass('active');
                 
                 // Filtrar itens
-                $container.find('.cct-portfolio-item').each(function() {
+                $container.find('.uenf-portfolio-item').each(function() {
                     const $item = $(this);
                     const category = $item.data('category');
                     
@@ -623,7 +623,7 @@
          */
         initPortfolioMasonry: function() {
             // Implementar masonry se necessário
-            $('.cct-portfolio-masonry').each(function() {
+            $('.uenf-portfolio-masonry').each(function() {
                 // Configurar masonry
             });
         },
@@ -660,10 +660,10 @@
          * Filtra padrões por termo de busca
          */
         filterPatterns: function(searchTerm) {
-            this.cache.patternGrid.find('.cct-pattern-item').each(function() {
+            this.cache.patternGrid.find('.uenf-pattern-item').each(function() {
                 const $item = $(this);
-                const name = $item.find('.cct-pattern-name').text().toLowerCase();
-                const description = $item.find('.cct-pattern-description').text().toLowerCase();
+                const name = $item.find('.uenf-pattern-name').text().toLowerCase();
+                const description = $item.find('.uenf-pattern-description').text().toLowerCase();
                 
                 if (name.includes(searchTerm) || description.includes(searchTerm)) {
                     $item.show();
@@ -732,7 +732,7 @@
          */
         generatePatternShortcode: function(patternKey) {
             // Implementar geração de shortcode
-            return `[cct_pattern type="${patternKey}"]Conteúdo do padrão[/cct_pattern]`;
+            return `[uenf_pattern type="${patternKey}"]Conteúdo do padrão[/uenf_pattern]`;
         },
         
         /**
@@ -780,7 +780,7 @@
          * Atualiza valor do range
          */
         updateRangeValue: function(input, value) {
-            $(input).siblings('.cct-range-value').text(value);
+            $(input).siblings('.uenf-range-value').text(value);
         },
         
         /**
@@ -850,7 +850,7 @@
             };
             
             // Atualizar controles
-            $('.cct-color-input').each(function() {
+            $('.uenf-color-input').each(function() {
                 const setting = $(this).data('setting');
                 if (CCTPatterns.settings.colors[setting]) {
                     $(this).val(CCTPatterns.settings.colors[setting]);
@@ -878,7 +878,7 @@
             
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'cct-pattern-config.json';
+            link.download = 'uenf-pattern-config.json';
             link.click();
             
             this.showNotification('Configurações exportadas!', 'success');
@@ -927,7 +927,7 @@
             const root = document.documentElement;
             
             Object.keys(colors).forEach(key => {
-                root.style.setProperty(`--cct-pattern-color-${key}`, colors[key]);
+                root.style.setProperty(`--uenf-pattern-color-${key}`, colors[key]);
             });
         },
         
@@ -936,7 +936,7 @@
          */
         openModal: function() {
             this.cache.previewModal.show();
-            $('body').addClass('cct-modal-open');
+            $('body').addClass('uenf-modal-open');
         },
         
         /**
@@ -944,7 +944,7 @@
          */
         closeModal: function() {
             this.cache.previewModal.hide();
-            $('body').removeClass('cct-modal-open');
+            $('body').removeClass('uenf-modal-open');
             this.state.currentPattern = null;
         },
         
@@ -1013,7 +1013,7 @@
         showNotification: function(message, type = 'info') {
             // Criar elemento de notificação
             const $notification = $(`
-                <div class="cct-pattern-notification cct-notification-${type}">
+                <div class="uenf-pattern-notification uenf-notification-${type}">
                     ${message}
                 </div>
             `);
@@ -1080,7 +1080,7 @@
  */
 (function() {
     const patternNotificationCSS = `
-        .cct-pattern-notification {
+        .uenf-pattern-notification {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1097,28 +1097,28 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
-        .cct-pattern-notification.show {
+        .uenf-pattern-notification.show {
             transform: translateX(0);
         }
         
-        .cct-notification-success {
+        .uenf-notification-success {
             background: #28a745;
         }
         
-        .cct-notification-info {
+        .uenf-notification-info {
             background: #17a2b8;
         }
         
-        .cct-notification-warning {
+        .uenf-notification-warning {
             background: #ffc107;
             color: #333;
         }
         
-        .cct-notification-error {
+        .uenf-notification-error {
             background: #dc3545;
         }
         
-        body.cct-modal-open {
+        body.uenf-modal-open {
             overflow: hidden;
         }
     `;

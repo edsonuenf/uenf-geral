@@ -4,14 +4,14 @@
  */
 
 // Enable lazy loading for images
-function cct_lazy_loading_setup() {
+function uenf_lazy_loading_setup() {
     if ( get_theme_mod( 'enable_lazy_loading', true ) ) {
-        add_filter( 'wp_get_attachment_image_attributes', 'cct_lazy_loading_attributes', 10, 3 );
+        add_filter( 'wp_get_attachment_image_attributes', 'uenf_lazy_loading_attributes', 10, 3 );
     }
 }
-add_action( 'after_setup_theme', 'cct_lazy_loading_setup' );
+add_action( 'after_setup_theme', 'uenf_lazy_loading_setup' );
 
-function cct_lazy_loading_attributes( $attr, $attachment, $size ) {
+function uenf_lazy_loading_attributes( $attr, $attachment, $size ) {
     if ( is_admin() || is_feed() ) {
         return $attr;
     }
@@ -21,7 +21,7 @@ function cct_lazy_loading_attributes( $attr, $attachment, $size ) {
 }
 
 // Minify and combine CSS
-function cct_minify_css( $css ) {
+function uenf_minify_css( $css ) {
     // Remove comments
     $css = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css );
     // Remove whitespace
@@ -30,20 +30,20 @@ function cct_minify_css( $css ) {
 }
 
 // Minify and combine JavaScript
-function cct_minify_js( $js ) {
+function uenf_minify_js( $js ) {
     require_once get_template_directory() . '/inc/class-js-minifier.php';
     return JSMin::minify( $js );
 }
 
 // Optimize images
-function cct_optimize_image_quality( $quality ) {
+function uenf_optimize_image_quality( $quality ) {
     return 85; // Balanced quality setting
 }
-add_filter( 'jpeg_quality', 'cct_optimize_image_quality' );
-add_filter( 'wp_editor_set_quality', 'cct_optimize_image_quality' );
+add_filter( 'jpeg_quality', 'uenf_optimize_image_quality' );
+add_filter( 'wp_editor_set_quality', 'uenf_optimize_image_quality' );
 
 // Add defer to non-critical scripts
-function cct_defer_scripts( $tag, $handle, $src ) {
+function uenf_defer_scripts( $tag, $handle, $src ) {
     $defer_scripts = array(
         'comment-reply',
         'wp-embed',
@@ -54,27 +54,27 @@ function cct_defer_scripts( $tag, $handle, $src ) {
     }
     return $tag;
 }
-add_filter( 'script_loader_tag', 'cct_defer_scripts', 10, 3 );
+add_filter( 'script_loader_tag', 'uenf_defer_scripts', 10, 3 );
 
 // Enable GZIP compression
-function cct_enable_gzip() {
+function uenf_enable_gzip() {
     if ( extension_loaded( 'zlib' ) && !ini_get( 'zlib.output_compression' ) ) {
         ini_set( 'zlib.output_compression', 'On' );
     }
 }
-add_action( 'init', 'cct_enable_gzip' );
+add_action( 'init', 'uenf_enable_gzip' );
 
 // Add browser caching headers
-function cct_add_browser_caching() {
+function uenf_add_browser_caching() {
     if ( !is_admin() ) {
         header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', time() + 31536000 ) . ' GMT' );
         header( 'Cache-Control: public, max-age=31536000' );
     }
 }
-add_action( 'send_headers', 'cct_add_browser_caching' );
+add_action( 'send_headers', 'uenf_add_browser_caching' );
 
 // Remove query strings from static resources (desativado em dev para permitir cache-bust)
-function cct_remove_script_version( $src ) {
+function uenf_remove_script_version( $src ) {
     if ( defined('WP_DEBUG') && WP_DEBUG ) {
         return $src; // Em dev, manter ?ver= para cache-bust
     }
@@ -83,11 +83,11 @@ function cct_remove_script_version( $src ) {
     }
     return $src;
 }
-add_filter( 'script_loader_src', 'cct_remove_script_version', 15, 1 );
-add_filter( 'style_loader_src', 'cct_remove_script_version', 15, 1 );
+add_filter( 'script_loader_src', 'uenf_remove_script_version', 15, 1 );
+add_filter( 'style_loader_src', 'uenf_remove_script_version', 15, 1 );
 
 // Disable emojis
-function cct_disable_emojis() {
+function uenf_disable_emojis() {
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
     remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -96,10 +96,10 @@ function cct_disable_emojis() {
     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 }
-add_action( 'init', 'cct_disable_emojis' );
+add_action( 'init', 'uenf_disable_emojis' );
 
 // Optimize database
-function cct_optimize_database() {
+function uenf_optimize_database() {
     global $wpdb;
     
     // Clean post revisions
@@ -118,4 +118,4 @@ function cct_optimize_database() {
     $wpdb->query( "OPTIMIZE TABLE $wpdb->posts" );
     $wpdb->query( "OPTIMIZE TABLE $wpdb->postmeta" );
 }
-add_action( 'wp_scheduled_delete', 'cct_optimize_database' ); 
+add_action( 'wp_scheduled_delete', 'uenf_optimize_database' ); 

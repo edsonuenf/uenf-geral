@@ -1,0 +1,933 @@
+/**
+ * Sistema de Design Tokens CCT - Estilos Frontend
+ * 
+ * Sistema completo de design tokens incluindo:
+ * - Variáveis CSS geradas dinamicamente
+ * - Classes utilitárias baseadas em tokens
+ * - Componentes com tokens aplicados
+ * - Documentação visual
+ * - Debug e desenvolvimento
+ * 
+ * @package UENF_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS Base dos Design Tokens
+   ========================================================================== */
+
+:root {
+    /* Estas variáveis são geradas dinamicamente pelo sistema de tokens */
+    /* Cores primitivas */
+    --uenf-colors-base-white: #ffffff;
+    --uenf-colors-base-black: #000000;
+    --uenf-colors-base-transparent: transparent;
+    
+    /* Cores cinza */
+    --uenf-colors-gray-50: #f9fafb;
+    --uenf-colors-gray-100: #f3f4f6;
+    --uenf-colors-gray-200: #e5e7eb;
+    --uenf-colors-gray-300: #d1d5db;
+    --uenf-colors-gray-400: #9ca3af;
+    --uenf-colors-gray-500: #6b7280;
+    --uenf-colors-gray-600: #4b5563;
+    --uenf-colors-gray-700: #374151;
+    --uenf-colors-gray-800: #1f2937;
+    --uenf-colors-gray-900: #111827;
+    
+    /* Cores azul */
+    --uenf-colors-blue-50: #eff6ff;
+    --uenf-colors-blue-100: #dbeafe;
+    --uenf-colors-blue-500: #3b82f6;
+    --uenf-colors-blue-600: #2563eb;
+    --uenf-colors-blue-700: #1d4ed8;
+    
+    /* Cores semânticas */
+    --uenf-colors-red-50: #fef2f2;
+    --uenf-colors-red-500: #ef4444;
+    --uenf-colors-red-600: #dc2626;
+    --uenf-colors-green-50: #f0fdf4;
+    --uenf-colors-green-500: #22c55e;
+    --uenf-colors-green-600: #16a34a;
+    --uenf-colors-yellow-50: #fefce8;
+    --uenf-colors-yellow-500: #eab308;
+    --uenf-colors-yellow-600: #ca8a04;
+    
+    /* Tipografia */
+    --uenf-typography-font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --uenf-typography-font-family-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --uenf-typography-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    
+    --uenf-typography-font-size-xs: 0.75rem;
+    --uenf-typography-font-size-sm: 0.875rem;
+    --uenf-typography-font-size-base: 1rem;
+    --uenf-typography-font-size-lg: 1.125rem;
+    --uenf-typography-font-size-xl: 1.25rem;
+    --uenf-typography-font-size-2xl: 1.5rem;
+    --uenf-typography-font-size-3xl: 1.875rem;
+    --uenf-typography-font-size-4xl: 2.25rem;
+    
+    --uenf-typography-font-weight-thin: 100;
+    --uenf-typography-font-weight-light: 300;
+    --uenf-typography-font-weight-normal: 400;
+    --uenf-typography-font-weight-medium: 500;
+    --uenf-typography-font-weight-semibold: 600;
+    --uenf-typography-font-weight-bold: 700;
+    
+    --uenf-typography-line-height-none: 1;
+    --uenf-typography-line-height-tight: 1.25;
+    --uenf-typography-line-height-snug: 1.375;
+    --uenf-typography-line-height-normal: 1.5;
+    --uenf-typography-line-height-relaxed: 1.625;
+    --uenf-typography-line-height-loose: 2;
+    
+    /* Espaçamentos */
+    --uenf-spacing-0: 0px;
+    --uenf-spacing-1: 0.25rem;
+    --uenf-spacing-2: 0.5rem;
+    --uenf-spacing-3: 0.75rem;
+    --uenf-spacing-4: 1rem;
+    --uenf-spacing-5: 1.25rem;
+    --uenf-spacing-6: 1.5rem;
+    --uenf-spacing-8: 2rem;
+    --uenf-spacing-10: 2.5rem;
+    --uenf-spacing-12: 3rem;
+    --uenf-spacing-16: 4rem;
+    --uenf-spacing-20: 5rem;
+    --uenf-spacing-24: 6rem;
+    
+    /* Bordas */
+    --uenf-border-radius-none: 0px;
+    --uenf-border-radius-sm: 0.125rem;
+    --uenf-border-radius-base: 0.25rem;
+    --uenf-border-radius-md: 0.375rem;
+    --uenf-border-radius-lg: 0.5rem;
+    --uenf-border-radius-xl: 0.75rem;
+    --uenf-border-radius-2xl: 1rem;
+    --uenf-border-radius-full: 9999px;
+    
+    /* Sombras */
+    --uenf-shadows-none: none;
+    --uenf-shadows-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --uenf-shadows-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --uenf-shadows-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --uenf-shadows-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --uenf-shadows-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --uenf-shadows-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* Transições */
+    --uenf-transitions-duration-fast: 150ms;
+    --uenf-transitions-duration-normal: 300ms;
+    --uenf-transitions-duration-slow: 500ms;
+    
+    --uenf-transitions-easing-linear: linear;
+    --uenf-transitions-easing-ease: ease;
+    --uenf-transitions-easing-ease-in: ease-in;
+    --uenf-transitions-easing-ease-out: ease-out;
+    --uenf-transitions-easing-ease-in-out: ease-in-out;
+    
+    /* Tokens semânticos */
+    --uenf-colors-text-primary: var(--uenf-colors-gray-900);
+    --uenf-colors-text-secondary: var(--uenf-colors-gray-600);
+    --uenf-colors-text-muted: var(--uenf-colors-gray-400);
+    --uenf-colors-text-inverse: var(--uenf-colors-base-white);
+    
+    --uenf-colors-background-primary: var(--uenf-colors-base-white);
+    --uenf-colors-background-secondary: var(--uenf-colors-gray-50);
+    --uenf-colors-background-tertiary: var(--uenf-colors-gray-100);
+    
+    --uenf-colors-border-default: var(--uenf-colors-gray-200);
+    --uenf-colors-border-muted: var(--uenf-colors-gray-100);
+    --uenf-colors-border-strong: var(--uenf-colors-gray-300);
+    
+    --uenf-colors-brand-primary: var(--uenf-colors-blue-600);
+    --uenf-colors-brand-secondary: var(--uenf-colors-blue-500);
+    
+    --uenf-colors-feedback-success: var(--uenf-colors-green-600);
+    --uenf-colors-feedback-warning: var(--uenf-colors-yellow-600);
+    --uenf-colors-feedback-error: var(--uenf-colors-red-600);
+    --uenf-colors-feedback-info: var(--uenf-colors-blue-600);
+    
+    /* Tokens de componente */
+    --uenf-spacing-component-xs: var(--uenf-spacing-2);
+    --uenf-spacing-component-sm: var(--uenf-spacing-4);
+    --uenf-spacing-component-md: var(--uenf-spacing-6);
+    --uenf-spacing-component-lg: var(--uenf-spacing-8);
+    --uenf-spacing-component-xl: var(--uenf-spacing-12);
+    
+    --uenf-spacing-layout-section: var(--uenf-spacing-16);
+    --uenf-spacing-layout-container: var(--uenf-spacing-6);
+}
+
+/* ==========================================================================
+   Classes Utilitárias Baseadas em Tokens
+   ========================================================================== */
+
+/* Cores de texto */
+.uenf-text-primary { color: var(--uenf-colors-text-primary) !important; }
+.uenf-text-secondary { color: var(--uenf-colors-text-secondary) !important; }
+.uenf-text-muted { color: var(--uenf-colors-text-muted) !important; }
+.uenf-text-inverse { color: var(--uenf-colors-text-inverse) !important; }
+
+.uenf-text-brand-primary { color: var(--uenf-colors-brand-primary) !important; }
+.uenf-text-brand-secondary { color: var(--uenf-colors-brand-secondary) !important; }
+
+.uenf-text-success { color: var(--uenf-colors-feedback-success) !important; }
+.uenf-text-warning { color: var(--uenf-colors-feedback-warning) !important; }
+.uenf-text-error { color: var(--uenf-colors-feedback-error) !important; }
+.uenf-text-info { color: var(--uenf-colors-feedback-info) !important; }
+
+/* Cores de fundo */
+.uenf-bg-primary { background-color: var(--uenf-colors-background-primary) !important; }
+.uenf-bg-secondary { background-color: var(--uenf-colors-background-secondary) !important; }
+.uenf-bg-tertiary { background-color: var(--uenf-colors-background-tertiary) !important; }
+
+.uenf-bg-brand-primary { background-color: var(--uenf-colors-brand-primary) !important; }
+.uenf-bg-brand-secondary { background-color: var(--uenf-colors-brand-secondary) !important; }
+
+.uenf-bg-success { background-color: var(--uenf-colors-feedback-success) !important; }
+.uenf-bg-warning { background-color: var(--uenf-colors-feedback-warning) !important; }
+.uenf-bg-error { background-color: var(--uenf-colors-feedback-error) !important; }
+.uenf-bg-info { background-color: var(--uenf-colors-feedback-info) !important; }
+
+/* Cores de borda */
+.uenf-border-default { border-color: var(--uenf-colors-border-default) !important; }
+.uenf-border-muted { border-color: var(--uenf-colors-border-muted) !important; }
+.uenf-border-strong { border-color: var(--uenf-colors-border-strong) !important; }
+
+.uenf-border-brand { border-color: var(--uenf-colors-brand-primary) !important; }
+.uenf-border-success { border-color: var(--uenf-colors-feedback-success) !important; }
+.uenf-border-warning { border-color: var(--uenf-colors-feedback-warning) !important; }
+.uenf-border-error { border-color: var(--uenf-colors-feedback-error) !important; }
+.uenf-border-info { border-color: var(--uenf-colors-feedback-info) !important; }
+
+/* Tipografia */
+.uenf-font-sans { font-family: var(--uenf-typography-font-family-sans) !important; }
+.uenf-font-serif { font-family: var(--uenf-typography-font-family-serif) !important; }
+.uenf-font-mono { font-family: var(--uenf-typography-font-family-mono) !important; }
+
+.uenf-text-xs { font-size: var(--uenf-typography-font-size-xs) !important; }
+.uenf-text-sm { font-size: var(--uenf-typography-font-size-sm) !important; }
+.uenf-text-base { font-size: var(--uenf-typography-font-size-base) !important; }
+.uenf-text-lg { font-size: var(--uenf-typography-font-size-lg) !important; }
+.uenf-text-xl { font-size: var(--uenf-typography-font-size-xl) !important; }
+.uenf-text-2xl { font-size: var(--uenf-typography-font-size-2xl) !important; }
+.uenf-text-3xl { font-size: var(--uenf-typography-font-size-3xl) !important; }
+.uenf-text-4xl { font-size: var(--uenf-typography-font-size-4xl) !important; }
+
+.uenf-font-thin { font-weight: var(--uenf-typography-font-weight-thin) !important; }
+.uenf-font-light { font-weight: var(--uenf-typography-font-weight-light) !important; }
+.uenf-font-normal { font-weight: var(--uenf-typography-font-weight-normal) !important; }
+.uenf-font-medium { font-weight: var(--uenf-typography-font-weight-medium) !important; }
+.uenf-font-semibold { font-weight: var(--uenf-typography-font-weight-semibold) !important; }
+.uenf-font-bold { font-weight: var(--uenf-typography-font-weight-bold) !important; }
+
+.uenf-leading-none { line-height: var(--uenf-typography-line-height-none) !important; }
+.uenf-leading-tight { line-height: var(--uenf-typography-line-height-tight) !important; }
+.uenf-leading-snug { line-height: var(--uenf-typography-line-height-snug) !important; }
+.uenf-leading-normal { line-height: var(--uenf-typography-line-height-normal) !important; }
+.uenf-leading-relaxed { line-height: var(--uenf-typography-line-height-relaxed) !important; }
+.uenf-leading-loose { line-height: var(--uenf-typography-line-height-loose) !important; }
+
+/* Espaçamentos */
+.uenf-m-0 { margin: var(--uenf-spacing-0) !important; }
+.uenf-m-1 { margin: var(--uenf-spacing-1) !important; }
+.uenf-m-2 { margin: var(--uenf-spacing-2) !important; }
+.uenf-m-3 { margin: var(--uenf-spacing-3) !important; }
+.uenf-m-4 { margin: var(--uenf-spacing-4) !important; }
+.uenf-m-5 { margin: var(--uenf-spacing-5) !important; }
+.uenf-m-6 { margin: var(--uenf-spacing-6) !important; }
+.uenf-m-8 { margin: var(--uenf-spacing-8) !important; }
+.uenf-m-10 { margin: var(--uenf-spacing-10) !important; }
+.uenf-m-12 { margin: var(--uenf-spacing-12) !important; }
+.uenf-m-16 { margin: var(--uenf-spacing-16) !important; }
+.uenf-m-20 { margin: var(--uenf-spacing-20) !important; }
+.uenf-m-24 { margin: var(--uenf-spacing-24) !important; }
+
+.uenf-p-0 { padding: var(--uenf-spacing-0) !important; }
+.uenf-p-1 { padding: var(--uenf-spacing-1) !important; }
+.uenf-p-2 { padding: var(--uenf-spacing-2) !important; }
+.uenf-p-3 { padding: var(--uenf-spacing-3) !important; }
+.uenf-p-4 { padding: var(--uenf-spacing-4) !important; }
+.uenf-p-5 { padding: var(--uenf-spacing-5) !important; }
+.uenf-p-6 { padding: var(--uenf-spacing-6) !important; }
+.uenf-p-8 { padding: var(--uenf-spacing-8) !important; }
+.uenf-p-10 { padding: var(--uenf-spacing-10) !important; }
+.uenf-p-12 { padding: var(--uenf-spacing-12) !important; }
+.uenf-p-16 { padding: var(--uenf-spacing-16) !important; }
+.uenf-p-20 { padding: var(--uenf-spacing-20) !important; }
+.uenf-p-24 { padding: var(--uenf-spacing-24) !important; }
+
+/* Espaçamentos direcionais */
+.uenf-mt-0 { margin-top: var(--uenf-spacing-0) !important; }
+.uenf-mt-1 { margin-top: var(--uenf-spacing-1) !important; }
+.uenf-mt-2 { margin-top: var(--uenf-spacing-2) !important; }
+.uenf-mt-3 { margin-top: var(--uenf-spacing-3) !important; }
+.uenf-mt-4 { margin-top: var(--uenf-spacing-4) !important; }
+.uenf-mt-5 { margin-top: var(--uenf-spacing-5) !important; }
+.uenf-mt-6 { margin-top: var(--uenf-spacing-6) !important; }
+.uenf-mt-8 { margin-top: var(--uenf-spacing-8) !important; }
+.uenf-mt-10 { margin-top: var(--uenf-spacing-10) !important; }
+.uenf-mt-12 { margin-top: var(--uenf-spacing-12) !important; }
+.uenf-mt-16 { margin-top: var(--uenf-spacing-16) !important; }
+.uenf-mt-20 { margin-top: var(--uenf-spacing-20) !important; }
+.uenf-mt-24 { margin-top: var(--uenf-spacing-24) !important; }
+
+.uenf-mb-0 { margin-bottom: var(--uenf-spacing-0) !important; }
+.uenf-mb-1 { margin-bottom: var(--uenf-spacing-1) !important; }
+.uenf-mb-2 { margin-bottom: var(--uenf-spacing-2) !important; }
+.uenf-mb-3 { margin-bottom: var(--uenf-spacing-3) !important; }
+.uenf-mb-4 { margin-bottom: var(--uenf-spacing-4) !important; }
+.uenf-mb-5 { margin-bottom: var(--uenf-spacing-5) !important; }
+.uenf-mb-6 { margin-bottom: var(--uenf-spacing-6) !important; }
+.uenf-mb-8 { margin-bottom: var(--uenf-spacing-8) !important; }
+.uenf-mb-10 { margin-bottom: var(--uenf-spacing-10) !important; }
+.uenf-mb-12 { margin-bottom: var(--uenf-spacing-12) !important; }
+.uenf-mb-16 { margin-bottom: var(--uenf-spacing-16) !important; }
+.uenf-mb-20 { margin-bottom: var(--uenf-spacing-20) !important; }
+.uenf-mb-24 { margin-bottom: var(--uenf-spacing-24) !important; }
+
+.uenf-ml-0 { margin-left: var(--uenf-spacing-0) !important; }
+.uenf-ml-1 { margin-left: var(--uenf-spacing-1) !important; }
+.uenf-ml-2 { margin-left: var(--uenf-spacing-2) !important; }
+.uenf-ml-3 { margin-left: var(--uenf-spacing-3) !important; }
+.uenf-ml-4 { margin-left: var(--uenf-spacing-4) !important; }
+.uenf-ml-5 { margin-left: var(--uenf-spacing-5) !important; }
+.uenf-ml-6 { margin-left: var(--uenf-spacing-6) !important; }
+.uenf-ml-8 { margin-left: var(--uenf-spacing-8) !important; }
+.uenf-ml-10 { margin-left: var(--uenf-spacing-10) !important; }
+.uenf-ml-12 { margin-left: var(--uenf-spacing-12) !important; }
+.uenf-ml-16 { margin-left: var(--uenf-spacing-16) !important; }
+.uenf-ml-20 { margin-left: var(--uenf-spacing-20) !important; }
+.uenf-ml-24 { margin-left: var(--uenf-spacing-24) !important; }
+
+.uenf-mr-0 { margin-right: var(--uenf-spacing-0) !important; }
+.uenf-mr-1 { margin-right: var(--uenf-spacing-1) !important; }
+.uenf-mr-2 { margin-right: var(--uenf-spacing-2) !important; }
+.uenf-mr-3 { margin-right: var(--uenf-spacing-3) !important; }
+.uenf-mr-4 { margin-right: var(--uenf-spacing-4) !important; }
+.uenf-mr-5 { margin-right: var(--uenf-spacing-5) !important; }
+.uenf-mr-6 { margin-right: var(--uenf-spacing-6) !important; }
+.uenf-mr-8 { margin-right: var(--uenf-spacing-8) !important; }
+.uenf-mr-10 { margin-right: var(--uenf-spacing-10) !important; }
+.uenf-mr-12 { margin-right: var(--uenf-spacing-12) !important; }
+.uenf-mr-16 { margin-right: var(--uenf-spacing-16) !important; }
+.uenf-mr-20 { margin-right: var(--uenf-spacing-20) !important; }
+.uenf-mr-24 { margin-right: var(--uenf-spacing-24) !important; }
+
+/* Paddings direcionais */
+.uenf-pt-0 { padding-top: var(--uenf-spacing-0) !important; }
+.uenf-pt-1 { padding-top: var(--uenf-spacing-1) !important; }
+.uenf-pt-2 { padding-top: var(--uenf-spacing-2) !important; }
+.uenf-pt-3 { padding-top: var(--uenf-spacing-3) !important; }
+.uenf-pt-4 { padding-top: var(--uenf-spacing-4) !important; }
+.uenf-pt-5 { padding-top: var(--uenf-spacing-5) !important; }
+.uenf-pt-6 { padding-top: var(--uenf-spacing-6) !important; }
+.uenf-pt-8 { padding-top: var(--uenf-spacing-8) !important; }
+.uenf-pt-10 { padding-top: var(--uenf-spacing-10) !important; }
+.uenf-pt-12 { padding-top: var(--uenf-spacing-12) !important; }
+.uenf-pt-16 { padding-top: var(--uenf-spacing-16) !important; }
+.uenf-pt-20 { padding-top: var(--uenf-spacing-20) !important; }
+.uenf-pt-24 { padding-top: var(--uenf-spacing-24) !important; }
+
+.uenf-pb-0 { padding-bottom: var(--uenf-spacing-0) !important; }
+.uenf-pb-1 { padding-bottom: var(--uenf-spacing-1) !important; }
+.uenf-pb-2 { padding-bottom: var(--uenf-spacing-2) !important; }
+.uenf-pb-3 { padding-bottom: var(--uenf-spacing-3) !important; }
+.uenf-pb-4 { padding-bottom: var(--uenf-spacing-4) !important; }
+.uenf-pb-5 { padding-bottom: var(--uenf-spacing-5) !important; }
+.uenf-pb-6 { padding-bottom: var(--uenf-spacing-6) !important; }
+.uenf-pb-8 { padding-bottom: var(--uenf-spacing-8) !important; }
+.uenf-pb-10 { padding-bottom: var(--uenf-spacing-10) !important; }
+.uenf-pb-12 { padding-bottom: var(--uenf-spacing-12) !important; }
+.uenf-pb-16 { padding-bottom: var(--uenf-spacing-16) !important; }
+.uenf-pb-20 { padding-bottom: var(--uenf-spacing-20) !important; }
+.uenf-pb-24 { padding-bottom: var(--uenf-spacing-24) !important; }
+
+.uenf-pl-0 { padding-left: var(--uenf-spacing-0) !important; }
+.uenf-pl-1 { padding-left: var(--uenf-spacing-1) !important; }
+.uenf-pl-2 { padding-left: var(--uenf-spacing-2) !important; }
+.uenf-pl-3 { padding-left: var(--uenf-spacing-3) !important; }
+.uenf-pl-4 { padding-left: var(--uenf-spacing-4) !important; }
+.uenf-pl-5 { padding-left: var(--uenf-spacing-5) !important; }
+.uenf-pl-6 { padding-left: var(--uenf-spacing-6) !important; }
+.uenf-pl-8 { padding-left: var(--uenf-spacing-8) !important; }
+.uenf-pl-10 { padding-left: var(--uenf-spacing-10) !important; }
+.uenf-pl-12 { padding-left: var(--uenf-spacing-12) !important; }
+.uenf-pl-16 { padding-left: var(--uenf-spacing-16) !important; }
+.uenf-pl-20 { padding-left: var(--uenf-spacing-20) !important; }
+.uenf-pl-24 { padding-left: var(--uenf-spacing-24) !important; }
+
+.uenf-pr-0 { padding-right: var(--uenf-spacing-0) !important; }
+.uenf-pr-1 { padding-right: var(--uenf-spacing-1) !important; }
+.uenf-pr-2 { padding-right: var(--uenf-spacing-2) !important; }
+.uenf-pr-3 { padding-right: var(--uenf-spacing-3) !important; }
+.uenf-pr-4 { padding-right: var(--uenf-spacing-4) !important; }
+.uenf-pr-5 { padding-right: var(--uenf-spacing-5) !important; }
+.uenf-pr-6 { padding-right: var(--uenf-spacing-6) !important; }
+.uenf-pr-8 { padding-right: var(--uenf-spacing-8) !important; }
+.uenf-pr-10 { padding-right: var(--uenf-spacing-10) !important; }
+.uenf-pr-12 { padding-right: var(--uenf-spacing-12) !important; }
+.uenf-pr-16 { padding-right: var(--uenf-spacing-16) !important; }
+.uenf-pr-20 { padding-right: var(--uenf-spacing-20) !important; }
+.uenf-pr-24 { padding-right: var(--uenf-spacing-24) !important; }
+
+/* Bordas arredondadas */
+.uenf-rounded-none { border-radius: var(--uenf-border-radius-none) !important; }
+.uenf-rounded-sm { border-radius: var(--uenf-border-radius-sm) !important; }
+.uenf-rounded { border-radius: var(--uenf-border-radius-base) !important; }
+.uenf-rounded-md { border-radius: var(--uenf-border-radius-md) !important; }
+.uenf-rounded-lg { border-radius: var(--uenf-border-radius-lg) !important; }
+.uenf-rounded-xl { border-radius: var(--uenf-border-radius-xl) !important; }
+.uenf-rounded-2xl { border-radius: var(--uenf-border-radius-2xl) !important; }
+.uenf-rounded-full { border-radius: var(--uenf-border-radius-full) !important; }
+
+/* Sombras */
+.uenf-shadow-none { box-shadow: var(--uenf-shadows-none) !important; }
+.uenf-shadow-sm { box-shadow: var(--uenf-shadows-sm) !important; }
+.uenf-shadow { box-shadow: var(--uenf-shadows-base) !important; }
+.uenf-shadow-md { box-shadow: var(--uenf-shadows-md) !important; }
+.uenf-shadow-lg { box-shadow: var(--uenf-shadows-lg) !important; }
+.uenf-shadow-xl { box-shadow: var(--uenf-shadows-xl) !important; }
+.uenf-shadow-2xl { box-shadow: var(--uenf-shadows-2xl) !important; }
+
+/* ==========================================================================
+   Componentes com Tokens Aplicados
+   ========================================================================== */
+
+/* Botões baseados em tokens */
+.uenf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--uenf-spacing-component-xs);
+    padding: var(--uenf-spacing-component-sm) var(--uenf-spacing-component-md);
+    font-family: var(--uenf-typography-font-family-sans);
+    font-size: var(--uenf-typography-font-size-base);
+    font-weight: var(--uenf-typography-font-weight-medium);
+    line-height: var(--uenf-typography-line-height-none);
+    border: 1px solid transparent;
+    border-radius: var(--uenf-border-radius-md);
+    cursor: pointer;
+    transition: all var(--uenf-transitions-duration-normal) var(--uenf-transitions-easing-ease-in-out);
+    text-decoration: none;
+}
+
+.uenf-btn:focus {
+    outline: 2px solid var(--uenf-colors-brand-primary);
+    outline-offset: 2px;
+}
+
+.uenf-btn-primary {
+    background-color: var(--uenf-colors-brand-primary);
+    color: var(--uenf-colors-text-inverse);
+    border-color: var(--uenf-colors-brand-primary);
+}
+
+.uenf-btn-primary:hover {
+    background-color: var(--uenf-colors-blue-700);
+    border-color: var(--uenf-colors-blue-700);
+}
+
+.uenf-btn-secondary {
+    background-color: var(--uenf-colors-background-secondary);
+    color: var(--uenf-colors-text-primary);
+    border-color: var(--uenf-colors-border-default);
+}
+
+.uenf-btn-secondary:hover {
+    background-color: var(--uenf-colors-background-tertiary);
+    border-color: var(--uenf-colors-border-strong);
+}
+
+.uenf-btn-success {
+    background-color: var(--uenf-colors-feedback-success);
+    color: var(--uenf-colors-text-inverse);
+    border-color: var(--uenf-colors-feedback-success);
+}
+
+.uenf-btn-warning {
+    background-color: var(--uenf-colors-feedback-warning);
+    color: var(--uenf-colors-text-inverse);
+    border-color: var(--uenf-colors-feedback-warning);
+}
+
+.uenf-btn-error {
+    background-color: var(--uenf-colors-feedback-error);
+    color: var(--uenf-colors-text-inverse);
+    border-color: var(--uenf-colors-feedback-error);
+}
+
+/* Tamanhos de botão */
+.uenf-btn-sm {
+    padding: var(--uenf-spacing-component-xs) var(--uenf-spacing-component-sm);
+    font-size: var(--uenf-typography-font-size-sm);
+}
+
+.uenf-btn-lg {
+    padding: var(--uenf-spacing-component-md) var(--uenf-spacing-component-lg);
+    font-size: var(--uenf-typography-font-size-lg);
+}
+
+/* Cards baseados em tokens */
+.uenf-card {
+    background-color: var(--uenf-colors-background-primary);
+    border: 1px solid var(--uenf-colors-border-default);
+    border-radius: var(--uenf-border-radius-lg);
+    padding: var(--uenf-spacing-component-lg);
+    box-shadow: var(--uenf-shadows-md);
+    transition: all var(--uenf-transitions-duration-normal) var(--uenf-transitions-easing-ease-in-out);
+}
+
+.uenf-card:hover {
+    box-shadow: var(--uenf-shadows-lg);
+    transform: translateY(-2px);
+}
+
+.uenf-card-elevated {
+    box-shadow: var(--uenf-shadows-lg);
+}
+
+.uenf-card-elevated:hover {
+    box-shadow: var(--uenf-shadows-xl);
+}
+
+/* Inputs baseados em tokens */
+.uenf-input {
+    width: 100%;
+    padding: var(--uenf-spacing-component-sm) var(--uenf-spacing-component-sm);
+    font-family: var(--uenf-typography-font-family-sans);
+    font-size: var(--uenf-typography-font-size-base);
+    line-height: var(--uenf-typography-line-height-normal);
+    color: var(--uenf-colors-text-primary);
+    background-color: var(--uenf-colors-background-primary);
+    border: 1px solid var(--uenf-colors-border-default);
+    border-radius: var(--uenf-border-radius-md);
+    transition: all var(--uenf-transitions-duration-normal) var(--uenf-transitions-easing-ease-in-out);
+}
+
+.uenf-input:focus {
+    outline: none;
+    border-color: var(--uenf-colors-brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.uenf-input:disabled {
+    background-color: var(--uenf-colors-background-secondary);
+    color: var(--uenf-colors-text-muted);
+    cursor: not-allowed;
+}
+
+.uenf-input.error {
+    border-color: var(--uenf-colors-feedback-error);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.uenf-input.success {
+    border-color: var(--uenf-colors-feedback-success);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+/* Badges baseados em tokens */
+.uenf-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--uenf-spacing-1) var(--uenf-spacing-2);
+    font-family: var(--uenf-typography-font-family-sans);
+    font-size: var(--uenf-typography-font-size-xs);
+    font-weight: var(--uenf-typography-font-weight-medium);
+    line-height: var(--uenf-typography-line-height-none);
+    border-radius: var(--uenf-border-radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.uenf-badge-primary {
+    background-color: var(--uenf-colors-blue-100);
+    color: var(--uenf-colors-blue-700);
+}
+
+.uenf-badge-success {
+    background-color: var(--uenf-colors-green-50);
+    color: var(--uenf-colors-green-600);
+}
+
+.uenf-badge-warning {
+    background-color: var(--uenf-colors-yellow-50);
+    color: var(--uenf-colors-yellow-600);
+}
+
+.uenf-badge-error {
+    background-color: var(--uenf-colors-red-50);
+    color: var(--uenf-colors-red-600);
+}
+
+.uenf-badge-neutral {
+    background-color: var(--uenf-colors-gray-100);
+    color: var(--uenf-colors-gray-600);
+}
+
+/* ==========================================================================
+   Documentação Visual de Tokens
+   ========================================================================== */
+
+/* Container de documentação */
+.uenf-token-documentation {
+    font-family: var(--uenf-typography-font-family-sans);
+    line-height: var(--uenf-typography-line-height-normal);
+}
+
+.uenf-token-category {
+    margin-bottom: var(--uenf-spacing-layout-section);
+}
+
+.uenf-token-category h3 {
+    font-size: var(--uenf-typography-font-size-2xl);
+    font-weight: var(--uenf-typography-font-weight-bold);
+    color: var(--uenf-colors-text-primary);
+    margin-bottom: var(--uenf-spacing-component-lg);
+    border-bottom: 2px solid var(--uenf-colors-border-default);
+    padding-bottom: var(--uenf-spacing-component-sm);
+}
+
+.uenf-token-subcategory {
+    margin-bottom: var(--uenf-spacing-component-xl);
+}
+
+.uenf-token-subcategory h4 {
+    font-size: var(--uenf-typography-font-size-xl);
+    font-weight: var(--uenf-typography-font-weight-semibold);
+    color: var(--uenf-colors-text-secondary);
+    margin-bottom: var(--uenf-spacing-component-md);
+}
+
+.uenf-tokens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--uenf-spacing-component-md);
+}
+
+.uenf-token-card {
+    background-color: var(--uenf-colors-background-primary);
+    border: 1px solid var(--uenf-colors-border-default);
+    border-radius: var(--uenf-border-radius-lg);
+    padding: var(--uenf-spacing-component-md);
+    transition: all var(--uenf-transitions-duration-normal) var(--uenf-transitions-easing-ease-in-out);
+}
+
+.uenf-token-card:hover {
+    border-color: var(--uenf-colors-brand-primary);
+    box-shadow: var(--uenf-shadows-md);
+}
+
+.uenf-token-header h5 {
+    font-size: var(--uenf-typography-font-size-base);
+    font-weight: var(--uenf-typography-font-weight-semibold);
+    color: var(--uenf-colors-text-primary);
+    margin-bottom: var(--uenf-spacing-component-xs);
+}
+
+.uenf-token-value {
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-sm);
+    color: var(--uenf-colors-text-secondary);
+    background-color: var(--uenf-colors-background-secondary);
+    padding: var(--uenf-spacing-1) var(--uenf-spacing-2);
+    border-radius: var(--uenf-border-radius-sm);
+    margin-bottom: var(--uenf-spacing-component-xs);
+}
+
+.uenf-token-css {
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-xs);
+    color: var(--uenf-colors-brand-primary);
+    margin-bottom: var(--uenf-spacing-component-xs);
+}
+
+.uenf-token-description {
+    font-size: var(--uenf-typography-font-size-sm);
+    color: var(--uenf-colors-text-muted);
+    line-height: var(--uenf-typography-line-height-relaxed);
+}
+
+/* Tabela de tokens */
+.uenf-tokens-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--uenf-typography-font-family-sans);
+    font-size: var(--uenf-typography-font-size-sm);
+    margin-bottom: var(--uenf-spacing-component-xl);
+}
+
+.uenf-tokens-table th,
+.uenf-tokens-table td {
+    padding: var(--uenf-spacing-component-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--uenf-colors-border-default);
+}
+
+.uenf-tokens-table th {
+    background-color: var(--uenf-colors-background-secondary);
+    font-weight: var(--uenf-typography-font-weight-semibold);
+    color: var(--uenf-colors-text-primary);
+}
+
+.uenf-tokens-table td {
+    color: var(--uenf-colors-text-secondary);
+}
+
+.uenf-tokens-table code {
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-xs);
+    background-color: var(--uenf-colors-background-secondary);
+    padding: var(--uenf-spacing-1);
+    border-radius: var(--uenf-border-radius-sm);
+}
+
+/* CSS Variables display */
+.uenf-tokens-css {
+    margin-bottom: var(--uenf-spacing-component-xl);
+}
+
+.uenf-tokens-css h3 {
+    font-size: var(--uenf-typography-font-size-xl);
+    font-weight: var(--uenf-typography-font-weight-semibold);
+    color: var(--uenf-colors-text-primary);
+    margin-bottom: var(--uenf-spacing-component-md);
+}
+
+.uenf-tokens-css pre {
+    background-color: var(--uenf-colors-gray-900);
+    color: var(--uenf-colors-gray-100);
+    padding: var(--uenf-spacing-component-lg);
+    border-radius: var(--uenf-border-radius-lg);
+    overflow-x: auto;
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-sm);
+    line-height: var(--uenf-typography-line-height-relaxed);
+}
+
+/* ==========================================================================
+   Preview de Tokens
+   ========================================================================== */
+
+.uenf-token-preview-container {
+    font-family: var(--uenf-typography-font-family-sans);
+}
+
+.uenf-preview-grid .uenf-token-category {
+    margin-bottom: var(--uenf-spacing-component-xl);
+}
+
+.uenf-preview-grid .uenf-token-subcategory {
+    margin-bottom: var(--uenf-spacing-component-lg);
+}
+
+.uenf-preview-grid .uenf-token-item {
+    display: flex;
+    align-items: center;
+    gap: var(--uenf-spacing-component-sm);
+    padding: var(--uenf-spacing-component-sm);
+    border: 1px solid var(--uenf-colors-border-default);
+    border-radius: var(--uenf-border-radius-md);
+    margin-bottom: var(--uenf-spacing-component-xs);
+    transition: all var(--uenf-transitions-duration-normal) var(--uenf-transitions-easing-ease-in-out);
+}
+
+.uenf-preview-grid .uenf-token-item:hover {
+    border-color: var(--uenf-colors-brand-primary);
+    background-color: var(--uenf-colors-background-secondary);
+}
+
+.uenf-token-name {
+    font-weight: var(--uenf-typography-font-weight-medium);
+    color: var(--uenf-colors-text-primary);
+    min-width: 120px;
+}
+
+.uenf-token-value {
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-sm);
+    color: var(--uenf-colors-text-secondary);
+    flex: 1;
+}
+
+.uenf-token-description {
+    font-size: var(--uenf-typography-font-size-sm);
+    color: var(--uenf-colors-text-muted);
+    font-style: italic;
+}
+
+/* Preview específico para cores */
+.uenf-token-preview[data-token*="colors"] {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--uenf-border-radius-md);
+    border: 1px solid var(--uenf-colors-border-default);
+    display: inline-block;
+    margin-right: var(--uenf-spacing-component-sm);
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug para tokens */
+.uenf-tokens-debug {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: var(--uenf-spacing-component-sm);
+    border-radius: var(--uenf-border-radius-md);
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-xs);
+    z-index: 10000;
+    max-width: 300px;
+    box-shadow: var(--uenf-shadows-lg);
+}
+
+.uenf-tokens-debug h4 {
+    margin: 0 0 var(--uenf-spacing-component-xs) 0;
+    color: var(--uenf-colors-blue-400);
+    font-size: var(--uenf-typography-font-size-sm);
+}
+
+.uenf-debug-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--uenf-spacing-1);
+}
+
+.uenf-debug-item:last-child {
+    margin-bottom: 0;
+}
+
+.uenf-debug-label {
+    color: var(--uenf-colors-gray-300);
+}
+
+.uenf-debug-value {
+    color: var(--uenf-colors-green-400);
+    font-weight: var(--uenf-typography-font-weight-medium);
+}
+
+/* Highlight de elementos com tokens */
+.uenf-token-highlight {
+    outline: 2px dashed var(--uenf-colors-brand-primary) !important;
+    outline-offset: 2px !important;
+    position: relative;
+}
+
+.uenf-token-highlight::before {
+    content: attr(data-uenf-token);
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: var(--uenf-colors-brand-primary);
+    color: var(--uenf-colors-text-inverse);
+    padding: var(--uenf-spacing-1) var(--uenf-spacing-2);
+    border-radius: var(--uenf-border-radius-sm);
+    font-family: var(--uenf-typography-font-family-mono);
+    font-size: var(--uenf-typography-font-size-xs);
+    z-index: 1000;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .uenf-tokens-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .uenf-tokens-table {
+        font-size: var(--uenf-typography-font-size-xs);
+    }
+    
+    .uenf-tokens-table th,
+    .uenf-tokens-table td {
+        padding: var(--uenf-spacing-component-xs);
+    }
+    
+    .uenf-tokens-debug {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: var(--uenf-spacing-component-md);
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .uenf-tokens-debug {
+        display: none !important;
+    }
+    
+    .uenf-token-highlight {
+        outline: none !important;
+    }
+    
+    .uenf-token-highlight::before {
+        display: none !important;
+    }
+    
+    .uenf-tokens-css pre {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .uenf-btn,
+    .uenf-card,
+    .uenf-input,
+    .uenf-token-card,
+    .uenf-token-item {
+        transition: none !important;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .uenf-token-card {
+        border-width: 2px;
+    }
+    
+    .uenf-btn {
+        border-width: 2px;
+    }
+    
+    .uenf-input {
+        border-width: 2px;
+    }
+}
+
+/* Modo escuro do sistema */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uenf-colors-text-primary: var(--uenf-colors-gray-100);
+        --uenf-colors-text-secondary: var(--uenf-colors-gray-300);
+        --uenf-colors-text-muted: var(--uenf-colors-gray-500);
+        --uenf-colors-text-inverse: var(--uenf-colors-gray-900);
+        
+        --uenf-colors-background-primary: var(--uenf-colors-gray-900);
+        --uenf-colors-background-secondary: var(--uenf-colors-gray-800);
+        --uenf-colors-background-tertiary: var(--uenf-colors-gray-700);
+        
+        --uenf-colors-border-default: var(--uenf-colors-gray-700);
+        --uenf-colors-border-muted: var(--uenf-colors-gray-800);
+        --uenf-colors-border-strong: var(--uenf-colors-gray-600);
+    }
+}

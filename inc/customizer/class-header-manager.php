@@ -7,7 +7,7 @@
  * - Cores e transparência
  * - Comportamento Sticky
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -16,9 +16,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CCT_Header_Manager extends CCT_Customizer_Base {
+class UENF_Header_Manager extends UENF_Customizer_Base {
     
-    protected $prefix = 'cct_header_';
+    protected $prefix = 'uenf_header_';
     
     protected function init() {
         $this->add_sections();
@@ -122,9 +122,9 @@ class CCT_Header_Manager extends CCT_Customizer_Base {
         
         $css = "
         :root {
-            --cct-header-height-desktop: {$h_desktop}px;
-            --cct-header-height-mobile: {$h_mobile}px;
-            --cct-header-bg: {$bg_color};
+            --uenf-header-height-desktop: {$h_desktop}px;
+            --uenf-header-height-mobile: {$h_mobile}px;
+            --uenf-header-bg: {$bg_color};
         }
         ";
         
@@ -135,15 +135,15 @@ class CCT_Header_Manager extends CCT_Customizer_Base {
                     position: fixed !important;
                     top: 0;
                     width: 100%;
-                    height: var(--cct-header-height-mobile) !important;
-                    background-color: var(--cct-header-bg) !important;
+                    height: var(--uenf-header-height-mobile) !important;
+                    background-color: var(--uenf-header-bg) !important;
                     z-index: 9999;
                 }
                 body {
-                    padding-top: var(--cct-header-height-mobile) !important;
+                    padding-top: var(--uenf-header-height-mobile) !important;
                 }
                 body.admin-bar {
-                    padding-top: calc(32px + var(--cct-header-height-mobile)) !important;
+                    padding-top: calc(32px + var(--uenf-header-height-mobile)) !important;
                 }
                 body.admin-bar .bg-header-logo {
                     top: 32px !important;

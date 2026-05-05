@@ -29,7 +29,7 @@
          */
         setupTokenManager: function() {
             // Criar interface do gerenciador se não existir
-            if (!$('.cct-design-tokens-control').length) {
+            if (!$('.uenf-design-tokens-control').length) {
                 this.createManagerInterface();
             }
         },
@@ -39,59 +39,59 @@
          */
         createManagerInterface: function() {
             var managerHTML = `
-                <div class="cct-design-tokens-control">
-                    <div class="cct-tokens-header">
+                <div class="uenf-design-tokens-control">
+                    <div class="uenf-tokens-header">
                         <h3>Gerenciador de Design Tokens</h3>
-                        <div class="cct-tokens-actions">
-                            <button class="button button-secondary cct-add-token">Adicionar Token</button>
-                            <button class="button button-secondary cct-export-tokens">Exportar</button>
-                            <button class="button button-secondary cct-import-tokens">Importar</button>
+                        <div class="uenf-tokens-actions">
+                            <button class="button button-secondary uenf-add-token">Adicionar Token</button>
+                            <button class="button button-secondary uenf-export-tokens">Exportar</button>
+                            <button class="button button-secondary uenf-import-tokens">Importar</button>
                         </div>
                     </div>
                     
-                    <div class="cct-tokens-categories">
-                        <div class="cct-category-tabs">
-                            <button class="cct-tab active" data-category="colors">Cores</button>
-                            <button class="cct-tab" data-category="typography">Tipografia</button>
-                            <button class="cct-tab" data-category="spacing">Espaçamentos</button>
-                            <button class="cct-tab" data-category="shadows">Sombras</button>
-                            <button class="cct-tab" data-category="borders">Bordas</button>
-                            <button class="cct-tab" data-category="custom">Personalizado</button>
+                    <div class="uenf-tokens-categories">
+                        <div class="uenf-category-tabs">
+                            <button class="uenf-tab active" data-category="colors">Cores</button>
+                            <button class="uenf-tab" data-category="typography">Tipografia</button>
+                            <button class="uenf-tab" data-category="spacing">Espaçamentos</button>
+                            <button class="uenf-tab" data-category="shadows">Sombras</button>
+                            <button class="uenf-tab" data-category="borders">Bordas</button>
+                            <button class="uenf-tab" data-category="custom">Personalizado</button>
                         </div>
                     </div>
                     
-                    <div class="cct-tokens-content">
-                        <div class="cct-tokens-list" data-category="colors">
+                    <div class="uenf-tokens-content">
+                        <div class="uenf-tokens-list" data-category="colors">
                             <!-- Tokens de cores -->
                         </div>
-                        <div class="cct-tokens-list" data-category="typography" style="display: none;">
+                        <div class="uenf-tokens-list" data-category="typography" style="display: none;">
                             <!-- Tokens de tipografia -->
                         </div>
-                        <div class="cct-tokens-list" data-category="spacing" style="display: none;">
+                        <div class="uenf-tokens-list" data-category="spacing" style="display: none;">
                             <!-- Tokens de espaçamentos -->
                         </div>
-                        <div class="cct-tokens-list" data-category="shadows" style="display: none;">
+                        <div class="uenf-tokens-list" data-category="shadows" style="display: none;">
                             <!-- Tokens de sombras -->
                         </div>
-                        <div class="cct-tokens-list" data-category="borders" style="display: none;">
+                        <div class="uenf-tokens-list" data-category="borders" style="display: none;">
                             <!-- Tokens de bordas -->
                         </div>
-                        <div class="cct-tokens-list" data-category="custom" style="display: none;">
+                        <div class="uenf-tokens-list" data-category="custom" style="display: none;">
                             <!-- Tokens personalizados -->
                         </div>
                     </div>
                     
-                    <div class="cct-tokens-preview">
+                    <div class="uenf-tokens-preview">
                         <h4>Preview</h4>
-                        <div class="cct-preview-container">
-                            <div class="cct-preview-element">Elemento de Preview</div>
+                        <div class="uenf-preview-container">
+                            <div class="uenf-preview-element">Elemento de Preview</div>
                         </div>
                     </div>
                 </div>
             `;
             
             // Adicionar à interface do customizer
-            $('.customize-control-cct_design_tokens_manager').append(managerHTML);
+            $('.customize-control-uenf_design_tokens_manager').append(managerHTML);
         },
 
         /**
@@ -150,26 +150,26 @@
          * Renderizar tokens por categoria
          */
         renderTokens: function(category, tokens) {
-            var container = $(`.cct-tokens-list[data-category="${category}"]`);
+            var container = $(`.uenf-tokens-list[data-category="${category}"]`);
             container.empty();
             
             tokens.forEach(function(token, index) {
                 var tokenHTML = `
-                    <div class="cct-token-item" data-category="${category}" data-index="${index}">
-                        <div class="cct-token-info">
-                            <div class="cct-token-name-group">
-                                <input type="text" class="cct-token-name" value="${token.name}" placeholder="Nome do token">
-                                <span class="cct-token-var">--cct-${token.name}</span>
+                    <div class="uenf-token-item" data-category="${category}" data-index="${index}">
+                        <div class="uenf-token-info">
+                            <div class="uenf-token-name-group">
+                                <input type="text" class="uenf-token-name" value="${token.name}" placeholder="Nome do token">
+                                <span class="uenf-token-var">--uenf-${token.name}</span>
                             </div>
-                            <div class="cct-token-value-group">
+                            <div class="uenf-token-value-group">
                                 ${this.getValueInput(category, token.value)}
-                                <div class="cct-token-preview" style="${this.getPreviewStyle(category, token.value)}"></div>
+                                <div class="uenf-token-preview" style="${this.getPreviewStyle(category, token.value)}"></div>
                             </div>
-                            <input type="text" class="cct-token-description" value="${token.description}" placeholder="Descrição">
+                            <input type="text" class="uenf-token-description" value="${token.description}" placeholder="Descrição">
                         </div>
-                        <div class="cct-token-actions">
-                            <button class="button button-small cct-duplicate-token" title="Duplicar">⧉</button>
-                            <button class="button button-small cct-delete-token" title="Excluir">×</button>
+                        <div class="uenf-token-actions">
+                            <button class="button button-small uenf-duplicate-token" title="Duplicar">⧉</button>
+                            <button class="button button-small uenf-delete-token" title="Excluir">×</button>
                         </div>
                     </div>
                 `;
@@ -184,20 +184,20 @@
         getValueInput: function(category, value) {
             switch(category) {
                 case 'colors':
-                    return `<input type="color" class="cct-token-value color-input" value="${value}">`;
+                    return `<input type="color" class="uenf-token-value color-input" value="${value}">`;
                 case 'typography':
                     if (value.includes('px') || value.includes('em') || value.includes('rem')) {
-                        return `<input type="text" class="cct-token-value" value="${value}" placeholder="ex: 16px, 1.2em">`;
+                        return `<input type="text" class="uenf-token-value" value="${value}" placeholder="ex: 16px, 1.2em">`;
                     }
-                    return `<input type="text" class="cct-token-value" value="${value}" placeholder="ex: Arial, sans-serif">`;
+                    return `<input type="text" class="uenf-token-value" value="${value}" placeholder="ex: Arial, sans-serif">`;
                 case 'spacing':
-                    return `<input type="text" class="cct-token-value" value="${value}" placeholder="ex: 16px, 1rem">`;
+                    return `<input type="text" class="uenf-token-value" value="${value}" placeholder="ex: 16px, 1rem">`;
                 case 'shadows':
-                    return `<input type="text" class="cct-token-value" value="${value}" placeholder="ex: 0 2px 4px rgba(0,0,0,0.1)">`;
+                    return `<input type="text" class="uenf-token-value" value="${value}" placeholder="ex: 0 2px 4px rgba(0,0,0,0.1)">`;
                 case 'borders':
-                    return `<input type="text" class="cct-token-value" value="${value}" placeholder="ex: 1px, 4px">`;
+                    return `<input type="text" class="uenf-token-value" value="${value}" placeholder="ex: 1px, 4px">`;
                 default:
-                    return `<input type="text" class="cct-token-value" value="${value}" placeholder="Valor">`;
+                    return `<input type="text" class="uenf-token-value" value="${value}" placeholder="Valor">`;
             }
         },
 
@@ -233,26 +233,26 @@
             };
             
             var tokenHTML = `
-                <div class="cct-token-item" data-category="${category}" data-index="new">
-                    <div class="cct-token-info">
-                        <div class="cct-token-name-group">
-                            <input type="text" class="cct-token-name" value="${newToken.name}" placeholder="Nome do token">
-                            <span class="cct-token-var">--cct-${newToken.name}</span>
+                <div class="uenf-token-item" data-category="${category}" data-index="new">
+                    <div class="uenf-token-info">
+                        <div class="uenf-token-name-group">
+                            <input type="text" class="uenf-token-name" value="${newToken.name}" placeholder="Nome do token">
+                            <span class="uenf-token-var">--uenf-${newToken.name}</span>
                         </div>
-                        <div class="cct-token-value-group">
+                        <div class="uenf-token-value-group">
                             ${this.getValueInput(category, newToken.value)}
-                            <div class="cct-token-preview" style="${this.getPreviewStyle(category, newToken.value)}"></div>
+                            <div class="uenf-token-preview" style="${this.getPreviewStyle(category, newToken.value)}"></div>
                         </div>
-                        <input type="text" class="cct-token-description" value="${newToken.description}" placeholder="Descrição">
+                        <input type="text" class="uenf-token-description" value="${newToken.description}" placeholder="Descrição">
                     </div>
-                    <div class="cct-token-actions">
-                        <button class="button button-small cct-duplicate-token" title="Duplicar">⧉</button>
-                        <button class="button button-small cct-delete-token" title="Excluir">×</button>
+                    <div class="uenf-token-actions">
+                        <button class="button button-small uenf-duplicate-token" title="Duplicar">⧉</button>
+                        <button class="button button-small uenf-delete-token" title="Excluir">×</button>
                     </div>
                 </div>
             `;
             
-            $(`.cct-tokens-list[data-category="${category}"]`).append(tokenHTML);
+            $(`.uenf-tokens-list[data-category="${category}"]`).append(tokenHTML);
         },
 
         /**
@@ -297,16 +297,16 @@
         getAllTokens: function() {
             var tokens = {};
             
-            $('.cct-tokens-list').each(function() {
+            $('.uenf-tokens-list').each(function() {
                 var category = $(this).data('category');
                 tokens[category] = [];
                 
-                $(this).find('.cct-token-item').each(function() {
+                $(this).find('.uenf-token-item').each(function() {
                     var item = $(this);
                     var token = {
-                        name: item.find('.cct-token-name').val(),
-                        value: item.find('.cct-token-value').val(),
-                        description: item.find('.cct-token-description').val()
+                        name: item.find('.uenf-token-name').val(),
+                        value: item.find('.uenf-token-value').val(),
+                        description: item.find('.uenf-token-description').val()
                     };
                     
                     tokens[category].push(token);
@@ -323,57 +323,57 @@
             var self = this;
             
             // Trocar categoria
-            $(document).on('click', '.cct-tab', function() {
+            $(document).on('click', '.uenf-tab', function() {
                 var category = $(this).data('category');
                 
-                $('.cct-tab').removeClass('active');
+                $('.uenf-tab').removeClass('active');
                 $(this).addClass('active');
                 
-                $('.cct-tokens-list').hide();
-                $(`.cct-tokens-list[data-category="${category}"]`).show();
+                $('.uenf-tokens-list').hide();
+                $(`.uenf-tokens-list[data-category="${category}"]`).show();
             });
             
             // Adicionar token
-            $(document).on('click', '.cct-add-token', function() {
-                var activeCategory = $('.cct-tab.active').data('category');
+            $(document).on('click', '.uenf-add-token', function() {
+                var activeCategory = $('.uenf-tab.active').data('category');
                 self.addToken(activeCategory);
             });
             
             // Exportar tokens
-            $(document).on('click', '.cct-export-tokens', function() {
+            $(document).on('click', '.uenf-export-tokens', function() {
                 self.exportTokens();
             });
             
             // Excluir token
-            $(document).on('click', '.cct-delete-token', function() {
+            $(document).on('click', '.uenf-delete-token', function() {
                 if (confirm('Tem certeza que deseja excluir este token?')) {
-                    $(this).closest('.cct-token-item').remove();
+                    $(this).closest('.uenf-token-item').remove();
                 }
             });
             
             // Duplicar token
-            $(document).on('click', '.cct-duplicate-token', function() {
-                var item = $(this).closest('.cct-token-item');
+            $(document).on('click', '.uenf-duplicate-token', function() {
+                var item = $(this).closest('.uenf-token-item');
                 var clone = item.clone();
-                clone.find('.cct-token-name').val(clone.find('.cct-token-name').val() + '-copy');
+                clone.find('.uenf-token-name').val(clone.find('.uenf-token-name').val() + '-copy');
                 item.after(clone);
             });
             
             // Atualizar preview quando valor mudar
-            $(document).on('input change', '.cct-token-value', function() {
-                var item = $(this).closest('.cct-token-item');
+            $(document).on('input change', '.uenf-token-value', function() {
+                var item = $(this).closest('.uenf-token-item');
                 var category = item.data('category');
                 var value = $(this).val();
-                var preview = item.find('.cct-token-preview');
+                var preview = item.find('.uenf-token-preview');
                 
                 preview.attr('style', self.getPreviewStyle(category, value));
             });
             
             // Atualizar variável CSS quando nome mudar
-            $(document).on('input', '.cct-token-name', function() {
-                var item = $(this).closest('.cct-token-item');
+            $(document).on('input', '.uenf-token-name', function() {
+                var item = $(this).closest('.uenf-token-item');
                 var name = $(this).val();
-                item.find('.cct-token-var').text('--cct-' + name);
+                item.find('.uenf-token-var').text('--uenf-' + name);
             });
         }
     };

@@ -9,7 +9,7 @@
  * - Otimizações de performance
  * - Acessibilidade
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -19,30 +19,30 @@
 
 :root {
     /* Timing */
-    --cct-animation-duration: 0.3s;
-    --cct-animation-easing: ease-in-out;
-    --cct-animation-delay: 0s;
+    --uenf-animation-duration: 0.3s;
+    --uenf-animation-easing: ease-in-out;
+    --uenf-animation-delay: 0s;
     
     /* Micro-interações */
-    --cct-hover-duration: 0.3s;
-    --cct-focus-duration: 0.2s;
-    --cct-ripple-duration: 0.6s;
+    --uenf-hover-duration: 0.3s;
+    --uenf-focus-duration: 0.2s;
+    --uenf-ripple-duration: 0.6s;
     
     /* Transições de página */
-    --cct-page-transition-duration: 0.5s;
-    --cct-page-transition-easing: ease-in-out;
+    --uenf-page-transition-duration: 0.5s;
+    --uenf-page-transition-easing: ease-in-out;
     
     /* Cores para efeitos */
-    --cct-focus-color: #0073aa;
-    --cct-focus-shadow: rgba(0, 115, 170, 0.25);
-    --cct-ripple-color: rgba(255, 255, 255, 0.5);
-    --cct-glow-color: rgba(0, 123, 255, 0.3);
+    --uenf-focus-color: #0073aa;
+    --uenf-focus-shadow: rgba(0, 115, 170, 0.25);
+    --uenf-ripple-color: rgba(255, 255, 255, 0.5);
+    --uenf-glow-color: rgba(0, 123, 255, 0.3);
     
     /* Transformações */
-    --cct-lift-distance: -4px;
-    --cct-scale-factor: 1.05;
-    --cct-tilt-angle: 2deg;
-    --cct-slide-distance: -8px;
+    --uenf-lift-distance: -4px;
+    --uenf-scale-factor: 1.05;
+    --uenf-tilt-angle: 2deg;
+    --uenf-slide-distance: -8px;
 }
 
 /* ==========================================================================
@@ -50,17 +50,17 @@
    ========================================================================== */
 
 /* Otimizações de performance */
-.cct-animate,
-.cct-hover-effect,
-.cct-focus-effect,
-.cct-page-transition {
+.uenf-animate,
+.uenf-hover-effect,
+.uenf-focus-effect,
+.uenf-page-transition {
     will-change: transform, opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
 }
 
 /* Remover will-change após animação */
-.cct-animated {
+.uenf-animated {
     will-change: auto;
 }
 
@@ -68,7 +68,7 @@
    Keyframes - Animações de Entrada
    ========================================================================== */
 
-@keyframes cct-fadeIn {
+@keyframes uenf-fadeIn {
     from {
         opacity: 0;
     }
@@ -77,7 +77,7 @@
     }
 }
 
-@keyframes cct-fadeOut {
+@keyframes uenf-fadeOut {
     from {
         opacity: 1;
     }
@@ -86,7 +86,7 @@
     }
 }
 
-@keyframes cct-slideInUp {
+@keyframes uenf-slideInUp {
     from {
         transform: translateY(100%);
         opacity: 0;
@@ -97,7 +97,7 @@
     }
 }
 
-@keyframes cct-slideInDown {
+@keyframes uenf-slideInDown {
     from {
         transform: translateY(-100%);
         opacity: 0;
@@ -108,7 +108,7 @@
     }
 }
 
-@keyframes cct-slideInLeft {
+@keyframes uenf-slideInLeft {
     from {
         transform: translateX(-100%);
         opacity: 0;
@@ -119,7 +119,7 @@
     }
 }
 
-@keyframes cct-slideInRight {
+@keyframes uenf-slideInRight {
     from {
         transform: translateX(100%);
         opacity: 0;
@@ -130,7 +130,7 @@
     }
 }
 
-@keyframes cct-scaleIn {
+@keyframes uenf-scaleIn {
     from {
         transform: scale(0);
         opacity: 0;
@@ -141,7 +141,7 @@
     }
 }
 
-@keyframes cct-scaleOut {
+@keyframes uenf-scaleOut {
     from {
         transform: scale(1);
         opacity: 1;
@@ -152,7 +152,7 @@
     }
 }
 
-@keyframes cct-rotateIn {
+@keyframes uenf-rotateIn {
     from {
         transform: rotate(-180deg);
         opacity: 0;
@@ -163,7 +163,7 @@
     }
 }
 
-@keyframes cct-rotateOut {
+@keyframes uenf-rotateOut {
     from {
         transform: rotate(0deg);
         opacity: 1;
@@ -174,7 +174,7 @@
     }
 }
 
-@keyframes cct-bounceIn {
+@keyframes uenf-bounceIn {
     0% {
         transform: scale(0.3);
         opacity: 0;
@@ -191,7 +191,7 @@
     }
 }
 
-@keyframes cct-bounceOut {
+@keyframes uenf-bounceOut {
     0% {
         transform: scale(1);
         opacity: 1;
@@ -209,7 +209,7 @@
     }
 }
 
-@keyframes cct-flipInX {
+@keyframes uenf-flipInX {
     0% {
         transform: perspective(400px) rotateX(90deg);
         opacity: 0;
@@ -230,7 +230,7 @@
     }
 }
 
-@keyframes cct-flipInY {
+@keyframes uenf-flipInY {
     0% {
         transform: perspective(400px) rotateY(90deg);
         opacity: 0;
@@ -255,16 +255,16 @@
    Keyframes - Micro-interações
    ========================================================================== */
 
-@keyframes cct-pulse {
+@keyframes uenf-pulse {
     0%, 100% {
         transform: scale(1);
     }
     50% {
-        transform: scale(var(--cct-scale-factor, 1.05));
+        transform: scale(var(--uenf-scale-factor, 1.05));
     }
 }
 
-@keyframes cct-heartbeat {
+@keyframes uenf-heartbeat {
     0%, 100% {
         transform: scale(1);
     }
@@ -282,7 +282,7 @@
     }
 }
 
-@keyframes cct-shake {
+@keyframes uenf-shake {
     0%, 100% {
         transform: translateX(0);
     }
@@ -294,7 +294,7 @@
     }
 }
 
-@keyframes cct-wobble {
+@keyframes uenf-wobble {
     0%, 100% {
         transform: translateX(0%) rotate(0deg);
     }
@@ -315,7 +315,7 @@
     }
 }
 
-@keyframes cct-spin {
+@keyframes uenf-spin {
     from {
         transform: rotate(0deg);
     }
@@ -324,19 +324,19 @@
     }
 }
 
-@keyframes cct-ripple {
+@keyframes uenf-ripple {
     to {
         transform: scale(4);
         opacity: 0;
     }
 }
 
-@keyframes cct-glow {
+@keyframes uenf-glow {
     0%, 100% {
-        box-shadow: 0 0 5px var(--cct-glow-color);
+        box-shadow: 0 0 5px var(--uenf-glow-color);
     }
     50% {
-        box-shadow: 0 0 20px var(--cct-glow-color), 0 0 30px var(--cct-glow-color);
+        box-shadow: 0 0 20px var(--uenf-glow-color), 0 0 30px var(--uenf-glow-color);
     }
 }
 
@@ -345,60 +345,60 @@
    ========================================================================== */
 
 /* Animações de entrada */
-.cct-fadeIn {
-    animation: cct-fadeIn var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-fadeIn {
+    animation: uenf-fadeIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-fadeOut {
-    animation: cct-fadeOut var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-fadeOut {
+    animation: uenf-fadeOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-slideInUp {
-    animation: cct-slideInUp var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-slideInUp {
+    animation: uenf-slideInUp var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-slideInDown {
-    animation: cct-slideInDown var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-slideInDown {
+    animation: uenf-slideInDown var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-slideInLeft {
-    animation: cct-slideInLeft var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-slideInLeft {
+    animation: uenf-slideInLeft var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-slideInRight {
-    animation: cct-slideInRight var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-slideInRight {
+    animation: uenf-slideInRight var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-scaleIn {
-    animation: cct-scaleIn var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-scaleIn {
+    animation: uenf-scaleIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-scaleOut {
-    animation: cct-scaleOut var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-scaleOut {
+    animation: uenf-scaleOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-rotateIn {
-    animation: cct-rotateIn var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-rotateIn {
+    animation: uenf-rotateIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-rotateOut {
-    animation: cct-rotateOut var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-rotateOut {
+    animation: uenf-rotateOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-bounceIn {
-    animation: cct-bounceIn var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-bounceIn {
+    animation: uenf-bounceIn var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-bounceOut {
-    animation: cct-bounceOut var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-bounceOut {
+    animation: uenf-bounceOut var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-flipInX {
-    animation: cct-flipInX var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-flipInX {
+    animation: uenf-flipInX var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
-.cct-flipInY {
-    animation: cct-flipInY var(--cct-animation-duration) var(--cct-animation-easing) var(--cct-animation-delay) both;
+.uenf-flipInY {
+    animation: uenf-flipInY var(--uenf-animation-duration) var(--uenf-animation-easing) var(--uenf-animation-delay) both;
 }
 
 /* ==========================================================================
@@ -406,65 +406,65 @@
    ========================================================================== */
 
 /* Base para efeitos de hover */
-.cct-hover-effect {
-    transition: all var(--cct-hover-duration) var(--cct-animation-easing);
+.uenf-hover-effect {
+    transition: all var(--uenf-hover-duration) var(--uenf-animation-easing);
     cursor: pointer;
 }
 
 /* Efeito Lift */
-.cct-hover-lift:hover,
-.cct-hover-lift.cct-hover-active {
-    transform: translateY(var(--cct-lift-distance));
+.uenf-hover-lift:hover,
+.uenf-hover-lift.uenf-hover-active {
+    transform: translateY(var(--uenf-lift-distance));
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Efeito Glow */
-.cct-hover-glow:hover,
-.cct-hover-glow.cct-hover-active {
-    box-shadow: 0 0 20px var(--cct-glow-color);
-    transform: scale(var(--cct-scale-factor));
+.uenf-hover-glow:hover,
+.uenf-hover-glow.uenf-hover-active {
+    box-shadow: 0 0 20px var(--uenf-glow-color);
+    transform: scale(var(--uenf-scale-factor));
 }
 
 /* Efeito Tilt */
-.cct-hover-tilt:hover,
-.cct-hover-tilt.cct-hover-active {
-    transform: rotate(var(--cct-tilt-angle)) scale(var(--cct-scale-factor));
+.uenf-hover-tilt:hover,
+.uenf-hover-tilt.uenf-hover-active {
+    transform: rotate(var(--uenf-tilt-angle)) scale(var(--uenf-scale-factor));
 }
 
 /* Efeito Zoom */
-.cct-hover-zoom:hover,
-.cct-hover-zoom.cct-hover-active {
-    transform: scale(var(--cct-scale-factor));
+.uenf-hover-zoom:hover,
+.uenf-hover-zoom.uenf-hover-active {
+    transform: scale(var(--uenf-scale-factor));
 }
 
 /* Efeito Slide Up */
-.cct-hover-slide_up:hover,
-.cct-hover-slide_up.cct-hover-active {
-    transform: translateY(var(--cct-slide-distance));
+.uenf-hover-slide_up:hover,
+.uenf-hover-slide_up.uenf-hover-active {
+    transform: translateY(var(--uenf-slide-distance));
 }
 
 /* Efeito Bounce */
-.cct-hover-bounce:hover,
-.cct-hover-bounce.cct-hover-active {
-    animation: cct-pulse 0.6s ease-in-out;
+.uenf-hover-bounce:hover,
+.uenf-hover-bounce.uenf-hover-active {
+    animation: uenf-pulse 0.6s ease-in-out;
 }
 
 /* Efeito Shake */
-.cct-hover-shake:hover,
-.cct-hover-shake.cct-hover-active {
-    animation: cct-shake 0.5s ease-in-out;
+.uenf-hover-shake:hover,
+.uenf-hover-shake.uenf-hover-active {
+    animation: uenf-shake 0.5s ease-in-out;
 }
 
 /* Efeito Wobble */
-.cct-hover-wobble:hover,
-.cct-hover-wobble.cct-hover-active {
-    animation: cct-wobble 0.6s ease-in-out;
+.uenf-hover-wobble:hover,
+.uenf-hover-wobble.uenf-hover-active {
+    animation: uenf-wobble 0.6s ease-in-out;
 }
 
 /* Efeito Heartbeat */
-.cct-hover-heartbeat:hover,
-.cct-hover-heartbeat.cct-hover-active {
-    animation: cct-heartbeat 1.2s ease-in-out;
+.uenf-hover-heartbeat:hover,
+.uenf-hover-heartbeat.uenf-hover-active {
+    animation: uenf-heartbeat 1.2s ease-in-out;
 }
 
 /* ==========================================================================
@@ -472,34 +472,34 @@
    ========================================================================== */
 
 /* Base para efeitos de focus */
-.cct-focus-effect {
-    transition: all var(--cct-focus-duration) var(--cct-animation-easing);
+.uenf-focus-effect {
+    transition: all var(--uenf-focus-duration) var(--uenf-animation-easing);
 }
 
 /* Focus padrão */
-.cct-focus-active,
+.uenf-focus-active,
 button:focus,
 input:focus,
 select:focus,
 textarea:focus,
 a:focus {
-    outline: 2px solid var(--cct-focus-color);
+    outline: 2px solid var(--uenf-focus-color);
     outline-offset: 2px;
-    box-shadow: 0 0 0 3px var(--cct-focus-shadow);
+    box-shadow: 0 0 0 3px var(--uenf-focus-shadow);
 }
 
 /* Focus com glow */
-.cct-focus-glow:focus,
-.cct-focus-glow.cct-focus-active {
-    box-shadow: 0 0 0 3px var(--cct-focus-shadow), 0 0 20px var(--cct-glow-color);
+.uenf-focus-glow:focus,
+.uenf-focus-glow.uenf-focus-active {
+    box-shadow: 0 0 0 3px var(--uenf-focus-shadow), 0 0 20px var(--uenf-glow-color);
     transform: scale(1.02);
 }
 
 /* Focus com scale */
-.cct-focus-scale:focus,
-.cct-focus-scale.cct-focus-active {
+.uenf-focus-scale:focus,
+.uenf-focus-scale.uenf-focus-active {
     transform: scale(1.02);
-    outline: 1px solid var(--cct-focus-color);
+    outline: 1px solid var(--uenf-focus-color);
 }
 
 /* ==========================================================================
@@ -507,37 +507,37 @@ a:focus {
    ========================================================================== */
 
 /* Botão com ripple */
-.cct-button-ripple {
+.uenf-button-ripple {
     position: relative;
     overflow: hidden;
 }
 
-.cct-button-ripple .cct-ripple {
+.uenf-button-ripple .uenf-ripple {
     position: absolute;
     border-radius: 50%;
-    background: var(--cct-ripple-color);
+    background: var(--uenf-ripple-color);
     transform: scale(0);
-    animation: cct-ripple var(--cct-ripple-duration) ease-out;
+    animation: uenf-ripple var(--uenf-ripple-duration) ease-out;
     pointer-events: none;
 }
 
 /* Botão com pulse */
-.cct-button-pulse.cct-pulse-active {
-    animation: cct-pulse 1s ease-in-out infinite;
+.uenf-button-pulse.uenf-pulse-active {
+    animation: uenf-pulse 1s ease-in-out infinite;
 }
 
 /* Botão com glow */
-.cct-button-glow:hover {
-    animation: cct-glow 2s ease-in-out infinite;
+.uenf-button-glow:hover {
+    animation: uenf-glow 2s ease-in-out infinite;
 }
 
 /* Botão com loading */
-.cct-button-loading {
+.uenf-button-loading {
     position: relative;
     color: transparent;
 }
 
-.cct-button-loading::after {
+.uenf-button-loading::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -548,7 +548,7 @@ a:focus {
     border: 2px solid transparent;
     border-top: 2px solid currentColor;
     border-radius: 50%;
-    animation: cct-spin 1s linear infinite;
+    animation: uenf-spin 1s linear infinite;
 }
 
 /* ==========================================================================
@@ -556,24 +556,24 @@ a:focus {
    ========================================================================== */
 
 /* Input com foco animado */
-.cct-input-animated {
+.uenf-input-animated {
     position: relative;
-    transition: all var(--cct-focus-duration) var(--cct-animation-easing);
+    transition: all var(--uenf-focus-duration) var(--uenf-animation-easing);
 }
 
-.cct-input-animated:focus,
-.cct-input-animated.cct-input-focused {
+.uenf-input-animated:focus,
+.uenf-input-animated.uenf-input-focused {
     transform: scale(1.02);
-    border-color: var(--cct-focus-color);
-    box-shadow: 0 0 0 3px var(--cct-focus-shadow);
+    border-color: var(--uenf-focus-color);
+    box-shadow: 0 0 0 3px var(--uenf-focus-shadow);
 }
 
 /* Label flutuante */
-.cct-input-float {
+.uenf-input-float {
     position: relative;
 }
 
-.cct-input-float label {
+.uenf-input-float label {
     position: absolute;
     top: 50%;
     left: 12px;
@@ -583,19 +583,19 @@ a:focus {
     color: #666;
 }
 
-.cct-input-float input:focus + label,
-.cct-input-float input:not(:placeholder-shown) + label,
-.cct-input-float.cct-input-focused label {
+.uenf-input-float input:focus + label,
+.uenf-input-float input:not(:placeholder-shown) + label,
+.uenf-input-float.uenf-input-focused label {
     top: 0;
     left: 8px;
     transform: translateY(-50%) scale(0.85);
-    color: var(--cct-focus-color);
+    color: var(--uenf-focus-color);
     background: white;
     padding: 0 4px;
 }
 
 /* Checkbox animado */
-.cct-checkbox-animated {
+.uenf-checkbox-animated {
     position: relative;
     appearance: none;
     width: 20px;
@@ -606,15 +606,15 @@ a:focus {
     cursor: pointer;
 }
 
-.cct-checkbox-animated:checked,
-.cct-checkbox-animated.cct-checkbox-checked {
-    background: var(--cct-focus-color);
-    border-color: var(--cct-focus-color);
+.uenf-checkbox-animated:checked,
+.uenf-checkbox-animated.uenf-checkbox-checked {
+    background: var(--uenf-focus-color);
+    border-color: var(--uenf-focus-color);
     transform: scale(1.1);
 }
 
-.cct-checkbox-animated:checked::after,
-.cct-checkbox-animated.cct-checkbox-checked::after {
+.uenf-checkbox-animated:checked::after,
+.uenf-checkbox-animated.uenf-checkbox-checked::after {
     content: '✓';
     position: absolute;
     top: 50%;
@@ -630,13 +630,13 @@ a:focus {
    ========================================================================== */
 
 /* Link com sublinhado animado */
-.cct-link-underline {
+.uenf-link-underline {
     position: relative;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.cct-link-underline::after {
+.uenf-link-underline::after {
     content: '';
     position: absolute;
     bottom: -2px;
@@ -647,40 +647,40 @@ a:focus {
     transition: width 0.3s ease;
 }
 
-.cct-link-underline:hover::after,
-.cct-link-underline:focus::after {
+.uenf-link-underline:hover::after,
+.uenf-link-underline:focus::after {
     width: 100%;
 }
 
 /* Link com background animado */
-.cct-link-background {
+.uenf-link-background {
     position: relative;
     text-decoration: none;
     transition: color 0.3s ease;
     z-index: 1;
 }
 
-.cct-link-background::before {
+.uenf-link-background::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--cct-focus-color);
+    background: var(--uenf-focus-color);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
     z-index: -1;
 }
 
-.cct-link-background:hover::before,
-.cct-link-background:focus::before {
+.uenf-link-background:hover::before,
+.uenf-link-background:focus::before {
     transform: scaleX(1);
 }
 
-.cct-link-background:hover,
-.cct-link-background:focus {
+.uenf-link-background:hover,
+.uenf-link-background:focus {
     color: white;
 }
 
@@ -689,12 +689,12 @@ a:focus {
    ========================================================================== */
 
 /* Card com revelação */
-.cct-card-reveal {
+.uenf-card-reveal {
     position: relative;
     overflow: hidden;
 }
 
-.cct-card-reveal .cct-card-overlay {
+.uenf-card-reveal .uenf-card-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -710,33 +710,33 @@ a:focus {
     transition: all 0.3s ease;
 }
 
-.cct-card-reveal:hover .cct-card-overlay {
+.uenf-card-reveal:hover .uenf-card-overlay {
     opacity: 1;
     transform: translateY(0);
 }
 
 /* Imagem com zoom */
-.cct-image-zoom {
+.uenf-image-zoom {
     overflow: hidden;
 }
 
-.cct-image-zoom img {
+.uenf-image-zoom img {
     transition: transform 0.3s ease;
 }
 
-.cct-image-zoom:hover img {
+.uenf-image-zoom:hover img {
     transform: scale(1.1);
 }
 
 /* Texto com typewriter */
-.cct-typewriter {
+.uenf-typewriter {
     overflow: hidden;
     border-right: 2px solid;
     white-space: nowrap;
-    animation: cct-typewriter 3s steps(40, end), cct-blink-caret 0.75s step-end infinite;
+    animation: uenf-typewriter 3s steps(40, end), uenf-blink-caret 0.75s step-end infinite;
 }
 
-@keyframes cct-typewriter {
+@keyframes uenf-typewriter {
     from {
         width: 0;
     }
@@ -745,7 +745,7 @@ a:focus {
     }
 }
 
-@keyframes cct-blink-caret {
+@keyframes uenf-blink-caret {
     from, to {
         border-color: transparent;
     }
@@ -759,27 +759,27 @@ a:focus {
    ========================================================================== */
 
 /* Spinner */
-.cct-loading-spinner {
+.uenf-loading-spinner {
     display: inline-block;
     width: 20px;
     height: 20px;
     border: 2px solid #f3f3f3;
-    border-top: 2px solid var(--cct-focus-color);
+    border-top: 2px solid var(--uenf-focus-color);
     border-radius: 50%;
-    animation: cct-spin 1s linear infinite;
+    animation: uenf-spin 1s linear infinite;
 }
 
 /* Dots */
-.cct-loading-dots {
+.uenf-loading-dots {
     display: inline-block;
 }
 
-.cct-loading-dots::after {
+.uenf-loading-dots::after {
     content: '.';
-    animation: cct-dots 1.4s ease-in-out infinite;
+    animation: uenf-dots 1.4s ease-in-out infinite;
 }
 
-@keyframes cct-dots {
+@keyframes uenf-dots {
     0%, 20% {
         content: '.';
     }
@@ -792,18 +792,18 @@ a:focus {
 }
 
 /* Pulse loading */
-.cct-loading-pulse {
-    animation: cct-pulse 2s ease-in-out infinite;
+.uenf-loading-pulse {
+    animation: uenf-pulse 2s ease-in-out infinite;
 }
 
 /* Skeleton loading */
-.cct-loading-skeleton {
+.uenf-loading-skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
-    animation: cct-skeleton 1.5s ease-in-out infinite;
+    animation: uenf-skeleton 1.5s ease-in-out infinite;
 }
 
-@keyframes cct-skeleton {
+@keyframes uenf-skeleton {
     0% {
         background-position: 200% 0;
     }
@@ -817,40 +817,40 @@ a:focus {
    ========================================================================== */
 
 /* Base para transições */
-.cct-page-transition {
-    transition: all var(--cct-page-transition-duration) var(--cct-page-transition-easing);
+.uenf-page-transition {
+    transition: all var(--uenf-page-transition-duration) var(--uenf-page-transition-easing);
 }
 
 /* Fade transition */
-.cct-transition-fade-out {
+.uenf-transition-fade-out {
     opacity: 0;
 }
 
-.cct-transition-fade-in {
+.uenf-transition-fade-in {
     opacity: 0;
-    animation: cct-fadeIn var(--cct-page-transition-duration) var(--cct-page-transition-easing) forwards;
+    animation: uenf-fadeIn var(--uenf-page-transition-duration) var(--uenf-page-transition-easing) forwards;
 }
 
 /* Slide transition */
-.cct-transition-slide-out {
+.uenf-transition-slide-out {
     transform: translateX(-100%);
 }
 
-.cct-transition-slide-in {
+.uenf-transition-slide-in {
     transform: translateX(100%);
-    animation: cct-slideInRight var(--cct-page-transition-duration) var(--cct-page-transition-easing) forwards;
+    animation: uenf-slideInRight var(--uenf-page-transition-duration) var(--uenf-page-transition-easing) forwards;
 }
 
 /* Scale transition */
-.cct-transition-scale-out {
+.uenf-transition-scale-out {
     transform: scale(0.8);
     opacity: 0;
 }
 
-.cct-transition-scale-in {
+.uenf-transition-scale-in {
     transform: scale(1.2);
     opacity: 0;
-    animation: cct-scaleIn var(--cct-page-transition-duration) var(--cct-page-transition-easing) forwards;
+    animation: uenf-scaleIn var(--uenf-page-transition-duration) var(--uenf-page-transition-easing) forwards;
 }
 
 /* ==========================================================================
@@ -858,32 +858,32 @@ a:focus {
    ========================================================================== */
 
 /* Pausar animações */
-.cct-animations-paused,
-.cct-animations-paused * {
+.uenf-animations-paused,
+.uenf-animations-paused * {
     animation-play-state: paused !important;
 }
 
 /* Desabilitar animações */
-.cct-animations-disabled,
-.cct-animations-disabled * {
+.uenf-animations-disabled,
+.uenf-animations-disabled * {
     animation: none !important;
     transition: none !important;
 }
 
 /* Estado de carregamento da página */
-.cct-page-loading {
+.uenf-page-loading {
     pointer-events: none;
     overflow: hidden;
 }
 
 /* Indicador de progresso */
-.cct-progress-bar {
+.uenf-progress-bar {
     position: fixed;
     top: 0;
     left: 0;
     width: 0;
     height: 3px;
-    background: var(--cct-focus-color);
+    background: var(--uenf-focus-color);
     transition: width 0.3s ease;
     z-index: 9999;
 }
@@ -893,25 +893,25 @@ a:focus {
    ========================================================================== */
 
 /* Parallax container */
-.cct-parallax {
+.uenf-parallax {
     transform: translateZ(0);
     will-change: transform;
 }
 
 /* Scroll reveal */
-.cct-scroll-reveal {
+.uenf-scroll-reveal {
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.6s ease;
 }
 
-.cct-scroll-reveal.cct-revealed {
+.uenf-scroll-reveal.uenf-revealed {
     opacity: 1;
     transform: translateY(0);
 }
 
 /* Sticky reveal */
-.cct-sticky-reveal {
+.uenf-sticky-reveal {
     position: sticky;
     top: 20px;
     transform: translateY(20px);
@@ -919,7 +919,7 @@ a:focus {
     transition: all 0.4s ease;
 }
 
-.cct-sticky-reveal.cct-revealed {
+.uenf-sticky-reveal.uenf-revealed {
     transform: translateY(0);
     opacity: 1;
 }
@@ -929,35 +929,35 @@ a:focus {
    ========================================================================== */
 
 /* Delays */
-.cct-delay-1 { animation-delay: 0.1s; }
-.cct-delay-2 { animation-delay: 0.2s; }
-.cct-delay-3 { animation-delay: 0.3s; }
-.cct-delay-4 { animation-delay: 0.4s; }
-.cct-delay-5 { animation-delay: 0.5s; }
+.uenf-delay-1 { animation-delay: 0.1s; }
+.uenf-delay-2 { animation-delay: 0.2s; }
+.uenf-delay-3 { animation-delay: 0.3s; }
+.uenf-delay-4 { animation-delay: 0.4s; }
+.uenf-delay-5 { animation-delay: 0.5s; }
 
 /* Durações */
-.cct-duration-fast { animation-duration: 0.2s; }
-.cct-duration-normal { animation-duration: 0.3s; }
-.cct-duration-slow { animation-duration: 0.6s; }
-.cct-duration-slower { animation-duration: 1s; }
+.uenf-duration-fast { animation-duration: 0.2s; }
+.uenf-duration-normal { animation-duration: 0.3s; }
+.uenf-duration-slow { animation-duration: 0.6s; }
+.uenf-duration-slower { animation-duration: 1s; }
 
 /* Repetições */
-.cct-repeat-1 { animation-iteration-count: 1; }
-.cct-repeat-2 { animation-iteration-count: 2; }
-.cct-repeat-3 { animation-iteration-count: 3; }
-.cct-repeat-infinite { animation-iteration-count: infinite; }
+.uenf-repeat-1 { animation-iteration-count: 1; }
+.uenf-repeat-2 { animation-iteration-count: 2; }
+.uenf-repeat-3 { animation-iteration-count: 3; }
+.uenf-repeat-infinite { animation-iteration-count: infinite; }
 
 /* Direções */
-.cct-direction-normal { animation-direction: normal; }
-.cct-direction-reverse { animation-direction: reverse; }
-.cct-direction-alternate { animation-direction: alternate; }
-.cct-direction-alternate-reverse { animation-direction: alternate-reverse; }
+.uenf-direction-normal { animation-direction: normal; }
+.uenf-direction-reverse { animation-direction: reverse; }
+.uenf-direction-alternate { animation-direction: alternate; }
+.uenf-direction-alternate-reverse { animation-direction: alternate-reverse; }
 
 /* Fill modes */
-.cct-fill-none { animation-fill-mode: none; }
-.cct-fill-forwards { animation-fill-mode: forwards; }
-.cct-fill-backwards { animation-fill-mode: backwards; }
-.cct-fill-both { animation-fill-mode: both; }
+.uenf-fill-none { animation-fill-mode: none; }
+.uenf-fill-forwards { animation-fill-mode: forwards; }
+.uenf-fill-backwards { animation-fill-mode: backwards; }
+.uenf-fill-both { animation-fill-mode: both; }
 
 /* ==========================================================================
    Responsividade
@@ -966,21 +966,21 @@ a:focus {
 /* Reduzir animações em telas pequenas */
 @media (max-width: 768px) {
     :root {
-        --cct-animation-duration: 0.2s;
-        --cct-hover-duration: 0.2s;
-        --cct-page-transition-duration: 0.3s;
+        --uenf-animation-duration: 0.2s;
+        --uenf-hover-duration: 0.2s;
+        --uenf-page-transition-duration: 0.3s;
     }
     
-    .cct-hover-effect {
+    .uenf-hover-effect {
         /* Desabilitar alguns efeitos em mobile */
     }
 }
 
 /* Reduzir animações em conexões lentas */
 @media (prefers-reduced-data) {
-    .cct-animate,
-    .cct-hover-effect,
-    .cct-page-transition {
+    .uenf-animate,
+    .uenf-hover-effect,
+    .uenf-page-transition {
         animation-duration: 0.1s;
         transition-duration: 0.1s;
     }
@@ -1001,11 +1001,11 @@ a:focus {
         scroll-behavior: auto !important;
     }
     
-    .cct-animate,
-    .cct-hover-effect,
-    .cct-focus-effect,
-    .cct-page-transition,
-    .cct-parallax {
+    .uenf-animate,
+    .uenf-hover-effect,
+    .uenf-focus-effect,
+    .uenf-page-transition,
+    .uenf-parallax {
         animation: none !important;
         transition: none !important;
         transform: none !important;
@@ -1015,19 +1015,19 @@ a:focus {
 /* Alto contraste */
 @media (prefers-contrast: high) {
     :root {
-        --cct-focus-color: #000;
-        --cct-focus-shadow: rgba(0, 0, 0, 0.5);
-        --cct-glow-color: rgba(0, 0, 0, 0.3);
+        --uenf-focus-color: #000;
+        --uenf-focus-shadow: rgba(0, 0, 0, 0.5);
+        --uenf-glow-color: rgba(0, 0, 0, 0.3);
     }
 }
 
 /* Modo escuro */
 @media (prefers-color-scheme: dark) {
     :root {
-        --cct-focus-color: #4a9eff;
-        --cct-focus-shadow: rgba(74, 158, 255, 0.25);
-        --cct-glow-color: rgba(74, 158, 255, 0.3);
-        --cct-ripple-color: rgba(255, 255, 255, 0.3);
+        --uenf-focus-color: #4a9eff;
+        --uenf-focus-shadow: rgba(74, 158, 255, 0.25);
+        --uenf-glow-color: rgba(74, 158, 255, 0.3);
+        --uenf-ripple-color: rgba(255, 255, 255, 0.3);
     }
 }
 
@@ -1036,20 +1036,20 @@ a:focus {
    ========================================================================== */
 
 @media print {
-    .cct-animate,
-    .cct-hover-effect,
-    .cct-focus-effect,
-    .cct-page-transition,
-    .cct-loading-spinner,
-    .cct-loading-dots,
-    .cct-loading-pulse {
+    .uenf-animate,
+    .uenf-hover-effect,
+    .uenf-focus-effect,
+    .uenf-page-transition,
+    .uenf-loading-spinner,
+    .uenf-loading-dots,
+    .uenf-loading-pulse {
         animation: none !important;
         transition: none !important;
         transform: none !important;
         opacity: 1 !important;
     }
     
-    .cct-card-overlay {
+    .uenf-card-overlay {
         display: none !important;
     }
 }
@@ -1059,20 +1059,20 @@ a:focus {
    ========================================================================== */
 
 /* Modo debug - mostrar elementos animados */
-.cct-debug .cct-animate {
+.uenf-debug .uenf-animate {
     outline: 2px dashed #ff6b6b;
 }
 
-.cct-debug .cct-hover-effect {
+.uenf-debug .uenf-hover-effect {
     outline: 2px dashed #4ecdc4;
 }
 
-.cct-debug .cct-focus-effect {
+.uenf-debug .uenf-focus-effect {
     outline: 2px dashed #45b7d1;
 }
 
 /* Informações de performance */
-.cct-debug::after {
+.uenf-debug::after {
     content: 'CCT Animations Debug Mode';
     position: fixed;
     bottom: 10px;

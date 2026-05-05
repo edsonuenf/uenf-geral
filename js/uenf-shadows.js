@@ -9,7 +9,7 @@
  * - Otimizações de performance
  * - Acessibilidade
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -97,8 +97,8 @@
          */
         initElevationPreview: function() {
             // Cache de elementos
-            this.cache.demoElement = $('#cct-demo-element');
-            this.cache.levelSelect = $('#cct-demo-level-select');
+            this.cache.demoElement = $('#uenf-demo-element');
+            this.cache.levelSelect = $('#uenf-demo-level-select');
             
             // Configurar demonstração interativa
             this.setupInteractiveDemo();
@@ -118,14 +118,14 @@
             });
             
             // Toggle de hover effect
-            $('#cct-demo-hover').on('change', (e) => {
+            $('#uenf-demo-hover').on('change', (e) => {
                 const enabled = e.target.checked;
                 this.toggleHoverEffect(enabled);
             });
             
             // Clique nos itens do grid
-            $('.cct-elevation-demo').on('click', (e) => {
-                const level = parseInt($(e.currentTarget).closest('.cct-elevation-item').data('level'));
+            $('.uenf-elevation-demo').on('click', (e) => {
+                const level = parseInt($(e.currentTarget).closest('.uenf-elevation-item').data('level'));
                 this.applyElevationLevel(level);
                 this.cache.levelSelect.val(level);
             });
@@ -136,13 +136,13 @@
          */
         setupElevationGrid: function() {
             // Botões de aplicar
-            $('.cct-apply-elevation').on('click', (e) => {
+            $('.uenf-apply-elevation').on('click', (e) => {
                 const level = parseInt($(e.target).data('level'));
                 this.applyElevationToSite(level);
             });
             
             // Botões de copiar CSS
-            $('.cct-copy-css').on('click', (e) => {
+            $('.uenf-copy-css').on('click', (e) => {
                 const css = $(e.target).data('css');
                 this.copyToClipboard(css);
                 this.showNotification('CSS copiado para a área de transferência!', 'success');
@@ -154,8 +154,8 @@
          */
         initShadowConfigurator: function() {
             // Cache de elementos
-            this.cache.previewBox = $('#cct-shadow-preview');
-            this.cache.cssOutput = $('#cct-shadow-css');
+            this.cache.previewBox = $('#uenf-shadow-preview');
+            this.cache.cssOutput = $('#uenf-shadow-css');
             
             // Configurar controles
             this.setupShadowControls();
@@ -176,11 +176,11 @@
         setupShadowControls: function() {
             // Controles de range
             const rangeControls = {
-                'cct-shadow-x': 'updateShadowX',
-                'cct-shadow-y': 'updateShadowY',
-                'cct-shadow-blur': 'updateShadowBlur',
-                'cct-shadow-spread': 'updateShadowSpread',
-                'cct-shadow-opacity': 'updateShadowOpacity'
+                'uenf-shadow-x': 'updateShadowX',
+                'uenf-shadow-y': 'updateShadowY',
+                'uenf-shadow-blur': 'updateShadowBlur',
+                'uenf-shadow-spread': 'updateShadowSpread',
+                'uenf-shadow-opacity': 'updateShadowOpacity'
             };
             
             Object.keys(rangeControls).forEach(id => {
@@ -192,13 +192,13 @@
             });
             
             // Controle de cor
-            $('#cct-shadow-color').on('input', (e) => {
+            $('#uenf-shadow-color').on('input', (e) => {
                 this.updateShadowColor(e.target.value);
                 this.updateShadowPreview();
             });
             
             // Botão de copiar CSS
-            $('.cct-copy-shadow-css').on('click', () => {
+            $('.uenf-copy-shadow-css').on('click', () => {
                 this.copyToClipboard(this.cache.cssOutput.val());
                 this.showNotification('CSS copiado!', 'success');
             });
@@ -209,18 +209,18 @@
          */
         setupMultipleLayers: function() {
             // Adicionar camada
-            $('.cct-add-layer').on('click', () => {
+            $('.uenf-add-layer').on('click', () => {
                 this.addShadowLayer();
             });
             
             // Remover camada
-            $(document).on('click', '.cct-remove-layer', (e) => {
-                const layer = parseInt($(e.target).closest('.cct-shadow-layer').data('layer'));
+            $(document).on('click', '.uenf-remove-layer', (e) => {
+                const layer = parseInt($(e.target).closest('.uenf-shadow-layer').data('layer'));
                 this.removeShadowLayer(layer);
             });
             
             // Reset sombras
-            $('.cct-reset-shadows').on('click', () => {
+            $('.uenf-reset-shadows').on('click', () => {
                 this.resetShadowLayers();
             });
         },
@@ -229,7 +229,7 @@
          * Configura presets rápidos
          */
         setupQuickPresets: function() {
-            $('.cct-preset-btn').on('click', (e) => {
+            $('.uenf-preset-btn').on('click', (e) => {
                 const preset = $(e.currentTarget).data('preset');
                 this.applyQuickPreset(preset);
             });
@@ -240,13 +240,13 @@
          */
         initPresetSelector: function() {
             // Aplicar preset
-            $('.cct-apply-preset').on('click', (e) => {
+            $('.uenf-apply-preset').on('click', (e) => {
                 const preset = $(e.target).data('preset');
                 this.applyPreset(preset);
             });
             
             // Preview preset
-            $('.cct-preview-preset').on('click', (e) => {
+            $('.uenf-preview-preset').on('click', (e) => {
                 const preset = $(e.target).data('preset');
                 this.previewPreset(preset);
             });
@@ -260,24 +260,24 @@
          */
         setupPresetConfig: function() {
             // Intensidade
-            $('.cct-preset-intensity').on('input', (e) => {
+            $('.uenf-preset-intensity').on('input', (e) => {
                 const intensity = parseFloat(e.target.value);
-                $('.cct-intensity-value').text(Math.round(intensity * 100) + '%');
+                $('.uenf-intensity-value').text(Math.round(intensity * 100) + '%');
                 this.updatePresetIntensity(intensity);
             });
             
             // Cor personalizada
-            $('.cct-preset-color').on('input', (e) => {
+            $('.uenf-preset-color').on('input', (e) => {
                 this.updatePresetColor(e.target.value);
             });
             
             // Reset cor
-            $('.cct-reset-color').on('click', () => {
+            $('.uenf-reset-color').on('click', () => {
                 this.resetPresetColor();
             });
             
             // Toggle customização
-            $('.cct-enable-custom').on('change', (e) => {
+            $('.uenf-enable-custom').on('change', (e) => {
                 this.toggleCustomization(e.target.checked);
             });
         },
@@ -297,10 +297,10 @@
             // Aplicar estilos baseados nas configurações atuais
             const customCSS = this.generateCustomCSS();
             
-            if (!$('#cct-use-case-styles').length) {
-                $('head').append(`<style id="cct-use-case-styles">${customCSS}</style>`);
+            if (!$('#uenf-use-case-styles').length) {
+                $('head').append(`<style id="uenf-use-case-styles">${customCSS}</style>`);
             } else {
-                $('#cct-use-case-styles').text(customCSS);
+                $('#uenf-use-case-styles').text(customCSS);
             }
         },
         
@@ -348,14 +348,14 @@
             
             // Aplicar configurações de animação
             const animationCSS = `
-                .cct-elevation-0, .cct-elevation-1, .cct-elevation-2, .cct-elevation-4,
-                .cct-elevation-6, .cct-elevation-8, .cct-elevation-12, .cct-elevation-16, .cct-elevation-24 {
+                .uenf-elevation-0, .uenf-elevation-1, .uenf-elevation-2, .uenf-elevation-4,
+                .uenf-elevation-6, .uenf-elevation-8, .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24 {
                     transition: box-shadow ${this.settings.animationDuration}s ${this.settings.animationEasing};
                 }
             `;
             
-            if (!$('#cct-shadow-animations').length) {
-                $('head').append(`<style id="cct-shadow-animations">${animationCSS}</style>`);
+            if (!$('#uenf-shadow-animations').length) {
+                $('head').append(`<style id="uenf-shadow-animations">${animationCSS}</style>`);
             }
         },
         
@@ -369,11 +369,11 @@
             
             // Remover classes anteriores
             this.cache.demoElement.removeClass((index, className) => {
-                return (className.match(/(^|\s)cct-elevation-\S+/g) || []).join(' ');
+                return (className.match(/(^|\s)uenf-elevation-\S+/g) || []).join(' ');
             });
             
             // Adicionar nova classe
-            this.cache.demoElement.addClass(`cct-elevation-${level}`);
+            this.cache.demoElement.addClass(`uenf-elevation-${level}`);
             
             // Atualizar estado
             this.state.currentLevel = level;
@@ -393,9 +393,9 @@
             const level = this.state.currentLevel;
             
             if (enabled) {
-                this.cache.demoElement.addClass(`cct-elevation-hover-${level}`);
+                this.cache.demoElement.addClass(`uenf-elevation-hover-${level}`);
             } else {
-                this.cache.demoElement.removeClass(`cct-elevation-hover-${level}`);
+                this.cache.demoElement.removeClass(`uenf-elevation-hover-${level}`);
             }
         },
         
@@ -413,27 +413,27 @@
          * Atualiza valores de sombra
          */
         updateShadowX: function(value) {
-            $('#cct-shadow-x-value').text(value + 'px');
+            $('#uenf-shadow-x-value').text(value + 'px');
             this.state.shadowX = value;
         },
         
         updateShadowY: function(value) {
-            $('#cct-shadow-y-value').text(value + 'px');
+            $('#uenf-shadow-y-value').text(value + 'px');
             this.state.shadowY = value;
         },
         
         updateShadowBlur: function(value) {
-            $('#cct-shadow-blur-value').text(value + 'px');
+            $('#uenf-shadow-blur-value').text(value + 'px');
             this.state.shadowBlur = value;
         },
         
         updateShadowSpread: function(value) {
-            $('#cct-shadow-spread-value').text(value + 'px');
+            $('#uenf-shadow-spread-value').text(value + 'px');
             this.state.shadowSpread = value;
         },
         
         updateShadowOpacity: function(value) {
-            $('#cct-shadow-opacity-value').text(Math.round(value * 100) + '%');
+            $('#uenf-shadow-opacity-value').text(Math.round(value * 100) + '%');
             this.state.shadowOpacity = value;
         },
         
@@ -494,13 +494,13 @@
             
             // Adicionar à UI
             const $layerEl = $(`
-                <div class="cct-shadow-layer" data-layer="${newLayer.id}">
-                    <span class="cct-layer-label">Camada ${layerCount + 1}</span>
-                    <button type="button" class="cct-remove-layer">×</button>
+                <div class="uenf-shadow-layer" data-layer="${newLayer.id}">
+                    <span class="uenf-layer-label">Camada ${layerCount + 1}</span>
+                    <button type="button" class="uenf-remove-layer">×</button>
                 </div>
             `);
             
-            $('#cct-shadow-layers').append($layerEl);
+            $('#uenf-shadow-layers').append($layerEl);
             
             // Atualizar preview
             this.updateMultiLayerPreview();
@@ -511,7 +511,7 @@
          */
         removeShadowLayer: function(layerId) {
             this.state.shadowLayers = this.state.shadowLayers.filter(layer => layer.id !== layerId);
-            $(`.cct-shadow-layer[data-layer="${layerId}"]`).remove();
+            $(`.uenf-shadow-layer[data-layer="${layerId}"]`).remove();
             this.updateMultiLayerPreview();
         },
         
@@ -520,7 +520,7 @@
          */
         resetShadowLayers: function() {
             this.state.shadowLayers = [];
-            $('#cct-shadow-layers').empty();
+            $('#uenf-shadow-layers').empty();
             
             // Adicionar camada padrão
             this.addShadowLayer();
@@ -561,14 +561,14 @@
                 const config = presets[preset];
                 
                 // Atualizar controles
-                $('#cct-shadow-x').val(config.x).trigger('input');
-                $('#cct-shadow-y').val(config.y).trigger('input');
-                $('#cct-shadow-blur').val(config.blur).trigger('input');
-                $('#cct-shadow-spread').val(config.spread).trigger('input');
-                $('#cct-shadow-opacity').val(config.opacity).trigger('input');
+                $('#uenf-shadow-x').val(config.x).trigger('input');
+                $('#uenf-shadow-y').val(config.y).trigger('input');
+                $('#uenf-shadow-blur').val(config.blur).trigger('input');
+                $('#uenf-shadow-spread').val(config.spread).trigger('input');
+                $('#uenf-shadow-opacity').val(config.opacity).trigger('input');
                 
                 if (config.color) {
-                    $('#cct-shadow-color').val(config.color).trigger('input');
+                    $('#uenf-shadow-color').val(config.color).trigger('input');
                 }
                 
                 this.showNotification(`Preset "${preset}" aplicado!`, 'success');
@@ -588,8 +588,8 @@
                 this.settings.shadowOpacity = preset.opacity;
                 
                 // Atualizar UI
-                $('.cct-preset-option').removeClass('active');
-                $(`.cct-preset-option[data-preset="${presetName}"]`).addClass('active');
+                $('.uenf-preset-option').removeClass('active');
+                $(`.uenf-preset-option[data-preset="${presetName}"]`).addClass('active');
                 
                 // Aplicar estilos
                 this.applyPresetStyles(preset);
@@ -621,10 +621,10 @@
             // Implementar aplicação de estilos específicos do preset
             const customCSS = this.generatePresetCSS(preset);
             
-            if (!$('#cct-preset-styles').length) {
-                $('head').append(`<style id="cct-preset-styles">${customCSS}</style>`);
+            if (!$('#uenf-preset-styles').length) {
+                $('head').append(`<style id="uenf-preset-styles">${customCSS}</style>`);
             } else {
-                $('#cct-preset-styles').text(customCSS);
+                $('#uenf-preset-styles').text(customCSS);
             }
         },
         
@@ -635,8 +635,8 @@
             // Implementar geração de CSS baseado no preset
             return `
                 :root {
-                    --cct-shadow-color: ${preset.color};
-                    --cct-shadow-opacity: ${preset.opacity};
+                    --uenf-shadow-color: ${preset.color};
+                    --uenf-shadow-opacity: ${preset.opacity};
                 }
             `;
         },
@@ -663,7 +663,7 @@
         resetPresetColor: function() {
             const activePreset = this.presets[this.settings.activePreset];
             if (activePreset) {
-                $('.cct-preset-color').val(activePreset.color);
+                $('.uenf-preset-color').val(activePreset.color);
                 this.updatePresetColor(activePreset.color);
             }
         },
@@ -672,7 +672,7 @@
          * Toggle customização
          */
         toggleCustomization: function(enabled) {
-            $('.cct-preset-intensity, .cct-preset-color').prop('disabled', !enabled);
+            $('.uenf-preset-intensity, .uenf-preset-color').prop('disabled', !enabled);
         },
         
         /**
@@ -700,14 +700,14 @@
             // Reduzir elevações altas em mobile
             const mobileCSS = `
                 @media (max-width: 768px) {
-                    .cct-elevation-12, .cct-elevation-16, .cct-elevation-24 {
-                        box-shadow: var(--cct-elevation-8) !important;
+                    .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24 {
+                        box-shadow: var(--uenf-elevation-8) !important;
                     }
                 }
             `;
             
-            if (!$('#cct-mobile-optimizations').length) {
-                $('head').append(`<style id="cct-mobile-optimizations">${mobileCSS}</style>`);
+            if (!$('#uenf-mobile-optimizations').length) {
+                $('head').append(`<style id="uenf-mobile-optimizations">${mobileCSS}</style>`);
             }
         },
         
@@ -730,15 +730,15 @@
                 // Remover animações
                 const noAnimationCSS = `
                     @media (prefers-reduced-motion: reduce) {
-                        .cct-elevation-0, .cct-elevation-1, .cct-elevation-2, .cct-elevation-4,
-                        .cct-elevation-6, .cct-elevation-8, .cct-elevation-12, .cct-elevation-16, .cct-elevation-24 {
+                        .uenf-elevation-0, .uenf-elevation-1, .uenf-elevation-2, .uenf-elevation-4,
+                        .uenf-elevation-6, .uenf-elevation-8, .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24 {
                             transition: none !important;
                         }
                     }
                 `;
                 
-                if (!$('#cct-reduced-motion').length) {
-                    $('head').append(`<style id="cct-reduced-motion">${noAnimationCSS}</style>`);
+                if (!$('#uenf-reduced-motion').length) {
+                    $('head').append(`<style id="uenf-reduced-motion">${noAnimationCSS}</style>`);
                 }
             }
         },
@@ -776,7 +776,7 @@
         showNotification: function(message, type = 'info') {
             // Criar elemento de notificação
             const $notification = $(`
-                <div class="cct-shadow-notification cct-notification-${type}">
+                <div class="uenf-shadow-notification uenf-notification-${type}">
                     ${message}
                 </div>
             `);
@@ -838,7 +838,7 @@
             this.state.initialized = false;
             
             // Remover estilos customizados
-            $('#cct-shadow-animations, #cct-preset-styles, #cct-use-case-styles, #cct-mobile-optimizations, #cct-reduced-motion').remove();
+            $('#uenf-shadow-animations, #uenf-preset-styles, #uenf-use-case-styles, #uenf-mobile-optimizations, #uenf-reduced-motion').remove();
             
             this.debug('Sistema de sombras destruído');
         }
@@ -864,7 +864,7 @@
  */
 (function() {
     const shadowNotificationCSS = `
-        .cct-shadow-notification {
+        .uenf-shadow-notification {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -881,24 +881,24 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
-        .cct-shadow-notification.show {
+        .uenf-shadow-notification.show {
             transform: translateX(0);
         }
         
-        .cct-notification-success {
+        .uenf-notification-success {
             background: #28a745;
         }
         
-        .cct-notification-info {
+        .uenf-notification-info {
             background: #17a2b8;
         }
         
-        .cct-notification-warning {
+        .uenf-notification-warning {
             background: #ffc107;
             color: #333;
         }
         
-        .cct-notification-error {
+        .uenf-notification-error {
             background: #dc3545;
         }
     `;

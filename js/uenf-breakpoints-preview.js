@@ -24,7 +24,7 @@
      */
     function bindBreakpointPreview() {
         // Mobile breakpoint
-        wp.customize('cct_breakpoint_mobile', function(value) {
+        wp.customize('uenf_breakpoint_mobile', function(value) {
             value.bind(function(newval) {
                 updateBreakpointCSS('mobile', newval);
                 updateBreakpointIndicator('mobile', newval);
@@ -32,7 +32,7 @@
         });
 
         // Tablet breakpoint
-        wp.customize('cct_breakpoint_tablet', function(value) {
+        wp.customize('uenf_breakpoint_tablet', function(value) {
             value.bind(function(newval) {
                 updateBreakpointCSS('tablet', newval);
                 updateBreakpointIndicator('tablet', newval);
@@ -40,7 +40,7 @@
         });
 
         // Desktop breakpoint
-        wp.customize('cct_breakpoint_desktop', function(value) {
+        wp.customize('uenf_breakpoint_desktop', function(value) {
             value.bind(function(newval) {
                 updateBreakpointCSS('desktop', newval);
                 updateBreakpointIndicator('desktop', newval);
@@ -48,7 +48,7 @@
         });
 
         // Wide breakpoint
-        wp.customize('cct_breakpoint_wide', function(value) {
+        wp.customize('uenf_breakpoint_wide', function(value) {
             value.bind(function(newval) {
                 updateBreakpointCSS('wide', newval);
                 updateBreakpointIndicator('wide', newval);
@@ -66,13 +66,13 @@
             case 'mobile':
                 css = `
                     @media (max-width: ${breakpoint}px) {
-                        .cct-hide-mobile { display: none !important; }
-                        .cct-show-mobile { display: block !important; }
-                        .cct-grid { grid-template-columns: 1fr !important; }
-                        .cct-container { padding: 0 15px !important; }
-                        .cct-text-mobile-center { text-align: center !important; }
-                        .cct-text-mobile-left { text-align: left !important; }
-                        .cct-text-mobile-right { text-align: right !important; }
+                        .uenf-hide-mobile { display: none !important; }
+                        .uenf-show-mobile { display: block !important; }
+                        .uenf-grid { grid-template-columns: 1fr !important; }
+                        .uenf-container { padding: 0 15px !important; }
+                        .uenf-text-mobile-center { text-align: center !important; }
+                        .uenf-text-mobile-left { text-align: left !important; }
+                        .uenf-text-mobile-right { text-align: right !important; }
                     }
                 `;
                 break;
@@ -80,10 +80,10 @@
             case 'tablet':
                 css = `
                     @media (min-width: ${parseInt(breakpoint) + 1}px) and (max-width: 1024px) {
-                        .cct-hide-tablet { display: none !important; }
-                        .cct-show-tablet { display: block !important; }
-                        .cct-grid { grid-template-columns: repeat(2, 1fr) !important; }
-                        .cct-container { padding: 0 20px !important; }
+                        .uenf-hide-tablet { display: none !important; }
+                        .uenf-show-tablet { display: block !important; }
+                        .uenf-grid { grid-template-columns: repeat(2, 1fr) !important; }
+                        .uenf-container { padding: 0 20px !important; }
                     }
                 `;
                 break;
@@ -91,9 +91,9 @@
             case 'desktop':
                 css = `
                     @media (min-width: ${breakpoint}px) {
-                        .cct-hide-desktop { display: none !important; }
-                        .cct-show-desktop { display: block !important; }
-                        .cct-container { max-width: ${breakpoint - 100}px !important; }
+                        .uenf-hide-desktop { display: none !important; }
+                        .uenf-show-desktop { display: block !important; }
+                        .uenf-container { max-width: ${breakpoint - 100}px !important; }
                     }
                 `;
                 break;
@@ -101,21 +101,21 @@
             case 'wide':
                 css = `
                     @media (min-width: ${breakpoint}px) {
-                        .cct-hide-wide { display: none !important; }
-                        .cct-show-wide { display: block !important; }
-                        .cct-container { max-width: ${breakpoint - 200}px !important; }
-                        .cct-grid { grid-template-columns: repeat(4, 1fr) !important; }
+                        .uenf-hide-wide { display: none !important; }
+                        .uenf-show-wide { display: block !important; }
+                        .uenf-container { max-width: ${breakpoint - 200}px !important; }
+                        .uenf-grid { grid-template-columns: repeat(4, 1fr) !important; }
                     }
                 `;
                 break;
         }
 
         // Remove CSS anterior
-        $('#cct-breakpoint-' + device + '-css').remove();
+        $('#uenf-breakpoint-' + device + '-css').remove();
         
         // Adiciona novo CSS
         if (css) {
-            $('head').append('<style id="cct-breakpoint-' + device + '-css">' + css + '</style>');
+            $('head').append('<style id="uenf-breakpoint-' + device + '-css">' + css + '</style>');
         }
     }
 
@@ -124,10 +124,10 @@
      */
     function updateBreakpointIndicator(device, breakpoint) {
         // Remove indicador anterior
-        $('.cct-breakpoint-indicator').remove();
+        $('.uenf-breakpoint-indicator').remove();
         
         // Cria novo indicador
-        var indicator = $('<div class="cct-breakpoint-indicator">');
+        var indicator = $('<div class="uenf-breakpoint-indicator">');
         indicator.css({
             'position': 'fixed',
             'top': '10px',
@@ -172,10 +172,10 @@
         // Verificar se wp.customize está disponível e obter valores customizados
         if (typeof wp !== 'undefined' && wp.customize && typeof wp.customize === 'function') {
             try {
-                mobile = wp.customize('cct_breakpoint_mobile')() || defaultBreakpoints.mobile;
-                tablet = wp.customize('cct_breakpoint_tablet')() || defaultBreakpoints.tablet;
-                desktop = wp.customize('cct_breakpoint_desktop')() || defaultBreakpoints.desktop;
-                wide = wp.customize('cct_breakpoint_wide')() || defaultBreakpoints.wide;
+                mobile = wp.customize('uenf_breakpoint_mobile')() || defaultBreakpoints.mobile;
+                tablet = wp.customize('uenf_breakpoint_tablet')() || defaultBreakpoints.tablet;
+                desktop = wp.customize('uenf_breakpoint_desktop')() || defaultBreakpoints.desktop;
+                wide = wp.customize('uenf_breakpoint_wide')() || defaultBreakpoints.wide;
             } catch(e) {
                 // Usar valores padrão se houver erro
             }
@@ -200,12 +200,12 @@
     function bindVisibilityPreview() {
         // Show/hide em diferentes dispositivos
         var visibilitySettings = [
-            'cct_show_mobile',
-            'cct_hide_mobile',
-            'cct_show_tablet',
-            'cct_hide_tablet',
-            'cct_show_desktop',
-            'cct_hide_desktop'
+            'uenf_show_mobile',
+            'uenf_hide_mobile',
+            'uenf_show_tablet',
+            'uenf_hide_tablet',
+            'uenf_show_desktop',
+            'uenf_hide_desktop'
         ];
         
         visibilitySettings.forEach(function(setting) {
@@ -221,7 +221,7 @@
      * Atualiza classes de visibilidade
      */
     function updateVisibilityClasses(setting, enabled) {
-        var className = setting.replace('cct_', 'cct-');
+        var className = setting.replace('uenf_', 'uenf-');
         
         if (enabled) {
             $('body').addClass(className + '-enabled');
@@ -235,38 +235,38 @@
      */
     function bindResponsiveGridPreview() {
         // Colunas por dispositivo
-        wp.customize('cct_grid_columns_mobile', function(value) {
+        wp.customize('uenf_grid_columns_mobile', function(value) {
             value.bind(function(newval) {
                 updateResponsiveGridCSS('mobile', 'columns', newval);
             });
         });
 
-        wp.customize('cct_grid_columns_tablet', function(value) {
+        wp.customize('uenf_grid_columns_tablet', function(value) {
             value.bind(function(newval) {
                 updateResponsiveGridCSS('tablet', 'columns', newval);
             });
         });
 
-        wp.customize('cct_grid_columns_desktop', function(value) {
+        wp.customize('uenf_grid_columns_desktop', function(value) {
             value.bind(function(newval) {
                 updateResponsiveGridCSS('desktop', 'columns', newval);
             });
         });
 
         // Gap por dispositivo
-        wp.customize('cct_grid_gap_mobile', function(value) {
+        wp.customize('uenf_grid_gap_mobile', function(value) {
             value.bind(function(newval) {
                 updateResponsiveGridCSS('mobile', 'gap', newval);
             });
         });
 
-        wp.customize('cct_grid_gap_tablet', function(value) {
+        wp.customize('uenf_grid_gap_tablet', function(value) {
             value.bind(function(newval) {
                 updateResponsiveGridCSS('tablet', 'gap', newval);
             });
         });
 
-        wp.customize('cct_grid_gap_desktop', function(value) {
+        wp.customize('uenf_grid_gap_desktop', function(value) {
             value.bind(function(newval) {
                 updateResponsiveGridCSS('desktop', 'gap', newval);
             });
@@ -277,13 +277,13 @@
      * Atualiza CSS do grid responsivo
      */
     function updateResponsiveGridCSS(device, property, value) {
-        var breakpoint = wp.customize('cct_breakpoint_' + device)() || defaultBreakpoints[device];
+        var breakpoint = wp.customize('uenf_breakpoint_' + device)() || defaultBreakpoints[device];
         var css = '';
         
         if (property === 'columns') {
             css = `
                 @media (max-width: ${breakpoint}px) {
-                    .cct-grid {
+                    .uenf-grid {
                         grid-template-columns: repeat(${value}, 1fr) !important;
                     }
                 }
@@ -291,7 +291,7 @@
         } else if (property === 'gap') {
             css = `
                 @media (max-width: ${breakpoint}px) {
-                    .cct-grid {
+                    .uenf-grid {
                         gap: ${value}px !important;
                     }
                 }
@@ -299,11 +299,11 @@
         }
 
         // Remove CSS anterior
-        $('#cct-responsive-grid-' + device + '-' + property + '-css').remove();
+        $('#uenf-responsive-grid-' + device + '-' + property + '-css').remove();
         
         // Adiciona novo CSS
         if (css) {
-            $('head').append('<style id="cct-responsive-grid-' + device + '-' + property + '-css">' + css + '</style>');
+            $('head').append('<style id="uenf-responsive-grid-' + device + '-' + property + '-css">' + css + '</style>');
         }
     }
 
@@ -320,15 +320,15 @@
                 var activeBreakpoint = getCurrentBreakpoint(currentWidth);
                 
                 // Atualiza indicador se existir
-                if ($('.cct-breakpoint-indicator').length) {
-                    $('.cct-breakpoint-indicator').html(`
+                if ($('.uenf-breakpoint-indicator').length) {
+                    $('.uenf-breakpoint-indicator').html(`
                         <div>Largura: ${currentWidth}px</div>
                         <div>Breakpoint: ${activeBreakpoint}</div>
                     `);
                 }
                 
                 // Trigger evento customizado
-                $(document).trigger('cct-breakpoint-change', {
+                $(document).trigger('uenf-breakpoint-change', {
                     width: currentWidth,
                     breakpoint: activeBreakpoint
                 });

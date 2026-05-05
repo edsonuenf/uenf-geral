@@ -29,7 +29,7 @@
     function bindResetButton() {
         // Aguardar o botão estar disponível
         setTimeout(function() {
-            $('.cct-social-reset-button').on('click', function(e) {
+            $('.uenf-social-reset-button').on('click', function(e) {
                 e.preventDefault();
                 resetSocialMediaSettings();
             });
@@ -61,7 +61,7 @@
      */
     function showResetMessage() {
         // Criar elemento de notificação
-        var $notification = $('<div class="cct-reset-notification">');
+        var $notification = $('<div class="uenf-reset-notification">');
         $notification.html('✅ Configurações de redes sociais restauradas para os valores padrão!');
         $notification.css({
             'position': 'fixed',
@@ -108,7 +108,7 @@
             setTimeout(function() {
                 var $control = $('#customize-control-' + setting);
                 if ($control.length) {
-                    var $resetBtn = $('<button type="button" class="button button-link cct-individual-reset" data-setting="' + setting + '">↺ Padrão</button>');
+                    var $resetBtn = $('<button type="button" class="button button-link uenf-individual-reset" data-setting="' + setting + '">↺ Padrão</button>');
                     $resetBtn.css({
                         'margin-left': '10px',
                         'font-size': '12px',

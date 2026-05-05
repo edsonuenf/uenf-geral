@@ -4,7 +4,7 @@
  *
  * Adiciona controles para personalizar a exibição da página 404
  *
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -55,7 +55,7 @@ if (class_exists('WP_Customize_Control')) {
 /**
  * Classe principal do Customizer para a página 404
  */
-class CCT_404_Customizer {
+class UENF_404_Customizer {
         /**
          * Inicializar controles
          */
@@ -87,7 +87,7 @@ class CCT_404_Customizer {
          */
         public static function register_controls($wp_customize) {
             // Painel de Configurações da Página 404
-            $wp_customize->add_section('cct_404_page', array(
+            $wp_customize->add_section('uenf_404_page', array(
                 'title'       => 'Página 404',
                 'description' => 'Configure o conteúdo exibido na página de erro 404.',
                 'priority'    => 35,
@@ -95,64 +95,64 @@ class CCT_404_Customizer {
             ));
 
             // Título da Página 404
-            $wp_customize->add_setting('cct_404_title', array(
+            $wp_customize->add_setting('uenf_404_title', array(
                 'default'           => 'Oops! Página não encontrada',
                 'sanitize_callback' => 'sanitize_text_field',
                 'transport'         => 'postMessage',
             ));
-            $wp_customize->add_control('cct_404_title', array(
+            $wp_customize->add_control('uenf_404_title', array(
                 'label'       => 'Título da Página 404',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'text',
             ));
 
             // Subtítulo da Página 404
-            $wp_customize->add_setting('cct_404_subtitle', array(
+            $wp_customize->add_setting('uenf_404_subtitle', array(
                 'default'           => 'A página que você está procurando pode ter sido removida, ter mudado de nome ou está temporariamente indisponível.',
                 'sanitize_callback' => 'wp_kses_post',
                 'transport'         => 'postMessage',
             ));
-            $wp_customize->add_control('cct_404_subtitle', array(
+            $wp_customize->add_control('uenf_404_subtitle', array(
                 'label'       => 'Subtítulo',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'textarea',
             ));
 
             // Seção: Conteúdo que pode interessar
-            $wp_customize->add_setting('cct_404_related_heading', array(
+            $wp_customize->add_setting('uenf_404_related_heading', array(
                 'sanitize_callback' => 'sanitize_text_field',
             ));
-            $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cct_404_related_heading', array(
+            $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'uenf_404_related_heading', array(
                 'label'       => 'Conteúdo que pode interessar',
                 'description' => 'Configure os conteúdos relacionados que aparecem na página 404.',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'hidden',
-                'settings'    => 'cct_404_related_heading',
+                'settings'    => 'uenf_404_related_heading',
             )));
 
             // Ativar conteúdo relacionado
-            $wp_customize->add_setting('cct_404_related_enabled', array(
+            $wp_customize->add_setting('uenf_404_related_enabled', array(
                 'default'           => true,
                 'sanitize_callback' => 'wp_validate_boolean',
                 'transport'         => 'refresh',
             ));
-            $wp_customize->add_control('cct_404_related_enabled', array(
+            $wp_customize->add_control('uenf_404_related_enabled', array(
                 'label'       => 'Exibir "Conteúdo que pode interessar"',
                 'description' => 'Ativa a exibição de conteúdos relacionados na página 404.',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'checkbox',
             ));
 
             // Título da seção de conteúdo relacionado
-            $wp_customize->add_setting('cct_404_related_title', array(
+            $wp_customize->add_setting('uenf_404_related_title', array(
                 'default'           => 'Conteúdo que pode interessar',
                 'sanitize_callback' => 'sanitize_text_field',
                 'transport'         => 'postMessage',
             ));
-            $wp_customize->add_control('cct_404_related_title', array(
+            $wp_customize->add_control('uenf_404_related_title', array(
                 'label'       => 'Título da seção de conteúdo relacionado',
                 'description' => 'Título exibido acima dos conteúdos relacionados.',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'text',
             ));
 
@@ -166,33 +166,33 @@ class CCT_404_Customizer {
                 }
             }
 
-            $wp_customize->add_setting('cct_404_related_post_types', array(
+            $wp_customize->add_setting('uenf_404_related_post_types', array(
                 'default'           => array('post', 'page'),
                 'sanitize_callback' => array(__CLASS__, 'sanitize_multiselect'),
                 'transport'         => 'refresh',
             ));
             $wp_customize->add_control(new WP_Customize_Control_Multiple_Select(
                 $wp_customize,
-                'cct_404_related_post_types',
+                'uenf_404_related_post_types',
                 array(
                     'label'       => 'Tipos de conteúdo',
                     'description' => 'Selecione os tipos de conteúdo que serão exibidos como sugestões.',
-                    'section'     => 'cct_404_page',
+                    'section'     => 'uenf_404_page',
                     'type'        => 'multiple-select',
                     'choices'     => $post_type_choices,
                 )
             ));
 
             // Número de itens para exibir
-            $wp_customize->add_setting('cct_404_related_count', array(
+            $wp_customize->add_setting('uenf_404_related_count', array(
                 'default'           => 4,
                 'sanitize_callback' => 'absint',
                 'transport'         => 'refresh',
             ));
-            $wp_customize->add_control('cct_404_related_count', array(
+            $wp_customize->add_control('uenf_404_related_count', array(
                 'label'       => 'Número de itens',
                 'description' => 'Quantos itens de conteúdo mostrar na seção.',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'number',
                 'input_attrs' => array(
                     'min'  => 1,
@@ -202,14 +202,14 @@ class CCT_404_Customizer {
             ));
 
             // Ordem dos itens
-            $wp_customize->add_setting('cct_404_related_orderby', array(
+            $wp_customize->add_setting('uenf_404_related_orderby', array(
                 'default'           => 'date',
                 'sanitize_callback' => 'sanitize_text_field',
                 'transport'         => 'refresh',
             ));
-            $wp_customize->add_control('cct_404_related_orderby', array(
+            $wp_customize->add_control('uenf_404_related_orderby', array(
                 'label'       => 'Ordenar por',
-                'section'     => 'cct_404_page',
+                'section'     => 'uenf_404_page',
                 'type'        => 'select',
                 'choices'     => array(
                     'date'          => 'Data (mais recentes primeiro)',
@@ -227,10 +227,10 @@ class CCT_404_Customizer {
          */
         public static function get_related_content() {
             // Obtém as configurações
-            $enabled = get_theme_mod('cct_404_related_enabled', true);
-            $post_types = get_theme_mod('cct_404_related_post_types', array('post', 'page'));
-            $count = get_theme_mod('cct_404_related_count', 4);
-            $orderby = get_theme_mod('cct_404_related_orderby', 'date');
+            $enabled = get_theme_mod('uenf_404_related_enabled', true);
+            $post_types = get_theme_mod('uenf_404_related_post_types', array('post', 'page'));
+            $count = get_theme_mod('uenf_404_related_count', 4);
+            $orderby = get_theme_mod('uenf_404_related_orderby', 'date');
             
             // Log para depuração
             error_log('Configurações de conteúdo relacionado:');
@@ -277,7 +277,7 @@ class CCT_404_Customizer {
         }
     }
 
-// Inicializar a classe CCT_404_Customizer
+// Inicializar a classe UENF_404_Customizer
 add_action('after_setup_theme', function() {
-    CCT_404_Customizer::init();
+    UENF_404_Customizer::init();
 });

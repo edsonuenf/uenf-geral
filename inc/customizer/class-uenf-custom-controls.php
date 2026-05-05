@@ -4,7 +4,7 @@
  * 
  * Centraliza controles reutilizáveis para todos os módulos do Customizer.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */

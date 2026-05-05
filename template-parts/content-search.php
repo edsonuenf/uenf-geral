@@ -21,7 +21,7 @@
 
     <footer class="entry-footer">
         <a href="<?php echo esc_url(get_permalink()); ?>" class="read-more">
-            <?php echo esc_html__('Read More', 'cct-theme'); ?> &raquo;
+            <?php echo esc_html__('Read More', 'uenf-theme'); ?> &raquo;
         </a>
     </footer>
 </article>

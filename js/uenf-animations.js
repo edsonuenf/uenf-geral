@@ -8,7 +8,7 @@
  * - Performance otimizada
  * - Acessibilidade (prefers-reduced-motion)
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -112,9 +112,9 @@
                 // Adicionar will-change aos elementos animados
                 const style = document.createElement('style');
                 style.textContent = `
-                    .cct-animate,
-                    .cct-hover-effect,
-                    .cct-page-transition {
+                    .uenf-animate,
+                    .uenf-hover-effect,
+                    .uenf-page-transition {
                         will-change: transform, opacity;
                         transform: translateZ(0);
                     }
@@ -161,8 +161,8 @@
          * Observa elementos animados
          */
         observeAnimatedElements: function(observer) {
-            // Elementos com classe cct-animate
-            const animatedElements = document.querySelectorAll('.cct-animate');
+            // Elementos com classe uenf-animate
+            const animatedElements = document.querySelectorAll('.uenf-animate');
             animatedElements.forEach(element => {
                 observer.observe(element);
             });
@@ -181,7 +181,7 @@
          * Dispara animação em um elemento
          */
         triggerAnimation: function(element) {
-            const animationType = element.dataset.animation || element.classList.contains('cct-animate') ? 'fadeIn' : null;
+            const animationType = element.dataset.animation || element.classList.contains('uenf-animate') ? 'fadeIn' : null;
             const trigger = element.dataset.trigger || 'scroll';
             const delay = parseFloat(element.dataset.delay || 0);
             
@@ -210,7 +210,7 @@
             this.state.activeAnimations.add(element);
             
             // Aplicar classe de animação
-            element.classList.add('cct-animated', `cct-${animationType}`);
+            element.classList.add('uenf-animated', `uenf-${animationType}`);
             
             // Configurar will-change
             if (this.settings.gpuAcceleration) {
@@ -269,7 +269,7 @@
             }
             
             // Elementos com efeitos de hover
-            const hoverElements = document.querySelectorAll('.cct-hover-effect, [data-hover-effect]');
+            const hoverElements = document.querySelectorAll('.uenf-hover-effect, [data-hover-effect]');
             
             hoverElements.forEach(element => {
                 const effect = element.dataset.hoverEffect || this.getHoverEffectFromClass(element);
@@ -300,7 +300,7 @@
          * Aplica efeito de hover
          */
         applyHoverEffect: function(element, effect, isHover) {
-            const className = `cct-hover-${effect}${isHover ? '-active' : ''}`;
+            const className = `uenf-hover-${effect}${isHover ? '-active' : ''}`;
             
             if (isHover) {
                 element.classList.add(className);
@@ -317,7 +317,7 @@
             const hoverClasses = ['lift', 'glow', 'tilt', 'zoom', 'slide_up'];
             
             for (const hoverClass of hoverClasses) {
-                if (classes.contains(`cct-hover-${hoverClass}`)) {
+                if (classes.contains(`uenf-hover-${hoverClass}`)) {
                     return hoverClass;
                 }
             }
@@ -357,9 +357,9 @@
          */
         applyFocusEffect: function(element, isFocused) {
             if (isFocused) {
-                element.classList.add('cct-focus-active');
+                element.classList.add('uenf-focus-active');
             } else {
-                element.classList.remove('cct-focus-active');
+                element.classList.remove('uenf-focus-active');
             }
         },
         
@@ -372,7 +372,7 @@
             }
             
             // Elementos de carregamento
-            const loadingElements = document.querySelectorAll('.cct-loading, [data-loading]');
+            const loadingElements = document.querySelectorAll('.uenf-loading, [data-loading]');
             
             loadingElements.forEach(element => {
                 const loadingType = element.dataset.loading || 'spinner';
@@ -384,14 +384,14 @@
          * Aplica efeito de carregamento
          */
         applyLoadingEffect: function(element, type) {
-            element.classList.add('cct-loading-active', `cct-loading-${type}`);
+            element.classList.add('uenf-loading-active', `uenf-loading-${type}`);
         },
         
         /**
          * Remove efeito de carregamento
          */
         removeLoadingEffect: function(element) {
-            const loadingClasses = Array.from(element.classList).filter(cls => cls.startsWith('cct-loading'));
+            const loadingClasses = Array.from(element.classList).filter(cls => cls.startsWith('uenf-loading'));
             element.classList.remove(...loadingClasses);
         },
         
@@ -400,7 +400,7 @@
          */
         initButtonEffects: function() {
             // Efeito ripple
-            const rippleButtons = document.querySelectorAll('.cct-button-ripple, [data-ripple]');
+            const rippleButtons = document.querySelectorAll('.uenf-button-ripple, [data-ripple]');
             
             rippleButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
@@ -409,15 +409,15 @@
             });
             
             // Efeito pulse
-            const pulseButtons = document.querySelectorAll('.cct-button-pulse, [data-pulse]');
+            const pulseButtons = document.querySelectorAll('.uenf-button-pulse, [data-pulse]');
             
             pulseButtons.forEach(button => {
                 button.addEventListener('mouseenter', () => {
-                    button.classList.add('cct-pulse-active');
+                    button.classList.add('uenf-pulse-active');
                 });
                 
                 button.addEventListener('mouseleave', () => {
-                    button.classList.remove('cct-pulse-active');
+                    button.classList.remove('uenf-pulse-active');
                 });
             });
         },
@@ -432,7 +432,7 @@
             const y = event.clientY - rect.top - size / 2;
             
             const ripple = document.createElement('span');
-            ripple.className = 'cct-ripple';
+            ripple.className = 'uenf-ripple';
             ripple.style.cssText = `
                 position: absolute;
                 width: ${size}px;
@@ -442,7 +442,7 @@
                 background: rgba(255, 255, 255, 0.5);
                 border-radius: 50%;
                 transform: scale(0);
-                animation: cct-ripple-animation 0.6s ease-out;
+                animation: uenf-ripple-animation 0.6s ease-out;
                 pointer-events: none;
             `;
             
@@ -466,34 +466,34 @@
          */
         initFormEffects: function() {
             // Inputs com foco animado
-            const animatedInputs = document.querySelectorAll('.cct-input-animated, [data-input-animation]');
+            const animatedInputs = document.querySelectorAll('.uenf-input-animated, [data-input-animation]');
             
             animatedInputs.forEach(input => {
                 input.addEventListener('focus', () => {
-                    input.classList.add('cct-input-focused');
+                    input.classList.add('uenf-input-focused');
                 });
                 
                 input.addEventListener('blur', () => {
                     if (!input.value) {
-                        input.classList.remove('cct-input-focused');
+                        input.classList.remove('uenf-input-focused');
                     }
                 });
                 
                 // Verificar se já tem valor
                 if (input.value) {
-                    input.classList.add('cct-input-focused');
+                    input.classList.add('uenf-input-focused');
                 }
             });
             
             // Checkboxes animados
-            const animatedCheckboxes = document.querySelectorAll('.cct-checkbox-animated, [data-checkbox-animation]');
+            const animatedCheckboxes = document.querySelectorAll('.uenf-checkbox-animated, [data-checkbox-animation]');
             
             animatedCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', () => {
                     if (checkbox.checked) {
-                        checkbox.classList.add('cct-checkbox-checked');
+                        checkbox.classList.add('uenf-checkbox-checked');
                     } else {
-                        checkbox.classList.remove('cct-checkbox-checked');
+                        checkbox.classList.remove('uenf-checkbox-checked');
                     }
                 });
             });
@@ -551,7 +551,7 @@
             const duration = this.settings.pageTransitionDuration;
             
             // Aplicar transição de saída
-            document.body.classList.add('cct-page-transitioning', `cct-transition-${transitionType}-out`);
+            document.body.classList.add('uenf-page-transitioning', `uenf-transition-${transitionType}-out`);
             
             // Navegar após transição
             setTimeout(() => {
@@ -565,11 +565,11 @@
         performEnterTransition: function() {
             const transitionType = this.settings.pageTransitionType;
             
-            document.body.classList.add('cct-page-transitioning', `cct-transition-${transitionType}-in`);
+            document.body.classList.add('uenf-page-transitioning', `uenf-transition-${transitionType}-in`);
             
             // Remover classes após transição
             setTimeout(() => {
-                document.body.classList.remove('cct-page-transitioning', `cct-transition-${transitionType}-in`);
+                document.body.classList.remove('uenf-page-transitioning', `uenf-transition-${transitionType}-in`);
             }, this.settings.pageTransitionDuration * 1000);
         },
         
@@ -615,7 +615,7 @@
          * Verifica animações no scroll
          */
         checkScrollAnimations: function() {
-            const elements = document.querySelectorAll('.cct-animate:not(.cct-animated)');
+            const elements = document.querySelectorAll('.uenf-animate:not(.uenf-animated)');
             const windowHeight = window.innerHeight;
             
             elements.forEach(element => {
@@ -631,7 +631,7 @@
          * Inicializa animações de parallax
          */
         initParallaxAnimations: function() {
-            const parallaxElements = document.querySelectorAll('.cct-parallax, [data-parallax]');
+            const parallaxElements = document.querySelectorAll('.uenf-parallax, [data-parallax]');
             
             if (parallaxElements.length === 0) {
                 return;
@@ -670,7 +670,7 @@
          * Inicializa animações de contador
          */
         initCounterAnimations: function() {
-            const counterElements = document.querySelectorAll('.cct-counter, [data-counter]');
+            const counterElements = document.querySelectorAll('.uenf-counter, [data-counter]');
             
             counterElements.forEach(element => {
                 const observer = new IntersectionObserver((entries) => {
@@ -767,14 +767,14 @@
          * Pausa animações
          */
         pauseAnimations: function() {
-            document.body.classList.add('cct-animations-paused');
+            document.body.classList.add('uenf-animations-paused');
         },
         
         /**
          * Retoma animações
          */
         resumeAnimations: function() {
-            document.body.classList.remove('cct-animations-paused');
+            document.body.classList.remove('uenf-animations-paused');
         },
         
         /**
@@ -819,7 +819,7 @@
                 return;
             }
             
-            element.classList.remove('cct-animated', `cct-${animationType}`);
+            element.classList.remove('uenf-animated', `uenf-${animationType}`);
             this.state.activeAnimations.delete(element);
         },
         
@@ -890,59 +890,59 @@
 (function() {
     const animationCSS = `
         /* Animações base */
-        @keyframes cct-fadeIn {
+        @keyframes uenf-fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         
-        @keyframes cct-fadeOut {
+        @keyframes uenf-fadeOut {
             from { opacity: 1; }
             to { opacity: 0; }
         }
         
-        @keyframes cct-slideInUp {
+        @keyframes uenf-slideInUp {
             from { transform: translateY(100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         
-        @keyframes cct-slideInDown {
+        @keyframes uenf-slideInDown {
             from { transform: translateY(-100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         
-        @keyframes cct-slideInLeft {
+        @keyframes uenf-slideInLeft {
             from { transform: translateX(-100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
         
-        @keyframes cct-slideInRight {
+        @keyframes uenf-slideInRight {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
         
-        @keyframes cct-scaleIn {
+        @keyframes uenf-scaleIn {
             from { transform: scale(0); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
         
-        @keyframes cct-scaleOut {
+        @keyframes uenf-scaleOut {
             from { transform: scale(1); opacity: 1; }
             to { transform: scale(0); opacity: 0; }
         }
         
-        @keyframes cct-rotateIn {
+        @keyframes uenf-rotateIn {
             from { transform: rotate(-180deg); opacity: 0; }
             to { transform: rotate(0deg); opacity: 1; }
         }
         
-        @keyframes cct-bounceIn {
+        @keyframes uenf-bounceIn {
             0% { transform: scale(0.3); opacity: 0; }
             50% { transform: scale(1.05); opacity: 1; }
             70% { transform: scale(0.9); }
             100% { transform: scale(1); }
         }
         
-        @keyframes cct-flipInX {
+        @keyframes uenf-flipInX {
             0% { transform: perspective(400px) rotateX(90deg); opacity: 0; }
             40% { transform: perspective(400px) rotateX(-20deg); }
             60% { transform: perspective(400px) rotateX(10deg); opacity: 1; }
@@ -950,7 +950,7 @@
             100% { transform: perspective(400px) rotateX(0deg); opacity: 1; }
         }
         
-        @keyframes cct-flipInY {
+        @keyframes uenf-flipInY {
             0% { transform: perspective(400px) rotateY(90deg); opacity: 0; }
             40% { transform: perspective(400px) rotateY(-20deg); }
             60% { transform: perspective(400px) rotateY(10deg); opacity: 1; }
@@ -959,7 +959,7 @@
         }
         
         /* Efeito ripple */
-        @keyframes cct-ripple-animation {
+        @keyframes uenf-ripple-animation {
             to {
                 transform: scale(4);
                 opacity: 0;
@@ -967,44 +967,44 @@
         }
         
         /* Efeito pulse */
-        @keyframes cct-pulse {
+        @keyframes uenf-pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
         
         /* Classes de animação */
-        .cct-fadeIn { animation: cct-fadeIn var(--cct-animation-duration, 0.3s) var(--cct-animation-easing, ease-in-out); }
-        .cct-fadeOut { animation: cct-fadeOut var(--cct-animation-duration, 0.3s) var(--cct-animation-easing, ease-in-out); }
-        .cct-slideInUp { animation: cct-slideInUp var(--cct-animation-duration, 0.5s) var(--cct-animation-easing, ease-out); }
-        .cct-slideInDown { animation: cct-slideInDown var(--cct-animation-duration, 0.5s) var(--cct-animation-easing, ease-out); }
-        .cct-slideInLeft { animation: cct-slideInLeft var(--cct-animation-duration, 0.5s) var(--cct-animation-easing, ease-out); }
-        .cct-slideInRight { animation: cct-slideInRight var(--cct-animation-duration, 0.5s) var(--cct-animation-easing, ease-out); }
-        .cct-scaleIn { animation: cct-scaleIn var(--cct-animation-duration, 0.4s) var(--cct-animation-easing, ease-out); }
-        .cct-scaleOut { animation: cct-scaleOut var(--cct-animation-duration, 0.4s) var(--cct-animation-easing, ease-in); }
-        .cct-rotateIn { animation: cct-rotateIn var(--cct-animation-duration, 0.6s) var(--cct-animation-easing, ease-in-out); }
-        .cct-bounceIn { animation: cct-bounceIn var(--cct-animation-duration, 0.8s) var(--cct-animation-easing, ease-out); }
-        .cct-flipInX { animation: cct-flipInX var(--cct-animation-duration, 0.7s) var(--cct-animation-easing, ease-in-out); }
-        .cct-flipInY { animation: cct-flipInY var(--cct-animation-duration, 0.7s) var(--cct-animation-easing, ease-in-out); }
+        .uenf-fadeIn { animation: uenf-fadeIn var(--uenf-animation-duration, 0.3s) var(--uenf-animation-easing, ease-in-out); }
+        .uenf-fadeOut { animation: uenf-fadeOut var(--uenf-animation-duration, 0.3s) var(--uenf-animation-easing, ease-in-out); }
+        .uenf-slideInUp { animation: uenf-slideInUp var(--uenf-animation-duration, 0.5s) var(--uenf-animation-easing, ease-out); }
+        .uenf-slideInDown { animation: uenf-slideInDown var(--uenf-animation-duration, 0.5s) var(--uenf-animation-easing, ease-out); }
+        .uenf-slideInLeft { animation: uenf-slideInLeft var(--uenf-animation-duration, 0.5s) var(--uenf-animation-easing, ease-out); }
+        .uenf-slideInRight { animation: uenf-slideInRight var(--uenf-animation-duration, 0.5s) var(--uenf-animation-easing, ease-out); }
+        .uenf-scaleIn { animation: uenf-scaleIn var(--uenf-animation-duration, 0.4s) var(--uenf-animation-easing, ease-out); }
+        .uenf-scaleOut { animation: uenf-scaleOut var(--uenf-animation-duration, 0.4s) var(--uenf-animation-easing, ease-in); }
+        .uenf-rotateIn { animation: uenf-rotateIn var(--uenf-animation-duration, 0.6s) var(--uenf-animation-easing, ease-in-out); }
+        .uenf-bounceIn { animation: uenf-bounceIn var(--uenf-animation-duration, 0.8s) var(--uenf-animation-easing, ease-out); }
+        .uenf-flipInX { animation: uenf-flipInX var(--uenf-animation-duration, 0.7s) var(--uenf-animation-easing, ease-in-out); }
+        .uenf-flipInY { animation: uenf-flipInY var(--uenf-animation-duration, 0.7s) var(--uenf-animation-easing, ease-in-out); }
         
         /* Estados de micro-interações */
-        .cct-pulse-active { animation: cct-pulse 1s ease-in-out infinite; }
+        .uenf-pulse-active { animation: uenf-pulse 1s ease-in-out infinite; }
         
         /* Transições de página */
-        .cct-page-transitioning { pointer-events: none; }
+        .uenf-page-transitioning { pointer-events: none; }
         
-        .cct-transition-fade-out { opacity: 0; transition: opacity var(--cct-page-transition-duration, 0.5s) ease-in-out; }
-        .cct-transition-fade-in { opacity: 0; animation: cct-fadeIn var(--cct-page-transition-duration, 0.5s) ease-in-out; }
+        .uenf-transition-fade-out { opacity: 0; transition: opacity var(--uenf-page-transition-duration, 0.5s) ease-in-out; }
+        .uenf-transition-fade-in { opacity: 0; animation: uenf-fadeIn var(--uenf-page-transition-duration, 0.5s) ease-in-out; }
         
         /* Pausar animações */
-        .cct-animations-paused * {
+        .uenf-animations-paused * {
             animation-play-state: paused !important;
         }
         
         /* Acessibilidade */
         @media (prefers-reduced-motion: reduce) {
-            .cct-animate,
-            .cct-hover-effect,
-            .cct-page-transition {
+            .uenf-animate,
+            .uenf-hover-effect,
+            .uenf-page-transition {
                 animation: none !important;
                 transition: none !important;
             }

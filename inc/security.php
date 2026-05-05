@@ -19,11 +19,11 @@ add_filter('the_generator', '__return_empty_string');
 /**
  * Remove a versão do WordPress dos scripts e estilos
  */
-add_filter('script_loader_src', 'cct_remove_wp_version_strings');
-add_filter('style_loader_src', 'cct_remove_wp_version_strings');
+add_filter('script_loader_src', 'uenf_remove_wp_version_strings');
+add_filter('style_loader_src', 'uenf_remove_wp_version_strings');
 
-if (!function_exists('cct_remove_wp_version_strings')) {
-    function cct_remove_wp_version_strings($src) {
+if (!function_exists('uenf_remove_wp_version_strings')) {
+    function uenf_remove_wp_version_strings($src) {
         global $wp_version;
         
         // Verifica se é um arquivo do WordPress
@@ -46,9 +46,9 @@ if (!function_exists('cct_remove_wp_version_strings')) {
 /**
  * Desabilita o envio de informações sobre o WordPress no cabeçalho HTTP
  */
-add_action('after_setup_theme', 'cct_remove_wp_version_header');
-if (!function_exists('cct_remove_wp_version_header')) {
-    function cct_remove_wp_version_header() {
+add_action('after_setup_theme', 'uenf_remove_wp_version_header');
+if (!function_exists('uenf_remove_wp_version_header')) {
+    function uenf_remove_wp_version_header() {
         remove_action('wp_head', 'wp_generator');
         remove_action('wp_head', 'wp_shortlink_wp_head');
         remove_action('wp_head', 'rsd_link');
@@ -75,10 +75,10 @@ if (!is_admin()) {
  */
 add_filter('xmlrpc_enabled', '__return_false');
 add_filter('pings_open', '__return_false', 9999);
-add_filter('wp_headers', 'cct_remove_x_pingback');
+add_filter('wp_headers', 'uenf_remove_x_pingback');
 
-if (!function_exists('cct_remove_x_pingback')) {
-    function cct_remove_x_pingback($headers) {
+if (!function_exists('uenf_remove_x_pingback')) {
+    function uenf_remove_x_pingback($headers) {
         unset($headers['X-Pingback']);
         return $headers;
     }
@@ -87,9 +87,9 @@ if (!function_exists('cct_remove_x_pingback')) {
 /**
  * Segurança para uploads
  */
-add_filter('upload_mimes', 'cct_restrict_mime_types');
-if (!function_exists('cct_restrict_mime_types')) {
-    function cct_restrict_mime_types($mime_types) {
+add_filter('upload_mimes', 'uenf_restrict_mime_types');
+if (!function_exists('uenf_restrict_mime_types')) {
+    function uenf_restrict_mime_types($mime_types) {
         // Tipos de arquivo permitidos
         $allowed_mimes = array(
             // Imagens
@@ -119,9 +119,9 @@ if (!function_exists('cct_restrict_mime_types')) {
 /**
  * Previne acesso a arquivos sensíveis de forma mais segura
  */
-add_action('init', 'cct_prevent_sensitive_file_access');
-if (!function_exists('cct_prevent_sensitive_file_access')) {
-    function cct_prevent_sensitive_file_access() {
+add_action('init', 'uenf_prevent_sensitive_file_access');
+if (!function_exists('uenf_prevent_sensitive_file_access')) {
+    function uenf_prevent_sensitive_file_access() {
         // Não executar em admin, AJAX, CRON ou na página de login
         if (is_admin() || wp_doing_ajax() || wp_doing_cron() || 
             (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php')) {
@@ -175,9 +175,9 @@ if (!function_exists('cct_prevent_sensitive_file_access')) {
 /**
  * Adiciona segurança extra ao cabeçalho de forma mais segura
  */
-add_action('send_headers', 'cct_additional_security_headers');
-if (!function_exists('cct_additional_security_headers')) {
-    function cct_additional_security_headers() {
+add_action('send_headers', 'uenf_additional_security_headers');
+if (!function_exists('uenf_additional_security_headers')) {
+    function uenf_additional_security_headers() {
         // Não adiciona headers extras na área administrativa
         if (is_admin()) {
             return;
@@ -211,9 +211,9 @@ if (!function_exists('cct_additional_security_headers')) {
 /**
  * Adiciona verificação de segurança para login
  */
-add_action('wp_login_failed', 'cct_login_failed');
-if (!function_exists('cct_login_failed')) {
-    function cct_login_failed($username) {
+add_action('wp_login_failed', 'uenf_login_failed');
+if (!function_exists('uenf_login_failed')) {
+    function uenf_login_failed($username) {
         // Registra tentativas de login sem redirecionamentos que possam causar loops
         error_log(sprintf(
             'Tentativa de login falha para o usuário: %s - IP: %s - Data: %s',

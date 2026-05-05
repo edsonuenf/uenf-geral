@@ -4,7 +4,7 @@
  * Media: (min-width:768px) and (max-width:991.98px)
  *
  * v1: contém regras para breakpoints intermediários (768px-1024px)
- * v2: expandir com split granular de new-menu.css e cct-responsive-breakpoints.css
+ * v2: expandir com split granular de new-menu.css e uenf-responsive-breakpoints.css
  *
  * Extraído de:
  *   - css/components/header.css
@@ -14,7 +14,7 @@
  * NOTA v1:
  * Este arquivo contém apenas os blocos genuinamente tablet-only encontrados
  * na varredura inicial do projeto. A maioria dos blocos "tablet" nos demais
- * arquivos (new-menu.css, cct-responsive-breakpoints.css) usa max-width:991.98px
+ * arquivos (new-menu.css, uenf-responsive-breakpoints.css) usa max-width:991.98px
  * ou max-width:992px — breakpoints que incluem mobile — e por isso não foram
  * duplicados aqui.
  *

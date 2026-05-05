@@ -1,3 +1,15 @@
+// Migração one-shot: renomeia chaves cct_ → uenf_ no localStorage
+(function () {
+    var map = { 'cct_dark_mode_preference': 'uenf_dark_mode_preference' };
+    Object.keys(map).forEach(function (oldKey) {
+        var val = localStorage.getItem(oldKey);
+        if (val !== null) {
+            localStorage.setItem(map[oldKey], val);
+            localStorage.removeItem(oldKey);
+        }
+    });
+})();
+
 /**
  * Sistema de Modo Escuro/Claro CCT - JavaScript Frontend
  * 
@@ -9,7 +21,7 @@
  * - Toggle manual com múltiplos estilos
  * - Integração com todos os módulos
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -115,9 +127,9 @@
         cacheElements: function() {
             this.cache.body = $('body');
             this.cache.html = $('html');
-            this.cache.toggleButtons = $('[data-cct-dark-mode-toggle]');
-            this.cache.themeIndicators = $('[data-cct-theme-indicator]');
-            this.cache.adminBarToggle = $('.cct-admin-bar-toggle');
+            this.cache.toggleButtons = $('[data-uenf-dark-mode-toggle]');
+            this.cache.themeIndicators = $('[data-uenf-theme-indicator]');
+            this.cache.adminBarToggle = $('.uenf-admin-bar-toggle');
         },
         
         /**
@@ -147,7 +159,7 @@
             
             // Tentar localStorage primeiro
             try {
-                const stored = localStorage.getItem('cct_dark_mode_preference');
+                const stored = localStorage.getItem('uenf_dark_mode_preference');
                 if (stored && ['light', 'dark', 'auto'].includes(stored)) {
                     this.state.userPreference = stored;
                 }
@@ -157,7 +169,7 @@
             
             // Fallback para cookie
             if (!this.state.userPreference) {
-                const cookie = this.getCookie('cct_dark_mode_preference');
+                const cookie = this.getCookie('uenf_dark_mode_preference');
                 if (cookie && ['light', 'dark', 'auto'].includes(cookie)) {
                     this.state.userPreference = cookie;
                 }
@@ -247,7 +259,7 @@
             // Marcar transição
             if (animate && this.settings.smoothTransitions) {
                 this.state.isTransitioning = true;
-                this.cache.body.addClass('cct-transitioning');
+                this.cache.body.addClass('uenf-transitioning');
                 
                 // Limpar timer anterior
                 if (this.timers.transitionEnd) {
@@ -257,7 +269,7 @@
                 // Timer para fim da transição
                 this.timers.transitionEnd = setTimeout(() => {
                     this.state.isTransitioning = false;
-                    this.cache.body.removeClass('cct-transitioning');
+                    this.cache.body.removeClass('uenf-transitioning');
                 }, this.settings.transitionDuration * 1000);
             }
             
@@ -266,8 +278,8 @@
             
             // Aplicar classes CSS
             this.cache.body
-                .removeClass('cct-theme-light cct-theme-dark')
-                .addClass(`cct-theme-${mode}`);
+                .removeClass('uenf-theme-light uenf-theme-dark')
+                .addClass(`uenf-theme-${mode}`);
             
             // Atualizar variáveis CSS
             this.updateCSSVariables(mode);
@@ -303,7 +315,7 @@
             const root = document.documentElement;
             
             Object.keys(colors).forEach(colorKey => {
-                root.style.setProperty(`--cct-color-${colorKey}`, colors[colorKey]);
+                root.style.setProperty(`--uenf-color-${colorKey}`, colors[colorKey]);
             });
         },
         
@@ -313,10 +325,10 @@
         updateToggleButtons: function(mode) {
             this.cache.toggleButtons.each(function() {
                 const $toggle = $(this);
-                const $btn = $toggle.find('.cct-toggle-btn, .cct-toggle-icon-btn');
-                const $input = $toggle.find('.cct-toggle-input');
-                const $text = $toggle.find('.cct-toggle-text');
-                const $icon = $toggle.find('.cct-toggle-icon');
+                const $btn = $toggle.find('.uenf-toggle-btn, .uenf-toggle-icon-btn');
+                const $input = $toggle.find('.uenf-toggle-input');
+                const $text = $toggle.find('.uenf-toggle-text');
+                const $icon = $toggle.find('.uenf-toggle-icon');
                 
                 // Atualizar estado do input
                 $input.prop('checked', mode === 'dark');
@@ -331,8 +343,8 @@
                 
                 // Atualizar ícone
                 if ($icon.length) {
-                    $icon.removeClass('cct-icon-sun cct-icon-moon')
-                          .addClass(mode === 'dark' ? 'cct-icon-sun' : 'cct-icon-moon');
+                    $icon.removeClass('uenf-icon-sun uenf-icon-moon')
+                          .addClass(mode === 'dark' ? 'uenf-icon-sun' : 'uenf-icon-moon');
                 }
                 
                 // Atualizar aria-label
@@ -343,8 +355,8 @@
                 $input.attr('aria-label', label);
                 
                 // Atualizar classes
-                $toggle.removeClass('cct-mode-light cct-mode-dark')
-                       .addClass(`cct-mode-${mode}`);
+                $toggle.removeClass('uenf-mode-light uenf-mode-dark')
+                       .addClass(`uenf-mode-${mode}`);
             });
             
             // Atualizar admin bar
@@ -360,13 +372,13 @@
         updateThemeIndicators: function(mode) {
             this.cache.themeIndicators.each(function() {
                 const $indicator = $(this);
-                const $icon = $indicator.find('.cct-theme-icon');
-                const $text = $indicator.find('.cct-theme-text');
+                const $icon = $indicator.find('.uenf-theme-icon');
+                const $text = $indicator.find('.uenf-theme-text');
                 
                 // Atualizar ícone
                 if ($icon.length) {
-                    $icon.removeClass('cct-icon-sun cct-icon-moon')
-                         .addClass(mode === 'dark' ? 'cct-icon-moon' : 'cct-icon-sun');
+                    $icon.removeClass('uenf-icon-sun uenf-icon-moon')
+                         .addClass(mode === 'dark' ? 'uenf-icon-moon' : 'uenf-icon-sun');
                 }
                 
                 // Atualizar texto
@@ -378,8 +390,8 @@
                 }
                 
                 // Atualizar classes
-                $indicator.removeClass('cct-mode-light cct-mode-dark')
-                          .addClass(`cct-mode-${mode}`);
+                $indicator.removeClass('uenf-mode-light uenf-mode-dark')
+                          .addClass(`uenf-mode-${mode}`);
             });
         },
         
@@ -407,19 +419,19 @@
             }
             
             // Eventos de clique
-            $(document).on('click', '[data-cct-dark-mode-toggle] .cct-toggle-btn, [data-cct-dark-mode-toggle] .cct-toggle-icon-btn', (e) => {
+            $(document).on('click', '[data-uenf-dark-mode-toggle] .uenf-toggle-btn, [data-uenf-dark-mode-toggle] .uenf-toggle-icon-btn', (e) => {
                 e.preventDefault();
                 this.toggleMode();
             });
             
             // Eventos de mudança no switch
-            $(document).on('change', '[data-cct-dark-mode-toggle] .cct-toggle-input', (e) => {
+            $(document).on('change', '[data-uenf-dark-mode-toggle] .uenf-toggle-input', (e) => {
                 const isChecked = e.target.checked;
                 this.setMode(isChecked ? 'dark' : 'light', true);
             });
             
             // Admin bar toggle
-            $(document).on('click', '.cct-admin-bar-toggle', (e) => {
+            $(document).on('click', '.uenf-admin-bar-toggle', (e) => {
                 e.preventDefault();
                 this.toggleMode();
             });
@@ -429,17 +441,17 @@
          * Cria toggle fixo
          */
         createFixedToggle: function() {
-            if ($('.cct-fixed-dark-mode-toggle').length) {
+            if ($('.uenf-fixed-dark-mode-toggle').length) {
                 return;
             }
             
             const position = this.settings.togglePosition;
-            const positionClass = `cct-position-${position}`;
+            const positionClass = `uenf-position-${position}`;
             
             const $toggle = $(`
-                <div class="cct-fixed-dark-mode-toggle ${positionClass}" data-cct-dark-mode-toggle>
-                    <button type="button" class="cct-toggle-btn" aria-label="${cctDarkMode.strings.toggleTooltip}">
-                        <span class="cct-toggle-icon cct-icon-moon"></span>
+                <div class="uenf-fixed-dark-mode-toggle ${positionClass}" data-uenf-dark-mode-toggle>
+                    <button type="button" class="uenf-toggle-btn" aria-label="${cctDarkMode.strings.toggleTooltip}">
+                        <span class="uenf-toggle-icon uenf-icon-moon"></span>
                     </button>
                 </div>
             `);
@@ -447,7 +459,7 @@
             $('body').append($toggle);
             
             // Atualizar cache
-            this.cache.toggleButtons = $('[data-cct-dark-mode-toggle]');
+            this.cache.toggleButtons = $('[data-uenf-dark-mode-toggle]');
         },
         
         /**
@@ -577,7 +589,7 @@
             
             // Salvar no localStorage
             try {
-                localStorage.setItem('cct_dark_mode_preference', preference);
+                localStorage.setItem('uenf_dark_mode_preference', preference);
             } catch (e) {
                 this.debug('Erro ao salvar no localStorage:', e);
             }
@@ -588,7 +600,7 @@
                     url: cctDarkMode.ajaxUrl,
                     type: 'POST',
                     data: {
-                        action: 'cct_save_dark_mode_preference',
+                        action: 'uenf_save_dark_mode_preference',
                         preference: preference,
                         nonce: cctDarkMode.nonce
                     },
@@ -621,7 +633,7 @@
          */
         handleResize: function() {
             // Reposicionar toggle fixo se necessário
-            const $fixedToggle = $('.cct-fixed-dark-mode-toggle');
+            const $fixedToggle = $('.uenf-fixed-dark-mode-toggle');
             if ($fixedToggle.length) {
                 // Lógica de reposicionamento se necessário
             }
@@ -709,7 +721,7 @@
             }
             
             // Remover toggle fixo
-            $('.cct-fixed-dark-mode-toggle').remove();
+            $('.uenf-fixed-dark-mode-toggle').remove();
             
             // Limpar cache
             this.cache = {
@@ -763,7 +775,7 @@
         if (typeof CCTShadows !== 'undefined') {
             // Atualizar cores das sombras
             const shadowColor = data.currentMode === 'dark' ? '255, 255, 255' : '0, 0, 0';
-            document.documentElement.style.setProperty('--cct-shadow-color', shadowColor);
+            document.documentElement.style.setProperty('--uenf-shadow-color', shadowColor);
         }
     });
     

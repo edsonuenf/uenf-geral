@@ -3,7 +3,7 @@
  * 
  * Funcionalidades JavaScript para busca avançada
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Search
  * @since 1.0.0
  */
@@ -159,7 +159,7 @@
             this.showLoading();
             
             const data = {
-                action: 'cct_advanced_search',
+                action: 'uenf_advanced_search',
                 nonce: cctSearch.nonce,
                 s: searchTerm,
                 ...filters
@@ -367,7 +367,7 @@
                 const filters = this.getActiveFilters();
                 
                 const data = {
-                    action: 'cct_load_more_search',
+                    action: 'uenf_load_more_search',
                     nonce: cctSearch.nonce,
                     s: searchTerm,
                     page: page,

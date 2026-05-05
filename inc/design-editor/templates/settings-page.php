@@ -2,7 +2,7 @@
 /**
  * Template da Página de Configurações do Editor CSS
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Design_Editor
  * @since 1.0.0
  */
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="wrap cct-css-editor-settings">
+<div class="wrap uenf-css-editor-settings">
     <h1 class="wp-heading-inline">
         <span class="dashicons dashicons-admin-settings"></span>
         Configurações do Editor CSS
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
     </p>
     
     <form method="post" action="">
-        <?php wp_nonce_field('cct_css_editor_settings'); ?>
+        <?php wp_nonce_field('uenf_css_editor_settings'); ?>
         
         <table class="form-table" role="presentation">
             <tbody>
@@ -276,23 +276,23 @@ if (!defined('ABSPATH')) {
 </div>
 
 <style>
-.cct-css-editor-settings .wp-heading-inline {
+.uenf-css-editor-settings .wp-heading-inline {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
 }
 
-.cct-css-editor-settings .wp-heading-inline .dashicons {
+.uenf-css-editor-settings .wp-heading-inline .dashicons {
     font-size: 24px;
     color: #1d3771;
 }
 
-.cct-css-editor-settings .form-table th {
+.uenf-css-editor-settings .form-table th {
     width: 200px;
 }
 
-.cct-css-editor-settings .button .dashicons {
+.uenf-css-editor-settings .button .dashicons {
     font-size: 16px;
     margin-right: 5px;
     vertical-align: middle;

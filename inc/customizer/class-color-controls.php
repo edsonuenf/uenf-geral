@@ -8,7 +8,7 @@
  * - Analisador de contraste WCAG
  * - Seletor de cores com sugestões
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -21,14 +21,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle de Preview de Paleta de Cores
  */
-class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
+class UENF_Color_Palette_Preview_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_color_palette_preview';
+    public $type = 'uenf_color_palette_preview';
     
     /**
      * Paletas disponíveis
@@ -52,18 +52,18 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-palette-preview-container">
+        <div class="uenf-palette-preview-container">
             <?php foreach ($this->palettes as $palette_id => $palette): ?>
-                <div class="cct-palette-option" data-palette="<?php echo esc_attr($palette_id); ?>">
-                    <div class="cct-palette-info">
+                <div class="uenf-palette-option" data-palette="<?php echo esc_attr($palette_id); ?>">
+                    <div class="uenf-palette-info">
                         <h4><?php echo esc_html($palette['name']); ?></h4>
                         <p><?php echo esc_html($palette['description']); ?></p>
-                        <span class="cct-palette-category"><?php echo esc_html(ucfirst($palette['category'])); ?></span>
+                        <span class="uenf-palette-category"><?php echo esc_html(ucfirst($palette['category'])); ?></span>
                     </div>
                     
-                    <div class="cct-palette-colors">
+                    <div class="uenf-palette-colors">
                         <?php foreach ($palette['colors'] as $role => $color): ?>
-                            <div class="cct-color-swatch" 
+                            <div class="uenf-color-swatch" 
                                  style="background-color: <?php echo esc_attr($color); ?>" 
                                  data-color="<?php echo esc_attr($color); ?>"
                                  data-role="<?php echo esc_attr($role); ?>"
@@ -72,7 +72,7 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
                         <?php endforeach; ?>
                     </div>
                     
-                    <button type="button" class="button cct-apply-palette" data-palette="<?php echo esc_attr($palette_id); ?>">
+                    <button type="button" class="button uenf-apply-palette" data-palette="<?php echo esc_attr($palette_id); ?>">
                         <?php _e('Aplicar Paleta', 'cct'); ?>
                     </button>
                 </div>
@@ -80,11 +80,11 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-palette-preview-container {
+        .uenf-palette-preview-container {
             margin-top: 10px;
         }
         
-        .cct-palette-option {
+        .uenf-palette-option {
             border: 2px solid #ddd;
             border-radius: 8px;
             padding: 15px;
@@ -93,29 +93,29 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-palette-option:hover {
+        .uenf-palette-option:hover {
             border-color: #0073aa;
             box-shadow: 0 2px 8px rgba(0,115,170,0.1);
         }
         
-        .cct-palette-option.selected {
+        .uenf-palette-option.selected {
             border-color: #0073aa;
             background-color: #f0f8ff;
         }
         
-        .cct-palette-info h4 {
+        .uenf-palette-info h4 {
             margin: 0 0 5px 0;
             font-size: 14px;
             font-weight: 600;
         }
         
-        .cct-palette-info p {
+        .uenf-palette-info p {
             margin: 0 0 8px 0;
             font-size: 12px;
             color: #666;
         }
         
-        .cct-palette-category {
+        .uenf-palette-category {
             display: inline-block;
             background: #0073aa;
             color: white;
@@ -126,14 +126,14 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
             font-weight: 500;
         }
         
-        .cct-palette-colors {
+        .uenf-palette-colors {
             display: flex;
             gap: 4px;
             margin: 12px 0;
             flex-wrap: wrap;
         }
         
-        .cct-color-swatch {
+        .uenf-color-swatch {
             width: 32px;
             height: 32px;
             border-radius: 6px;
@@ -143,11 +143,11 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
             transition: transform 0.2s ease;
         }
         
-        .cct-color-swatch:hover {
+        .uenf-color-swatch:hover {
             transform: scale(1.1);
         }
         
-        .cct-apply-palette {
+        .uenf-apply-palette {
             width: 100%;
             margin-top: 8px;
         }
@@ -159,14 +159,14 @@ class CCT_Color_Palette_Preview_Control extends WP_Customize_Control {
 /**
  * Controle Gerador de Cores
  */
-class CCT_Color_Generator_Control extends WP_Customize_Control {
+class UENF_Color_Generator_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_color_generator';
+    public $type = 'uenf_color_generator';
     
     /**
      * Renderiza o controle
@@ -183,29 +183,29 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-color-generator">
-            <div class="cct-generator-preview">
+        <div class="uenf-color-generator">
+            <div class="uenf-generator-preview">
                 <h4><?php _e('Paleta Gerada', 'cct'); ?></h4>
-                <div class="cct-generated-colors" id="cct-generated-colors">
+                <div class="uenf-generated-colors" id="uenf-generated-colors">
                     <!-- Cores geradas aparecerão aqui -->
                 </div>
             </div>
             
-            <div class="cct-generator-controls">
-                <button type="button" class="button button-primary cct-generate-colors">
+            <div class="uenf-generator-controls">
+                <button type="button" class="button button-primary uenf-generate-colors">
                     <?php _e('Gerar Nova Paleta', 'cct'); ?>
                 </button>
                 
-                <button type="button" class="button cct-apply-generated" style="display: none;">
+                <button type="button" class="button uenf-apply-generated" style="display: none;">
                     <?php _e('Aplicar Paleta Gerada', 'cct'); ?>
                 </button>
                 
-                <button type="button" class="button cct-randomize-base">
+                <button type="button" class="button uenf-randomize-base">
                     <?php _e('Cor Base Aleatória', 'cct'); ?>
                 </button>
             </div>
             
-            <div class="cct-harmony-info">
+            <div class="uenf-harmony-info">
                 <h4><?php _e('Tipos de Harmonia', 'cct'); ?></h4>
                 <ul>
                     <li><strong><?php _e('Complementar:', 'cct'); ?></strong> <?php _e('Cores opostas no círculo cromático', 'cct'); ?></li>
@@ -218,11 +218,11 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-color-generator {
+        .uenf-color-generator {
             margin-top: 10px;
         }
         
-        .cct-generator-preview {
+        .uenf-generator-preview {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -230,13 +230,13 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
             margin-bottom: 15px;
         }
         
-        .cct-generator-preview h4 {
+        .uenf-generator-preview h4 {
             margin: 0 0 10px 0;
             font-size: 13px;
             font-weight: 600;
         }
         
-        .cct-generated-colors {
+        .uenf-generated-colors {
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
@@ -244,7 +244,7 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
             align-items: center;
         }
         
-        .cct-generated-color {
+        .uenf-generated-color {
             width: 40px;
             height: 40px;
             border-radius: 6px;
@@ -254,7 +254,7 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-generated-color::after {
+        .uenf-generated-color::after {
             content: attr(data-hex);
             position: absolute;
             bottom: -20px;
@@ -265,45 +265,45 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
             white-space: nowrap;
         }
         
-        .cct-generator-controls {
+        .uenf-generator-controls {
             display: flex;
             gap: 8px;
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
         
-        .cct-generator-controls .button {
+        .uenf-generator-controls .button {
             flex: 1;
             min-width: 120px;
         }
         
-        .cct-harmony-info {
+        .uenf-harmony-info {
             background: #f0f8ff;
             border: 1px solid #b3d9ff;
             border-radius: 6px;
             padding: 12px;
         }
         
-        .cct-harmony-info h4 {
+        .uenf-harmony-info h4 {
             margin: 0 0 8px 0;
             font-size: 12px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-harmony-info ul {
+        .uenf-harmony-info ul {
             margin: 0;
             padding: 0;
             list-style: none;
         }
         
-        .cct-harmony-info li {
+        .uenf-harmony-info li {
             margin-bottom: 4px;
             font-size: 11px;
             line-height: 1.4;
         }
         
-        .cct-harmony-info strong {
+        .uenf-harmony-info strong {
             color: #333;
         }
         </style>
@@ -314,14 +314,14 @@ class CCT_Color_Generator_Control extends WP_Customize_Control {
 /**
  * Controle Analisador de Contraste
  */
-class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
+class UENF_Contrast_Analyzer_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_contrast_analyzer';
+    public $type = 'uenf_contrast_analyzer';
     
     /**
      * Regras de acessibilidade
@@ -345,26 +345,26 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-contrast-analyzer">
-            <div class="cct-contrast-test">
+        <div class="uenf-contrast-analyzer">
+            <div class="uenf-contrast-test">
                 <h4><?php _e('Teste de Contraste', 'cct'); ?></h4>
                 
-                <div class="cct-color-pair">
-                    <div class="cct-color-input">
+                <div class="uenf-color-pair">
+                    <div class="uenf-color-input">
                         <label><?php _e('Cor do Texto:', 'cct'); ?></label>
-                        <input type="color" class="cct-text-color" value="#333333">
-                        <span class="cct-color-value">#333333</span>
+                        <input type="color" class="uenf-text-color" value="#333333">
+                        <span class="uenf-color-value">#333333</span>
                     </div>
                     
-                    <div class="cct-color-input">
+                    <div class="uenf-color-input">
                         <label><?php _e('Cor de Fundo:', 'cct'); ?></label>
-                        <input type="color" class="cct-bg-color" value="#ffffff">
-                        <span class="cct-color-value">#ffffff</span>
+                        <input type="color" class="uenf-bg-color" value="#ffffff">
+                        <span class="uenf-color-value">#ffffff</span>
                     </div>
                 </div>
                 
-                <div class="cct-contrast-preview">
-                    <div class="cct-preview-sample">
+                <div class="uenf-contrast-preview">
+                    <div class="uenf-preview-sample">
                         <h5><?php _e('Texto Normal', 'cct'); ?></h5>
                         <p><?php _e('Este é um exemplo de texto normal para testar a legibilidade.', 'cct'); ?></p>
                         
@@ -374,56 +374,56 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
                 </div>
             </div>
             
-            <div class="cct-contrast-results">
+            <div class="uenf-contrast-results">
                 <h4><?php _e('Resultados da Análise', 'cct'); ?></h4>
                 
-                <div class="cct-contrast-ratio">
-                    <span class="cct-ratio-label"><?php _e('Razão de Contraste:', 'cct'); ?></span>
-                    <span class="cct-ratio-value">-</span>
+                <div class="uenf-contrast-ratio">
+                    <span class="uenf-ratio-label"><?php _e('Razão de Contraste:', 'cct'); ?></span>
+                    <span class="uenf-ratio-value">-</span>
                 </div>
                 
-                <div class="cct-wcag-compliance">
-                    <div class="cct-compliance-item">
-                        <span class="cct-compliance-label"><?php _e('WCAG AA (Texto Normal):', 'cct'); ?></span>
-                        <span class="cct-compliance-status cct-aa-normal">-</span>
+                <div class="uenf-wcag-compliance">
+                    <div class="uenf-compliance-item">
+                        <span class="uenf-compliance-label"><?php _e('WCAG AA (Texto Normal):', 'cct'); ?></span>
+                        <span class="uenf-compliance-status uenf-aa-normal">-</span>
                     </div>
                     
-                    <div class="cct-compliance-item">
-                        <span class="cct-compliance-label"><?php _e('WCAG AA (Texto Grande):', 'cct'); ?></span>
-                        <span class="cct-compliance-status cct-aa-large">-</span>
+                    <div class="uenf-compliance-item">
+                        <span class="uenf-compliance-label"><?php _e('WCAG AA (Texto Grande):', 'cct'); ?></span>
+                        <span class="uenf-compliance-status uenf-aa-large">-</span>
                     </div>
                     
-                    <div class="cct-compliance-item">
-                        <span class="cct-compliance-label"><?php _e('WCAG AAA (Texto Normal):', 'cct'); ?></span>
-                        <span class="cct-compliance-status cct-aaa-normal">-</span>
+                    <div class="uenf-compliance-item">
+                        <span class="uenf-compliance-label"><?php _e('WCAG AAA (Texto Normal):', 'cct'); ?></span>
+                        <span class="uenf-compliance-status uenf-aaa-normal">-</span>
                     </div>
                     
-                    <div class="cct-compliance-item">
-                        <span class="cct-compliance-label"><?php _e('WCAG AAA (Texto Grande):', 'cct'); ?></span>
-                        <span class="cct-compliance-status cct-aaa-large">-</span>
+                    <div class="uenf-compliance-item">
+                        <span class="uenf-compliance-label"><?php _e('WCAG AAA (Texto Grande):', 'cct'); ?></span>
+                        <span class="uenf-compliance-status uenf-aaa-large">-</span>
                     </div>
                 </div>
                 
-                <div class="cct-recommendations">
+                <div class="uenf-recommendations">
                     <h5><?php _e('Recomendações:', 'cct'); ?></h5>
-                    <div class="cct-recommendation-text"></div>
+                    <div class="uenf-recommendation-text"></div>
                 </div>
             </div>
             
-            <div class="cct-quick-tests">
+            <div class="uenf-quick-tests">
                 <h4><?php _e('Testes Rápidos', 'cct'); ?></h4>
-                <button type="button" class="button cct-test-primary"><?php _e('Testar Cor Primária', 'cct'); ?></button>
-                <button type="button" class="button cct-test-secondary"><?php _e('Testar Cor Secundária', 'cct'); ?></button>
-                <button type="button" class="button cct-test-all"><?php _e('Testar Todas as Cores', 'cct'); ?></button>
+                <button type="button" class="button uenf-test-primary"><?php _e('Testar Cor Primária', 'cct'); ?></button>
+                <button type="button" class="button uenf-test-secondary"><?php _e('Testar Cor Secundária', 'cct'); ?></button>
+                <button type="button" class="button uenf-test-all"><?php _e('Testar Todas as Cores', 'cct'); ?></button>
             </div>
         </div>
         
         <style>
-        .cct-contrast-analyzer {
+        .uenf-contrast-analyzer {
             margin-top: 10px;
         }
         
-        .cct-contrast-test {
+        .uenf-contrast-test {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -431,30 +431,30 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             margin-bottom: 15px;
         }
         
-        .cct-contrast-test h4 {
+        .uenf-contrast-test h4 {
             margin: 0 0 12px 0;
             font-size: 13px;
             font-weight: 600;
         }
         
-        .cct-color-pair {
+        .uenf-color-pair {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
         }
         
-        .cct-color-input {
+        .uenf-color-input {
             flex: 1;
         }
         
-        .cct-color-input label {
+        .uenf-color-input label {
             display: block;
             font-size: 12px;
             font-weight: 500;
             margin-bottom: 5px;
         }
         
-        .cct-color-input input[type="color"] {
+        .uenf-color-input input[type="color"] {
             width: 100%;
             height: 40px;
             border: 1px solid #ddd;
@@ -462,7 +462,7 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-color-value {
+        .uenf-color-value {
             display: block;
             font-size: 11px;
             color: #666;
@@ -470,34 +470,34 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             text-align: center;
         }
         
-        .cct-contrast-preview {
+        .uenf-contrast-preview {
             border: 1px solid #ddd;
             border-radius: 4px;
             overflow: hidden;
         }
         
-        .cct-preview-sample {
+        .uenf-preview-sample {
             padding: 15px;
             background: #ffffff;
             color: #333333;
         }
         
-        .cct-preview-sample h5 {
+        .uenf-preview-sample h5 {
             margin: 0 0 8px 0;
             font-size: 14px;
         }
         
-        .cct-preview-sample h3 {
+        .uenf-preview-sample h3 {
             margin: 15px 0 8px 0;
             font-size: 18px;
         }
         
-        .cct-preview-sample p {
+        .uenf-preview-sample p {
             margin: 0;
             line-height: 1.5;
         }
         
-        .cct-contrast-results {
+        .uenf-contrast-results {
             background: #f0f8ff;
             border: 1px solid #b3d9ff;
             border-radius: 6px;
@@ -505,14 +505,14 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             margin-bottom: 15px;
         }
         
-        .cct-contrast-results h4 {
+        .uenf-contrast-results h4 {
             margin: 0 0 12px 0;
             font-size: 13px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-contrast-ratio {
+        .uenf-contrast-ratio {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -522,22 +522,22 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             border-radius: 4px;
         }
         
-        .cct-ratio-label {
+        .uenf-ratio-label {
             font-weight: 500;
             font-size: 12px;
         }
         
-        .cct-ratio-value {
+        .uenf-ratio-value {
             font-weight: 600;
             font-size: 14px;
             color: #0073aa;
         }
         
-        .cct-wcag-compliance {
+        .uenf-wcag-compliance {
             margin-bottom: 12px;
         }
         
-        .cct-compliance-item {
+        .uenf-compliance-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -548,7 +548,7 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             font-size: 11px;
         }
         
-        .cct-compliance-status {
+        .uenf-compliance-status {
             padding: 2px 8px;
             border-radius: 12px;
             font-weight: 500;
@@ -556,48 +556,48 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
             text-transform: uppercase;
         }
         
-        .cct-compliance-status.pass {
+        .uenf-compliance-status.pass {
             background: #d4edda;
             color: #155724;
         }
         
-        .cct-compliance-status.fail {
+        .uenf-compliance-status.fail {
             background: #f8d7da;
             color: #721c24;
         }
         
-        .cct-recommendations {
+        .uenf-recommendations {
             background: white;
             border-radius: 4px;
             padding: 10px;
         }
         
-        .cct-recommendations h5 {
+        .uenf-recommendations h5 {
             margin: 0 0 8px 0;
             font-size: 12px;
             font-weight: 600;
         }
         
-        .cct-recommendation-text {
+        .uenf-recommendation-text {
             font-size: 11px;
             line-height: 1.4;
             color: #666;
         }
         
-        .cct-quick-tests {
+        .uenf-quick-tests {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
         
-        .cct-quick-tests h4 {
+        .uenf-quick-tests h4 {
             width: 100%;
             margin: 0 0 8px 0;
             font-size: 12px;
             font-weight: 600;
         }
         
-        .cct-quick-tests .button {
+        .uenf-quick-tests .button {
             flex: 1;
             min-width: 100px;
             font-size: 11px;
@@ -610,14 +610,14 @@ class CCT_Contrast_Analyzer_Control extends WP_Customize_Control {
 /**
  * Controle de Seletor de Cores com Sugestões
  */
-class CCT_Smart_Color_Control extends WP_Customize_Color_Control {
+class UENF_Smart_Color_Control extends WP_Customize_Color_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_smart_color';
+    public $type = 'uenf_smart_color';
     
     /**
      * Cores sugeridas
@@ -634,11 +634,11 @@ class CCT_Smart_Color_Control extends WP_Customize_Color_Control {
         
         if (!empty($this->suggested_colors)) {
             ?>
-            <div class="cct-color-suggestions">
+            <div class="uenf-color-suggestions">
                 <h5><?php _e('Cores Sugeridas:', 'cct'); ?></h5>
-                <div class="cct-suggestion-swatches">
+                <div class="uenf-suggestion-swatches">
                     <?php foreach ($this->suggested_colors as $color): ?>
-                        <div class="cct-suggestion-swatch" 
+                        <div class="uenf-suggestion-swatch" 
                              style="background-color: <?php echo esc_attr($color); ?>" 
                              data-color="<?php echo esc_attr($color); ?>"
                              title="<?php echo esc_attr($color); ?>">
@@ -648,25 +648,25 @@ class CCT_Smart_Color_Control extends WP_Customize_Color_Control {
             </div>
             
             <style>
-            .cct-color-suggestions {
+            .uenf-color-suggestions {
                 margin-top: 10px;
                 padding-top: 10px;
                 border-top: 1px solid #ddd;
             }
             
-            .cct-color-suggestions h5 {
+            .uenf-color-suggestions h5 {
                 margin: 0 0 8px 0;
                 font-size: 12px;
                 font-weight: 600;
             }
             
-            .cct-suggestion-swatches {
+            .uenf-suggestion-swatches {
                 display: flex;
                 gap: 4px;
                 flex-wrap: wrap;
             }
             
-            .cct-suggestion-swatch {
+            .uenf-suggestion-swatch {
                 width: 24px;
                 height: 24px;
                 border-radius: 4px;
@@ -676,7 +676,7 @@ class CCT_Smart_Color_Control extends WP_Customize_Color_Control {
                 transition: transform 0.2s ease;
             }
             
-            .cct-suggestion-swatch:hover {
+            .uenf-suggestion-swatch:hover {
                 transform: scale(1.2);
             }
             </style>

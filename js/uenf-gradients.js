@@ -9,7 +9,7 @@
  * - Gerenciamento de favoritos
  * - Export e import
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -104,10 +104,10 @@
          */
         initBrowser: function() {
             // Cache de elementos
-            this.cache.gradientGrid = $('.cct-gradient-grid');
-            this.cache.categoryTabs = $('.cct-category-tab');
-            this.cache.searchInput = $('.cct-gradient-search');
-            this.cache.sortSelect = $('.cct-gradient-sort');
+            this.cache.gradientGrid = $('.uenf-gradient-grid');
+            this.cache.categoryTabs = $('.uenf-category-tab');
+            this.cache.searchInput = $('.uenf-gradient-search');
+            this.cache.sortSelect = $('.uenf-gradient-sort');
             
             // Configurar filtros
             this.setupFilters();
@@ -166,7 +166,7 @@
          * Configura toggle de visualização
          */
         setupViewToggle: function() {
-            $('.cct-view-btn').on('click', (e) => {
+            $('.uenf-view-btn').on('click', (e) => {
                 const $btn = $(e.currentTarget);
                 const view = $btn.data('view');
                 
@@ -174,7 +174,7 @@
                 this.state.currentView = view;
                 
                 // Atualizar UI
-                $('.cct-view-btn').removeClass('active');
+                $('.uenf-view-btn').removeClass('active');
                 $btn.addClass('active');
                 
                 // Aplicar visualização
@@ -200,11 +200,11 @@
             const category = this.state.activeCategory;
             const query = this.state.searchQuery;
             
-            $('.cct-gradient-item').each((index, element) => {
+            $('.uenf-gradient-item').each((index, element) => {
                 const $item = $(element);
                 const itemCategory = $item.data('category');
-                const itemName = $item.find('.cct-gradient-name').text().toLowerCase();
-                const itemDescription = $item.find('.cct-gradient-description').text().toLowerCase();
+                const itemName = $item.find('.uenf-gradient-name').text().toLowerCase();
+                const itemDescription = $item.find('.uenf-gradient-description').text().toLowerCase();
                 
                 let visible = true;
                 
@@ -232,7 +232,7 @@
          */
         sortGradients: function() {
             const sortBy = this.state.sortBy;
-            const $items = $('.cct-gradient-item:not(.hidden)');
+            const $items = $('.uenf-gradient-item:not(.hidden)');
             
             const sortedItems = $items.sort((a, b) => {
                 const $a = $(a);
@@ -240,13 +240,13 @@
                 
                 switch (sortBy) {
                     case 'name':
-                        return $a.find('.cct-gradient-name').text().localeCompare($b.find('.cct-gradient-name').text());
+                        return $a.find('.uenf-gradient-name').text().localeCompare($b.find('.uenf-gradient-name').text());
                     case 'popularity':
-                        const popA = parseInt($a.find('.cct-gradient-popularity').text()) || 0;
-                        const popB = parseInt($b.find('.cct-gradient-popularity').text()) || 0;
+                        const popA = parseInt($a.find('.uenf-gradient-popularity').text()) || 0;
+                        const popB = parseInt($b.find('.uenf-gradient-popularity').text()) || 0;
                         return popB - popA;
                     case 'type':
-                        return $a.find('.cct-gradient-type').text().localeCompare($b.find('.cct-gradient-type').text());
+                        return $a.find('.uenf-gradient-type').text().localeCompare($b.find('.uenf-gradient-type').text());
                     case 'category':
                         return $a.data('category').localeCompare($b.data('category'));
                     default:
@@ -267,8 +267,8 @@
             }
             
             // Cache de elementos
-            this.cache.previewBox = $('#cct-gradient-preview');
-            this.cache.cssOutput = $('#cct-gradient-css');
+            this.cache.previewBox = $('#uenf-gradient-preview');
+            this.cache.cssOutput = $('#uenf-gradient-css');
             
             // Configurar controles
             this.setupGeneratorControls();
@@ -288,36 +288,36 @@
          */
         setupGeneratorControls: function() {
             // Tipo de gradiente
-            $('#cct-gradient-type').on('change', (e) => {
+            $('#uenf-gradient-type').on('change', (e) => {
                 this.state.generatorData.type = e.target.value;
                 this.toggleGeneratorSettings();
                 this.updateGeneratorPreview();
             });
             
             // Ângulo linear
-            $('#cct-gradient-angle').on('input', (e) => {
+            $('#uenf-gradient-angle').on('input', (e) => {
                 this.state.generatorData.angle = parseInt(e.target.value);
-                $('#cct-angle-value').text(e.target.value + '°');
+                $('#uenf-angle-value').text(e.target.value + '°');
                 this.updateGeneratorPreview();
             });
             
             // Botões de direção
-            $('.cct-direction-btn').on('click', (e) => {
+            $('.uenf-direction-btn').on('click', (e) => {
                 const angle = parseInt($(e.currentTarget).data('angle'));
                 this.state.generatorData.angle = angle;
-                $('#cct-gradient-angle').val(angle);
-                $('#cct-angle-value').text(angle + '°');
+                $('#uenf-gradient-angle').val(angle);
+                $('#uenf-angle-value').text(angle + '°');
                 this.updateGeneratorPreview();
             });
             
             // Configurações radiais
-            $('#cct-radial-shape, #cct-radial-position').on('change', () => {
+            $('#uenf-radial-shape, #uenf-radial-position').on('change', () => {
                 this.updateGeneratorPreview();
             });
             
             // Ângulo cônico
-            $('#cct-conic-angle').on('input', (e) => {
-                $('#cct-conic-value').text(e.target.value + '°');
+            $('#uenf-conic-angle').on('input', (e) => {
+                $('#uenf-conic-value').text(e.target.value + '°');
                 this.updateGeneratorPreview();
             });
         },
@@ -328,9 +328,9 @@
         toggleGeneratorSettings: function() {
             const type = this.state.generatorData.type;
             
-            $('.cct-linear-settings').toggle(type === 'linear');
-            $('.cct-radial-settings').toggle(type === 'radial');
-            $('.cct-conic-settings').toggle(type === 'conic');
+            $('.uenf-linear-settings').toggle(type === 'linear');
+            $('.uenf-radial-settings').toggle(type === 'radial');
+            $('.uenf-conic-settings').toggle(type === 'conic');
         },
         
         /**
@@ -338,13 +338,13 @@
          */
         setupColorEditor: function() {
             // Mudança de cor
-            $(document).on('input', '.cct-color-input', (e) => {
-                const $colorStop = $(e.target).closest('.cct-color-stop');
+            $(document).on('input', '.uenf-color-input', (e) => {
+                const $colorStop = $(e.target).closest('.uenf-color-stop');
                 const position = parseInt($colorStop.data('position'));
                 const color = e.target.value;
                 
                 // Atualizar preview da cor
-                $colorStop.find('.cct-color-preview').css('background', color);
+                $colorStop.find('.uenf-color-preview').css('background', color);
                 
                 // Atualizar dados
                 this.updateColorStop(position, { color });
@@ -354,13 +354,13 @@
             });
             
             // Mudança de posição
-            $(document).on('input', '.cct-position-input', (e) => {
-                const $colorStop = $(e.target).closest('.cct-color-stop');
+            $(document).on('input', '.uenf-position-input', (e) => {
+                const $colorStop = $(e.target).closest('.uenf-color-stop');
                 const oldPosition = parseInt($colorStop.data('position'));
                 const newPosition = parseInt(e.target.value);
                 
                 // Atualizar display
-                $colorStop.find('.cct-position-value').text(newPosition + '%');
+                $colorStop.find('.uenf-position-value').text(newPosition + '%');
                 $colorStop.data('position', newPosition);
                 
                 // Atualizar dados
@@ -371,11 +371,11 @@
             });
             
             // Remover cor
-            $(document).on('click', '.cct-remove-color', (e) => {
-                const $colorStop = $(e.target).closest('.cct-color-stop');
+            $(document).on('click', '.uenf-remove-color', (e) => {
+                const $colorStop = $(e.target).closest('.uenf-color-stop');
                 const position = parseInt($colorStop.data('position'));
                 
-                if ($('.cct-color-stop').length > 2) {
+                if ($('.uenf-color-stop').length > 2) {
                     this.removeColorStop(position);
                     $colorStop.remove();
                     this.updateGeneratorPreview();
@@ -383,17 +383,17 @@
             });
             
             // Adicionar cor
-            $('.cct-add-color').on('click', () => {
+            $('.uenf-add-color').on('click', () => {
                 this.addColorStop();
             });
             
             // Cores aleatórias
-            $('.cct-random-colors').on('click', () => {
+            $('.uenf-random-colors').on('click', () => {
                 this.generateRandomColors();
             });
             
             // Inverter cores
-            $('.cct-reverse-colors').on('click', () => {
+            $('.uenf-reverse-colors').on('click', () => {
                 this.reverseColors();
             });
         },
@@ -471,7 +471,7 @@
          * Reconstrói color stops
          */
         rebuildColorStops: function() {
-            const $container = $('#cct-color-stops');
+            const $container = $('#uenf-color-stops');
             $container.empty();
             
             this.state.generatorData.colors.forEach((colorStop, index) => {
@@ -487,12 +487,12 @@
             const canRemove = this.state.generatorData.colors.length > 2;
             
             return $(`
-                <div class="cct-color-stop" data-position="${colorStop.position}">
-                    <div class="cct-color-preview" style="background: ${colorStop.color};"></div>
-                    <input type="color" class="cct-color-input" value="${colorStop.color}">
-                    <input type="range" class="cct-position-input" min="0" max="100" value="${colorStop.position}">
-                    <span class="cct-position-value">${colorStop.position}%</span>
-                    <button type="button" class="cct-remove-color" ${!canRemove ? 'disabled' : ''}>×</button>
+                <div class="uenf-color-stop" data-position="${colorStop.position}">
+                    <div class="uenf-color-preview" style="background: ${colorStop.color};"></div>
+                    <input type="color" class="uenf-color-input" value="${colorStop.color}">
+                    <input type="range" class="uenf-position-input" min="0" max="100" value="${colorStop.position}">
+                    <span class="uenf-position-value">${colorStop.position}%</span>
+                    <button type="button" class="uenf-remove-color" ${!canRemove ? 'disabled' : ''}>×</button>
                 </div>
             `);
         },
@@ -513,7 +513,7 @@
          * Configura presets
          */
         setupPresets: function() {
-            $('.cct-preset-btn').on('click', (e) => {
+            $('.uenf-preset-btn').on('click', (e) => {
                 const preset = $(e.currentTarget).data('preset');
                 this.applyPreset(preset);
             });
@@ -590,12 +590,12 @@
             const data = this.state.generatorData;
             
             // Tipo
-            $('#cct-gradient-type').val(data.type);
+            $('#uenf-gradient-type').val(data.type);
             this.toggleGeneratorSettings();
             
             // Ângulo
-            $('#cct-gradient-angle').val(data.angle);
-            $('#cct-angle-value').text(data.angle + '°');
+            $('#uenf-gradient-angle').val(data.angle);
+            $('#uenf-angle-value').text(data.angle + '°');
             
             // Cores
             this.rebuildColorStops();
@@ -630,12 +630,12 @@
             
             switch (data.type) {
                 case 'radial':
-                    const shape = $('#cct-radial-shape').val() || 'circle';
-                    const position = $('#cct-radial-position').val() || 'center';
+                    const shape = $('#uenf-radial-shape').val() || 'circle';
+                    const position = $('#uenf-radial-position').val() || 'center';
                     return `radial-gradient(${shape} at ${position}, ${colorStops})`;
                     
                 case 'conic':
-                    const conicAngle = $('#cct-conic-angle').val() || 0;
+                    const conicAngle = $('#uenf-conic-angle').val() || 0;
                     return `conic-gradient(from ${conicAngle}deg at center, ${colorStops})`;
                     
                 default:
@@ -656,7 +656,7 @@
          */
         setupApplicationControls: function() {
             // Checkboxes de aplicação
-            $('.cct-apply-to').on('change', (e) => {
+            $('.uenf-apply-to').on('change', (e) => {
                 const target = $(e.target).data('target');
                 const enabled = e.target.checked;
                 
@@ -665,15 +665,15 @@
             });
             
             // Sliders de intensidade e opacidade
-            $('.cct-intensity-slider').on('input', (e) => {
+            $('.uenf-intensity-slider').on('input', (e) => {
                 const value = parseFloat(e.target.value);
-                $('.cct-intensity-value').text(Math.round(value * 100) + '%');
+                $('.uenf-intensity-value').text(Math.round(value * 100) + '%');
                 this.updateApplicationPreview();
             });
             
-            $('.cct-opacity-slider').on('input', (e) => {
+            $('.uenf-opacity-slider').on('input', (e) => {
                 const value = parseFloat(e.target.value);
-                $('.cct-opacity-value').text(Math.round(value * 100) + '%');
+                $('.uenf-opacity-value').text(Math.round(value * 100) + '%');
                 this.updateApplicationPreview();
             });
         },
@@ -690,26 +690,26 @@
          */
         updateApplicationPreview: function() {
             const currentGradient = this.generateGradientCSS();
-            const intensity = parseFloat($('.cct-intensity-slider').val() || 1);
-            const opacity = parseFloat($('.cct-opacity-slider').val() || 1);
+            const intensity = parseFloat($('.uenf-intensity-slider').val() || 1);
+            const opacity = parseFloat($('.uenf-opacity-slider').val() || 1);
             
             // Aplicar aos samples
-            if ($('.cct-apply-to[data-target="backgrounds"]').is(':checked')) {
-                $('.cct-bg-sample').css({
+            if ($('.uenf-apply-to[data-target="backgrounds"]').is(':checked')) {
+                $('.uenf-bg-sample').css({
                     'background': currentGradient,
                     'opacity': opacity
                 });
             }
             
-            if ($('.cct-apply-to[data-target="buttons"]').is(':checked')) {
-                $('.cct-btn-sample').css({
+            if ($('.uenf-apply-to[data-target="buttons"]').is(':checked')) {
+                $('.uenf-btn-sample').css({
                     'background': currentGradient,
                     'opacity': opacity
                 });
             }
             
-            if ($('.cct-apply-to[data-target="text"]').is(':checked')) {
-                $('.cct-text-sample').css({
+            if ($('.uenf-apply-to[data-target="text"]').is(':checked')) {
+                $('.uenf-text-sample').css({
                     'background': currentGradient,
                     '-webkit-background-clip': 'text',
                     '-webkit-text-fill-color': 'transparent',
@@ -718,8 +718,8 @@
                 });
             }
             
-            if ($('.cct-apply-to[data-target="borders"]').is(':checked')) {
-                $('.cct-border-sample').css({
+            if ($('.uenf-apply-to[data-target="borders"]').is(':checked')) {
+                $('.uenf-border-sample').css({
                     'border-image': `${currentGradient} 1`,
                     'opacity': opacity
                 });
@@ -748,19 +748,19 @@
          */
         bindBrowserEvents: function() {
             // Aplicar gradiente
-            $(document).on('click', '.cct-btn-apply', (e) => {
+            $(document).on('click', '.uenf-btn-apply', (e) => {
                 const gradientKey = $(e.target).data('gradient');
                 this.applyGradient(gradientKey);
             });
             
             // Favoritar gradiente
-            $(document).on('click', '.cct-btn-favorite', (e) => {
+            $(document).on('click', '.uenf-btn-favorite', (e) => {
                 const gradientKey = $(e.target).data('gradient');
                 this.toggleFavorite(gradientKey);
             });
             
             // Copiar CSS
-            $(document).on('click', '.cct-btn-copy', (e) => {
+            $(document).on('click', '.uenf-btn-copy', (e) => {
                 const gradientKey = $(e.target).data('gradient');
                 this.copyGradientCSS(gradientKey);
             });
@@ -771,22 +771,22 @@
          */
         bindGeneratorEvents: function() {
             // Copiar CSS
-            $('.cct-copy-css').on('click', () => {
+            $('.uenf-copy-css').on('click', () => {
                 this.copyToClipboard(this.cache.cssOutput.val());
             });
             
             // Salvar gradiente
-            $('.cct-save-gradient').on('click', () => {
+            $('.uenf-save-gradient').on('click', () => {
                 this.saveCustomGradient();
             });
             
             // Exportar gradiente
-            $('.cct-export-gradient').on('click', () => {
+            $('.uenf-export-gradient').on('click', () => {
                 this.exportGradient();
             });
             
             // Reset gerador
-            $('.cct-reset-generator').on('click', () => {
+            $('.uenf-reset-generator').on('click', () => {
                 this.resetGenerator();
             });
         },
@@ -796,17 +796,17 @@
          */
         bindApplicationEvents: function() {
             // Aplicar gradiente
-            $('.cct-apply-gradient').on('click', () => {
+            $('.uenf-apply-gradient').on('click', () => {
                 this.applyCurrentGradient();
             });
             
             // Preview ao vivo
-            $('.cct-preview-live').on('click', () => {
+            $('.uenf-preview-live').on('click', () => {
                 this.toggleLivePreview();
             });
             
             // Reset aplicação
-            $('.cct-reset-application').on('click', () => {
+            $('.uenf-reset-application').on('click', () => {
                 this.resetApplication();
             });
         },
@@ -1038,10 +1038,10 @@
             
             if (this.state.previewMode) {
                 this.startLivePreview();
-                $('.cct-preview-live').text('🚫 Parar Preview');
+                $('.uenf-preview-live').text('🚫 Parar Preview');
             } else {
                 this.stopLivePreview();
-                $('.cct-preview-live').text('👁️ Preview ao Vivo');
+                $('.uenf-preview-live').text('👁️ Preview ao Vivo');
             }
         },
         
@@ -1071,12 +1071,12 @@
          */
         resetApplication: function() {
             // Reset configurações
-            $('.cct-apply-to').prop('checked', false);
-            $('.cct-apply-to[data-target="backgrounds"]').prop('checked', true);
-            $('.cct-intensity-slider').val(1);
-            $('.cct-opacity-slider').val(1);
-            $('.cct-intensity-value').text('100%');
-            $('.cct-opacity-value').text('100%');
+            $('.uenf-apply-to').prop('checked', false);
+            $('.uenf-apply-to[data-target="backgrounds"]').prop('checked', true);
+            $('.uenf-intensity-slider').val(1);
+            $('.uenf-opacity-slider').val(1);
+            $('.uenf-intensity-value').text('100%');
+            $('.uenf-opacity-value').text('100%');
             
             this.updateApplicationPreview();
         },
@@ -1103,7 +1103,7 @@
         saveSettings: function() {
             // Implementar salvamento via AJAX
             $.post(cctGradients.ajaxUrl, {
-                action: 'cct_save_gradient_settings',
+                action: 'uenf_save_gradient_settings',
                 nonce: cctGradients.nonce,
                 settings: this.settings
             });
@@ -1115,7 +1115,7 @@
         showNotification: function(message, type = 'info') {
             // Criar elemento de notificação
             const $notification = $(`
-                <div class="cct-notification cct-notification-${type}">
+                <div class="uenf-notification uenf-notification-${type}">
                     ${message}
                 </div>
             `);
@@ -1212,7 +1212,7 @@
  */
 (function() {
     const notificationCSS = `
-        .cct-notification {
+        .uenf-notification {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1228,24 +1228,24 @@
             word-wrap: break-word;
         }
         
-        .cct-notification.show {
+        .uenf-notification.show {
             transform: translateX(0);
         }
         
-        .cct-notification-success {
+        .uenf-notification-success {
             background: #28a745;
         }
         
-        .cct-notification-info {
+        .uenf-notification-info {
             background: #17a2b8;
         }
         
-        .cct-notification-warning {
+        .uenf-notification-warning {
             background: #ffc107;
             color: #333;
         }
         
-        .cct-notification-error {
+        .uenf-notification-error {
             background: #dc3545;
         }
     `;

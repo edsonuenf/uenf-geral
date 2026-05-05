@@ -3,7 +3,7 @@
  * 
  * Atualiza os estilos da busca em tempo real no customizer
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -67,14 +67,14 @@
     }
 
     // Bindar ao setting do Customizer para atualização em tempo real
-    wp.customize('cct_search_results_excerpt_length', function(value) {
+    wp.customize('uenf_search_results_excerpt_length', function(value) {
         value.bind(function(newval) {
             updateExcerptLengthIndicator(newval);
             updateResultExcerpts(newval);
         });
     });
 
-    wp.customize('cct_search_button_color', function(value) {
+    wp.customize('uenf_search_button_color', function(value) {
         value.bind(function(newval) {
             $('input[type="submit"].search-custom-uenf').css('background-color', newval);
             $('button[type="submit"].search-custom-uenf').css('background-color', newval);
@@ -82,7 +82,7 @@
         });
     });
     
-    wp.customize('cct_search_button_border_color', function(value) {
+    wp.customize('uenf_search_button_border_color', function(value) {
         value.bind(function(newval) {
             $('input[type="submit"].search-custom-uenf').css('border-color', newval);
             $('button[type="submit"].search-custom-uenf').css('border-color', newval);
@@ -90,7 +90,7 @@
         });
     });
     
-    wp.customize('cct_search_button_hover_color', function(value) {
+    wp.customize('uenf_search_button_hover_color', function(value) {
         value.bind(function(newval) {
             // Criar/atualizar regra CSS para hover
             updateHoverCSS('input[type="submit"].search-custom-uenf:hover', {
@@ -105,33 +105,33 @@
         });
     });
     
-    wp.customize('cct_search_border_color', function(value) {
+    wp.customize('uenf_search_border_color', function(value) {
         value.bind(function(newval) {
             $('input[type="search"].search-custom-uenf').css('border-color', newval);
         });
     });
     
     // Configurações do campo de texto
-    wp.customize('cct_search_field_bg_color', function(value) {
+    wp.customize('uenf_search_field_bg_color', function(value) {
         value.bind(function(newval) {
             $('input[type="search"].search-custom-uenf').css('background-color', newval);
         });
     });
     
-    wp.customize('cct_search_field_text_color', function(value) {
+    wp.customize('uenf_search_field_text_color', function(value) {
         value.bind(function(newval) {
             $('input[type="search"].search-custom-uenf').css('color', newval);
         });
     });
     
-    wp.customize('cct_search_field_placeholder_color', function(value) {
+    wp.customize('uenf_search_field_placeholder_color', function(value) {
         value.bind(function(newval) {
             // Atualizar cor do placeholder via CSS
             updatePlaceholderCSS('input[type="search"].search-custom-uenf', newval);
         });
     });
     
-    wp.customize('cct_search_field_focus_color', function(value) {
+    wp.customize('uenf_search_field_focus_color', function(value) {
         value.bind(function(newval) {
             // Atualizar cor de foco via CSS
             updateFocusCSS('input[type="search"].search-custom-uenf', newval);
@@ -143,8 +143,8 @@
     var paddingVerticalUnit = 'px';
     
     function initializePaddingValues() {
-        paddingVerticalValue = wp.customize('cct_search_padding_vertical')() || 0;
-        paddingVerticalUnit = wp.customize('cct_search_padding_vertical_unit')() || 'px';
+        paddingVerticalValue = wp.customize('uenf_search_padding_vertical')() || 0;
+        paddingVerticalUnit = wp.customize('uenf_search_padding_vertical_unit')() || 'px';
     }
     
     function updatePaddingVertical() {
@@ -157,14 +157,14 @@
         $('.search-submit.search-custom-uenf').css('padding-bottom', value);
     }
     
-    wp.customize('cct_search_padding_vertical', function(value) {
+    wp.customize('uenf_search_padding_vertical', function(value) {
         value.bind(function(newval) {
             paddingVerticalValue = newval;
             updatePaddingVertical();
         });
     });
     
-    wp.customize('cct_search_padding_vertical_unit', function(value) {
+    wp.customize('uenf_search_padding_vertical_unit', function(value) {
         value.bind(function(newval) {
             paddingVerticalUnit = newval;
             updatePaddingVertical();
@@ -176,8 +176,8 @@
     var maxWidthUnit = '%';
     
     function initializeMaxWidthValues() {
-        maxWidthValue = wp.customize('cct_search_max_width')() || 100;
-        maxWidthUnit = wp.customize('cct_search_max_width_unit')() || '%';
+        maxWidthValue = wp.customize('uenf_search_max_width')() || 100;
+        maxWidthUnit = wp.customize('uenf_search_max_width_unit')() || '%';
     }
     
     function updateMaxWidth() {
@@ -185,27 +185,27 @@
         $('.custom-search-form.search-custom-uenf').css('max-width', value);
     }
     
-    wp.customize('cct_search_max_width', function(value) {
+    wp.customize('uenf_search_max_width', function(value) {
         value.bind(function(newval) {
             maxWidthValue = newval;
             updateMaxWidth();
         });
     });
     
-    wp.customize('cct_search_max_width_unit', function(value) {
+    wp.customize('uenf_search_max_width_unit', function(value) {
         value.bind(function(newval) {
             maxWidthUnit = newval;
             updateMaxWidth();
         });
     });
     
-    wp.customize('cct_search_border_width', function(value) {
+    wp.customize('uenf_search_border_width', function(value) {
         value.bind(function(newval) {
             $('input[type="search"].search-custom-uenf').css('border-width', newval + 'px');
         });
     });
     
-    wp.customize('cct_search_button_border_width', function(value) {
+    wp.customize('uenf_search_button_border_width', function(value) {
         value.bind(function(newval) {
             $('input[type="submit"].search-custom-uenf').css('border-width', newval + 'px');
             $('button[type="submit"].search-custom-uenf').css('border-width', newval + 'px');
@@ -227,11 +227,11 @@
     }
 
     function updateNewSearchCSS() {
-        var bg   = getCustomizerValue('cct_search_results_new_search_button_bg_color', '#1e73be');
-        var text = getCustomizerValue('cct_search_results_new_search_button_text_color', '#ffffff');
-        var bord = getCustomizerValue('cct_search_results_new_search_button_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_new_search_button_border_width', 0);
-        var br   = getCustomizerValue('cct_search_results_new_search_button_border_radius', 25);
+        var bg   = getCustomizerValue('uenf_search_results_new_search_button_bg_color', '#1e73be');
+        var text = getCustomizerValue('uenf_search_results_new_search_button_text_color', '#ffffff');
+        var bord = getCustomizerValue('uenf_search_results_new_search_button_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('uenf_search_results_new_search_button_border_width', 0);
+        var br   = getCustomizerValue('uenf_search_results_new_search_button_border_radius', 25);
 
         var css = '';
         css += '.search-actions .new-search-btn, .result-actions .new-search-btn{';
@@ -245,33 +245,33 @@
         css += 'color:' + text + ' !important;';
         css += '}';
 
-        updateRuleCSS('cct-search-new-search-css', css);
+        updateRuleCSS('uenf-search-new-search-css', css);
     }
 
     // Bindings (estado normal)
-    wp.customize('cct_search_results_new_search_button_bg_color', function(value) {
+    wp.customize('uenf_search_results_new_search_button_bg_color', function(value) {
         value.bind(function() { updateNewSearchCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_text_color', function(value) {
+    wp.customize('uenf_search_results_new_search_button_text_color', function(value) {
         value.bind(function() { updateNewSearchCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_border_color', function(value) {
+    wp.customize('uenf_search_results_new_search_button_border_color', function(value) {
         value.bind(function() { updateNewSearchCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_border_width', function(value) {
+    wp.customize('uenf_search_results_new_search_button_border_width', function(value) {
         value.bind(function() { updateNewSearchCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_border_radius', function(value) {
+    wp.customize('uenf_search_results_new_search_button_border_radius', function(value) {
         value.bind(function() { updateNewSearchCSS(); });
     });
 
     // ===== Botão "Ler mais" nos resultados =====
     function updateReadMoreCSS() {
-        var bg   = getCustomizerValue('cct_search_results_read_more_button_bg_color', '#152a5a');
-        var text = getCustomizerValue('cct_search_results_read_more_button_text_color', '#ffffff');
-        var bord = getCustomizerValue('cct_search_results_read_more_button_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_read_more_button_border_width', 0);
-        var br   = getCustomizerValue('cct_search_results_read_more_button_border_radius', 25);
+        var bg   = getCustomizerValue('uenf_search_results_read_more_button_bg_color', '#152a5a');
+        var text = getCustomizerValue('uenf_search_results_read_more_button_text_color', '#ffffff');
+        var bord = getCustomizerValue('uenf_search_results_read_more_button_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('uenf_search_results_read_more_button_border_width', 0);
+        var br   = getCustomizerValue('uenf_search_results_read_more_button_border_radius', 25);
 
         var css = '';
         css += '.result-actions .read-more-btn{';
@@ -285,30 +285,30 @@
         css += 'color:' + text + ' !important;';
         css += '}';
 
-        updateRuleCSS('cct-search-read-more-css', css);
+        updateRuleCSS('uenf-search-read-more-css', css);
     }
 
-    wp.customize('cct_search_results_read_more_button_bg_color', function(value) {
+    wp.customize('uenf_search_results_read_more_button_bg_color', function(value) {
         value.bind(function() { updateReadMoreCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_text_color', function(value) {
+    wp.customize('uenf_search_results_read_more_button_text_color', function(value) {
         value.bind(function() { updateReadMoreCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_border_color', function(value) {
+    wp.customize('uenf_search_results_read_more_button_border_color', function(value) {
         value.bind(function() { updateReadMoreCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_border_width', function(value) {
+    wp.customize('uenf_search_results_read_more_button_border_width', function(value) {
         value.bind(function() { updateReadMoreCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_border_radius', function(value) {
+    wp.customize('uenf_search_results_read_more_button_border_radius', function(value) {
         value.bind(function() { updateReadMoreCSS(); });
     });
 
     function updateReadMoreHoverCSS() {
-        var bg   = getCustomizerValue('cct_search_results_read_more_button_hover_bg_color', '#1e73be');
-        var text = getCustomizerValue('cct_search_results_read_more_button_hover_text_color', '#ffffff');
-        var bord = getCustomizerValue('cct_search_results_read_more_button_hover_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_read_more_button_hover_border_width', 0);
+        var bg   = getCustomizerValue('uenf_search_results_read_more_button_hover_bg_color', '#1e73be');
+        var text = getCustomizerValue('uenf_search_results_read_more_button_hover_text_color', '#ffffff');
+        var bord = getCustomizerValue('uenf_search_results_read_more_button_hover_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('uenf_search_results_read_more_button_hover_border_width', 0);
 
         updateHoverCSS('.result-actions .read-more-btn:hover', {
             'background-color': bg,
@@ -318,24 +318,24 @@
         });
     }
 
-    wp.customize('cct_search_results_read_more_button_hover_bg_color', function(value) {
+    wp.customize('uenf_search_results_read_more_button_hover_bg_color', function(value) {
         value.bind(function() { updateReadMoreHoverCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_hover_text_color', function(value) {
+    wp.customize('uenf_search_results_read_more_button_hover_text_color', function(value) {
         value.bind(function() { updateReadMoreHoverCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_hover_border_color', function(value) {
+    wp.customize('uenf_search_results_read_more_button_hover_border_color', function(value) {
         value.bind(function() { updateReadMoreHoverCSS(); });
     });
-    wp.customize('cct_search_results_read_more_button_hover_border_width', function(value) {
+    wp.customize('uenf_search_results_read_more_button_hover_border_width', function(value) {
         value.bind(function() { updateReadMoreHoverCSS(); });
     });
 
     function updateNewSearchHoverCSS() {
-        var bg   = (typeof wp.customize('cct_search_results_new_search_button_hover_bg_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_bg_color')() || '#152a5a') : '#152a5a';
-        var text = (typeof wp.customize('cct_search_results_new_search_button_hover_text_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_text_color')() || '#ffffff') : '#ffffff';
-        var bord = (typeof wp.customize('cct_search_results_new_search_button_hover_border_color') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_color')() || '#0d6efd') : '#0d6efd';
-        var bw   = (typeof wp.customize('cct_search_results_new_search_button_hover_border_width') === 'function') ? (wp.customize('cct_search_results_new_search_button_hover_border_width')() || 0) : 0;
+        var bg   = (typeof wp.customize('uenf_search_results_new_search_button_hover_bg_color') === 'function') ? (wp.customize('uenf_search_results_new_search_button_hover_bg_color')() || '#152a5a') : '#152a5a';
+        var text = (typeof wp.customize('uenf_search_results_new_search_button_hover_text_color') === 'function') ? (wp.customize('uenf_search_results_new_search_button_hover_text_color')() || '#ffffff') : '#ffffff';
+        var bord = (typeof wp.customize('uenf_search_results_new_search_button_hover_border_color') === 'function') ? (wp.customize('uenf_search_results_new_search_button_hover_border_color')() || '#0d6efd') : '#0d6efd';
+        var bw   = (typeof wp.customize('uenf_search_results_new_search_button_hover_border_width') === 'function') ? (wp.customize('uenf_search_results_new_search_button_hover_border_width')() || 0) : 0;
 
         updateHoverCSS('.search-actions .new-search-btn:hover', {
             'background-color': bg,
@@ -346,26 +346,26 @@
     }
 
     // Hover bindings
-    wp.customize('cct_search_results_new_search_button_hover_bg_color', function(value) {
+    wp.customize('uenf_search_results_new_search_button_hover_bg_color', function(value) {
         value.bind(function() { updateNewSearchHoverCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_hover_text_color', function(value) {
+    wp.customize('uenf_search_results_new_search_button_hover_text_color', function(value) {
         value.bind(function() { updateNewSearchHoverCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_hover_border_color', function(value) {
+    wp.customize('uenf_search_results_new_search_button_hover_border_color', function(value) {
         value.bind(function() { updateNewSearchHoverCSS(); });
     });
-    wp.customize('cct_search_results_new_search_button_hover_border_width', function(value) {
+    wp.customize('uenf_search_results_new_search_button_hover_border_width', function(value) {
         value.bind(function() { updateNewSearchHoverCSS(); });
     });
 
     // ===== Destaque de termos nos resultados =====
     function updateHighlightCSS() {
-        var bg   = getCustomizerValue('cct_search_results_highlight_bg_color', '#ededc7');
-        var text = getCustomizerValue('cct_search_results_highlight_text_color', '');
-        var wght = getCustomizerValue('cct_search_results_highlight_font_weight', '700');
+        var bg   = getCustomizerValue('uenf_search_results_highlight_bg_color', '#ededc7');
+        var text = getCustomizerValue('uenf_search_results_highlight_text_color', '');
+        var wght = getCustomizerValue('uenf_search_results_highlight_font_weight', '700');
 
-        var css = 'mark.cct-highlight, .cct-highlight{';
+        var css = 'mark.uenf-highlight, .uenf-highlight{';
         css += 'background-color:' + bg + ' !important;';
         css += 'font-weight:' + wght + ' !important;';
         if (text && text !== '') {
@@ -376,16 +376,16 @@
         css += 'padding:0 .15em;border-radius:2px;';
         css += '}';
 
-        updateRuleCSS('cct-search-highlight-css', css);
+        updateRuleCSS('uenf-search-highlight-css', css);
     }
 
     // ===== Botão de Link (copiar/abrir) nos resultados =====
     function updateLinkButtonCSS() {
-        var bg   = getCustomizerValue('cct_search_results_link_button_bg_color', '#afb8bf');
-        var icon = getCustomizerValue('cct_search_results_link_button_icon_color', '#000000');
-        var bord = getCustomizerValue('cct_search_results_link_button_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_link_button_border_width', 0);
-        var br   = getCustomizerValue('cct_search_results_link_button_border_radius', 25);
+        var bg   = getCustomizerValue('uenf_search_results_link_button_bg_color', '#afb8bf');
+        var icon = getCustomizerValue('uenf_search_results_link_button_icon_color', '#000000');
+        var bord = getCustomizerValue('uenf_search_results_link_button_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('uenf_search_results_link_button_border_width', 0);
+        var br   = getCustomizerValue('uenf_search_results_link_button_border_radius', 25);
 
         var css = '';
         css += '.result-actions .copy-link-btn{';
@@ -400,30 +400,30 @@
         // Foco sem borda por padrão
         css += '.result-actions .copy-link-btn:focus{outline:none !important;border-width:0 !important;border-color:transparent !important;box-shadow:none !important;}';
 
-        updateRuleCSS('cct-search-link-button-css', css);
+        updateRuleCSS('uenf-search-link-button-css', css);
     }
 
-    wp.customize('cct_search_results_link_button_bg_color', function(value) {
+    wp.customize('uenf_search_results_link_button_bg_color', function(value) {
         value.bind(function() { updateLinkButtonCSS(); });
     });
-    wp.customize('cct_search_results_link_button_icon_color', function(value) {
+    wp.customize('uenf_search_results_link_button_icon_color', function(value) {
         value.bind(function() { updateLinkButtonCSS(); });
     });
-    wp.customize('cct_search_results_link_button_border_color', function(value) {
+    wp.customize('uenf_search_results_link_button_border_color', function(value) {
         value.bind(function() { updateLinkButtonCSS(); });
     });
-    wp.customize('cct_search_results_link_button_border_width', function(value) {
+    wp.customize('uenf_search_results_link_button_border_width', function(value) {
         value.bind(function() { updateLinkButtonCSS(); });
     });
-    wp.customize('cct_search_results_link_button_border_radius', function(value) {
+    wp.customize('uenf_search_results_link_button_border_radius', function(value) {
         value.bind(function() { updateLinkButtonCSS(); });
     });
 
     function updateLinkButtonHoverCSS() {
-        var bg   = getCustomizerValue('cct_search_results_link_button_hover_bg_color', '#0d6efd');
-        var icon = getCustomizerValue('cct_search_results_link_button_hover_icon_color', '#ffffff');
-        var bord = getCustomizerValue('cct_search_results_link_button_hover_border_color', '#0d6efd');
-        var bw   = getCustomizerValue('cct_search_results_link_button_hover_border_width', 0);
+        var bg   = getCustomizerValue('uenf_search_results_link_button_hover_bg_color', '#0d6efd');
+        var icon = getCustomizerValue('uenf_search_results_link_button_hover_icon_color', '#ffffff');
+        var bord = getCustomizerValue('uenf_search_results_link_button_hover_border_color', '#0d6efd');
+        var bw   = getCustomizerValue('uenf_search_results_link_button_hover_border_width', 0);
 
         updateHoverCSS('.result-actions .copy-link-btn:hover', {
             'background-color': bg,
@@ -437,27 +437,27 @@
         });
     }
 
-    wp.customize('cct_search_results_link_button_hover_bg_color', function(value) {
+    wp.customize('uenf_search_results_link_button_hover_bg_color', function(value) {
         value.bind(function() { updateLinkButtonHoverCSS(); });
     });
-    wp.customize('cct_search_results_link_button_hover_icon_color', function(value) {
+    wp.customize('uenf_search_results_link_button_hover_icon_color', function(value) {
         value.bind(function() { updateLinkButtonHoverCSS(); });
     });
-    wp.customize('cct_search_results_link_button_hover_border_color', function(value) {
+    wp.customize('uenf_search_results_link_button_hover_border_color', function(value) {
         value.bind(function() { updateLinkButtonHoverCSS(); });
     });
-    wp.customize('cct_search_results_link_button_hover_border_width', function(value) {
+    wp.customize('uenf_search_results_link_button_hover_border_width', function(value) {
         value.bind(function() { updateLinkButtonHoverCSS(); });
     });
 
     // Bindings de destaque
-    wp.customize('cct_search_results_highlight_bg_color', function(value) {
+    wp.customize('uenf_search_results_highlight_bg_color', function(value) {
         value.bind(function() { updateHighlightCSS(); });
     });
-    wp.customize('cct_search_results_highlight_text_color', function(value) {
+    wp.customize('uenf_search_results_highlight_text_color', function(value) {
         value.bind(function() { updateHighlightCSS(); });
     });
-    wp.customize('cct_search_results_highlight_font_weight', function(value) {
+    wp.customize('uenf_search_results_highlight_font_weight', function(value) {
         value.bind(function() { updateHighlightCSS(); });
     });
     
@@ -471,10 +471,10 @@
     
     // Função para inicializar valores
     function initializeFieldBorderRadiusValues() {
-        fieldBorderRadiusValues.topLeft = wp.customize('cct_search_border_radius_top_left')() || 0;
-        fieldBorderRadiusValues.topRight = wp.customize('cct_search_border_radius_top_right')() || 0;
-        fieldBorderRadiusValues.bottomLeft = wp.customize('cct_search_border_radius_bottom_left')() || 0;
-        fieldBorderRadiusValues.bottomRight = wp.customize('cct_search_border_radius_bottom_right')() || 0;
+        fieldBorderRadiusValues.topLeft = wp.customize('uenf_search_border_radius_top_left')() || 0;
+        fieldBorderRadiusValues.topRight = wp.customize('uenf_search_border_radius_top_right')() || 0;
+        fieldBorderRadiusValues.bottomLeft = wp.customize('uenf_search_border_radius_bottom_left')() || 0;
+        fieldBorderRadiusValues.bottomRight = wp.customize('uenf_search_border_radius_bottom_right')() || 0;
     }
     
     function updateFieldBorderRadius() {
@@ -485,28 +485,28 @@
         $('input[type="search"].search-custom-uenf').css('border-radius', borderRadius);
     }
     
-    wp.customize('cct_search_border_radius_top_left', function(value) {
+    wp.customize('uenf_search_border_radius_top_left', function(value) {
         value.bind(function(newval) {
             fieldBorderRadiusValues.topLeft = newval;
             updateFieldBorderRadius();
         });
     });
     
-    wp.customize('cct_search_border_radius_top_right', function(value) {
+    wp.customize('uenf_search_border_radius_top_right', function(value) {
         value.bind(function(newval) {
             fieldBorderRadiusValues.topRight = newval;
             updateFieldBorderRadius();
         });
     });
     
-    wp.customize('cct_search_border_radius_bottom_left', function(value) {
+    wp.customize('uenf_search_border_radius_bottom_left', function(value) {
         value.bind(function(newval) {
             fieldBorderRadiusValues.bottomLeft = newval;
             updateFieldBorderRadius();
         });
     });
     
-    wp.customize('cct_search_border_radius_bottom_right', function(value) {
+    wp.customize('uenf_search_border_radius_bottom_right', function(value) {
         value.bind(function(newval) {
             fieldBorderRadiusValues.bottomRight = newval;
             updateFieldBorderRadius();
@@ -523,10 +523,10 @@
     
     // Função para inicializar valores do botão
     function initializeButtonBorderRadiusValues() {
-        buttonBorderRadiusValues.topLeft = wp.customize('cct_search_button_border_radius_top_left')() || 0;
-        buttonBorderRadiusValues.topRight = wp.customize('cct_search_button_border_radius_top_right')() || 4;
-        buttonBorderRadiusValues.bottomLeft = wp.customize('cct_search_button_border_radius_bottom_left')() || 0;
-        buttonBorderRadiusValues.bottomRight = wp.customize('cct_search_button_border_radius_bottom_right')() || 4;
+        buttonBorderRadiusValues.topLeft = wp.customize('uenf_search_button_border_radius_top_left')() || 0;
+        buttonBorderRadiusValues.topRight = wp.customize('uenf_search_button_border_radius_top_right')() || 4;
+        buttonBorderRadiusValues.bottomLeft = wp.customize('uenf_search_button_border_radius_bottom_left')() || 0;
+        buttonBorderRadiusValues.bottomRight = wp.customize('uenf_search_button_border_radius_bottom_right')() || 4;
     }
     
     function updateButtonBorderRadius() {
@@ -539,28 +539,28 @@
         $('.search-submit.search-custom-uenf').css('border-radius', borderRadius);
     }
     
-    wp.customize('cct_search_button_border_radius_top_left', function(value) {
+    wp.customize('uenf_search_button_border_radius_top_left', function(value) {
         value.bind(function(newval) {
             buttonBorderRadiusValues.topLeft = newval;
             updateButtonBorderRadius();
         });
     });
     
-    wp.customize('cct_search_button_border_radius_top_right', function(value) {
+    wp.customize('uenf_search_button_border_radius_top_right', function(value) {
         value.bind(function(newval) {
             buttonBorderRadiusValues.topRight = newval;
             updateButtonBorderRadius();
         });
     });
     
-    wp.customize('cct_search_button_border_radius_bottom_left', function(value) {
+    wp.customize('uenf_search_button_border_radius_bottom_left', function(value) {
         value.bind(function(newval) {
             buttonBorderRadiusValues.bottomLeft = newval;
             updateButtonBorderRadius();
         });
     });
     
-    wp.customize('cct_search_button_border_radius_bottom_right', function(value) {
+    wp.customize('uenf_search_button_border_radius_bottom_right', function(value) {
         value.bind(function(newval) {
             buttonBorderRadiusValues.bottomRight = newval;
             updateButtonBorderRadius();
@@ -572,8 +572,8 @@
     var fontSizeUnit = 'px';
     
     function initializeFontSizeValues() {
-        fontSizeValue = wp.customize('cct_search_font_size')() || 16;
-        fontSizeUnit = wp.customize('cct_search_font_size_unit')() || 'px';
+        fontSizeValue = wp.customize('uenf_search_font_size')() || 16;
+        fontSizeUnit = wp.customize('uenf_search_font_size_unit')() || 'px';
     }
     
     function updateFontSize() {
@@ -583,21 +583,21 @@
         $('.search-submit.search-custom-uenf').css('font-size', value);
     }
     
-    wp.customize('cct_search_font_size', function(value) {
+    wp.customize('uenf_search_font_size', function(value) {
         value.bind(function(newval) {
             fontSizeValue = newval;
             updateFontSize();
         });
     });
     
-    wp.customize('cct_search_font_size_unit', function(value) {
+    wp.customize('uenf_search_font_size_unit', function(value) {
         value.bind(function(newval) {
             fontSizeUnit = newval;
             updateFontSize();
         });
     });
     
-    wp.customize('cct_search_box_shadow', function(value) {
+    wp.customize('uenf_search_box_shadow', function(value) {
         value.bind(function(newval) {
             if (newval) {
                 $('form.search-custom-uenf').css('box-shadow', '0 2px 10px rgba(0, 0, 0, 0.1)');
@@ -607,7 +607,7 @@
         });
     });
     
-    wp.customize('cct_search_transitions', function(value) {
+    wp.customize('uenf_search_transitions', function(value) {
         value.bind(function(newval) {
             if (newval) {
                 $('input.search-custom-uenf').css('transition', 'all 0.3s ease');
@@ -621,16 +621,16 @@
         });
     });
     
-    wp.customize('cct_search_custom_css', function(value) {
+    wp.customize('uenf_search_custom_css', function(value) {
         value.bind(function(newval) {
             // Remover CSS personalizado anterior
-            $('#cct-search-custom-css').remove();
+            $('#uenf-search-custom-css').remove();
             
             // SECURITY FIX (SEC-JS-006): textContent previne CSS Injection via </style><script>
             // $('head').append() com string HTML permitia injetar tags fora do <style>
             if (newval) {
                 var styleEl = document.createElement('style');
-                styleEl.id = 'cct-search-custom-css';
+                styleEl.id = 'uenf-search-custom-css';
                 styleEl.textContent = newval;
                 document.head.appendChild(styleEl);
             }
@@ -642,7 +642,7 @@
      */
     function updatePlaceholderCSS(selector, color) {
         // Remover regra anterior
-        $('#cct-search-placeholder-css').remove();
+        $('#uenf-search-placeholder-css').remove();
         
         // Criar nova regra CSS para placeholder
         var css = selector + '::placeholder { color: ' + color + ' !important; }';
@@ -650,7 +650,7 @@
         css += selector + '::-moz-placeholder { color: ' + color + ' !important; }';
         css += selector + ':-ms-input-placeholder { color: ' + color + ' !important; }';
         
-        $('head').append('<style id="cct-search-placeholder-css">' + css + '</style>');
+        $('head').append('<style id="uenf-search-placeholder-css">' + css + '</style>');
     }
     
     /**
@@ -658,7 +658,7 @@
      */
     function updateFocusCSS(selector, color) {
         // Remover regra anterior
-        $('#cct-search-focus-css').remove();
+        $('#uenf-search-focus-css').remove();
         
         // Converter cor hex para RGB
         var rgb = hexToRgb(color);
@@ -671,7 +671,7 @@
         css += 'box-shadow: 0 0 0 2px ' + rgbaColor + ' !important; ';
         css += '}';
         
-        $('head').append('<style id="cct-search-focus-css">' + css + '</style>');
+        $('head').append('<style id="uenf-search-focus-css">' + css + '</style>');
     }
     
     /**
@@ -691,7 +691,7 @@
      */
     function updateHoverCSS(selector, styles) {
         // Remover regra anterior
-        $('#cct-search-hover-css').remove();
+        $('#uenf-search-hover-css').remove();
         
         // Criar nova regra CSS
         var css = selector + ' {';
@@ -701,7 +701,7 @@
         css += '}';
         
         // Adicionar ao head
-        $('head').append('<style id="cct-search-hover-css">' + css + '</style>');
+        $('head').append('<style id="uenf-search-hover-css">' + css + '</style>');
     }
     
     /**
@@ -731,8 +731,8 @@
         updateHighlightCSS();
 
         // Atualizar indicador e re-trim de resumos com valor inicial
-        if (typeof wp.customize('cct_search_results_excerpt_length') === 'function') {
-            var initialExcerptLen = wp.customize('cct_search_results_excerpt_length')();
+        if (typeof wp.customize('uenf_search_results_excerpt_length') === 'function') {
+            var initialExcerptLen = wp.customize('uenf_search_results_excerpt_length')();
             if (typeof initialExcerptLen !== 'undefined') {
                 updateExcerptLengthIndicator(initialExcerptLen);
                 updateResultExcerpts(initialExcerptLen);
