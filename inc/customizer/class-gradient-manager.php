@@ -10,7 +10,7 @@
  * - Export e import de gradientes
  * - Integração com sistema de cores
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal da Biblioteca de Gradientes
  */
-class CCT_Gradient_Manager {
+class UENF_Gradient_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -37,7 +37,7 @@ class CCT_Gradient_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_gradient_';
+    private $prefix = 'uenf_gradient_';
     
     /**
      * Biblioteca de gradientes predefinidos
@@ -97,15 +97,15 @@ class CCT_Gradient_Manager {
         add_action('wp_footer', array($this, 'output_custom_js'));
         
         // Shortcodes
-        add_shortcode('cct_gradient', array($this, 'gradient_shortcode'));
-        add_shortcode('cct_gradient_text', array($this, 'gradient_text_shortcode'));
-        add_shortcode('cct_gradient_button', array($this, 'gradient_button_shortcode'));
+        add_shortcode('uenf_gradient', array($this, 'gradient_shortcode'));
+        add_shortcode('uenf_gradient_text', array($this, 'gradient_text_shortcode'));
+        add_shortcode('uenf_gradient_button', array($this, 'gradient_button_shortcode'));
         
         // AJAX handlers
-        add_action('wp_ajax_cct_generate_gradient', array($this, 'ajax_generate_gradient'));
-        add_action('wp_ajax_nopriv_cct_generate_gradient', array($this, 'ajax_generate_gradient'));
-        add_action('wp_ajax_cct_save_gradient', array($this, 'ajax_save_gradient'));
-        add_action('wp_ajax_cct_export_gradients', array($this, 'ajax_export_gradients'));
+        add_action('wp_ajax_uenf_generate_gradient', array($this, 'ajax_generate_gradient'));
+        add_action('wp_ajax_nopriv_uenf_generate_gradient', array($this, 'ajax_generate_gradient'));
+        add_action('wp_ajax_uenf_save_gradient', array($this, 'ajax_save_gradient'));
+        add_action('wp_ajax_uenf_export_gradients', array($this, 'ajax_export_gradients'));
     }
     
     /**
@@ -745,25 +745,25 @@ class CCT_Gradient_Manager {
     public function enqueue_scripts() {
         // CSS dos gradientes
         wp_enqueue_style(
-            'cct-gradients',
-            get_template_directory_uri() . '/css/cct-gradients.css',
+            'uenf-gradients',
+            get_template_directory_uri() . '/css/uenf-gradients.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript dos gradientes
         wp_enqueue_script(
-            'cct-gradients',
-            get_template_directory_uri() . '/js/cct-gradients.js',
+            'uenf-gradients',
+            get_template_directory_uri() . '/js/uenf-gradients.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-gradients', 'cctGradients', array(
+        wp_localize_script('uenf-gradients', 'cctGradients', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_gradients_nonce'),
+            'nonce' => wp_create_nonce('uenf_gradients_nonce'),
             'settings' => $this->get_frontend_settings(),
             'library' => $this->gradient_library,
             'categories' => $this->gradient_categories,
@@ -801,7 +801,7 @@ class CCT_Gradient_Manager {
             return;
         }
         
-        echo "<style id='cct-gradients-custom-css'>\n";
+        echo "<style id='uenf-gradients-custom-css'>\n";
         
         // CSS base para gradientes
         echo ":root {\n";
@@ -809,12 +809,12 @@ class CCT_Gradient_Manager {
         // Gerar variáveis CSS para gradientes
         if ($settings['enableCssVariables'] && is_array($this->gradient_library)) {
             foreach ($this->gradient_library as $key => $gradient) {
-                echo "  --cct-gradient-{$key}: {$gradient['css']};\n";
+                echo "  --uenf-gradient-{$key}: {$gradient['css']};\n";
                 
                 // Fallback colors
                 if ($settings['enableFallbackColors'] && !empty($gradient['colors'])) {
                     $fallback_color = $gradient['colors'][0]['color'];
-                    echo "  --cct-gradient-{$key}-fallback: {$fallback_color};\n";
+                    echo "  --uenf-gradient-{$key}-fallback: {$fallback_color};\n";
                 }
             }
         }
@@ -826,7 +826,7 @@ class CCT_Gradient_Manager {
             foreach ($this->gradient_library as $key => $gradient) {
                 // Background gradients
                 if ($settings['applyToBackgrounds']) {
-                    echo ".cct-bg-gradient-{$key} {\n";
+                    echo ".uenf-bg-gradient-{$key} {\n";
                     if ($settings['enableFallbackColors'] && !empty($gradient['colors'])) {
                         echo "  background-color: {$gradient['colors'][0]['color']};\n";
                     }
@@ -836,7 +836,7 @@ class CCT_Gradient_Manager {
                 
                 // Text gradients
                 if ($settings['applyToText']) {
-                    echo ".cct-text-gradient-{$key} {\n";
+                    echo ".uenf-text-gradient-{$key} {\n";
                     if ($settings['enableFallbackColors'] && !empty($gradient['colors'])) {
                         echo "  color: {$gradient['colors'][0]['color']};\n";
                     }
@@ -849,7 +849,7 @@ class CCT_Gradient_Manager {
                 
                 // Border gradients
                 if ($settings['applyToBorders']) {
-                    echo ".cct-border-gradient-{$key} {\n";
+                    echo ".uenf-border-gradient-{$key} {\n";
                     echo "  border: 2px solid;\n";
                     if ($settings['enableFallbackColors'] && !empty($gradient['colors'])) {
                         echo "  border-color: {$gradient['colors'][0]['color']};\n";
@@ -862,7 +862,7 @@ class CCT_Gradient_Manager {
         
         // Otimizações de performance
         if ($settings['optimizePerformance']) {
-            echo ".cct-gradient-optimized {\n";
+            echo ".uenf-gradient-optimized {\n";
             echo "  will-change: background;\n";
             echo "  transform: translateZ(0);\n";
             echo "}\n";
@@ -881,7 +881,7 @@ class CCT_Gradient_Manager {
             return;
         }
         
-        echo "<script id='cct-gradients-custom-js'>\n";
+        echo "<script id='uenf-gradients-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTGradients !== 'undefined') {\n";
         echo "    CCTGradients.init(" . wp_json_encode($settings) . ");\n";
@@ -899,14 +899,14 @@ class CCT_Gradient_Manager {
             'type' => 'background',
             'class' => '',
             'style' => '',
-        ), $atts, 'cct_gradient');
+        ), $atts, 'uenf_gradient');
         
         if (empty($atts['name']) || !isset($this->gradient_library[$atts['name']])) {
             return $content;
         }
         
         $gradient = $this->gradient_library[$atts['name']];
-        $classes = array('cct-gradient');
+        $classes = array('uenf-gradient');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -954,14 +954,14 @@ class CCT_Gradient_Manager {
         $atts = shortcode_atts(array(
             'gradient' => 'sunset',
             'class' => '',
-        ), $atts, 'cct_gradient_text');
+        ), $atts, 'uenf_gradient_text');
         
         if (!isset($this->gradient_library[$atts['gradient']])) {
             return $content;
         }
         
         $gradient = $this->gradient_library[$atts['gradient']];
-        $classes = array('cct-gradient-text');
+        $classes = array('uenf-gradient-text');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -981,14 +981,14 @@ class CCT_Gradient_Manager {
             'href' => '#',
             'target' => '_self',
             'class' => '',
-        ), $atts, 'cct_gradient_button');
+        ), $atts, 'uenf_gradient_button');
         
         if (!isset($this->gradient_library[$atts['gradient']])) {
             return $content;
         }
         
         $gradient = $this->gradient_library[$atts['gradient']];
-        $classes = array('cct-gradient-button');
+        $classes = array('uenf-gradient-button');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -1003,7 +1003,7 @@ class CCT_Gradient_Manager {
      * AJAX handler para gerar gradiente
      */
     public function ajax_generate_gradient() {
-        check_ajax_referer('cct_gradients_nonce', 'nonce');
+        check_ajax_referer('uenf_gradients_nonce', 'nonce');
         
         $type = sanitize_text_field($_POST['type'] ?? 'linear');
         $colors = $this->sanitize_json_array($_POST['colors'] ?? array());
@@ -1032,7 +1032,7 @@ class CCT_Gradient_Manager {
      * AJAX handler para salvar gradiente
      */
     public function ajax_save_gradient() {
-        check_ajax_referer('cct_gradients_nonce', 'nonce');
+        check_ajax_referer('uenf_gradients_nonce', 'nonce');
         
         $name = sanitize_text_field($_POST['name'] ?? '');
         $gradient_data = $this->sanitize_json_array($_POST['gradient'] ?? array());
@@ -1058,7 +1058,7 @@ class CCT_Gradient_Manager {
      * AJAX handler para exportar gradientes
      */
     public function ajax_export_gradients() {
-        check_ajax_referer('cct_gradients_nonce', 'nonce');
+        check_ajax_referer('uenf_gradients_nonce', 'nonce');
         
         $format = sanitize_text_field($_POST['format'] ?? 'css');
         $gradients = $this->sanitize_json_array($_POST['gradients'] ?? array());

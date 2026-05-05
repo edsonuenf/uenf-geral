@@ -11,9 +11,7 @@
       this.menu = menuElement;
       this.breakpoint = 1920; // Breakpoint para desktop (acima de 1920px)
       this.initialized = false;
-      
-      console.log('[UENF Menu] Inicializando menu...');
-      
+
       // Inicializa o menu
       this.init();
     }
@@ -23,9 +21,7 @@
      */
     init() {
       if (this.initialized) return;
-      
-      console.log('[UENF Menu] Configurando menu...');
-      
+
       // Adiciona indicadores de dropdown
       this.addDropdownIndicators();
       
@@ -147,15 +143,11 @@
           .find('> .sub-menu, > .children')
           .removeClass('show');
       }
-      
-      console.log(`[UENF Menu] Modo: ${isMobile ? 'mobile' : 'desktop'}`);
     }
   }
 
   // Inicializa o menu quando o documento estiver pronto
   $(document).ready(function() {
-    console.log('[UENF Menu] Documento pronto, inicializando menu...');
-    
     // Inicializa o menu principal
     const menu = new UENFMenu(document.querySelector('.new-menu'));
     

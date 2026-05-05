@@ -13,7 +13,7 @@ O Design System CCT é uma solução completa e modular para WordPress que ofere
 
 ### ✨ Principais Características
 
-- 🎨 **7 Módulos Completos** - Editor CSS, Tipografia, Cores, Ícones, Layout, Animações e Gradientes
+- 🎨 **8 Módulos Completos** - Editor CSS, Tipografia, Cores, Ícones, Layout, Animações, Gradientes e Cabeçalho/Navegação
 - 🎯 **Interface Visual** - Customizer avançado com preview em tempo real
 - 📱 **Totalmente Responsivo** - Funciona perfeitamente em todos os dispositivos
 - ♿ **Acessibilidade WCAG** - Compatível com padrões de acessibilidade
@@ -65,6 +65,12 @@ O Design System CCT é uma solução completa e modular para WordPress que ofere
 - 3 tipos (linear, radial, cônico)
 - Export em 4 formatos
 
+### 8. 🔝 Cabeçalho & Navegação
+- Controle de altura Desktop/Mobile
+- Configuração de cores e transparência
+- Toggle de Cabeçalho Fixo (Sticky)
+- Suporte automático ao Admin Bar do WP
+
 ## 🚀 Instalação Rápida
 
 ### Requisitos
@@ -114,6 +120,7 @@ O Design System CCT é uma solução completa e modular para WordPress que ofere
    - 📐 Componentes de Layout
    - 🎬 Sistema de Animações
    - 🌈 Biblioteca de Gradientes
+   - 🔝 Cabeçalho & Navegação
 
 ### Exemplos de Uso
 
@@ -249,6 +256,7 @@ npm run lint:css
 - [x] Componentes de Layout (100%)
 - [x] Sistema de Animações (100%)
 - [x] Biblioteca de Gradientes (100%)
+- [x] Cabeçalho & Navegação (100%)
 
 ### Roadmap Futuro 🚧
 - [ ] Modo Escuro/Claro

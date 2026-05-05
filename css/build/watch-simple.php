@@ -1,26 +1,26 @@
 #!/usr/bin/env php
 <?php
 // Definir diretório do tema
-define('CCT_THEME_DIR', '/var/www/html/wp-content/themes/uenf-geral');
+define('UENF_THEME_DIR', '/var/www/html/wp-content/themes/uenf-geral');
 
 // Lista de arquivos CSS a monitorar
 $cssFiles = [
-    CCT_THEME_DIR . '/css/variables.css',
-    CCT_THEME_DIR . '/css/layout/main.css',
-    CCT_THEME_DIR . '/css/components/header.css',
-    CCT_THEME_DIR . '/css/components/menu.css',
-    CCT_THEME_DIR . '/css/components/search.css',
-    CCT_THEME_DIR . '/css/components/footer.css',
-    CCT_THEME_DIR . '/css/custom-fontawesome.css',
-    CCT_THEME_DIR . '/css/fonts_css.css',
-    CCT_THEME_DIR . '/css/404.css',
-    CCT_THEME_DIR . '/css/search.css',
-    CCT_THEME_DIR . '/css/styles.css'
+    UENF_THEME_DIR . '/css/variables.css',
+    UENF_THEME_DIR . '/css/layout/main.css',
+    UENF_THEME_DIR . '/css/components/header.css',
+    UENF_THEME_DIR . '/css/components/menu.css',
+    UENF_THEME_DIR . '/css/components/search.css',
+    UENF_THEME_DIR . '/css/components/footer.css',
+    UENF_THEME_DIR . '/css/custom-fontawesome.css',
+    UENF_THEME_DIR . '/css/fonts_css.css',
+    UENF_THEME_DIR . '/css/404.css',
+    UENF_THEME_DIR . '/css/search.css',
+    UENF_THEME_DIR . '/css/styles.css'
 ];
 
 // Função para minificar e salvar
 function buildCss() {
-    require_once CCT_THEME_DIR . '/css/build/build.php';
+    require_once UENF_THEME_DIR . '/css/build/build.php';
     echo "✅ Minificação e combinação de CSS concluída\n";
 }
 

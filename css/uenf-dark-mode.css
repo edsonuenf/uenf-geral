@@ -1,0 +1,807 @@
+/**
+ * Sistema de Modo Escuro/Claro CCT - Estilos Frontend
+ * 
+ * Sistema completo de modo escuro/claro incluindo:
+ * - Variáveis CSS para ambos os modos
+ * - Transições suaves entre modos
+ * - Componentes de toggle
+ * - Integração com todos os módulos
+ * - Responsividade e acessibilidade
+ * 
+ * @package UENF_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS Base
+   ========================================================================== */
+
+:root {
+    /* Cores modo claro (padrão) */
+    --uenf-color-background: #ffffff;
+    --uenf-color-surface: #f8f9fa;
+    --uenf-color-primary: #0073aa;
+    --uenf-color-secondary: #666666;
+    --uenf-color-accent: #ff6b6b;
+    --uenf-color-text: #333333;
+    --uenf-color-text-secondary: #666666;
+    --uenf-color-text-muted: #999999;
+    --uenf-color-border: #e0e0e0;
+    --uenf-color-shadow: rgba(0, 0, 0, 0.1);
+    --uenf-color-overlay: rgba(255, 255, 255, 0.9);
+    --uenf-color-success: #28a745;
+    --uenf-color-warning: #ffc107;
+    --uenf-color-error: #dc3545;
+    --uenf-color-info: #17a2b8;
+    
+    /* Configurações de transição */
+    --uenf-dark-mode-transition-duration: 0.3s;
+    --uenf-dark-mode-transition-easing: ease-in-out;
+    --uenf-dark-mode-transition-properties: background-color, color, border-color, box-shadow, fill, stroke;
+    
+    /* Z-index para toggles */
+    --uenf-dark-mode-toggle-z: 9999;
+    
+    /* Tamanhos dos toggles */
+    --uenf-toggle-size-small: 32px;
+    --uenf-toggle-size-medium: 40px;
+    --uenf-toggle-size-large: 48px;
+}
+
+/* Cores modo escuro */
+[data-theme='dark'] {
+    --uenf-color-background: #1a1a1a;
+    --uenf-color-surface: #2a2a2a;
+    --uenf-color-primary: #4a9eff;
+    --uenf-color-secondary: #b0b0b0;
+    --uenf-color-accent: #ff8a8a;
+    --uenf-color-text: #ffffff;
+    --uenf-color-text-secondary: #cccccc;
+    --uenf-color-text-muted: #888888;
+    --uenf-color-border: #404040;
+    --uenf-color-shadow: rgba(0, 0, 0, 0.3);
+    --uenf-color-overlay: rgba(0, 0, 0, 0.9);
+    --uenf-color-success: #4caf50;
+    --uenf-color-warning: #ff9800;
+    --uenf-color-error: #f44336;
+    --uenf-color-info: #2196f3;
+}
+
+/* ==========================================================================
+   Transições Globais
+   ========================================================================== */
+
+/* Aplicar transições a todos os elementos quando habilitado */
+.uenf-smooth-transitions *,
+.uenf-smooth-transitions *::before,
+.uenf-smooth-transitions *::after {
+    transition: var(--uenf-dark-mode-transition-properties) var(--uenf-dark-mode-transition-duration) var(--uenf-dark-mode-transition-easing);
+}
+
+/* Excluir elementos que não devem ter transição */
+.uenf-smooth-transitions img,
+.uenf-smooth-transitions video,
+.uenf-smooth-transitions iframe,
+.uenf-smooth-transitions canvas,
+.uenf-smooth-transitions .no-transition,
+.uenf-smooth-transitions .uenf-no-transition {
+    transition: none !important;
+}
+
+/* Estado de transição ativo */
+.uenf-transitioning {
+    pointer-events: none;
+}
+
+.uenf-transitioning * {
+    transition-duration: var(--uenf-dark-mode-transition-duration) !important;
+}
+
+/* ==========================================================================
+   Estilos Base dos Elementos
+   ========================================================================== */
+
+/* Body e HTML */
+body {
+    background-color: var(--uenf-color-background);
+    color: var(--uenf-color-text);
+}
+
+/* Elementos de texto */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--uenf-color-text);
+}
+
+p, span, div {
+    color: var(--uenf-color-text);
+}
+
+a {
+    color: var(--uenf-color-primary);
+}
+
+a:hover {
+    color: var(--uenf-color-accent);
+}
+
+/* Elementos de formulário */
+input, textarea, select {
+    background-color: var(--uenf-color-surface);
+    color: var(--uenf-color-text);
+    border-color: var(--uenf-color-border);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--uenf-color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--uenf-color-primary-rgb, 0, 115, 170), 0.1);
+}
+
+/* Botões */
+button, .button, input[type="submit"], input[type="button"] {
+    background-color: var(--uenf-color-primary);
+    color: var(--uenf-color-background);
+    border-color: var(--uenf-color-primary);
+}
+
+button:hover, .button:hover {
+    background-color: var(--uenf-color-accent);
+    border-color: var(--uenf-color-accent);
+}
+
+/* Bordas e divisores */
+hr, .separator {
+    border-color: var(--uenf-color-border);
+}
+
+/* Cards e superfícies */
+.card, .panel, .widget {
+    background-color: var(--uenf-color-surface);
+    border-color: var(--uenf-color-border);
+    box-shadow: 0 2px 4px var(--uenf-color-shadow);
+}
+
+/* ==========================================================================
+   Componentes de Toggle
+   ========================================================================== */
+
+/* Container base do toggle */
+.uenf-dark-mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+/* Toggle fixo */
+.uenf-fixed-dark-mode-toggle {
+    position: fixed;
+    z-index: var(--uenf-dark-mode-toggle-z);
+    padding: 8px;
+}
+
+/* Posicionamento do toggle fixo */
+.uenf-position-top-left {
+    top: 20px;
+    left: 20px;
+}
+
+.uenf-position-top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.uenf-position-bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.uenf-position-bottom-right {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Botão de toggle */
+.uenf-toggle-btn,
+.uenf-toggle-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--uenf-color-surface);
+    color: var(--uenf-color-text);
+    border: 1px solid var(--uenf-color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px var(--uenf-color-shadow);
+}
+
+.uenf-toggle-icon-btn {
+    padding: 8px;
+    border-radius: 50%;
+    width: var(--uenf-toggle-size-medium);
+    height: var(--uenf-toggle-size-medium);
+}
+
+.uenf-toggle-btn:hover,
+.uenf-toggle-icon-btn:hover {
+    background: var(--uenf-color-primary);
+    color: var(--uenf-color-background);
+    border-color: var(--uenf-color-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--uenf-color-shadow);
+}
+
+.uenf-toggle-btn:active,
+.uenf-toggle-icon-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px var(--uenf-color-shadow);
+}
+
+/* Ícones do toggle */
+.uenf-toggle-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+/* Ícone de sol */
+.uenf-toggle-icon.uenf-icon-sun::before {
+    content: '☀️';
+    font-size: 16px;
+}
+
+/* Ícone de lua */
+.uenf-toggle-icon.uenf-icon-moon::before {
+    content: '🌙';
+    font-size: 16px;
+}
+
+/* Animação de rotação do ícone */
+.uenf-mode-dark .uenf-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Texto do toggle */
+.uenf-toggle-text {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Toggle Switch (Estilo iOS)
+   ========================================================================== */
+
+.uenf-toggle-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.uenf-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.uenf-toggle-slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: var(--uenf-color-border);
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+    box-shadow: inset 0 1px 3px var(--uenf-color-shadow);
+}
+
+.uenf-toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--uenf-color-background);
+    border-radius: 50%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px var(--uenf-color-shadow);
+}
+
+.uenf-toggle-input:checked + .uenf-toggle-slider {
+    background: var(--uenf-color-primary);
+}
+
+.uenf-toggle-input:checked + .uenf-toggle-slider::before {
+    transform: translateX(26px);
+}
+
+.uenf-toggle-input:focus + .uenf-toggle-slider {
+    box-shadow: inset 0 1px 3px var(--uenf-color-shadow), 0 0 0 3px rgba(var(--uenf-color-primary-rgb, 0, 115, 170), 0.2);
+}
+
+/* ==========================================================================
+   Tamanhos dos Toggles
+   ========================================================================== */
+
+/* Tamanho pequeno */
+.uenf-size-small .uenf-toggle-btn,
+.uenf-size-small .uenf-toggle-icon-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    width: var(--uenf-toggle-size-small);
+    height: var(--uenf-toggle-size-small);
+}
+
+.uenf-size-small .uenf-toggle-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.uenf-size-small .uenf-toggle-icon::before {
+    font-size: 14px;
+}
+
+.uenf-size-small .uenf-toggle-slider {
+    width: 40px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.uenf-size-small .uenf-toggle-slider::before {
+    width: 16px;
+    height: 16px;
+}
+
+.uenf-size-small .uenf-toggle-input:checked + .uenf-toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* Tamanho grande */
+.uenf-size-large .uenf-toggle-btn,
+.uenf-size-large .uenf-toggle-icon-btn {
+    padding: 12px 16px;
+    font-size: 16px;
+    width: var(--uenf-toggle-size-large);
+    height: var(--uenf-toggle-size-large);
+}
+
+.uenf-size-large .uenf-toggle-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.uenf-size-large .uenf-toggle-icon::before {
+    font-size: 20px;
+}
+
+.uenf-size-large .uenf-toggle-slider {
+    width: 60px;
+    height: 28px;
+    border-radius: 14px;
+}
+
+.uenf-size-large .uenf-toggle-slider::before {
+    width: 24px;
+    height: 24px;
+}
+
+.uenf-size-large .uenf-toggle-input:checked + .uenf-toggle-slider::before {
+    transform: translateX(32px);
+}
+
+/* ==========================================================================
+   Indicadores de Tema
+   ========================================================================== */
+
+.uenf-theme-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: var(--uenf-color-surface);
+    color: var(--uenf-color-text-secondary);
+    border: 1px solid var(--uenf-color-border);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.uenf-theme-icon {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uenf-theme-icon.uenf-icon-sun::before {
+    content: '☀️';
+    font-size: 12px;
+}
+
+.uenf-theme-icon.uenf-icon-moon::before {
+    content: '🌙';
+    font-size: 12px;
+}
+
+.uenf-theme-text {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   Admin Bar Integration
+   ========================================================================== */
+
+#wpadminbar .uenf-admin-bar-dark-mode {
+    cursor: pointer;
+}
+
+#wpadminbar .uenf-admin-bar-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    transition: opacity 0.2s ease;
+}
+
+#wpadminbar .uenf-admin-bar-toggle:hover {
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   Integração com Módulos Existentes
+   ========================================================================== */
+
+/* Sistema de Sombras */
+[data-theme='dark'] .uenf-elevation-1,
+[data-theme='dark'] .uenf-elevation-2,
+[data-theme='dark'] .uenf-elevation-4,
+[data-theme='dark'] .uenf-elevation-6,
+[data-theme='dark'] .uenf-elevation-8,
+[data-theme='dark'] .uenf-elevation-12,
+[data-theme='dark'] .uenf-elevation-16,
+[data-theme='dark'] .uenf-elevation-24 {
+    --uenf-shadow-color: 0, 0, 0;
+}
+
+/* Sistema de Gradientes */
+[data-theme='dark'] .uenf-bg-gradient-ocean {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+[data-theme='dark'] .uenf-bg-gradient-sunset {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+/* Sistema de Ícones */
+[data-theme='dark'] .uenf-icon {
+    fill: var(--uenf-color-text);
+    color: var(--uenf-color-text);
+}
+
+/* Sistema de Animações */
+[data-theme='dark'] .uenf-animate {
+    --uenf-animation-shadow: var(--uenf-color-shadow);
+}
+
+/* Biblioteca de Padrões */
+[data-theme='dark'] .uenf-pattern-card {
+    background: var(--uenf-color-surface);
+    border-color: var(--uenf-color-border);
+}
+
+[data-theme='dark'] .uenf-faq-accordion .uenf-faq-item {
+    background: var(--uenf-color-surface);
+    border-color: var(--uenf-color-border);
+}
+
+[data-theme='dark'] .uenf-pricing-plan {
+    background: var(--uenf-color-surface);
+    border-color: var(--uenf-color-border);
+}
+
+[data-theme='dark'] .uenf-team-member {
+    background: var(--uenf-color-surface);
+    border-color: var(--uenf-color-border);
+}
+
+[data-theme='dark'] .uenf-portfolio-item {
+    background: var(--uenf-color-surface);
+    border-color: var(--uenf-color-border);
+}
+
+/* ==========================================================================
+   Estados de Foco e Acessibilidade
+   ========================================================================== */
+
+/* Foco visível */
+.uenf-toggle-btn:focus,
+.uenf-toggle-icon-btn:focus {
+    outline: 2px solid var(--uenf-color-primary);
+    outline-offset: 2px;
+}
+
+.uenf-toggle-input:focus + .uenf-toggle-slider {
+    outline: 2px solid var(--uenf-color-primary);
+    outline-offset: 2px;
+}
+
+/* Estados desabilitados */
+.uenf-toggle-btn:disabled,
+.uenf-toggle-icon-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .uenf-toggle-btn,
+    .uenf-toggle-icon-btn {
+        border-width: 2px;
+    }
+    
+    .uenf-toggle-slider {
+        border: 2px solid var(--uenf-color-border);
+    }
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Mobile */
+@media (max-width: 768px) {
+    .uenf-fixed-dark-mode-toggle {
+        padding: 6px;
+    }
+    
+    .uenf-position-top-left,
+    .uenf-position-top-right {
+        top: 15px;
+    }
+    
+    .uenf-position-top-left,
+    .uenf-position-bottom-left {
+        left: 15px;
+    }
+    
+    .uenf-position-top-right,
+    .uenf-position-bottom-right {
+        right: 15px;
+    }
+    
+    .uenf-position-bottom-left,
+    .uenf-position-bottom-right {
+        bottom: 15px;
+    }
+    
+    .uenf-toggle-text {
+        display: none;
+    }
+    
+    .uenf-size-large .uenf-toggle-btn,
+    .uenf-size-large .uenf-toggle-icon-btn {
+        width: var(--uenf-toggle-size-medium);
+        height: var(--uenf-toggle-size-medium);
+        padding: 8px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .uenf-fixed-dark-mode-toggle {
+        padding: 7px;
+    }
+}
+
+/* ==========================================================================
+   Preferências do Sistema
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .uenf-smooth-transitions *,
+    .uenf-smooth-transitions *::before,
+    .uenf-smooth-transitions *::after {
+        transition: none !important;
+    }
+    
+    .uenf-toggle-icon {
+        transition: none !important;
+    }
+    
+    .uenf-toggle-slider::before {
+        transition: none !important;
+    }
+}
+
+/* Modo escuro automático do sistema */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --uenf-color-background: #1a1a1a;
+        --uenf-color-surface: #2a2a2a;
+        --uenf-color-primary: #4a9eff;
+        --uenf-color-secondary: #b0b0b0;
+        --uenf-color-accent: #ff8a8a;
+        --uenf-color-text: #ffffff;
+        --uenf-color-text-secondary: #cccccc;
+        --uenf-color-text-muted: #888888;
+        --uenf-color-border: #404040;
+        --uenf-color-shadow: rgba(0, 0, 0, 0.3);
+        --uenf-color-overlay: rgba(0, 0, 0, 0.9);
+        --uenf-color-success: #4caf50;
+        --uenf-color-warning: #ff9800;
+        --uenf-color-error: #f44336;
+        --uenf-color-info: #2196f3;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .uenf-dark-mode-toggle,
+    .uenf-fixed-dark-mode-toggle,
+    .uenf-theme-indicator {
+        display: none !important;
+    }
+    
+    /* Forçar modo claro para impressão */
+    * {
+        background: white !important;
+        color: black !important;
+        border-color: #ccc !important;
+        box-shadow: none !important;
+    }
+}
+
+/* ==========================================================================
+   Animações Especiais
+   ========================================================================== */
+
+/* Animação de entrada do toggle fixo */
+@keyframes uenf-toggle-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.uenf-fixed-dark-mode-toggle {
+    animation: uenf-toggle-fade-in 0.3s ease-out;
+}
+
+/* Animação de pulsação para chamar atenção */
+@keyframes uenf-toggle-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px var(--uenf-color-shadow);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px var(--uenf-color-shadow);
+    }
+}
+
+.uenf-toggle-pulse {
+    animation: uenf-toggle-pulse 2s ease-in-out infinite;
+}
+
+/* Animação de rotação do ícone */
+@keyframes uenf-icon-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.uenf-toggle-icon.uenf-rotating {
+    animation: uenf-icon-rotate 0.5s ease-in-out;
+}
+
+/* ==========================================================================
+   Utilitários
+   ========================================================================== */
+
+/* Classe para forçar modo claro */
+.uenf-force-light-mode {
+    --uenf-color-background: #ffffff !important;
+    --uenf-color-surface: #f8f9fa !important;
+    --uenf-color-text: #333333 !important;
+    --uenf-color-border: #e0e0e0 !important;
+}
+
+/* Classe para forçar modo escuro */
+.uenf-force-dark-mode {
+    --uenf-color-background: #1a1a1a !important;
+    --uenf-color-surface: #2a2a2a !important;
+    --uenf-color-text: #ffffff !important;
+    --uenf-color-border: #404040 !important;
+}
+
+/* Classe para desabilitar transições */
+.uenf-no-dark-mode-transition,
+.uenf-no-dark-mode-transition * {
+    transition: none !important;
+}
+
+/* Classe para ocultar em modo escuro */
+[data-theme='dark'] .uenf-hide-in-dark {
+    display: none !important;
+}
+
+/* Classe para ocultar em modo claro */
+[data-theme='light'] .uenf-hide-in-light,
+:root:not([data-theme]) .uenf-hide-in-light {
+    display: none !important;
+}
+
+/* Classe para mostrar apenas em modo escuro */
+.uenf-show-in-dark {
+    display: none !important;
+}
+
+[data-theme='dark'] .uenf-show-in-dark {
+    display: block !important;
+}
+
+/* Classe para mostrar apenas em modo claro */
+.uenf-show-in-light {
+    display: none !important;
+}
+
+[data-theme='light'] .uenf-show-in-light,
+:root:not([data-theme]) .uenf-show-in-light {
+    display: block !important;
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug */
+.uenf-dark-mode-debug {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--uenf-color-surface);
+    color: var(--uenf-color-text);
+    padding: 8px 12px;
+    border: 1px solid var(--uenf-color-border);
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+/* Indicador de modo ativo */
+.uenf-dark-mode-debug::before {
+    content: 'Modo: ' attr(data-current-mode);
+}
+
+/* Informações de performance */
+.uenf-dark-mode-debug::after {
+    content: ' | Transições: ' attr(data-transitions-enabled);
+}

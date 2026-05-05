@@ -1,0 +1,7 @@
+path,displayName,icon,role
+./agents/php-auditor.agent.md,Valentina (PHP Security Auditor),🔐,Audita código PHP em busca de XSS, SQLi, nonces e capabilities
+./agents/js-auditor.agent.md,Bruno (JS Security Auditor),🛡️,Audita JavaScript em busca de eval, innerHTML inseguro e CSRF
+./agents/wp-config-auditor.agent.md,Sofia (WP Config Auditor),⚙️,Audita configuração WordPress e headers HTTP de segurança
+./agents/security-reporter.agent.md,Gabriel (Security Reporter),📋,Consolida relatórios e classifica vulnerabilidades por severidade CVSS
+./agents/security-fixer.agent.md,Isabela (Security Fixer),🔧,Implementa correções para vulnerabilidades críticas e altas
+./agents/release-mgr.agent.md,Marco (Release Manager),📦,CHANGELOG de segurança e mensagem de commit

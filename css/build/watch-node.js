@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Definir diretório do tema
-const CCT_THEME_DIR = '/var/www/html/wp-content/themes/uenf-geral';
+const UENF_THEME_DIR = '/var/www/html/wp-content/themes/uenf-geral';
 
 // Lista de arquivos CSS a monitorar
 const cssFiles = [
@@ -18,7 +18,7 @@ const cssFiles = [
     '404.css',
     'search.css',
     'styles.css'
-].map(file => path.join(CCT_THEME_DIR, 'css', file));
+].map(file => path.join(UENF_THEME_DIR, 'css', file));
 
 // Função para minificar e salvar
 function buildCss() {

@@ -22,7 +22,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
             <div class="row align-items-center mb-3">
                 <div class="col-lg-12">
                     <h1 class="display-5 fw-bold text-uenf-blue mb-3 hero-title">
-                        <?php echo get_bloginfo('name'); ?>
+                        <?php echo esc_html(get_bloginfo('name')); ?>
                     </h1>
                 </div>
             </div>
@@ -31,7 +31,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
 
     <!-- Breadcrumb -->
     <div class="container">
-        <?php cct_custom_breadcrumb(); ?>
+        <?php uenf_custom_breadcrumb(); ?>
     </div>
     <section class="line-breadcrumb"></section>
 
@@ -103,7 +103,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                     <div class="card-body">
                                         <div class="row">
                                             <?php 
-                                            $show_thumbnail = get_theme_mod('cct_search_results_show_thumbnail', true);
+                                            $show_thumbnail = get_theme_mod('uenf_search_results_show_thumbnail', true);
                                             if ($show_thumbnail && has_post_thumbnail()) : ?>
                                                 <div class="col-md-3">
                                                     <div class="result-thumbnail">
@@ -117,7 +117,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                 <div class="col-12">
                                             <?php endif; ?>
                                                 <div class="result-content">
-                                                    <?php if (get_theme_mod('cct_search_results_show_meta', true)) : ?>
+                                                    <?php if (get_theme_mod('uenf_search_results_show_meta', true)) : ?>
                                                         <div class="result-meta mb-2">
                                                             <span class="badge bg-primary me-2"><?php echo get_post_type_object(get_post_type())->labels->singular_name; ?></span>
                                                             <span class="text-muted">
@@ -130,12 +130,13 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                     <h2 class="result-title">
                                         <a href="<?php the_permalink(); ?>" class="text-decoration-none">
                                             <?php 
-                                            $highlight = get_theme_mod('cct_search_results_highlight_terms', true);
+                                            $highlight = get_theme_mod('uenf_search_results_highlight_terms', true);
+                                            $allowed_tags = array('mark' => array('class' => array()));
                                             $title = get_the_title();
                                             if ($highlight && $search_query) {
-                                                $title = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="cct-highlight">$1</mark>', $title);
+                                                $title = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="uenf-highlight">$1</mark>', $title);
                                             }
-                                            echo $title;
+                                            echo wp_kses($title, $allowed_tags);
                                             ?>
                                         </a>
                                     </h2>
@@ -150,7 +151,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                     ?>">
                                                         <?php 
                                                         // Tamanho desejado do resumo a partir do Customizer
-                                                        $len = absint(get_theme_mod('cct_search_results_excerpt_length', 20));
+                                                        $len = absint(get_theme_mod('uenf_search_results_excerpt_length', 20));
                                                         
                                                         // Gerar resumo consistente ignorando o filtro global
                                                         if (has_excerpt()) {
@@ -163,10 +164,10 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                                         $excerpt = wp_trim_words($base_text, max(1, $len), '…');
                                                         
                                                         // Destacar termos
-                                                        if (get_theme_mod('cct_search_results_highlight_terms', true) && $search_query) {
-                                                            $excerpt = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="cct-highlight">$1</mark>', $excerpt);
+                                                        if (get_theme_mod('uenf_search_results_highlight_terms', true) && $search_query) {
+                                                            $excerpt = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="uenf-highlight">$1</mark>', $excerpt);
                                                         }
-                                                        echo $excerpt;
+                                                        echo wp_kses($excerpt, $allowed_tags);
                                                         ?>
                                                     </div>
                                                     
@@ -176,7 +177,7 @@ $end_result = min($current_page * $results_per_page, $total_results);
                                             Ler Mais
                                         </a>
                                         <?php if (get_permalink()) : ?>
-                                            <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo get_permalink(); ?>')" aria-label="Copiar link do artigo">
+                                            <button class="btn btn-outline-secondary btn-sm ms-2 copy-link-btn" onclick="navigator.clipboard.writeText('<?php echo esc_js(get_permalink()); ?>')" aria-label="Copiar link do artigo">
                                                 <i class="fas fa-link" aria-hidden="true"></i>
                                             </button>
                                         <?php endif; ?>

@@ -5,7 +5,7 @@
  * Controles especializados para preview de font pairing,
  * escala tipográfica e outras funcionalidades avançadas.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 /**
  * Controle de Preview de Font Pairing
  */
-class CCT_Typography_Preview_Control extends WP_Customize_Control {
+class UENF_Typography_Preview_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
@@ -46,7 +46,7 @@ class CCT_Typography_Preview_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-typography-preview" id="cct-typography-preview">
+        <div class="uenf-typography-preview" id="uenf-typography-preview">
             <div class="preview-container">
                 <div class="preview-heading" id="preview-heading">
                     <h2>Exemplo de Título Principal</h2>
@@ -74,7 +74,7 @@ class CCT_Typography_Preview_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-typography-preview {
+        .uenf-typography-preview {
             border: 1px solid #ddd;
             border-radius: 6px;
             padding: 20px;
@@ -133,7 +133,7 @@ class CCT_Typography_Preview_Control extends WP_Customize_Control {
         <script>
         (function($) {
             function updateTypographyPreview() {
-                var pairingValue = $('#customize-control-cct_font_pairing_preset select').val();
+                var pairingValue = $('#customize-control-uenf_font_pairing_preset select').val();
                 var pairings = <?php echo json_encode($this->font_pairings); ?>;
                 
                 if (pairings[pairingValue]) {
@@ -167,7 +167,7 @@ class CCT_Typography_Preview_Control extends WP_Customize_Control {
             }
             
             // Atualizar preview quando o valor mudar
-            $('#customize-control-cct_font_pairing_preset select').on('change', updateTypographyPreview);
+            $('#customize-control-uenf_font_pairing_preset select').on('change', updateTypographyPreview);
             
             // Atualizar preview inicial
             setTimeout(updateTypographyPreview, 100);
@@ -181,7 +181,7 @@ class CCT_Typography_Preview_Control extends WP_Customize_Control {
 /**
  * Controle de Preview de Escala Tipográfica
  */
-class CCT_Typography_Scale_Preview_Control extends WP_Customize_Control {
+class UENF_Typography_Scale_Preview_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
@@ -209,7 +209,7 @@ class CCT_Typography_Scale_Preview_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-scale-preview" id="cct-scale-preview">
+        <div class="uenf-scale-preview" id="uenf-scale-preview">
             <div class="scale-info">
                 <div class="scale-name" id="scale-name">Segunda Maior</div>
                 <div class="scale-ratio" id="scale-ratio">Proporção: 1.125</div>
@@ -250,7 +250,7 @@ class CCT_Typography_Scale_Preview_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-scale-preview {
+        .uenf-scale-preview {
             border: 1px solid #ddd;
             border-radius: 6px;
             padding: 20px;
@@ -328,8 +328,8 @@ class CCT_Typography_Scale_Preview_Control extends WP_Customize_Control {
         <script>
         (function($) {
             function updateScalePreview() {
-                var scaleValue = $('#customize-control-cct_typography_scale select').val();
-                var baseSize = parseInt($('#customize-control-cct_base_font_size input[type="range"]').val()) || 16;
+                var scaleValue = $('#customize-control-uenf_typography_scale select').val();
+                var baseSize = parseInt($('#customize-control-uenf_base_font_size input[type="range"]').val()) || 16;
                 var scales = <?php echo json_encode($this->typography_scales); ?>;
                 
                 if (scales[scaleValue]) {
@@ -368,8 +368,8 @@ class CCT_Typography_Scale_Preview_Control extends WP_Customize_Control {
             }
             
             // Atualizar preview quando os valores mudarem
-            $('#customize-control-cct_typography_scale select').on('change', updateScalePreview);
-            $('#customize-control-cct_base_font_size input[type="range"]').on('input', updateScalePreview);
+            $('#customize-control-uenf_typography_scale select').on('change', updateScalePreview);
+            $('#customize-control-uenf_base_font_size input[type="range"]').on('input', updateScalePreview);
             
             // Atualizar preview inicial
             setTimeout(updateScalePreview, 100);
@@ -380,85 +380,11 @@ class CCT_Typography_Scale_Preview_Control extends WP_Customize_Control {
     }
 }
 
-/**
- * Controle de Range com Valor
- */
-if (!class_exists('WP_Customize_Range_Value_Control')) {
-    class WP_Customize_Range_Value_Control extends WP_Customize_Control {
-        
-        /**
-         * Tipo do controle
-         * 
-         * @var string
-         */
-        public $type = 'range_value';
-        
-        /**
-         * Renderiza o controle
-         */
-        public function render_content() {
-            ?>
-            <label>
-                <span class="customize-control-title"><?php echo esc_html($this->label); ?></span>
-                <?php if (!empty($this->description)) : ?>
-                    <span class="description customize-control-description"><?php echo $this->description; ?></span>
-                <?php endif; ?>
-                
-                <div class="range-value-wrapper">
-                    <input type="range" 
-                           <?php $this->input_attrs(); ?> 
-                           value="<?php echo esc_attr($this->value()); ?>" 
-                           <?php $this->link(); ?> 
-                           class="range-input" />
-                    <span class="range-value"><?php echo esc_html($this->value()); ?></span>
-                </div>
-            </label>
-            
-            <style>
-            .range-value-wrapper {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-top: 5px;
-            }
-            
-            .range-input {
-                flex: 1;
-                margin: 0;
-            }
-            
-            .range-value {
-                min-width: 40px;
-                text-align: center;
-                font-family: monospace;
-                font-size: 13px;
-                background: #f1f1f1;
-                padding: 2px 6px;
-                border-radius: 3px;
-                border: 1px solid #ddd;
-            }
-            </style>
-            
-            <script>
-            (function($) {
-                var control = $(document).find('#customize-control-<?php echo $this->id; ?>');
-                var rangeInput = control.find('.range-input');
-                var valueDisplay = control.find('.range-value');
-                
-                rangeInput.on('input', function() {
-                    valueDisplay.text($(this).val());
-                });
-            })(jQuery);
-            </script>
-            <?php
-        }
-    }
-}
 
 /**
  * Controle de Upload de Fonte
  */
-class CCT_Font_Upload_Control extends WP_Customize_Upload_Control {
+class UENF_Font_Upload_Control extends WP_Customize_Upload_Control {
     
     /**
      * Tipo do controle

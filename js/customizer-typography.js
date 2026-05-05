@@ -14,7 +14,7 @@
                 console.log("Aplicando preview:", newval);
                 
                 // Remove estilos anteriores
-                $("#cct-preview-typography").remove();
+                $("#uenf-preview-typography").remove();
                 
                 var css = "";
                 var fontLink = "";
@@ -50,23 +50,35 @@
                         break;
                 }
                 
-                // Aplica as mudanças no preview
+                // SECURITY FIX: JS-A03 — Substituído append() com string HTML por criação DOM segura.
+                // fontLink como string HTML e css concatenado em <style> permitiam CSS/HTML injection.
+                // Agora: <link> criado via $('<link>').attr() e CSS injetado via textContent.
                 if (fontLink) {
-                    $("head").append(fontLink);
+                    // Extrair href da string fontLink (valor estático do switch-case)
+                    var hrefMatch = fontLink.match(/href='([^']+)'/);
+                    if (hrefMatch && hrefMatch[1]) {
+                        $('<link>').attr({ rel: 'stylesheet', href: hrefMatch[1] }).appendTo('head');
+                    }
                 }
-                $("head").append("<style id='cct-preview-typography'>" + css + "</style>");
+                var styleEl = document.getElementById('uenf-preview-typography');
+                if (!styleEl) {
+                    styleEl = document.createElement('style');
+                    styleEl.id = 'uenf-preview-typography';
+                    document.head.appendChild(styleEl);
+                }
+                styleEl.textContent = css;
                 
                 // Força re-render
-                $("body").addClass("cct-typography-updated").removeClass("cct-typography-updated");
+                $("body").addClass("uenf-typography-updated").removeClass("uenf-typography-updated");
             }
             
             // Bind para mudanças na configuração
-            wp.customize("cct_font_pairing_preset", function(value) {
+            wp.customize("uenf_font_pairing_preset", function(value) {
                 value.bind(applyTypographyPreview);
             });
             
             // Aplica configuração inicial
-            var initialValue = wp.customize("cct_font_pairing_preset").get();
+            var initialValue = wp.customize("uenf_font_pairing_preset").get();
             if (initialValue) {
                 applyTypographyPreview(initialValue);
             }

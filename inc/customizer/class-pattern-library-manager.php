@@ -11,7 +11,7 @@
  * - Configurações customizáveis
  * - Preview em tempo real
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal da Biblioteca de Padrões
  */
-class CCT_Pattern_Library_Manager {
+class UENF_Pattern_Library_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -38,7 +38,7 @@ class CCT_Pattern_Library_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_patterns_';
+    private $prefix = 'uenf_patterns_';
     
     /**
      * ID do painel de design
@@ -121,20 +121,20 @@ class CCT_Pattern_Library_Manager {
         add_action('wp_footer', array($this, 'output_custom_js'));
         
         // Shortcodes
-        add_shortcode('cct_faq_section', array($this, 'faq_section_shortcode'));
-        add_shortcode('cct_faq', array($this, 'faq_item_shortcode'));
-        add_shortcode('cct_pricing_table', array($this, 'pricing_table_shortcode'));
-        add_shortcode('cct_pricing_plan', array($this, 'pricing_plan_shortcode'));
-        add_shortcode('cct_team_grid', array($this, 'team_grid_shortcode'));
-        add_shortcode('cct_team_member', array($this, 'team_member_shortcode'));
-        add_shortcode('cct_portfolio_gallery', array($this, 'portfolio_gallery_shortcode'));
-        add_shortcode('cct_portfolio_item', array($this, 'portfolio_item_shortcode'));
+        add_shortcode('uenf_faq_section', array($this, 'faq_section_shortcode'));
+        add_shortcode('uenf_faq', array($this, 'faq_item_shortcode'));
+        add_shortcode('uenf_pricing_table', array($this, 'pricing_table_shortcode'));
+        add_shortcode('uenf_pricing_plan', array($this, 'pricing_plan_shortcode'));
+        add_shortcode('uenf_team_grid', array($this, 'team_grid_shortcode'));
+        add_shortcode('uenf_team_member', array($this, 'team_member_shortcode'));
+        add_shortcode('uenf_portfolio_gallery', array($this, 'portfolio_gallery_shortcode'));
+        add_shortcode('uenf_portfolio_item', array($this, 'portfolio_item_shortcode'));
         
         // AJAX handlers
-        add_action('wp_ajax_cct_preview_pattern', array($this, 'ajax_preview_pattern'));
-        add_action('wp_ajax_nopriv_cct_preview_pattern', array($this, 'ajax_preview_pattern'));
-        add_action('wp_ajax_cct_export_pattern', array($this, 'ajax_export_pattern'));
-        add_action('wp_ajax_cct_import_pattern', array($this, 'ajax_import_pattern'));
+        add_action('wp_ajax_uenf_preview_pattern', array($this, 'ajax_preview_pattern'));
+        add_action('wp_ajax_nopriv_uenf_preview_pattern', array($this, 'ajax_preview_pattern'));
+        add_action('wp_ajax_uenf_export_pattern', array($this, 'ajax_export_pattern'));
+        add_action('wp_ajax_uenf_import_pattern', array($this, 'ajax_import_pattern'));
     }
     
     /**
@@ -1173,25 +1173,25 @@ class CCT_Pattern_Library_Manager {
     public function enqueue_scripts() {
         // CSS dos padrões
         wp_enqueue_style(
-            'cct-patterns',
-            get_template_directory_uri() . '/css/cct-patterns.css',
+            'uenf-patterns',
+            get_template_directory_uri() . '/css/uenf-patterns.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript dos padrões
         wp_enqueue_script(
-            'cct-patterns',
-            get_template_directory_uri() . '/js/cct-patterns.js',
+            'uenf-patterns',
+            get_template_directory_uri() . '/js/uenf-patterns.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-patterns', 'cctPatterns', array(
+        wp_localize_script('uenf-patterns', 'cctPatterns', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_patterns_nonce'),
+            'nonce' => wp_create_nonce('uenf_patterns_nonce'),
             'settings' => $this->get_frontend_settings(),
             'patterns' => array(
                 'faq' => $this->faq_patterns,
@@ -1251,12 +1251,12 @@ class CCT_Pattern_Library_Manager {
             return;
         }
         
-        echo "<style id='cct-patterns-custom-css'>\n";
+        echo "<style id='uenf-patterns-custom-css'>\n";
         
         // Variáveis CSS para cores
         echo ":root {\n";
         foreach ($settings['colors'] as $color_key => $color_value) {
-            echo "  --cct-pattern-color-{$color_key}: {$color_value};\n";
+            echo "  --uenf-pattern-color-{$color_key}: {$color_value};\n";
         }
         echo "}\n";
         
@@ -1272,26 +1272,26 @@ class CCT_Pattern_Library_Manager {
     private function output_pattern_specific_css($settings) {
         // CSS para FAQ
         if ($settings['faqActivePattern'] === 'accordion') {
-            echo ".cct-faq-accordion .cct-faq-item { border-color: var(--cct-pattern-color-border); }\n";
-            echo ".cct-faq-accordion .cct-faq-question { background: var(--cct-pattern-color-background); }\n";
+            echo ".uenf-faq-accordion .uenf-faq-item { border-color: var(--uenf-pattern-color-border); }\n";
+            echo ".uenf-faq-accordion .uenf-faq-question { background: var(--uenf-pattern-color-background); }\n";
         }
         
         // CSS para Pricing
         if ($settings['pricingActivePattern'] === 'cards') {
-            echo ".cct-pricing-cards .cct-pricing-card { border-color: var(--cct-pattern-color-border); }\n";
-            echo ".cct-pricing-cards .cct-pricing-popular { border-color: var(--cct-pattern-color-accent); }\n";
+            echo ".uenf-pricing-cards .uenf-pricing-card { border-color: var(--uenf-pattern-color-border); }\n";
+            echo ".uenf-pricing-cards .uenf-pricing-popular { border-color: var(--uenf-pattern-color-accent); }\n";
         }
         
         // CSS para Team
         if ($settings['teamActivePattern'] === 'grid') {
-            echo ".cct-team-grid .cct-team-card { background: var(--cct-pattern-color-background); }\n";
-            echo ".cct-team-grid .cct-team-card:hover { border-color: var(--cct-pattern-color-primary); }\n";
+            echo ".uenf-team-grid .uenf-team-card { background: var(--uenf-pattern-color-background); }\n";
+            echo ".uenf-team-grid .uenf-team-card:hover { border-color: var(--uenf-pattern-color-primary); }\n";
         }
         
         // CSS para Portfolio
         if ($settings['portfolioActivePattern'] === 'masonry') {
-            echo ".cct-portfolio-masonry .cct-portfolio-item { background: var(--cct-pattern-color-background); }\n";
-            echo ".cct-portfolio-masonry .cct-portfolio-overlay { background: var(--cct-pattern-color-primary); }\n";
+            echo ".uenf-portfolio-masonry .uenf-portfolio-item { background: var(--uenf-pattern-color-background); }\n";
+            echo ".uenf-portfolio-masonry .uenf-portfolio-overlay { background: var(--uenf-pattern-color-primary); }\n";
         }
     }
     
@@ -1305,7 +1305,7 @@ class CCT_Pattern_Library_Manager {
             return;
         }
         
-        echo "<script id='cct-patterns-custom-js'>\n";
+        echo "<script id='uenf-patterns-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTPatterns !== 'undefined') {\n";
         echo "    CCTPatterns.init(" . wp_json_encode($settings) . ");\n";
@@ -1324,9 +1324,9 @@ class CCT_Pattern_Library_Manager {
             'search' => get_theme_mod($this->prefix . 'faq_search_enabled', true) ? 'true' : 'false',
             'categories' => get_theme_mod($this->prefix . 'faq_categories_enabled', true) ? 'true' : 'false',
             'class' => '',
-        ), $atts, 'cct_faq_section');
+        ), $atts, 'uenf_faq_section');
         
-        $classes = array('cct-faq-section', 'cct-faq-' . $atts['pattern']);
+        $classes = array('uenf-faq-section', 'uenf-faq-' . $atts['pattern']);
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -1335,16 +1335,16 @@ class CCT_Pattern_Library_Manager {
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         if (!empty($atts['title'])) {
-            $output .= '<h2 class="cct-faq-title">' . esc_html($atts['title']) . '</h2>';
+            $output .= '<h2 class="uenf-faq-title">' . esc_html($atts['title']) . '</h2>';
         }
         
         if ($atts['search'] === 'true') {
-            $output .= '<div class="cct-faq-search">';
-            $output .= '<input type="text" class="cct-faq-search-input" placeholder="' . esc_attr__('Buscar...', 'cct') . '">';
+            $output .= '<div class="uenf-faq-search">';
+            $output .= '<input type="text" class="uenf-faq-search-input" placeholder="' . esc_attr__('Buscar...', 'cct') . '">';
             $output .= '</div>';
         }
         
-        $output .= '<div class="cct-faq-content">';
+        $output .= '<div class="uenf-faq-content">';
         
         // Se não há conteúdo personalizado, usar dados do customizer
         if (empty($content)) {
@@ -1358,12 +1358,12 @@ class CCT_Pattern_Library_Manager {
                 if (!empty($question) && !empty($answer)) {
                     $item_id = 'faq-' . sanitize_title($question);
                     
-                    $output .= '<div class="cct-faq-item" data-category="' . esc_attr($category) . '" id="' . esc_attr($item_id) . '">';
-                    $output .= '<div class="cct-faq-question">';
+                    $output .= '<div class="uenf-faq-item" data-category="' . esc_attr($category) . '" id="' . esc_attr($item_id) . '">';
+                    $output .= '<div class="uenf-faq-question">';
                     $output .= '<h3>' . esc_html($question) . '</h3>';
-                    $output .= '<span class="cct-faq-icon"></span>';
+                    $output .= '<span class="uenf-faq-icon"></span>';
                     $output .= '</div>';
-                    $output .= '<div class="cct-faq-answer">';
+                    $output .= '<div class="uenf-faq-answer">';
                     $output .= wpautop($answer);
                     $output .= '</div>';
                     $output .= '</div>';
@@ -1387,7 +1387,7 @@ class CCT_Pattern_Library_Manager {
             'question' => '',
             'category' => 'geral',
             'id' => '',
-        ), $atts, 'cct_faq');
+        ), $atts, 'uenf_faq');
         
         if (empty($atts['question'])) {
             return '';
@@ -1395,12 +1395,12 @@ class CCT_Pattern_Library_Manager {
         
         $item_id = !empty($atts['id']) ? $atts['id'] : 'faq-' . sanitize_title($atts['question']);
         
-        $output = '<div class="cct-faq-item" data-category="' . esc_attr($atts['category']) . '" id="' . esc_attr($item_id) . '">';
-        $output .= '<div class="cct-faq-question">';
+        $output = '<div class="uenf-faq-item" data-category="' . esc_attr($atts['category']) . '" id="' . esc_attr($item_id) . '">';
+        $output .= '<div class="uenf-faq-question">';
         $output .= '<h3>' . esc_html($atts['question']) . '</h3>';
-        $output .= '<span class="cct-faq-icon"></span>';
+        $output .= '<span class="uenf-faq-icon"></span>';
         $output .= '</div>';
-        $output .= '<div class="cct-faq-answer">';
+        $output .= '<div class="uenf-faq-answer">';
         $output .= wpautop(do_shortcode($content));
         $output .= '</div>';
         $output .= '</div>';
@@ -1418,9 +1418,9 @@ class CCT_Pattern_Library_Manager {
             'billing_toggle' => get_theme_mod($this->prefix . 'pricing_billing_toggle', true) ? 'true' : 'false',
             'currency' => get_theme_mod($this->prefix . 'pricing_currency', 'R$'),
             'class' => '',
-        ), $atts, 'cct_pricing_table');
+        ), $atts, 'uenf_pricing_table');
         
-        $classes = array('cct-pricing-table', 'cct-pricing-' . $atts['pattern']);
+        $classes = array('uenf-pricing-table', 'uenf-pricing-' . $atts['pattern']);
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -1429,21 +1429,21 @@ class CCT_Pattern_Library_Manager {
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         if (!empty($atts['title'])) {
-            $output .= '<h2 class="cct-pricing-title">' . esc_html($atts['title']) . '</h2>';
+            $output .= '<h2 class="uenf-pricing-title">' . esc_html($atts['title']) . '</h2>';
         }
         
         if ($atts['billing_toggle'] === 'true') {
-            $output .= '<div class="cct-pricing-toggle">';
-            $output .= '<label class="cct-toggle-label">';
+            $output .= '<div class="uenf-pricing-toggle">';
+            $output .= '<label class="uenf-toggle-label">';
             $output .= '<span>' . __('Mensal', 'cct') . '</span>';
-            $output .= '<input type="checkbox" class="cct-billing-toggle">';
-            $output .= '<span class="cct-toggle-slider"></span>';
+            $output .= '<input type="checkbox" class="uenf-billing-toggle">';
+            $output .= '<span class="uenf-toggle-slider"></span>';
             $output .= '<span>' . __('Anual', 'cct') . '</span>';
             $output .= '</label>';
             $output .= '</div>';
         }
         
-        $output .= '<div class="cct-pricing-content" data-currency="' . esc_attr($atts['currency']) . '">';
+        $output .= '<div class="uenf-pricing-content" data-currency="' . esc_attr($atts['currency']) . '">';
         
         // Se não há conteúdo personalizado, usar dados do customizer
         if (empty($content)) {
@@ -1455,33 +1455,33 @@ class CCT_Pattern_Library_Manager {
                 $plan_description = get_theme_mod($this->prefix . "pricing_plan_description_{$i}", sprintf(__('Descrição do plano %d', 'cct'), $i));
                 
                 if (!empty($plan_name) && !empty($plan_price)) {
-                    $classes = array('cct-pricing-plan');
+                    $classes = array('uenf-pricing-plan');
                     
                     // Marcar o plano do meio como popular se houver 3 planos
                     if ($pricing_count == 3 && $i == 2) {
-                        $classes[] = 'cct-pricing-popular';
+                        $classes[] = 'uenf-pricing-popular';
                     }
                     
                     $output .= '<div class="' . implode(' ', $classes) . '">';
                     
-                    if (in_array('cct-pricing-popular', $classes)) {
-                        $output .= '<div class="cct-pricing-badge">' . __('Mais Popular', 'cct') . '</div>';
+                    if (in_array('uenf-pricing-popular', $classes)) {
+                        $output .= '<div class="uenf-pricing-badge">' . __('Mais Popular', 'cct') . '</div>';
                     }
                     
-                    $output .= '<div class="cct-pricing-header">';
-                    $output .= '<h3 class="cct-pricing-name">' . esc_html($plan_name) . '</h3>';
-                    $output .= '<div class="cct-pricing-price">';
-                    $output .= '<span class="cct-price-amount">' . esc_html($atts['currency']) . esc_html($plan_price) . '</span>';
-                    $output .= '<span class="cct-price-period">/' . __('mês', 'cct') . '</span>';
+                    $output .= '<div class="uenf-pricing-header">';
+                    $output .= '<h3 class="uenf-pricing-name">' . esc_html($plan_name) . '</h3>';
+                    $output .= '<div class="uenf-pricing-price">';
+                    $output .= '<span class="uenf-price-amount">' . esc_html($atts['currency']) . esc_html($plan_price) . '</span>';
+                    $output .= '<span class="uenf-price-period">/' . __('mês', 'cct') . '</span>';
                     $output .= '</div>';
                     $output .= '</div>';
                     
-                    $output .= '<div class="cct-pricing-body">';
-                    $output .= '<div class="cct-pricing-description">' . wpautop($plan_description) . '</div>';
+                    $output .= '<div class="uenf-pricing-body">';
+                    $output .= '<div class="uenf-pricing-description">' . wpautop($plan_description) . '</div>';
                     $output .= '</div>';
                     
-                    $output .= '<div class="cct-pricing-footer">';
-                    $output .= '<a href="#" class="cct-pricing-button">' . __('Escolher Plano', 'cct') . '</a>';
+                    $output .= '<div class="uenf-pricing-footer">';
+                    $output .= '<a href="#" class="uenf-pricing-button">' . __('Escolher Plano', 'cct') . '</a>';
                     $output .= '</div>';
                     
                     $output .= '</div>';
@@ -1510,48 +1510,48 @@ class CCT_Pattern_Library_Manager {
             'popular' => 'false',
             'button_text' => __('Escolher Plano', 'cct'),
             'button_url' => '#',
-        ), $atts, 'cct_pricing_plan');
+        ), $atts, 'uenf_pricing_plan');
         
         if (empty($atts['name']) || empty($atts['price'])) {
             return '';
         }
         
-        $classes = array('cct-pricing-plan');
+        $classes = array('uenf-pricing-plan');
         
         if ($atts['popular'] === 'true') {
-            $classes[] = 'cct-pricing-popular';
+            $classes[] = 'uenf-pricing-popular';
         }
         
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         if ($atts['popular'] === 'true') {
-            $output .= '<div class="cct-pricing-badge">' . __('Mais Popular', 'cct') . '</div>';
+            $output .= '<div class="uenf-pricing-badge">' . __('Mais Popular', 'cct') . '</div>';
         }
         
-        $output .= '<div class="cct-pricing-header">';
-        $output .= '<h3 class="cct-pricing-name">' . esc_html($atts['name']) . '</h3>';
-        $output .= '<div class="cct-pricing-price">';
-        $output .= '<span class="cct-price-monthly" data-price="' . esc_attr($atts['price']) . '" data-period="' . esc_attr($atts['period']) . '">';
-        $output .= '<span class="cct-price-amount">' . esc_html($atts['price']) . '</span>';
-        $output .= '<span class="cct-price-period">/' . esc_html($atts['period']) . '</span>';
+        $output .= '<div class="uenf-pricing-header">';
+        $output .= '<h3 class="uenf-pricing-name">' . esc_html($atts['name']) . '</h3>';
+        $output .= '<div class="uenf-pricing-price">';
+        $output .= '<span class="uenf-price-monthly" data-price="' . esc_attr($atts['price']) . '" data-period="' . esc_attr($atts['period']) . '">';
+        $output .= '<span class="uenf-price-amount">' . esc_html($atts['price']) . '</span>';
+        $output .= '<span class="uenf-price-period">/' . esc_html($atts['period']) . '</span>';
         $output .= '</span>';
         
         if (!empty($atts['annual_price'])) {
-            $output .= '<span class="cct-price-annual" data-price="' . esc_attr($atts['annual_price']) . '" data-period="' . esc_attr($atts['annual_period']) . '" style="display: none;">';
-            $output .= '<span class="cct-price-amount">' . esc_html($atts['annual_price']) . '</span>';
-            $output .= '<span class="cct-price-period">/' . esc_html($atts['annual_period']) . '</span>';
+            $output .= '<span class="uenf-price-annual" data-price="' . esc_attr($atts['annual_price']) . '" data-period="' . esc_attr($atts['annual_period']) . '" style="display: none;">';
+            $output .= '<span class="uenf-price-amount">' . esc_html($atts['annual_price']) . '</span>';
+            $output .= '<span class="uenf-price-period">/' . esc_html($atts['annual_period']) . '</span>';
             $output .= '</span>';
         }
         
         $output .= '</div>';
         $output .= '</div>';
         
-        $output .= '<div class="cct-pricing-features">';
+        $output .= '<div class="uenf-pricing-features">';
         $output .= wpautop(do_shortcode($content));
         $output .= '</div>';
         
-        $output .= '<div class="cct-pricing-footer">';
-        $output .= '<a href="' . esc_url($atts['button_url']) . '" class="cct-pricing-button">' . esc_html($atts['button_text']) . '</a>';
+        $output .= '<div class="uenf-pricing-footer">';
+        $output .= '<a href="' . esc_url($atts['button_url']) . '" class="uenf-pricing-button">' . esc_html($atts['button_text']) . '</a>';
         $output .= '</div>';
         
         $output .= '</div>';
@@ -1568,9 +1568,9 @@ class CCT_Pattern_Library_Manager {
             'title' => __('Nossa Equipe', 'cct'),
             'columns' => '4',
             'class' => '',
-        ), $atts, 'cct_team_grid');
+        ), $atts, 'uenf_team_grid');
         
-        $classes = array('cct-team-grid', 'cct-team-' . $atts['pattern'], 'cct-columns-' . $atts['columns']);
+        $classes = array('uenf-team-grid', 'uenf-team-' . $atts['pattern'], 'uenf-columns-' . $atts['columns']);
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -1579,10 +1579,10 @@ class CCT_Pattern_Library_Manager {
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         if (!empty($atts['title'])) {
-            $output .= '<h2 class="cct-team-title">' . esc_html($atts['title']) . '</h2>';
+            $output .= '<h2 class="uenf-team-title">' . esc_html($atts['title']) . '</h2>';
         }
         
-        $output .= '<div class="cct-team-content">';
+        $output .= '<div class="uenf-team-content">';
         $output .= do_shortcode($content);
         $output .= '</div>';
         $output .= '</div>';
@@ -1604,29 +1604,29 @@ class CCT_Pattern_Library_Manager {
             'twitter' => '',
             'facebook' => '',
             'instagram' => '',
-        ), $atts, 'cct_team_member');
+        ), $atts, 'uenf_team_member');
         
         if (empty($atts['name'])) {
             return '';
         }
         
-        $output = '<div class="cct-team-member">';
+        $output = '<div class="uenf-team-member">';
         
         if (!empty($atts['image'])) {
-            $output .= '<div class="cct-team-image">';
+            $output .= '<div class="uenf-team-image">';
             $output .= '<img src="' . esc_url($atts['image']) . '" alt="' . esc_attr($atts['name']) . '">';
             $output .= '</div>';
         }
         
-        $output .= '<div class="cct-team-info">';
-        $output .= '<h3 class="cct-team-name">' . esc_html($atts['name']) . '</h3>';
+        $output .= '<div class="uenf-team-info">';
+        $output .= '<h3 class="uenf-team-name">' . esc_html($atts['name']) . '</h3>';
         
         if (!empty($atts['role'])) {
-            $output .= '<p class="cct-team-role">' . esc_html($atts['role']) . '</p>';
+            $output .= '<p class="uenf-team-role">' . esc_html($atts['role']) . '</p>';
         }
         
         if (!empty($content)) {
-            $output .= '<div class="cct-team-bio">' . wpautop(do_shortcode($content)) . '</div>';
+            $output .= '<div class="uenf-team-bio">' . wpautop(do_shortcode($content)) . '</div>';
         }
         
         // Redes sociais
@@ -1638,10 +1638,10 @@ class CCT_Pattern_Library_Manager {
         if (!empty($atts['instagram'])) $social_links['instagram'] = $atts['instagram'];
         
         if (!empty($social_links) && get_theme_mod($this->prefix . 'team_social_links', true)) {
-            $output .= '<div class="cct-team-social">';
+            $output .= '<div class="uenf-team-social">';
             foreach ($social_links as $platform => $url) {
-                $output .= '<a href="' . esc_url($url) . '" class="cct-social-' . $platform . '" target="_blank" rel="noopener">';
-                $output .= '<span class="cct-icon cct-icon-' . $platform . '"></span>';
+                $output .= '<a href="' . esc_url($url) . '" class="uenf-social-' . $platform . '" target="_blank" rel="noopener">';
+                $output .= '<span class="uenf-icon uenf-icon-' . $platform . '"></span>';
                 $output .= '</a>';
             }
             $output .= '</div>';
@@ -1663,9 +1663,9 @@ class CCT_Pattern_Library_Manager {
             'columns' => '3',
             'filters' => get_theme_mod($this->prefix . 'portfolio_filters', true) ? 'true' : 'false',
             'class' => '',
-        ), $atts, 'cct_portfolio_gallery');
+        ), $atts, 'uenf_portfolio_gallery');
         
-        $classes = array('cct-portfolio-gallery', 'cct-portfolio-' . $atts['pattern'], 'cct-columns-' . $atts['columns']);
+        $classes = array('uenf-portfolio-gallery', 'uenf-portfolio-' . $atts['pattern'], 'uenf-columns-' . $atts['columns']);
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -1674,16 +1674,16 @@ class CCT_Pattern_Library_Manager {
         $output = '<div class="' . implode(' ', $classes) . '">';
         
         if (!empty($atts['title'])) {
-            $output .= '<h2 class="cct-portfolio-title">' . esc_html($atts['title']) . '</h2>';
+            $output .= '<h2 class="uenf-portfolio-title">' . esc_html($atts['title']) . '</h2>';
         }
         
         if ($atts['filters'] === 'true') {
-            $output .= '<div class="cct-portfolio-filters">';
-            $output .= '<button class="cct-filter-btn active" data-filter="*">' . __('Todos', 'cct') . '</button>';
+            $output .= '<div class="uenf-portfolio-filters">';
+            $output .= '<button class="uenf-filter-btn active" data-filter="*">' . __('Todos', 'cct') . '</button>';
             $output .= '</div>';
         }
         
-        $output .= '<div class="cct-portfolio-content">';
+        $output .= '<div class="uenf-portfolio-content">';
         $output .= do_shortcode($content);
         $output .= '</div>';
         $output .= '</div>';
@@ -1701,28 +1701,28 @@ class CCT_Pattern_Library_Manager {
             'image' => '',
             'url' => '',
             'description' => '',
-        ), $atts, 'cct_portfolio_item');
+        ), $atts, 'uenf_portfolio_item');
         
         if (empty($atts['title']) || empty($atts['image'])) {
             return '';
         }
         
-        $output = '<div class="cct-portfolio-item" data-category="' . esc_attr($atts['category']) . '">';
+        $output = '<div class="uenf-portfolio-item" data-category="' . esc_attr($atts['category']) . '">';
         
-        $output .= '<div class="cct-portfolio-image">';
+        $output .= '<div class="uenf-portfolio-image">';
         $output .= '<img src="' . esc_url($atts['image']) . '" alt="' . esc_attr($atts['title']) . '">';
-        $output .= '<div class="cct-portfolio-overlay">';
-        $output .= '<div class="cct-portfolio-actions">';
+        $output .= '<div class="uenf-portfolio-overlay">';
+        $output .= '<div class="uenf-portfolio-actions">';
         
         if (get_theme_mod($this->prefix . 'portfolio_lightbox', true)) {
-            $output .= '<a href="' . esc_url($atts['image']) . '" class="cct-lightbox-btn" data-lightbox="portfolio">';
-            $output .= '<span class="cct-icon cct-icon-zoom"></span>';
+            $output .= '<a href="' . esc_url($atts['image']) . '" class="uenf-lightbox-btn" data-lightbox="portfolio">';
+            $output .= '<span class="uenf-icon uenf-icon-zoom"></span>';
             $output .= '</a>';
         }
         
         if (!empty($atts['url'])) {
-            $output .= '<a href="' . esc_url($atts['url']) . '" class="cct-external-btn" target="_blank" rel="noopener">';
-            $output .= '<span class="cct-icon cct-icon-external"></span>';
+            $output .= '<a href="' . esc_url($atts['url']) . '" class="uenf-external-btn" target="_blank" rel="noopener">';
+            $output .= '<span class="uenf-icon uenf-icon-external"></span>';
             $output .= '</a>';
         }
         
@@ -1730,15 +1730,15 @@ class CCT_Pattern_Library_Manager {
         $output .= '</div>';
         $output .= '</div>';
         
-        $output .= '<div class="cct-portfolio-info">';
-        $output .= '<h3 class="cct-portfolio-title">' . esc_html($atts['title']) . '</h3>';
+        $output .= '<div class="uenf-portfolio-info">';
+        $output .= '<h3 class="uenf-portfolio-title">' . esc_html($atts['title']) . '</h3>';
         
         if (!empty($atts['description'])) {
-            $output .= '<p class="cct-portfolio-description">' . esc_html($atts['description']) . '</p>';
+            $output .= '<p class="uenf-portfolio-description">' . esc_html($atts['description']) . '</p>';
         }
         
         if (!empty($content)) {
-            $output .= '<div class="cct-portfolio-content">' . wpautop(do_shortcode($content)) . '</div>';
+            $output .= '<div class="uenf-portfolio-content">' . wpautop(do_shortcode($content)) . '</div>';
         }
         
         $output .= '</div>';
@@ -1751,7 +1751,7 @@ class CCT_Pattern_Library_Manager {
      * AJAX handler para preview de padrão
      */
     public function ajax_preview_pattern() {
-        check_ajax_referer('cct_patterns_nonce', 'nonce');
+        check_ajax_referer('uenf_patterns_nonce', 'nonce');
         
         $pattern_type = sanitize_text_field($_POST['pattern_type'] ?? '');
         $pattern_name = sanitize_text_field($_POST['pattern_name'] ?? '');
@@ -1782,7 +1782,7 @@ class CCT_Pattern_Library_Manager {
      * AJAX handler para export de padrão
      */
     public function ajax_export_pattern() {
-        check_ajax_referer('cct_patterns_nonce', 'nonce');
+        check_ajax_referer('uenf_patterns_nonce', 'nonce');
         
         $pattern_type = sanitize_text_field($_POST['pattern_type'] ?? '');
         $pattern_name = sanitize_text_field($_POST['pattern_name'] ?? '');
@@ -1809,7 +1809,7 @@ class CCT_Pattern_Library_Manager {
      * AJAX handler para import de padrão
      */
     public function ajax_import_pattern() {
-        check_ajax_referer('cct_patterns_nonce', 'nonce');
+        check_ajax_referer('uenf_patterns_nonce', 'nonce');
         
         $import_data = $this->sanitize_json_array($_POST['import_data'] ?? array());
         
@@ -1851,7 +1851,7 @@ class CCT_Pattern_Library_Manager {
      */
     private function generate_pattern_preview($pattern_type, $pattern_name) {
         // Implementar geração de preview HTML
-        return '<div class="cct-pattern-preview">Preview de ' . $pattern_type . ' - ' . $pattern_name . '</div>';
+        return '<div class="uenf-pattern-preview">Preview de ' . $pattern_type . ' - ' . $pattern_name . '</div>';
     }
     
     /**
@@ -1859,7 +1859,7 @@ class CCT_Pattern_Library_Manager {
      */
     private function generate_pattern_css($pattern_type, $pattern_name) {
         // Implementar geração de CSS específico
-        return '.cct-' . $pattern_type . '-' . $pattern_name . ' { /* CSS específico */ }';
+        return '.uenf-' . $pattern_type . '-' . $pattern_name . ' { /* CSS específico */ }';
     }
     
     /**

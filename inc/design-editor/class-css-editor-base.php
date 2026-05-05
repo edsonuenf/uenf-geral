@@ -5,7 +5,7 @@
  * Fornece a estrutura básica para o sistema de edição CSS avançado,
  * incluindo syntax highlighting, backup automático e validação.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Design_Editor
  * @since 1.0.0
  */
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
  * Esta classe fornece funcionalidades básicas para edição de CSS
  * com recursos avançados como syntax highlighting e backup automático.
  */
-class CCT_CSS_Editor_Base {
+class UENF_CSS_Editor_Base {
     
     /**
      * Versão do editor
@@ -59,10 +59,10 @@ class CCT_CSS_Editor_Base {
     private function init_hooks() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
-        add_action('wp_ajax_cct_save_css', array($this, 'ajax_save_css'));
-        add_action('wp_ajax_cct_backup_css', array($this, 'ajax_backup_css'));
-        add_action('wp_ajax_cct_restore_css', array($this, 'ajax_restore_css'));
-        add_action('wp_ajax_cct_validate_css', array($this, 'ajax_validate_css'));
+        add_action('wp_ajax_uenf_save_css', array($this, 'ajax_save_css'));
+        add_action('wp_ajax_uenf_backup_css', array($this, 'ajax_backup_css'));
+        add_action('wp_ajax_uenf_restore_css', array($this, 'ajax_restore_css'));
+        add_action('wp_ajax_uenf_validate_css', array($this, 'ajax_validate_css'));
     }
     
     /**
@@ -124,7 +124,7 @@ class CCT_CSS_Editor_Base {
             'Editor CSS Avançado',
             'Editor CSS',
             'edit_theme_options',
-            'cct-css-editor',
+            'uenf-css-editor',
             array($this, 'render_editor_page')
         );
     }
@@ -133,7 +133,7 @@ class CCT_CSS_Editor_Base {
      * Carrega scripts e estilos necessários
      */
     public function enqueue_scripts($hook) {
-        if ($hook !== 'appearance_page_cct-css-editor') {
+        if ($hook !== 'appearance_page_uenf-css-editor') {
             return;
         }
         
@@ -170,7 +170,7 @@ class CCT_CSS_Editor_Base {
         
         // Script personalizado do editor
         wp_enqueue_script(
-            'cct-css-editor',
+            'uenf-css-editor',
             get_template_directory_uri() . '/js/css-editor.js',
             array('jquery', 'codemirror', 'codemirror-css'),
             self::VERSION,
@@ -179,16 +179,16 @@ class CCT_CSS_Editor_Base {
         
         // Estilo personalizado do editor
         wp_enqueue_style(
-            'cct-css-editor',
+            'uenf-css-editor',
             get_template_directory_uri() . '/css/css-editor.css',
             array('codemirror-css'),
             self::VERSION
         );
         
         // Localização para AJAX
-        wp_localize_script('cct-css-editor', 'cctCssEditor', array(
+        wp_localize_script('uenf-css-editor', 'cctCssEditor', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_css_editor'),
+            'nonce' => wp_create_nonce('uenf_css_editor'),
             'messages' => array(
                 'saved' => 'CSS salvo com sucesso!',
                 'backup_created' => 'Backup criado com sucesso!',
@@ -257,7 +257,8 @@ class CCT_CSS_Editor_Base {
             'content' => $content
         );
         
-        return file_put_contents($backup_path, serialize($backup_data)) !== false ? $backup_filename : false;
+        // SECURITY FIX (SEC-PHP-001): substituído serialize() por wp_json_encode() para prevenir PHP Object Injection
+        return file_put_contents($backup_path, wp_json_encode($backup_data)) !== false ? $backup_filename : false;
     }
     
     /**
@@ -272,7 +273,11 @@ class CCT_CSS_Editor_Base {
         $files = glob($this->backup_dir . sanitize_file_name($file_key) . '_*.css');
         
         foreach ($files as $file) {
-            $data = unserialize(file_get_contents($file));
+            // SECURITY FIX (SEC-PHP-001): substituído unserialize() por json_decode() para prevenir PHP Object Injection
+            $data = json_decode(file_get_contents($file), true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                continue; // falha segura — ignora backup corrompido/inválido
+            }
             if ($data && isset($data['timestamp'])) {
                 $backups[] = array(
                     'filename' => basename($file),
@@ -332,7 +337,7 @@ class CCT_CSS_Editor_Base {
      * AJAX: Salvar CSS
      */
     public function ajax_save_css() {
-        check_ajax_referer('cct_css_editor', 'nonce');
+        check_ajax_referer('uenf_css_editor', 'nonce');
         
         if (!current_user_can('edit_theme_options')) {
             wp_die('Permissão negada');
@@ -340,13 +345,23 @@ class CCT_CSS_Editor_Base {
         
         $file_key = sanitize_text_field($_POST['file']);
         $content = wp_unslash($_POST['content']);
-        
+
+        // SECURITY FIX (SEC-PHP-011): rejeitar conteúdo PHP em arquivos CSS para prevenir Arbitrary File Write → RCE
+        if (preg_match('/<\?(?:php)?/i', $content)) {
+            wp_send_json_error('Conteúdo PHP não é permitido em arquivos CSS');
+        }
+
         if (!isset($this->editable_files[$file_key])) {
             wp_send_json_error('Arquivo inválido');
         }
-        
+
         $file_info = $this->editable_files[$file_key];
-        
+
+        // SECURITY FIX (SEC-PHP-011): verificar que o destino é realmente um arquivo .css
+        if (pathinfo($file_info['path'], PATHINFO_EXTENSION) !== 'css') {
+            wp_send_json_error('Tipo de arquivo não permitido');
+        }
+
         // Validar CSS
         $validation = $this->validate_css($content);
         if (!$validation['valid']) {
@@ -376,7 +391,7 @@ class CCT_CSS_Editor_Base {
      * AJAX: Criar backup
      */
     public function ajax_backup_css() {
-        check_ajax_referer('cct_css_editor', 'nonce');
+        check_ajax_referer('uenf_css_editor', 'nonce');
         
         if (!current_user_can('edit_theme_options')) {
             wp_die('Permissão negada');
@@ -400,7 +415,7 @@ class CCT_CSS_Editor_Base {
      * AJAX: Restaurar backup
      */
     public function ajax_restore_css() {
-        check_ajax_referer('cct_css_editor', 'nonce');
+        check_ajax_referer('uenf_css_editor', 'nonce');
         
         if (!current_user_can('edit_theme_options')) {
             wp_die('Permissão negada');
@@ -413,9 +428,10 @@ class CCT_CSS_Editor_Base {
             wp_send_json_error('Backup não encontrado');
         }
         
-        $backup_data = unserialize(file_get_contents($backup_path));
-        
-        if (!$backup_data || !isset($backup_data['content'])) {
+        // SECURITY FIX (SEC-PHP-001): substituído unserialize() por json_decode() para prevenir PHP Object Injection
+        $backup_data = json_decode(file_get_contents($backup_path), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || !$backup_data || !isset($backup_data['content'])) {
             wp_send_json_error('Backup corrompido');
         }
         
@@ -448,7 +464,7 @@ class CCT_CSS_Editor_Base {
      * AJAX: Validar CSS
      */
     public function ajax_validate_css() {
-        check_ajax_referer('cct_css_editor', 'nonce');
+        check_ajax_referer('uenf_css_editor', 'nonce');
         
         if (!current_user_can('edit_theme_options')) {
             wp_die('Permissão negada');

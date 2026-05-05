@@ -10,7 +10,7 @@
  * - Micro-interações para UX
  * - Performance otimizada
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do Sistema de Animações
  */
-class CCT_Animation_Manager {
+class UENF_Animation_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -37,7 +37,7 @@ class CCT_Animation_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_animation_';
+    private $prefix = 'uenf_animation_';
     
     /**
      * Presets de animações
@@ -97,12 +97,12 @@ class CCT_Animation_Manager {
         add_action('wp_footer', array($this, 'output_custom_js'));
         
         // Shortcodes
-        add_shortcode('cct_animate', array($this, 'animate_shortcode'));
-        add_shortcode('cct_hover_effect', array($this, 'hover_effect_shortcode'));
+        add_shortcode('uenf_animate', array($this, 'animate_shortcode'));
+        add_shortcode('uenf_hover_effect', array($this, 'hover_effect_shortcode'));
         
         // AJAX handlers
-        add_action('wp_ajax_cct_preview_animation', array($this, 'ajax_preview_animation'));
-        add_action('wp_ajax_nopriv_cct_preview_animation', array($this, 'ajax_preview_animation'));
+        add_action('wp_ajax_uenf_preview_animation', array($this, 'ajax_preview_animation'));
+        add_action('wp_ajax_nopriv_uenf_preview_animation', array($this, 'ajax_preview_animation'));
     }
     
     /**
@@ -113,7 +113,7 @@ class CCT_Animation_Manager {
             'fade' => array(
                 'name' => __('Fade', 'cct'),
                 'description' => __('Transição suave de opacidade', 'cct'),
-                'css_class' => 'cct-fade',
+                'css_class' => 'uenf-fade',
                 'keyframes' => array(
                     'fadeIn' => array(
                         '0%' => array('opacity' => '0'),
@@ -130,7 +130,7 @@ class CCT_Animation_Manager {
             'slide' => array(
                 'name' => __('Slide', 'cct'),
                 'description' => __('Deslizamento suave', 'cct'),
-                'css_class' => 'cct-slide',
+                'css_class' => 'uenf-slide',
                 'keyframes' => array(
                     'slideInLeft' => array(
                         '0%' => array('transform' => 'translateX(-100%)', 'opacity' => '0'),
@@ -155,7 +155,7 @@ class CCT_Animation_Manager {
             'scale' => array(
                 'name' => __('Scale', 'cct'),
                 'description' => __('Efeito de escala suave', 'cct'),
-                'css_class' => 'cct-scale',
+                'css_class' => 'uenf-scale',
                 'keyframes' => array(
                     'scaleIn' => array(
                         '0%' => array('transform' => 'scale(0)', 'opacity' => '0'),
@@ -177,7 +177,7 @@ class CCT_Animation_Manager {
             'rotate' => array(
                 'name' => __('Rotate', 'cct'),
                 'description' => __('Rotação suave', 'cct'),
-                'css_class' => 'cct-rotate',
+                'css_class' => 'uenf-rotate',
                 'keyframes' => array(
                     'rotateIn' => array(
                         '0%' => array('transform' => 'rotate(-180deg)', 'opacity' => '0'),
@@ -198,7 +198,7 @@ class CCT_Animation_Manager {
             'bounce' => array(
                 'name' => __('Bounce', 'cct'),
                 'description' => __('Efeito de salto', 'cct'),
-                'css_class' => 'cct-bounce',
+                'css_class' => 'uenf-bounce',
                 'keyframes' => array(
                     'bounceIn' => array(
                         '0%' => array('transform' => 'scale(0.3)', 'opacity' => '0'),
@@ -225,7 +225,7 @@ class CCT_Animation_Manager {
             'flip' => array(
                 'name' => __('Flip', 'cct'),
                 'description' => __('Efeito de virada', 'cct'),
-                'css_class' => 'cct-flip',
+                'css_class' => 'uenf-flip',
                 'keyframes' => array(
                     'flipInX' => array(
                         '0%' => array('transform' => 'perspective(400px) rotateX(90deg)', 'opacity' => '0'),
@@ -737,25 +737,25 @@ class CCT_Animation_Manager {
     public function enqueue_scripts() {
         // CSS das animações
         wp_enqueue_style(
-            'cct-animations',
-            get_template_directory_uri() . '/css/cct-animations.css',
+            'uenf-animations',
+            get_template_directory_uri() . '/css/uenf-animations.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript das animações
         wp_enqueue_script(
-            'cct-animations',
-            get_template_directory_uri() . '/js/cct-animations.js',
+            'uenf-animations',
+            get_template_directory_uri() . '/js/uenf-animations.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-animations', 'cctAnimations', array(
+        wp_localize_script('uenf-animations', 'cctAnimations', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_animations_nonce'),
+            'nonce' => wp_create_nonce('uenf_animations_nonce'),
             'settings' => $this->get_frontend_settings(),
         ));
     }
@@ -790,12 +790,12 @@ class CCT_Animation_Manager {
             return;
         }
         
-        echo "<style id='cct-animations-custom-css'>\n";
+        echo "<style id='uenf-animations-custom-css'>\n";
         
         // CSS base para animações
         echo ":root {\n";
-        echo "  --cct-animation-duration: {$settings['duration']}s;\n";
-        echo "  --cct-animation-easing: {$settings['easing']};\n";
+        echo "  --uenf-animation-duration: {$settings['duration']}s;\n";
+        echo "  --uenf-animation-easing: {$settings['easing']};\n";
         echo "}\n";
         
         // Respeitar preferência de movimento reduzido
@@ -811,7 +811,7 @@ class CCT_Animation_Manager {
         
         // CSS para aceleração GPU
         if ($settings['gpuAcceleration']) {
-            echo ".cct-animate, .cct-hover-effect {\n";
+            echo ".uenf-animate, .uenf-hover-effect {\n";
             echo "  will-change: transform, opacity;\n";
             echo "  transform: translateZ(0);\n";
             echo "}\n";
@@ -830,7 +830,7 @@ class CCT_Animation_Manager {
             return;
         }
         
-        echo "<script id='cct-animations-custom-js'>\n";
+        echo "<script id='uenf-animations-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTAnimations !== 'undefined') {\n";
         echo "    CCTAnimations.init(" . wp_json_encode($settings) . ");\n";
@@ -850,9 +850,9 @@ class CCT_Animation_Manager {
             'easing' => '',
             'trigger' => 'scroll',
             'class' => '',
-        ), $atts, 'cct_animate');
+        ), $atts, 'uenf_animate');
         
-        $classes = array('cct-animate');
+        $classes = array('uenf-animate');
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -902,9 +902,9 @@ class CCT_Animation_Manager {
             'effect' => 'lift',
             'duration' => '0.3',
             'class' => '',
-        ), $atts, 'cct_hover_effect');
+        ), $atts, 'uenf_hover_effect');
         
-        $classes = array('cct-hover-effect', 'cct-hover-' . sanitize_html_class($atts['effect']));
+        $classes = array('uenf-hover-effect', 'uenf-hover-' . sanitize_html_class($atts['effect']));
         
         if (!empty($atts['class'])) {
             $classes[] = sanitize_html_class($atts['class']);
@@ -923,7 +923,7 @@ class CCT_Animation_Manager {
      * AJAX handler para preview de animações
      */
     public function ajax_preview_animation() {
-        check_ajax_referer('cct_animations_nonce', 'nonce');
+        check_ajax_referer('uenf_animations_nonce', 'nonce');
         
         $animation_type = sanitize_text_field($_POST['animation_type'] ?? '');
         $duration = floatval($_POST['duration'] ?? 0.3);
@@ -973,7 +973,7 @@ class CCT_Animation_Manager {
                 }
             }
             
-            $css .= ".cct-animate-{$animation_type} {\n";
+            $css .= ".uenf-animate-{$animation_type} {\n";
             $css .= "  animation: {$animation_type} {$duration}s {$easing};\n";
             $css .= "}\n";
         }

@@ -70,13 +70,13 @@ html, body {
     margin-top: 0 !important;
 }
 
-/* Correção para elementos Bootstrap que podem adicionar margem */
-.row {
+/* Correção para elementos Bootstrap dentro do hero — escopo para não quebrar grids globais */
+.hero-section .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
 
-.container-fluid {
+.hero-section .container-fluid {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }

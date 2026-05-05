@@ -1,0 +1,630 @@
+/**
+ * Sistema de Ícones CCT - Estilos Frontend
+ * 
+ * Estilos para ícones SVG incluindo:
+ * - Classes base para ícones
+ * - Variações de tamanho
+ * - Estados interativos
+ * - Responsividade
+ * - Acessibilidade
+ * 
+ * @package UENF_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Classes Base dos Ícones
+   ========================================================================== */
+
+.uenf-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.uenf-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ==========================================================================
+   Variações de Tamanho
+   ========================================================================== */
+
+/* Tamanhos predefinidos */
+.uenf-icon-xs {
+    width: 12px;
+    height: 12px;
+}
+
+.uenf-icon-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.uenf-icon-md {
+    width: 20px;
+    height: 20px;
+}
+
+.uenf-icon-lg {
+    width: 24px;
+    height: 24px;
+}
+
+.uenf-icon-xl {
+    width: 32px;
+    height: 32px;
+}
+
+.uenf-icon-2xl {
+    width: 48px;
+    height: 48px;
+}
+
+.uenf-icon-3xl {
+    width: 64px;
+    height: 64px;
+}
+
+/* Tamanhos responsivos */
+.uenf-icon-responsive {
+    width: clamp(16px, 4vw, 32px);
+    height: clamp(16px, 4vw, 32px);
+}
+
+/* ==========================================================================
+   Estados Interativos
+   ========================================================================== */
+
+/* Hover padrão */
+.uenf-icon:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Ícones clicáveis */
+.uenf-icon-clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.uenf-icon-clickable:hover {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+}
+
+.uenf-icon-clickable:active {
+    transform: scale(0.95);
+}
+
+/* Estados de foco para acessibilidade */
+.uenf-icon:focus {
+    outline: 2px solid var(--color-primary, #0073aa);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ==========================================================================
+   Variações de Cor
+   ========================================================================== */
+
+/* Cores do tema */
+.uenf-icon-primary {
+    color: var(--color-primary, #1d3771);
+}
+
+.uenf-icon-secondary {
+    color: var(--color-secondary, #2c5aa0);
+}
+
+.uenf-icon-accent {
+    color: var(--color-accent, #3498db);
+}
+
+.uenf-icon-success {
+    color: var(--color-success, #27ae60);
+}
+
+.uenf-icon-warning {
+    color: var(--color-warning, #f39c12);
+}
+
+.uenf-icon-danger {
+    color: var(--color-danger, #e74c3c);
+}
+
+.uenf-icon-light {
+    color: var(--color-light, #ecf0f1);
+}
+
+.uenf-icon-dark {
+    color: var(--color-dark, #2c3e50);
+}
+
+/* Cores neutras */
+.uenf-icon-muted {
+    color: #6c757d;
+}
+
+.uenf-icon-white {
+    color: #ffffff;
+}
+
+.uenf-icon-black {
+    color: #000000;
+}
+
+/* ==========================================================================
+   Estilos de Fundo
+   ========================================================================== */
+
+/* Ícones com fundo circular */
+.uenf-icon-circle {
+    background-color: currentColor;
+    color: white;
+    border-radius: 50%;
+    padding: 0.5em;
+    width: auto;
+    height: auto;
+}
+
+.uenf-icon-circle svg {
+    width: 1em;
+    height: 1em;
+}
+
+/* Ícones com fundo quadrado */
+.uenf-icon-square {
+    background-color: currentColor;
+    color: white;
+    border-radius: 0.25em;
+    padding: 0.5em;
+    width: auto;
+    height: auto;
+}
+
+.uenf-icon-square svg {
+    width: 1em;
+    height: 1em;
+}
+
+/* Ícones com fundo arredondado */
+.uenf-icon-rounded {
+    background-color: currentColor;
+    color: white;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    width: auto;
+    height: auto;
+}
+
+.uenf-icon-rounded svg {
+    width: 1em;
+    height: 1em;
+}
+
+/* ==========================================================================
+   Animações
+   ========================================================================== */
+
+/* Rotação */
+.uenf-icon-spin {
+    animation: uenf-icon-spin 1s linear infinite;
+}
+
+@keyframes uenf-icon-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pulsação */
+.uenf-icon-pulse {
+    animation: uenf-icon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes uenf-icon-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+/* Balanço */
+.uenf-icon-bounce {
+    animation: uenf-icon-bounce 1s ease-in-out infinite;
+}
+
+@keyframes uenf-icon-bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Shake */
+.uenf-icon-shake {
+    animation: uenf-icon-shake 0.5s ease-in-out;
+}
+
+@keyframes uenf-icon-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* ==========================================================================
+   Layouts e Posicionamento
+   ========================================================================== */
+
+/* Ícones inline com texto */
+.uenf-icon-inline {
+    margin: 0 0.25em;
+    vertical-align: baseline;
+}
+
+/* Ícones à esquerda do texto */
+.uenf-icon-left {
+    margin-right: 0.5em;
+}
+
+/* Ícones à direita do texto */
+.uenf-icon-right {
+    margin-left: 0.5em;
+}
+
+/* Ícones centralizados */
+.uenf-icon-center {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Ícones flutuantes */
+.uenf-icon-float-left {
+    float: left;
+    margin: 0 1em 1em 0;
+}
+
+.uenf-icon-float-right {
+    float: right;
+    margin: 0 0 1em 1em;
+}
+
+/* ==========================================================================
+   Grupos de Ícones
+   ========================================================================== */
+
+/* Container para grupos de ícones */
+.uenf-icon-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.uenf-icon-group-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+}
+
+/* Lista de ícones */
+.uenf-icon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.uenf-icon-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+
+.uenf-icon-list .uenf-icon {
+    margin-right: 0.75em;
+    flex-shrink: 0;
+}
+
+/* Grid de ícones */
+.uenf-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 1em;
+    padding: 1em;
+}
+
+.uenf-icon-grid .uenf-icon {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+}
+
+/* ==========================================================================
+   Componentes Específicos
+   ========================================================================== */
+
+/* Botões com ícones */
+.btn .uenf-icon {
+    vertical-align: middle;
+}
+
+.btn .uenf-icon-left {
+    margin-right: 0.5em;
+    margin-left: 0;
+}
+
+.btn .uenf-icon-right {
+    margin-left: 0.5em;
+    margin-right: 0;
+}
+
+/* Links com ícones */
+a .uenf-icon {
+    transition: all 0.3s ease;
+}
+
+a:hover .uenf-icon {
+    transform: translateX(2px);
+}
+
+/* Cards com ícones */
+.card-header .uenf-icon {
+    margin-right: 0.5em;
+}
+
+/* Navegação com ícones */
+.nav-link .uenf-icon {
+    margin-right: 0.5em;
+}
+
+/* Breadcrumbs com ícones */
+.breadcrumb-item .uenf-icon {
+    margin-right: 0.25em;
+}
+
+/* ==========================================================================
+   Estados de Loading
+   ========================================================================== */
+
+/* Ícone de loading */
+.uenf-icon-loading {
+    opacity: 0.6;
+    animation: uenf-icon-spin 1s linear infinite;
+}
+
+/* Skeleton loading para ícones */
+.uenf-icon-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: uenf-skeleton-loading 1.5s infinite;
+    border-radius: 2px;
+}
+
+@keyframes uenf-skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Mobile First */
+@media (max-width: 576px) {
+    .uenf-icon-responsive-sm {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .uenf-icon-group {
+        gap: 0.25em;
+    }
+    
+    .uenf-icon-grid {
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+        gap: 0.5em;
+    }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .uenf-icon-responsive-md {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (min-width: 769px) {
+    .uenf-icon-responsive-lg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+    .uenf-icon,
+    .uenf-icon-spin,
+    .uenf-icon-pulse,
+    .uenf-icon-bounce,
+    .uenf-icon-shake {
+        animation: none;
+        transition: none;
+    }
+    
+    .uenf-icon:hover {
+        transform: none;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .uenf-icon {
+        filter: contrast(1.5);
+    }
+    
+    .uenf-icon:focus {
+        outline-width: 3px;
+    }
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+    .uenf-icon-auto-dark {
+        filter: invert(1);
+    }
+    
+    .uenf-icon-skeleton {
+        background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    }
+}
+
+/* ==========================================================================
+   Utilitários
+   ========================================================================== */
+
+/* Visibilidade */
+.uenf-icon-hidden {
+    display: none;
+}
+
+.uenf-icon-invisible {
+    visibility: hidden;
+}
+
+/* Opacidade */
+.uenf-icon-opacity-25 {
+    opacity: 0.25;
+}
+
+.uenf-icon-opacity-50 {
+    opacity: 0.5;
+}
+
+.uenf-icon-opacity-75 {
+    opacity: 0.75;
+}
+
+/* Rotação */
+.uenf-icon-rotate-90 {
+    transform: rotate(90deg);
+}
+
+.uenf-icon-rotate-180 {
+    transform: rotate(180deg);
+}
+
+.uenf-icon-rotate-270 {
+    transform: rotate(270deg);
+}
+
+/* Espelhamento */
+.uenf-icon-flip-horizontal {
+    transform: scaleX(-1);
+}
+
+.uenf-icon-flip-vertical {
+    transform: scaleY(-1);
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .uenf-icon {
+        color: black !important;
+        background: transparent !important;
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .uenf-icon-circle,
+    .uenf-icon-square,
+    .uenf-icon-rounded {
+        background: transparent !important;
+        border: 1px solid black;
+    }
+}
+
+/* ==========================================================================
+   Compatibilidade com Temas
+   ========================================================================== */
+
+/* Integração com cores do tema */
+.theme-dark .uenf-icon {
+    color: #ffffff;
+}
+
+.theme-light .uenf-icon {
+    color: #333333;
+}
+
+/* Integração com Bootstrap */
+.text-primary .uenf-icon {
+    color: inherit;
+}
+
+.text-secondary .uenf-icon {
+    color: inherit;
+}
+
+.text-success .uenf-icon {
+    color: inherit;
+}
+
+.text-danger .uenf-icon {
+    color: inherit;
+}
+
+.text-warning .uenf-icon {
+    color: inherit;
+}
+
+.text-info .uenf-icon {
+    color: inherit;
+}
+
+.text-light .uenf-icon {
+    color: inherit;
+}
+
+.text-dark .uenf-icon {
+    color: inherit;
+}
+
+.text-muted .uenf-icon {
+    color: inherit;
+}

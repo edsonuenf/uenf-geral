@@ -3,14 +3,11 @@
  * Mesmo menu para mobile e desktop, sem roteamento de eventos
  */
 
-console.log('[Menu] Carregando script de menu simplificado...');
-
 (function($) {
   'use strict';
 
   class UENFSimpleMenu {
     constructor(menuElement) {
-      console.log('[Menu] Inicializando menu simplificado para elemento:', menuElement);
       this.menu = $(menuElement);
       this.breakpoint = 1920; // Breakpoint para desktop em 1920px
       this.initialized = false;
@@ -29,9 +26,7 @@ console.log('[Menu] Carregando script de menu simplificado...');
       // Evita inicialização múltipla
       if (this.initialized) return;
       this.initialized = true;
-      
-      console.log('[Menu] Iniciando inicialização do menu...');
-      
+
       // Adiciona indicadores de dropdown
       this.addDropdownIndicators();
       
@@ -41,11 +36,6 @@ console.log('[Menu] Carregando script de menu simplificado...');
       // Configura o menu baseado no tamanho da tela
       this.handleResize();
       
-      // Log de elementos do menu encontrados
-      const menuItems = this.menu.find('> li');
-      const submenus = this.menu.find('.sub-menu, .children');
-      console.log(`[Menu] Inicialização concluída. Itens do menu: ${menuItems.length}, Submenus: ${submenus.length}`);
-      console.log('[Menu] Menu simplificado inicializado com sucesso');
     }
 
     /**
@@ -176,14 +166,8 @@ console.log('[Menu] Carregando script de menu simplificado...');
       );
       const isDesktop = viewportWidth > this.breakpoint;
       
-      console.log(`[Menu] Alternando submenu para: ${$parent.find('> a').text().trim()}`);
-      console.log(`[Menu] Estado: ${isActive ? 'aberto' : 'fechado'}, ` +
-                 `Modo: ${isDesktop ? 'desktop' : 'mobile'}, ` +
-                 `Viewport: ${viewportWidth}px, Breakpoint: ${this.breakpoint}px`);
-      
       // Em desktop, garante que o submenu está visível
       if (isDesktop) {
-        console.log('[Menu] Em desktop, garantindo visibilidade do submenu');
         if ($submenu.length) {
           $submenu.css({
             'display': 'block',
@@ -291,9 +275,7 @@ console.log('[Menu] Carregando script de menu simplificado...');
         window.innerWidth || 0
       );
       const isMobile = viewportWidth <= this.breakpoint;
-      
-      console.log(`[Menu] Atualizando classes para viewport: ${viewportWidth}px, Modo: ${isMobile ? 'mobile' : 'desktop'}`);
-      
+
       if (isMobile) {
         this.menu.addClass('is-mobile').removeClass('is-desktop');
         // Garante que os submenus estejam ocultos no mobile
@@ -312,9 +294,7 @@ console.log('[Menu] Carregando script de menu simplificado...');
         window.innerWidth || 0
       );
       const isDesktop = viewportWidth > this.breakpoint;
-      
-      console.log(`[Menu] Redimensionando... Viewport: ${viewportWidth}px, Breakpoint: ${this.breakpoint}px, Modo: ${isDesktop ? 'desktop' : 'mobile'}`);
-      
+
       // Atualiza as classes de estado
       this.updateMobileClass();
       
@@ -371,29 +351,21 @@ console.log('[Menu] Carregando script de menu simplificado...');
 
   // Inicializa o menu quando o documento estiver pronto
   $(document).ready(function() {
-    console.log('[Menu] Documento pronto, inicializando menu simplificado...');
-    
     // Verifica se o jQuery está carregado
     if (typeof jQuery === 'undefined') {
-      console.error('[Menu] jQuery não está carregado! O menu não funcionará corretamente.');
       return;
     }
-    
+
     // Inicializa cada instância do menu
     const menuElements = $('.menu-principal, .new-menu');
-    console.log(`[Menu] Encontrados ${menuElements.length} elementos de menu para inicializar`);
-    
+
     if (menuElements.length === 0) {
-      console.warn('[Menu] Nenhum elemento de menu encontrado com as classes .menu-principal ou .new-menu');
       return;
     }
-    
+
     menuElements.each(function(index) {
-      console.log(`[Menu] Inicializando menu ${index + 1}/${menuElements.length}:`, this);
       new UENFSimpleMenu(this);
     });
-    
-    console.log('[Menu] Menu simplificado inicializado com sucesso!');
   });
 
 })(jQuery);

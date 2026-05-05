@@ -5,7 +5,7 @@
  * Este arquivo é responsável por carregar todos os módulos do customizer
  * de forma organizada e modular, substituindo o arquivo monolítico anterior.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -18,12 +18,12 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do carregador do customizer
  */
-class CCT_Customizer_Loader {
+class UENF_Customizer_Loader {
     
     /**
      * Instância única da classe (Singleton)
      * 
-     * @var CCT_Customizer_Loader
+     * @var UENF_Customizer_Loader
      */
     private static $instance = null;
     
@@ -52,7 +52,7 @@ class CCT_Customizer_Loader {
     /**
      * Obtém a instância única da classe
      * 
-     * @return CCT_Customizer_Loader
+     * @return UENF_Customizer_Loader
      */
     public static function get_instance() {
         if (self::$instance === null) {
@@ -86,24 +86,28 @@ class CCT_Customizer_Loader {
         $this->load_file('class-customizer-base.php');
         
         // Verificar se a classe base foi carregada corretamente
-        if (!class_exists('CCT_Customizer_Base')) {
+        if (!class_exists('UENF_Customizer_Base')) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('CCT: Classe base CCT_Customizer_Base não encontrada. Alguns módulos podem não funcionar corretamente.');
+                error_log('CCT: Classe base UENF_Customizer_Base não encontrada. Alguns módulos podem não funcionar corretamente.');
             }
         } else {
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('CCT: Classe base CCT_Customizer_Base carregada com sucesso');
+                error_log('CCT: Classe base UENF_Customizer_Base carregada com sucesso');
             }
         }
         
         // Verificar gerenciador de extensões
-        $extension_manager = function_exists('cct_extension_manager') ? cct_extension_manager() : null;
+        $extension_manager = function_exists('uenf_extension_manager') ? uenf_extension_manager() : null;
+        
+        // Carregar controles personalizados compartilhados
+        $this->load_file('class-uenf-custom-controls.php');
         
         // Lista de módulos básicos (sempre carregados)
         $basic_modules = array(
             'class-menu-customizer.php',
             'class-design-panel-manager.php',
             'class-404-customizer.php',
+            'class-header-manager.php',
         );
         
         // Lista de módulos condicionais (baseados em extensões)
@@ -202,13 +206,21 @@ class CCT_Customizer_Loader {
          }
         
         // Carregar cada módulo
-        error_log('CCT: Carregando ' . count($module_files) . ' módulos');
-        foreach ($module_files as $file) {
-            error_log('CCT: Tentando carregar módulo: ' . $file);
-            $result = $this->load_module($file, $wp_customize);
-            error_log('CCT: Módulo ' . $file . ' - Resultado: ' . ($result ? 'SUCESSO' : 'FALHA'));
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Carregando ' . count($module_files) . ' módulos');
         }
-        error_log('CCT: Carregamento de módulos concluído. Total de módulos carregados: ' . count($this->modules));
+        foreach ($module_files as $file) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT: Tentando carregar módulo: ' . $file);
+            }
+            $result = $this->load_module($file, $wp_customize);
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CCT: Módulo ' . $file . ' - Resultado: ' . ($result ? 'SUCESSO' : 'FALHA'));
+            }
+        }
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CCT: Carregamento de módulos concluído. Total de módulos carregados: ' . count($this->modules));
+        }
         
         // Manter funcionalidades existentes do customizer original
         $this->load_legacy_customizer($wp_customize);
@@ -283,30 +295,31 @@ class CCT_Customizer_Loader {
     private function get_class_name_from_file($filename) {
         // Mapeamento específico para nomes de classes
         $class_map = array(
-            'class-menu-customizer.php' => 'CCT_Menu_Customizer',
-            'class-typography-customizer.php' => 'CCT_Typography_Customizer',
-            'class-typography-controls.php' => 'CCT_Typography_Preview_Control', // Primeira classe do arquivo
-            'class-color-customizer.php' => 'CCT_Color_Customizer',
-            'class-color-manager.php' => 'CCT_Color_Manager',
-            'class-color-controls.php' => 'CCT_Color_Palette_Preview_Control', // Classe principal do arquivo
-            'class-icon-manager.php' => 'CCT_Icon_Manager',
-            'class-icon-controls.php' => 'CCT_Icon_Category_Browser_Control', // Classe principal do arquivo
-            'class-layout-manager.php' => 'CCT_Layout_Manager',
-            'class-layout-controls.php' => 'CCT_Grid_Preview_Control', // Classe principal do arquivo
-            'class-animation-manager.php' => 'CCT_Animation_Manager',
-            'class-animation-controls.php' => 'CCT_Animation_Preview_Control', // Classe principal do arquivo
-            'class-gradient-manager.php' => 'CCT_Gradient_Manager',
-            'class-gradient-controls.php' => 'CCT_Gradient_Browser_Control', // Classe principal do arquivo
-            'class-shadow-manager.php' => 'CCT_Shadow_Manager',
-            'class-shadow-controls.php' => 'CCT_Elevation_Preview_Control', // Classe principal do arquivo
-            'class-pattern-library-manager.php' => 'CCT_Pattern_Library_Manager',
-            'class-pattern-library-controls.php' => 'CCT_Pattern_Browser_Control', // Classe principal do arquivo
-            'class-dark-mode-manager.php' => 'CCT_Dark_Mode_Manager',
-            'class-responsive-breakpoints-manager.php' => 'CCT_Responsive_Breakpoints_Manager',
-            'class-breakpoint-manager-control.php' => 'CCT_Breakpoint_Manager_Control',
-            'class-design-tokens-manager.php' => 'CCT_Design_Tokens_Manager',
-            'class-design-tokens-control.php' => 'CCT_Design_Tokens_Control',
+            'class-menu-customizer.php' => 'UENF_Menu_Customizer',
+            'class-typography-customizer.php' => 'UENF_Typography_Customizer',
+            'class-typography-controls.php' => 'UENF_Typography_Preview_Control', // Primeira classe do arquivo
+            'class-color-customizer.php' => 'UENF_Color_Customizer',
+            'class-color-manager.php' => 'UENF_Color_Manager',
+            'class-color-controls.php' => 'UENF_Color_Palette_Preview_Control', // Classe principal do arquivo
+            'class-icon-manager.php' => 'UENF_Icon_Manager',
+            'class-icon-controls.php' => 'UENF_Icon_Category_Browser_Control', // Classe principal do arquivo
+            'class-layout-manager.php' => 'UENF_Layout_Manager',
+            'class-layout-controls.php' => 'UENF_Grid_Preview_Control', // Classe principal do arquivo
+            'class-animation-manager.php' => 'UENF_Animation_Manager',
+            'class-animation-controls.php' => 'UENF_Animation_Preview_Control', // Classe principal do arquivo
+            'class-gradient-manager.php' => 'UENF_Gradient_Manager',
+            'class-gradient-controls.php' => 'UENF_Gradient_Browser_Control', // Classe principal do arquivo
+            'class-shadow-manager.php' => 'UENF_Shadow_Manager',
+            'class-shadow-controls.php' => 'UENF_Elevation_Preview_Control', // Classe principal do arquivo
+            'class-pattern-library-manager.php' => 'UENF_Pattern_Library_Manager',
+            'class-pattern-library-controls.php' => 'UENF_Pattern_Browser_Control', // Classe principal do arquivo
+            'class-dark-mode-manager.php' => 'UENF_Dark_Mode_Manager',
+            'class-responsive-breakpoints-manager.php' => 'UENF_Responsive_Breakpoints_Manager',
+            'class-breakpoint-manager-control.php' => 'UENF_Breakpoint_Manager_Control',
+            'class-design-tokens-manager.php' => 'UENF_Design_Tokens_Manager',
+            'class-design-tokens-control.php' => 'UENF_Design_Tokens_Control',
             'class-design-panel-manager.php' => 'UENF\CCT\Customizer\Design_Panel_Manager',
+            'class-header-manager.php' => 'UENF_Header_Manager',
         );
         
         // Verificar se existe mapeamento específico
@@ -324,7 +337,7 @@ class CCT_Customizer_Loader {
         }
         
         if (strpos($class_name, 'CCT') !== 0) {
-            $class_name = 'CCT_' . $class_name;
+            $class_name = 'UENF_' . $class_name;
         }
         
         return $class_name;
@@ -341,7 +354,7 @@ class CCT_Customizer_Loader {
         
         if (file_exists($legacy_file)) {
             // Verificar se a função principal ainda não foi carregada
-            if (function_exists('cct_customize_register')) {
+            if (function_exists('uenf_customize_register')) {
                 // Executar apenas as partes não migradas
                 $this->load_legacy_sections($wp_customize);
             }
@@ -382,7 +395,7 @@ class CCT_Customizer_Loader {
         
         // Exibir CSS se houver conteúdo
         if (!empty($css)) {
-            echo '<style type="text/css" id="cct-customizer-css">';
+            echo '<style type="text/css" id="uenf-customizer-css">';
             echo $this->minify_css($css);
             echo '</style>';
         }
@@ -436,4 +449,4 @@ class CCT_Customizer_Loader {
 }
 
 // Inicializar o carregador
-CCT_Customizer_Loader::get_instance();
+UENF_Customizer_Loader::get_instance();

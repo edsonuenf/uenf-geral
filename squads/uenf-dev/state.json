@@ -1,0 +1,24 @@
+{
+  "squad": "uenf-dev",
+  "status": "running",
+  "step": { "current": 7, "total": 11, "label": "frontend-testing + backend-testing + security-audit" },
+  "agents": [
+    { "id": "lucas",   "name": "Lucas",   "icon": "💻", "status": "done",    "deliverTo": null, "desk": { "col": 1, "row": 1 } },
+    { "id": "isabela", "name": "Isabela", "icon": "🎨", "status": "done",    "deliverTo": null, "desk": { "col": 2, "row": 1 } },
+    { "id": "marina",  "name": "Marina",  "icon": "🖥️", "status": "done",    "deliverTo": null, "desk": { "col": 3, "row": 1 } },
+    { "id": "camila",  "name": "Camila",  "icon": "✍️", "status": "done",    "deliverTo": null, "desk": { "col": 1, "row": 2 } },
+    { "id": "pedro",   "name": "Pedro",   "icon": "🔍", "status": "done",    "deliverTo": null, "desk": { "col": 2, "row": 2 } },
+    { "id": "rafael",  "name": "Rafael",  "icon": "🧪", "status": "working", "deliverTo": null, "desk": { "col": 3, "row": 2 } },
+    { "id": "diego",   "name": "Diego",   "icon": "⚙️", "status": "working", "deliverTo": null, "desk": { "col": 1, "row": 3 } },
+    { "id": "andre",   "name": "André",   "icon": "🔒", "status": "working", "deliverTo": null, "desk": { "col": 2, "row": 3 } },
+    { "id": "beatriz", "name": "Beatriz", "icon": "📋", "status": "idle",    "deliverTo": null, "desk": { "col": 3, "row": 3 } }
+  ],
+  "handoff": {
+    "from": "camila+pedro+marina+isabela",
+    "to": "rafael+diego+andre",
+    "message": "Fase de revisão completa. 4 relatórios gerados. Iniciando testes em paralelo.",
+    "completedAt": "2026-03-31T10:25:00Z"
+  },
+  "startedAt": "2026-03-31T10:00:00Z",
+  "updatedAt": "2026-03-31T10:25:00Z"
+}

@@ -1,0 +1,848 @@
+/**
+ * Sistema de Sombras CCT - Estilos Frontend
+ * 
+ * Sistema completo de elevação e profundidade incluindo:
+ * - 8 níveis de elevação baseados no Material Design
+ * - Classes utilitárias para diferentes elementos
+ * - Animações e transições suaves
+ * - Responsividade e acessibilidade
+ * - Otimizações de performance
+ * - Fallbacks para navegadores antigos
+ * 
+ * @package UENF_Theme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Variáveis CSS para Sistema de Sombras
+   ========================================================================== */
+
+:root {
+    /* Cor base das sombras */
+    --uenf-shadow-color: 0, 0, 0;
+    --uenf-shadow-color-hex: #000000;
+    
+    /* Opacidades para diferentes níveis */
+    --uenf-shadow-opacity-subtle: 0.08;
+    --uenf-shadow-opacity-light: 0.12;
+    --uenf-shadow-opacity-medium: 0.16;
+    --uenf-shadow-opacity-strong: 0.20;
+    --uenf-shadow-opacity-intense: 0.25;
+    --uenf-shadow-opacity-dramatic: 0.30;
+    
+    /* Configurações de animação */
+    --uenf-shadow-transition-duration: 0.3s;
+    --uenf-shadow-transition-easing: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --uenf-shadow-transition-fast: 0.15s;
+    --uenf-shadow-transition-slow: 0.5s;
+    
+    /* Intensidades personalizáveis */
+    --uenf-shadow-blur-multiplier: 1;
+    --uenf-shadow-spread-multiplier: 1;
+    --uenf-shadow-offset-multiplier: 1;
+    
+    /* Configurações de performance */
+    --uenf-shadow-gpu-acceleration: translateZ(0);
+    --uenf-shadow-will-change: box-shadow;
+    
+    /* Sombras predefinidas por nível */
+    --uenf-elevation-0: none;
+    --uenf-elevation-1: 0 1px 3px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-light)), 
+                       0 1px 2px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-intense));
+    --uenf-elevation-2: 0 3px 6px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-medium)), 
+                       0 3px 6px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-strong));
+    --uenf-elevation-4: 0 10px 20px rgba(var(--uenf-shadow-color), 0.19), 
+                       0 6px 6px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-strong));
+    --uenf-elevation-6: 0 14px 28px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-intense)), 
+                       0 10px 10px rgba(var(--uenf-shadow-color), 0.22);
+    --uenf-elevation-8: 0 19px 38px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-dramatic)), 
+                       0 15px 12px rgba(var(--uenf-shadow-color), 0.22);
+    --uenf-elevation-12: 0 25px 50px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-intense)), 
+                        0 12px 24px rgba(var(--uenf-shadow-color), 0.22);
+    --uenf-elevation-16: 0 30px 60px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-dramatic)), 
+                        0 18px 36px rgba(var(--uenf-shadow-color), 0.22);
+    --uenf-elevation-24: 0 38px 76px rgba(var(--uenf-shadow-color), 0.35), 
+                        0 24px 48px rgba(var(--uenf-shadow-color), 0.22);
+    
+    /* Sombras coloridas */
+    --uenf-shadow-blue: 59, 130, 246;
+    --uenf-shadow-green: 34, 197, 94;
+    --uenf-shadow-red: 239, 68, 68;
+    --uenf-shadow-yellow: 245, 158, 11;
+    --uenf-shadow-purple: 147, 51, 234;
+    --uenf-shadow-pink: 236, 72, 153;
+    --uenf-shadow-indigo: 99, 102, 241;
+    --uenf-shadow-teal: 20, 184, 166;
+    
+    /* Z-index para elevações */
+    --uenf-z-elevation-0: 0;
+    --uenf-z-elevation-1: 1;
+    --uenf-z-elevation-2: 2;
+    --uenf-z-elevation-4: 4;
+    --uenf-z-elevation-6: 6;
+    --uenf-z-elevation-8: 8;
+    --uenf-z-elevation-12: 12;
+    --uenf-z-elevation-16: 16;
+    --uenf-z-elevation-24: 24;
+}
+
+/* ==========================================================================
+   Classes Base de Elevação
+   ========================================================================== */
+
+/* Classe base para elementos com sombra */
+.uenf-shadow {
+    position: relative;
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Otimização de performance */
+.uenf-shadow-optimized {
+    transform: var(--uenf-shadow-gpu-acceleration);
+    will-change: var(--uenf-shadow-will-change);
+    backface-visibility: hidden;
+}
+
+/* ==========================================================================
+   Níveis de Elevação (Material Design)
+   ========================================================================== */
+
+/* Nível 0 - Plano */
+.uenf-elevation-0 {
+    box-shadow: var(--uenf-elevation-0);
+    z-index: var(--uenf-z-elevation-0);
+}
+
+/* Nível 1 - Muito Baixo */
+.uenf-elevation-1 {
+    box-shadow: var(--uenf-elevation-1);
+    z-index: var(--uenf-z-elevation-1);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 2 - Baixo */
+.uenf-elevation-2 {
+    box-shadow: var(--uenf-elevation-2);
+    z-index: var(--uenf-z-elevation-2);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 4 - Médio */
+.uenf-elevation-4 {
+    box-shadow: var(--uenf-elevation-4);
+    z-index: var(--uenf-z-elevation-4);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 6 - Médio-Alto */
+.uenf-elevation-6 {
+    box-shadow: var(--uenf-elevation-6);
+    z-index: var(--uenf-z-elevation-6);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 8 - Alto */
+.uenf-elevation-8 {
+    box-shadow: var(--uenf-elevation-8);
+    z-index: var(--uenf-z-elevation-8);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 12 - Muito Alto */
+.uenf-elevation-12 {
+    box-shadow: var(--uenf-elevation-12);
+    z-index: var(--uenf-z-elevation-12);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 16 - Extremo */
+.uenf-elevation-16 {
+    box-shadow: var(--uenf-elevation-16);
+    z-index: var(--uenf-z-elevation-16);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* Nível 24 - Máximo */
+.uenf-elevation-24 {
+    box-shadow: var(--uenf-elevation-24);
+    z-index: var(--uenf-z-elevation-24);
+    transition: box-shadow var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+/* ==========================================================================
+   Efeitos de Hover (Elevação Dinâmica)
+   ========================================================================== */
+
+/* Hover: Nível 1 → 2 */
+.uenf-elevation-hover-1:hover {
+    box-shadow: var(--uenf-elevation-2);
+    transform: translateY(-1px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 2 → 4 */
+.uenf-elevation-hover-2:hover {
+    box-shadow: var(--uenf-elevation-4);
+    transform: translateY(-2px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 4 → 6 */
+.uenf-elevation-hover-4:hover {
+    box-shadow: var(--uenf-elevation-6);
+    transform: translateY(-2px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 6 → 8 */
+.uenf-elevation-hover-6:hover {
+    box-shadow: var(--uenf-elevation-8);
+    transform: translateY(-3px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 8 → 12 */
+.uenf-elevation-hover-8:hover {
+    box-shadow: var(--uenf-elevation-12);
+    transform: translateY(-3px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 12 → 16 */
+.uenf-elevation-hover-12:hover {
+    box-shadow: var(--uenf-elevation-16);
+    transform: translateY(-4px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Hover: Nível 16 → 24 */
+.uenf-elevation-hover-16:hover {
+    box-shadow: var(--uenf-elevation-24);
+    transform: translateY(-4px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* ==========================================================================
+   Estados Interativos
+   ========================================================================== */
+
+/* Estado de foco */
+.uenf-elevation-focus:focus {
+    outline: 3px solid rgba(59, 130, 246, 0.3);
+    outline-offset: 2px;
+}
+
+/* Estado ativo (pressionado) */
+.uenf-elevation-active:active {
+    transform: translateY(1px) var(--uenf-shadow-gpu-acceleration);
+    box-shadow: var(--uenf-elevation-1);
+    transition: all var(--uenf-shadow-transition-fast) var(--uenf-shadow-transition-easing);
+}
+
+/* Estado desabilitado */
+.uenf-elevation-disabled {
+    box-shadow: var(--uenf-elevation-1);
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Sombras Coloridas
+   ========================================================================== */
+
+/* Sombra azul */
+.uenf-shadow-blue {
+    --uenf-shadow-color: var(--uenf-shadow-blue);
+}
+
+/* Sombra verde */
+.uenf-shadow-green {
+    --uenf-shadow-color: var(--uenf-shadow-green);
+}
+
+/* Sombra vermelha */
+.uenf-shadow-red {
+    --uenf-shadow-color: var(--uenf-shadow-red);
+}
+
+/* Sombra amarela */
+.uenf-shadow-yellow {
+    --uenf-shadow-color: var(--uenf-shadow-yellow);
+}
+
+/* Sombra roxa */
+.uenf-shadow-purple {
+    --uenf-shadow-color: var(--uenf-shadow-purple);
+}
+
+/* Sombra rosa */
+.uenf-shadow-pink {
+    --uenf-shadow-color: var(--uenf-shadow-pink);
+}
+
+/* Sombra índigo */
+.uenf-shadow-indigo {
+    --uenf-shadow-color: var(--uenf-shadow-indigo);
+}
+
+/* Sombra teal */
+.uenf-shadow-teal {
+    --uenf-shadow-color: var(--uenf-shadow-teal);
+}
+
+/* ==========================================================================
+   Variações de Intensidade
+   ========================================================================== */
+
+/* Sombras sutis */
+.uenf-shadow-subtle {
+    --uenf-shadow-opacity-light: 0.06;
+    --uenf-shadow-opacity-medium: 0.08;
+    --uenf-shadow-opacity-strong: 0.10;
+    --uenf-shadow-opacity-intense: 0.12;
+    --uenf-shadow-opacity-dramatic: 0.15;
+}
+
+/* Sombras suaves */
+.uenf-shadow-soft {
+    --uenf-shadow-opacity-light: 0.08;
+    --uenf-shadow-opacity-medium: 0.10;
+    --uenf-shadow-opacity-strong: 0.12;
+    --uenf-shadow-opacity-intense: 0.15;
+    --uenf-shadow-opacity-dramatic: 0.18;
+}
+
+/* Sombras normais (padrão) */
+.uenf-shadow-normal {
+    /* Usa valores padrão das variáveis */
+}
+
+/* Sombras intensas */
+.uenf-shadow-intense {
+    --uenf-shadow-opacity-light: 0.15;
+    --uenf-shadow-opacity-medium: 0.20;
+    --uenf-shadow-opacity-strong: 0.25;
+    --uenf-shadow-opacity-intense: 0.30;
+    --uenf-shadow-opacity-dramatic: 0.35;
+}
+
+/* Sombras dramáticas */
+.uenf-shadow-dramatic {
+    --uenf-shadow-opacity-light: 0.20;
+    --uenf-shadow-opacity-medium: 0.25;
+    --uenf-shadow-opacity-strong: 0.30;
+    --uenf-shadow-opacity-intense: 0.35;
+    --uenf-shadow-opacity-dramatic: 0.45;
+}
+
+/* ==========================================================================
+   Componentes Específicos
+   ========================================================================== */
+
+/* Cards com sombra */
+.uenf-shadow-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+}
+
+.uenf-shadow-card:hover {
+    transform: translateY(-2px) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Botões com sombra */
+.uenf-shadow-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    background: #0073aa;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--uenf-shadow-transition-duration) var(--uenf-shadow-transition-easing);
+    transform: var(--uenf-shadow-gpu-acceleration);
+}
+
+.uenf-shadow-button:hover {
+    transform: translateY(-1px) var(--uenf-shadow-gpu-acceleration);
+    text-decoration: none;
+    color: white;
+}
+
+.uenf-shadow-button:active {
+    transform: translateY(0) var(--uenf-shadow-gpu-acceleration);
+}
+
+/* Modais com sombra */
+.uenf-shadow-modal {
+    background: white;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Tooltips com sombra */
+.uenf-shadow-tooltip {
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 1000;
+}
+
+/* Dropdowns com sombra */
+.uenf-shadow-dropdown {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 0;
+    min-width: 200px;
+    position: absolute;
+    z-index: 100;
+}
+
+/* Headers com sombra */
+.uenf-shadow-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* Sidebars com sombra */
+.uenf-shadow-sidebar {
+    background: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    overflow-y: auto;
+    z-index: 40;
+}
+
+/* ==========================================================================
+   Sombras Internas (Inset)
+   ========================================================================== */
+
+/* Sombra interna sutil */
+.uenf-shadow-inset-subtle {
+    box-shadow: inset 0 1px 2px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-light));
+}
+
+/* Sombra interna média */
+.uenf-shadow-inset-medium {
+    box-shadow: inset 0 2px 4px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-medium));
+}
+
+/* Sombra interna forte */
+.uenf-shadow-inset-strong {
+    box-shadow: inset 0 3px 6px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-strong));
+}
+
+/* ==========================================================================
+   Animações Especiais
+   ========================================================================== */
+
+/* Animação de pulsação */
+.uenf-shadow-pulse {
+    animation: uenf-shadow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes uenf-shadow-pulse {
+    0%, 100% {
+        box-shadow: var(--uenf-elevation-2);
+    }
+    50% {
+        box-shadow: var(--uenf-elevation-8);
+    }
+}
+
+/* Animação de flutuação */
+.uenf-shadow-float {
+    animation: uenf-shadow-float 3s ease-in-out infinite;
+}
+
+@keyframes uenf-shadow-float {
+    0%, 100% {
+        transform: translateY(0) var(--uenf-shadow-gpu-acceleration);
+        box-shadow: var(--uenf-elevation-2);
+    }
+    50% {
+        transform: translateY(-8px) var(--uenf-shadow-gpu-acceleration);
+        box-shadow: var(--uenf-elevation-8);
+    }
+}
+
+/* Animação de respiração */
+.uenf-shadow-breathe {
+    animation: uenf-shadow-breathe 4s ease-in-out infinite;
+}
+
+@keyframes uenf-shadow-breathe {
+    0%, 100% {
+        transform: scale(1) var(--uenf-shadow-gpu-acceleration);
+        box-shadow: var(--uenf-elevation-2);
+    }
+    50% {
+        transform: scale(1.02) var(--uenf-shadow-gpu-acceleration);
+        box-shadow: var(--uenf-elevation-6);
+    }
+}
+
+/* ==========================================================================
+   Utilitários de Sombra
+   ========================================================================== */
+
+/* Remover sombra */
+.uenf-shadow-none {
+    box-shadow: none !important;
+}
+
+/* Sombra apenas no topo */
+.uenf-shadow-top {
+    box-shadow: 0 -4px 8px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-medium));
+}
+
+/* Sombra apenas na base */
+.uenf-shadow-bottom {
+    box-shadow: 0 4px 8px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-medium));
+}
+
+/* Sombra apenas à esquerda */
+.uenf-shadow-left {
+    box-shadow: -4px 0 8px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-medium));
+}
+
+/* Sombra apenas à direita */
+.uenf-shadow-right {
+    box-shadow: 4px 0 8px rgba(var(--uenf-shadow-color), var(--uenf-shadow-opacity-medium));
+}
+
+/* Sombra circular */
+.uenf-shadow-circle {
+    border-radius: 50%;
+}
+
+/* Sombra com bordas arredondadas */
+.uenf-shadow-rounded {
+    border-radius: 8px;
+}
+
+.uenf-shadow-rounded-lg {
+    border-radius: 12px;
+}
+
+.uenf-shadow-rounded-xl {
+    border-radius: 16px;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Mobile (até 768px) */
+@media (max-width: 768px) {
+    /* Reduzir elevações altas em mobile */
+    .uenf-elevation-12 {
+        box-shadow: var(--uenf-elevation-8);
+    }
+    
+    .uenf-elevation-16 {
+        box-shadow: var(--uenf-elevation-8);
+    }
+    
+    .uenf-elevation-24 {
+        box-shadow: var(--uenf-elevation-8);
+    }
+    
+    /* Reduzir animações em mobile */
+    .uenf-shadow-pulse,
+    .uenf-shadow-float,
+    .uenf-shadow-breathe {
+        animation-duration: 4s;
+    }
+    
+    /* Ajustar componentes para mobile */
+    .uenf-shadow-card {
+        padding: 15px;
+        border-radius: 6px;
+    }
+    
+    .uenf-shadow-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .uenf-shadow-modal {
+        width: 95%;
+        border-radius: 8px;
+    }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .uenf-shadow-card {
+        padding: 18px;
+    }
+}
+
+/* Desktop grande (1200px+) */
+@media (min-width: 1200px) {
+    .uenf-shadow-card {
+        padding: 24px;
+    }
+    
+    .uenf-shadow-button {
+        padding: 14px 28px;
+    }
+}
+
+/* ==========================================================================
+   Acessibilidade
+   ========================================================================== */
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .uenf-elevation-0, .uenf-elevation-1, .uenf-elevation-2, .uenf-elevation-4,
+    .uenf-elevation-6, .uenf-elevation-8, .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24,
+    .uenf-shadow-card, .uenf-shadow-button {
+        transition: none;
+    }
+    
+    .uenf-elevation-hover-1:hover,
+    .uenf-elevation-hover-2:hover,
+    .uenf-elevation-hover-4:hover,
+    .uenf-elevation-hover-6:hover,
+    .uenf-elevation-hover-8:hover,
+    .uenf-elevation-hover-12:hover,
+    .uenf-elevation-hover-16:hover {
+        transform: none;
+    }
+    
+    .uenf-shadow-pulse,
+    .uenf-shadow-float,
+    .uenf-shadow-breathe {
+        animation: none;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    :root {
+        --uenf-shadow-opacity-light: 0.20;
+        --uenf-shadow-opacity-medium: 0.25;
+        --uenf-shadow-opacity-strong: 0.30;
+        --uenf-shadow-opacity-intense: 0.35;
+        --uenf-shadow-opacity-dramatic: 0.45;
+    }
+    
+    .uenf-shadow-button {
+        border: 2px solid rgba(var(--uenf-shadow-color), 0.3);
+    }
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uenf-shadow-color: 255, 255, 255;
+        --uenf-shadow-opacity-light: 0.05;
+        --uenf-shadow-opacity-medium: 0.08;
+        --uenf-shadow-opacity-strong: 0.12;
+        --uenf-shadow-opacity-intense: 0.15;
+        --uenf-shadow-opacity-dramatic: 0.20;
+    }
+    
+    .uenf-shadow-card {
+        background: #1a1a1a;
+        border: 1px solid #333;
+    }
+    
+    .uenf-shadow-dropdown {
+        background: #2a2a2a;
+        border-color: #444;
+    }
+    
+    .uenf-shadow-header {
+        background: #1a1a1a;
+        border-bottom-color: #333;
+    }
+    
+    .uenf-shadow-sidebar {
+        background: #1a1a1a;
+    }
+}
+
+/* ==========================================================================
+   Fallbacks para Navegadores Antigos
+   ========================================================================== */
+
+/* IE11 fallbacks */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .uenf-elevation-1 {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+    
+    .uenf-elevation-2 {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    }
+    
+    .uenf-elevation-4 {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+    }
+    
+    .uenf-elevation-8 {
+        box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30);
+    }
+    
+    .uenf-shadow {
+        transform: none;
+    }
+}
+
+/* Safari fallbacks */
+@supports not (transform: translateZ(0)) {
+    .uenf-shadow-optimized {
+        transform: none;
+    }
+}
+
+/* Firefox fallbacks */
+@-moz-document url-prefix() {
+    .uenf-shadow {
+        will-change: auto;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .uenf-elevation-0, .uenf-elevation-1, .uenf-elevation-2, .uenf-elevation-4,
+    .uenf-elevation-6, .uenf-elevation-8, .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24,
+    .uenf-shadow-card, .uenf-shadow-button, .uenf-shadow-modal {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .uenf-shadow-pulse,
+    .uenf-shadow-float,
+    .uenf-shadow-breathe {
+        animation: none !important;
+    }
+}
+
+/* ==========================================================================
+   Debug e Desenvolvimento
+   ========================================================================== */
+
+/* Modo debug */
+.uenf-shadows-debug .uenf-elevation-1,
+.uenf-shadows-debug .uenf-elevation-2,
+.uenf-shadows-debug .uenf-elevation-4,
+.uenf-shadows-debug .uenf-elevation-6,
+.uenf-shadows-debug .uenf-elevation-8,
+.uenf-shadows-debug .uenf-elevation-12,
+.uenf-shadows-debug .uenf-elevation-16,
+.uenf-shadows-debug .uenf-elevation-24 {
+    position: relative;
+}
+
+.uenf-shadows-debug .uenf-elevation-1::before,
+.uenf-shadows-debug .uenf-elevation-2::before,
+.uenf-shadows-debug .uenf-elevation-4::before,
+.uenf-shadows-debug .uenf-elevation-6::before,
+.uenf-shadows-debug .uenf-elevation-8::before,
+.uenf-shadows-debug .uenf-elevation-12::before,
+.uenf-shadows-debug .uenf-elevation-16::before,
+.uenf-shadows-debug .uenf-elevation-24::before {
+    content: attr(class);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Informações de performance */
+.uenf-shadows-debug::after {
+    content: 'CCT Shadows Debug Mode - ' attr(data-shadow-count) ' shadows active';
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Customizações Específicas do Tema
+   ========================================================================== */
+
+/* Integração com componentes do tema */
+.site-header.uenf-shadow-header {
+    margin-bottom: 0;
+}
+
+.entry-content .uenf-shadow-button {
+    margin: 10px 5px;
+}
+
+.widget .uenf-shadow-card {
+    margin-bottom: 20px;
+}
+
+.comment-list .uenf-shadow-card {
+    margin-bottom: 15px;
+}
+
+/* Compatibilidade com plugins */
+.woocommerce .uenf-shadow-button {
+    display: inline-block;
+    text-align: center;
+}
+
+.contact-form-7 .uenf-shadow-button {
+    border: none;
+    cursor: pointer;
+}
+
+.wp-block-button .uenf-shadow-button {
+    width: 100%;
+}
+
+/* Ajustes para editor de blocos */
+.wp-block .uenf-shadow {
+    margin: 0;
+}
+
+.editor-styles-wrapper .uenf-shadow-button {
+    pointer-events: none;
+}
+
+/* Customizações para diferentes tipos de post */
+.single-post .uenf-shadow-card {
+    margin-bottom: 30px;
+}
+
+.archive .uenf-shadow-card {
+    margin-bottom: 25px;
+}
+
+.search-results .uenf-shadow-card {
+    margin-bottom: 20px;
+}

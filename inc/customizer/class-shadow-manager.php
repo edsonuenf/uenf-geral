@@ -10,7 +10,7 @@
  * - Otimização de performance
  * - Responsividade adaptativa
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe principal do Sistema de Sombras
  */
-class CCT_Shadow_Manager {
+class UENF_Shadow_Manager {
     
     /**
      * Instância do WP_Customize_Manager
@@ -37,7 +37,7 @@ class CCT_Shadow_Manager {
      * 
      * @var string
      */
-    private $prefix = 'cct_shadow_';
+    private $prefix = 'uenf_shadow_';
     
     /**
      * Níveis de elevação
@@ -97,13 +97,13 @@ class CCT_Shadow_Manager {
         add_action('wp_footer', array($this, 'output_custom_js'));
         
         // Shortcodes
-        add_shortcode('cct_shadow', array($this, 'shadow_shortcode'));
-        add_shortcode('cct_elevation', array($this, 'elevation_shortcode'));
-        add_shortcode('cct_card', array($this, 'card_shortcode'));
+        add_shortcode('uenf_shadow', array($this, 'shadow_shortcode'));
+        add_shortcode('uenf_elevation', array($this, 'elevation_shortcode'));
+        add_shortcode('uenf_card', array($this, 'card_shortcode'));
         
         // AJAX handlers
-        add_action('wp_ajax_cct_preview_shadow', array($this, 'ajax_preview_shadow'));
-        add_action('wp_ajax_nopriv_cct_preview_shadow', array($this, 'ajax_preview_shadow'));
+        add_action('wp_ajax_uenf_preview_shadow', array($this, 'ajax_preview_shadow'));
+        add_action('wp_ajax_nopriv_uenf_preview_shadow', array($this, 'ajax_preview_shadow'));
     }
     
     /**
@@ -587,25 +587,25 @@ class CCT_Shadow_Manager {
     public function enqueue_scripts() {
         // CSS das sombras
         wp_enqueue_style(
-            'cct-shadows',
-            get_template_directory_uri() . '/css/cct-shadows.css',
+            'uenf-shadows',
+            get_template_directory_uri() . '/css/uenf-shadows.css',
             array(),
             '1.0.0'
         );
         
         // JavaScript das sombras
         wp_enqueue_script(
-            'cct-shadows',
-            get_template_directory_uri() . '/js/cct-shadows.js',
+            'uenf-shadows',
+            get_template_directory_uri() . '/js/uenf-shadows.js',
             array('jquery'),
             '1.0.0',
             true
         );
         
         // Localização do script
-        wp_localize_script('cct-shadows', 'cctShadows', array(
+        wp_localize_script('uenf-shadows', 'cctShadows', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cct_shadows_nonce'),
+            'nonce' => wp_create_nonce('uenf_shadows_nonce'),
             'settings' => $this->get_frontend_settings(),
             'elevationLevels' => $this->elevation_levels,
             'presets' => $this->shadow_presets,
@@ -643,33 +643,33 @@ class CCT_Shadow_Manager {
             return;
         }
         
-        echo "<style id='cct-shadows-custom-css'>\n";
+        echo "<style id='uenf-shadows-custom-css'>\n";
         
         // Variáveis CSS para sombras
         echo ":root {\n";
-        echo "  --cct-shadow-color: {$settings['shadowColor']};\n";
-        echo "  --cct-shadow-opacity: {$settings['shadowOpacity']};\n";
-        echo "  --cct-blur-intensity: {$settings['blurIntensity']};\n";
-        echo "  --cct-spread-intensity: {$settings['spreadIntensity']};\n";
-        echo "  --cct-animation-duration: {$settings['animationDuration']}s;\n";
-        echo "  --cct-animation-easing: {$settings['animationEasing']};\n";
+        echo "  --uenf-shadow-color: {$settings['shadowColor']};\n";
+        echo "  --uenf-shadow-opacity: {$settings['shadowOpacity']};\n";
+        echo "  --uenf-blur-intensity: {$settings['blurIntensity']};\n";
+        echo "  --uenf-spread-intensity: {$settings['spreadIntensity']};\n";
+        echo "  --uenf-animation-duration: {$settings['animationDuration']}s;\n";
+        echo "  --uenf-animation-easing: {$settings['animationEasing']};\n";
         
         // Gerar variáveis para cada nível de elevação
         foreach ($this->elevation_levels as $level => $data) {
             $shadow = $this->calculate_shadow($data['shadow'], $settings);
-            echo "  --cct-elevation-{$level}: {$shadow};\n";
+            echo "  --uenf-elevation-{$level}: {$shadow};\n";
         }
         
         echo "}\n";
         
         // Classes de elevação
         foreach ($this->elevation_levels as $level => $data) {
-            echo ".cct-elevation-{$level} {\n";
-            echo "  box-shadow: var(--cct-elevation-{$level});\n";
+            echo ".uenf-elevation-{$level} {\n";
+            echo "  box-shadow: var(--uenf-elevation-{$level});\n";
             echo "  z-index: {$data['z_index']};\n";
             
             if ($settings['animationsEnabled']) {
-                echo "  transition: box-shadow var(--cct-animation-duration) var(--cct-animation-easing);\n";
+                echo "  transition: box-shadow var(--uenf-animation-duration) var(--uenf-animation-easing);\n";
             }
             
             if ($settings['gpuAcceleration']) {
@@ -685,18 +685,18 @@ class CCT_Shadow_Manager {
         
         // Animações de hover
         if ($settings['animationsEnabled']) {
-            echo ".cct-elevation-hover-1:hover { box-shadow: var(--cct-elevation-2); }\n";
-            echo ".cct-elevation-hover-2:hover { box-shadow: var(--cct-elevation-4); }\n";
-            echo ".cct-elevation-hover-4:hover { box-shadow: var(--cct-elevation-6); }\n";
-            echo ".cct-elevation-hover-6:hover { box-shadow: var(--cct-elevation-8); }\n";
-            echo ".cct-elevation-hover-8:hover { box-shadow: var(--cct-elevation-12); }\n";
+            echo ".uenf-elevation-hover-1:hover { box-shadow: var(--uenf-elevation-2); }\n";
+            echo ".uenf-elevation-hover-2:hover { box-shadow: var(--uenf-elevation-4); }\n";
+            echo ".uenf-elevation-hover-4:hover { box-shadow: var(--uenf-elevation-6); }\n";
+            echo ".uenf-elevation-hover-6:hover { box-shadow: var(--uenf-elevation-8); }\n";
+            echo ".uenf-elevation-hover-8:hover { box-shadow: var(--uenf-elevation-12); }\n";
         }
         
         // Otimizações mobile
         if ($settings['mobileOptimization']) {
             echo "@media (max-width: 768px) {\n";
-            echo "  .cct-elevation-12, .cct-elevation-16, .cct-elevation-24 {\n";
-            echo "    box-shadow: var(--cct-elevation-8);\n";
+            echo "  .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24 {\n";
+            echo "    box-shadow: var(--uenf-elevation-8);\n";
             echo "  }\n";
             echo "}\n";
         }
@@ -704,8 +704,8 @@ class CCT_Shadow_Manager {
         // Respeitar movimento reduzido
         if ($settings['reduceMotionRespect']) {
             echo "@media (prefers-reduced-motion: reduce) {\n";
-            echo "  .cct-elevation-0, .cct-elevation-1, .cct-elevation-2, .cct-elevation-4,\n";
-            echo "  .cct-elevation-6, .cct-elevation-8, .cct-elevation-12, .cct-elevation-16, .cct-elevation-24 {\n";
+            echo "  .uenf-elevation-0, .uenf-elevation-1, .uenf-elevation-2, .uenf-elevation-4,\n";
+            echo "  .uenf-elevation-6, .uenf-elevation-8, .uenf-elevation-12, .uenf-elevation-16, .uenf-elevation-24 {\n";
             echo "    transition: none;\n";
             echo "  }\n";
             echo "}\n";
@@ -761,7 +761,7 @@ class CCT_Shadow_Manager {
             return;
         }
         
-        echo "<script id='cct-shadows-custom-js'>\n";
+        echo "<script id='uenf-shadows-custom-js'>\n";
         echo "document.addEventListener('DOMContentLoaded', function() {\n";
         echo "  if (typeof CCTShadows !== 'undefined') {\n";
         echo "    CCTShadows.init(" . wp_json_encode($settings) . ");\n";
@@ -779,21 +779,21 @@ class CCT_Shadow_Manager {
             'hover' => 'false',
             'class' => '',
             'style' => '',
-        ), $atts, 'cct_shadow');
+        ), $atts, 'uenf_shadow');
         
         $level = intval($atts['level']);
-        $classes = array('cct-shadow');
+        $classes = array('uenf-shadow');
         
         // Validar nível
         if (!isset($this->elevation_levels[$level])) {
             $level = 2; // Fallback
         }
         
-        $classes[] = "cct-elevation-{$level}";
+        $classes[] = "uenf-elevation-{$level}";
         
         // Adicionar hover effect
         if ($atts['hover'] === 'true') {
-            $classes[] = "cct-elevation-hover-{$level}";
+            $classes[] = "uenf-elevation-hover-{$level}";
         }
         
         if (!empty($atts['class'])) {
@@ -831,19 +831,19 @@ class CCT_Shadow_Manager {
             'border_radius' => '8px',
             'background' => '#ffffff',
             'class' => '',
-        ), $atts, 'cct_card');
+        ), $atts, 'uenf_card');
         
-        $classes = array('cct-card');
+        $classes = array('uenf-card');
         $level = intval($atts['elevation']);
         
         if (!isset($this->elevation_levels[$level])) {
             $level = 2;
         }
         
-        $classes[] = "cct-elevation-{$level}";
+        $classes[] = "uenf-elevation-{$level}";
         
         if ($atts['hover'] === 'true') {
-            $classes[] = "cct-elevation-hover-{$level}";
+            $classes[] = "uenf-elevation-hover-{$level}";
         }
         
         if (!empty($atts['class'])) {
@@ -867,7 +867,7 @@ class CCT_Shadow_Manager {
      * AJAX handler para preview de sombra
      */
     public function ajax_preview_shadow() {
-        check_ajax_referer('cct_shadows_nonce', 'nonce');
+        check_ajax_referer('uenf_shadows_nonce', 'nonce');
         
         $level = intval($_POST['level'] ?? 2);
         $settings = $this->sanitize_json_array($_POST['settings'] ?? array());

@@ -9,7 +9,7 @@
  * - Editor de configurações avançadas
  * - Demonstração de casos de uso
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -22,14 +22,14 @@ if (!defined('ABSPATH')) {
 /**
  * Controle Preview de Elevação
  */
-class CCT_Elevation_Preview_Control extends WP_Customize_Control {
+class UENF_Elevation_Preview_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_elevation_preview';
+    public $type = 'uenf_elevation_preview';
     
     /**
      * Níveis de elevação
@@ -53,24 +53,24 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-elevation-preview">
+        <div class="uenf-elevation-preview">
             <!-- Grid de níveis de elevação -->
-            <div class="cct-elevation-grid">
+            <div class="uenf-elevation-grid">
                 <?php foreach ($this->elevation_levels as $level => $data): ?>
-                    <div class="cct-elevation-item" data-level="<?php echo esc_attr($level); ?>">
-                        <div class="cct-elevation-demo" 
+                    <div class="uenf-elevation-item" data-level="<?php echo esc_attr($level); ?>">
+                        <div class="uenf-elevation-demo" 
                              style="box-shadow: <?php echo esc_attr($data['shadow']); ?>">
-                            <div class="cct-elevation-content">
-                                <span class="cct-elevation-level"><?php echo esc_html($level); ?></span>
-                                <span class="cct-elevation-name"><?php echo esc_html($data['name']); ?></span>
+                            <div class="uenf-elevation-content">
+                                <span class="uenf-elevation-level"><?php echo esc_html($level); ?></span>
+                                <span class="uenf-elevation-name"><?php echo esc_html($data['name']); ?></span>
                             </div>
                         </div>
                         
-                        <div class="cct-elevation-info">
+                        <div class="uenf-elevation-info">
                             <h5><?php echo esc_html($data['name']); ?></h5>
-                            <p class="cct-elevation-description"><?php echo esc_html($data['description']); ?></p>
+                            <p class="uenf-elevation-description"><?php echo esc_html($data['description']); ?></p>
                             
-                            <div class="cct-elevation-use-cases">
+                            <div class="uenf-elevation-use-cases">
                                 <strong><?php _e('Casos de uso:', 'cct'); ?></strong>
                                 <ul>
                                     <?php foreach ($data['use_cases'] as $use_case): ?>
@@ -79,12 +79,12 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
                                 </ul>
                             </div>
                             
-                            <div class="cct-elevation-actions">
-                                <button type="button" class="button cct-apply-elevation" 
+                            <div class="uenf-elevation-actions">
+                                <button type="button" class="button uenf-apply-elevation" 
                                         data-level="<?php echo esc_attr($level); ?>">
                                     <?php _e('Aplicar', 'cct'); ?>
                                 </button>
-                                <button type="button" class="button cct-copy-css" 
+                                <button type="button" class="button uenf-copy-css" 
                                         data-css="<?php echo esc_attr($data['shadow']); ?>">
                                     <?php _e('📋 CSS', 'cct'); ?>
                                 </button>
@@ -95,19 +95,19 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             </div>
             
             <!-- Demonstração interativa -->
-            <div class="cct-elevation-demo-area">
+            <div class="uenf-elevation-demo-area">
                 <h4><?php _e('Demonstração Interativa', 'cct'); ?></h4>
                 
-                <div class="cct-demo-stage">
-                    <div class="cct-demo-element" id="cct-demo-element">
+                <div class="uenf-demo-stage">
+                    <div class="uenf-demo-element" id="uenf-demo-element">
                         <h3><?php _e('Elemento de Demonstração', 'cct'); ?></h3>
                         <p><?php _e('Clique nos níveis acima para ver o efeito', 'cct'); ?></p>
                     </div>
                 </div>
                 
-                <div class="cct-demo-controls">
+                <div class="uenf-demo-controls">
                     <label><?php _e('Nível atual:', 'cct'); ?></label>
-                    <select id="cct-demo-level-select">
+                    <select id="uenf-demo-level-select">
                         <?php foreach ($this->elevation_levels as $level => $data): ?>
                             <option value="<?php echo esc_attr($level); ?>">
                                 <?php echo esc_html($data['name']); ?>
@@ -116,7 +116,7 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
                     </select>
                     
                     <label>
-                        <input type="checkbox" id="cct-demo-hover" checked>
+                        <input type="checkbox" id="uenf-demo-hover" checked>
                         <?php _e('Efeito de hover', 'cct'); ?>
                     </label>
                 </div>
@@ -124,7 +124,7 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-elevation-preview {
+        .uenf-elevation-preview {
             margin-top: 10px;
             padding: 15px;
             background: #f9f9f9;
@@ -132,14 +132,14 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             border-radius: 8px;
         }
         
-        .cct-elevation-grid {
+        .uenf-elevation-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
         
-        .cct-elevation-item {
+        .uenf-elevation-item {
             background: white;
             border-radius: 8px;
             padding: 15px;
@@ -147,11 +147,11 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-elevation-item:hover {
+        .uenf-elevation-item:hover {
             transform: translateY(-2px);
         }
         
-        .cct-elevation-demo {
+        .uenf-elevation-demo {
             width: 100%;
             height: 80px;
             background: white;
@@ -165,15 +165,15 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             position: relative;
         }
         
-        .cct-elevation-demo:hover {
+        .uenf-elevation-demo:hover {
             transform: translateY(-1px);
         }
         
-        .cct-elevation-content {
+        .uenf-elevation-content {
             text-align: center;
         }
         
-        .cct-elevation-level {
+        .uenf-elevation-level {
             display: block;
             font-size: 18px;
             font-weight: bold;
@@ -181,84 +181,84 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             margin-bottom: 4px;
         }
         
-        .cct-elevation-name {
+        .uenf-elevation-name {
             font-size: 10px;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        .cct-elevation-info h5 {
+        .uenf-elevation-info h5 {
             margin: 0 0 8px 0;
             font-size: 13px;
             color: #333;
         }
         
-        .cct-elevation-description {
+        .uenf-elevation-description {
             font-size: 11px;
             color: #666;
             margin: 0 0 10px 0;
             line-height: 1.4;
         }
         
-        .cct-elevation-use-cases {
+        .uenf-elevation-use-cases {
             margin-bottom: 15px;
             font-size: 10px;
         }
         
-        .cct-elevation-use-cases strong {
+        .uenf-elevation-use-cases strong {
             display: block;
             margin-bottom: 5px;
             color: #333;
         }
         
-        .cct-elevation-use-cases ul {
+        .uenf-elevation-use-cases ul {
             margin: 0;
             padding-left: 15px;
             color: #666;
         }
         
-        .cct-elevation-use-cases li {
+        .uenf-elevation-use-cases li {
             margin-bottom: 2px;
         }
         
-        .cct-elevation-actions {
+        .uenf-elevation-actions {
             display: flex;
             gap: 8px;
             justify-content: center;
         }
         
-        .cct-elevation-actions .button {
+        .uenf-elevation-actions .button {
             font-size: 10px;
             padding: 6px 12px;
             height: auto;
         }
         
-        .cct-apply-elevation {
+        .uenf-apply-elevation {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
-        .cct-copy-css {
+        .uenf-copy-css {
             background: #f0f0f1;
             color: #333;
         }
         
-        .cct-elevation-demo-area {
+        .uenf-elevation-demo-area {
             background: white;
             padding: 20px;
             border-radius: 8px;
             border: 1px solid #ddd;
         }
         
-        .cct-elevation-demo-area h4 {
+        .uenf-elevation-demo-area h4 {
             margin: 0 0 15px 0;
             font-size: 14px;
             color: #333;
         }
         
-        .cct-demo-stage {
+        .uenf-demo-stage {
             background: #f8f9fa;
             padding: 40px 20px;
             border-radius: 6px;
@@ -270,7 +270,7 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             justify-content: center;
         }
         
-        .cct-demo-element {
+        .uenf-demo-element {
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -280,31 +280,31 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             max-width: 250px;
         }
         
-        .cct-demo-element h3 {
+        .uenf-demo-element h3 {
             margin: 0 0 8px 0;
             font-size: 16px;
             color: #333;
         }
         
-        .cct-demo-element p {
+        .uenf-demo-element p {
             margin: 0;
             font-size: 12px;
             color: #666;
         }
         
-        .cct-demo-element:hover {
+        .uenf-demo-element:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
         }
         
-        .cct-demo-controls {
+        .uenf-demo-controls {
             display: flex;
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
         }
         
-        .cct-demo-controls label {
+        .uenf-demo-controls label {
             font-size: 12px;
             color: #333;
             display: flex;
@@ -312,14 +312,14 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
             gap: 6px;
         }
         
-        .cct-demo-controls select {
+        .uenf-demo-controls select {
             padding: 6px 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 12px;
         }
         
-        .cct-demo-controls input[type="checkbox"] {
+        .uenf-demo-controls input[type="checkbox"] {
             margin: 0;
         }
         </style>
@@ -330,14 +330,14 @@ class CCT_Elevation_Preview_Control extends WP_Customize_Control {
 /**
  * Controle Configurador de Sombras
  */
-class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
+class UENF_Shadow_Configurator_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_shadow_configurator';
+    public $type = 'uenf_shadow_configurator';
     
     /**
      * Renderiza o controle
@@ -354,120 +354,120 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-shadow-configurator">
+        <div class="uenf-shadow-configurator">
             <!-- Preview da sombra -->
-            <div class="cct-shadow-preview-area">
-                <div class="cct-shadow-preview-box" id="cct-shadow-preview">
-                    <div class="cct-preview-content">
+            <div class="uenf-shadow-preview-area">
+                <div class="uenf-shadow-preview-box" id="uenf-shadow-preview">
+                    <div class="uenf-preview-content">
                         <h3><?php _e('Preview da Sombra', 'cct'); ?></h3>
                         <p><?php _e('Ajuste as configurações abaixo', 'cct'); ?></p>
                     </div>
                 </div>
                 
-                <div class="cct-shadow-code">
+                <div class="uenf-shadow-code">
                     <label><?php _e('Código CSS:', 'cct'); ?></label>
-                    <textarea id="cct-shadow-css" readonly></textarea>
-                    <button type="button" class="button cct-copy-shadow-css"><?php _e('📋 Copiar CSS', 'cct'); ?></button>
+                    <textarea id="uenf-shadow-css" readonly></textarea>
+                    <button type="button" class="button uenf-copy-shadow-css"><?php _e('📋 Copiar CSS', 'cct'); ?></button>
                 </div>
             </div>
             
             <!-- Configurações da sombra -->
-            <div class="cct-shadow-settings">
-                <div class="cct-setting-group">
+            <div class="uenf-shadow-settings">
+                <div class="uenf-setting-group">
                     <label><?php _e('Offset X:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" id="cct-shadow-x" min="-50" max="50" value="0">
-                        <span id="cct-shadow-x-value">0px</span>
+                    <div class="uenf-range-control">
+                        <input type="range" id="uenf-shadow-x" min="-50" max="50" value="0">
+                        <span id="uenf-shadow-x-value">0px</span>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Offset Y:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" id="cct-shadow-y" min="-50" max="50" value="4">
-                        <span id="cct-shadow-y-value">4px</span>
+                    <div class="uenf-range-control">
+                        <input type="range" id="uenf-shadow-y" min="-50" max="50" value="4">
+                        <span id="uenf-shadow-y-value">4px</span>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Blur:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" id="cct-shadow-blur" min="0" max="100" value="8">
-                        <span id="cct-shadow-blur-value">8px</span>
+                    <div class="uenf-range-control">
+                        <input type="range" id="uenf-shadow-blur" min="0" max="100" value="8">
+                        <span id="uenf-shadow-blur-value">8px</span>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Spread:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" id="cct-shadow-spread" min="-20" max="20" value="0">
-                        <span id="cct-shadow-spread-value">0px</span>
+                    <div class="uenf-range-control">
+                        <input type="range" id="uenf-shadow-spread" min="-20" max="20" value="0">
+                        <span id="uenf-shadow-spread-value">0px</span>
                     </div>
                 </div>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Cor:', 'cct'); ?></label>
-                    <input type="color" id="cct-shadow-color" value="#000000">
+                    <input type="color" id="uenf-shadow-color" value="#000000">
                 </div>
                 
-                <div class="cct-setting-group">
+                <div class="uenf-setting-group">
                     <label><?php _e('Opacidade:', 'cct'); ?></label>
-                    <div class="cct-range-control">
-                        <input type="range" id="cct-shadow-opacity" min="0" max="1" step="0.01" value="0.25">
-                        <span id="cct-shadow-opacity-value">25%</span>
+                    <div class="uenf-range-control">
+                        <input type="range" id="uenf-shadow-opacity" min="0" max="1" step="0.01" value="0.25">
+                        <span id="uenf-shadow-opacity-value">25%</span>
                     </div>
                 </div>
             </div>
             
             <!-- Múltiplas sombras -->
-            <div class="cct-multiple-shadows">
+            <div class="uenf-multiple-shadows">
                 <h4><?php _e('Múltiplas Sombras', 'cct'); ?></h4>
                 
-                <div class="cct-shadow-layers" id="cct-shadow-layers">
-                    <div class="cct-shadow-layer" data-layer="0">
-                        <span class="cct-layer-label"><?php _e('Camada 1', 'cct'); ?></span>
-                        <button type="button" class="cct-remove-layer" disabled>×</button>
+                <div class="uenf-shadow-layers" id="uenf-shadow-layers">
+                    <div class="uenf-shadow-layer" data-layer="0">
+                        <span class="uenf-layer-label"><?php _e('Camada 1', 'cct'); ?></span>
+                        <button type="button" class="uenf-remove-layer" disabled>×</button>
                     </div>
                 </div>
                 
-                <div class="cct-shadow-actions">
-                    <button type="button" class="button cct-add-layer"><?php _e('+ Adicionar Camada', 'cct'); ?></button>
-                    <button type="button" class="button cct-reset-shadows"><?php _e('🔄 Reset', 'cct'); ?></button>
+                <div class="uenf-shadow-actions">
+                    <button type="button" class="button uenf-add-layer"><?php _e('+ Adicionar Camada', 'cct'); ?></button>
+                    <button type="button" class="button uenf-reset-shadows"><?php _e('🔄 Reset', 'cct'); ?></button>
                 </div>
             </div>
             
             <!-- Presets rápidos -->
-            <div class="cct-shadow-presets">
+            <div class="uenf-shadow-presets">
                 <h4><?php _e('Presets Rápidos', 'cct'); ?></h4>
                 
-                <div class="cct-preset-grid">
-                    <button type="button" class="cct-preset-btn" data-preset="subtle">
-                        <div class="cct-preset-preview" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12);"></div>
+                <div class="uenf-preset-grid">
+                    <button type="button" class="uenf-preset-btn" data-preset="subtle">
+                        <div class="uenf-preset-preview" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12);"></div>
                         <span><?php _e('Sutil', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="soft">
-                        <div class="cct-preset-preview" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="soft">
+                        <div class="uenf-preset-preview" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
                         <span><?php _e('Suave', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="medium">
-                        <div class="cct-preset-preview" style="box-shadow: 0 10px 15px rgba(0,0,0,0.1);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="medium">
+                        <div class="uenf-preset-preview" style="box-shadow: 0 10px 15px rgba(0,0,0,0.1);"></div>
                         <span><?php _e('Médio', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="large">
-                        <div class="cct-preset-preview" style="box-shadow: 0 20px 25px rgba(0,0,0,0.15);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="large">
+                        <div class="uenf-preset-preview" style="box-shadow: 0 20px 25px rgba(0,0,0,0.15);"></div>
                         <span><?php _e('Grande', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="colored">
-                        <div class="cct-preset-preview" style="box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="colored">
+                        <div class="uenf-preset-preview" style="box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);"></div>
                         <span><?php _e('Colorido', 'cct'); ?></span>
                     </button>
                     
-                    <button type="button" class="cct-preset-btn" data-preset="inset">
-                        <div class="cct-preset-preview" style="box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);"></div>
+                    <button type="button" class="uenf-preset-btn" data-preset="inset">
+                        <div class="uenf-preset-preview" style="box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);"></div>
                         <span><?php _e('Interno', 'cct'); ?></span>
                     </button>
                 </div>
@@ -475,20 +475,20 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-shadow-configurator {
+        .uenf-shadow-configurator {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-shadow-preview-area {
+        .uenf-shadow-preview-area {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-shadow-preview-box {
+        .uenf-shadow-preview-box {
             height: 150px;
             background: white;
             border-radius: 8px;
@@ -499,35 +499,35 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        .cct-preview-content {
+        .uenf-preview-content {
             text-align: center;
             color: #333;
         }
         
-        .cct-preview-content h3 {
+        .uenf-preview-content h3 {
             margin: 0 0 5px 0;
             font-size: 16px;
         }
         
-        .cct-preview-content p {
+        .uenf-preview-content p {
             margin: 0;
             font-size: 12px;
             color: #666;
         }
         
-        .cct-shadow-code {
+        .uenf-shadow-code {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-shadow-code label {
+        .uenf-shadow-code label {
             font-size: 12px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-shadow-code textarea {
+        .uenf-shadow-code textarea {
             flex: 1;
             padding: 8px;
             border: 1px solid #ddd;
@@ -538,22 +538,22 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             height: 40px;
         }
         
-        .cct-copy-shadow-css {
+        .uenf-copy-shadow-css {
             font-size: 11px;
             padding: 8px 12px;
         }
         
-        .cct-shadow-settings {
+        .uenf-shadow-settings {
             padding: 20px;
             background: white;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-setting-group {
+        .uenf-setting-group {
             margin-bottom: 20px;
         }
         
-        .cct-setting-group label {
+        .uenf-setting-group label {
             display: block;
             font-size: 12px;
             font-weight: 600;
@@ -561,17 +561,17 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             color: #333;
         }
         
-        .cct-range-control {
+        .uenf-range-control {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .cct-range-control input[type="range"] {
+        .uenf-range-control input[type="range"] {
             flex: 1;
         }
         
-        .cct-range-control span {
+        .uenf-range-control span {
             min-width: 50px;
             font-size: 12px;
             font-weight: 600;
@@ -579,7 +579,7 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             text-align: right;
         }
         
-        .cct-setting-group input[type="color"] {
+        .uenf-setting-group input[type="color"] {
             width: 50px;
             height: 30px;
             border: none;
@@ -587,24 +587,24 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-multiple-shadows {
+        .uenf-multiple-shadows {
             padding: 20px;
             background: #f8f9fa;
             border-bottom: 1px solid #ddd;
         }
         
-        .cct-multiple-shadows h4 {
+        .uenf-multiple-shadows h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-shadow-layers {
+        .uenf-shadow-layers {
             margin-bottom: 15px;
         }
         
-        .cct-shadow-layer {
+        .uenf-shadow-layer {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -615,12 +615,12 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             margin-bottom: 8px;
         }
         
-        .cct-layer-label {
+        .uenf-layer-label {
             font-size: 12px;
             color: #333;
         }
         
-        .cct-remove-layer {
+        .uenf-remove-layer {
             width: 20px;
             height: 20px;
             border: none;
@@ -634,40 +634,40 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             justify-content: center;
         }
         
-        .cct-remove-layer:disabled {
+        .uenf-remove-layer:disabled {
             background: #ccc;
             cursor: not-allowed;
         }
         
-        .cct-shadow-actions {
+        .uenf-shadow-actions {
             display: flex;
             gap: 10px;
         }
         
-        .cct-shadow-actions .button {
+        .uenf-shadow-actions .button {
             font-size: 11px;
             padding: 8px 12px;
         }
         
-        .cct-shadow-presets {
+        .uenf-shadow-presets {
             padding: 20px;
             background: white;
         }
         
-        .cct-shadow-presets h4 {
+        .uenf-shadow-presets h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-preset-grid {
+        .uenf-preset-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
         
-        .cct-preset-btn {
+        .uenf-preset-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -680,19 +680,19 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
             transition: all 0.3s ease;
         }
         
-        .cct-preset-btn:hover {
+        .uenf-preset-btn:hover {
             border-color: #0073aa;
             background: #f0f8ff;
         }
         
-        .cct-preset-preview {
+        .uenf-preset-preview {
             width: 40px;
             height: 25px;
             background: white;
             border-radius: 4px;
         }
         
-        .cct-preset-btn span {
+        .uenf-preset-btn span {
             font-size: 10px;
             color: #333;
             text-align: center;
@@ -705,14 +705,14 @@ class CCT_Shadow_Configurator_Control extends WP_Customize_Control {
 /**
  * Controle Seletor de Presets
  */
-class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
+class UENF_Shadow_Preset_Selector_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_shadow_preset_selector';
+    public $type = 'uenf_shadow_preset_selector';
     
     /**
      * Presets de sombras
@@ -736,37 +736,37 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-shadow-preset-selector">
-            <div class="cct-preset-options">
+        <div class="uenf-shadow-preset-selector">
+            <div class="uenf-preset-options">
                 <?php foreach ($this->shadow_presets as $preset_key => $preset): ?>
-                    <div class="cct-preset-option" data-preset="<?php echo esc_attr($preset_key); ?>">
-                        <div class="cct-preset-demo" 
+                    <div class="uenf-preset-option" data-preset="<?php echo esc_attr($preset_key); ?>">
+                        <div class="uenf-preset-demo" 
                              style="background: <?php echo esc_attr($preset['color']); ?>; opacity: <?php echo esc_attr($preset['opacity']); ?>">
-                            <div class="cct-preset-sample"></div>
+                            <div class="uenf-preset-sample"></div>
                         </div>
                         
-                        <div class="cct-preset-info">
+                        <div class="uenf-preset-info">
                             <h5><?php echo esc_html($preset['name']); ?></h5>
                             <p><?php echo esc_html($preset['description']); ?></p>
                             
-                            <div class="cct-preset-meta">
-                                <span class="cct-preset-style">
+                            <div class="uenf-preset-meta">
+                                <span class="uenf-preset-style">
                                     <strong><?php _e('Estilo:', 'cct'); ?></strong> 
                                     <?php echo esc_html(ucfirst($preset['style'])); ?>
                                 </span>
                                 
-                                <span class="cct-preset-opacity">
+                                <span class="uenf-preset-opacity">
                                     <strong><?php _e('Opacidade:', 'cct'); ?></strong> 
                                     <?php echo esc_html(round($preset['opacity'] * 100)); ?>%
                                 </span>
                             </div>
                             
-                            <div class="cct-preset-actions">
-                                <button type="button" class="button cct-apply-preset" 
+                            <div class="uenf-preset-actions">
+                                <button type="button" class="button uenf-apply-preset" 
                                         data-preset="<?php echo esc_attr($preset_key); ?>">
                                     <?php _e('Aplicar', 'cct'); ?>
                                 </button>
-                                <button type="button" class="button cct-preview-preset" 
+                                <button type="button" class="button uenf-preview-preset" 
                                         data-preset="<?php echo esc_attr($preset_key); ?>">
                                     <?php _e('👁️ Preview', 'cct'); ?>
                                 </button>
@@ -777,24 +777,24 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             </div>
             
             <!-- Configurações do preset ativo -->
-            <div class="cct-active-preset-config">
+            <div class="uenf-active-preset-config">
                 <h4><?php _e('Configurações do Preset Ativo', 'cct'); ?></h4>
                 
-                <div class="cct-config-row">
+                <div class="uenf-config-row">
                     <label><?php _e('Intensidade:', 'cct'); ?></label>
-                    <input type="range" class="cct-preset-intensity" min="0.5" max="2" step="0.1" value="1">
-                    <span class="cct-intensity-value">100%</span>
+                    <input type="range" class="uenf-preset-intensity" min="0.5" max="2" step="0.1" value="1">
+                    <span class="uenf-intensity-value">100%</span>
                 </div>
                 
-                <div class="cct-config-row">
+                <div class="uenf-config-row">
                     <label><?php _e('Cor personalizada:', 'cct'); ?></label>
-                    <input type="color" class="cct-preset-color" value="#000000">
-                    <button type="button" class="button cct-reset-color"><?php _e('Reset', 'cct'); ?></button>
+                    <input type="color" class="uenf-preset-color" value="#000000">
+                    <button type="button" class="button uenf-reset-color"><?php _e('Reset', 'cct'); ?></button>
                 </div>
                 
-                <div class="cct-config-row">
-                    <label class="cct-checkbox-label">
-                        <input type="checkbox" class="cct-enable-custom" checked>
+                <div class="uenf-config-row">
+                    <label class="uenf-checkbox-label">
+                        <input type="checkbox" class="uenf-enable-custom" checked>
                         <?php _e('Permitir customização', 'cct'); ?>
                     </label>
                 </div>
@@ -802,14 +802,14 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-shadow-preset-selector {
+        .uenf-shadow-preset-selector {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-preset-options {
+        .uenf-preset-options {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
@@ -819,7 +819,7 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             overflow-y: auto;
         }
         
-        .cct-preset-option {
+        .uenf-preset-option {
             display: flex;
             background: white;
             border: 1px solid #ddd;
@@ -829,17 +829,17 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-preset-option:hover {
+        .uenf-preset-option:hover {
             border-color: #0073aa;
             box-shadow: 0 2px 8px rgba(0, 115, 170, 0.1);
         }
         
-        .cct-preset-option.active {
+        .uenf-preset-option.active {
             border-color: #0073aa;
             background: #f0f8ff;
         }
         
-        .cct-preset-demo {
+        .uenf-preset-demo {
             width: 80px;
             height: 80px;
             display: flex;
@@ -849,7 +849,7 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             flex-shrink: 0;
         }
         
-        .cct-preset-sample {
+        .uenf-preset-sample {
             width: 40px;
             height: 40px;
             background: white;
@@ -857,26 +857,26 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
         
-        .cct-preset-info {
+        .uenf-preset-info {
             flex: 1;
             padding: 15px;
         }
         
-        .cct-preset-info h5 {
+        .uenf-preset-info h5 {
             margin: 0 0 5px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-preset-info p {
+        .uenf-preset-info p {
             margin: 0 0 10px 0;
             font-size: 11px;
             color: #666;
             line-height: 1.4;
         }
         
-        .cct-preset-meta {
+        .uenf-preset-meta {
             display: flex;
             gap: 15px;
             margin-bottom: 10px;
@@ -884,54 +884,54 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             color: #888;
         }
         
-        .cct-preset-actions {
+        .uenf-preset-actions {
             display: flex;
             gap: 8px;
         }
         
-        .cct-preset-actions .button {
+        .uenf-preset-actions .button {
             font-size: 10px;
             padding: 6px 10px;
             height: auto;
         }
         
-        .cct-apply-preset {
+        .uenf-apply-preset {
             background: #0073aa;
             color: white;
             border-color: #005a87;
         }
         
-        .cct-active-preset-config {
+        .uenf-active-preset-config {
             padding: 20px;
             background: white;
             border-top: 1px solid #ddd;
         }
         
-        .cct-active-preset-config h4 {
+        .uenf-active-preset-config h4 {
             margin: 0 0 15px 0;
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-config-row {
+        .uenf-config-row {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
         }
         
-        .cct-config-row label {
+        .uenf-config-row label {
             min-width: 120px;
             font-size: 12px;
             color: #333;
         }
         
-        .cct-config-row input[type="range"] {
+        .uenf-config-row input[type="range"] {
             flex: 1;
         }
         
-        .cct-config-row input[type="color"] {
+        .uenf-config-row input[type="color"] {
             width: 40px;
             height: 25px;
             border: none;
@@ -939,19 +939,19 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-intensity-value {
+        .uenf-intensity-value {
             min-width: 40px;
             font-size: 11px;
             font-weight: 600;
             color: #0073aa;
         }
         
-        .cct-reset-color {
+        .uenf-reset-color {
             font-size: 10px;
             padding: 4px 8px;
         }
         
-        .cct-checkbox-label {
+        .uenf-checkbox-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -959,7 +959,7 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
             cursor: pointer;
         }
         
-        .cct-checkbox-label input[type="checkbox"] {
+        .uenf-checkbox-label input[type="checkbox"] {
             margin: 0;
         }
         </style>
@@ -970,14 +970,14 @@ class CCT_Shadow_Preset_Selector_Control extends WP_Customize_Control {
 /**
  * Controle Demonstração de Casos de Uso
  */
-class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
+class UENF_Shadow_Use_Cases_Control extends WP_Customize_Control {
     
     /**
      * Tipo do controle
      * 
      * @var string
      */
-    public $type = 'cct_shadow_use_cases';
+    public $type = 'uenf_shadow_use_cases';
     
     /**
      * Renderiza o controle
@@ -994,29 +994,29 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
             <?php endif; ?>
         </label>
         
-        <div class="cct-shadow-use-cases">
+        <div class="uenf-shadow-use-cases">
             <!-- Casos de uso por categoria -->
-            <div class="cct-use-case-categories">
-                <div class="cct-use-case-category">
+            <div class="uenf-use-case-categories">
+                <div class="uenf-use-case-category">
                     <h4><?php _e('Interface de Usuário', 'cct'); ?></h4>
                     
-                    <div class="cct-use-case-examples">
-                        <div class="cct-use-case-example">
-                            <div class="cct-example-demo cct-elevation-2">
+                    <div class="uenf-use-case-examples">
+                        <div class="uenf-use-case-example">
+                            <div class="uenf-example-demo uenf-elevation-2">
                                 <span><?php _e('Card de Conteúdo', 'cct'); ?></span>
                             </div>
                             <p><?php _e('Elevação 2 - Para separar conteúdo', 'cct'); ?></p>
                         </div>
                         
-                        <div class="cct-use-case-example">
-                            <button class="cct-example-demo cct-elevation-4">
+                        <div class="uenf-use-case-example">
+                            <button class="uenf-example-demo uenf-elevation-4">
                                 <?php _e('Botão Primário', 'cct'); ?>
                             </button>
                             <p><?php _e('Elevação 4 - Para elementos interativos', 'cct'); ?></p>
                         </div>
                         
-                        <div class="cct-use-case-example">
-                            <div class="cct-example-demo cct-elevation-8">
+                        <div class="uenf-use-case-example">
+                            <div class="uenf-example-demo uenf-elevation-8">
                                 <span><?php _e('Modal/Dialog', 'cct'); ?></span>
                             </div>
                             <p><?php _e('Elevação 8 - Para overlays importantes', 'cct'); ?></p>
@@ -1024,19 +1024,19 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
                     </div>
                 </div>
                 
-                <div class="cct-use-case-category">
+                <div class="uenf-use-case-category">
                     <h4><?php _e('Navegação', 'cct'); ?></h4>
                     
-                    <div class="cct-use-case-examples">
-                        <div class="cct-use-case-example">
-                            <div class="cct-example-demo cct-elevation-12">
+                    <div class="uenf-use-case-examples">
+                        <div class="uenf-use-case-example">
+                            <div class="uenf-example-demo uenf-elevation-12">
                                 <span><?php _e('Menu Dropdown', 'cct'); ?></span>
                             </div>
                             <p><?php _e('Elevação 12 - Para menus suspensos', 'cct'); ?></p>
                         </div>
                         
-                        <div class="cct-use-case-example">
-                            <div class="cct-example-demo cct-elevation-16">
+                        <div class="uenf-use-case-example">
+                            <div class="uenf-example-demo uenf-elevation-16">
                                 <span><?php _e('Tooltip', 'cct'); ?></span>
                             </div>
                             <p><?php _e('Elevação 16 - Para dicas contextuais', 'cct'); ?></p>
@@ -1044,19 +1044,19 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
                     </div>
                 </div>
                 
-                <div class="cct-use-case-category">
+                <div class="uenf-use-case-category">
                     <h4><?php _e('Estados Interativos', 'cct'); ?></h4>
                     
-                    <div class="cct-use-case-examples">
-                        <div class="cct-use-case-example">
-                            <div class="cct-example-demo cct-elevation-2 cct-elevation-hover-2">
+                    <div class="uenf-use-case-examples">
+                        <div class="uenf-use-case-example">
+                            <div class="uenf-example-demo uenf-elevation-2 uenf-elevation-hover-2">
                                 <span><?php _e('Card Hover', 'cct'); ?></span>
                             </div>
                             <p><?php _e('Hover: 2 → 4 - Feedback visual', 'cct'); ?></p>
                         </div>
                         
-                        <div class="cct-use-case-example">
-                            <button class="cct-example-demo cct-elevation-4 cct-elevation-hover-4">
+                        <div class="uenf-use-case-example">
+                            <button class="uenf-example-demo uenf-elevation-4 uenf-elevation-hover-4">
                                 <?php _e('Botão Hover', 'cct'); ?>
                             </button>
                             <p><?php _e('Hover: 4 → 6 - Interação clara', 'cct'); ?></p>
@@ -1066,37 +1066,37 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
             </div>
             
             <!-- Guia de boas práticas -->
-            <div class="cct-best-practices">
+            <div class="uenf-best-practices">
                 <h4><?php _e('Boas Práticas', 'cct'); ?></h4>
                 
-                <div class="cct-practice-tips">
-                    <div class="cct-tip">
-                        <span class="cct-tip-icon">💡</span>
-                        <div class="cct-tip-content">
+                <div class="uenf-practice-tips">
+                    <div class="uenf-tip">
+                        <span class="uenf-tip-icon">💡</span>
+                        <div class="uenf-tip-content">
                             <strong><?php _e('Hierarquia Visual', 'cct'); ?></strong>
                             <p><?php _e('Use elevações crescentes para criar hierarquia clara entre elementos.', 'cct'); ?></p>
                         </div>
                     </div>
                     
-                    <div class="cct-tip">
-                        <span class="cct-tip-icon">⚡</span>
-                        <div class="cct-tip-content">
+                    <div class="uenf-tip">
+                        <span class="uenf-tip-icon">⚡</span>
+                        <div class="uenf-tip-content">
                             <strong><?php _e('Performance', 'cct'); ?></strong>
                             <p><?php _e('Evite usar muitas elevações altas simultaneamente para manter boa performance.', 'cct'); ?></p>
                         </div>
                     </div>
                     
-                    <div class="cct-tip">
-                        <span class="cct-tip-icon">🎨</span>
-                        <div class="cct-tip-content">
+                    <div class="uenf-tip">
+                        <span class="uenf-tip-icon">🎨</span>
+                        <div class="uenf-tip-content">
                             <strong><?php _e('Consistência', 'cct'); ?></strong>
                             <p><?php _e('Mantenha o mesmo nível de elevação para elementos similares.', 'cct'); ?></p>
                         </div>
                     </div>
                     
-                    <div class="cct-tip">
-                        <span class="cct-tip-icon">📱</span>
-                        <div class="cct-tip-content">
+                    <div class="uenf-tip">
+                        <span class="uenf-tip-icon">📱</span>
+                        <div class="uenf-tip-content">
                             <strong><?php _e('Mobile', 'cct'); ?></strong>
                             <p><?php _e('Reduza elevações em dispositivos móveis para melhor performance.', 'cct'); ?></p>
                         </div>
@@ -1106,27 +1106,27 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
         </div>
         
         <style>
-        .cct-shadow-use-cases {
+        .uenf-shadow-use-cases {
             margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .cct-use-case-categories {
+        .uenf-use-case-categories {
             padding: 20px;
             background: #f9f9f9;
         }
         
-        .cct-use-case-category {
+        .uenf-use-case-category {
             margin-bottom: 30px;
         }
         
-        .cct-use-case-category:last-child {
+        .uenf-use-case-category:last-child {
             margin-bottom: 0;
         }
         
-        .cct-use-case-category h4 {
+        .uenf-use-case-category h4 {
             margin: 0 0 15px 0;
             font-size: 14px;
             font-weight: 600;
@@ -1135,17 +1135,17 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
             padding-bottom: 5px;
         }
         
-        .cct-use-case-examples {
+        .uenf-use-case-examples {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
         }
         
-        .cct-use-case-example {
+        .uenf-use-case-example {
             text-align: center;
         }
         
-        .cct-example-demo {
+        .uenf-example-demo {
             width: 100%;
             height: 60px;
             background: white;
@@ -1161,32 +1161,32 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
-        .cct-use-case-example p {
+        .uenf-use-case-example p {
             margin: 0;
             font-size: 10px;
             color: #666;
             line-height: 1.3;
         }
         
-        .cct-best-practices {
+        .uenf-best-practices {
             padding: 20px;
             background: white;
             border-top: 1px solid #ddd;
         }
         
-        .cct-best-practices h4 {
+        .uenf-best-practices h4 {
             margin: 0 0 15px 0;
             font-size: 14px;
             font-weight: 600;
             color: #333;
         }
         
-        .cct-practice-tips {
+        .uenf-practice-tips {
             display: grid;
             gap: 15px;
         }
         
-        .cct-tip {
+        .uenf-tip {
             display: flex;
             align-items: flex-start;
             gap: 12px;
@@ -1196,19 +1196,19 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
             border-left: 4px solid #0073aa;
         }
         
-        .cct-tip-icon {
+        .uenf-tip-icon {
             font-size: 18px;
             flex-shrink: 0;
         }
         
-        .cct-tip-content strong {
+        .uenf-tip-content strong {
             display: block;
             font-size: 12px;
             color: #333;
             margin-bottom: 4px;
         }
         
-        .cct-tip-content p {
+        .uenf-tip-content p {
             margin: 0;
             font-size: 11px;
             color: #666;
@@ -1216,22 +1216,22 @@ class CCT_Shadow_Use_Cases_Control extends WP_Customize_Control {
         }
         
         /* Aplicar classes de elevação */
-        .cct-elevation-0 { box-shadow: none; }
-        .cct-elevation-1 { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-        .cct-elevation-2 { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-        .cct-elevation-4 { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
-        .cct-elevation-6 { box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
-        .cct-elevation-8 { box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22); }
-        .cct-elevation-12 { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.22); }
-        .cct-elevation-16 { box-shadow: 0 30px 60px rgba(0, 0, 0, 0.30), 0 18px 36px rgba(0, 0, 0, 0.22); }
-        .cct-elevation-24 { box-shadow: 0 38px 76px rgba(0, 0, 0, 0.35), 0 24px 48px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-0 { box-shadow: none; }
+        .uenf-elevation-1 { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+        .uenf-elevation-2 { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+        .uenf-elevation-4 { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+        .uenf-elevation-6 { box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-8 { box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-12 { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-16 { box-shadow: 0 30px 60px rgba(0, 0, 0, 0.30), 0 18px 36px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-24 { box-shadow: 0 38px 76px rgba(0, 0, 0, 0.35), 0 24px 48px rgba(0, 0, 0, 0.22); }
         
         /* Hover effects */
-        .cct-elevation-hover-1:hover { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-        .cct-elevation-hover-2:hover { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
-        .cct-elevation-hover-4:hover { box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
-        .cct-elevation-hover-6:hover { box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22); }
-        .cct-elevation-hover-8:hover { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-hover-1:hover { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+        .uenf-elevation-hover-2:hover { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+        .uenf-elevation-hover-4:hover { box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-hover-6:hover { box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22); }
+        .uenf-elevation-hover-8:hover { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.22); }
         </style>
         <?php
     }

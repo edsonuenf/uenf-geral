@@ -14,7 +14,6 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0 15px;
-  width: 100%;
   box-sizing: border-box;
 }
 
@@ -22,7 +21,7 @@
 #colophon .footer-widgets {
   display: grid;
   grid-template-columns: 200px repeat(2, 1fr);
-  gap: 2rem;
+  gap: 1rem;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -31,7 +30,7 @@
 
 /* Footer Widget Styles */
 .footer-widget {
-  padding: 1.5rem;
+  padding: 0.75rem;
 }
 
 .footer-widget h3,
@@ -129,11 +128,11 @@ h4.setor-info{
   /* Ajustes para tablets */
   #colophon .footer-widgets {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 1rem;
   }
-  
+
   .footer-widget {
-    padding: 1.25rem;
+    padding: 0.625rem;
   }
   
   .footer-widget:first-child {
@@ -146,95 +145,9 @@ h4.setor-info{
   }
 }
 
-@media (max-width: 768px) {
-  /* Ajustes para tablets pequenos */
-  #colophon.site-footer {
-    padding: 2.5rem 0;
-  }
-  
-  #colophon .footer-widgets {
-    gap: 1.5rem;
-  }
-  
-  .footer-widget {
-    padding: 1rem 0.75rem;
-  }
-  
-  .enderecos h4, 
-  h4.setor-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .enderecos p,
-  .setor-info {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-}
+/* Responsive footer (≤768px, ≤576px): movido para css/responsive/mobile.css */
 
-@media (max-width: 576px) {
-  /* Ajustes para celulares */
-  #colophon .footer-widgets {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .footer-widget {
-    padding: 1.25rem 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .footer-widget:last-child {
-    border-bottom: none;
-  }
-  
-  .footer-logo img {
-    height: 80px;
-    margin-bottom: 1rem;
-  }
-  
-  .enderecos h4, 
-  h4.setor-title {
-    font-size: 1.05rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .enderecos p,
-  .setor-info {
-    font-size: 0.85rem;
-  }
-  
-  .setor-info br {
-    display: none;
-  }
-  
-  .setor-info strong {
-    display: inline-block;
-    min-width: 60px;
-  }
-}
-
-/* Ajustes adicionais para telas muito pequenas */
-@media (max-width: 360px) {
-  #colophon .container {
-    padding: 0 10px;
-  }
-  
-  .footer-widget {
-    padding: 1rem 0.5rem;
-  }
-  
-  .enderecos h4, 
-  h4.setor-title {
-    font-size: 1rem;
-  }
-  
-  .enderecos p,
-  .setor-info {
-    font-size: 0.8rem;
-  }
-}
+/* Responsive footer (≤360px): movido para css/responsive/mobile.css */
 
 /* Shortcut Panel Styles */
 .shortcut-icon {
@@ -346,12 +259,17 @@ h4.setor-info{
   bottom: 30px;
   width: 50px;
   height: 50px;
-  background-color: var(--bs-uenf-blue);
+  background-color: rgba(29, 55, 113, 0.7);
   color: white;
-  border-radius: 50%;
+  border-radius: 8px;
+  border: 1px solid rgba(29, 55, 113, 0.8);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
   text-decoration: none;
   opacity: 0;
   visibility: hidden;
@@ -371,30 +289,13 @@ h4.setor-info{
 }
 
 .back-to-top:hover {
-  background-color: #0056b3;
+  background-color: #142a55;
   transform: translateY(-3px);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .shortcut-panel {
-    width: 100%;
-    right: -100%;
-  }
-  
-  .shortcut-panel.open {
-    right: 0;
-  }
-  
-  .shortcut-icon {
-    bottom: 80px;
-    right: 15px;
-  }
-  
-  .back-to-top {
-    right: 15px;
-    bottom: 15px;
-  }
+.back-to-top:focus-visible {
+  outline: 2px solid rgba(29, 55, 113, 0.8);
+  outline-offset: 2px;
 }
 
 /* Ajuste de posição quando o painel de atalhos está aberto */
@@ -403,9 +304,9 @@ h4.setor-info{
   transition: right 0.3s ease;
 }
 
-@media (max-width: 768px) {
-  .shortcut-panel.open + .back-to-top.visible {
-    right: auto;
-    left: 15px;
-  }
+/* Responsive adjustments (≤768px): movido para css/responsive/mobile.css */
+
+.contact-item a {
+  font-weight: normal;
+  color: inherit;
 }

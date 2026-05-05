@@ -3,7 +3,7 @@
  */
 
 /* Botão principal de reset */
-.cct-social-reset-button {
+.uenf-social-reset-button {
     width: 100% !important;
     margin-top: 15px !important;
     padding: 10px 15px !important;
@@ -15,17 +15,17 @@
     transition: all 0.2s ease !important;
 }
 
-.cct-social-reset-button:hover {
+.uenf-social-reset-button:hover {
     background: #e0e0e1 !important;
     border-color: #8c8f94 !important;
 }
 
-.cct-social-reset-button:active {
+.uenf-social-reset-button:active {
     background: #d0d0d1 !important;
 }
 
 /* Botões individuais de reset */
-.cct-individual-reset {
+.uenf-individual-reset {
     font-size: 10px !important;
     padding: 3px 8px !important;
     margin-left: 10px !important;
@@ -43,20 +43,20 @@
     text-align: center !important;
 }
 
-.cct-individual-reset:hover {
+.uenf-individual-reset:hover {
     background: #f0f0f1 !important;
     border-color: #999 !important;
     color: #333 !important;
     text-decoration: none !important;
 }
 
-.cct-individual-reset:focus {
+.uenf-individual-reset:focus {
     outline: 1px solid #0073aa !important;
     outline-offset: 1px !important;
 }
 
 /* Notificação de sucesso */
-.cct-reset-notification {
+.uenf-reset-notification {
     animation: slideInRight 0.3s ease-out;
 }
 
@@ -118,13 +118,13 @@
 
 /* Responsivo */
 @media (max-width: 782px) {
-    .cct-individual-reset {
+    .uenf-individual-reset {
         font-size: 10px !important;
         padding: 1px 4px !important;
         margin-left: 5px !important;
     }
     
-    .cct-reset-notification {
+    .uenf-reset-notification {
         right: 10px !important;
         max-width: 250px !important;
         font-size: 13px !important;
@@ -132,18 +132,18 @@
 }
 
 /* Estados de feedback */
-.cct-individual-reset.success {
+.uenf-individual-reset.success {
     color: #00a32a !important;
     border-color: #00a32a !important;
 }
 
-.cct-individual-reset.loading {
+.uenf-individual-reset.loading {
     color: #0073aa !important;
     border-color: #0073aa !important;
 }
 
 /* Tooltip para botões individuais */
-.cct-individual-reset[title]:hover::after {
+.uenf-individual-reset[title]:hover::after {
     content: attr(title);
     position: absolute;
     bottom: 100%;
@@ -159,7 +159,7 @@
     margin-bottom: 5px;
 }
 
-.cct-individual-reset[title]:hover::before {
+.uenf-individual-reset[title]:hover::before {
     content: '';
     position: absolute;
     bottom: 100%;

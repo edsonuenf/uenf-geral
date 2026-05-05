@@ -1,0 +1,550 @@
+/*
+ * UENF Theme — Mobile Responsive CSS
+ * Gerado por: uenf-css-performance squad (Step 4)
+ * Media: (max-width:767.98px)
+ *
+ * ATENÇÃO: Este arquivo é carregado com media="(max-width:767.98px)"
+ * Contém regras extraídas de:
+ *   - css/custom-fixes.css
+ *   - css/components/shortcuts.css
+ *   - css/components/header.css
+ *   - css/components/footer.css
+ *   - css/components/new-menu.css
+ */
+
+/* === De: css/custom-fixes.css === */
+
+@media (max-width: 576px) {
+  .footer-widgets {
+    gap: 8px !important;
+  }
+
+  .footer-logo img {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* ===== Back-to-top: fica atrás da barra inferior em mobile ===== */
+@media (max-width: 767.98px) {
+  .back-to-top {
+    z-index: 9999 !important;
+    /* abaixo da .header-media-grid (z-index: 10000) */
+    bottom: 76px !important;
+    /* um pouco mais alto para respirar acima da barra */
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 0.85rem !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(29, 55, 113, 0.8) !important;
+    background-color: rgba(29, 55, 113, 0.7) !important;
+    color: #fff !important;
+  }
+
+  .back-to-top i {
+    color: #fff !important;
+  }
+}
+
+/* ===== Painel de atalhos: mantém posicionamento original do shortcuts.css ===== */
+/* O shortcuts.css controla: position:fixed; top:0; right:0; height:100vh; width:0; overflow:hidden */
+/* Quando expandido (.expanded), width:300px; overflow:visible */
+/* NÃO sobrescrever top/right/height/width — isso quebraria o slide-in do painel */
+@media (max-width: 767.98px) {
+
+  /* Oculta o ícone flutuante original — usamos #header-shortcut-btn no lugar */
+  #uenf-shortcut-panel-container .shortcut-icon {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    /* não intercepta cliques do usuário */
+    /* programmatic .click() ainda funciona — dispara o jQuery handler */
+  }
+
+  /* FIX: shortcuts.css define right:-100% em mobile mas nunca reseta para 0 ao expandir.
+       O painel ficava fora da tela mesmo com .expanded/.active. */
+  #uenf-shortcut-panel-container.expanded .shortcut-panel {
+    right: 0 !important;
+  }
+}
+
+/* ===== Ícones da barra inferior mobile — background 30%, borda 1px 40% ===== */
+@media (max-width: 767.98px) {
+
+  /* Tamanho e estilo uniforme para todos os botões da barra */
+  .header-home-link,
+  .header-shortcut-btn,
+  .header-social-btn,
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Home à esquerda */
+  .header-home-link {
+    margin-right: 0;
+  }
+
+  /* Atalhos: empurra shortcuts+social para a direita */
+  .header-shortcut-btn {
+    margin-left: auto;
+  }
+
+  .header-home-link:hover,
+  .header-shortcut-btn:hover,
+  .header-social-btn:hover,
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger:hover {
+    color: #fff !important;
+  }
+
+  /* Ajusta barra: home à esquerda, atalhos+social à direita, idiomas centralizado */
+  /* NÃO definir position aqui — style.min.css tem position:fixed;bottom:0 que deve prevalecer */
+  .header-media-grid {
+    justify-content: flex-start !important;
+    align-items: center;
+    gap: 6px;
+    padding-top: 10px !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* Idiomas: posicionado absolutamente no centro da barra */
+  .header-media-grid .idiomas-bandeiras {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger::after {
+    display: none !important;
+    content: '' !important;
+  }
+
+  .header-media-grid .idiomas-bandeiras.open .lang-dropdown-trigger::after {
+    display: none !important;
+    content: '' !important;
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger img {
+    width: 22px !important;
+    height: auto;
+    pointer-events: none;
+  }
+
+  /* Oculta ícones sociais individuais — substituídos pelo botão share */
+  .header-media-grid .social-media {
+    display: none !important;
+  }
+
+  /* Wrapper do botão share — visível e posicionado corretamente */
+  .social-share-wrapper {
+    display: flex !important;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Dropdown de redes sociais — abre para cima */
+  .social-share-wrapper .social-dropdown-panel {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    background: #1d3771;
+    border-radius: 6px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    padding: 6px 0;
+    min-width: 150px;
+    z-index: 10002;
+  }
+
+  .social-share-wrapper.open .social-dropdown-panel {
+    display: block;
+  }
+
+  .social-share-wrapper .social-dropdown-panel a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  .social-share-wrapper .social-dropdown-panel a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .social-share-wrapper .social-dropdown-panel a i {
+    width: 18px;
+    text-align: center;
+    font-size: 1rem;
+  }
+}
+
+/* ===== Espaço inferior: evita conteúdo oculto atrás da barra fixa ===== */
+/* barra: padding 8px top/bottom + ícone ~24px = ~40px total */
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(41px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ===== Dropdown de idiomas — somente mobile (barra rodapé) ===== */
+/* position:absolute (da regra de centering acima) já cria contexto para .lang-dropdown-panel */
+@media (max-width: 767.98px) {
+
+  /* Botão trigger: mostra a flag atual */
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #fff;
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger img {
+    width: 26px !important;
+    height: auto;
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-trigger::after {
+    content: '▲';
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: transform 0.2s;
+  }
+
+  .header-media-grid .idiomas-bandeiras.open .lang-dropdown-trigger::after {
+    content: '▼';
+  }
+
+  /* Painel com todos os idiomas — abre para cima */
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-panel {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    background: #1d3771;
+    border-radius: 6px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    padding: 6px 0;
+    min-width: 120px;
+    z-index: 10002;
+  }
+
+  .header-media-grid .idiomas-bandeiras.open .lang-dropdown-panel {
+    display: block;
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-panel a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-panel a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .header-media-grid .idiomas-bandeiras .lang-dropdown-panel img {
+    width: 20px;
+    height: auto;
+  }
+
+  /* Oculta a lista original */
+  .header-media-grid .idiomas-bandeiras>ul,
+  .header-media-grid .idiomas-bandeiras>.widget {
+    display: none !important;
+  }
+}
+
+/* ===== Tipografia mobile: H1/H2/H3 -2px + entrelinhamento compacto ===== */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.615rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ~25.8px — era ~27.85px */
+  h2 {
+    font-size: 1.875rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* 30px — era 32px */
+  h3 {
+    font-size: 1.075rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ~17.2px — era 19.2px */
+}
+
+/* === De: css/components/shortcuts.css === */
+
+/* Responsivo (primeiro bloco) */
+@media (max-width: 768px) {
+  #uenf-shortcut-panel-container .shortcut-panel {
+    width: 100%;
+    right: -100%;
+  }
+
+  #uenf-shortcut-panel-container.expanded .shortcut-panel {
+    right: 0;
+  }
+
+  #uenf-shortcut-panel-container .shortcut-icon {
+    bottom: 80px;
+    right: 15px;
+    top: auto;
+    transform: none;
+  }
+
+  #uenf-shortcut-panel-container .shortcut-icon.active {
+    right: 15px;
+    bottom: 80px;
+    transform: none;
+  }
+}
+
+/* Responsividade (segundo bloco) */
+@media (max-width: 768px) {
+  #uenf-shortcut-panel-container.expanded {
+    width: 100vw;
+  }
+
+  #uenf-shortcut-panel-container .shortcut-panel {
+    width: 100%;
+  }
+
+  #uenf-shortcut-panel-container .shortcut-icon {
+    bottom: 80px;
+    right: 15px;
+  }
+
+  #uenf-shortcut-panel-container.expanded .shortcut-icon {
+    right: 15px;
+    /* Mantém na mesma posição em mobile */
+  }
+}
+
+/* === De: css/components/header.css === */
+
+/* Responsive Hero */
+@media (max-width: 768px) {
+  .hero-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  .hero-section .container {
+    padding: 0 15px;
+  }
+
+  .hero-title {
+    padding: 30px 0 20px 0;
+    font-size: 2rem;
+  }
+}
+
+/* Responsive Social Media */
+@media (max-width: 768px) {
+  .social-media-links {
+    gap: 5px;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-media-links {
+    gap: 4px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-media-grid {
+    grid-template-columns: 1fr;
+    justify-content: end;
+    gap: 8px;
+  }
+
+  .header-media-grid .idiomas-bandeiras,
+  .header-media-grid .social-media {
+    justify-items: end;
+  }
+}
+
+/* === De: css/components/footer.css === */
+
+@media (max-width: 768px) {
+
+  /* Ajustes para tablets pequenos */
+  #colophon.site-footer {
+    padding: 2.5rem 0;
+  }
+
+  #colophon .footer-widgets {
+    gap: 0.75rem;
+  }
+
+  .footer-widget {
+    padding: 0.5rem 0.375rem;
+  }
+
+  .enderecos h4,
+  h4.setor-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .enderecos p,
+  .setor-info {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 576px) {
+
+  /* Ajustes para celulares */
+  #colophon .footer-widgets {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .footer-widget {
+    padding: 0.625rem 0.375rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-widget:last-child {
+    border-bottom: none;
+  }
+
+  .footer-logo img {
+    height: 80px;
+    margin-bottom: 0.5rem;
+  }
+
+  .enderecos h4,
+  h4.setor-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .enderecos p,
+  .setor-info {
+    font-size: 0.85rem;
+  }
+
+  .setor-info br {
+    display: none;
+  }
+
+  .setor-info strong {
+    display: inline-block;
+    min-width: 60px;
+  }
+}
+
+/* Ajustes adicionais para telas muito pequenas */
+@media (max-width: 360px) {
+  #colophon .container {
+    padding: 0 10px;
+  }
+
+  .footer-widget {
+    padding: 1rem 0.5rem;
+  }
+
+  .enderecos h4,
+  h4.setor-title {
+    font-size: 1rem;
+  }
+
+  .enderecos p,
+  .setor-info {
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .shortcut-panel {
+    width: 100%;
+    right: -100%;
+  }
+
+  .shortcut-panel.open {
+    right: 0;
+  }
+
+  .shortcut-icon {
+    bottom: 80px;
+    right: 15px;
+  }
+
+  .back-to-top {
+    right: 15px;
+    bottom: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .shortcut-panel.open+.back-to-top.visible {
+    right: auto;
+    left: 15px;
+  }
+}
+
+/* === De: css/components/new-menu.css === */
+
+/* Hamburger: 6px mais para a direita */
+@media (max-width: 767.98px) {
+  .navbar-toggler {
+    margin-right: calc(1rem - 6px);
+  }
+}
+
+/* Melhorias de responsividade */
+@media (max-width: 768px) {
+  .new-menu a {
+    padding: 14px 20px;
+    font-size: 0.95em;
+  }
+
+  .new-menu .submenu-toggle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .new-menu .sub-menu a,
+  .new-menu .children a {
+    padding: 10px 16px 10px 28px;
+    font-size: 0.85em;
+  }
+}

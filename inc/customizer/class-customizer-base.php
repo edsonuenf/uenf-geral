@@ -5,7 +5,7 @@
  * Classe abstrata que define a estrutura básica para módulos do customizer.
  * Fornece métodos comuns e padroniza a implementação de seções do customizer.
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @subpackage Customizer
  * @since 1.0.0
  */
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
  * Esta classe fornece a estrutura básica que todos os módulos do customizer
  * devem seguir, garantindo consistência e reutilização de código.
  */
-abstract class CCT_Customizer_Base {
+abstract class UENF_Customizer_Base {
     
     /**
      * Instância do gerenciador do customizer
@@ -35,7 +35,7 @@ abstract class CCT_Customizer_Base {
      * 
      * @var string
      */
-    protected $prefix = 'cct_';
+    protected $prefix = 'uenf_';
     
     /**
      * Construtor
@@ -150,7 +150,7 @@ abstract class CCT_Customizer_Base {
      * @param string $suffix Sufixo para o valor (ex: 'px', '%')
      * @return string CSS gerado
      */
-    protected function generate_css($selector, $property, $setting_id, $default = '', $suffix = '') {
+    protected function get_css_line($selector, $property, $setting_id, $default = '', $suffix = '') {
         $value = $this->get_theme_mod($setting_id, $default);
         
         if (empty($value) || $value === $default) {

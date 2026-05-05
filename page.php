@@ -13,7 +13,7 @@ get_header();
                 <!-- Hero -->
                 <div class="col-lg-12">
                     <div class="display-5 fw-bold text-uenf-blue mb-3 hero-title">
-                        <?php echo get_bloginfo('name'); ?>
+                        <?php echo esc_html(get_bloginfo('name')); ?>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@ get_header();
     </section>
 
     <div class="container">
-        <?php cct_custom_breadcrumb(); ?>
+        <?php uenf_custom_breadcrumb(); ?>
     </div>
 
     <section class="line-breadcrumb"></section>
@@ -34,7 +34,7 @@ get_header();
                     ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                         <header class="entry-header mb-4">
-                            <h1 class="entry-title"><?php the_title(); ?></h1>
+                            <h1 class="entry-title"><?php echo esc_html(get_the_title()); ?></h1>
                         </header>
 
                         <?php if ( has_post_thumbnail() ) : ?>
@@ -49,7 +49,7 @@ get_header();
 
                             wp_link_pages(
                                 array(
-                                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'cct-theme' ),
+                                    'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'uenf-theme' ),
                                     'after'  => '</div>',
                                 )
                             );
@@ -63,7 +63,7 @@ get_header();
                                     sprintf(
                                         wp_kses(
                                             /* translators: %s: Name of current post. Only visible to screen readers */
-                                            __( 'Edit <span class="screen-reader-text">%s</span>', 'cct-theme' ),
+                                            __( 'Edit <span class="screen-reader-text">%s</span>', 'uenf-theme' ),
                                             array(
                                                 'span' => array(
                                                     'class' => array(),

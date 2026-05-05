@@ -13,7 +13,7 @@ get_header();
                 <!-- Hero -->
                 <div class="col-lg-12">
                     <div class="display-5 fw-bold text-uenf-blue mb-3 hero-title">
-                        <?php echo get_bloginfo('name'); ?>
+                        <?php echo esc_html(get_bloginfo('name')); ?>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@ get_header();
     </section>
 
     <div class="container py-1">
-        <?php cct_custom_breadcrumb(); ?>
+        <?php uenf_custom_breadcrumb(); ?>
     </div>
 
     <section class="line-breadcrumb"></section>
@@ -35,21 +35,25 @@ get_header();
                     the_post();
                     ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                        <header class="entry-header mb-4">
-                            <h1 class="entry-title"><?php the_title(); ?></h1>
-
-                            <?php if ('post' === get_post_type()): ?>
-                                <div class="entry-meta mb-3">
-                                    <span class="posted-on">Publicado em <?php echo get_the_date(); ?></span>
-                                </div>
-                            <?php endif; ?>
-                        </header>
 
                         <?php if (has_post_thumbnail()): ?>
-                            <div class="post-thumbnail mb-4">
-                                <?php the_post_thumbnail('uenf-large', ['class' => 'img-fluid']); ?>
+                            <div class="post-hero-image mb-4">
+                                <?php the_post_thumbnail('uenf-large', ['class' => 'img-fluid w-100']); ?>
                             </div>
                         <?php endif; ?>
+
+                        <header class="entry-header mb-4">
+                            <?php if ('post' === get_post_type()): ?>
+                                <div class="entry-meta">
+                                    <span class="posted-on">
+                                        <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
+                                        <?php echo esc_html( get_the_date() ); ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+
+                            <h1 class="entry-title"><?php echo esc_html(get_the_title()); ?></h1>
+                        </header>
 
                         <div class="entry-content">
                             <?php the_content(); ?>
@@ -57,7 +61,7 @@ get_header();
                             <?php
                             wp_link_pages(
                                 array(
-                                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'cct-theme'),
+                                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'uenf-theme'),
                                     'after' => '</div>',
                                 )
                             );
@@ -84,8 +88,8 @@ get_header();
                         <?php
                         the_post_navigation(
                             array(
-                                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Anterior:', 'cct-theme') . '</span> <span class="nav-title">%title</span>',
-                                'next_text' => '<span class="nav-subtitle">' . esc_html__('Próximo:', 'cct-theme') . '</span> <span class="nav-title">%title</span>',
+                                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Anterior:', 'uenf-theme') . '</span> <span class="nav-title">%title</span>',
+                                'next_text' => '<span class="nav-subtitle">' . esc_html__('Próximo:', 'uenf-theme') . '</span> <span class="nav-title">%title</span>',
                             )
                         );
                         ?>

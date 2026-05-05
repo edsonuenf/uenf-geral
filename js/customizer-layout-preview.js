@@ -14,7 +14,7 @@
      */
     function bindGridPreview() {
         // Grid columns
-        wp.customize('cct_grid_columns', function(value) {
+        wp.customize('uenf_grid_columns', function(value) {
             value.bind(function(newval) {
                 $('body').attr('data-grid-columns', newval);
                 updateGridCSS();
@@ -22,7 +22,7 @@
         });
 
         // Grid gap
-        wp.customize('cct_grid_gap', function(value) {
+        wp.customize('uenf_grid_gap', function(value) {
             value.bind(function(newval) {
                 $('body').attr('data-grid-gap', newval);
                 updateGridCSS();
@@ -30,7 +30,7 @@
         });
 
         // Grid max width
-        wp.customize('cct_grid_max_width', function(value) {
+        wp.customize('uenf_grid_max_width', function(value) {
             value.bind(function(newval) {
                 $('body').attr('data-grid-max-width', newval);
                 updateGridCSS();
@@ -43,21 +43,21 @@
      */
     function bindContainerPreview() {
         // Container width
-        wp.customize('cct_container_width', function(value) {
+        wp.customize('uenf_container_width', function(value) {
             value.bind(function(newval) {
-                $('.container, .cct-container').css('max-width', newval + 'px');
+                $('.container, .uenf-container').css('max-width', newval + 'px');
             });
         });
 
         // Container padding
-        wp.customize('cct_container_padding', function(value) {
+        wp.customize('uenf_container_padding', function(value) {
             value.bind(function(newval) {
-                $('.container, .cct-container').css('padding', '0 ' + newval + 'px');
+                $('.container, .uenf-container').css('padding', '0 ' + newval + 'px');
             });
         });
 
         // Container type
-        wp.customize('cct_container_type', function(value) {
+        wp.customize('uenf_container_type', function(value) {
             value.bind(function(newval) {
                 $('body').removeClass('container-fluid container-boxed container-full-width')
                          .addClass('container-' + newval);
@@ -70,21 +70,21 @@
      */
     function bindSpacingPreview() {
         // Section spacing
-        wp.customize('cct_section_spacing', function(value) {
+        wp.customize('uenf_section_spacing', function(value) {
             value.bind(function(newval) {
-                $('.cct-section, section').css('margin-bottom', newval + 'px');
+                $('.uenf-section, section').css('margin-bottom', newval + 'px');
             });
         });
 
         // Element spacing
-        wp.customize('cct_element_spacing', function(value) {
+        wp.customize('uenf_element_spacing', function(value) {
             value.bind(function(newval) {
-                $('.cct-element').css('margin-bottom', newval + 'px');
+                $('.uenf-element').css('margin-bottom', newval + 'px');
             });
         });
 
         // Paragraph spacing
-        wp.customize('cct_paragraph_spacing', function(value) {
+        wp.customize('uenf_paragraph_spacing', function(value) {
             value.bind(function(newval) {
                 $('p').css('margin-bottom', newval + 'px');
             });
@@ -100,7 +100,7 @@
         var maxWidth = $('body').attr('data-grid-max-width') || '1200';
 
         var css = `
-            .cct-grid {
+            .uenf-grid {
                 display: grid;
                 grid-template-columns: repeat(${columns}, 1fr);
                 gap: ${gap}px;
@@ -108,22 +108,22 @@
                 margin: 0 auto;
             }
             
-            .cct-grid-item {
+            .uenf-grid-item {
                 grid-column: span 1;
             }
             
             @media (max-width: 768px) {
-                .cct-grid {
+                .uenf-grid {
                     grid-template-columns: 1fr;
                 }
             }
         `;
 
         // Remove CSS anterior
-        $('#cct-grid-preview-css').remove();
+        $('#uenf-grid-preview-css').remove();
         
         // Adiciona novo CSS
-        $('head').append('<style id="cct-grid-preview-css">' + css + '</style>');
+        $('head').append('<style id="uenf-grid-preview-css">' + css + '</style>');
     }
 
     /**
@@ -131,14 +131,14 @@
      */
     function bindLayoutBuilderPreview() {
         // Layout structure
-        wp.customize('cct_layout_structure', function(value) {
+        wp.customize('uenf_layout_structure', function(value) {
             value.bind(function(newval) {
                 updateLayoutStructure(newval);
             });
         });
 
         // Sidebar position
-        wp.customize('cct_sidebar_position', function(value) {
+        wp.customize('uenf_sidebar_position', function(value) {
             value.bind(function(newval) {
                 $('body').removeClass('sidebar-left sidebar-right sidebar-none')
                          .addClass('sidebar-' + newval);
@@ -146,7 +146,7 @@
         });
 
         // Sidebar width
-        wp.customize('cct_sidebar_width', function(value) {
+        wp.customize('uenf_sidebar_width', function(value) {
             value.bind(function(newval) {
                 $('.sidebar').css('width', newval + '%');
                 $('.main-content').css('width', (100 - parseInt(newval)) + '%');
@@ -200,21 +200,21 @@
      */
     function bindResponsivePreview() {
         // Mobile breakpoint
-        wp.customize('cct_mobile_breakpoint', function(value) {
+        wp.customize('uenf_mobile_breakpoint', function(value) {
             value.bind(function(newval) {
                 updateResponsiveCSS('mobile', newval);
             });
         });
 
         // Tablet breakpoint
-        wp.customize('cct_tablet_breakpoint', function(value) {
+        wp.customize('uenf_tablet_breakpoint', function(value) {
             value.bind(function(newval) {
                 updateResponsiveCSS('tablet', newval);
             });
         });
 
         // Desktop breakpoint
-        wp.customize('cct_desktop_breakpoint', function(value) {
+        wp.customize('uenf_desktop_breakpoint', function(value) {
             value.bind(function(newval) {
                 updateResponsiveCSS('desktop', newval);
             });
@@ -230,28 +230,28 @@
         switch(device) {
             case 'mobile':
                 css = `@media (max-width: ${breakpoint}px) {
-                    .cct-hide-mobile { display: none !important; }
-                    .cct-grid { grid-template-columns: 1fr !important; }
+                    .uenf-hide-mobile { display: none !important; }
+                    .uenf-grid { grid-template-columns: 1fr !important; }
                 }`;
                 break;
             case 'tablet':
                 css = `@media (min-width: ${breakpoint}px) and (max-width: 1024px) {
-                    .cct-hide-tablet { display: none !important; }
-                    .cct-grid { grid-template-columns: repeat(2, 1fr) !important; }
+                    .uenf-hide-tablet { display: none !important; }
+                    .uenf-grid { grid-template-columns: repeat(2, 1fr) !important; }
                 }`;
                 break;
             case 'desktop':
                 css = `@media (min-width: ${breakpoint}px) {
-                    .cct-hide-desktop { display: none !important; }
+                    .uenf-hide-desktop { display: none !important; }
                 }`;
                 break;
         }
 
         // Remove CSS anterior
-        $('#cct-responsive-' + device + '-css').remove();
+        $('#uenf-responsive-' + device + '-css').remove();
         
         // Adiciona novo CSS
-        $('head').append('<style id="cct-responsive-' + device + '-css">' + css + '</style>');
+        $('head').append('<style id="uenf-responsive-' + device + '-css">' + css + '</style>');
     }
 
     /**

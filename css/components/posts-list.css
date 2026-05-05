@@ -1,0 +1,107 @@
+/* =============================================
+   Posts List — Página de listagem de posts
+   Independente do search.css
+   ============================================= */
+
+/* Filtro de categorias */
+.posts-list-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.posts-list-filter-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--bs-uenf-blue, #1d3771);
+    white-space: nowrap;
+}
+
+.posts-list-cat-select {
+    font-size: 0.9rem;
+    border: 2px solid var(--bs-uenf-blue, #1d3771);
+    border-radius: 4px;
+    padding: 0.3rem 2rem 0.3rem 0.6rem;
+    color: var(--bs-uenf-blue, #1d3771);
+    background: #fff;
+    cursor: pointer;
+    appearance: auto;
+}
+
+.posts-list-cat-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(29, 55, 113, 0.2);
+}
+
+/* Card de post */
+.posts-list-item {
+    background: #fff;
+    border: 1px solid #e0e6f0;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.posts-list-item:hover {
+    box-shadow: 0 2px 12px rgba(29, 55, 113, 0.08);
+}
+
+/* Data */
+.posts-list-date {
+    display: block;
+    font-size: 0.78rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+}
+
+/* Título */
+.posts-list-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+}
+
+.posts-list-title a {
+    color: #1d3770bf !important;
+    text-decoration: none;
+}
+
+.posts-list-title a:hover {
+    text-decoration: underline;
+}
+
+/* Excerpt */
+.posts-list-excerpt {
+    font-size: 0.9rem;
+    color: #495057;
+    margin: 0 0 1rem;
+    line-height: 1.6;
+}
+
+/* Ações */
+.posts-list-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Sem resultados */
+.posts-list-empty {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsivo */
+@media (max-width: 767.98px) {
+    .posts-list-item {
+        padding: 1rem;
+    }
+
+    .posts-list-title {
+        font-size: 1.4rem;
+    }
+}

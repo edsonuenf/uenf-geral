@@ -4,7 +4,7 @@
  */
 
 // Add meta description
-function cct_meta_description() {
+function uenf_meta_description() {
     if ( is_singular() ) {
         global $post;
         $meta_description = get_post_meta( $post->ID, '_meta_description', true );
@@ -20,10 +20,10 @@ function cct_meta_description() {
         echo '<meta name="description" content="' . esc_attr( $meta_description ) . '" />' . "\n";
     }
 }
-add_action( 'wp_head', 'cct_meta_description' );
+add_action( 'wp_head', 'uenf_meta_description' );
 
 // Add Open Graph meta tags
-function cct_og_meta_tags() {
+function uenf_og_meta_tags() {
     global $post;
 
     if ( is_singular() ) {
@@ -49,10 +49,10 @@ function cct_og_meta_tags() {
         }
     }
 }
-add_action( 'wp_head', 'cct_og_meta_tags' );
+add_action( 'wp_head', 'uenf_og_meta_tags' );
 
 // Add Twitter Card meta tags
-function cct_twitter_card_tags() {
+function uenf_twitter_card_tags() {
     global $post;
 
     if ( is_singular() ) {
@@ -75,10 +75,10 @@ function cct_twitter_card_tags() {
         }
     }
 }
-add_action( 'wp_head', 'cct_twitter_card_tags' );
+add_action( 'wp_head', 'uenf_twitter_card_tags' );
 
 // Add schema.org markup
-function cct_schema_org_markup() {
+function uenf_schema_org_markup() {
     if ( is_singular( 'post' ) ) {
         global $post;
         
@@ -116,18 +116,18 @@ function cct_schema_org_markup() {
         echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
     }
 }
-add_action( 'wp_head', 'cct_schema_org_markup' );
+add_action( 'wp_head', 'uenf_schema_org_markup' );
 
 // Add canonical URL
-function cct_canonical_url() {
+function uenf_canonical_url() {
     if ( is_singular() ) {
         echo '<link rel="canonical" href="' . esc_url( get_permalink() ) . '" />' . "\n";
     }
 }
-add_action( 'wp_head', 'cct_canonical_url' );
+add_action( 'wp_head', 'uenf_canonical_url' );
 
 // Add meta robots
-function cct_meta_robots() {
+function uenf_meta_robots() {
     if ( is_singular() ) {
         $robots = get_post_meta( get_the_ID(), '_meta_robots', true );
         if ( !empty( $robots ) ) {
@@ -135,4 +135,4 @@ function cct_meta_robots() {
         }
     }
 }
-add_action( 'wp_head', 'cct_meta_robots' ); 
+add_action( 'wp_head', 'uenf_meta_robots' ); 

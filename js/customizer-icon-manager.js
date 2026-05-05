@@ -9,7 +9,7 @@
  * - Otimização automática
  * - Preview e códigos de exemplo
  * 
- * @package CCT_Theme
+ * @package UENF_Theme
  * @since 1.0.0
  */
 
@@ -64,15 +64,15 @@
          * Cache elementos DOM
          */
         cacheElements: function() {
-            this.cache.$categoryBrowser = $('.cct-category-browser');
-            this.cache.$iconGrid = $('#cct-icon-grid');
-            this.cache.$searchInput = $('.cct-icon-search-input');
-            this.cache.$categoryFilter = $('.cct-category-filter');
-            this.cache.$viewFilter = $('.cct-view-filter');
-            this.cache.$iconModal = $('#cct-icon-modal');
-            this.cache.$uploadArea = $('#cct-upload-area');
-            this.cache.$fileInput = $('#cct-file-input');
-            this.cache.$customIconsList = $('#cct-custom-icons-list');
+            this.cache.$categoryBrowser = $('.uenf-category-browser');
+            this.cache.$iconGrid = $('#uenf-icon-grid');
+            this.cache.$searchInput = $('.uenf-icon-search-input');
+            this.cache.$categoryFilter = $('.uenf-category-filter');
+            this.cache.$viewFilter = $('.uenf-view-filter');
+            this.cache.$iconModal = $('#uenf-icon-modal');
+            this.cache.$uploadArea = $('#uenf-upload-area');
+            this.cache.$fileInput = $('#uenf-file-input');
+            this.cache.$customIconsList = $('#uenf-custom-icons-list');
         },
         
         /**
@@ -82,7 +82,7 @@
             var self = this;
             
             // Navegação por categorias
-            $(document).on('click', '.cct-category-item', function() {
+            $(document).on('click', '.uenf-category-item', function() {
                 var category = $(this).data('category');
                 self.selectCategory(category);
             });
@@ -95,7 +95,7 @@
             });
             
             // Limpar busca
-            $(document).on('click', '.cct-search-clear', function() {
+            $(document).on('click', '.uenf-search-clear', function() {
                 self.cache.$searchInput.val('');
                 self.settings.searchTerm = '';
                 self.filterIcons();
@@ -114,7 +114,7 @@
             });
             
             // Clique em ícone
-            $(document).on('click', '.cct-icon-item', function() {
+            $(document).on('click', '.uenf-icon-item', function() {
                 var iconName = $(this).data('icon-name');
                 var iconCategory = $(this).data('icon-category');
                 var isCustom = $(this).data('is-custom') || false;
@@ -123,20 +123,20 @@
             });
             
             // Modal de ícone
-            $(document).on('click', '.cct-modal-close, .cct-modal-backdrop', function() {
+            $(document).on('click', '.uenf-modal-close, .uenf-modal-backdrop', function() {
                 self.hideIconModal();
             });
             
             // Ações do modal
-            $(document).on('click', '.cct-copy-shortcode', function() {
+            $(document).on('click', '.uenf-copy-shortcode', function() {
                 self.copyShortcode();
             });
             
-            $(document).on('click', '.cct-copy-svg', function() {
+            $(document).on('click', '.uenf-copy-svg', function() {
                 self.copySvgCode();
             });
             
-            $(document).on('click', '.cct-toggle-favorite', function() {
+            $(document).on('click', '.uenf-toggle-favorite', function() {
                 self.toggleFavorite();
             });
             
@@ -168,22 +168,22 @@
             });
             
             // Gerenciamento de ícones personalizados
-            $(document).on('change', '.cct-icon-checkbox', function() {
+            $(document).on('change', '.uenf-icon-checkbox', function() {
                 self.updateSelectedIcons();
             });
             
-            $(document).on('click', '.cct-apply-bulk', function() {
+            $(document).on('click', '.uenf-apply-bulk', function() {
                 self.applyBulkAction();
             });
             
-            $(document).on('click', '.cct-icon-action', function() {
+            $(document).on('click', '.uenf-icon-action', function() {
                 var action = $(this).data('action');
-                var iconIndex = $(this).closest('.cct-custom-icon-item').data('icon-index');
+                var iconIndex = $(this).closest('.uenf-custom-icon-item').data('icon-index');
                 self.handleIconAction(action, iconIndex);
             });
             
             // Limpar filtros
-            $(document).on('click', '.cct-clear-filters', function() {
+            $(document).on('click', '.uenf-clear-filters', function() {
                 self.clearFilters();
             });
         },
@@ -192,7 +192,7 @@
          * Carrega favoritos
          */
         loadFavorites: function() {
-            var favorites = wp.customize('cct_favorite_icons')();
+            var favorites = wp.customize('uenf_favorite_icons')();
             try {
                 this.settings.favoriteIcons = JSON.parse(favorites || '[]');
             } catch (e) {
@@ -204,7 +204,7 @@
          * Carrega ícones personalizados
          */
         loadCustomIcons: function() {
-            var customIcons = wp.customize('cct_custom_icons_data')();
+            var customIcons = wp.customize('uenf_custom_icons_data')();
             try {
                 this.settings.customIcons = JSON.parse(customIcons || '[]');
             } catch (e) {
@@ -234,7 +234,7 @@
                     count = Object.keys(self.settings.iconLibrary[categoryId]).length;
                 }
                 
-                $('.cct-icon-count[data-category="' + categoryId + '"]').text(count);
+                $('.uenf-icon-count[data-category="' + categoryId + '"]').text(count);
             });
         },
         
@@ -245,8 +245,8 @@
             this.settings.currentCategory = category;
             
             // Atualiza UI
-            $('.cct-category-item').removeClass('active');
-            $('.cct-category-item[data-category="' + category + '"]').addClass('active');
+            $('.uenf-category-item').removeClass('active');
+            $('.uenf-category-item[data-category="' + category + '"]').addClass('active');
             
             this.cache.$categoryFilter.val(category);
             this.filterIcons();
@@ -299,7 +299,7 @@
             var favoriteClass = isFavorite ? ' favorite' : '';
             var customAttr = isCustom ? ' data-is-custom="true"' : '';
             
-            return '<div class="cct-icon-item' + favoriteClass + '" ' +
+            return '<div class="uenf-icon-item' + favoriteClass + '" ' +
                    'data-icon-name="' + iconName + '" ' +
                    'data-icon-category="' + category + '"' + customAttr + '>' +
                    iconSvg +
@@ -311,7 +311,7 @@
          */
         filterIcons: function() {
             var self = this;
-            var $icons = this.cache.$iconGrid.find('.cct-icon-item');
+            var $icons = this.cache.$iconGrid.find('.uenf-icon-item');
             var visibleCount = 0;
             
             $icons.each(function() {
@@ -349,13 +349,13 @@
             });
             
             // Atualiza estatísticas
-            $('.cct-filtered-icons').text(visibleCount);
+            $('.uenf-filtered-icons').text(visibleCount);
             
             // Mostra/esconde mensagem vazia
             if (visibleCount === 0) {
-                $('.cct-empty-message').show();
+                $('.uenf-empty-message').show();
             } else {
-                $('.cct-empty-message').hide();
+                $('.uenf-empty-message').hide();
             }
         },
         
@@ -364,9 +364,9 @@
          */
         toggleSearchClear: function() {
             if (this.settings.searchTerm) {
-                $('.cct-search-clear').show();
+                $('.uenf-search-clear').show();
             } else {
-                $('.cct-search-clear').hide();
+                $('.uenf-search-clear').hide();
             }
         },
         
@@ -409,16 +409,16 @@
             var categoryName = isCustom ? 'Personalizado' : (this.settings.categories[category] ? this.settings.categories[category].name : category);
             var isFavorite = this.settings.favoriteIcons.includes((isCustom ? 'custom' : category) + ':' + iconName);
             
-            $('.cct-modal-title').text(iconName);
-            $('.cct-icon-display').html(iconSvg);
-            $('.cct-icon-category').text('Categoria: ' + categoryName);
-            $('.cct-icon-size').text('Tamanho: ' + this.getSvgSize(iconSvg));
+            $('.uenf-modal-title').text(iconName);
+            $('.uenf-icon-display').html(iconSvg);
+            $('.uenf-icon-category').text('Categoria: ' + categoryName);
+            $('.uenf-icon-size').text('Tamanho: ' + this.getSvgSize(iconSvg));
             
             // Atualiza exemplos de código
             this.updateCodeExamples(iconName, category, isCustom);
             
             // Atualiza botão de favorito
-            $('.cct-toggle-favorite')
+            $('.uenf-toggle-favorite')
                 .text(isFavorite ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos')
                 .data('icon-name', iconName)
                 .data('icon-category', isCustom ? 'custom' : category)
@@ -447,7 +447,7 @@
          * Atualiza exemplos de código
          */
         updateCodeExamples: function(iconName, category, isCustom) {
-            var shortcode = '[cct_icon name="' + iconName + '"';
+            var shortcode = '[uenf_icon name="' + iconName + '"';
             if (!isCustom) {
                 shortcode += ' category="' + category + '"';
             } else {
@@ -457,15 +457,15 @@
             
             var phpCode = "<?php echo do_shortcode('" + shortcode + "'); ?>";
             
-            $('.cct-shortcode-example').text(shortcode);
-            $('.cct-php-example').text(phpCode);
+            $('.uenf-shortcode-example').text(shortcode);
+            $('.uenf-php-example').text(phpCode);
         },
         
         /**
          * Copia shortcode
          */
         copyShortcode: function() {
-            var shortcode = $('.cct-shortcode-example').text();
+            var shortcode = $('.uenf-shortcode-example').text();
             this.copyToClipboard(shortcode);
             this.showNotification(cctIconManager.strings.codeCopied, 'success');
         },
@@ -475,7 +475,7 @@
          */
         copySvgCode: function() {
             var svgCode = this.cache.$iconModal.data('icon-svg');
-            $('.cct-svg-code').val(svgCode);
+            $('.uenf-svg-code').val(svgCode);
             this.copyToClipboard(svgCode);
             this.showNotification(cctIconManager.strings.codeCopied, 'success');
         },
@@ -484,7 +484,7 @@
          * Alterna favorito
          */
         toggleFavorite: function() {
-            var $button = $('.cct-toggle-favorite');
+            var $button = $('.uenf-toggle-favorite');
             var iconName = $button.data('icon-name');
             var iconCategory = $button.data('icon-category');
             var isFavorite = $button.data('is-favorite');
@@ -505,7 +505,7 @@
             }
             
             // Salva favoritos
-            wp.customize('cct_favorite_icons').set(JSON.stringify(this.settings.favoriteIcons));
+            wp.customize('uenf_favorite_icons').set(JSON.stringify(this.settings.favoriteIcons));
             
             // Atualiza UI
             this.updateIconFavoriteStatus(iconName, iconCategory, !isFavorite);
@@ -516,7 +516,7 @@
          * Atualiza status de favorito do ícone
          */
         updateIconFavoriteStatus: function(iconName, iconCategory, isFavorite) {
-            var $icon = $('.cct-icon-item[data-icon-name="' + iconName + '"][data-icon-category="' + iconCategory + '"]');
+            var $icon = $('.uenf-icon-item[data-icon-name="' + iconName + '"][data-icon-category="' + iconCategory + '"]');
             
             if (isFavorite) {
                 $icon.addClass('favorite');
@@ -613,7 +613,7 @@
             var self = this;
             var formData = new FormData();
             
-            formData.append('action', 'cct_upload_icon');
+            formData.append('action', 'uenf_upload_icon');
             formData.append('nonce', cctIconManager.nonce);
             formData.append('icon_file', file);
             
@@ -643,7 +643,7 @@
          * Mostra progresso do upload
          */
         showUploadProgress: function() {
-            $('.cct-upload-progress').show();
+            $('.uenf-upload-progress').show();
             this.updateUploadProgress(0);
         },
         
@@ -651,15 +651,15 @@
          * Atualiza progresso do upload
          */
         updateUploadProgress: function(percent) {
-            $('.cct-progress-fill').css('width', percent + '%');
-            $('.cct-progress-text').text(percent + '%');
+            $('.uenf-progress-fill').css('width', percent + '%');
+            $('.uenf-progress-text').text(percent + '%');
         },
         
         /**
          * Esconde progresso do upload
          */
         hideUploadProgress: function() {
-            $('.cct-upload-progress').hide();
+            $('.uenf-upload-progress').hide();
         },
         
         /**
@@ -670,12 +670,12 @@
             var html = '';
             
             if (this.settings.customIcons.length === 0) {
-                $('.cct-empty-custom-icons').show();
+                $('.uenf-empty-custom-icons').show();
                 this.cache.$customIconsList.hide();
                 return;
             }
             
-            $('.cct-empty-custom-icons').hide();
+            $('.uenf-empty-custom-icons').hide();
             this.cache.$customIconsList.show();
             
             this.settings.customIcons.forEach(function(icon, index) {
@@ -692,17 +692,17 @@
             var uploadDate = new Date(icon.uploaded).toLocaleDateString();
             var fileSize = this.formatFileSize(icon.size);
             
-            return '<div class="cct-custom-icon-item" data-icon-index="' + index + '">' +
-                   '<input type="checkbox" class="cct-icon-checkbox">' +
-                   '<div class="cct-custom-icon-preview">' + icon.svg + '</div>' +
-                   '<div class="cct-custom-icon-details">' +
-                   '<div class="cct-icon-name">' + icon.name + '</div>' +
-                   '<div class="cct-icon-meta">' + fileSize + ' • ' + uploadDate + '</div>' +
+            return '<div class="uenf-custom-icon-item" data-icon-index="' + index + '">' +
+                   '<input type="checkbox" class="uenf-icon-checkbox">' +
+                   '<div class="uenf-custom-icon-preview">' + icon.svg + '</div>' +
+                   '<div class="uenf-custom-icon-details">' +
+                   '<div class="uenf-icon-name">' + icon.name + '</div>' +
+                   '<div class="uenf-icon-meta">' + fileSize + ' • ' + uploadDate + '</div>' +
                    '</div>' +
-                   '<div class="cct-custom-icon-actions">' +
-                   '<button class="cct-icon-action" data-action="edit">Editar</button>' +
-                   '<button class="cct-icon-action" data-action="optimize">Otimizar</button>' +
-                   '<button class="cct-icon-action danger" data-action="delete">Excluir</button>' +
+                   '<div class="uenf-custom-icon-actions">' +
+                   '<button class="uenf-icon-action" data-action="edit">Editar</button>' +
+                   '<button class="uenf-icon-action" data-action="optimize">Otimizar</button>' +
+                   '<button class="uenf-icon-action danger" data-action="delete">Excluir</button>' +
                    '</div>' +
                    '</div>';
         },
@@ -711,19 +711,19 @@
          * Atualiza ícones selecionados
          */
         updateSelectedIcons: function() {
-            var selectedCount = $('.cct-icon-checkbox:checked').length;
-            $('.cct-apply-bulk').prop('disabled', selectedCount === 0);
+            var selectedCount = $('.uenf-icon-checkbox:checked').length;
+            $('.uenf-apply-bulk').prop('disabled', selectedCount === 0);
         },
         
         /**
          * Aplica ação em lote
          */
         applyBulkAction: function() {
-            var action = $('.cct-bulk-select').val();
+            var action = $('.uenf-bulk-select').val();
             var selectedIndexes = [];
             
-            $('.cct-icon-checkbox:checked').each(function() {
-                var index = $(this).closest('.cct-custom-icon-item').data('icon-index');
+            $('.uenf-icon-checkbox:checked').each(function() {
+                var index = $(this).closest('.uenf-custom-icon-item').data('icon-index');
                 selectedIndexes.push(index);
             });
             
@@ -773,7 +773,7 @@
                 url: cctIconManager.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'cct_delete_custom_icon',
+                    action: 'uenf_delete_custom_icon',
                     nonce: cctIconManager.nonce,
                     icon_index: iconIndex
                 },
@@ -807,23 +807,23 @@
             
             totalIcons += customCount;
             
-            $('.cct-total-icons').text(totalIcons);
-            $('.cct-favorite-count').text(favoriteCount);
-            $('.cct-custom-count').text(customCount);
+            $('.uenf-total-icons').text(totalIcons);
+            $('.uenf-favorite-count').text(favoriteCount);
+            $('.uenf-custom-count').text(customCount);
             
             // Calcula tamanho total dos ícones personalizados
             var totalSize = this.settings.customIcons.reduce(function(sum, icon) {
                 return sum + (icon.size || 0);
             }, 0);
             
-            $('.cct-total-size').text(this.formatFileSize(totalSize));
+            $('.uenf-total-size').text(this.formatFileSize(totalSize));
         },
         
         /**
          * Mostra loading
          */
         showLoading: function() {
-            $('.cct-loading').show();
+            $('.uenf-loading').show();
             this.cache.$iconGrid.hide();
         },
         
@@ -831,7 +831,7 @@
          * Esconde loading
          */
         hideLoading: function() {
-            $('.cct-loading').hide();
+            $('.uenf-loading').hide();
             this.cache.$iconGrid.show();
         },
         
@@ -872,7 +872,7 @@
         showNotification: function(message, type) {
             type = type || 'info';
             
-            var $notification = $('<div class="cct-notification cct-notification-' + type + '">');
+            var $notification = $('<div class="uenf-notification uenf-notification-' + type + '">');
             $notification.text(message);
             
             $('body').append($notification);
@@ -892,7 +892,7 @@
     
     // CSS para notificações
     $('<style>').text(`
-        .cct-notification {
+        .uenf-notification {
             position: fixed;
             top: 32px;
             right: 20px;
@@ -905,19 +905,19 @@
             transition: transform 0.3s ease;
         }
         
-        .cct-notification.show {
+        .uenf-notification.show {
             transform: translateX(0);
         }
         
-        .cct-notification-success {
+        .uenf-notification-success {
             background: #46b450;
         }
         
-        .cct-notification-error {
+        .uenf-notification-error {
             background: #dc3232;
         }
         
-        .cct-notification-info {
+        .uenf-notification-info {
             background: #0073aa;
         }
     `).appendTo('head');

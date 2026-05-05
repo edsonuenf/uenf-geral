@@ -6,28 +6,22 @@
  * @since 1.0.0
  */
 
-// Inclui a classe CCT_404_Customizer
-function cct_load_404_customizer()
+// Inclui a classe UENF_404_Customizer
+function uenf_load_404_customizer()
 {
     $file_path = get_template_directory() . '/inc/customizer/class-404-customizer.php';
     if (file_exists($file_path)) {
         require_once $file_path;
 
         // Verifica se a classe foi carregada corretamente
-        if (class_exists('CCT_404_Customizer')) {
-            error_log('Classe CCT_404_Customizer carregada com sucesso!');
-            // Inicializa a classe se necessário
-            if (method_exists('CCT_404_Customizer', 'init')) {
-                CCT_404_Customizer::init();
+        if (class_exists('UENF_404_Customizer')) {
+            if (method_exists('UENF_404_Customizer', 'init')) {
+                UENF_404_Customizer::init();
             }
-        } else {
-            error_log('ERRO: A classe CCT_404_Customizer não foi definida no arquivo.');
         }
-    } else {
-        error_log('ERRO: Arquivo não encontrado: ' . $file_path);
     }
 }
-add_action('after_setup_theme', 'cct_load_404_customizer', 5);
+add_action('after_setup_theme', 'uenf_load_404_customizer', 5);
 
 // Corrigir erro de buffer zlib
 if (!defined('ABSPATH')) {
@@ -49,59 +43,59 @@ if (ob_get_level()) {
 require_once get_template_directory() . '/components/menu/uenf-menu.php';
 
 // Definir constantes para cores padrão
-define('CCT_PRIMARY_COLOR', '#1D3771');
-define('CCT_PRIMARY_LIGHT', '#1D3770BF');
-define('CCT_TEXT_COLOR', '#333');
-define('CCT_LINK_COLOR', '#26557D');
-define('CCT_LINK_HOVER_COLOR', '#1D3771');
-define('CCT_WHITE', '#FFFFFF');
-define('CCT_BLACK', '#000000');
+define('UENF_PRIMARY_COLOR', '#1D3771');
+define('UENF_PRIMARY_LIGHT', '#1D3770BF');
+define('UENF_TEXT_COLOR', '#333');
+define('UENF_LINK_COLOR', '#26557D');
+define('UENF_LINK_HOVER_COLOR', '#1D3771');
+define('UENF_WHITE', '#FFFFFF');
+define('UENF_BLACK', '#000000');
 
 // Definir constantes para fontes
-define('CCT_PRIMARY_FONT', 'Ubuntu, system-ui, -apple-system, Roboto, Oxygen, sans-serif');
-define('CCT_SECONDARY_FONT', 'system-ui, -apple-system, Roboto, Oxygen, sans-serif');
+define('UENF_PRIMARY_FONT', 'Ubuntu, system-ui, -apple-system, Roboto, Oxygen, sans-serif');
+define('UENF_SECONDARY_FONT', 'system-ui, -apple-system, Roboto, Oxygen, sans-serif');
 
 // Tamanhos de fonte
-define('CCT_FONT_SIZE_BASE', '1rem');
-define('CCT_FONT_SIZE_LG', '1.25rem');
-define('CCT_FONT_SIZE_XL', '1.5rem');
-define('CCT_FONT_SIZE_XXL', '2rem');
+define('UENF_FONT_SIZE_BASE', '1rem');
+define('UENF_FONT_SIZE_LG', '1.25rem');
+define('UENF_FONT_SIZE_XL', '1.5rem');
+define('UENF_FONT_SIZE_XXL', '2rem');
 
 // Configurações padrão do customizer
-define('CCT_DEFAULT_MENU_STYLE', 'modern');
-define('CCT_DEFAULT_MENU_HIERARCHY_ICONS', false);
-define('CCT_DEFAULT_PANEL_WIDTH', '300px');
-define('CCT_DEFAULT_TRANSPARENT', 'transparent');
+define('UENF_DEFAULT_MENU_STYLE', 'modern');
+define('UENF_DEFAULT_MENU_HIERARCHY_ICONS', false);
+define('UENF_DEFAULT_PANEL_WIDTH', '300px');
+define('UENF_DEFAULT_TRANSPARENT', 'transparent');
 
 // Valores de configuração
-define('CCT_DEFAULT_LAZY_LOADING', true);
-define('CCT_DEFAULT_FOOTER_COLUMNS', 3);
-define('CCT_DEFAULT_SOCIAL_ALIGNMENT', 'center');
+define('UENF_DEFAULT_LAZY_LOADING', true);
+define('UENF_DEFAULT_FOOTER_COLUMNS', 3);
+define('UENF_DEFAULT_SOCIAL_ALIGNMENT', 'center');
 
 // Constantes de tipografia
-define('CCT_DEFAULT_HEADING_FONT', 'Roboto');
-define('CCT_DEFAULT_BODY_FONT', 'Open Sans');
-define('CCT_DEFAULT_HEADING_FONT_WEIGHT', '600');
-define('CCT_DEFAULT_BODY_FONT_WEIGHT', '400');
-define('CCT_DEFAULT_BASE_FONT_SIZE', '16');
-define('CCT_DEFAULT_LINE_HEIGHT', '1.6');
-define('CCT_DEFAULT_LETTER_SPACING', '0');
-define('CCT_DEFAULT_TEXT_MAX_WIDTH', '65');
-define('CCT_DEFAULT_TYPOGRAPHY_SCALE', 'major_second');
-define('CCT_DEFAULT_FONT_PAIRING', 'modern_sans');
+define('UENF_DEFAULT_HEADING_FONT', 'Roboto');
+define('UENF_DEFAULT_BODY_FONT', 'Open Sans');
+define('UENF_DEFAULT_HEADING_FONT_WEIGHT', '600');
+define('UENF_DEFAULT_BODY_FONT_WEIGHT', '400');
+define('UENF_DEFAULT_BASE_FONT_SIZE', '16');
+define('UENF_DEFAULT_LINE_HEIGHT', '1.6');
+define('UENF_DEFAULT_LETTER_SPACING', '0');
+define('UENF_DEFAULT_TEXT_MAX_WIDTH', '65');
+define('UENF_DEFAULT_TYPOGRAPHY_SCALE', 'major_second');
+define('UENF_DEFAULT_FONT_PAIRING', 'modern_sans');
 
 // Google Fonts API (opcional - pode ser configurada via customizer)
-// define('CCT_GOOGLE_FONTS_API_KEY', 'sua_chave_aqui');
+// define('UENF_GOOGLE_FONTS_API_KEY', 'sua_chave_aqui');
 
 
 // Cores com transparência
-define('CCT_PRIMARY_RGBA', 'rgba(29, 55, 113, 0.95)');
-define('CCT_WHITE_RGBA_08', 'rgba(255, 255, 255, 0.8)');
-define('CCT_WHITE_RGBA_01', 'rgba(255, 255, 255, 0.1)');
-define('CCT_BLACK_RGBA_02', 'rgba(0, 0, 0, 0.2)');
+define('UENF_PRIMARY_RGBA', 'rgba(29, 55, 113, 0.95)');
+define('UENF_WHITE_RGBA_08', 'rgba(255, 255, 255, 0.8)');
+define('UENF_WHITE_RGBA_01', 'rgba(255, 255, 255, 0.1)');
+define('UENF_BLACK_RGBA_02', 'rgba(0, 0, 0, 0.2)');
 
 // Espaçamentos
-define('CCT_SPACING_UNIT', '1rem'); // @since 1.0.0
+define('UENF_SPACING_UNIT', '1rem'); // @since 1.0.0
 
 // Verificar se estamos no WordPress
 if (!defined('ABSPATH')) {
@@ -125,25 +119,29 @@ if (!function_exists('add_action')) {
 }
 
 // Define constants
-if (!defined('CCT_THEME_VERSION')) {
-    define('CCT_THEME_VERSION', '1.0.0');
+if (!defined('UENF_THEME_VERSION')) {
+    define('UENF_THEME_VERSION', '1.0.0');
 }
-if (!defined('CCT_THEME_DIR')) {
-    define('CCT_THEME_DIR', get_template_directory());
+if (!defined('UENF_THEME_DIR')) {
+    define('UENF_THEME_DIR', get_template_directory());
 }
-if (!defined('CCT_THEME_URI')) {
-    define('CCT_THEME_URI', get_template_directory_uri());
+if (!defined('UENF_THEME_URI')) {
+    define('UENF_THEME_URI', get_template_directory_uri());
 }
 
 // Carregar arquivos de suporte
 // Carregar Gerenciador de Extensões primeiro
-require_once CCT_THEME_DIR . '/inc/extensions/class-extension-manager.php';
+require_once UENF_THEME_DIR . '/inc/extensions/class-extension-manager.php';
 
 // Carregar customizer
-require_once CCT_THEME_DIR . '/inc/customizer.php';
+require_once UENF_THEME_DIR . '/inc/customizer.php';
 
 // Carregar sistema de reset de configurações
-require_once CCT_THEME_DIR . '/inc/class-theme-reset-manager.php';
+require_once UENF_THEME_DIR . '/inc/class-theme-reset-manager.php';
+
+// Configuração de Contato do Rodapé (email + telefone — CPT singleton)
+require_once UENF_THEME_DIR . '/inc/class-uenf-contact-settings.php';
+UENF_Contact_Settings::get_instance();
 
 // Incluir Editor CSS Avançado
 require get_template_directory() . '/inc/design-editor/css-editor-loader.php';
@@ -293,17 +291,17 @@ add_action('customize_register', function ($wp_customize) {
     }
 
     // Usar o Gerenciador de Extensões para carregar módulos
-    $extension_manager = cct_extension_manager();
+    $extension_manager = uenf_extension_manager();
 
     // Carregar extensões através do gerenciador (incluindo tipografia)
-    cct_init_customizer_extensions($wp_customize, $extension_manager);
+    uenf_init_customizer_extensions($wp_customize, $extension_manager);
 
     // Inicialização condicional das extensões (respeitando configurações do gerenciador)
 
     // Tipografia - só inicializa se estiver ativa
-    if (class_exists('CCT_Typography_Customizer') && $extension_manager && $extension_manager->is_extension_active('typography')) {
+    if (class_exists('UENF_Typography_Customizer') && $extension_manager && $extension_manager->is_extension_active('typography')) {
         try {
-            $typography_manager = new CCT_Typography_Customizer($wp_customize);
+            $typography_manager = new UENF_Typography_Customizer($wp_customize);
 
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CCT: Tipografia inicializada (extensão ativa)');
@@ -318,9 +316,9 @@ add_action('customize_register', function ($wp_customize) {
     }
 
     // Cores - só inicializa se estiver ativa
-    if (class_exists('CCT_Color_Manager') && $extension_manager && $extension_manager->is_extension_active('colors')) {
+    if (class_exists('UENF_Color_Manager') && $extension_manager && $extension_manager->is_extension_active('colors')) {
         try {
-            $color_manager = new CCT_Color_Manager($wp_customize);
+            $color_manager = new UENF_Color_Manager($wp_customize);
 
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CCT: Gerenciador de cores inicializado (extensão ativa)');
@@ -335,9 +333,9 @@ add_action('customize_register', function ($wp_customize) {
     }
 
     // Ícones - só inicializa se estiver ativa
-    if (class_exists('CCT_Icon_Manager') && $extension_manager && $extension_manager->is_extension_active('icons')) {
+    if (class_exists('UENF_Icon_Manager') && $extension_manager && $extension_manager->is_extension_active('icons')) {
         try {
-            $icon_manager = new CCT_Icon_Manager($wp_customize);
+            $icon_manager = new UENF_Icon_Manager($wp_customize);
 
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CCT: Gerenciador de ícones inicializado (extensão ativa)');
@@ -355,8 +353,8 @@ add_action('customize_register', function ($wp_customize) {
 // Reorganizar todos os painéis e seções do tema sob uenf_panel (prioridade 999 = após tudo)
 add_action('customize_register', function ($wp_customize) {
     // Sub-painéis do customizer legado que serão dissolvidos em uenf_panel
-    // cct_colors_panel está comentado no customizer.php — seções orphaned precisam ser movidas
-    $legacy_panels = array('cct_shortcut_panel', 'cct_personalizando_panel', 'cct_forms_panel', 'cct_colors_panel');
+    // uenf_colors_panel está comentado no customizer.php — seções orphaned precisam ser movidas
+    $legacy_panels = array('uenf_shortcut_panel', 'uenf_personalizando_panel', 'uenf_forms_panel', 'uenf_colors_panel');
 
     // Mover seções dos sub-painéis legados para uenf_panel e remover os sub-painéis
     foreach ($legacy_panels as $old_panel_id) {
@@ -368,14 +366,14 @@ add_action('customize_register', function ($wp_customize) {
         $wp_customize->remove_panel($old_panel_id);
     }
 
-    // Mover seções cct_* sem painel para uenf_panel
+    // Mover seções uenf_* sem painel para uenf_panel
     foreach ($wp_customize->sections() as $section) {
-        if (empty($section->panel) && strpos($section->id, 'cct_') === 0) {
+        if (empty($section->panel) && strpos($section->id, 'uenf_') === 0) {
             $section->panel = 'uenf_panel';
         }
     }
 
-    // Mover seções não-cct_ sem painel para uenf_panel (ex: menu_settings, color_accessibility)
+    // Mover seções não-uenf_ sem painel para uenf_panel (ex: menu_settings, color_accessibility)
     $known_no_prefix = array('menu_settings', 'color_accessibility', 'typography_section');
     foreach ($known_no_prefix as $section_id) {
         $section = $wp_customize->get_section($section_id);
@@ -395,7 +393,7 @@ add_action('customize_register', function ($wp_customize) {
 // customize_controls_enqueue_scripts: CSS (aparência dos grupos) + JS (indentação e visibilidade).
 add_action('customize_register', function ($wp_customize) {
 
-    // typography_section não tem prefixo cct_ — não é capturada pelo hook 999.
+    // typography_section não tem prefixo uenf_ — não é capturada pelo hook 999.
     $typography_section = $wp_customize->get_section('typography_section');
     if ($typography_section && empty($typography_section->panel)) {
         $typography_section->panel = 'uenf_panel';
@@ -406,21 +404,21 @@ add_action('customize_register', function ($wp_customize) {
     $sections = array(
 
         // ── 🎨 Cores (grupo: 100) ────────────────────────────────────────────
-        'cct_text_colors'                  => array('Cores de Texto',            101),
-        'cct_menu_colors'                  => array('Cores do Menu',             102),
-        'cct_main_colors'                  => array('Cores Principais',          103),
-        'cct_colors_color_generator'       => array('Gerador',                   104),
-        'cct_colors_color_palettes'        => array('Paletas Predefinidas',       105),
-        'cct_colors_custom_colors'         => array('Personalizadas',            106),
+        'uenf_text_colors'                  => array('Cores de Texto',            101),
+        'uenf_menu_colors'                  => array('Cores do Menu',             102),
+        'uenf_main_colors'                  => array('Cores Principais',          103),
+        'uenf_colors_color_generator'       => array('Gerador',                   104),
+        'uenf_colors_color_palettes'        => array('Paletas Predefinidas',       105),
+        'uenf_colors_custom_colors'         => array('Personalizadas',            106),
         'color_accessibility'              => array('Acessibilidade WCAG',       107),
 
         // ── 🌙 Modo Escuro (grupo: 200) ──────────────────────────────────────
-        'cct_dark_mode_general'            => array('Geral',                     201),
-        'cct_dark_mode_light_colors'       => array('Cores do Modo Claro',       202),
-        'cct_dark_mode_dark_colors'        => array('Cores do Modo Escuro',      203),
-        'cct_dark_mode_interface'          => array('Interface',                  204),
-        'cct_dark_mode_auto_toggle'        => array('Toggle Automático',         205),
-        'cct_dark_mode_transitions'        => array('Transições',                206),
+        'uenf_dark_mode_general'            => array('Geral',                     201),
+        'uenf_dark_mode_light_colors'       => array('Cores do Modo Claro',       202),
+        'uenf_dark_mode_dark_colors'        => array('Cores do Modo Escuro',      203),
+        'uenf_dark_mode_interface'          => array('Interface',                  204),
+        'uenf_dark_mode_auto_toggle'        => array('Toggle Automático',         205),
+        'uenf_dark_mode_transitions'        => array('Transições',                206),
 
         // ── 🔤 Tipografia (grupo: 300) ───────────────────────────────────────
         'typography_section'               => array('Visão Geral',               301),
@@ -431,90 +429,90 @@ add_action('customize_register', function ($wp_customize) {
         'typography_reading'               => array('Leitura',                   306),
 
         // ── 🖥️ Header e Footer (grupo: 400) ──────────────────────────────────
-        'cct_header'                       => array('Header',                    401),
-        'cct_footer'                       => array('Footer',                    402),
+        'uenf_header'                       => array('Header',                    401),
+        'uenf_footer'                       => array('Footer',                    402),
 
         // ── ☰ Navegação (grupo: 500) ─────────────────────────────────────────
-        'cct_search_customizer'            => array('Busca',                     501),
+        'uenf_search_customizer'            => array('Busca',                     501),
         'menu_settings'                    => array('Menu',                      502),
-        'cct_404_page'                     => array('Página 404',                503),
+        'uenf_404_page'                     => array('Página 404',                503),
 
         // ── 📋 Padrões (grupo: 600) ──────────────────────────────────────────
-        'cct_patterns_main'                => array('Visão Geral',               601),
-        'cct_patterns_content'             => array('Conteúdo',                  602),
-        'cct_patterns_styles'              => array('Estilos Globais',           603),
-        'cct_patterns_faq'                 => array('FAQ',                       604),
-        'cct_patterns_general'             => array('Geral',                     605),
-        'cct_patterns_portfolio'           => array('Portfólio',                 606),
-        'cct_patterns_pricing'             => array('Pricing',                   607),
-        'cct_patterns_templates'           => array('Templates',                 608),
-        'cct_patterns_team'                => array('Team',                      609),
+        'uenf_patterns_main'                => array('Visão Geral',               601),
+        'uenf_patterns_content'             => array('Conteúdo',                  602),
+        'uenf_patterns_styles'              => array('Estilos Globais',           603),
+        'uenf_patterns_faq'                 => array('FAQ',                       604),
+        'uenf_patterns_general'             => array('Geral',                     605),
+        'uenf_patterns_portfolio'           => array('Portfólio',                 606),
+        'uenf_patterns_pricing'             => array('Pricing',                   607),
+        'uenf_patterns_templates'           => array('Templates',                 608),
+        'uenf_patterns_team'                => array('Team',                      609),
 
         // ── ✏️ Formulários (grupo: 700) ───────────────────────────────────────
-        'cct_form_buttons'                 => array('Botões',                    701),
-        'cct_form_fields'                  => array('Campos',                    702),
+        'uenf_form_buttons'                 => array('Botões',                    701),
+        'uenf_form_fields'                  => array('Campos',                    702),
 
         // ── ⚡ Atalho Rápido (grupo: 800) ────────────────────────────────────
-        'cct_shortcut_button_open'         => array('Botão Abrir',               801),
-        'cct_shortcut_menu'                => array('Menu',                      802),
-        'cct_shortcut_panel_settings'      => array('Painel',                    803),
+        'uenf_shortcut_button_open'         => array('Botão Abrir',               801),
+        'uenf_shortcut_menu'                => array('Menu',                      802),
+        'uenf_shortcut_panel_settings'      => array('Painel',                    803),
 
         // ── ◇ Ícones (grupo: 900) ────────────────────────────────────────────
-        'cct_icons_icon_library'           => array('Biblioteca',                901),
-        'cct_icons_icon_settings'          => array('Configurações',             902),
-        'cct_icons_icon_optimization'      => array('Otimização SVG',            903),
-        'cct_icons_custom_icons'           => array('Personalizados',            904),
+        'uenf_icons_icon_library'           => array('Biblioteca',                901),
+        'uenf_icons_icon_settings'          => array('Configurações',             902),
+        'uenf_icons_icon_optimization'      => array('Otimização SVG',            903),
+        'uenf_icons_custom_icons'           => array('Personalizados',            904),
 
         // ── 📐 Layout (grupo: 1000) ──────────────────────────────────────────
-        'cct_layout_containers'            => array('Containers',               1001),
-        'cct_layout_layout_builder'        => array('Construtor',               1002),
-        'cct_layout_spacing'               => array('Espaçamentos',             1003),
-        'cct_layout_grid_system'           => array('Grid',                     1004),
-        'cct_layout_breakpoints'           => array('Breakpoints',              1005),
+        'uenf_layout_containers'            => array('Containers',               1001),
+        'uenf_layout_layout_builder'        => array('Construtor',               1002),
+        'uenf_layout_spacing'               => array('Espaçamentos',             1003),
+        'uenf_layout_grid_system'           => array('Grid',                     1004),
+        'uenf_layout_breakpoints'           => array('Breakpoints',              1005),
 
         // ── 📱 Responsividade (grupo: 1100) ──────────────────────────────────
-        'cct_breakpoints_management'       => array('Gerenciamento',            1101),
-        'cct_breakpoints_general'          => array('Geral',                    1102),
-        'cct_breakpoints_preview'          => array('Preview',                  1103),
-        'cct_breakpoints_templates'        => array('Templates',                1104),
+        'uenf_breakpoints_management'       => array('Gerenciamento',            1101),
+        'uenf_breakpoints_general'          => array('Geral',                    1102),
+        'uenf_breakpoints_preview'          => array('Preview',                  1103),
+        'uenf_breakpoints_templates'        => array('Templates',                1104),
 
         // ── ▪ Sombras (grupo: 1200) ──────────────────────────────────────────
-        'cct_shadow_general'               => array('Configurações',            1201),
-        'cct_shadow_elevation'             => array('Níveis de Elevação',       1202),
-        'cct_shadow_animations'            => array('Animações',                1203),
-        'cct_shadow_performance'           => array('Performance',              1204),
-        'cct_shadow_presets'               => array('Presets',                  1205),
+        'uenf_shadow_general'               => array('Configurações',            1201),
+        'uenf_shadow_elevation'             => array('Níveis de Elevação',       1202),
+        'uenf_shadow_animations'            => array('Animações',                1203),
+        'uenf_shadow_performance'           => array('Performance',              1204),
+        'uenf_shadow_presets'               => array('Presets',                  1205),
 
         // ── ✨ Animações (grupo: 1300) ────────────────────────────────────────
-        'cct_animation_general'            => array('Geral',                    1301),
-        'cct_animation_micro_interactions' => array('Micro-interações',         1302),
-        'cct_animation_performance'        => array('Performance',              1303),
-        'cct_animation_presets'            => array('Presets',                  1304),
-        'cct_animation_page_transitions'   => array('Transições de Página',    1305),
+        'uenf_animation_general'            => array('Geral',                    1301),
+        'uenf_animation_micro_interactions' => array('Micro-interações',         1302),
+        'uenf_animation_performance'        => array('Performance',              1303),
+        'uenf_animation_presets'            => array('Presets',                  1304),
+        'uenf_animation_page_transitions'   => array('Transições de Página',    1305),
 
         // ── ◆ Design System (grupo: 1400) ────────────────────────────────────
-        'cct_design_tokens_general'        => array('Geral',                    1401),
-        'cct_design_tokens_primitive'      => array('Tokens Primitivos',        1402),
-        'cct_design_tokens_semantic'       => array('Tokens Semânticos',        1403),
-        'cct_design_tokens_component'      => array('Componentes',              1404),
-        'cct_design_tokens_management'     => array('Gerenciamento',            1405),
-        'cct_design_tokens_documentation'  => array('Documentação',             1406),
+        'uenf_design_tokens_general'        => array('Geral',                    1401),
+        'uenf_design_tokens_primitive'      => array('Tokens Primitivos',        1402),
+        'uenf_design_tokens_semantic'       => array('Tokens Semânticos',        1403),
+        'uenf_design_tokens_component'      => array('Componentes',              1404),
+        'uenf_design_tokens_management'     => array('Gerenciamento',            1405),
+        'uenf_design_tokens_documentation'  => array('Documentação',             1406),
 
         // ── 🌈 Gradientes (grupo: 1500) ──────────────────────────────────────
-        'cct_gradient_generator'           => array('Gerador',                  1501),
-        'cct_gradient_library'             => array('Biblioteca',               1502),
-        'cct_gradient_settings'            => array('Configurações',            1503),
-        'cct_gradient_application'         => array('Aplicação',                1504),
+        'uenf_gradient_generator'           => array('Gerador',                  1501),
+        'uenf_gradient_library'             => array('Biblioteca',               1502),
+        'uenf_gradient_settings'            => array('Configurações',            1503),
+        'uenf_gradient_application'         => array('Aplicação',                1504),
 
         // ── ⚙️ Sistema (grupo: 1600) ───────────────────────────────────────────
-        'cct_backup_section'               => array('Backup e Restauração',     1601),
-        'cct_general_settings'             => array('Configurações Gerais',     1602),
-        'cct_performance'                  => array('Performance',              1603),
-        'cct_reset_section'                => array('Redefinir Configurações',  1604),
+        'uenf_backup_section'               => array('Backup e Restauração',     1601),
+        'uenf_general_settings'             => array('Configurações Gerais',     1602),
+        'uenf_performance'                  => array('Performance',              1603),
+        'uenf_reset_section'                => array('Redefinir Configurações',  1604),
 
         // ── Standalone (sem grupo) ────────────────────────────────────────────
-        'cct_seo'                          => array('SEO',                      1700),
-        'cct_social_media'                 => array('Social Media',             1710),
+        'uenf_seo'                          => array('SEO',                      1700),
+        'uenf_social_media'                 => array('Social Media',             1710),
     );
 
     foreach ($sections as $id => list($title, $priority)) {
@@ -580,22 +578,22 @@ add_action('customize_controls_enqueue_scripts', function () {
 
     // Mapa grupo → filhos (para visibilidade dinâmica dos cabeçalhos).
     $group_children_map = array(
-        'uenf_group_cores'          => array('cct_text_colors','cct_menu_colors','cct_main_colors','cct_colors_color_generator','cct_colors_color_palettes','cct_colors_custom_colors','color_accessibility'),
-        'uenf_group_modo_escuro'    => array('cct_dark_mode_general','cct_dark_mode_light_colors','cct_dark_mode_dark_colors','cct_dark_mode_interface','cct_dark_mode_auto_toggle','cct_dark_mode_transitions'),
+        'uenf_group_cores'          => array('uenf_text_colors','uenf_menu_colors','uenf_main_colors','uenf_colors_color_generator','uenf_colors_color_palettes','uenf_colors_custom_colors','color_accessibility'),
+        'uenf_group_modo_escuro'    => array('uenf_dark_mode_general','uenf_dark_mode_light_colors','uenf_dark_mode_dark_colors','uenf_dark_mode_interface','uenf_dark_mode_auto_toggle','uenf_dark_mode_transitions'),
         'uenf_group_tipografia'     => array('typography_section','typography_font_pairing','typography_scale','typography_custom_fonts','typography_google_fonts','typography_reading'),
-        'uenf_group_header_footer'  => array('cct_header','cct_footer'),
-        'uenf_group_navegacao'      => array('cct_search_customizer','menu_settings','cct_404_page'),
-        'uenf_group_padroes'        => array('cct_patterns_main','cct_patterns_content','cct_patterns_styles','cct_patterns_faq','cct_patterns_general','cct_patterns_portfolio','cct_patterns_pricing','cct_patterns_templates','cct_patterns_team'),
-        'uenf_group_formularios'    => array('cct_form_buttons','cct_form_fields'),
-        'uenf_group_atalho_rapido'  => array('cct_shortcut_button_open','cct_shortcut_menu','cct_shortcut_panel_settings'),
-        'uenf_group_icones'         => array('cct_icons_icon_library','cct_icons_icon_settings','cct_icons_icon_optimization','cct_icons_custom_icons'),
-        'uenf_group_layout'         => array('cct_layout_containers','cct_layout_layout_builder','cct_layout_spacing','cct_layout_grid_system','cct_layout_breakpoints'),
-        'uenf_group_responsividade' => array('cct_breakpoints_management','cct_breakpoints_general','cct_breakpoints_preview','cct_breakpoints_templates'),
-        'uenf_group_sombras'        => array('cct_shadow_general','cct_shadow_elevation','cct_shadow_animations','cct_shadow_performance','cct_shadow_presets'),
-        'uenf_group_animacoes'      => array('cct_animation_general','cct_animation_micro_interactions','cct_animation_performance','cct_animation_presets','cct_animation_page_transitions'),
-        'uenf_group_design_system'  => array('cct_design_tokens_general','cct_design_tokens_primitive','cct_design_tokens_semantic','cct_design_tokens_component','cct_design_tokens_management','cct_design_tokens_documentation'),
-        'uenf_group_gradientes'     => array('cct_gradient_generator','cct_gradient_library','cct_gradient_settings','cct_gradient_application'),
-        'uenf_group_sistema'        => array('cct_backup_section','cct_general_settings','cct_performance','cct_reset_section'),
+        'uenf_group_header_footer'  => array('uenf_header','uenf_footer'),
+        'uenf_group_navegacao'      => array('uenf_search_customizer','menu_settings','uenf_404_page'),
+        'uenf_group_padroes'        => array('uenf_patterns_main','uenf_patterns_content','uenf_patterns_styles','uenf_patterns_faq','uenf_patterns_general','uenf_patterns_portfolio','uenf_patterns_pricing','uenf_patterns_templates','uenf_patterns_team'),
+        'uenf_group_formularios'    => array('uenf_form_buttons','uenf_form_fields'),
+        'uenf_group_atalho_rapido'  => array('uenf_shortcut_button_open','uenf_shortcut_menu','uenf_shortcut_panel_settings'),
+        'uenf_group_icones'         => array('uenf_icons_icon_library','uenf_icons_icon_settings','uenf_icons_icon_optimization','uenf_icons_custom_icons'),
+        'uenf_group_layout'         => array('uenf_layout_containers','uenf_layout_layout_builder','uenf_layout_spacing','uenf_layout_grid_system','uenf_layout_breakpoints'),
+        'uenf_group_responsividade' => array('uenf_breakpoints_management','uenf_breakpoints_general','uenf_breakpoints_preview','uenf_breakpoints_templates'),
+        'uenf_group_sombras'        => array('uenf_shadow_general','uenf_shadow_elevation','uenf_shadow_animations','uenf_shadow_performance','uenf_shadow_presets'),
+        'uenf_group_animacoes'      => array('uenf_animation_general','uenf_animation_micro_interactions','uenf_animation_performance','uenf_animation_presets','uenf_animation_page_transitions'),
+        'uenf_group_design_system'  => array('uenf_design_tokens_general','uenf_design_tokens_primitive','uenf_design_tokens_semantic','uenf_design_tokens_component','uenf_design_tokens_management','uenf_design_tokens_documentation'),
+        'uenf_group_gradientes'     => array('uenf_gradient_generator','uenf_gradient_library','uenf_gradient_settings','uenf_gradient_application'),
+        'uenf_group_sistema'        => array('uenf_backup_section','uenf_general_settings','uenf_performance','uenf_reset_section'),
     );
 
     $child_sections = array_merge(...array_values($group_children_map));
@@ -705,7 +703,7 @@ add_action('customize_controls_enqueue_scripts', function () {
 /**
  * Adiciona menu administrativo do Tema UENF
  */
-function cct_add_admin_menu()
+function uenf_add_admin_menu()
 {
     // Menu principal do Tema UENF
     add_menu_page(
@@ -713,7 +711,7 @@ function cct_add_admin_menu()
         'Tema UENF',                    // Título do menu (removido emoji)
         'manage_options',               // Capacidade necessária
         'tema-uenf',                    // Slug do menu
-        'cct_admin_page_callback',      // Função callback
+        'uenf_admin_page_callback',      // Função callback
         'dashicons-admin-appearance',   // Ícone padrão do WordPress
         20                              // Posição padrão entre menus principais
     );
@@ -725,7 +723,7 @@ function cct_add_admin_menu()
         'Extensões',                    // Título do submenu
         'manage_options',               // Capacidade necessária
         'tema-uenf-extensoes',          // Slug
-        'cct_extensions_page_callback'  // Função callback
+        'uenf_extensions_page_callback'  // Função callback
     );
 
     // Submenu: Reset de Configurações
@@ -735,7 +733,7 @@ function cct_add_admin_menu()
         'Reset de Configurações',       // Título do submenu
         'manage_options',               // Capacidade necessária
         'tema-uenf-reset',              // Slug
-        'cct_reset_page_callback'       // Função callback
+        'uenf_reset_page_callback'       // Função callback
     );
 
     // Submenu: Documentação de Personalização
@@ -745,7 +743,7 @@ function cct_add_admin_menu()
         'Documentação Design',          // Título do submenu
         'manage_options',               // Capacidade necessária
         'tema-uenf-docs-design',        // Slug
-        'cct_docs_design_page_callback' // Função callback
+        'uenf_docs_design_page_callback' // Função callback
     );
 
     // Submenu: Customizer
@@ -756,37 +754,54 @@ function cct_add_admin_menu()
         'manage_options',               // Capacidade necessária
         'customize.php'                 // Link direto para o customizer
     );
+
+    // Remove o sub-item duplicado "Tema UENF" criado automaticamente pelo WordPress
+    remove_submenu_page('tema-uenf', 'tema-uenf');
 }
-add_action('admin_menu', 'cct_add_admin_menu', 5);
+add_action('admin_menu', 'uenf_add_admin_menu', 5);
+
+// Carrega o design system do admin apenas nas páginas do Tema UENF
+add_action('admin_enqueue_scripts', function ($hook) {
+    if (strpos($hook, 'tema-uenf') !== false) {
+        wp_enqueue_style(
+            'uenf-admin-theme',
+            get_template_directory_uri() . '/css/admin/admin-theme.css',
+            array(),
+            '1.0.0'
+        );
+    }
+});
 
 /**
  * Página principal do Tema UENF
  */
-function cct_admin_page_callback()
+function uenf_admin_page_callback()
 {
     ?>
-    <div class="wrap">
-        <h1>🎓 Tema UENF</h1>
-        <p>Bem-vindo ao painel de controle do Tema UENF. Gerencie todas as funcionalidades e configurações do seu tema.</p>
-
-        <div class="card" style="max-width: 800px;">
-            <h2>🚀 Acesso Rápido</h2>
-            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-primary">🔧
-                    Gerenciar Extensões</a></p>
-            <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-secondary">🎨 Personalizar Tema</a>
-            </p>
+    <div class="ua-page">
+        <div class="ua-header">
+            <h1>Tema UENF</h1>
+            <p>Painel de controle do tema institucional.</p>
         </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>📊 Status do Sistema</h2>
+        <div class="ua-card">
+            <p class="ua-card-title">Acesso Rápido</p>
+            <div class="ua-nav">
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-extensoes')); ?>" class="ua-btn ua-btn-default">🔧 Extensões</a>
+                <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="ua-btn ua-btn-outline">🎨 Personalizar</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-docs-design')); ?>" class="ua-btn ua-btn-outline">📖 Documentação</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-reset')); ?>" class="ua-btn ua-btn-ghost">🔄 Reset</a>
+            </div>
+        </div>
+
+        <div class="ua-card">
+            <p class="ua-card-title">Status do Sistema</p>
             <?php
-            $extension_manager = cct_extension_manager();
+            $extension_manager = uenf_extension_manager();
             if ($extension_manager) {
                 $active_count = 0;
-                $total_count = 0;
-
-                $extensions = $extension_manager->get_all_extensions();
-                $total_count = count($extensions);
+                $extensions   = $extension_manager->get_all_extensions();
+                $total_count  = count($extensions);
 
                 foreach ($extensions as $id => $extension) {
                     if ($extension_manager->is_extension_active($id)) {
@@ -794,18 +809,23 @@ function cct_admin_page_callback()
                     }
                 }
 
-                echo '<p><strong>Extensões Ativas:</strong> ' . $active_count . ' de ' . $total_count . '</p>';
-
-                $percentage = $total_count > 0 ? ($active_count / $total_count) * 100 : 0;
-                if ($percentage <= 30) {
-                    echo '<p><strong>Performance:</strong> 🟢 Excelente</p>';
-                } elseif ($percentage <= 60) {
-                    echo '<p><strong>Performance:</strong> 🟡 Boa</p>';
-                } elseif ($percentage <= 80) {
-                    echo '<p><strong>Performance:</strong> 🟠 Moderada</p>';
-                } else {
-                    echo '<p><strong>Performance:</strong> 🔴 Pesada</p>';
-                }
+                $inactive_count = $total_count - $active_count;
+                ?>
+                <div class="ua-stats">
+                    <div class="ua-stat">
+                        <div class="ua-stat-value ua-color-primary"><?php echo $total_count; ?></div>
+                        <div class="ua-stat-label">Total</div>
+                    </div>
+                    <div class="ua-stat">
+                        <div class="ua-stat-value ua-color-success"><?php echo $active_count; ?></div>
+                        <div class="ua-stat-label">Ativas</div>
+                    </div>
+                    <div class="ua-stat">
+                        <div class="ua-stat-value ua-color-muted"><?php echo $inactive_count; ?></div>
+                        <div class="ua-stat-label">Inativas</div>
+                    </div>
+                </div>
+                <?php
             }
             ?>
         </div>
@@ -816,7 +836,7 @@ function cct_admin_page_callback()
 /**
  * Página de Documentação de Personalização do Design
  */
-function cct_docs_design_page_callback()
+function uenf_docs_design_page_callback()
 {
     $docs_file = get_template_directory() . '/GUIA-CONFIGURACAO-DESIGN.md';
     $docs_content = '';
@@ -824,15 +844,32 @@ function cct_docs_design_page_callback()
     if (file_exists($docs_file)) {
         $docs_content = file_get_contents($docs_file);
         // Converte Markdown avançado para HTML
-        $docs_content = preg_replace('/^# (.+)$/m', '<h1 class="docs-h1">$1</h1>', $docs_content);
-        $docs_content = preg_replace('/^## (.+)$/m', '<h2 class="docs-h2">$1</h2>', $docs_content);
-        $docs_content = preg_replace('/^### (.+)$/m', '<h3 class="docs-h3">$1</h3>', $docs_content);
-        $docs_content = preg_replace('/^#### (.+)$/m', '<h4 class="docs-h4">$1</h4>', $docs_content);
+        // Headings com IDs automáticos para navegação interna (smooth scroll)
+        // SECURITY FIX: PHP-A01 — Adicionado esc_html() em todos os callbacks de heading do parser
+        // Markdown. Sem escape, conteúdo do arquivo .md com caracteres HTML especiais ou editado
+        // por ator malicioso resultaria em XSS Stored na área administrativa.
+        $docs_content = preg_replace_callback('/^# (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h1 id="' . esc_attr($id) . '" class="docs-h1">' . esc_html($m[1]) . '</h1>';
+        }, $docs_content);
+        $docs_content = preg_replace_callback('/^## (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h2 id="' . esc_attr($id) . '" class="docs-h2">' . esc_html($m[1]) . '</h2>';
+        }, $docs_content);
+        $docs_content = preg_replace_callback('/^### (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h3 id="' . esc_attr($id) . '" class="docs-h3">' . esc_html($m[1]) . '</h3>';
+        }, $docs_content);
+        $docs_content = preg_replace_callback('/^#### (.+)$/m', function ($m) {
+            $id = sanitize_title(strip_tags($m[1]));
+            return '<h4 id="' . esc_attr($id) . '" class="docs-h4">' . esc_html($m[1]) . '</h4>';
+        }, $docs_content);
         $docs_content = preg_replace('/\*\*(.+?)\*\*/', '<strong class="docs-bold">$1</strong>', $docs_content);
         $docs_content = preg_replace('/\*(.+?)\*/', '<em class="docs-italic">$1</em>', $docs_content);
         $docs_content = preg_replace('/`(.+?)`/', '<code class="docs-code">$1</code>', $docs_content);
         $docs_content = preg_replace('/^- (.+)$/m', '<li class="docs-li">$1</li>', $docs_content);
-        $docs_content = preg_replace('/(<li class="docs-li">.*<\/li>)/s', '<ul class="docs-ul">$1</ul>', $docs_content);
+        // Agrupa <li> consecutivos em <ul> sem flag /s para evitar listas aninhadas incorretas
+        $docs_content = preg_replace('/(<li class="docs-li">[^\n]*<\/li>\s*)+/', '<ul class="docs-ul">$0</ul>', $docs_content);
         $docs_content = preg_replace('/^> (.+)$/m', '<blockquote class="docs-quote">$1</blockquote>', $docs_content);
         $docs_content = nl2br($docs_content);
     } else {
@@ -1082,24 +1119,45 @@ function cct_docs_design_page_callback()
         <div class="docs-nav">
             <h3>🚀 Acesso Rápido</h3>
             <div class="docs-nav-buttons">
-                <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Abrir Customizer</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf-extensoes'); ?>" class="button button-secondary">🔧
+                <?php // SECURITY FIX: PHP-A02 — Adicionado esc_url() em todos os echo admin_url().
+                // Sem esc_url(), hooks maliciosos em admin_url filter poderiam injetar código. ?>
+                <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="button button-primary">🎨 Abrir Customizer</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-extensoes')); ?>" class="button button-secondary">🔧
                     Gerenciar Extensões</a>
-                <a href="<?php echo admin_url('admin.php?page=tema-uenf-reset'); ?>" class="button button-secondary">🔄
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-reset')); ?>" class="button button-secondary">🔄
                     Reset Configurações</a>
             </div>
         </div>
 
         <div class="docs-content">
-            <?php echo $docs_content; ?>
+            <?php
+            // SECURITY FIX (SEC-PHP-002): wp_kses() filtra o HTML gerado pelo Markdown para prevenir XSS
+            // Tags permitidas: apenas as geradas pelo preg_replace acima
+            $allowed_docs_tags = array(
+                'h1'         => array('class' => array()),
+                'h2'         => array('class' => array()),
+                'h3'         => array('class' => array()),
+                'h4'         => array('class' => array()),
+                'strong'     => array('class' => array()),
+                'em'         => array('class' => array()),
+                'code'       => array('class' => array()),
+                'ul'         => array('class' => array()),
+                'li'         => array('class' => array()),
+                'blockquote' => array('class' => array()),
+                'br'         => array(),
+                'div'        => array('class' => array()),
+                'p'          => array(),
+            );
+            echo wp_kses($docs_content, $allowed_docs_tags);
+            ?>
         </div>
 
         <div class="docs-footer">
             <h3>🎯 Próximos Passos</h3>
             <p style="margin-bottom: 20px;">Agora que você conhece as opções de personalização, comece a criar seu design
                 único!</p>
-            <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Começar Personalização</a>
-            <a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Voltar ao
+            <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="button button-primary">🎨 Começar Personalização</a>
+            <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf')); ?>" class="button button-secondary">← Voltar ao
                 Painel</a>
         </div>
     </div>
@@ -1135,11 +1193,11 @@ function cct_docs_design_page_callback()
 /**
  * Página do Gerenciador de Extensões
  */
-function cct_extensions_page_callback()
+function uenf_extensions_page_callback()
 {
     // Processar formulário se enviado
-    if (isset($_POST['cct_update_extensions']) && wp_verify_nonce($_POST['cct_extensions_nonce'], 'cct_extensions_action')) {
-        $extension_manager = cct_extension_manager();
+    if (isset($_POST['uenf_update_extensions']) && wp_verify_nonce($_POST['uenf_extensions_nonce'], 'uenf_extensions_action')) {
+        $extension_manager = uenf_extension_manager();
         if ($extension_manager) {
             $extensions = $extension_manager->get_all_extensions();
 
@@ -1153,213 +1211,19 @@ function cct_extensions_page_callback()
         }
     }
 
-    // CSS personalizado para melhor UX/UI
-    echo '<style>
-    .cct-extensions-page {
-        background: #f1f1f1;
-        margin: -20px -20px 0 -10px;
-        padding: 20px;
-        min-height: calc(100vh - 32px);
-    }
-    .cct-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 30px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .cct-header h1 {
-        margin: 0 0 10px 0;
-        font-size: 2.2em;
-        font-weight: 600;
-    }
-    .cct-header p {
-        margin: 0;
-        opacity: 0.9;
-        font-size: 1.1em;
-    }
-    .cct-card {
-        background: white;
-        border-radius: 12px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        border: 1px solid #e1e5e9;
-        transition: all 0.3s ease;
-    }
-    .cct-card:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-        transform: translateY(-2px);
-    }
-    .cct-card h2 {
-        margin: 0 0 15px 0;
-        color: #2c3e50;
-        font-size: 1.4em;
-        font-weight: 600;
-        border-bottom: 2px solid #f8f9fa;
-        padding-bottom: 10px;
-    }
-    .cct-controls {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-    }
-    .cct-btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-    }
-    .cct-btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-    }
-    .cct-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        color: white;
-    }
-    .cct-btn-success {
-        background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
-        color: white;
-        box-shadow: 0 2px 8px rgba(86, 171, 47, 0.3);
-    }
-    .cct-btn-success:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(86, 171, 47, 0.4);
-        color: white;
-    }
-    .cct-btn-danger {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
-        color: white;
-        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
-    }
-    .cct-btn-danger:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        color: white;
-    }
-    .cct-btn-save {
-        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-        color: white;
-        padding: 12px 30px;
-        font-size: 16px;
-        font-weight: 600;
-        box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
-    }
-    .cct-btn-save:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
-        color: white;
-    }
-    .cct-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .cct-table th {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 15px;
-        text-align: left;
-        font-weight: 600;
-        color: #495057;
-        border-bottom: 2px solid #dee2e6;
-    }
-    .cct-table td {
-        padding: 15px;
-        border-bottom: 1px solid #f1f3f4;
-        vertical-align: middle;
-    }
-    .cct-table tr:hover {
-        background: #f8f9fa;
-    }
-    .cct-checkbox {
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        accent-color: #667eea;
-    }
-    .cct-status-active {
-        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-        color: #155724;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-    }
-    .cct-status-inactive {
-        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-        color: #721c24;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-    }
-    .cct-extension-title {
-        font-weight: 600;
-        color: #2c3e50;
-        font-size: 15px;
-    }
-    .cct-description {
-        color: #6c757d;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    .cct-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-    .cct-stat-card {
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        border: 1px solid #e1e5e9;
-    }
-    .cct-stat-number {
-        font-size: 2.5em;
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-    .cct-stat-label {
-        color: #6c757d;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    </style>';
-
     ?>
-    <div class="cct-extensions-page">
-        <div class="cct-header">
-            <h1>🔧 Gerenciador de Extensões</h1>
-            <p>Controle todas as funcionalidades avançadas do tema. Desative extensões não utilizadas para melhorar a
-                performance.</p>
+    <div class="ua-page">
+        <div class="ua-header">
+            <h1>Extensões</h1>
+            <p>Ative apenas o que o site precisa para manter o carregamento rápido.</p>
         </div>
 
         <?php
         // Estatísticas das extensões
-        $extension_manager = cct_extension_manager();
+        $extension_manager = uenf_extension_manager();
         if ($extension_manager) {
-            $extensions = $extension_manager->get_all_extensions();
-            $total_count = count($extensions);
+            $extensions   = $extension_manager->get_all_extensions();
+            $total_count  = count($extensions);
             $active_count = 0;
 
             foreach ($extensions as $id => $extension) {
@@ -1369,85 +1233,112 @@ function cct_extensions_page_callback()
             }
 
             $inactive_count = $total_count - $active_count;
-            $percentage = $total_count > 0 ? round(($active_count / $total_count) * 100) : 0;
+            $percentage     = $total_count > 0 ? round(($active_count / $total_count) * 100) : 0;
             ?>
-            <div class="cct-stats">
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #667eea;"><?php echo $total_count; ?></div>
-                    <div class="cct-stat-label">Total de Extensões</div>
+            <div class="ua-stats">
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:var(--ua-primary)"><?php echo $total_count; ?></div>
+                    <div class="ua-stat-label">Total</div>
                 </div>
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #4CAF50;"><?php echo $active_count; ?></div>
-                    <div class="cct-stat-label">Extensões Ativas</div>
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:#16a34a"><?php echo $active_count; ?></div>
+                    <div class="ua-stat-label">Ativas</div>
                 </div>
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #ff6b6b;"><?php echo $inactive_count; ?></div>
-                    <div class="cct-stat-label">Extensões Inativas</div>
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:var(--ua-foreground-muted)"><?php echo $inactive_count; ?></div>
+                    <div class="ua-stat-label">Inativas</div>
                 </div>
-                <div class="cct-stat-card">
-                    <div class="cct-stat-number" style="color: #ffa726;"><?php echo $percentage; ?>%</div>
-                    <div class="cct-stat-label">Taxa de Utilização</div>
+                <div class="ua-stat">
+                    <div class="ua-stat-value" style="color:#d97706"><?php echo $percentage; ?>%</div>
+                    <div class="ua-stat-label">Utilização</div>
                 </div>
             </div>
             <?php
         }
         ?>
 
-        <div class="cct-card">
-            <h2>⚡ Acesso Rápido</h2>
-            <p style="margin-bottom: 20px; color: #6c757d;">Configure as extensões ativas diretamente no Customizer do
-                WordPress:</p>
-            <a href="<?php echo admin_url('customize.php'); ?>" class="cct-btn cct-btn-primary">🎨 Abrir Customizer</a>
-            <p style="margin-top: 15px; font-size: 13px; color: #6c757d;">💡 <strong>Dica:</strong> No Customizer, procure
-                por: <strong>🎓 Tema UENF → 🔧 Gerenciador de Extensões</strong></p>
+        <div class="ua-card">
+            <p class="ua-card-title">Acesso Rápido</p>
+            <p style="margin-bottom: 14px; color: var(--ua-foreground-muted); font-size: 0.875rem;">Personalize cores, tipografia e layout no Customizer:</p>
+            <div class="ua-nav">
+                <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="ua-btn ua-btn-default">🎨 Abrir Customizer</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf')); ?>" class="ua-btn ua-btn-ghost">← Painel Principal</a>
+            </div>
         </div>
 
-        <div class="cct-card">
-            <h2>📋 Gerenciar Extensões</h2>
+        <div class="ua-card">
+            <p class="ua-card-title">Gerenciar Extensões</p>
             <?php
             if ($extension_manager && !empty($extensions)) {
                 ?>
                 <form method="post" action="">
-                    <?php wp_nonce_field('cct_extensions_action', 'cct_extensions_nonce'); ?>
+                    <?php wp_nonce_field('uenf_extensions_action', 'uenf_extensions_nonce'); ?>
 
-                    <div class="cct-controls">
-                        <button type="button" id="select-all-extensions" class="cct-btn cct-btn-success">✅ Selecionar
-                            Todas</button>
-                        <button type="button" id="deselect-all-extensions" class="cct-btn cct-btn-danger">❌ Desmarcar
-                            Todas</button>
+                    <div class="ua-controls">
+                        <button type="button" id="select-all-extensions" class="ua-btn ua-btn-secondary">Selecionar Todas</button>
+                        <button type="button" id="deselect-all-extensions" class="ua-btn ua-btn-outline">Desmarcar Todas</button>
                     </div>
 
-                    <table class="cct-table">
+                    <div class="ua-table-wrap">
+                    <table class="ua-table">
                         <thead>
                             <tr>
-                                <th style="width: 60px; text-align: center;">Ativar</th>
+                                <th style="width: 48px; text-align: center;">Ativar</th>
                                 <th>Extensão</th>
-                                <th style="width: 120px; text-align: center;">Status</th>
+                                <th style="width: 100px; text-align: center;">Status</th>
                                 <th>Descrição</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($extensions as $id => $extension) {
-                                $is_active = $extension_manager->is_extension_active($id);
-                                $status_class = $is_active ? 'cct-status-active' : 'cct-status-inactive';
-                                $status_text = $is_active ? '✅ Ativa' : '❌ Inativa';
-                                $title = isset($extension['title']) ? $extension['title'] : ucfirst($id);
-                                $description = isset($extension['description']) ? $extension['description'] : 'Sem descrição disponível';
+                            // Rótulos de categoria em português
+                            $category_labels = array(
+                                'design'     => '🎨 Design',
+                                'layout'     => '📐 Layout',
+                                'typography' => '✏️ Tipografia',
+                                'effects'    => '✨ Efeitos',
+                                'interface'  => '🖥️ Interface',
+                                'content'    => '📄 Conteúdo',
+                            );
 
-                                echo '<tr>';
-                                echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox cct-checkbox" ' . checked($is_active, true, false) . '></td>';
-                                echo '<td><span class="cct-extension-title">' . esc_html($title) . '</span></td>';
-                                echo '<td style="text-align: center;"><span class="' . $status_class . '">' . $status_text . '</span></td>';
-                                echo '<td><span class="cct-description">' . esc_html($description) . '</span></td>';
-                                echo '</tr>';
+                            // Agrupar extensões por categoria
+                            $grouped = array();
+                            foreach ($extensions as $id => $extension) {
+                                $cat = isset($extension['category']) ? $extension['category'] : 'outros';
+                                $grouped[$cat][$id] = $extension;
+                            }
+
+                            // Renderizar por categoria na ordem definida
+                            $order = array_keys($category_labels);
+                            foreach ($order as $cat) {
+                                if (empty($grouped[$cat])) {
+                                    continue;
+                                }
+                                $cat_label = isset($category_labels[$cat]) ? $category_labels[$cat] : ucfirst($cat);
+                                echo '<tr><td colspan="4" style="background:#f8f9fa;padding:8px 12px;font-weight:600;font-size:0.85rem;color:#495057;border-top:2px solid #dee2e6;">' . esc_html($cat_label) . '</td></tr>';
+
+                                foreach ($grouped[$cat] as $id => $extension) {
+                                    $is_active = $extension_manager->is_extension_active($id);
+                                    $status_class = $is_active ? 'ua-badge ua-badge-success' : 'ua-badge ua-badge-muted';
+                                    $status_text  = $is_active ? '● Ativa' : '○ Inativa';
+                                    $title = isset($extension['name']) ? $extension['name'] : ucfirst($id);
+                                    $description = isset($extension['description']) ? $extension['description'] : 'Sem descrição disponível';
+
+                                    echo '<tr>';
+                                    echo '<td style="text-align: center;"><input type="checkbox" name="extension_' . esc_attr($id) . '" class="extension-checkbox ua-checkbox" ' . checked($is_active, true, false) . '></td>';
+                                    echo '<td><span class="ua-ext-title">' . esc_html($title) . '</span></td>';
+                                    echo '<td style="text-align: center;"><span class="' . $status_class . '">' . $status_text . '</span></td>';
+                                    echo '<td><span class="ua-ext-desc">' . esc_html($description) . '</span></td>';
+                                    echo '</tr>';
+                                }
                             }
                             ?>
                         </tbody>
                     </table>
+                    </div><!-- /.ua-table-wrap -->
 
-                    <div style="margin-top: 25px; text-align: center;">
-                        <input type="submit" name="cct_update_extensions" class="cct-btn cct-btn-save"
+                    <div class="ua-save-row">
+                        <input type="submit" name="uenf_update_extensions" class="ua-btn ua-btn-default ua-btn-lg"
                             value="💾 Salvar Configurações">
                     </div>
                 </form>
@@ -1482,15 +1373,11 @@ function cct_extensions_page_callback()
                             }, 150);
                         });
 
-                        // Animação nos checkboxes
+                        // Feedback visual nos checkboxes
                         document.querySelectorAll('.extension-checkbox').forEach(function (checkbox) {
                             checkbox.addEventListener('change', function () {
                                 var row = this.closest('tr');
-                                if (this.checked) {
-                                    row.style.background = 'linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%)';
-                                } else {
-                                    row.style.background = '';
-                                }
+                                row.style.background = this.checked ? '#f0fdf4' : '';
                             });
                         });
                     });
@@ -1512,11 +1399,11 @@ function cct_extensions_page_callback()
 /**
  * Garante que o sistema global de extensões esteja ativo (sem forçar extensões específicas)
  */
-function cct_ensure_global_system_activated()
+function uenf_ensure_global_system_activated()
 {
     // Garantir apenas que o sistema global esteja ativo
-    if (get_theme_mod('cct_extensions_global_enabled') === false) {
-        set_theme_mod('cct_extensions_global_enabled', true);
+    if (get_theme_mod('uenf_extensions_global_enabled') === false) {
+        set_theme_mod('uenf_extensions_global_enabled', true);
 
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('CCT: Sistema global de extensões ativado');
@@ -1529,12 +1416,12 @@ function cct_ensure_global_system_activated()
         error_log('CCT: Sistema de extensões inicializado - controle total do usuário');
     }
 }
-add_action('after_setup_theme', 'cct_ensure_global_system_activated', 5);
+add_action('after_setup_theme', 'uenf_ensure_global_system_activated', 5);
 
 /**
  * Inicializa extensões do customizer através do gerenciador
  */
-function cct_init_customizer_extensions($wp_customize, $extension_manager)
+function uenf_init_customizer_extensions($wp_customize, $extension_manager)
 {
     // Verificar se o gerenciador está disponível
     if (!$extension_manager || !is_object($extension_manager)) {
@@ -1545,11 +1432,11 @@ function cct_init_customizer_extensions($wp_customize, $extension_manager)
     }
 
     // Garantir que o sistema esteja habilitado globalmente
-    $global_enabled = get_theme_mod('cct_extensions_global_enabled', true);
+    $global_enabled = get_theme_mod('uenf_extensions_global_enabled', true);
 
     // Forçar ativação se não estiver definido
     if ($global_enabled === null || $global_enabled === false) {
-        set_theme_mod('cct_extensions_global_enabled', true);
+        set_theme_mod('uenf_extensions_global_enabled', true);
         $global_enabled = true;
 
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -1566,16 +1453,16 @@ function cct_init_customizer_extensions($wp_customize, $extension_manager)
 
     // Mapeamento de extensões para classes
     $extension_classes = array(
-        'colors' => 'CCT_Color_Manager',
-        'icons' => 'CCT_Icon_Manager',
-        'typography' => 'CCT_Typography_Customizer',
-        'dark_mode' => 'CCT_Dark_Mode_Manager',
-        'shadows' => 'CCT_Shadow_Manager',
-        'breakpoints' => 'CCT_Responsive_Breakpoints_Manager',
-        'design_tokens' => 'CCT_Design_Tokens_Manager',
-        'patterns' => 'CCT_Pattern_Library_Manager',
-        'gradients' => 'CCT_Gradient_Manager',
-        'animations' => 'CCT_Animation_Manager'
+        'colors' => 'UENF_Color_Manager',
+        'icons' => 'UENF_Icon_Manager',
+        'typography' => 'UENF_Typography_Customizer',
+        'dark_mode' => 'UENF_Dark_Mode_Manager',
+        'shadows' => 'UENF_Shadow_Manager',
+        'breakpoints' => 'UENF_Responsive_Breakpoints_Manager',
+        'design_tokens' => 'UENF_Design_Tokens_Manager',
+        'patterns' => 'UENF_Pattern_Library_Manager',
+        'gradients' => 'UENF_Gradient_Manager',
+        'animations' => 'UENF_Animation_Manager'
     );
 
     // Classes que precisam de $wp_customize no construtor
@@ -1622,36 +1509,38 @@ function cct_init_customizer_extensions($wp_customize, $extension_manager)
         }
     }
 }
-require_once CCT_THEME_DIR . '/inc/template-tags.php';
-require_once CCT_THEME_DIR . '/inc/template-functions.php';
-require_once CCT_THEME_DIR . '/inc/optimization.php';
-require_once CCT_THEME_DIR . '/inc/seo.php';
-//require_once CCT_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
+require_once UENF_THEME_DIR . '/inc/template-tags.php';
+require_once UENF_THEME_DIR . '/inc/template-functions.php';
+require_once UENF_THEME_DIR . '/inc/optimization.php';
+require_once UENF_THEME_DIR . '/inc/seo.php';
+// SECURITY FIX: WP-C01 — Reativado security.php que estava comentado. Contém CSP, HSTS, bloqueio XML-RPC,
+// remoção de versão WP, prevenção de enumeração de usuários e restrição de MIME types.
+require_once UENF_THEME_DIR . '/inc/security.php'; // Arquivo de funções de segurança
 
 // Inclui o customizer da página 404
-if (file_exists(CCT_THEME_DIR . '/inc/customizer/class-404-customizer.php')) {
-    require_once CCT_THEME_DIR . '/inc/customizer/class-404-customizer.php';
+if (file_exists(UENF_THEME_DIR . '/inc/customizer/class-404-customizer.php')) {
+    require_once UENF_THEME_DIR . '/inc/customizer/class-404-customizer.php';
 }
 
 // Verificar se as funções de template estão disponíveis
-if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !function_exists('cct_post_thumbnail')) {
+if (!function_exists('uenf_posted_on') || !function_exists('uenf_posted_by') || !function_exists('uenf_post_thumbnail')) {
     // Definir funções de fallback se não estiverem disponíveis
-    if (!function_exists('cct_posted_on')) {
-        function cct_posted_on()
+    if (!function_exists('uenf_posted_on')) {
+        function uenf_posted_on()
         {
             echo '<span class="posted-on">Publicado em ' . get_the_date() . '</span>';
         }
     }
 
-    if (!function_exists('cct_posted_by')) {
-        function cct_posted_by()
+    if (!function_exists('uenf_posted_by')) {
+        function uenf_posted_by()
         {
             // Author info removed by request
         }
     }
 
-    if (!function_exists('cct_post_thumbnail')) {
-        function cct_post_thumbnail()
+    if (!function_exists('uenf_post_thumbnail')) {
+        function uenf_post_thumbnail()
         {
             if (has_post_thumbnail()) {
                 echo '<div class="post-thumbnail">';
@@ -1663,24 +1552,24 @@ if (!function_exists('cct_posted_on') || !function_exists('cct_posted_by') || !f
 }
 
 // Verificar se o Customizer está carregado
-if (!function_exists('cct_customize_register')) {
+if (!function_exists('uenf_customize_register')) {
     // O Customizer não está carregado
 }
 
 /**
  * Configurações de segurança adicionais
  */
-add_action('after_setup_theme', 'cct_security_headers');
-if (!function_exists('cct_security_headers')) {
-    function cct_security_headers()
+// SECURITY FIX: WP-C02 — Trocado hook after_setup_theme (dispara antes do envio HTTP) por send_headers
+// (hook correto para definir headers HTTP). WP-A04 — Removido header X-XSS-Protection deprecated
+// (obsoleto em browsers modernos; pode criar vulnerabilidade em IE antigo).
+add_action('send_headers', 'uenf_security_headers');
+if (!function_exists('uenf_security_headers')) {
+    function uenf_security_headers()
     {
         // Headers de segurança
         if (!is_admin()) {
             // X-Content-Type-Options: previne que navegadores façam MIME-type sniffing
             header('X-Content-Type-Options: nosniff');
-
-            // X-XSS-Protection: ativa o filtro XSS do navegador
-            header('X-XSS-Protection: 1; mode=block');
 
             // X-Frame-Options: previne clickjacking
             header('X-Frame-Options: SAMEORIGIN');
@@ -1695,7 +1584,7 @@ if (!function_exists('cct_security_headers')) {
 }
 
 // Setup theme
-function cct_theme_setup()
+function uenf_theme_setup()
 {
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -1738,8 +1627,8 @@ function cct_theme_setup()
 
     // Register nav menus
     register_nav_menus(array(
-        'primary' => esc_html__('Primary Menu', 'cct-theme'),
-        'footer' => esc_html__('Footer Menu', 'cct-theme'),
+        'primary' => esc_html__('Primary Menu', 'uenf-theme'),
+        'footer' => esc_html__('Footer Menu', 'uenf-theme'),
     ));
 
     // Add theme support for selective refresh for widgets
@@ -1748,19 +1637,19 @@ function cct_theme_setup()
     // Block patterns são responsabilidade do plugin uenf-templates
     remove_theme_support('core-block-patterns');
 }
-add_action('after_setup_theme', 'cct_theme_setup');
+add_action('after_setup_theme', 'uenf_theme_setup');
 
 // Função para otimizar a exibição de imagens
-function cct_optimize_image_display($html, $post_id, $post_image_id, $size, $attr)
+function uenf_optimize_image_display($html, $post_id, $post_image_id, $size, $attr)
 {
     $html = str_replace('<img', '<img loading="lazy" decoding="async"', $html);
     return $html;
 }
-add_filter('post_thumbnail_html', 'cct_optimize_image_display', 10, 5);
-add_filter('get_image_tag', 'cct_optimize_image_display', 10, 5);
+add_filter('post_thumbnail_html', 'uenf_optimize_image_display', 10, 5);
+add_filter('get_image_tag', 'uenf_optimize_image_display', 10, 5);
 
 // Resource hints para fontes e CDNs usados pelo tema
-function cct_add_resource_hints()
+function uenf_add_resource_hints()
 {
     // Evitar repetição no admin
     if (is_admin()) {
@@ -1781,15 +1670,15 @@ function cct_add_resource_hints()
         echo '<link rel="dns-prefetch" href="' . esc_url($host) . '" />' . "\n";
     }
 }
-add_action('wp_head', 'cct_add_resource_hints', 1);
+add_action('wp_head', 'uenf_add_resource_hints', 1);
 
 // Register widget areas
-function cct_widgets_init()
+function uenf_widgets_init()
 {
     register_sidebar(array(
-        'name' => esc_html__('Sidebar', 'cct-theme'),
+        'name' => esc_html__('Sidebar', 'uenf-theme'),
         'id' => 'sidebar-1',
-        'description' => esc_html__('Add widgets here.', 'cct-theme'),
+        'description' => esc_html__('Add widgets here.', 'uenf-theme'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget' => '</section>',
         'before_title' => '<h2 class="widget-title">',
@@ -1799,54 +1688,35 @@ function cct_widgets_init()
     // Footer widgets
     for ($i = 1; $i <= 4; $i++) {
         register_sidebar(array(
-            'name' => sprintf(esc_html__('Footer %d', 'cct-theme'), $i),
+            'name' => sprintf(esc_html__('Footer %d', 'uenf-theme'), $i),
             'id' => 'footer-' . $i,
-            'description' => esc_html__('Add footer widgets here.', 'cct-theme'),
+            'description' => esc_html__('Add footer widgets here.', 'uenf-theme'),
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
             'after_widget' => '</div>',
             'before_title' => '<h3 class="widget-title">',
             'after_title' => '</h3>',
         ));
     }
-    // E-mail
-    register_sidebar(array(
-        'name' => 'Email',
-        'id' => 'endereco-email-setor',
-        'description' => esc_html__('Add footer widgets here.', 'cct-theme'),
-        'before_widget' => '',
-        'after_widget' => '',
-        'before_title' => '',
-        'after_title' => '',
-    ));
-    // telefone setor
-    register_sidebar(array(
-        'name' => 'Telefone',
-        'id' => 'telefone-setor',
-        'description' => esc_html__('Add footer widgets here.', 'cct-theme'),
-        'before_widget' => '',
-        'after_widget' => '',
-        'before_title' => '',
-        'after_title' => '',
-    ));
+    // Email e Telefone gerenciados pelo CPT uenf_contato (class-uenf-contact-settings.php)
     // Área de busca personalizada removida - substituída por solução nativa
     // Widget de redes sociais removido - usando configurações do customizer
     // Área de idiomas
     register_sidebar(array(
-        'name' => 'idiomas UENF',
+        'name' => 'Idiomas UENF',
         'id' => 'idiomas-uenf',
-        'description' => esc_html__('Add header widgets here.', 'cct-theme'),
+        'description' => esc_html__('Add header widgets here.', 'uenf-theme'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget' => '</div>',
         'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>',
     ));
 }
-add_action('widgets_init', 'cct_widgets_init');
+add_action('widgets_init', 'uenf_widgets_init');
 
 /**
  * Gera CSS dinâmico para redes sociais
  */
-function cct_get_social_media_css()
+function uenf_get_social_media_css()
 {
     // Garantir que o valor padrão seja 36 se não estiver definido ou for inválido
     $icon_size = get_theme_mod('social_media_icon_size', 32);
@@ -1876,14 +1746,27 @@ function cct_get_social_media_css()
 }
 
 /**
+ * Retorna true se ao menos uma rede social estiver configurada no customizer
+ */
+function uenf_has_social_media(): bool {
+    $networks = [ 'facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'telegram', 'whatsapp' ];
+    foreach ( $networks as $network ) {
+        if ( ! empty( get_theme_mod( $network . '_link', '' ) ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * Exibe as redes sociais configuradas no customizer
  */
-function cct_display_social_media()
+function uenf_display_social_media()
 {
     $social_networks = array('facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'telegram', 'whatsapp');
     $alignment = get_theme_mod('social_media_alignment', 'right');
     $icon_gap = get_theme_mod('social_media_icon_gap', 6);
-    $social_css = cct_get_social_media_css();
+    $social_css = uenf_get_social_media_css();
 
     $output = '<div class="social-media-links" style="text-align: ' . esc_attr($alignment) . '; gap: ' . esc_attr($icon_gap) . 'px;">';
     $has_links = false;
@@ -1929,7 +1812,7 @@ add_filter('widget_text', 'formatarTelefoneBrasil');
  * Enqueue scripts and styles
  * Ordem de carregamento otimizada para melhor performance e manutenção
  */
-function cct_scripts()
+function uenf_scripts()
 {
     // Versão baseada no timestamp do arquivo para evitar cache
     $theme_version = wp_get_theme()->get('Version');
@@ -1937,44 +1820,44 @@ function cct_scripts()
     $style_version = file_exists($style_path) ? filemtime($style_path) : $theme_version;
 
     // 1. Fontes externas (carregadas primeiro para evitar FOUT - Flash of Unstyled Text)
-    wp_enqueue_style('cct-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), null);
-    wp_enqueue_style('cct-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), '6.4.2');
+    wp_enqueue_style('uenf-fonts', 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap', array(), null);
+    wp_enqueue_style('uenf-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), '6.4.2');
 
     // 2. Frameworks e bibliotecas (Bootstrap CDN completo para garantir funcionalidade do offcanvas)
-    wp_enqueue_style('cct-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', array(), '5.3.2');
-    wp_style_add_data('cct-bootstrap', 'integrity', 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN');
-    wp_style_add_data('cct-bootstrap', 'crossorigin', 'anonymous');
+    wp_enqueue_style('uenf-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', array(), '5.3.2');
+    wp_style_add_data('uenf-bootstrap', 'integrity', 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN');
+    wp_style_add_data('uenf-bootstrap', 'crossorigin', 'anonymous');
 
     // 2.1. Variáveis CSS (deve ser carregado antes do style.min.css)
     $variables_path = get_template_directory() . '/css/variables.css';
     $variables_version = file_exists($variables_path) ? filemtime($variables_path) : $theme_version;
-    wp_enqueue_style('cct-variables', CCT_THEME_URI . '/css/variables.css', array('cct-bootstrap'), $variables_version);
+    wp_enqueue_style('uenf-variables', UENF_THEME_URI . '/css/variables.css', array('uenf-bootstrap'), $variables_version);
 
     // 2.5 Reset CSS (deve ser carregado antes de todos os outros estilos)
     $reset_css_path = get_template_directory() . '/css/reset.css';
     if (file_exists($reset_css_path)) {
         $reset_css_version = filemtime($reset_css_path);
-        wp_enqueue_style('cct-reset', CCT_THEME_URI . '/css/reset.css', array(), $reset_css_version);
+        wp_enqueue_style('uenf-reset', UENF_THEME_URI . '/css/reset.css', array(), $reset_css_version);
     }
 
     // 2.6 Correção específica para hero e header (carregado após reset)
     $hero_header_fix_path = get_template_directory() . '/css/hero-header-fix.css';
     if (file_exists($hero_header_fix_path)) {
         $hero_header_fix_version = filemtime($hero_header_fix_path);
-        wp_enqueue_style('cct-hero-header-fix', CCT_THEME_URI . '/css/hero-header-fix.css', array('cct-reset'), $hero_header_fix_version);
+        wp_enqueue_style('uenf-hero-header-fix', UENF_THEME_URI . '/css/hero-header-fix.css', array('uenf-reset'), $hero_header_fix_version);
     }
 
     // 3. Estilo principal (compilado com todos os estilos em um único arquivo)
     wp_enqueue_style(
-        'cct-style',
-        CCT_THEME_URI . '/assets/dist/css/style.min.css',
+        'uenf-style',
+        UENF_THEME_URI . '/assets/dist/css/style.min.css',
         array(
-            'cct-fonts',
-            'cct-fontawesome',
-            'cct-bootstrap',
-            'cct-variables',
-            'cct-reset',
-            'cct-hero-header-fix'
+            'uenf-fonts',
+            'uenf-fontawesome',
+            'uenf-bootstrap',
+            'uenf-variables',
+            'uenf-reset',
+            'uenf-hero-header-fix'
         ),
         $style_version // Usa timestamp do arquivo para versionamento
     );
@@ -1983,22 +1866,64 @@ function cct_scripts()
     $css_404_path = get_template_directory() . '/assets/css/404.css';
     if (is_404() && file_exists($css_404_path)) {
         wp_enqueue_style(
-            'cct-404-style',
+            'uenf-404-style',
             get_template_directory_uri() . '/assets/css/404.css',
-            array('cct-style'),
+            array('uenf-style'),
             filemtime($css_404_path)
         );
     }
 
     // 3.1 Estilos adicionais (removidos do header.php para melhor performance)
-    wp_enqueue_style('cct-styles-additional', CCT_THEME_URI . '/css/styles.css', array('cct-style'), $style_version);
-    wp_enqueue_style('cct-custom-fixes', CCT_THEME_URI . '/css/custom-fixes.css', array('cct-styles-additional'), $style_version);
+    wp_enqueue_style('uenf-styles-additional', UENF_THEME_URI . '/css/styles.css', array('uenf-style'), $style_version);
+    wp_enqueue_style('uenf-custom-fixes', UENF_THEME_URI . '/css/custom-fixes.css', array('uenf-styles-additional'), $style_version);
+
+    // 3.1.5 CSS Responsivo Condicional — carregado com media attribute (non-render-blocking)
+    // mobile.css: só bloqueia render em dispositivos ≤767.98px; para desktop é non-blocking
+    $responsive_base = get_template_directory() . '/css/responsive/';
+    $mobile_css_path = $responsive_base . 'mobile.css';
+    if (file_exists($mobile_css_path)) {
+        wp_enqueue_style(
+            'uenf-responsive-mobile',
+            UENF_THEME_URI . '/css/responsive/mobile.css',
+            array('uenf-custom-fixes'),
+            filemtime($mobile_css_path)
+        );
+        wp_style_add_data('uenf-responsive-mobile', 'media', '(max-width:767.98px)');
+    }
+    $tablet_css_path = $responsive_base . 'tablet.css';
+    if (file_exists($tablet_css_path)) {
+        wp_enqueue_style(
+            'uenf-responsive-tablet',
+            UENF_THEME_URI . '/css/responsive/tablet.css',
+            array('uenf-custom-fixes'),
+            filemtime($tablet_css_path)
+        );
+        wp_style_add_data('uenf-responsive-tablet', 'media', '(min-width:768px) and (max-width:991.98px)');
+    }
+    $desktop_css_path = $responsive_base . 'desktop.css';
+    if (file_exists($desktop_css_path)) {
+        wp_enqueue_style(
+            'uenf-responsive-desktop',
+            UENF_THEME_URI . '/css/responsive/desktop.css',
+            array('uenf-custom-fixes'),
+            filemtime($desktop_css_path)
+        );
+        wp_style_add_data('uenf-responsive-desktop', 'media', '(min-width:992px)');
+    }
+
+    // 3.2 Estilos da listagem de posts (somente em páginas de blog/arquivo)
+    if (is_home() || is_archive()) {
+        $posts_list_path = get_template_directory() . '/css/components/posts-list.css';
+        if (file_exists($posts_list_path)) {
+            wp_enqueue_style('uenf-posts-list', UENF_THEME_URI . '/css/components/posts-list.css', array('uenf-custom-fixes'), filemtime($posts_list_path));
+        }
+    }
 
     // 3.1.1 Estilos dos Block Patterns
     $patterns_css_path = get_template_directory() . '/css/patterns.css';
     if (file_exists($patterns_css_path)) {
         $patterns_css_version = filemtime($patterns_css_path);
-        wp_enqueue_style('cct-patterns', CCT_THEME_URI . '/css/patterns.css', array('cct-style'), $patterns_css_version);
+        wp_enqueue_style('uenf-patterns', UENF_THEME_URI . '/css/patterns.css', array('uenf-style'), $patterns_css_version);
     }
 
     // 3.1.2 Correções específicas para o WordPress Customizer
@@ -2006,7 +1931,7 @@ function cct_scripts()
         $customizer_fix_path = get_template_directory() . '/css/customizer-fix.css';
         if (file_exists($customizer_fix_path)) {
             $customizer_fix_version = filemtime($customizer_fix_path);
-            wp_enqueue_style('cct-customizer-fix', CCT_THEME_URI . '/css/customizer-fix.css', array('cct-style'), $customizer_fix_version);
+            wp_enqueue_style('uenf-customizer-fix', UENF_THEME_URI . '/css/customizer-fix.css', array('uenf-style'), $customizer_fix_version);
         }
     }
 
@@ -2054,14 +1979,14 @@ function cct_scripts()
             $file_version = filemtime($file_path);
 
             wp_enqueue_style(
-                'cct-' . $handle . '-style',
-                CCT_THEME_URI . $path,
-                array('cct-style'), // Depende do estilo principal
+                'uenf-' . $handle . '-style',
+                UENF_THEME_URI . $path,
+                array('uenf-style'), // Depende do estilo principal
                 $file_version
             );
 
             // Adiciona um parâmetro de consulta para forçar o recarregamento
-            wp_style_add_data('cct-' . $handle . '-style', 'ver', $file_version);
+            wp_style_add_data('uenf-' . $handle . '-style', 'ver', $file_version);
         }
     }
 
@@ -2070,9 +1995,9 @@ function cct_scripts()
     if (file_exists($spacing_fixes_path)) {
         $spacing_fixes_version = filemtime($spacing_fixes_path);
         wp_enqueue_style(
-            'cct-spacing-fixes',
-            CCT_THEME_URI . '/css/spacing-fixes.css',
-            array('cct-style', 'cct-new-menu-style'), // Depende de todos os outros estilos
+            'uenf-spacing-fixes',
+            UENF_THEME_URI . '/css/spacing-fixes.css',
+            array('uenf-style', 'uenf-new-menu-style'), // Depende de todos os outros estilos
             $spacing_fixes_version
         );
     }
@@ -2085,41 +2010,41 @@ function cct_scripts()
             'deps' => array()
         ),
         // Gerenciador de eventos (deve ser carregado após o jQuery)
-        'cct-event-manager' => array(
+        'uenf-event-manager' => array(
             'path' => '/js/event-manager.js',
             'deps' => array('jquery'),
             'force' => true // Força o carregamento do event-manager.js em todas as páginas
         ),
         // Scripts do menu (dependem do jQuery e do event-manager)
-        'cct-menu' => array(
+        'uenf-menu' => array(
             'path' => '/components/menu/assets/js/uenf-menu-new.js', // Atualizado para usar a nova versão do menu
-            'deps' => array('jquery', 'cct-event-manager'),
+            'deps' => array('jquery', 'uenf-event-manager'),
             'force' => true // Forçar carregamento em todas as páginas
         ),
         // Bootstrap JS (removido do header.php para melhor performance)
-        'cct-bootstrap-js' => array(
+        'uenf-bootstrap-js' => array(
             'path' => false, // Usar CDN para Bootstrap JS
             'deps' => array('jquery'),
             'force' => true,
             'cdn' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
         ),
         // Script principal (carregado por último)
-        'cct-main' => array(
+        'uenf-main' => array(
             'path' => '/js/main.js',
-            'deps' => array('jquery', 'cct-event-manager', 'cct-bootstrap-js')
+            'deps' => array('jquery', 'uenf-event-manager', 'uenf-bootstrap-js')
         ),
         // Outros scripts (carregados condicionalmente)
-        'cct-back-to-top' => array(
+        'uenf-back-to-top' => array(
             'path' => '/js/back-to-top.js',
             'deps' => array('jquery')
         ),
         // Script da busca retrátil
-        'cct-search-retractable' => array(
+        'uenf-search-retractable' => array(
             'path' => '/js/search-retractable.js',
-            'deps' => array('jquery', 'cct-event-manager')
+            'deps' => array('jquery', 'uenf-event-manager')
         ),
         // Script dos Block Patterns
-        'cct-patterns' => array(
+        'uenf-patterns' => array(
             'path' => '/js/patterns.js',
             'deps' => array('jquery'),
             'force' => true
@@ -2136,10 +2061,10 @@ function cct_scripts()
         $is_front_or_page = is_front_page() || is_page();
 
         // Evitar carregar globalmente quando não necessário
-        if ($handle === 'cct-menu' && !$has_primary_menu && empty($file['force'])) {
+        if ($handle === 'uenf-menu' && !$has_primary_menu && empty($file['force'])) {
             continue;
         }
-        if ($handle === 'cct-patterns' && !$is_front_or_page && empty($file['force'])) {
+        if ($handle === 'uenf-patterns' && !$is_front_or_page && empty($file['force'])) {
             continue;
         }
 
@@ -2179,7 +2104,7 @@ function cct_scripts()
         }
 
         // Adicionar dados de localização se necessário
-        if ($handle === 'cct-event-manager') {
+        if ($handle === 'uenf-event-manager') {
             wp_localize_script($handle, 'uenfEventManagerVars', array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'is_admin' => current_user_can('manage_options')
@@ -2195,13 +2120,13 @@ function cct_scripts()
         wp_enqueue_script('comment-reply');
     }
 }
-add_action('wp_enqueue_scripts', 'cct_scripts');
+add_action('wp_enqueue_scripts', 'uenf_scripts');
 
 /**
  * Personalizado breadcrumb com ícone de casa
  * Refatorado para usar classes CSS e estrutura padrão
  */
-function cct_custom_breadcrumb()
+function uenf_custom_breadcrumb()
 {
     // Não exibir na home
     if (is_front_page()) {
@@ -2223,13 +2148,15 @@ function cct_custom_breadcrumb()
         return trim($title);
     };
 
+    // SECURITY FIX (SEC-PHP-003): adicionados esc_url() e esc_html() em todos os pontos do breadcrumb
+    // Sem escape, títulos/categorias com HTML podem causar XSS Stored visível para todos os visitantes
     if (is_page()) {
         $ancestors = get_post_ancestors(get_the_ID());
         if ($ancestors) {
             $ancestors = array_reverse($ancestors);
             foreach ($ancestors as $ancestor) {
                 echo '<li class="breadcrumb-item">';
-                echo '<a href="' . get_permalink($ancestor) . '" class="breadcrumb-link">' . $clean_title(get_the_title($ancestor)) . '</a>';
+                echo '<a href="' . esc_url(get_permalink($ancestor)) . '" class="breadcrumb-link">' . esc_html($clean_title(get_the_title($ancestor))) . '</a>';
                 echo '</li>';
             }
         }
@@ -2238,7 +2165,7 @@ function cct_custom_breadcrumb()
         $parent = $post->post_parent;
         if ($parent) {
             echo '<li class="breadcrumb-item">';
-            echo '<a href="' . get_permalink($parent) . '" class="breadcrumb-link">' . $clean_title(get_the_title($parent)) . '</a>';
+            echo '<a href="' . esc_url(get_permalink($parent)) . '" class="breadcrumb-link">' . esc_html($clean_title(get_the_title($parent))) . '</a>';
             echo '</li>';
         } else {
             // Se for post padrão, mostrar categoria
@@ -2246,7 +2173,7 @@ function cct_custom_breadcrumb()
             if ($categories) {
                 $category = $categories[0];
                 echo '<li class="breadcrumb-item">';
-                echo '<a href="' . get_category_link($category->term_id) . '" class="breadcrumb-link">' . $clean_title($category->name) . '</a>';
+                echo '<a href="' . esc_url(get_category_link($category->term_id)) . '" class="breadcrumb-link">' . esc_html($clean_title($category->name)) . '</a>';
                 echo '</li>';
             }
         }
@@ -2255,7 +2182,7 @@ function cct_custom_breadcrumb()
         if ($category->parent) {
             $parent_category = get_category($category->parent);
             echo '<li class="breadcrumb-item">';
-            echo '<a href="' . get_category_link($category->parent) . '" class="breadcrumb-link">' . $clean_title($parent_category->name) . '</a>';
+            echo '<a href="' . esc_url(get_category_link($category->parent)) . '" class="breadcrumb-link">' . esc_html($clean_title($parent_category->name)) . '</a>';
             echo '</li>';
         }
     } elseif (is_search()) {
@@ -2272,11 +2199,11 @@ function cct_custom_breadcrumb()
     if (is_home()) {
         echo '<li class="breadcrumb-item active" aria-current="page">Blog</li>';
     } elseif (is_category()) {
-        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(single_cat_title('', false)) . '</li>';
+        echo '<li class="breadcrumb-item active" aria-current="page">' . esc_html($clean_title(single_cat_title('', false))) . '</li>';
     } elseif (is_archive()) {
-        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(get_the_archive_title()) . '</li>';
+        echo '<li class="breadcrumb-item active" aria-current="page">' . esc_html($clean_title(get_the_archive_title())) . '</li>';
     } else {
-        echo '<li class="breadcrumb-item active" aria-current="page">' . $clean_title(get_the_title()) . '</li>';
+        echo '<li class="breadcrumb-item active" aria-current="page">' . esc_html($clean_title(get_the_title())) . '</li>';
     }
 
     echo '</ol>';
@@ -2336,7 +2263,7 @@ function uenf_load_addons()
 add_action('after_setup_theme', 'uenf_load_addons', 10);
 
 // Verifica a ordem de carregamento dos scripts (apenas se WP_DEBUG ativo)
-function cct_debug_scripts_footer()
+function uenf_debug_scripts_footer()
 {
     // Só executa se WP_DEBUG estiver ativo
     if (!defined('WP_DEBUG') || !WP_DEBUG) {
@@ -2356,20 +2283,29 @@ function cct_debug_scripts_footer()
         error_log($debug_info);
     }
 
-    // JavaScript debug apenas no console
-    echo '<script>
-        if (typeof console !== "undefined") {
-            console.log("[CCT DEBUG] jQuery version:", typeof jQuery !== "undefined" ? jQuery.fn.jquery : "jQuery não carregado");
-            console.log("[CCT DEBUG] uenfEventRouter:", typeof uenfEventRouter !== "undefined" ? "Carregado" : "Não carregado");
-            console.log("[CCT DEBUG] UENFMenu:", typeof UENFMenu !== "undefined" ? "Definido" : "Não definido");
-        }
-    </script>';
 }
-add_action('wp_print_footer_scripts', 'cct_debug_scripts_footer', 9999);
+add_action('wp_print_footer_scripts', 'uenf_debug_scripts_footer', 9999);
+
+/**
+ * Evita 404 de imagens cujo arquivo foi removido do disco.
+ * Retorna false quando o arquivo físico do attachment não existe,
+ * fazendo has_post_thumbnail() e the_post_thumbnail() ignorarem
+ * graciosamente o attachment órfão.
+ */
+add_filter('wp_get_attachment_image_src', function ($image, $attachment_id) {
+    if ( ! $image ) {
+        return $image;
+    }
+    $file = get_attached_file($attachment_id);
+    if ( $file && ! file_exists($file) ) {
+        return false;
+    }
+    return $image;
+}, 10, 2);
 
 // Inicializa os addons apenas uma vez
-if (!function_exists('cct_init_addons')) {
-    function cct_init_addons()
+if (!function_exists('uenf_init_addons')) {
+    function uenf_init_addons()
     {
         // Verifica se os addons já foram inicializados
         static $initialized = false;
@@ -2379,15 +2315,15 @@ if (!function_exists('cct_init_addons')) {
         $initialized = true;
 
         // Inicializa os addons aqui
-        do_action('cct_addons_init');
+        do_action('uenf_addons_init');
     }
 
     // Garante que os addons sejam inicializados após o tema estar pronto
-    add_action('after_setup_theme', 'cct_init_addons', 20);
+    add_action('after_setup_theme', 'uenf_init_addons', 20);
 }
 
 // Adiciona atributo defer a scripts não críticos
-function cct_add_defer_to_scripts($tag, $handle, $src)
+function uenf_add_defer_to_scripts($tag, $handle, $src)
 {
     // Não interferir com jQuery ou scripts do core que precisam em head
     $no_defer = array('jquery', 'comment-reply', 'customize-preview');
@@ -2395,8 +2331,8 @@ function cct_add_defer_to_scripts($tag, $handle, $src)
         return $tag;
     }
 
-    // Apenas scripts do tema (cct-*) e algumas bibliotecas carregadas no footer
-    $defer_handles_prefix = array('cct-', 'uenf-');
+    // Apenas scripts do tema (uenf-*) e algumas bibliotecas carregadas no footer
+    $defer_handles_prefix = array('uenf-', 'uenf-');
     $should_defer = false;
     foreach ($defer_handles_prefix as $prefix) {
         if (strpos($handle, $prefix) === 0) {
@@ -2406,7 +2342,7 @@ function cct_add_defer_to_scripts($tag, $handle, $src)
     }
 
     // Bootstrap via CDN também pode receber defer
-    if ($handle === 'cct-bootstrap-js') {
+    if ($handle === 'uenf-bootstrap-js') {
         $should_defer = true;
     }
 
@@ -2416,16 +2352,16 @@ function cct_add_defer_to_scripts($tag, $handle, $src)
     }
     return $tag;
 }
-add_filter('script_loader_tag', 'cct_add_defer_to_scripts', 10, 3);
+add_filter('script_loader_tag', 'uenf_add_defer_to_scripts', 10, 3);
 
 /**
  * Função vazia para manter compatibilidade
  */
-function cct_customizer_live_preview()
+function uenf_customizer_live_preview()
 {
     // Função mantida para compatibilidade, mas sem funcionalidade
 }
-add_action('customize_preview_init', 'cct_customizer_live_preview');
+add_action('customize_preview_init', 'uenf_customizer_live_preview');
 
 /**
  * Inicializa os addons apenas uma vez
@@ -2484,7 +2420,7 @@ add_filter('wp_get_nav_menu_items', 'uenf_filter_hidden_pages_from_menu', 999, 2
 
 
 // Página de Reset de Configurações
-function cct_reset_page_callback()
+function uenf_reset_page_callback()
 {
     // Verificar se o usuário tem permissão
     if (!current_user_can('manage_options')) {
@@ -2492,7 +2428,7 @@ function cct_reset_page_callback()
     }
 
     // Processar ações de reset se enviadas
-    if (isset($_POST['action']) && wp_verify_nonce($_POST['reset_nonce'], 'cct_reset_action')) {
+    if (isset($_POST['action']) && wp_verify_nonce($_POST['reset_nonce'], 'uenf_reset_action')) {
         $reset_manager = UENF_Theme_Reset_Manager::get_instance();
         $message = '';
         $message_type = 'success';
@@ -2505,9 +2441,9 @@ function cct_reset_page_callback()
                 break;
 
             case 'reset_extensions':
-                $extension_manager = cct_extension_manager();
+                $extension_manager = uenf_extension_manager();
                 if ($extension_manager) {
-                    $result = $extension_manager->reset_all_extensions();
+                    $result = $extension_manager->reset_all_settings();
                     $message = $result ? 'Configurações de extensões resetadas com sucesso!' : 'Erro ao resetar configurações de extensões.';
                     $message_type = $result ? 'success' : 'error';
                 }
@@ -2525,57 +2461,98 @@ function cct_reset_page_callback()
         }
     }
     ?>
-    <div class="wrap">
-        <h1>🔄 Reset de Configurações</h1>
-        <p>Use esta página para resetar configurações do tema e extensões para os valores padrão.</p>
+    <div class="ua-page">
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>⚠️ Atenção</h2>
-            <p><strong>Esta ação não pode ser desfeita!</strong> Certifique-se de fazer um backup das suas configurações
-                antes de prosseguir.</p>
+        <div class="ua-header">
+            <h1>Reset de Configurações</h1>
+            <p>Restaure as configurações do tema e extensões para os valores padrão.</p>
         </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>🔄 Opções de Reset</h2>
-
-            <form method="post" style="margin-bottom: 20px;">
-                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
-                <input type="hidden" name="action" value="reset_theme">
-                <h3>Reset do Tema</h3>
-                <p>Reseta apenas as configurações do tema (cores, tipografia, layout, etc.)</p>
-                <button type="submit" class="button button-secondary"
-                    onclick="return confirm('Tem certeza que deseja resetar as configurações do tema? Esta ação não pode ser desfeita.');">🎨
-                    Resetar Tema</button>
-            </form>
-
-            <form method="post" style="margin-bottom: 20px;">
-                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
-                <input type="hidden" name="action" value="reset_extensions">
-                <h3>Reset de Extensões</h3>
-                <p>Reseta apenas as configurações das extensões ativas</p>
-                <button type="submit" class="button button-secondary"
-                    onclick="return confirm('Tem certeza que deseja resetar as configurações das extensões? Esta ação não pode ser desfeita.');">🔧
-                    Resetar Extensões</button>
-            </form>
-
-            <form method="post">
-                <?php wp_nonce_field('cct_reset_action', 'reset_nonce'); ?>
-                <input type="hidden" name="action" value="reset_all">
-                <h3>Reset Completo</h3>
-                <p><strong>Reseta TODAS as configurações</strong> (tema + extensões)</p>
-                <button type="submit" class="button button-primary"
-                    style="background-color: #dc3545; border-color: #dc3545;"
-                    onclick="return confirm('ATENÇÃO: Esta ação irá resetar TODAS as configurações do tema e extensões. Esta ação não pode ser desfeita. Tem certeza que deseja continuar?');">🗑️
-                    Reset Completo</button>
-            </form>
+        <div class="ua-alert ua-alert-warning">
+            ⚠️ <strong>Atenção:</strong> As ações abaixo <strong>não podem ser desfeitas</strong>.
+            Recomendamos <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=uenf_backup_section')); ?>">fazer um backup</a> antes de prosseguir.
         </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2>📋 Acesso Rápido</h2>
-            <p><a href="<?php echo admin_url('admin.php?page=tema-uenf'); ?>" class="button button-secondary">← Voltar ao
-                    Tema UENF</a></p>
-            <p><a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">🎨 Abrir Customizer</a></p>
+        <div class="ua-reset-grid">
+            <div class="ua-reset-item ua-reset-item-warning">
+                <h3>🎨 Reset do Tema</h3>
+                <p>Reverte cores, tipografia e layout para os valores padrão. Não afeta as extensões.</p>
+                <form method="post">
+                    <?php wp_nonce_field('uenf_reset_action', 'reset_nonce'); ?>
+                    <input type="hidden" name="action" value="reset_theme">
+                    <button type="submit" class="ua-btn ua-btn-outline"
+                        onclick="return confirm('Tem certeza que deseja resetar as configurações do tema? Esta ação não pode ser desfeita.');">
+                        Resetar Tema
+                    </button>
+                </form>
+            </div>
+
+            <div class="ua-reset-item ua-reset-item-danger">
+                <h3>🔧 Reset de Extensões</h3>
+                <p>Desativa todas as extensões e reverte suas configurações para os padrões.</p>
+                <form method="post">
+                    <?php wp_nonce_field('uenf_reset_action', 'reset_nonce'); ?>
+                    <input type="hidden" name="action" value="reset_extensions">
+                    <button type="submit" class="ua-btn ua-btn-outline"
+                        onclick="return confirm('Tem certeza que deseja resetar as configurações das extensões? Esta ação não pode ser desfeita.');">
+                        Resetar Extensões
+                    </button>
+                </form>
+            </div>
+
+            <div class="ua-reset-item ua-reset-item-critical">
+                <h3>🗑️ Reset Completo</h3>
+                <p><strong>Reseta tudo</strong>: tema + extensões. Use apenas como último recurso.</p>
+                <form method="post">
+                    <?php wp_nonce_field('uenf_reset_action', 'reset_nonce'); ?>
+                    <input type="hidden" name="action" value="reset_all">
+                    <button type="submit" class="ua-btn ua-btn-destructive"
+                        onclick="return confirm('ATENÇÃO: Esta ação irá resetar TODAS as configurações. Esta ação não pode ser desfeita. Tem certeza?');">
+                        Reset Completo
+                    </button>
+                </form>
+            </div>
         </div>
+
+        <div class="ua-card">
+            <p class="ua-card-title">Navegação</p>
+            <div class="ua-nav">
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf')); ?>" class="ua-btn ua-btn-outline">← Painel Principal</a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=tema-uenf-extensoes')); ?>" class="ua-btn ua-btn-outline">🔧 Extensões</a>
+                <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=uenf_backup_section')); ?>" class="ua-btn ua-btn-default">💾 Fazer Backup</a>
+            </div>
+        </div>
+
     </div>
     <?php
 }
+
+// Migração única: renomeia chaves cct_ → uenf_ no banco de dados.
+// Executa uma vez e grava flag para não repetir.
+add_action( 'init', function () {
+    if ( get_option( 'uenf_prefix_migration_done' ) ) {
+        return;
+    }
+
+    // Theme mods
+    $theme_slug  = get_option( 'stylesheet' );
+    $option_name = 'theme_mods_' . $theme_slug;
+    $mods        = get_option( $option_name, array() );
+    $migrated    = array();
+    foreach ( $mods as $key => $value ) {
+        $new_key              = preg_replace( '/^cct_/', 'uenf_', $key );
+        $migrated[ $new_key ] = $value;
+    }
+    update_option( $option_name, $migrated );
+
+    // wp_options com prefixo cct_
+    foreach ( array( 'cct_active_extensions', 'cct_google_fonts_api_key', 'cct_css_editor_settings' ) as $old ) {
+        $val = get_option( $old );
+        if ( $val !== false ) {
+            update_option( str_replace( 'cct_', 'uenf_', $old ), $val );
+            delete_option( $old );
+        }
+    }
+
+    update_option( 'uenf_prefix_migration_done', true );
+}, 1 );
