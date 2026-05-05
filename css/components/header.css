@@ -92,8 +92,17 @@
   align-items: center !important;
 }
 
+.idiomas-bandeiras ul {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .idiomas-bandeiras ul li {
-  display: inline;
+  display: flex;
 }
 
 /* Responsive Header */

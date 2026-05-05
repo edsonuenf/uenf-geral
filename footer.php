@@ -46,7 +46,10 @@
                         <?php endif; ?>
                         <?php if ( $uenf_contact_phones ) : ?>
                         <div class="contact-item"><strong>Telefone:</strong>
-                            <?php echo esc_html( implode( ' | ', $uenf_contact_phones ) ); ?>
+                            <?php echo implode( ' | ', array_map(
+                                fn( $p ) => '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $p ) ) . '">' . esc_html( $p ) . '</a>',
+                                $uenf_contact_phones
+                            ) ); ?>
                         </div>
                         <?php endif; ?>
                     </div>

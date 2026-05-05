@@ -305,3 +305,8 @@ h4.setor-info{
 }
 
 /* Responsive adjustments (≤768px): movido para css/responsive/mobile.css */
+
+.contact-item a {
+  font-weight: normal;
+  color: inherit;
+}
