@@ -74,9 +74,16 @@ docker-compose.*.yml
 .opencode/
 .playwright-mcp/
 
-# Browser sessions (cookies e dados de sessão — sensíveis)
-_opensquad/_browser_profile/
-_opensquad/logs/
+# Ferramentas de squad/agentes (uso local apenas — não enviar ao GitHub)
+_opensquad/
+squads/*/output/
+squads/uenf-security-audit/output/
+
+# Dashboard (aplicação separada)
+dashboard/
+
+# Cache de testes
+.phpunit.result.cache
 
 # Screenshots de debug no diretório raiz
 /*.png
